@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.summary               = %q{wip: increase quality of Ruby coding life}
   spec.description           = %q{wip: flavored modifications & extensions for increased quality of Ruby coding life}
   spec.authors               = ["Uladzislau Tarsunou"]
-  spec.email                 = ["utarsuno@gmail.com"]
+  spec.email                 = %w(utarsuno@gmail.com)
   spec.homepage              = 'https://github.com/utarsuno/ruuuby.git'
   spec.license               = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
@@ -25,5 +25,5 @@ Gem::Specification.new do |spec|
   end
   spec.bindir                = 'exe'
   spec.executables           = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths         = ['lib']
+  spec.require_paths         = %w(lib)
 end

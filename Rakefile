@@ -12,8 +12,10 @@ RDoc::Task.new do |rdoc|
   rdoc.main = 'README.md'
   rdoc.rdoc_files.include('README.md','lib/**/*.rb')
 
+  rdoc.options << '--verbose'
+
   # more options at: https://ruby.github.io/rdoc/RDoc/Options.html
-  %w(coverage-report verbose force-update).each do |option|
-    rdoc.options << "--#{option}"
-  end
+  #%w(coverage-report verbose force-update).each do |option|
+  #rdoc.options << "--#{option}"
+  #end
 end

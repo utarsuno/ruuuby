@@ -18,5 +18,10 @@ RSpec.describe Ruuuby do
     it 'exists on global scope' do
       expect(defined?(::Ruuuby)).to eq('constant')
     end
+    context 'has all needed modules' do
+      it 'has module[Enum]' do
+        expect(Ruuuby.const_defined?('Enum')).to eq(true)
+      end
+    end
   end
 end
