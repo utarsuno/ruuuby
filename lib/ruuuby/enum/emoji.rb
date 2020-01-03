@@ -4,22 +4,22 @@ module ::Ruuuby
   #
   #  - Emoji
   module Enum
-    # set of string constants for emojis
+    # set of symbol constants for emojis
     module Emoji
       # value: [⚠️]
       #
-      # @type [String]
-      WARNING  = "⚠️"
+      # @type [Symbol]
+      WARNING  = :⚠️
 
       # value: [✅]
       #
-      # @type [String]
-      POSITIVE = "✅"
+      # @type [Symbol]
+      POSITIVE = :✅
 
       # value: [❌]
       #
-      # @type [String]
-      NEGATIVE = "❌"
+      # @type [Symbol]
+      NEGATIVE = :❌
     end
   end
 end

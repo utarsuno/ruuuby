@@ -7,16 +7,16 @@ Gem::Specification.new do |spec|
   spec.description           = %q{wip: flavored modifications & extensions for increased quality of Ruby coding life}
   spec.authors               = ["Uladzislau Tarsunou"]
   spec.email                 = %w(utarsuno@gmail.com)
-  spec.homepage              = 'https://github.com/utarsuno/ruuuby.git'
+  spec.homepage              = 'https://github.com/utarsuno/ruuuby'
   spec.license               = 'MIT'
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.7.0')
   spec.platform              = Gem::Platform.local
   spec.post_install_message  = "GEM[ruuuby-extensions] has just been installed, cheers!"
   _ = spec.metadata
-  _['homepage_uri']          = "#{spec.homepage}.git"
-  _['source_code_uri']       = spec.metadata['homepage_uri']
-  _['source_code_uri']       = "#{spec.homepage}/master/CHANGELOG.md"
-  _['changelog_uri']         = "#{spec.homepage}/master/README.md"
+  _['homepage_uri']          = spec.homepage
+  _['source_code_uri']       = "#{spec.homepage}.git"
+  _['source_code_uri']       = "#{spec.homepage}/blob/master/CHANGELOG.md"
+  _['changelog_uri']         = "#{spec.homepage}/blob/master/README.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
