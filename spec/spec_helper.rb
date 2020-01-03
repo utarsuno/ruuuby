@@ -1,8 +1,10 @@
 require 'simplecov'
 SimpleCov.start
 
-require "bundler/setup"
-require "ruuuby"
+require 'bundler/setup'
+require 'ruuuby'
+
+require 'rspec-benchmark'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -14,4 +16,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.include(RSpec::Benchmark::Matchers)
 end

@@ -1,8 +1,14 @@
 
 RSpec.describe Object do
+
   context 'creates function[bool?]' do
-    it 'responds to function[bool?]' do
-      expect(subject.respond_to?(:bool?)).to eq(true)
+    context 'responds to function[bool?]' do
+      it 'test subject' do
+        expect(subject.respond_to?(:bool?)).to eq(true)
+      end
+      it 'a newly created generic object' do
+        expect(Object.new.respond_to?(:bool?)).to eq(true)
+      end
     end
     context 'handles all input scenarios' do
       it 'cases[positive]' do
@@ -30,4 +36,14 @@ RSpec.describe Object do
       end
     end
   end
+
+  #  __   ___  __   ___  __   __                   __   ___
+  # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
+  # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
+  context 'performance', :'performance' do
+    it 'func[bool?]: runtime <= .0001s' do
+      expect{true.bool?}.to perform_under(0.0001).sec.sample(10).times
+    end
+  end
+
 end

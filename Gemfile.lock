@@ -1,11 +1,14 @@
 PATH
   remote: .
   specs:
-    ruuuby (0.0.3-x86_64-darwin-18)
+    ruuuby (0.0.4-x86_64-darwin-18)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    benchmark-malloc (0.1.0)
+    benchmark-perf (0.5.0)
+    benchmark-trend (0.3.0)
     diff-lcs (1.3)
     docile (1.3.2)
     json (2.3.0)
@@ -15,6 +18,11 @@ GEM
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
       rspec-mocks (~> 3.9.0)
+    rspec-benchmark (0.5.1)
+      benchmark-malloc (~> 0.1.0)
+      benchmark-perf (~> 0.5.0)
+      benchmark-trend (~> 0.3.0)
+      rspec (>= 3.0.0, < 4.0.0)
     rspec-core (3.9.1)
       rspec-support (~> 3.9.1)
     rspec-expectations (3.9.0)
@@ -37,8 +45,12 @@ DEPENDENCIES
   rake (~> 13.0.1)
   rdoc (~> 6.2.1)
   rspec (~> 3.9.0)
+  rspec-benchmark (~> 0.5.1)
   ruuuby!
-  simplecov (= 0.17.1)
+  simplecov (~> 0.17.1)
+
+RUBY VERSION
+   ruby 2.7.0p0
 
 BUNDLED WITH
    2.1.2

@@ -8,4 +8,14 @@ RSpec.describe 'nil' do
       expect(nil.empty?).to eq(true)
     end
   end
+
+  #  __   ___  __   ___  __   __                   __   ___
+  # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
+  # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
+  context 'performance', :'performance' do
+    it 'func[empty?]: runtime <= .00001s' do
+      expect{nil.empty?}.to perform_under(0.00001).sec.sample(10).times
+    end
+  end
+
 end

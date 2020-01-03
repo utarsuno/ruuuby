@@ -1,60 +1,53 @@
 # Ruuuby
 
-###### wip: flavored modifications & extensions for increased quality of Ruby coding life
+```flavored modifications & extensions for increased quality of Ruby coding life```
+
+| for | use |
+| --- | --- |
+| `Gemfile`  | `gem 'ruuuby', '~> 0.0.4'`  |
+| library import | `require ruuuby` |
+| gem url | https://rubygems.org/gems/ruuuby |
+| changelog | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
 
 #### Language Changes:
-| class    | func added    |
-| -----    | ------------- |
-| Object   | int?          |
-| Object   | ary?          |
-| Object   | bool?         |
-| Array    | remove_empty! |
-| NilClass | empty?        |
+| modified class | action          | desc. |
+| ------------- | --------------- | ----- |
+| `Object`        | added functions | [`int?`, `ary?`, `bool?`] |
+| `Array`         | added functions | [`remove_empty!`]  |
+| `NilClass`      | added functions | [`empty?`]  |
 
-#### Enums:
-| |
-| -----    |
-| ::Ruuuby::Enum::Emoji    |
+#### Code Base Statistics:
+| category | attribute     | value    | desc.                                   |
+| -------- | ------------- | -------- | --------------------------------------- |
+| QA       | unit          | 32       | # of tests                              |
+| QA       | performance   | 5        | # of tests                              |
+| coverage | LOCs          | 192      | lines of code covered                   |
+| coverage | runtime       | 100%     | % of LOCs executed during full QA suite |
+| coverage | documentation | 100%     | % of LOCs with enough documentation     |
 
-#### Gems:
+### Gems:
 | gem       | version | :development | :test | :production |
 | ---       | ---     | ---          | ---   | ---         |
+| rdoc      | 6.2.1   | ✅           | ❌    | ❌          |
 | rake      | 13.0.1  | ✅           | ✅    | ❌          |
 | rspec     | 3.9.0   | ✅           | ✅    | ❌          |
+| rspec-benchmark | 0.5.1 | ✅ | ✅ | ❌ |
 | simplecov | 0.17.1  | ✅           | ❌    | ❌          |
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'ruuuby', '~> 0.0.3'
-```
-
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install ruuuby
-
-## Usage
-
-```ruby
-require 'ruuuby'
-```
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+### Rake Tasks:
+|  preface | cmd   | description   |
+| ----- | ---   | ------------- |
+| `bundle exec rake` | `rdoc` | generate documentation coverage report |
+| `bundle exec rake` | `rspec` | run only non-performance based unit-tests|
+| `bundle exec rake` | `rspec_performance` | run only performance based unit-tests|
+| `bundle exec rake` | `rspec_all` | run all unit-tests |
+| `bundle exec rake` | `install` | install gem onto local machine |
+| `bin/` | `setup` | install dependencies |
+| `bin/` | `console` | interactive console for easier experimenting |
 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/utarsuno/ruuuby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/utarsuno/ruuuby/blob/master/CODE_OF_CONDUCT.md).
-
 
 ## License
 
