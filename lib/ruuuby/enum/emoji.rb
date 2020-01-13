@@ -20,6 +20,8 @@ module ::Ruuuby
       #
       # @type [Symbol]
       NEGATIVE = :❌
+
+      freeze
     end
   end
 end

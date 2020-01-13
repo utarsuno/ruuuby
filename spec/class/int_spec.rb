@@ -1,16 +1,19 @@
 
 RSpec.describe 1337 do
-  context 'creates function[int?] for class[Object]' do
-    context 'responds to function[int?]' do
-      it 'test subject' do
-        expect(subject.respond_to?(:int?)).to eq(true)
+  context 'extends class[Object]' do
+    context 'by adding function[int?]' do
+      it 'exists' do
+        expect(::Object.method_defined?(:int?)).to eq(true)
       end
-      it 'a newly created generic object' do
+      it 'a newly created generic object has it as well' do
         expect(Object.new.respond_to?(:int?)).to eq(true)
+      end
+      it 'without effecting Integer instance' do
+        expect(Integer.int?).to eq(false)
       end
     end
 
-    context 'covers all scenarios' do
+    context 'handles needed input scenarios' do
       it 'returns correct value{true}' do
         expect(-1337.int?).to eq(true)
         expect(-1.int?).to eq(true)
@@ -19,7 +22,6 @@ RSpec.describe 1337 do
         expect(1337.int?).to eq(true)
       end
       it 'returns correct value{false}' do
-        expect(Integer.int?).to eq(false)
         expect(nil.int?).to eq(false)
         expect(''.int?).to eq(false)
         expect('9'.int?).to eq(false)
@@ -33,7 +35,7 @@ RSpec.describe 1337 do
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
     it 'func[empty?]: runtime <= .00001s' do
-      expect{5.int?}.to perform_under(0.00001).sec.sample(10).times
+      expect{5.int?}.to perform_extremely_quickly
     end
   end
 

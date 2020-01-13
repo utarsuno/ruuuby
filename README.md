@@ -4,7 +4,7 @@
 
 | for | use |
 | --- | --- |
-| `Gemfile`  | `gem 'ruuuby', '~> 0.0.4'`  |
+| `Gemfile`  | `gem 'ruuuby', '~> 0.0.5'`  |
 | library import | `require ruuuby` |
 | gem url | https://rubygems.org/gems/ruuuby |
 | changelog | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -12,18 +12,18 @@
 #### Language Changes:
 | modified class | action          | desc. |
 | ------------- | --------------- | ----- |
-| `Object`        | added functions | [`int?`, `ary?`, `bool?`] |
+| `Object`        | added functions | [`ary?`, `bool?`, `int?`, `str?`] |
 | `Array`         | added functions | [`remove_empty!`]  |
 | `NilClass`      | added functions | [`empty?`]  |
 
 #### Code Base Statistics:
 | category | attribute     | value    | desc.                                   |
 | -------- | ------------- | -------- | --------------------------------------- |
-| QA       | unit          | 32       | # of tests                              |
-| QA       | performance   | 5        | # of tests                              |
-| coverage | LOCs          | 192      | lines of code covered                   |
-| coverage | runtime       | 100%     | % of LOCs executed during full QA suite |
-| coverage | documentation | 100%     | % of LOCs with enough documentation     |
+| QA       | unit          | 46       | # of tests                              |
+| QA       | performance   | 7        | # of tests                              |
+| coverage | LOCs          | 255      | lines of code covered                   |
+| coverage | runtime       | 100      | % of LOCs executed during full QA suite |
+| coverage | documentation | 100      | % of LOCs with enough documentation     |
 
 ### Gems:
 | gem       | version | :development | :test | :production |

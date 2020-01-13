@@ -1,8 +1,8 @@
 
 unless ::Object.respond_to?(:bool?)
-  # add function +ary?+ to existing class +Object+
+  # add function +bool?+ to existing class +Object+
   class ::Object
-    # @return [Boolean] true, if current object's class is either +TrueClass+ or +FalseClass+
-    def bool?; self.class == TrueClass || self.class == FalseClass; end
+    # @return [Boolean] +true+, if the current object is an instance of either +TrueClass+ or +FalseClass+
+    def bool?; self.object_id == true.object_id || self.object_id == false.object_id; end
   end
 end

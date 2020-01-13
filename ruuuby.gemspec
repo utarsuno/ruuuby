@@ -2,7 +2,7 @@ require_relative 'lib/ruuuby/version'
 
 Gem::Specification.new do |spec|
   spec.name                  = Ruuuby.name.downcase
-  spec.version               = Ruuuby::VERSION
+  spec.version               = Ruuuby::Version::VERSION
   spec.summary               = %q{wip: increase quality of Ruby coding life}
   spec.description           = %q{wip: flavored modifications & extensions for increased quality of Ruby coding life}
   spec.authors               = ["Uladzislau Tarsunou"]

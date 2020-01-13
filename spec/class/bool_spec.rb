@@ -1,16 +1,20 @@
 
 RSpec.describe Object do
 
-  context 'creates function[bool?]' do
-    context 'responds to function[bool?]' do
-      it 'test subject' do
-        expect(subject.respond_to?(:bool?)).to eq(true)
+  context 'extends class[Object]' do
+    context 'by adding function[bool?]' do
+      it 'exists' do
+        expect(::Object.method_defined?(:bool?)).to eq(true)
       end
-      it 'a newly created generic object' do
+      it 'a newly created generic object also responds' do
         expect(Object.new.respond_to?(:bool?)).to eq(true)
       end
+      it 'without effecting TrueClass instance or FalseClass instance' do
+        expect(TrueClass.bool?).to eq(false)
+        expect(FalseClass.bool?).to eq(false)
+      end
     end
-    context 'handles all input scenarios' do
+    context 'handles needed input scenarios' do
       it 'cases[positive]' do
         expect(true.bool?).to eq(true)
         expect(false.bool?).to eq(true)
@@ -18,8 +22,6 @@ RSpec.describe Object do
         expect((2 != 1).bool?).to eq(true)
       end
       it 'cases[negative]' do
-        expect(TrueClass.bool?).to eq(false)
-        expect(FalseClass.bool?).to eq(false)
         expect(Class.bool?).to eq(false)
         expect(Object.bool?).to eq(false)
         expect(NilClass.bool?).to eq(false)
@@ -41,8 +43,8 @@ RSpec.describe Object do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
-    it 'func[bool?]: runtime <= .0001s' do
-      expect{true.bool?}.to perform_under(0.0001).sec.sample(10).times
+    it 'func[bool?]: runtime <= .00001s' do
+      expect{true.bool?}.to perform_extremely_quickly
     end
   end
 

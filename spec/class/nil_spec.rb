@@ -1,11 +1,16 @@
 
 RSpec.describe 'nil' do
-  context 'creates function[empty?] for class[NilClass]' do
-    it 'responds to function[empty?]' do
-      expect(nil.respond_to?(:empty?)).to eq(true)
-    end
-    it 'returns correct value{true}' do
-      expect(nil.empty?).to eq(true)
+  context 'extends class[NilClass]' do
+    context 'by adding function[empty?' do
+      it 'exists' do
+        expect(NilClass.method_defined?(:empty?)).to eq(true)
+      end
+      it 'and returns correct value{true}' do
+        expect(nil.empty?).to eq(true)
+      end
+      it 'without effecting NilClass instance' do
+        expect(NilClass.respond_to?(:empty?)).to eq(false)
+      end
     end
   end
 
@@ -14,7 +19,7 @@ RSpec.describe 'nil' do
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
     it 'func[empty?]: runtime <= .00001s' do
-      expect{nil.empty?}.to perform_under(0.00001).sec.sample(10).times
+      expect{nil.empty?}.to perform_extremely_quickly
     end
   end
 

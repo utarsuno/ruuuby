@@ -2,10 +2,8 @@
 unless ::Object.respond_to?(:ary?)
   # add function +ary?+ to existing class +Object+
   class ::Object
-    # @param [Boolean] require_non_empty(=false)
-    #
-    # @return [Boolean] true, if provided variable is an array
-    def ary?(require_non_empty=false); self.class == Array && (!require_non_empty || !self.empty?); end
+    # @return [Boolean] +true+, if the current object is an instance of +Array+
+    def ary?; self.class == Array; end
   end
 end
 
@@ -14,7 +12,7 @@ class ::Array
 
   # :category: Modifications
   #
-  # @return [Array]
+  # @return [Array] the same object instance but with empty values removed
   def remove_empty!
     return self if self.length == 0
     reject!{|node| node.respond_to?(:empty?) && node.empty?}

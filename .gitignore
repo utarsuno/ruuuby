@@ -11,3 +11,6 @@
 .rspec_status
 /.idea/
 /html/
+
+# Mac OS generated file
+.DS_Store

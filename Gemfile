@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gemspec
 
-ruby '~> 2.7.0', required: true
+#ruby '~> 2.7.0', required: true
 
 group :test, :development do
   gem 'rake', '~> 13.0.1'

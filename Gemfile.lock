@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruuuby (0.0.4-x86_64-darwin-18)
+    ruuuby (0.0.5-x86_64-darwin-18)
 
 GEM
   remote: https://rubygems.org/
