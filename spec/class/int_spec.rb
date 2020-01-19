@@ -3,7 +3,7 @@ RSpec.describe 1337 do
   context 'extends class[Object]' do
     context 'by adding function[int?]' do
       it 'exists' do
-        expect(::Object.method_defined?(:int?)).to eq(true)
+        expect_func_in_class(::Object, :int?)
       end
       it 'a newly created generic object has it as well' do
         expect(Object.new.respond_to?(:int?)).to eq(true)

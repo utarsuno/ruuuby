@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruuuby (0.0.5-x86_64-darwin-18)
+    ruuuby (0.0.6-x86_64-darwin-18)
 
 GEM
   remote: https://rubygems.org/
@@ -48,9 +48,6 @@ DEPENDENCIES
   rspec-benchmark (~> 0.5.1)
   ruuuby!
   simplecov (~> 0.17.1)
-
-RUBY VERSION
-   ruby 2.7.0p0
 
 BUNDLED WITH
    2.1.2

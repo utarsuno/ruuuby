@@ -1,8 +1,5 @@
 
 module ::Ruuuby
-  # contains the following enums
-  #
-  #  - Emoji
   module Enum
     # set of symbol constants for emojis
     module Emoji

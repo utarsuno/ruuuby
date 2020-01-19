@@ -4,7 +4,7 @@ RSpec.describe Object do
   context 'extends class[Object]' do
     context 'by adding function[bool?]' do
       it 'exists' do
-        expect(::Object.method_defined?(:bool?)).to eq(true)
+        expect_func_in_class(::Object, :bool?)
       end
       it 'a newly created generic object also responds' do
         expect(Object.new.respond_to?(:bool?)).to eq(true)

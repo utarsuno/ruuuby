@@ -4,24 +4,28 @@
 
 | for | use |
 | --- | --- |
-| `Gemfile`  | `gem 'ruuuby', '~> 0.0.5'`  |
-| library import | `require ruuuby` |
+| `Gemfile`  | `gem 'ruuuby', '~> 0.0.6'`  |
+| library import | `require 'ruuuby'` |
 | gem url | https://rubygems.org/gems/ruuuby |
 | changelog | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
 
 #### Language Changes:
-| modified class | action          | desc. |
-| ------------- | --------------- | ----- |
-| `Object`        | added functions | [`ary?`, `bool?`, `int?`, `str?`] |
-| `Array`         | added functions | [`remove_empty!`]  |
-| `NilClass`      | added functions | [`empty?`]  |
+
+| modified class   | additions       | desc. | notes |
+| --------------- | --------------- | ----------------------------------------- | --- |
+| `Object`        | methods         | [`ary?`, `bool?`, `int?`, `str?`, `sym?`] | |
+| `Array`         | method          | `remove_empty!`                           | |
+| `String`        | methods         | [`ensure_start!`, `ensure_ending!`]       | see func docs for notes regarding arg: `use_partial_fill_in` |
+| `String`        | ordinary method | `>>` | prepend provided arg, reverse operation of `<<` |
+| `NilClass`      | method          | `empty?`                                  | added for sake of `Array`'s func: `remove_empty!` |
+
 
 #### Code Base Statistics:
 | category | attribute     | value    | desc.                                   |
 | -------- | ------------- | -------- | --------------------------------------- |
-| QA       | unit          | 46       | # of tests                              |
-| QA       | performance   | 7        | # of tests                              |
-| coverage | LOCs          | 255      | lines of code covered                   |
+| QA       | unit          | 75       | # of tests                              |
+| QA       | performance   | 12       | # of tests                              |
+| coverage | LOCs          | 481      | lines of code covered                   |
 | coverage | runtime       | 100      | % of LOCs executed during full QA suite |
 | coverage | documentation | 100      | % of LOCs with enough documentation     |
 

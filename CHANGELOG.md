@@ -1,10 +1,23 @@
+# 0.0.6
+ * add {`Ruuuby::Enum::Text`}
+ * minor changes/functions-added to DRY some code
+ * add `Gemfile.lock` to `.gitignore`
+ * add the following methods:
+ 
+ | class    | method added       |
+ | -------  | ---------------- |
+ | `Object` | `sym?`           |
+ | `String` | `>>`             |
+ | `String` | `ensure_start!`  | 
+ | `String` | `ensure_ending!` |
+
 # 0.0.5
  * for time being, remove ruby `v2.7` requirement
  * `freeze` various constants and modules
  * slightly clean-up (with helper functions) and expand RSpec scenario coverage
- * add the following function:
+ * add the following method:
  
- | class  | func added    |
+ | class  | method added    |
  | -----  | ------------- |
  | `Object` | `str?`      |
 
@@ -27,18 +40,18 @@
  * modify {`Ruuuby::Enum::Emoji`} from strings to symbols
  * fix gemspec to reflect correct git URLs
  * add first update to `README.md`
- * add the following functions:
+ * add the following methods:
 
-| class  | func added    |
+| class  | method added    |
 | -----  | ------------- |
 | `Object` | `int?`          |
 | `Object` | `ary?`          |
 | `Array`  | `remove_empty!` |
 
 # 0.0.2
- * add the following functions:
+ * add the following method:
 
-| class  | func added    |
+| class  | method added    |
 | -----  | ------------- |
 | `Object` | `bool?`         |
 
@@ -46,9 +59,9 @@
  * add `CHANGELOG.md`
  * add {`Ruuuby::Enum::Emoji`}
  * add bin/audit (for running rdoc, rspecs, and coverage reports)
- * add the following functions:
+ * add the following method:
 
-| class    | func added    |
+| class    | method added    |
 | -----    | ------------- |
 | `NilClass` | `empty?`        |
 

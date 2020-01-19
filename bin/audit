@@ -4,4 +4,4 @@ IFS=$'\n\t'
 set -vx
 
 bundle exec rake rdoc
-bundle exec rake rspec
+bundle exec rake rspec_all

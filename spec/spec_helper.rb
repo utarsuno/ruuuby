@@ -19,13 +19,17 @@ RSpec.configure do |config|
 
   config.include(RSpec::Benchmark::Matchers)
 
-  module FrozenTestHelper
+  module GeneralTestHelper
+    def expect_func_in_class(the_class, the_func)
+      expect(the_class.method_defined?(the_func)).to eq(true)
+    end
+  end
 
+  module FrozenTestHelper
     # expect the test condition to raise a +FrozenError+
     def be_frozen
       raise_error(FrozenError)
     end
-
   end
 
   module PerformanceTestHelper
@@ -48,5 +52,6 @@ RSpec.configure do |config|
 
   config.include(PerformanceTestHelper) #, :type => :'performance'
   config.include(FrozenTestHelper)
+  config.include(GeneralTestHelper)
 
 end

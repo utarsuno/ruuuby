@@ -2,7 +2,7 @@ RSpec.describe Ruuuby::Version do
   context 'defines the current version' do
     it 'has a version number' do
       expect(subject::VERSION).not_to be nil
-      expect(subject::VERSION.class).to eq(String)
+      expect(subject::VERSION.str?).to eq(true)
     end
     it 'version number cant be changed' do
       expect{::Ruuuby::Version::VERSION = '1.0.0'}.to be_frozen

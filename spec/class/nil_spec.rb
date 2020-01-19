@@ -3,7 +3,7 @@ RSpec.describe 'nil' do
   context 'extends class[NilClass]' do
     context 'by adding function[empty?' do
       it 'exists' do
-        expect(NilClass.method_defined?(:empty?)).to eq(true)
+        expect_func_in_class(NilClass, :empty?)
       end
       it 'and returns correct value{true}' do
         expect(nil.empty?).to eq(true)

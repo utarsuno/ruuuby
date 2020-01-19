@@ -1,21 +1,21 @@
 
-RSpec.describe Ruuuby::Enum::Emoji do
+RSpec.describe ::Ruuuby::Enum::Emoji do
   context 'creates module[Emoji]' do
     it 'Ruuuby::Enum responds to [Emoji]' do
-      expect(Ruuuby::Enum.const_defined?('Emoji')).to eq(true)
+      expect(::Ruuuby::Enum.const_defined?('Emoji')).to eq(true)
     end
     context 'with correct values' do
       it 'emoji: warning' do
         expect(subject::WARNING.to_s).to eq("⚠️")
-        expect(subject::WARNING.class).to eq(Symbol)
+        expect(subject::WARNING.sym?).to eq(true)
       end
       it 'emoji: positive' do
         expect(subject::POSITIVE.to_s).to eq("✅")
-        expect(subject::POSITIVE.class).to eq(Symbol)
+        expect(subject::POSITIVE.sym?).to eq(true)
       end
       it 'emoji: negative' do
         expect(subject::NEGATIVE.to_s).to eq("❌")
-        expect(subject::NEGATIVE.class).to eq(Symbol)
+        expect(subject::NEGATIVE.sym?).to eq(true)
       end
     end
     context 'cant be changed' do

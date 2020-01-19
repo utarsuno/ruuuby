@@ -3,7 +3,7 @@ RSpec.describe Object do
   context 'extends class[Object]' do
     context 'by adding function[ary?]' do
       it 'exists' do
-        expect(::Object.method_defined?(:ary?)).to eq(true)
+        expect_func_in_class(::Object, :ary?)
       end
       it 'a newly created generic object also has it' do
         expect(Object.new.respond_to?(:ary?)).to eq(true)
@@ -95,16 +95,16 @@ RSpec.describe Object do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
-    context 'run very quickly' do
-      it 'func[ary?]' do
+    context 'fast tests' do
+      it 'func[ary?] runs extremely quickly' do
         expect{['a'].ary?}.to perform_extremely_quickly
       end
-      it 'func[remove_empty!] (with small array)' do
+      it 'func[remove_empty!] (with small array) runs very quickly' do
         expect{[%w(a bb c)].remove_empty!}.to perform_very_quickly
         expect{[nil, nil, 'c'].remove_empty!}.to perform_very_quickly
       end
     end
-    it 'func[remove_empty!]: runtime <= .001s' do
+    it 'func[remove_empty!]: runs quickly' do
       scenario = ['0', nil, 'a', 1337, [], {}, 0, '', 'hiya', {nil: nil}]
       expect{scenario.remove_empty!}.to perform_quickly
     end
