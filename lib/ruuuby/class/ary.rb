@@ -1,11 +1,5 @@
 
-unless ::Object.respond_to?(:ary?)
-  # add function +ary?+ to existing class +Object+
-  class ::Object
-    # @return [Boolean] +true+, if the current object is an instance of +Array+
-    def ary?; self.class == Array; end
-  end
-
+unless ::Array.respond_to?(:remove_empty!)
   # add various functions to existing class +Array+
   class ::Array
     # @return [Array] the same object instance but with empty values removed

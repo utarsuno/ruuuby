@@ -1,12 +1,6 @@
 
-unless ::Object.respond_to?(:str?)
-  # add function +str?+ to existing class +Object+
-  class ::Object
-    # @return [Boolean] +true+, if the current object is an instance of +String+
-    def str?; self.class == String; end
-  end
-
-  # Extending functionality of core classes.
+unless ::String.respond_to?(:ensure_ending!)
+  # add various functions to existing class +String+
   class ::String
 
     # Ruby provides *<<* for string append operation but provides the insert function for prepending operations.

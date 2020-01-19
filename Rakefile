@@ -1,7 +1,24 @@
-require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+require 'bundler/gem_tasks'
+require 'rspec/core/rake_task'
 gem 'rdoc'
 require 'rdoc/rdoc'
+
+
+#spec = Gem::Specification.load('ruuuby.gemspec')
+#if RUBY_PLATFORM =~ /java/
+#  require 'rake/javaextensiontask'
+#  Rake::JavaExtensionTask.new('ruby_class_mods', spec)
+#else
+#  require 'rake/extensiontask'
+#  Rake::ExtensionTask.new('ruby_class_mods', spec)
+#end
+
+#Rake::ExtensionTask.new('ruby_class_mods') do |ext|
+#  ext.lib_dir = "lib/ruuuby"
+#end
+
+require 'rake/extensiontask'
+Rake::ExtensionTask.new('ruby_class_mods')
 
 spec_default_opts = ['--format documentation', '--color', '--require spec_helper']
 

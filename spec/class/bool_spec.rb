@@ -1,7 +1,6 @@
 
-RSpec.describe Object do
-
-  context 'extends class[Object]' do
+RSpec.describe 'Boolean' do
+  context 'extending class[Object]' do
     context 'by adding function[bool?]' do
       it 'exists' do
         expect_func_in_class(::Object, :bool?)
@@ -12,6 +11,10 @@ RSpec.describe Object do
       it 'without effecting TrueClass instance or FalseClass instance' do
         expect(TrueClass.bool?).to eq(false)
         expect(FalseClass.bool?).to eq(false)
+        class MockTrue < TrueClass; end
+        class MockFalse < TrueClass; end
+        expect(MockTrue.bool?).to eq(false)
+        expect(MockFalse.bool?).to eq(false)
       end
     end
     context 'handles needed input scenarios' do

@@ -13,5 +13,5 @@ end
 
 group :development do
   gem 'rdoc', '~> 6.2.1'
+  gem 'rake-compiler', '~> 1.1.0'
 end
-

@@ -1,10 +1,21 @@
+# 0.0.7
+ * add gem `'rake-compiler', '~> 1.1.0'` to group `development`
+ * adjust `bin/audit`, `ruuuby.gemspec`, `Rakefile`, etc to support native C-extensions
+ * added section `project layout` and update formatting to `README.md`
+ * replace various Ruby functions with native C-extensions (`ruuuby/ext/ruby_class_mods/ruby_class_mods.c`):
+ 
+ | modified class   | funcs replaced |
+ | --------------- | --------------- |
+ | `Object`        | `ary?`, `bool?`, `int?`, `str?`, `sym?` |
+ | `NilClass`      | `empty?` |
+
 # 0.0.6
  * add {`Ruuuby::Enum::Text`}
  * minor changes/functions-added to DRY some code
  * add `Gemfile.lock` to `.gitignore`
  * add the following methods:
  
- | class    | method added       |
+ | class    | method added     |
  | -------  | ---------------- |
  | `Object` | `sym?`           |
  | `String` | `>>`             |
@@ -22,7 +33,7 @@
  | `Object` | `str?`      |
 
 # 0.0.4
- * add gem `rspec-benchmark`
+ * add gem `'rspec-benchmark', '~> 0.5.1'`
  * remove file `.rpsec`, add rspec configurations through code
  * add performance tests along with a few missed ones
  * heavily update `README.md`
