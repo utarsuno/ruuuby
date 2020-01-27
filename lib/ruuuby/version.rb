@@ -13,10 +13,10 @@ module ::Ruuuby
 
   # container for version number to ensure it does not get modified
   module VERSION
-    # The version of *Ruuuby*, reflected in gemspec, currently{0.0.8}.
+    # The version of *Ruuuby*, reflected in gemspec, currently{0.0.9}.
     #
     # @type [String]
-    VERSION = '0.0.8'.❄️
+    VERSION = '0.0.9'.❄️
 
     ❄️
   end

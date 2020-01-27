@@ -63,10 +63,34 @@ RSpec.describe Object do
         expect_response_to(%w(), :∖)
       end
       it 'works correctly' do
+        expect([2, 3, 4].∖([1, 2, 3])).to eq([4])
         expect([1, 2, 3].∖([2, 3, 4])).to eq([1])
+        expect([1, 1, 2, 2, 3].∖([2, 3, 4])).to eq([1, 1])
       end
       it 'detects bad param' do
         expect{%w().∖ nil}.to throw_arg_error
+      end
+    end
+
+    context 'func{∋?} (include?)' do
+      it 'was added' do
+        expect_response_to([], :∋?)
+        expect_func_in_class(Array, :∋?)
+      end
+      it 'works correctly' do
+        expect(['a', 1337, [[1337]]].∋? [[1337]]).to eq(true)
+        expect(['a', 1337, [[1337]]].∋? 'b').to eq(false)
+      end
+    end
+
+    context 'func{∌?} (include?)' do
+      it 'was added' do
+        expect_response_to([], :∌?)
+        expect_func_in_class(Array, :∌?)
+      end
+      it 'works correctly' do
+        expect(['a', 1337, [[1337]]].∌? [[1337]]).to eq(false)
+        expect(['a', 1337, [[1337]]].∌? 'b').to eq(true)
       end
     end
 

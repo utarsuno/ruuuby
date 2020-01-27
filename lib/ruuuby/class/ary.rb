@@ -5,7 +5,22 @@ unless ::Array.respond_to?(:∑)
   class ::Array
     alias :∑ :each
     alias :⨍ :map
+    # Same meaning as: `arg.∈ self`
+    alias_method :∋?, :include?
     alias_method :remove_empty!, :remove_empty!
+
+    # :category: Set Mathematics
+    #
+    # Same meaning as: `arg.∉ self`
+    #
+    # @see https://en.wikipedia.org/wiki/ISO_31-11#Sets
+    #
+    # @param [*] arg
+    #
+    # @return [Boolean] true, if this array instance contains the provided arg
+    def ∌?(arg)
+      not self.include?(arg)
+    end
 
     # @param [*] ary
     #

@@ -18,7 +18,7 @@ RSpec.describe 'Object' do
       expect_response_to(::Object, :❄️?)
       leet = [999999, 'a']
       expect(leet.❄️?).to eq(false)
-      leet.❄️
+      leet.freeze
       expect(leet.❄️?).to eq(true)
     end
   end

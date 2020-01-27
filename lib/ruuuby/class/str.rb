@@ -4,17 +4,49 @@ unless ::String.respond_to?(:ensure_ending!)
   # add various functions to existing class +String+
   class ::String
 
+    # @param [*] str
+    #
+    # @return [Boolean] true, if this string instance contains the provided str
+    def ∋?(str)
+      raise ArgumentError.new("String#∌ included? operation only accepts a string argument, received a {#{str.class.to_s}} instead!") unless str.str?
+      self.include?(str)
+    end
+
+    # @param [*] str
+    #
+    # @return [Boolean] true, if this string instance contains the provided str
+    def ∌?(str)
+      raise ArgumentError.new("String#∌ not-included? operation only accepts a string argument, received a {#{str.class.to_s}} instead!") unless str.str?
+      not self.include?(str)
+    end
+
+    # @param [*] str
+    #
+    # @return [Boolean] true, if this string instance is not contained in the provided str
+    def ∉?(str)
+      raise ArgumentError.new("String#∉ not-contained? operation only accepts a string argument, received a {#{str.class.to_s}} instead!") unless str.str?
+      str.∌?(self)
+    end
+
+    # @param [*] str
+    #
+    # @return [Boolean] true, if this string instance is contained in the provided str
+    def ∈?(str)
+      raise ArgumentError.new("String#∈ contained? operation only accepts a string argument, received a {#{str.class.to_s}} instead!") unless str.str?
+      str.∋?(self)
+    end
+
     # Ruby provides *<<* for string append operation but provides the insert function for prepending operations.
     # This function declaration adds the naturally expected reverse operation for prepending to an existing string.
     #
-    # @param [String] arg the text to prepend to this current string object
+    # @param [String] str the text to prepend to this current string object
     #
     # @raise [ArgumentError] thrown if the parameter provided is not a +String+ instance
     #
     # @return [String] a new string object with contents equaling "#{arg}{self.to_s}"
-    def >>(arg)
-      raise ArgumentError.new("String >> prepend operation only accepts a string argument, received a {#{arg.class.to_s}} instead!") unless arg.str?
-      self.insert(0, arg)
+    def >>(str)
+      raise ArgumentError.new("String#>> prepend operation only accepts a string argument, received a {#{str.class.to_s}} instead!") unless str.str?
+      self.insert(0, str)
     end
 
     # @param [String] start the text that this string start with

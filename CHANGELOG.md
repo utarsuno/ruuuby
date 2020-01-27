@@ -1,3 +1,13 @@
+# 0.0.9
+ * add example usage in `README.md`
+ * add various aliases and functions for additional set math operations
+ 
+ | class    | method(s)/alias(es) added |
+ | -------  | ------------------------- |
+ | `Array`  | `∌?`, `∋?`                |
+ | `String` | `∌?`, `∋?`, `∈?`, `∉?`    |
+ 
+
 # 0.0.8
  * mark various files with `UTF-8` encoding: `# -*- encoding : utf-8 -*-`
  * add `help` directory to contain troubleshooting documentation

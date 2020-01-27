@@ -74,6 +74,62 @@ RSpec.describe 'str' do
       end
     end
 
+    context 'func{∋?} (include?)' do
+      it 'was added' do
+        expect_response_to('', :∋?)
+        expect_func_in_class(String, :∋?)
+      end
+      it 'works correctly' do
+        expect('abc'.∋? 'b').to eq(true)
+        expect('abc'.∋? 'd').to eq(false)
+      end
+      it 'catches bad arg' do
+        expect{'b'.∋? nil}.to throw_arg_error
+      end
+    end
+
+    context 'func{∌?} (excluded?)' do
+      it 'was added' do
+        expect_response_to('', :∌?)
+        expect_func_in_class(String, :∌?)
+      end
+      it 'works correctly' do
+        expect('abc'.∌? 'd').to eq(true)
+        expect('abc'.∌? 'b').to eq(false)
+      end
+      it 'catches bad arg' do
+        expect{'b'.∌? nil}.to throw_arg_error
+      end
+    end
+
+    context 'func{∈?} (include?)' do
+      it 'was added' do
+        expect_response_to('', :∈?)
+        expect_func_in_class(String, :∈?)
+      end
+      it 'works correctly' do
+        expect('b'.∈? 'abc').to eq(true)
+        expect('d'.∈? 'abc').to eq(false)
+      end
+      it 'catches bad arg' do
+        expect{'b'.∈? nil}.to throw_arg_error
+      end
+    end
+
+    context 'func{∉?} (excluded?)' do
+      it 'was added' do
+        expect_response_to('', :∉?)
+        expect_func_in_class(String, :∉?)
+      end
+      it 'works correctly' do
+        expect('d'.∉? 'abc').to eq(true)
+        expect('b'.∉? 'abc').to eq(false)
+      end
+      it 'catches bad arg' do
+        expect{'b'.∉? nil}.to throw_arg_error
+      end
+    end
+
     context 'func{>>} (prepend operation)' do
       it 'was added' do
         expect_response_to('', :>>)
