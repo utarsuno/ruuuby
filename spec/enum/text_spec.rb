@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 RSpec.describe ::Ruuuby::Enum::Text do
   context 'creates module[Text]' do

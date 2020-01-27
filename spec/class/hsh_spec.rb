@@ -1,40 +1,38 @@
 # -*- encoding : utf-8 -*-
 
-RSpec.describe 1337 do
+RSpec.describe 'hsh' do
   context 'extends class[Object]' do
-    context 'by adding function[int?]' do
+    context 'by adding function[hsh?]' do
       it 'exists' do
-        expect_func_in_class(::Object, :int?)
+        expect_func_in_class(::Object, :hsh?)
       end
       it 'a newly created generic object responds to it' do
-        expect_response_to(Object.new, :int?)
+        expect_response_to(Object.new, :hsh?)
       end
       it 'without effecting Integer instance' do
-        expect(Integer.int?).to eq(false)
+        expect(Hash.hsh?).to eq(false)
       end
       context 'handles needed input scenarios' do
         it 'returns correct value{true}' do
-          [-1337, -1, 0, 1, 1337].⨍{|n| expect(n.int?).to eq(true)}
+          [{}, {'a' => 5}, {a: {}}, {nil: nil}, {[] => nil}].⨍{|h|expect(h.hsh?).to eq(true)}
         end
         it 'returns correct value{false}' do
-          [nil, '', '1337', {}, []].⨍{|n| expect(n.int?).to eq(false)}
+          [nil, '', '{}', [], [{}], 1337].⨍{|h|expect(h.hsh?).to eq(false)}
         end
       end
     end
   end
-
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
-    context 'func[int?]: performs extremely quickly' do
+    context 'func[empty?]: performs extremely quickly' do
       it 'for cases: true' do
-        expect{5.int?}.to perform_extremely_quickly
+        expect{{}.hsh?}.to perform_extremely_quickly
       end
       it 'for cases: false' do
-        expect{'0'.int?}.to perform_extremely_quickly
+        expect{5.hsh?}.to perform_extremely_quickly
       end
     end
   end
-
 end

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 module ::Ruuuby
   module Enum
@@ -18,7 +19,7 @@ module ::Ruuuby
       # @type [Symbol]
       NEGATIVE = :❌
 
-      freeze
+      ❄️
     end
   end
 end

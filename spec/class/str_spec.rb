@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 RSpec.describe 'str' do
   context 'extends class[Object]' do
@@ -5,26 +6,15 @@ RSpec.describe 'str' do
       it 'as expected' do
         expect(::Object.method_defined?(:str?)).to eq(true)
       end
-      it 'a newly created generic object has it as well' do
-        expect(String.new('strstr').respond_to?(:str?)).to eq(true)
+      it 'a newly created generic object responds to it' do
+        expect_response_to(String.new('strstr'), :str?)
       end
       context 'with correct return values of' do
         it 'true' do
-          expect(''.str?).to eq(true)
-          expect(' '.str?).to eq(true)
-          expect('hello world'.str?).to eq(true)
-          expect('2'.str?).to eq(true)
-          expect('nil'.str?).to eq(true)
-          expect(2.to_s.str?).to eq(true)
+          ['', ' ', 'hello world', '2', 'nil', 2.to_s].⨍{|s|expect(s.str?).to eq(true)}
         end
         it 'false' do
-          expect(String.str?).to eq(false)
-          expect(nil.str?).to eq(false)
-          expect(0.str?).to eq(false)
-          expect(1.str?).to eq(false)
-          expect({}.str?).to eq(false)
-          expect(['str'].str?).to eq(false)
-          expect(:str.str?).to eq(false)
+          [String, nil, 0, 1, {}, [], ['str'], :str].⨍{|s|expect(s.str?).to eq(false)}
         end
         it 'a newly created object inheriting String (does not match)' do
           class MockString < String; end
@@ -36,67 +26,49 @@ RSpec.describe 'str' do
 
     context 'func{ensure_ending!}' do
       it 'was added' do
-        expect(''.respond_to?(:ensure_ending!)).to eq(true)
+        expect_response_to('', :ensure_ending!)
         expect_func_in_class(String, :ensure_ending!)
       end
       context 'handles cases' do
         context 'positive' do
           context 'with partial fill in' do
             it 'passes simple scenarios' do
-              expect(''.ensure_ending!('', true)).to eq('')
-              expect(''.ensure_ending!('aaa', true)).to eq('aaa')
-              expect('aaa'.ensure_ending!('', true)).to eq('aaa')
-              expect('hello?'.ensure_ending!('?', true)).to eq('hello?')
-              expect('hello'.ensure_ending!('?a', true)).to eq('hello?a')
-              expect('hellb'.ensure_ending!('??', true)).to eq('hellb??')
+              [
+                  ['', '', ''], ['', 'aaa', 'aaa'], ['aaa', '', 'aaa'], %w(hello? ? hello?), %w(hello ?a hello?a), %w(hellb ?? hellb??), %w(hello? ?? hello??)
+              ].⨍{|a|expect(a[0].ensure_ending!(a[1], true)).to eq(a[2])}
             end
             it 'passes complex scenarios' do
-              expect('baa'.ensure_ending!('aaa', true)).to eq('baaa')
-              expect('bba'.ensure_ending!('aaa', true)).to eq('bbaaa')
-              expect('baa'.ensure_ending!('aaaaaaaaa', true)).to eq('baaaaaaaaa')
-              expect('baaaaa'.ensure_ending!('aaaaaa', true)).to eq('baaaaaa')
-              expect('ba'.ensure_ending!('aaaaaaaa', true)).to eq('baaaaaaaa')
-              expect('abc'.ensure_ending!('bca', true)).to eq('abca')
-              expect('hi '.ensure_ending!(' ', true)).to eq('hi ')
-              expect(' hi'.ensure_ending!(' ', true)).to eq(' hi ')
-              expect('abc'.ensure_ending!('bcd', true)).to eq('abcd')
+              [
+                  %w(baa aaa baaa), %w(bba aaa bbaaa), %w(baa aaaaaaaaa baaaaaaaaa),
+                  %w(baaaaa aaaaaa baaaaaa), %w(ba aaaaaaaa baaaaaaaa), %w(abc bca abca),
+                  ['hi ', ' ', 'hi '], [' hi', ' ', ' hi '], %w(abc bcd abcd)
+              ].⨍{|a|expect(a[0].ensure_ending!(a[1], true)).to eq(a[2])}
             end
           end # end context 'positive' -> 'with partial fill in'
           context 'without partial fill in' do
             it 'passes simple scenarios' do
-              expect(''.ensure_ending!('', false)).to eq('')
-              expect(''.ensure_ending!('aaa', false)).to eq('aaa')
-              expect('aaa'.ensure_ending!('', false)).to eq('aaa')
-              expect('hello?'.ensure_ending!('?', false)).to eq('hello?')
-              expect('hello'.ensure_ending!('?a', false)).to eq('hello?a')
-              expect('hellb'.ensure_ending!('??', false)).to eq('hellb??')
+              [
+                  ['', '', ''], ['', 'aaa', 'aaa'], ['aaa', '', 'aaa'], %w(hello? ? hello?), %w(hello ?a hello?a), %w(hellb ?? hellb??), %w(hello? ?? hello???)
+              ].⨍{|a|expect(a[0].ensure_ending!(a[1], false)).to eq(a[2])}
             end
             it 'passes complex scenarios' do
-              expect('baa'.ensure_ending!('aaa', false)).to eq('baaaaa')
-              expect('bba'.ensure_ending!('aaa', false)).to eq('bbaaaa')
-              expect('baa'.ensure_ending!('aaaaaaaaa', false)).to eq('baaaaaaaaaaa')
-              expect('baaaaa'.ensure_ending!('aaaaaa', false)).to eq('baaaaaaaaaaa')
-              expect('ba'.ensure_ending!('aaaaaaaa', false)).to eq('baaaaaaaaa')
-              expect('abc'.ensure_ending!('bca', false)).to eq('abcbca')
-              expect('hi '.ensure_ending!(' ', false)).to eq('hi ')
-              expect(' hi'.ensure_ending!(' ', false)).to eq(' hi ')
-              expect('abc'.ensure_ending!('bcd', false)).to eq('abcbcd')
+              [
+                  %w(baa aaa baaaaa), %w(bba aaa bbaaaa), %w(baa aaaaaaaaa baaaaaaaaaaa),
+                  %w(baaaaa aaaaaa baaaaaaaaaaa), %w(ba aaaaaaaa baaaaaaaaa), %w(abc bca abcbca),
+                  ['hi ', ' ', 'hi '], [' hi', ' ', ' hi '], %w(abc bcd abcbcd)
+              ].⨍{|a|expect(a[0].ensure_ending!(a[1], false)).to eq(a[2])}
             end
           end # end context 'positive' -> 'without partial fill in'
         end # end context 'positive'
         context 'error' do
           it 'catches bad param: start' do
-            expect{''.ensure_ending!(nil, true)}.to raise_exception(ArgumentError)
-            expect{''.ensure_ending!(1337, true)}.to raise_exception(ArgumentError)
-            expect{''.ensure_ending!({}, true)}.to raise_exception(ArgumentError)
-            expect{''.ensure_ending!(nil, false)}.to raise_exception(ArgumentError)
-            expect{''.ensure_ending!(1337, false)}.to raise_exception(ArgumentError)
-            expect{''.ensure_ending!({}, false)}.to raise_exception(ArgumentError)
+            [nil, 1337, {}].⨍{|a|expect{''.ensure_ending!(a, true)}.to throw_arg_error}
+            [nil, 1337, {}].⨍{|a|expect{''.ensure_ending!(a, false)}.to throw_arg_error}
           end
           it 'catches bad param: use_partial_fill_in' do
-            expect{''.ensure_ending!('nil', nil)}.to raise_exception(ArgumentError)
-            expect{''.ensure_ending!('1337', 1337)}.to raise_exception(ArgumentError)
-            expect{''.ensure_ending!('', {})}.to raise_exception(ArgumentError)
+            expect{''.ensure_ending!('nil', nil)}.to throw_arg_error
+            expect{''.ensure_ending!('1337', 1337)}.to throw_arg_error
+            expect{''.ensure_ending!('', {})}.to throw_arg_error
           end
         end # end context 'error'
       end
@@ -104,16 +76,13 @@ RSpec.describe 'str' do
 
     context 'func{>>} (prepend operation)' do
       it 'was added' do
-        expect(''.respond_to?(:>>)).to eq(true)
+        expect_response_to('', :>>)
         expect_func_in_class(String, :>>)
       end
       context 'handles cases' do
         context 'positive' do
           it 'simple data' do
-            expect('' >> '').to eq('')
-            expect('' >> 'a').to eq('a')
-            expect('' >> 'ab').to eq('ab')
-            expect('' >> " abcde 101 \n").to eq(" abcde 101 \n")
+            [['', ''], %w(a a), %w(ab ab), [" abcde 101 \n", " abcde 101 \n"]].⨍{|a|expect('' >> a[0]).to eq(a[1])}
           end
           it 'complex data' do
             expect('b' >> 'a').to eq('ab')
@@ -123,9 +92,7 @@ RSpec.describe 'str' do
         end
         context 'error' do
           it 'catches wrong parameter type provided' do
-            expect{'' >> nil}.to raise_exception(ArgumentError)
-            expect{'' >> 1337}.to raise_exception(ArgumentError)
-            expect{'' >> {}}.to raise_exception(ArgumentError)
+            [nil, 1337, {}].⨍{|a|expect{'' >> a}.to throw_arg_error}
           end
         end
       end
@@ -133,66 +100,48 @@ RSpec.describe 'str' do
 
     context 'func{ensure_start!}' do
       it 'was added' do
-        expect(''.respond_to?(:ensure_start!)).to eq(true)
+        expect_response_to('', :ensure_start!)
         expect_func_in_class(String, :ensure_start!)
       end
       context 'handles cases' do
         context 'positive' do
           context 'with partial fill in' do
             it 'simple data' do
-              expect(''.ensure_start!('', true)).to eq('')
-              expect(''.ensure_start!(' ', true)).to eq(' ')
-              expect(' '.ensure_start!(' ', true)).to eq(' ')
-              expect(''.ensure_start!('a', true)).to eq('a')
-              expect('b'.ensure_start!('a', true)).to eq('ab')
-              expect('c'.ensure_start!('aaac', true)).to eq('aaac')
+              [
+                  ['', '', ''], ['', ' ', ' '], [' ', ' ', ' '], ['', 'a', 'a'], %w(b a ab), %w(c aaac aaac)
+              ].⨍{|a|expect(a[0].ensure_start!(a[1], true)).to eq(a[2])}
             end
             it 'complex data' do
-              expect('baa'.ensure_start!('b', true)).to eq('baa')
-              expect('baa'.ensure_start!('ba', true)).to eq('baa')
-              expect('baa'.ensure_start!('baa', true)).to eq('baa')
-              expect('baa'.ensure_start!('bb', true)).to eq('bbaa')
-              expect('baa'.ensure_start!('bba', true)).to eq('bbaa')
-              expect('baa'.ensure_start!('bbaa', true)).to eq('bbaa')
-              expect('baa'.ensure_start!('bbaaa', true)).to eq('bbaaabaa')
-              expect('abc123xyz'.ensure_start!('123', true)).to eq('123abc123xyz')
+              [
+                  %w(baa b baa), %w(baa ba baa), %w(baa baa baa), %w(baa bb bbaa), %w(baa bba bbaa),
+                  %w(baa bbaa bbaa), %w(baa bbaaa bbaaabaa), %w(abc123xyz 123 123abc123xyz)
+              ].⨍{|a|expect(a[0].ensure_start!(a[1], true)).to eq(a[2])}
             end
           end
           context 'without partial fill in' do
             it 'simple data' do
-              expect(''.ensure_start!('', false)).to eq('')
-              expect(''.ensure_start!(' ', false)).to eq(' ')
-              expect(' '.ensure_start!(' ', false)).to eq(' ')
-              expect(''.ensure_start!('a', false)).to eq('a')
-              expect('b'.ensure_start!('a', false)).to eq('ab')
-              expect('b'.ensure_start!('aaab', false)).to eq('aaabb')
+              [
+                  ['', '', ''], ['', ' ', ' '], [' ', ' ', ' '], ['', 'a', 'a'], %w(b a ab), %w(b aaab aaabb)
+              ].⨍{|a|expect(a[0].ensure_start!(a[1], false)).to eq(a[2])}
             end
             it 'complex data' do
-              expect('baa'.ensure_start!('b', false)).to eq('baa')
-              expect('baa'.ensure_start!('ba', false)).to eq('baa')
-              expect('baa'.ensure_start!('baa', false)).to eq('baa')
-              expect('baa'.ensure_start!('bb', false)).to eq('bbbaa')
-              expect('baa'.ensure_start!('bba', false)).to eq('bbabaa')
-              expect('baa'.ensure_start!('bbaa', false)).to eq('bbaabaa')
-              expect('baa'.ensure_start!('bbaaa', false)).to eq('bbaaabaa')
-              expect('abc123xyz'.ensure_start!('123', false)).to eq('123abc123xyz')
+              [
+                  %w(baa b baa), %w(baa ba baa), %w(baa baa baa), %w(baa bb bbbaa), %w(baa bba bbabaa),
+                  %w(baa bbaa bbaabaa), %w(baa bbaaa bbaaabaa), %w(abc123xyz 123 123abc123xyz)
+              ].⨍{|a|expect(a[0].ensure_start!(a[1], false)).to eq(a[2])}
             end
           end
         end # end context 'positive'
 
         context 'error' do
           it 'catches bad param: start' do
-            expect{''.ensure_start!(nil, true)}.to raise_exception(ArgumentError)
-            expect{''.ensure_start!(1337, true)}.to raise_exception(ArgumentError)
-            expect{''.ensure_start!({}, true)}.to raise_exception(ArgumentError)
-            expect{''.ensure_start!(nil, false)}.to raise_exception(ArgumentError)
-            expect{''.ensure_start!(1337, false)}.to raise_exception(ArgumentError)
-            expect{''.ensure_start!({}, false)}.to raise_exception(ArgumentError)
+            [nil, 1337, {}].⨍{|a|expect{''.ensure_start!(a, true)}.to throw_arg_error}
+            [nil, 1337, {}].⨍{|a|expect{''.ensure_start!(a, false)}.to throw_arg_error}
           end
           it 'catches bad param: use_partial_fill_in' do
-            expect{''.ensure_start!('nil', nil)}.to raise_exception(ArgumentError)
-            expect{''.ensure_start!('1337', 1337)}.to raise_exception(ArgumentError)
-            expect{''.ensure_start!('', {})}.to raise_exception(ArgumentError)
+            expect{''.ensure_start!('nil', nil)}.to throw_arg_error
+            expect{''.ensure_start!('1337', 1337)}.to throw_arg_error
+            expect{''.ensure_start!('', {})}.to throw_arg_error
           end
         end
       end
@@ -203,35 +152,24 @@ RSpec.describe 'str' do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
+    let(:big_str){'ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^'}
     it 'func[str?]: runtime <= .00001s' do
       expect{'hi'.str?}.to perform_extremely_quickly
     end
     context 'with partial fill in, performs quickly' do
       it 'func[ensure_ending!]' do
-        big = 'ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^'
-        expect{'hello'.ensure_ending!('?a', true)}.to perform_quickly
-        expect{''.ensure_ending!(big, true)}.to perform_quickly
-        expect{big.ensure_ending!('', true)}.to perform_quickly
+        [%w(hello ?a), ['', big_str], [big_str, '']].⨍{|a|expect{a[0].ensure_ending!(a[1], true)}.to perform_quickly}
       end
       it 'func[ensure_start!]' do
-        big = 'ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^'
-        expect{'hello'.ensure_start!('?a', true)}.to perform_quickly
-        expect{''.ensure_start!(big, true)}.to perform_quickly
-        expect{big.ensure_start!('', true)}.to perform_quickly
+        [%w(hello ?a), ['', big_str], [big_str, '']].⨍{|a|expect{a[0].ensure_start!(a[1], true)}.to perform_quickly}
       end
     end
     context 'without partial fill in, performs quickly' do
       it 'func[ensure_ending!]' do
-        big = 'ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^'
-        expect{'hello'.ensure_ending!('?a', false)}.to perform_quickly
-        expect{''.ensure_ending!(big, false)}.to perform_quickly
-        expect{big.ensure_ending!('', false)}.to perform_quickly
+        [%w(hello ?a), ['', big_str], [big_str, '']].⨍{|a|expect{a[0].ensure_ending!(a[1], false)}.to perform_quickly}
       end
       it 'func[ensure_start!]' do
-        big = 'ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^'
-        expect{'hello'.ensure_start!('?a', false)}.to perform_quickly
-        expect{''.ensure_start!(big, false)}.to perform_quickly
-        expect{big.ensure_start!('', false)}.to perform_quickly
+        [%w(hello ?a), ['', big_str], [big_str, '']].⨍{|a|expect{a[0].ensure_start!(a[1], false)}.to perform_quickly}
       end
     end
   end

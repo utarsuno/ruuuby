@@ -1,5 +1,4 @@
-require 'simplecov'
-SimpleCov.start
+# -*- encoding : utf-8 -*-
 
 require 'bundler/setup'
 require 'ruuuby'
@@ -20,12 +19,23 @@ RSpec.configure do |config|
   config.include(RSpec::Benchmark::Matchers)
 
   module GeneralTestHelper
+
     def expect_func_in_class(the_class, the_func)
       expect(the_class.method_defined?(the_func)).to eq(true)
     end
-  end
 
-  module FrozenTestHelper
+    def expect_func_alias(the_class, the_func, the_alias)
+      expect(the_class.instance_method(the_func) == the_class.instance_method(the_alias)).to eq(true)
+    end
+
+    def expect_response_to(responder, response_to)
+      expect(responder.respond_to?(response_to)).to eq(true)
+    end
+
+    def throw_arg_error
+      raise_exception(ArgumentError)
+    end
+
     # expect the test condition to raise a +FrozenError+
     def be_frozen
       raise_error(FrozenError)
@@ -51,7 +61,6 @@ RSpec.configure do |config|
   end
 
   config.include(PerformanceTestHelper) #, :type => :'performance'
-  config.include(FrozenTestHelper)
   config.include(GeneralTestHelper)
 
 end

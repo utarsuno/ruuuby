@@ -1,5 +1,7 @@
+# -*- encoding : utf-8 -*-
 
 RSpec.describe 'sym' do
+
   context 'extends class[Object]' do
     context 'by adding' do
       context 'function[sym?]' do
@@ -8,17 +10,12 @@ RSpec.describe 'sym' do
         end
         context 'with correct return values of' do
           it 'true' do
-            expect(:test.sym?).to eq(true)
             another_test = :hello
-            expect(another_test.sym?).to eq(true)
+            [:test, another_test].⨍{|n|expect(n.sym?).to eq(true)}
           end
           it 'false' do
-            expect(nil.sym?).to eq(false)
-            expect(1337.sym?).to eq(false)
             test = :test
-            expect(test.to_s.sym?).to eq(false)
-            expect('test'.sym?).to eq(false)
-            expect(':test'.sym?).to eq(false)
+            [nil, 1337, 'test', ':test', test.to_s].⨍{|n|expect(n.sym?).to eq(false)}
           end
         end
         it 'without effecting Symbol instance' do
@@ -32,8 +29,13 @@ RSpec.describe 'sym' do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
-    it 'func[sym?] runs extremely quickly' do
-      expect{:sym.sym?}.to perform_extremely_quickly
+    context 'func[sym?]: performs extremely quickly' do
+      it 'for cases: true' do
+        expect{:sym.sym?}.to perform_extremely_quickly
+      end
+      it 'for cases: false' do
+        expect{'sym'.sym?}.to perform_extremely_quickly
+      end
     end
   end
 

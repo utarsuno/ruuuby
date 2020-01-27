@@ -1,10 +1,41 @@
+# 0.0.8
+ * mark various files with `UTF-8` encoding: `# -*- encoding : utf-8 -*-`
+ * add `help` directory to contain troubleshooting documentation
+ * for now, remove `gem`: `simplecov` and temporarily stop tracking LOCs coverage until JRuby extensions are added in
+ * extend usage of pre-processing for C files
+ * increase scope of performance RSpecs, light adjustments to remaining RSpecs for clarity & future scope
+ * add various aliases to existing Ruby functions/fields/constants/etc
+ 
+| class           | base reference                          | alias         | notes |
+| --------------- | --------------------------------------- | ------------- | ----- |
+| `Object`        | field: `object_id`                       | `🆔`          |       |
+| `Object`        | method: `freeze`                        | `❄️`          |       |
+| `Object`        | method: `frozen?`                       | `❄️ ?`        |       |
+| `Array`         | method: `∑`                             | `each`        |       |
+| `Array`         | method: `⨍`                             | `map`         |       |
+
+ * added the following methods:
+ 
+ | class    | method added     |
+ | -------  | ---------------- |
+ | `Array`  | `>>`             |
+ | `Array`  | `⊕`              |
+ | `Array`  | `∖`              |
+
+ * add/replace various Ruby functions with native C-extensions (`ruuuby/ext/ruby_class_mods/ruby_class_mods.c`):
+ 
+ | modified class   | funcs added/replaced  |
+ | --------------- | --------------------- |
+ | `Object`        | `hsh?`                |
+ | `Array`         | `remove_empty!`       |
+
 # 0.0.7
  * add gem `'rake-compiler', '~> 1.1.0'` to group `development`
  * adjust `bin/audit`, `ruuuby.gemspec`, `Rakefile`, etc to support native C-extensions
  * added section `project layout` and update formatting to `README.md`
  * replace various Ruby functions with native C-extensions (`ruuuby/ext/ruby_class_mods/ruby_class_mods.c`):
  
- | modified class   | funcs replaced |
+ | modified class   | funcs replaced  |
  | --------------- | --------------- |
  | `Object`        | `ary?`, `bool?`, `int?`, `str?`, `sym?` |
  | `NilClass`      | `empty?` |

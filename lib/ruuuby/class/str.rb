@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 unless ::String.respond_to?(:ensure_ending!)
   # add various functions to existing class +String+
@@ -26,7 +27,7 @@ unless ::String.respond_to?(:ensure_ending!)
       raise ArgumentError.new("Provided argument is a {#{start.class.to_s}}, not a String!") unless start.str?
       raise ArgumentError.new("Provided argument is a {#{use_partial_fill_in.class.to_s}}, not a Boolean!") unless use_partial_fill_in.bool?
       return self if start.length == 0 || self.start_with?(start)
-      return self >> start if self.length == 0 || !use_partial_fill_in
+      return self >> start if (self.length == 0 || !use_partial_fill_in)
       last_matched = ''
       delta        = 0
       while delta <= self.length && delta <= start.length

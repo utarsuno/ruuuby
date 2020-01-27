@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 RSpec.describe ::Ruuuby::Enum::Emoji do
   context 'creates module[Emoji]' do

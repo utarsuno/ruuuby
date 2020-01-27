@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 RSpec.describe 'Boolean' do
   context 'extending class[Object]' do
@@ -6,7 +7,7 @@ RSpec.describe 'Boolean' do
         expect_func_in_class(::Object, :bool?)
       end
       it 'a newly created generic object also responds' do
-        expect(Object.new.respond_to?(:bool?)).to eq(true)
+        expect_response_to(Object.new, :bool?)
       end
       it 'without effecting TrueClass instance or FalseClass instance' do
         expect(TrueClass.bool?).to eq(false)
@@ -16,38 +17,27 @@ RSpec.describe 'Boolean' do
         expect(MockTrue.bool?).to eq(false)
         expect(MockFalse.bool?).to eq(false)
       end
-    end
-    context 'handles needed input scenarios' do
-      it 'cases[positive]' do
-        expect(true.bool?).to eq(true)
-        expect(false.bool?).to eq(true)
-        expect((1 == 1).bool?).to eq(true)
-        expect((2 != 1).bool?).to eq(true)
-      end
-      it 'cases[negative]' do
-        expect(Class.bool?).to eq(false)
-        expect(Object.bool?).to eq(false)
-        expect(NilClass.bool?).to eq(false)
-        expect(''.bool?).to eq(false)
-        expect('true'.bool?).to eq(false)
-        expect('false'.bool?).to eq(false)
-        expect(-1.bool?).to eq(false)
-        expect(1.bool?).to eq(false)
-        expect(0.bool?).to eq(false)
-        expect([].bool?).to eq(false)
-        expect({}.bool?).to eq(false)
-        expect([false].bool?).to eq(false)
-        expect([true].bool?).to eq(false)
+      context 'handles needed input scenarios' do
+        it 'cases[positive]' do
+          [true, false, 1 == 1, 1 != 2].⨍{|n|expect(n.bool?).to eq(true)}
+        end
+        it 'cases[negative]' do
+          [Class, Object, NilClass, '', 'true', 'False', -1, 1, 0, [], {}, [false], [true]].⨍{|n|expect(n.bool?).to eq(false)}
+        end
       end
     end
   end
-
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
-    it 'func[bool?]: runtime <= .00001s' do
-      expect{true.bool?}.to perform_extremely_quickly
+    context 'func[bool?]: performs extremely quickly' do
+      it 'for cases: true' do
+        expect{true.bool?}.to perform_extremely_quickly
+      end
+      it 'for cases: false' do
+        expect{0.bool?}.to perform_extremely_quickly
+      end
     end
   end
 

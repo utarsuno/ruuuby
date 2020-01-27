@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 module ::Ruuuby
   module Enum
@@ -7,15 +8,15 @@ module ::Ruuuby
       # value: "\r\n"
       #
       # @type [String]
-      EOL_DOS  = "\r\n".freeze
+      EOL_DOS  = "\r\n".❄️
 
       # the newline character used by Unix operation systems
       # value: "\n"
       #
       # @type [String]
-      EOL_UNIX = "\n".freeze
+      EOL_UNIX = "\n".❄️
 
-      freeze
+      ❄️
     end
   end
 end
