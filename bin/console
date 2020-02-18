@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
+# encoding: utf-8
 
 require 'bundler/setup'
+
 require 'ruuuby'
 
 # You can add fixtures and/or initialization code here to make experimenting

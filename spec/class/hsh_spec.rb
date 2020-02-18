@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+# coding: utf-8
 
 RSpec.describe 'hsh' do
   context 'extends class[Object]' do

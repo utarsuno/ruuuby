@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+# coding: utf-8
 
 RSpec.describe Ruuuby::VERSION do
   context 'defines the current version' do
@@ -12,7 +12,7 @@ RSpec.describe Ruuuby::VERSION do
       expect{::Ruuuby::VERSION::VERSION = '1.0.0'}.to be_frozen
     end
     it 'has valid version number syntax' do
-      expect(%r(\A\d.\d.\d\z).match?(subject::VERSION)).to eq(true)
+      expect(%r(\A\d.\d.\d(\d?)\z).match?(subject::VERSION)).to eq(true)
     end
   end
   context 'has correct namings, definitions, and scopes' do
@@ -26,9 +26,6 @@ RSpec.describe Ruuuby::VERSION do
       expect(defined?(::Ruuuby::VERSION)).to eq('constant')
     end
     context 'has all needed modules' do
-      it 'has module[Enum]' do
-        expect(Ruuuby.const_defined?('Enum')).to eq(true)
-      end
       it 'has module[Version]' do
         expect(Ruuuby.const_defined?('VERSION')).to eq(true)
       end

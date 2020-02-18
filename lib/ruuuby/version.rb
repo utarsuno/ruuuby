@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+# coding: utf-8
 
 require_relative 'class/obj' unless ::Object.respond_to?(:❄️)
 
@@ -13,10 +13,10 @@ module ::Ruuuby
 
   # container for version number to ensure it does not get modified
   module VERSION
-    # The version of *Ruuuby*, reflected in gemspec, currently{0.0.9}.
+    # The version of *Ruuuby*, reflected in gemspec, currently{0.0.10}.
     #
     # @type [String]
-    VERSION = '0.0.9'.❄️
+    VERSION = '0.0.10'.❄️
 
     ❄️
   end

@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+# coding: utf-8
 
 # explicitly create aliases to play nice with IDEs
 class ::NilClass

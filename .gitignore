@@ -20,3 +20,4 @@ Gemfile.lock
 
 #
 lib/ruby_class_mods.bundle
+lib/ruby_class_mods.so

@@ -2,35 +2,46 @@
 
 ```flavored modifications & extensions for increased quality of Ruby coding life```
 
-### Example
-```ruby
-'b'.∈? 'abc' # true
-'abc'.∌? 'd' # true
-'d'.∈? 'abc' # false
-
-[1337, 'abc'.❄️].⨍ {|x| puts x if x.str? && x.❄️?}
-
-[1, 2, 3].⊕ [3, 4] # [1, 2, 4]
-
-[2, 3, 4].∖ [1, 2, 3] # [4]
-```
-
 ## Usage
 
 | for       | use |
 | --------- | ----------------------------------------------------------- |
-| `Gemfile`  | `gem 'ruuuby', '~> 0.0.9'`                                  |
+| `Gemfile`  | `gem 'ruuuby', '~> 0.0.10'`                                 |
 | library   | `require 'ruuuby'`                                          |
 | gem url   | https://rubygems.org/gems/ruuuby                            |
 | changelog | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
+
+
+#### Example
+
+```ruby
+# true
+'b'.∈? 'abc'
+# true
+'abc'.∌? 'd'
+# false
+'d'.∈? 'abc'
+
+# [false, true, false, true]
+[-5.ℕ?, 7.0.ℤ?, Complex(Float::NAN).ℝ?, Rational(2, 3).ℚ?]
+
+# [1, 2, 4]
+[1, 2, 3].⊕ [3, 4]
+
+# [4]
+[2, 3, 4].∖ [1, 2, 3]
+
+# stdout -> 'abc'
+[1337, 'abc'.❄️].⨍ {|x| puts x if x.str? && x.❄️?}
+```
 
 ---
 
 ## Language Changes:
 
 #### Methods Added:
-| class           | func(s)                                         | as extension? | notes |
-| --------------- | ----------------------------------------------- | ------------- | ----- |
+| class           | func(s)                                         | as c-extension? (java-wip) | notes |
+| --------------- | ----------------------------------------------- | -------------- | ----- |
 | `Object`        | `ary?`, `bool?`, `hsh?`, `int?`, `str?`, `sym?` | ✅            |       |
 | `Array`         | `remove_empty!`                                 | ✅            |       |
 | `Array`         | `⊕`                                             | ❌            | `⊕` is set notation for: *symmetric difference*   |
@@ -42,6 +53,11 @@
 | `String`        | `>>`                                            | ❌            | prepend provided arg, reverse operation of `<<`   |
 | `String`        | `ensure_start!`, `ensure_ending!`               | ❌            | ⚠️ see docs on `use_partial_fill_in` before use    |
 | `NilClass`      | `empty?`                                        | ✅            | added for sake of `Array`'s func: `remove_empty!` |
+| `Integer`       | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`                    | ❌            |       |
+| `Float`         | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`                    | ❌            |       |
+| `BigDecimal`    | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`                    | ❌            |       |
+| `Complex`       | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`                    | ❌            |       |
+| `Rational`      | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`                    | ❌            |       |
 
 #### Created Aliases:
 | class           | base reference                          | alias         | notes |
@@ -59,8 +75,8 @@
 ### Code Base Statistics:
 | category | attribute     | value    | desc.                                                           |
 | -------- | ------------- | -------- | --------------------------------------------------------------- |
-| QA       | unit          | 109      | # of tests                                                      |
-| QA       | performance   | 22       | # of tests                                                      |
+| QA       | unit          | 146      | # of tests                                                      |
+| QA       | performance   | 65       | # of tests                                                      |
 | coverage | LOCs          | ???      | wip |
 | coverage | runtime       | ???      | wip |
 | coverage | documentation | ???      | wip |
@@ -97,9 +113,10 @@
 |  directory | description of contents                        |
 | ---------- | ---------------------------------------------- |
 | `bin`      | executable files                                |
-| `ext`      | C portion of this Gem's code (ruby extensions) |
+| `ext`      | C portion of this Gem's code (and future location for JRuby extensions) |
 | `lib`      | ruby portion of this Gem's code                |
 | `spec`     | RSpecs (unit tests)                            |
+| `help`     | any helpful trouble-shooting and tips          |
 
 ---
 

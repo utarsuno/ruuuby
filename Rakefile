@@ -7,8 +7,8 @@ require 'rspec/core/rake_task'
 require 'rdoc/rdoc'
 
 #exttask = Rake::ExtensionTask.new('my_extension', my_gem_spec) do |ext|
-exttask = Rake::ExtensionTask.new(:ruby_class_mods) do |ext|
-  ext.cross_compile  = true
+Rake::ExtensionTask.new(:ruby_class_mods) do |ext|
+  ext.cross_compile  = false
   ext.cross_platform = %w[x86-linux x86_64-linux x86_64-darwin18 x86-darwin18]
 end
 

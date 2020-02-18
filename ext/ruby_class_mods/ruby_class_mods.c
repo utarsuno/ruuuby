@@ -1,4 +1,4 @@
-// -*- encoding : utf-8 -*-
+// encoding: utf-8
 
 /*____________________________________________________________________________________________________________________________________________________________________
          __   __        __                  __   __   __  ___  __
@@ -72,8 +72,8 @@ r_func(m_sym , is_sym(self))
 r_func_raw(m_empty, return TRUE;)
 
 // class{Array} - function{remove_empty!}
-r_func_raw(
-m_remove_empty,
+r_func_raw(m_remove_empty,
+    // --------------------------------------------------------------- //
     raise_error_if_frozen(self);
     if (is_empty_ary(self)){re_me}
     long len = len_ary(self);
@@ -87,11 +87,12 @@ m_remove_empty,
         } else {i++;}
     }
     re_me
+    // --------------------------------------------------------------- //
 )
 
 // adds the needed C 'main method' function for this extension
-c_func(
-Init_ruby_class_mods,
+c_func(Init_ruby_class_mods,
+    // --------------------------------------------------------------- //
     r_class_add_method(R_OBJ, "ary?"         , m_ary         , 0);
     r_class_add_method(R_OBJ, "bool?"        , m_bool        , 0);
     r_class_add_method(R_OBJ, "int?"         , m_int         , 0);
@@ -100,4 +101,17 @@ Init_ruby_class_mods,
     r_class_add_method(R_OBJ, "sym?"         , m_sym         , 0);
     r_class_add_method(R_NIL, "empty?"       , m_empty       , 0);
     r_class_add_method(R_ARY, "remove_empty!", m_remove_empty, 0);
+    // --------------------------------------------------------------- //
+    rb_require("ruuuby/class/obj");
+    rb_require("ruuuby/class/nums/int");
+    rb_require("ruuuby/class/nums/float");
+    rb_require("bigdecimal");
+    rb_require("ruuuby/class/nums/big_decimal");
+    rb_require("ruuuby/class/nums/rational");
+    rb_require("ruuuby/class/nums/complex");
+    rb_require("ruuuby/class/nil");
+    rb_require("ruuuby/class/ary");
+    rb_require("ruuuby/class/str");
+    rb_require("ruuuby/version");
+    // --------------------------------------------------------------- //
 )

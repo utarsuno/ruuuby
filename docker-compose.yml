@@ -1,0 +1,14 @@
+# {'Compose file format': '3.7', 'Docker Engine release': '18.06.0*'}
+version: '3.7'
+
+services:
+
+  ruuuby:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      SERVICE_NAME: "ruuuby"
+    tty: false
+    volumes:
+      - ./:/ruuuby

@@ -1,3 +1,19 @@
+# 0.0.10
+ * move various `require` statements from `ruuuby.rb` to `ruby_class_mods.c`
+ * remove all `Ruuuby::Enum`'s and relating references
+ * add/update minor details to `README.md`
+ * add `help/jruby.md` to document jruby extensions gotchas along the way
+ * add initial `Dockerfile` and `docker-compose.yml`
+ * add the following methods:
+ 
+ | class        | methods added                |
+ | -----------  | ---------------------------- |
+ | `Integer`    | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
+ | `Float`      | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
+ | `BigDecimal` | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` | 
+ | `Complex`    | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
+ | `Rational`   | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
+
 # 0.0.9
  * add example usage in `README.md`
  * add various aliases and functions for additional set math operations
