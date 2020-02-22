@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# encoding: utf-8
+
+set -euo pipefail
+IFS=$'\n\t'
+set -vx
+
+bundle exec rake compile:ruby_class_mods
+bundle exec rake spec

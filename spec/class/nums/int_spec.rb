@@ -74,15 +74,6 @@ RSpec.describe 'int.rb' do
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
 
-    context 'func[int?]: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{5.int?}.to perform_extremely_quickly
-      end
-      it 'for cases: false' do
-        expect{'0'.int?}.to perform_extremely_quickly
-      end
-    end
-
     context 'func[ℕ?]: performs extremely quickly' do
       it 'for cases: true' do
         expect{0.ℕ?}.to perform_extremely_quickly

@@ -1,3 +1,21 @@
+# 0.0.11
+ * add more organization to `extconf.rb`
+ * add `bin/audit_quick` for faster iterative development
+ * add missing section in performance testing tiers and general cleanup to some RSpec structure
+ * move/add the following to `ruby_class_mods.c`
+   * move `Array`'s added method `>>`
+   * move `String`'s added method `>>`
+   * add private method `disjunctive_union` to `Array` for use in method`⊕`
+ * add the following methods/aliases:
+ 
+ | (c)lass or (m)odule | methods/aliases added |
+ | ------------------- | --------------------- |
+ | (c) `Hash`          | `🔑?`, `∃🔑?`         |
+ | (c) `Array`         | `∀`, `📊`, `≈`        |
+ | (m) `Ruuuby`        | `∃module?`, `∃class?` |
+
+---
+
 # 0.0.10
  * move various `require` statements from `ruuuby.rb` to `ruby_class_mods.c`
  * remove all `Ruuuby::Enum`'s and relating references
@@ -14,6 +32,8 @@
  | `Complex`    | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
  | `Rational`   | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
 
+---
+
 # 0.0.9
  * add example usage in `README.md`
  * add various aliases and functions for additional set math operations
@@ -23,6 +43,7 @@
  | `Array`  | `∌?`, `∋?`                |
  | `String` | `∌?`, `∋?`, `∈?`, `∉?`    |
  
+---
 
 # 0.0.8
  * mark various files with `UTF-8` encoding: `# -*- encoding : utf-8 -*-`
@@ -55,6 +76,8 @@
  | `Object`        | `hsh?`                |
  | `Array`         | `remove_empty!`       |
 
+---
+
 # 0.0.7
  * add gem `'rake-compiler', '~> 1.1.0'` to group `development`
  * adjust `bin/audit`, `ruuuby.gemspec`, `Rakefile`, etc to support native C-extensions
@@ -65,6 +88,8 @@
  | --------------- | --------------- |
  | `Object`        | `ary?`, `bool?`, `int?`, `str?`, `sym?` |
  | `NilClass`      | `empty?` |
+
+---
 
 # 0.0.6
  * add {`Ruuuby::Enum::Text`}
@@ -79,6 +104,8 @@
  | `String` | `ensure_start!`  | 
  | `String` | `ensure_ending!` |
 
+---
+
 # 0.0.5
  * for time being, remove ruby `v2.7` requirement
  * `freeze` various constants and modules
@@ -88,6 +115,8 @@
  | class  | method added    |
  | -----  | ------------- |
  | `Object` | `str?`      |
+
+---
 
 # 0.0.4
  * add gem `'rspec-benchmark', '~> 0.5.1'`
@@ -103,6 +132,7 @@
 | only performance | `bundle exec rake rspec_performance` |
 | all tests | `bundle exec rake rspec_all` |
 
+---
 
 # 0.0.3
  * modify {`Ruuuby::Enum::Emoji`} from strings to symbols
@@ -116,12 +146,16 @@
 | `Object` | `ary?`          |
 | `Array`  | `remove_empty!` |
 
+---
+
 # 0.0.2
  * add the following method:
 
 | class  | method added    |
 | -----  | ------------- |
 | `Object` | `bool?`         |
+
+---
 
 # 0.0.1
  * add `CHANGELOG.md`
@@ -132,6 +166,8 @@
 | class    | method added    |
 | -----    | ------------- |
 | `NilClass` | `empty?`        |
+
+---
 
 # 0.0.0
  * initial project creation

@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# add various functions to existing class +String+
+# add various functions to existing class +String+ (and explicitly create aliases to play nice with IDEs)
 class ::String
 
   # @param [*] str
@@ -33,19 +33,6 @@ class ::String
   def ∈?(str)
     raise ArgumentError.new("String#∈ contained? operation only accepts a string argument, received a {#{str.class.to_s}} instead!") unless str.str?
     str.∋?(self)
-  end
-
-  # Ruby provides *<<* for string append operation but provides the insert function for prepending operations.
-  # This function declaration adds the naturally expected reverse operation for prepending to an existing string.
-  #
-  # @param [String] str the text to prepend to this current string object
-  #
-  # @raise [ArgumentError] thrown if the parameter provided is not a +String+ instance
-  #
-  # @return [String] a new string object with contents equaling "#{arg}{self.to_s}"
-  def >>(str)
-    raise ArgumentError.new("String#>> prepend operation only accepts a string argument, received a {#{str.class.to_s}} instead!") unless str.str?
-    self.insert(0, str)
   end
 
   # @param [String] start the text that this string start with

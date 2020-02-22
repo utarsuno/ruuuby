@@ -110,11 +110,11 @@ RSpec.describe 'big_decimal.rb' do
 
     context 'func[ℂ?]: performs very quickly' do
       it 'for cases: true' do
-        expect{data_zero.ℕ?}.to perform_very_quickly
+        expect{data_zero.ℂ?}.to perform_very_quickly
       end
       it 'for cases: false' do
-        expect{data_minus_one.ℕ?}.to perform_very_quickly
-        expect{data_nan.ℕ?}.to perform_very_quickly
+        expect{data_minus_one.ℂ?}.to perform_very_quickly
+        expect{data_nan.ℂ?}.to perform_very_quickly
       end
     end
 

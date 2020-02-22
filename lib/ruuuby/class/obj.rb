@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# explicitly create aliases to play nice with IDEs
+# add various functions to existing class +Object+ (and explicitly create aliases to play nice with IDEs)
 class ::Object
   # mapped to Ruby language constructs
   alias 🆔 object_id

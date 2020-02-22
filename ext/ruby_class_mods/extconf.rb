@@ -2,47 +2,34 @@
 
 require 'mkmf'
 
-extension_name = 'ruby_class_mods'
-$DEBUG         = true
-LIBDIR         = RbConfig::CONFIG['libdir']
-INCLUDEDIR     = RbConfig::CONFIG['includedir']
-
-HEADER_DIRS = [
-    # First search /opt/local for macports
-    #'/opt/local/include',
-
-    # Then search /usr/local for people that installed from source
-    '/usr/local/include',
-    '/usr/local/bin',
-
-    # Check the ruby install locations
-    INCLUDEDIR,
-
-    # Finally fall back to /usr
-    #'/usr/include',
-]
-
-LIB_DIRS = [
-    # First search /opt/local for macports
-    #'/opt/local/lib',
-
-    # Then search /usr/local for people that installed from source
-    '/usr/local/lib',
-    '/usr/local/bin',
-
-    # Check the ruby install locations
-    LIBDIR,
-
-    # Finally fall back to /usr
-    #'/usr/lib',
-]
-
-#dir_config(extension_name)
-dir_config(extension_name, HEADER_DIRS, LIB_DIRS)
-
-find_header('ruby.h')
-find_header('ruby/encoding.h')
-
+$DEBUG = true
 $CFLAGS << ' -v'
 
-create_makefile(extension_name)
+module ExtconfConfigHelper
+
+  EXTENSION_NAME = 'ruby_class_mods'
+
+  module Dir
+    MACPORTS               = '/opt/local/include'
+    SOURCE_A               = '/usr/local/include'
+    SOURCE_B               = '/usr/local/bin'
+    RUBY_INSTALLED_HEADERS = RbConfig::CONFIG['includedir']
+    RUBY_INSTALLED_LIBS    = RbConfig::CONFIG['libdir']
+    FALLBACK               = '/usr/include'
+    DIRS_HEADER            = [SOURCE_A, SOURCE_B, RUBY_INSTALLED_HEADERS, FALLBACK] #MACPORTS (for index 0)
+    DIRS_LIB               = [SOURCE_A, SOURCE_B, RUBY_INSTALLED_LIBS, FALLBACK] #MACPORTS (for index 0)
+  end
+
+  module Headers
+    ALL = %w(ruby.h ruby/encoding.h ruby/intern.h ruby/version.h ruby/debug.h)
+  end
+
+end
+
+dir_config(ExtconfConfigHelper::EXTENSION_NAME, ExtconfConfigHelper::Dir::DIRS_HEADER, ExtconfConfigHelper::Dir::DIRS_LIB)
+
+ExtconfConfigHelper::Headers::ALL.each do |h|
+  find_header(h)
+end
+
+create_makefile(ExtconfConfigHelper::EXTENSION_NAME)

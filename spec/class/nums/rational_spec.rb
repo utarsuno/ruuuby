@@ -90,12 +90,12 @@ RSpec.describe 'rational.rb' do
       end
     end
 
-    context 'func[ℤ?]: performs extremely quickly' do
+    context 'func[ℤ?]: performs very quickly' do
       it 'for cases: true' do
-        expect{data_minus_leet.ℤ?}.to perform_extremely_quickly
+        expect{data_minus_leet.ℤ?}.to perform_very_quickly
       end
       it 'cases: negative' do
-        expect{data_minus_leet2.ℤ?}.to perform_extremely_quickly
+        expect{data_minus_leet2.ℤ?}.to perform_very_quickly
       end
     end
 
