@@ -6,10 +6,10 @@ RSpec.describe 'ary' do
   context 'extends class[Object]' do
 
     it 'by creating needed aliases' do
-      expect_func_alias(::Array, :each, :∑)
-      expect_func_alias(::Array, :each, :∀)
-      expect_func_alias(::Array, :map, :⨍)
-      expect_func_alias(::Array, :∋?, :include?)
+      expect(::Array.∃func_alias?(:each, :∑)).to eq(true)
+      expect(::Array.∃func_alias?(:each, :∀)).to eq(true)
+      expect(::Array.∃func_alias?(:map, :⨍)).to eq(true)
+      expect(::Array.∃func_alias?(:include?, :∋?)).to eq(true)
     end
 
     it 'by creating needed functions' do
@@ -34,7 +34,7 @@ RSpec.describe 'ary' do
       it 'handles frozen arrays' do
         a = [1, 'a'].❄️
         a.❄️
-        expect{a >> 'test'}.to be_frozen
+        expect{a >> 'test'}.to raise_error(FrozenError)
       end
       it 'while preserving object_id' do
         a = [1337, 'a']
@@ -69,8 +69,8 @@ RSpec.describe 'ary' do
         end
       end
       it 'detects bad param' do
-        expect{%w().≈ nil}.to throw_arg_error
-        expect{[1, nil, 'abc'].≈({})}.to throw_arg_error
+        expect{%w().≈ nil}.to raise_exception(ArgumentError)
+        expect{[1, nil, 'abc'].≈({})}.to raise_exception(ArgumentError)
       end
     end
 
@@ -108,9 +108,6 @@ RSpec.describe 'ary' do
 
     context 'by adding function[⊕] (symmetric difference)' do
       it 'works correctly' do
-
-        # values should also match the following: (self - ary) | (ary - self)
-
         expect(([1, 2, 3].⊕([3, 4])).≈([1, 2, 4])).to eq(true)
         what = [3, 4].⊕([1, 2, 3])
         expect(what.≈([1, 2, 4])).to eq(true)
@@ -122,7 +119,7 @@ RSpec.describe 'ary' do
         expect((ary_a.⊕(ary_b)).≈(result)).to eq(true)
       end
       it 'detects bad param' do
-        expect{%w().⊕ nil}.to throw_arg_error
+        expect{%w().⊕ nil}.to raise_exception(ArgumentError)
       end
     end
 
@@ -133,7 +130,7 @@ RSpec.describe 'ary' do
         expect([1, 1, 2, 2, 3].∖([2, 3, 4])).to eq([1, 1])
       end
       it 'detects bad param' do
-        expect{%w().∖ nil}.to throw_arg_error
+        expect{%w().∖ nil}.to raise_exception(ArgumentError)
       end
     end
 
@@ -174,7 +171,7 @@ RSpec.describe 'ary' do
 
       context 'frozen arrays' do
         it 'handles frozen arrays' do
-          expect{[1337, 'abc', nil, {leet: 'okay'}, [], 0, 'yikes'].❄️.remove_empty!}.to be_frozen
+          expect{[1337, 'abc', nil, {leet: 'okay'}, [], 0, 'yikes'].❄️.remove_empty!}.to raise_error(FrozenError)
         end
       end
 
@@ -226,13 +223,9 @@ RSpec.describe 'ary' do
     it 'func[>>] runs fast enough' do
       expect{[1, 2, 3] >> [2, 3, 4]}.to perform_quickly
     end
-    context 'fast tests' do
-      it 'func[remove_empty!] (with small array) runs very quickly' do
-        expect{[%w(a bb c)].remove_empty!}.to perform_very_quickly
-        expect{[nil, nil, 'c'].remove_empty!}.to perform_very_quickly
-      end
-    end
     it 'func[remove_empty!]: runs perform_quickly' do
+      expect{[%w(a bb c)].remove_empty!}.to perform_very_quickly
+      expect{[nil, nil, 'c'].remove_empty!}.to perform_very_quickly
       scenario = ['0', nil, 'a', 1337, [], {}, 0, '', 'hiya', {nil: nil}]
       expect{scenario.remove_empty!}.to perform_quickly
     end

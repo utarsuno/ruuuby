@@ -1,3 +1,21 @@
+# 0.0.12
+ * organize `ruuuby/version.rb` into major, minor, & tiny versions
+ * add string generating macros for `rb_require` in `ruby_class_mods.c`
+ * remove certain helper funcs from `spec_helper.rb` as core language adds similar wrappers
+ * add organization and new information to `help/ruuuby.md`
+ * add files: `ruuuby/module/kernel.rb`, `ruuuby/module/module.rb`, and `ruuuby/arg_err.rb`
+ * add the following methods/aliases:
+ 
+ | (c)lass or (m)odule | methods/aliases added |
+ | ------------------- | --------------------- |
+ | (m) `Module`        | `🙈`, `🙈constants⟶`, `∃const?`, `∃func?`, `∃func_alias?` |
+ | (m) `Kernel`        | `∃module?`, `∃class?` |
+ | (m) `Ruuuby::Err`   | `param¬bool`, `param¬str`, `param¬stry`, `param¬ary`, `param¬module`, `param¬class` |
+ | (c) `Ruuuby::Err::WrongParamType` | `generate_error_text`, `throw` |
+ | (c) `Object`        | `stry?`              |
+
+---
+
 # 0.0.11
  * add more organization to `extconf.rb`
  * add `bin/audit_quick` for faster iterative development

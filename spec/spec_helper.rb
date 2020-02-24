@@ -5,6 +5,15 @@ require 'ruuuby'
 
 require 'rspec-benchmark'
 
+class TestDataGlobalClass
+  class TestDataInternalClass
+    class TestDataInternalNestedClass
+    end
+  end
+  module TestDataInternalModule
+  end
+end
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
@@ -20,25 +29,12 @@ RSpec.configure do |config|
 
   module GeneralTestHelper
 
-    def expect_func_in_class(the_class, the_func)
-      expect(the_class.method_defined?(the_func)).to eq(true)
-    end
-
-    def expect_func_alias(the_class, the_func, the_alias)
-      expect(the_class.instance_method(the_func) == the_class.instance_method(the_alias)).to eq(true)
-    end
-
     def expect_response_to(responder, response_to)
       expect(responder.respond_to?(response_to)).to eq(true)
     end
 
-    def throw_arg_error
-      raise_exception(ArgumentError)
-    end
-
-    # expect the test condition to raise a +FrozenError+
-    def be_frozen
-      raise_error(FrozenError)
+    def throw_wrong_param_type(the_class, the_method, arg_name, received_type, expected_types)
+      raise_error(ArgumentError, Ruuuby::Err::WrongParamType::generate_error_text(the_class, the_method, arg_name, received_type, expected_types))
     end
   end
 

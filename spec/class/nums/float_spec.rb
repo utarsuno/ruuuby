@@ -7,11 +7,11 @@ RSpec.describe 'float.rb' do
 
     context 'by adding functions for (ℕ?, ℤ?, ℂ?, ℚ?, ℝ?)' do
       it 'exists' do
-        expect_func_in_class(::Float, :ℕ?)
-        expect_func_in_class(::Float, :ℤ?)
-        expect_func_in_class(::Float, :ℂ?)
-        expect_func_in_class(::Float, :ℚ?)
-        expect_func_in_class(::Float, :ℝ?)
+        expect(::Float.∃func?(:ℕ?)).to eq(true)
+        expect(::Float.∃func?(:ℤ?)).to eq(true)
+        expect(::Float.∃func?(:ℂ?)).to eq(true)
+        expect(::Float.∃func?(:ℚ?)).to eq(true)
+        expect(::Float.∃func?(:ℝ?)).to eq(true)
       end
     end
 

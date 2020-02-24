@@ -2,17 +2,18 @@
 
 RSpec.describe 'str' do
   let(:data_empty){''}
+  let(:wrong_param_type){Ruuuby::Err::WrongParamType}
 
   context 'extends class[String]' do
 
-    it 'by creating needed functions' do
-      expect_response_to(data_empty, :ensure_ending!)
-      expect_response_to(data_empty, :∋?)
-      expect_response_to(data_empty, :∌?)
-      expect_response_to(data_empty, :∈?)
-      expect_response_to(data_empty, :∉?)
-      expect_response_to(data_empty, :>>)
-      expect_response_to(data_empty, :ensure_start!)
+    it 'by creating needed aliases' do
+      expect(::String.∃func?(:∋?)).to eq(true)
+      expect(::String.∃func?(:∈?)).to eq(true)
+      expect(::String.∃func?(:∌?)).to eq(true)
+      expect(::String.∃func?(:∉?)).to eq(true)
+      expect(::String.∃func?(:>>)).to eq(true)
+      expect(::String.∃func?(:ensure_ending!)).to eq(true)
+      expect(::String.∃func?(:ensure_start!)).to eq(true)
     end
 
 
@@ -50,19 +51,19 @@ RSpec.describe 'str' do
         end # end context 'positive'
         context 'error' do
           it 'catches bad param: start' do
-            [nil, 1337, {}].∀{|a|expect{''.ensure_ending!(a, true)}.to throw_arg_error}
-            [nil, 1337, {}].∀{|a|expect{''.ensure_ending!(a, false)}.to throw_arg_error}
+            [nil, 1337, {}].∀{|a|expect{''.ensure_ending!(a, true)}.to raise_exception(ArgumentError)}
+            [nil, 1337, {}].∀{|a|expect{''.ensure_ending!(a, false)}.to raise_exception(ArgumentError)}
           end
           it 'catches bad param: use_partial_fill_in' do
-            expect{''.ensure_ending!('nil', nil)}.to throw_arg_error
-            expect{''.ensure_ending!('1337', 1337)}.to throw_arg_error
-            expect{''.ensure_ending!('', {})}.to throw_arg_error
+            expect{''.ensure_ending!('nil', nil)}.to raise_exception(ArgumentError)
+            expect{''.ensure_ending!('1337', 1337)}.to raise_exception(ArgumentError)
+            expect{''.ensure_ending!('', {})}.to raise_exception(ArgumentError)
           end
           it 'catches frozen string' do
             a = 'my_frozen_string'.❄️
             a.❄️
-            expect{a.ensure_ending!('bbb', true)}.to be_frozen
-            expect{a.ensure_ending!('bbb', false)}.to be_frozen
+            expect{a.ensure_ending!('bbb', true)}.to raise_error(FrozenError)
+            expect{a.ensure_ending!('bbb', false)}.to raise_error(FrozenError)
           end
         end # end context 'error'
       end
@@ -74,7 +75,7 @@ RSpec.describe 'str' do
         expect('abc'.∋? 'd').to eq(false)
       end
       it 'catches bad arg' do
-        expect{'b'.∋? nil}.to throw_arg_error
+        expect{'b'.∋?(nil)}.to throw_wrong_param_type('String', '∋?', 'str', NilClass, String)
       end
     end
 
@@ -84,7 +85,7 @@ RSpec.describe 'str' do
         expect('abc'.∌? 'b').to eq(false)
       end
       it 'catches bad arg' do
-        expect{'b'.∌? nil}.to throw_arg_error
+        expect{'b'.∌? nil}.to raise_exception(ArgumentError)
       end
     end
 
@@ -94,7 +95,7 @@ RSpec.describe 'str' do
         expect('d'.∈? 'abc').to eq(false)
       end
       it 'catches bad arg' do
-        expect{'b'.∈? nil}.to throw_arg_error
+        expect{'b'.∈? nil}.to raise_exception(ArgumentError)
       end
     end
 
@@ -104,7 +105,7 @@ RSpec.describe 'str' do
         expect('b'.∉? 'abc').to eq(false)
       end
       it 'catches bad arg' do
-        expect{'b'.∉? nil}.to throw_arg_error
+        expect{'b'.∉? nil}.to raise_exception(ArgumentError)
       end
     end
 
@@ -129,12 +130,16 @@ RSpec.describe 'str' do
         end
         context 'error' do
           it 'catches wrong parameter type provided' do
-            [nil, 1337, {}].∀{|a|expect{'' >> a}.to throw_arg_error}
+            [nil, 1337, {}].∀{|a|expect{'' >> a}.to raise_exception(ArgumentError)}
+            expect{''>>([1])}.to throw_wrong_param_type(String, '>>', nil, Array, String)
+            expect{''.>>(nil)}.to throw_wrong_param_type(String, '>>', nil, NilClass, String)
+            expect{''.>>(1337)}.to throw_wrong_param_type(String, '>>', nil, Integer, String)
+            expect{'' >> {'apple' => 'aa'} }.to throw_wrong_param_type(String, '>>', nil, Hash, String)
           end
           it 'catches frozen strings' do
             a = 'my_frozen_string'.❄️
             a.❄️
-            expect{a.>>('bbb')}.to be_frozen
+            expect{a.>>('bbb')}.to raise_error(FrozenError)
           end
         end
       end
@@ -173,19 +178,19 @@ RSpec.describe 'str' do
 
         context 'error' do
           it 'catches bad param: start' do
-            [nil, 1337, {}].∀{|a|expect{''.ensure_start!(a, true)}.to throw_arg_error}
-            [nil, 1337, {}].∀{|a|expect{''.ensure_start!(a, false)}.to throw_arg_error}
+            [nil, 1337, {}].∀{|a|expect{''.ensure_start!(a, true)}.to raise_exception(ArgumentError)}
+            [nil, 1337, {}].∀{|a|expect{''.ensure_start!(a, false)}.to raise_exception(ArgumentError)}
           end
           it 'catches bad param: use_partial_fill_in' do
-            expect{''.ensure_start!('nil', nil)}.to throw_arg_error
-            expect{''.ensure_start!('1337', 1337)}.to throw_arg_error
-            expect{''.ensure_start!('', {})}.to throw_arg_error
+            expect{''.ensure_start!('nil', nil)}.to raise_exception(ArgumentError)
+            expect{''.ensure_start!('1337', 1337)}.to raise_exception(ArgumentError)
+            expect{''.ensure_start!('', {})}.to raise_exception(ArgumentError)
           end
           it 'catches frozen string' do
             a = 'my_frozen_string'.❄️
             a.❄️
-            expect{a.ensure_start!('bbb', true)}.to be_frozen
-            expect{a.ensure_start!('bbb', false)}.to be_frozen
+            expect{a.ensure_start!('bbb', true)}.to raise_error(FrozenError)
+            expect{a.ensure_start!('bbb', false)}.to raise_error(FrozenError)
           end
         end
       end

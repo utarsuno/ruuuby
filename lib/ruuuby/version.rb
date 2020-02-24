@@ -1,7 +1,5 @@
 # coding: utf-8
 
-require_relative 'class/obj' unless ::Object.respond_to?(:❄️)
-
 module ::Ruuuby
 
   # @return [String]
@@ -9,14 +7,30 @@ module ::Ruuuby
     ::Ruuuby::VERSION::VERSION
   end
 
-  private
-
   # container for version number to ensure it does not get modified
   module VERSION
-    # The version of *Ruuuby*, reflected in gemspec, currently{0.0.11}.
+
+    # major version of *Ruuuby*
+    #
+    # @type [Integer]
+    MAJOR = 0
+
+    # minor version of *Ruuuby*
+    #
+    # @type [Integer]
+    MINOR = 0
+
+    # tiny version of *Ruuuby*
+    #
+    # @type [Integer]
+    TINY = 12
+
+    # The version of *Ruuuby*, reflected in gemspec, currently{0.0.12}.
     #
     # @type [String]
-    VERSION = '0.0.11'.❄️
+    VERSION = "#{MAJOR.to_s}.#{MINOR.to_s}.#{TINY.to_s}".❄️
+
+    🙈constants⟶ :MAJOR, :MINOR, :TINY
 
     ❄️
   end

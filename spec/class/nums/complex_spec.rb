@@ -7,11 +7,11 @@ RSpec.describe 'complex.rb' do
 
     context 'by adding functions for (ℕ?, ℤ?, ℂ?, ℚ?, ℝ?)' do
       it 'exists' do
-        expect_func_in_class(::Complex, :ℕ?)
-        expect_func_in_class(::Complex, :ℤ?)
-        expect_func_in_class(::Complex, :ℂ?)
-        expect_func_in_class(::Complex, :ℚ?)
-        expect_func_in_class(::Complex, :ℝ?)
+        expect(::Complex.∃func?(:ℕ?)).to eq(true)
+        expect(::Complex.∃func?(:ℤ?)).to eq(true)
+        expect(::Complex.∃func?(:ℂ?)).to eq(true)
+        expect(::Complex.∃func?(:ℚ?)).to eq(true)
+        expect(::Complex.∃func?(:ℝ?)).to eq(true)
       end
     end
 

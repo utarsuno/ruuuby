@@ -11,11 +11,11 @@ RSpec.describe 'rational.rb' do
 
     context 'by adding functions for (ℕ?, ℤ?, ℂ?, ℚ?, ℝ?)' do
       it 'exists' do
-        expect_func_in_class(::Rational, :ℕ?)
-        expect_func_in_class(::Rational, :ℤ?)
-        expect_func_in_class(::Rational, :ℂ?)
-        expect_func_in_class(::Rational, :ℚ?)
-        expect_func_in_class(::Rational, :ℝ?)
+        expect(::Rational.∃func?(:ℕ?)).to eq(true)
+        expect(::Rational.∃func?(:ℤ?)).to eq(true)
+        expect(::Rational.∃func?(:ℂ?)).to eq(true)
+        expect(::Rational.∃func?(:ℚ?)).to eq(true)
+        expect(::Rational.∃func?(:ℝ?)).to eq(true)
       end
     end
 

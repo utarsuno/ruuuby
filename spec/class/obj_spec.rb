@@ -1,6 +1,7 @@
 # coding: utf-8
 
 RSpec.describe 'Object' do
+  let(:data_default){Object.new}
 
   context 'creates Ruuuby aliases' do
     it '🆔 --> object_id' do
@@ -9,14 +10,12 @@ RSpec.describe 'Object' do
       expect(leet.object_id == leet.🆔).to eq(true)
     end
     it '❄️ --> freeze' do
-      expect_response_to(::Object, :❄️)
       leet = [999999, 'a']
       expect(leet.frozen?).to eq(false)
       leet.❄️
       expect(leet.frozen?).to eq(true)
     end
     it '❄️? --> frozen?' do
-      expect_response_to(::Object, :❄️?)
       leet = [999999, 'a']
       expect(leet.❄️?).to eq(false)
       leet.freeze
@@ -26,10 +25,20 @@ RSpec.describe 'Object' do
 
   context 'extends class[Object]' do
 
+    it 'has needed aliases' do
+      expect(::Object.∃func?(:int?)).to eq(true)
+      expect(::Object.∃func?(:ary?)).to eq(true)
+      expect(::Object.∃func?(:bool?)).to eq(true)
+      expect(::Object.∃func?(:hsh?)).to eq(true)
+      expect(::Object.∃func?(:str?)).to eq(true)
+      expect(::Object.∃func?(:stry?)).to eq(true)
+      expect(::Object.∃func?(:sym?)).to eq(true)
+      expect(::Object.∃func?(:🆔)).to eq(true)
+      expect(::Object.∃func?(:❄️)).to eq(true)
+      expect(::Object.∃func?(:❄️?)).to eq(true)
+    end
+
     context 'by adding function[ary?]' do
-      it 'exists' do
-        expect_func_in_class(::Object, :ary?)
-      end
       it 'a newly created generic object responds to it' do
         expect_response_to(Object.new, :ary?)
       end
@@ -47,9 +56,6 @@ RSpec.describe 'Object' do
     end
 
     context 'by adding function[bool?]' do
-      it 'exists' do
-        expect_func_in_class(::Object, :bool?)
-      end
       it 'a newly created generic object also responds' do
         expect_response_to(Object.new, :bool?)
       end
@@ -72,9 +78,6 @@ RSpec.describe 'Object' do
     end
 
     context 'by adding function[hsh?]' do
-      it 'exists' do
-        expect_func_in_class(::Object, :hsh?)
-      end
       it 'a newly created generic object responds to it' do
         expect_response_to(Object.new, :hsh?)
       end
@@ -92,9 +95,6 @@ RSpec.describe 'Object' do
     end
 
     context 'by adding function[int?]' do
-      it 'exists' do
-        expect_func_in_class(::Object, :int?)
-      end
       it 'a newly created generic object responds to it' do
         expect_response_to(Object.new, :int?)
       end
@@ -112,9 +112,6 @@ RSpec.describe 'Object' do
     end
 
     context 'by adding function[str?]' do
-      it 'as expected' do
-        expect(::Object.method_defined?(:str?)).to eq(true)
-      end
       it 'a newly created generic object responds to it' do
         expect_response_to(String.new('strstr'), :str?)
       end
@@ -133,10 +130,27 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function[sym?]' do
-      it 'as expected' do
-        expect_func_in_class(::Object, :sym?)
+    context 'by adding function[stry?]' do
+      it 'a newly created generic object responds to it' do
+        expect_response_to(String.new('strstr'), :str?)
+        expect_response_to(String.new('strstr'), :stry?)
       end
+      context 'with correct return values of' do
+        it 'true' do
+          ['hello_world', '_2', 'nil', 2.to_s].∀{|s|expect(s.stry? && s.to_sym.stry?).to eq(true)}
+        end
+        it 'false' do
+          [String, nil, 0, 1, {}, [], ['str']].∀{|s|expect(s.stry?).to eq(false)}
+        end
+        it 'a newly created object inheriting String (does not match)' do
+          class MockString < String; end
+          mock_str = MockString.new('my_str')
+          expect(mock_str.stry?).to eq(false)
+        end
+      end
+    end
+
+    context 'by adding function[sym?]' do
       context 'with correct return values of' do
         it 'true' do
           another_test = :hello
@@ -211,6 +225,16 @@ RSpec.describe 'Object' do
       end
       it 'for cases: false' do
         expect{5.str?}.to perform_extremely_quickly
+      end
+    end
+
+    context 'func[stry?]: performs extremely quickly' do
+      it 'for cases: true' do
+        expect{'a'.stry?}.to perform_extremely_quickly
+        expect{:a.stry?}.to perform_extremely_quickly
+      end
+      it 'for cases: false' do
+        expect{5.stry?}.to perform_extremely_quickly
       end
     end
 

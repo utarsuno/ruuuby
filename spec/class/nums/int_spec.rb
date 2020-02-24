@@ -5,11 +5,11 @@ RSpec.describe 'int.rb' do
 
     context 'by adding functions for (ℕ?, ℤ?, ℂ?, ℚ?, ℝ?)' do
       it 'exists' do
-        expect_func_in_class(::Integer, :ℕ?)
-        expect_func_in_class(::Integer, :ℤ?)
-        expect_func_in_class(::Integer, :ℂ?)
-        expect_func_in_class(::Integer, :ℚ?)
-        expect_func_in_class(::Integer, :ℝ?)
+        expect(::Integer.∃func?(:ℕ?)).to eq(true)
+        expect(::Integer.∃func?(:ℤ?)).to eq(true)
+        expect(::Integer.∃func?(:ℂ?)).to eq(true)
+        expect(::Integer.∃func?(:ℚ?)).to eq(true)
+        expect(::Integer.∃func?(:ℝ?)).to eq(true)
       end
     end
 

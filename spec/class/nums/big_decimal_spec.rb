@@ -13,11 +13,11 @@ RSpec.describe 'big_decimal.rb' do
 
     context 'by adding functions for (ℕ?, ℤ?, ℂ?, ℚ?, ℝ?)' do
       it 'exists' do
-        expect_func_in_class(::BigDecimal, :ℕ?)
-        expect_func_in_class(::BigDecimal, :ℤ?)
-        expect_func_in_class(::BigDecimal, :ℂ?)
-        expect_func_in_class(::BigDecimal, :ℚ?)
-        expect_func_in_class(::BigDecimal, :ℝ?)
+        expect(::BigDecimal.∃func?(:ℕ?)).to eq(true)
+        expect(::BigDecimal.∃func?(:ℤ?)).to eq(true)
+        expect(::BigDecimal.∃func?(:ℂ?)).to eq(true)
+        expect(::BigDecimal.∃func?(:ℚ?)).to eq(true)
+        expect(::BigDecimal.∃func?(:ℝ?)).to eq(true)
       end
     end
 
