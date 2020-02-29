@@ -1,26 +1,19 @@
 # coding: utf-8
 
 RSpec.describe 'ary' do
-  let(:data_empty){[]}
 
   context 'extends class[Object]' do
 
     it 'by creating needed aliases' do
-      expect(::Array.∃func_alias?(:each, :∑)).to eq(true)
-      expect(::Array.∃func_alias?(:each, :∀)).to eq(true)
-      expect(::Array.∃func_alias?(:map, :⨍)).to eq(true)
-      expect(::Array.∃func_alias?(:include?, :∋?)).to eq(true)
-    end
-
-    it 'by creating needed functions' do
-      expect_response_to(data_empty, :>>)
-      expect_response_to(data_empty, :≈)
-      expect_response_to(data_empty, :📊)
-      expect_response_to(data_empty, :⊕)
-      expect_response_to(data_empty, :∖)
-      expect_response_to(data_empty, :∋?)
-      expect_response_to(data_empty, :∌?)
-      expect_response_to(data_empty, :remove_empty!)
+      RuuubyTestHelper::CONFIG_ARRAY[:ruby].∀{|func| expect(::Array.∃func?(func)).to eq(true)}
+      RuuubyTestHelper::CONFIG_ARRAY[:c].∀{|func| expect(::Array.∃func?(func)).to eq(true)}
+      RuuubyTestHelper::CONFIG_ARRAY[:aliases].∀ do |base_func, aliases|
+        if aliases.ary?
+          aliases.∀{|a| expect(::Array.∃func?(a)).to eq(true)}
+        else
+          expect(::Array.∃func?(aliases)).to eq(true)
+        end
+      end
     end
 
     context 'by adding function[>>]' do
@@ -123,7 +116,49 @@ RSpec.describe 'ary' do
       end
     end
 
+    context 'func{ensure_ending!}' do
+      context 'works for needed scenarios' do
+        it 'with empty input scenarios' do
+          expect([].ensure_ending!([])).to eq([[]])
+          expect([].ensure_ending!(['a'])).to eq([['a']])
+          expect(['a'].ensure_ending!([])).to eq(['a', []])
+          expect([].ensure_ending!(['a', 'b', 1337])).to eq([['a', 'b', 1337]])
+        end
+        it 'works for cases: positive' do
+          expect([].ensure_ending!('a')).to eq(['a'])
+          expect([].ensure_ending!('a', 'a')).to eq(['a', 'a'])
+          expect([nil].ensure_ending!('a', 2, nil, nil)).to eq([nil, 'a', 2, nil, nil])
+
+          expect(['a'].ensure_ending!('b')).to eq(%w(a b))
+          expect(['a'].ensure_ending!(['b'])).to eq(['a', ['b']])
+          expect(['a'].ensure_ending!('b', 'c')).to eq(%w(a b c))
+          expect(%w(a bb).ensure_ending!('cc')).to eq(%w(a bb cc))
+          expect([3, nil, {b: 'apple'}].ensure_ending!(nil, {b: 'apple'}, 4)).to eq([3, nil, {b: 'apple'}, 4])
+          expect([3, nil, {b: 'apple'}].ensure_ending!(nil, {b: 'apple'}, nil, 4)).to eq([3, nil, {b: 'apple'}, nil, 4])
+          expect([3, nil, {b: 'apple'}].ensure_ending!(nil, {b: 'apple'}, 4, nil)).to eq([3, nil, {b: 'apple'}, 4, nil])
+          expect(['a', 1337, nil, {}, ['b']].ensure_ending!(nil, {}, ['b'], 'c', 'cc', 123456)).to eq(['a', 1337, nil, {}, ['b'], 'c', 'cc', 123456])
+          expect(%w(b a).ensure_ending!(%w(a a a))).to eq(['b', 'a', %w(a a a)])
+          expect(%w(b a).ensure_ending!('a', 'a', 'a')).to eq(%w(b a a a))
+          expect(%w(b).ensure_ending!('a', 'a', 'a')).to eq(%w(b a a a))
+          expect(%w(b a a).ensure_ending!('a', 'a', 'a')).to eq(%w(b a a a))
+        end
+        it 'works for complex-cases: positive' do
+          big_node = ['CC', nil, 9]
+          expect([3, 'b', big_node].ensure_ending!('b', big_node, 'aa')).to eq([3, 'b', big_node, 'aa'])
+          expect(['6', 2].ensure_ending!(2, 2, 2, 2, 2, 2, 2, 2)).to eq(['6', 2, 2, 2, 2, 2, 2, 2, 2])
+          expect(['6', 2, 3].ensure_ending!(2, 3)).to eq(['6', 2, 3])
+          expect(['6', 2, 3].ensure_ending!(3, 3)).to eq(['6', 2, 3, 3])
+          expect(['6', 2].ensure_ending!(3, 3)).to eq(['6', 2, 3, 3])
+          expect(['6', 2, 3].ensure_ending!(2, 3, 3)).to eq(['6', 2, 3, 3])
+          expect(['6', 2, 3].ensure_ending!(2, 3, 4)).to eq(['6', 2, 3, 4])
+        end
+      end
+    end
+
     context 'by adding function[∖] (relative complement)' do
+      it 'has alias: uniq_to_me' do
+        expect(::Array.∃func_alias?(:uniq_to_me, :∖)).to eq(true)
+      end
       it 'works correctly' do
         expect([2, 3, 4].∖([1, 2, 3])).to eq([4])
         expect([1, 2, 3].∖([2, 3, 4])).to eq([1])
@@ -135,69 +170,102 @@ RSpec.describe 'ary' do
     end
 
     context 'func{∋?} (include?)' do
-      it 'works correctly' do
-        expect(['a', 1337, [[1337]]].∋? [[1337]]).to eq(true)
-        expect(['a', 1337, [[1337]]].∋? 'b').to eq(false)
+      context 'works for needed scenarios' do
+        it 'works for cases: positive' do
+          expect(['a', 1337, [[1337]]].∋? [[1337]]).to eq(true)
+          expect(['a', 1337, nil].∋?(nil)).to eq(true)
+          expect(%w(a cc b).∋? 'b').to eq(true)
+        end
+        it 'works for cases: negative' do
+          expect(['a', 1337, [[1337]]].∋? 'b').to eq(false)
+        end
       end
     end
 
     context 'func{∌?} (include?)' do
-      it 'works correctly' do
-        expect(['a', 1337, [[1337]]].∌? [[1337]]).to eq(false)
-        expect(['a', 1337, [[1337]]].∌? 'b').to eq(true)
+      context 'works for needed scenarios' do
+        it 'works for cases: positive' do
+          expect(['a', 1337, [[1337]]].∌? 'b').to eq(true)
+          expect(['a', 1337, [[1337]]].∌? [1337]).to eq(true)
+        end
+        it 'works for cases: negative' do
+          expect(['a', 1337, [[1337]]].∌? [[1337]]).to eq(false)
+          expect(['a', 1337, nil].∌?(nil)).to eq(false)
+        end
+      end
+    end
+
+    context 'func{end_with?}' do
+      context 'works for needed scenarios' do
+        it 'works for cases: positive' do
+          expect([nil].end_with?(nil)).to eq(true)
+          expect([1, 2, 'a'].end_with?(2, 'a')).to eq(true)
+          expect([1, 2, ['a']].end_with?(2, ['a'])).to eq(true)
+          expect(['a', []].end_with?([])).to eq(true)
+          expect(['a', [[]]].end_with?([[]])).to eq(true)
+          expect(['a', 1337].end_with?(1337)).to eq(true)
+          expect(['a', 1337, nil].end_with?(nil)).to eq(true)
+          expect(['a', 1337, nil, ''].end_with?('')).to eq(true)
+          expect(['a', ['bb'], 5, 'a', ['bb']].end_with?('a', ['bb'])).to eq(true)
+          expect([{a: 'b'}, 'a', [['b']], :c].end_with?([['b']], :c)).to eq(true)
+        end
+        it 'works for cases: negative' do
+          expect([].end_with?()).to eq(false)
+          expect([nil].end_with?()).to eq(false)
+          expect([].end_with?(nil)).to eq(false)
+          expect([1, 2, 'a'].end_with?()).to eq(false)
+          expect([1, 2, 'a'].end_with?(['a'])).to eq(false)
+
+          expect([nil].end_with?(1, 2, 3, 4, 5)).to eq(false)
+        end
       end
     end
 
     context 'by adding function[remove_empty!]' do
-
-      context 'handles cases[positive]' do
-        it 'all empty' do
-          expect([nil, nil, nil, nil, nil, nil].remove_empty!).to eq([])
-          expect([nil, 1, nil, nil, nil, nil].remove_empty!).to eq([1])
-          expect([nil, nil, 'a', nil, 2, 'aa'].remove_empty!).to eq(['a', 2, 'aa'])
+      context 'handles cases' do
+        context 'positive' do
+          it 'all empty' do
+            expect([].remove_empty!).to eq([])
+            expect([nil, nil, nil, nil, nil, nil].remove_empty!).to eq([])
+            expect([nil, 1, nil, nil, nil, nil].remove_empty!).to eq([1])
+            expect([nil, nil, 'a', nil, 2, 'aa'].remove_empty!).to eq(['a', 2, 'aa'])
+            expect([1, 2, 3].remove_empty!).to eq([1, 2, 3])
+          end
+          it 'complicated array' do
+            scenario = ['0', nil, 'a', 1337, [], {}, 0, '', 'hiya', {nil: nil}]
+            expect(scenario.remove_empty!).to eq(['0', 'a', 1337, 0, 'hiya', {nil: nil}])
+          end
         end
-        it 'normal array' do
-          expect([1, 2, 3].remove_empty!).to eq([1, 2, 3])
+        it 'negative' do
+          expect(%w().remove_empty!).to eq(%w())
         end
-        it 'complicated array' do
-          scenario = ['0', nil, 'a', 1337, [], {}, 0, '', 'hiya', {nil: nil}]
-          expect(scenario.remove_empty!).to eq(['0', 'a', 1337, 0, 'hiya', {nil: nil}])
-        end
-      end
-
-      it 'handles cases[negative]' do
-        expect(%w().remove_empty!).to eq(%w())
-      end
-
-      context 'frozen arrays' do
-        it 'handles frozen arrays' do
+        it 'frozen arrays' do
           expect{[1337, 'abc', nil, {leet: 'okay'}, [], 0, 'yikes'].❄️.remove_empty!}.to raise_error(FrozenError)
         end
-      end
-
-      context 'dynamically re-assigns variable or not' do
-        it 'assigns variable in-place' do
-          scenario = ['a', 1337, nil, '', [], {}, 'b', 'c']
-          scenario.remove_empty!
-          expect(scenario).to eq(['a', 1337, 'b', 'c'])
-        end
-        it 'returns the same object (id)' do
-          scenario    = [nil, 5, [], 6, nil]
-          scenario_id = scenario.🆔
-          scenario.remove_empty!
-          expect(scenario.🆔).to eq(scenario_id)
-          expect(scenario).to eq([5, 6])
-        end
-        it 'does not perform deep copy on individual elements' do
-          new_obj   = Object.new
-          ary_obj   = %w(a bb c)
-          ary_id    = ary_obj.🆔
-          scenario  = [ary_obj, [], 1337, nil, new_obj]
-          reference = scenario[0]
-          scenario.remove_empty!
-          reference[0] = 'd'
-          expect(scenario).to eq([%w(d bb c), 1337, new_obj])
-          expect(scenario[0].🆔).to eq(ary_id)
+        context 'dynamically re-assigns variable or not' do
+          it 'assigns variable in-place' do
+            scenario = ['a', 1337, nil, '', [], {}, 'b', 'c']
+            scenario.remove_empty!
+            expect(scenario).to eq(['a', 1337, 'b', 'c'])
+          end
+          it 'returns the same object (id)' do
+            scenario    = [nil, 5, [], 6, nil]
+            scenario_id = scenario.🆔
+            scenario.remove_empty!
+            expect(scenario.🆔).to eq(scenario_id)
+            expect(scenario).to eq([5, 6])
+          end
+          it 'does not perform deep copy on individual elements' do
+            new_obj   = Object.new
+            ary_obj   = %w(a bb c)
+            ary_id    = ary_obj.🆔
+            scenario  = [ary_obj, [], 1337, nil, new_obj]
+            reference = scenario[0]
+            scenario.remove_empty!
+            reference[0] = 'd'
+            expect(scenario).to eq([%w(d bb c), 1337, new_obj])
+            expect(scenario[0].🆔).to eq(ary_id)
+          end
         end
       end
     end
@@ -223,6 +291,22 @@ RSpec.describe 'ary' do
     it 'func[>>] runs fast enough' do
       expect{[1, 2, 3] >> [2, 3, 4]}.to perform_quickly
     end
+
+    context 'func[end_with?] runs fast enough' do
+      it 'for scenarios: positive' do
+        expect{['a', ['bb'], 5, 'a', ['bb']].end_with?('a', ['bb'])}.to perform_very_quickly
+      end
+      it 'for scenarios: negative' do
+        expect{[1, 2, 'a'].end_with?(['a'])}.to perform_very_quickly
+      end
+    end
+
+    context 'func[ensure_ending!] runs fast enough' do
+      it 'for scenarios: positive' do
+        expect{[3, nil, {b: 'apple'}].ensure_ending!(nil, {b: 'apple'}, 4)}.to perform_very_quickly
+      end
+    end
+
     it 'func[remove_empty!]: runs perform_quickly' do
       expect{[%w(a bb c)].remove_empty!}.to perform_very_quickly
       expect{[nil, nil, 'c'].remove_empty!}.to perform_very_quickly

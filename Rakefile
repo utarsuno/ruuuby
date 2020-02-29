@@ -22,8 +22,9 @@ def add_task_rspec(task_name, additional_options=[])
   rspec_task.rspec_opts = (spec_default_opts + additional_options).join(' ')
 end
 
-add_task_rspec(:spec, ['--tag ~@performance'])
-add_task_rspec(:rspec_performance, ['--tag @performance'])
+add_task_rspec(:rspec_unit, ['--tag ~@performance --tag ~@audits'])
+add_task_rspec(:rspec_audit, ['--tag @audits --tag ~@performance'])
+add_task_rspec(:rspec_performance, ['--tag @performance --tag ~@audits'])
 add_task_rspec(:rspec_all)
 
 #  __   __   __              ___      ___      ___    __

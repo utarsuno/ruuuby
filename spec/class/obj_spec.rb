@@ -26,16 +26,9 @@ RSpec.describe 'Object' do
   context 'extends class[Object]' do
 
     it 'has needed aliases' do
-      expect(::Object.∃func?(:int?)).to eq(true)
-      expect(::Object.∃func?(:ary?)).to eq(true)
-      expect(::Object.∃func?(:bool?)).to eq(true)
-      expect(::Object.∃func?(:hsh?)).to eq(true)
-      expect(::Object.∃func?(:str?)).to eq(true)
-      expect(::Object.∃func?(:stry?)).to eq(true)
-      expect(::Object.∃func?(:sym?)).to eq(true)
-      expect(::Object.∃func?(:🆔)).to eq(true)
-      expect(::Object.∃func?(:❄️)).to eq(true)
-      expect(::Object.∃func?(:❄️?)).to eq(true)
+      RuuubyTestHelper::CONFIG_OBJECT[:ruby].∀{|c| expect(::Object.∃func?(c)).to eq(true)}
+      RuuubyTestHelper::CONFIG_OBJECT[:c].∀{|config| expect(::Object.∃func?(config)).to eq(true)}
+      RuuubyTestHelper::CONFIG_OBJECT[:aliases].∀{|base_func, func_alias| expect(::Object.∃func?(func_alias)).to eq(true)}
     end
 
     context 'by adding function[ary?]' do

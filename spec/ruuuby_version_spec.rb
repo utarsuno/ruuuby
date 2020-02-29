@@ -12,7 +12,7 @@ RSpec.describe Ruuuby::VERSION do
       expect(subject::VERSION.split('.')[1].to_i).to eq(0)
     end
     it 'tiny version matches' do
-      expect(subject::VERSION.split('.')[2].to_i).to eq(12)
+      expect(subject::VERSION.split('.')[2].to_i).to eq(13)
     end
     context 'preventing changes' do
       it 'version sub-numbers are private' do

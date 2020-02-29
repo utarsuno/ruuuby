@@ -1,6 +1,7 @@
 
 # add various functions to existing module +Kernel+ (and explicitly create aliases to play nice with IDEs)
 module ::Kernel
+  alias_method :🛑, :raise
 
   # Check if a module exists on global scope, if provided a second argument, the first will be owner/scope.
   #
@@ -11,8 +12,8 @@ module ::Kernel
   #
   # @return [Boolean] true, if the module exists on global scope or in the provided owner
   def ∃module?(module_name, module_owner=(::Kernel))
-    raise Ruuuby::Err::param¬stry(::Kernel, 'module_name', module_name) unless module_name.stry?
-    raise Ruuuby::Err::param¬module(::Kernel, 'module_owner', module_owner) unless (module_owner == ::Kernel || module_owner.instance_of?(::Module))
+    🛑 Ruuuby::ParamErr::throw(::Kernel, '∃module?', 'module_name', [::Symbol, ::String], module_name) unless module_name.stry?
+    🛑 Ruuuby::ParamErr::throw(::Kernel, '∃module?', 'module_owner', ::Module, module_owner) unless (module_owner == ::Kernel || module_owner.instance_of?(::Module))
     module_owner.∃const?(module_name) && module_owner.const_get(module_name).instance_of?(::Module)
   end
 
@@ -25,9 +26,18 @@ module ::Kernel
   #
   # @return [Boolean] true, if the module exists on global scope or in the provided owner
   def ∃class?(class_name, class_owner=(::Kernel))
-    raise Ruuuby::Err::param¬stry(::Kernel, 'class_name', class_name) unless class_name.stry?
-    raise Ruuuby::Err::param¬module(::Kernel, 'class_owner', class_owner) unless (class_owner == ::Kernel || class_owner.is_a?(Module))
+    🛑 Ruuuby::ParamErr::throw(::Kernel, '∃class?', 'class_name', [::Symbol, ::String], class_name) unless class_name.stry?
+    🛑 Ruuuby::ParamErr::throw(::Kernel, '∃class?', 'class_owner', ::Module, class_owner) unless (class_owner == ::Kernel || class_owner.is_a?(Module))
     class_owner.∃const?(class_name) && class_owner.const_get(class_name).instance_of?(::Class)
+  end
+
+  # Return the square-root of the provided argument.
+  #
+  # @param [Numeric] n
+  #
+  # @return [Float]
+  def √(n)
+    Math.sqrt(n)
   end
 
 end

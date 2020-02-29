@@ -2,58 +2,46 @@
 
 # add various functions to existing class +String+ (and explicitly create aliases to play nice with IDEs)
 class ::String
+  alias_method :∅?, :empty?
+  alias_method :>>, :>>
 
   # @param [String] str
   #
   # @raise [WrongParamType]
   #
   # @return [Boolean] true, if this string instance contains the provided str
-  def ∋?(str)
-    raise Ruuuby::Err::param¬str(::String, 'str', str) unless str.str?
-    self.include?(str)
-  end
+  def ∋?(str) ; 🛑❓str(:str, str) ; self.include?(str) ; end
 
   # @param [String] str
   #
   # @raise [WrongParamType]
   #
   # @return [Boolean] true, if this string instance contains the provided str
-  def ∌?(str)
-    raise Ruuuby::Err::param¬str(::String, 'str', str) unless str.str?
-    not self.include?(str)
-  end
+  def ∌?(str) ; 🛑❓str(:str, str) ; not self.include?(str) ; end
 
-  # @param [String] str
+  # @param [String|Array] content
   #
   # @raise [WrongParamType]
   #
-  # @return [Boolean] true, if this string instance is not contained in the provided str
-  def ∉?(str)
-    raise Ruuuby::Err::param¬str(::String, 'str', str) unless str.str?
-    str.∌?(self)
-  end
+  # @return [Boolean] true, if this string instance is not contained in the provided str (or array)
+  def ∉?(content) ; 🛑❓str_or_ary(:content, content) ; content.∌?(self) ; end
 
-  # @param [String] str
+  # @param [String|Array] content
   #
   # @raise [WrongParamType]
   #
-  # @return [Boolean] true, if this string instance is contained in the provided str
-  def ∈?(str)
-    raise Ruuuby::Err::param¬str(::String, 'str', str) unless str.str?
-    str.∋?(self)
-  end
+  # @return [Boolean] true, if this string instance is contained in the provided str (or array)
+  def ∈?(content) ; 🛑❓str_or_ary(:content, content) ; content.∋?(self) ; end
 
   # @param [String]  start the text that this string start with
-  # @param [Boolean] use_partial_fill_in ex: 'baa'.ensure_start!('bba', true) -> 'bbaa', 'baa'.ensure_start!('bba', false) -> 'bbabaa'
   #
   # @raise [WrongParamType]
   #
   # @return [String] the original string with the starting text added if at least partially missing prior
-  def ensure_start!(start, use_partial_fill_in)
-    raise Ruuuby::Err::param¬str(::String, 'start', start) unless start.str?
-    raise Ruuuby::Err::param¬bool(::String, 'use_partial_fill_in', use_partial_fill_in) unless use_partial_fill_in.bool?
-    return self if start.length == 0 || self.start_with?(start)
-    return self >> start if (self.length == 0 || !use_partial_fill_in)
+  def ensure_start!(start)
+    🛑❓str(:start, start)
+    return self if start.∅? || self.start_with?(start)
+    return self >> start if self.∅?
     last_matched = ''
     delta        = 0
     while delta <= self.length && delta <= start.length
@@ -65,16 +53,14 @@ class ::String
   end
 
   # @param [String] ending the text that this string should end with
-  # @param [Boolean] use_partial_fill_in ex: 'baa'.ensure_ending!('aab', true) -> 'baab', 'baa'.ensure_ending!('aab', false) -> 'baaaab'
   #
   # @raise [WrongParamType]
   #
   # @return [String] the original string with ending-string added if missing prior
-  def ensure_ending!(ending, use_partial_fill_in)
-    raise Ruuuby::Err::param¬str(::String, 'ending', ending) unless ending.str?
-    raise Ruuuby::Err::param¬bool(::String, 'use_partial_fill_in', use_partial_fill_in) unless use_partial_fill_in.bool?
-    return self if ending.length == 0 || self.end_with?(ending)
-    return self << ending if self.length == 0 || !use_partial_fill_in
+  def ensure_ending!(ending)
+    🛑❓str(:ending, ending)
+    return self if ending.∅? || self.end_with?(ending)
+    return self << ending if self.∅?
     last_matched = ''
     delta        = 0
     while delta <= self.length && delta <= ending.length

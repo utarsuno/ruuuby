@@ -81,12 +81,12 @@ RSpec.describe 'rational.rb' do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
-    context 'func[ℕ?]: performs extremely quickly' do
+    context 'func[ℕ?]: performs very quickly' do
       it 'for cases: true' do
-        expect{data_for_performance_a.ℕ?}.to perform_extremely_quickly
+        expect{data_for_performance_a.ℕ?}.to perform_very_quickly
       end
       it 'cases: negative' do
-        expect{data_for_performance_b.ℕ?}.to perform_extremely_quickly
+        expect{data_for_performance_b.ℕ?}.to perform_very_quickly
       end
     end
 
@@ -99,21 +99,21 @@ RSpec.describe 'rational.rb' do
       end
     end
 
-    context 'func[ℂ?]: performs extremely quickly' do
+    context 'func[ℂ?]: performs very quickly' do
       it 'for cases: true' do
-        expect{data_default.ℂ?}.to perform_extremely_quickly
+        expect{data_default.ℂ?}.to perform_very_quickly
       end
     end
 
-    context 'func[ℚ?]: performs extremely quickly' do
+    context 'func[ℚ?]: performs very quickly' do
       it 'for cases: true' do
-        expect{data_default.ℚ?}.to perform_extremely_quickly
+        expect{data_default.ℚ?}.to perform_very_quickly
       end
     end
 
-    context 'func[ℝ?]: performs extremely quickly' do
+    context 'func[ℝ?]: performs very quickly' do
       it 'for cases: true' do
-        expect{data_default.ℝ?}.to perform_extremely_quickly
+        expect{data_default.ℝ?}.to perform_very_quickly
       end
     end
   end

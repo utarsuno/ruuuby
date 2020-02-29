@@ -79,10 +79,148 @@ CC=/usr/bin/gcc rbenv install 2.7.0
 
 ```ruby
 
-class Kernel
-  def √(n)
-    Math.sqrt(n)
+module Kernel
+  # @param [String] path
+  #
+  # @return [::Dir] a new Dir object with the provided path
+  def 📁(path)
+    ::Dir.new(path)
   end
+end
+
+class Array
+  #  :⋂, :⋃, :uniq_to_them
+
+    context 'func{⋂} (set intersection)' do
+      context 'works for needed scenarios' do
+        it 'works for cases: positive' do
+          ary_a = %w(a a d)
+          ary_b = %w(b a dd d c)
+          result = ary_a.⋂(ary_b)
+          expect(result).to eq(%w(a d))
+          expect(ary_a).to eq(%w(a a d))
+          expect(ary_b).to eq(%w(b a dd d c))
+        end
+        it 'works for cases: negative' do
+          expect([1, 2, 3].⋂(%w(1 2 3))).to eq(%w())
+        end
+        it 'catches cases: error' do
+          expect{[].⋂ nil}.to raise_error(ArgumentError)
+        end
+      end
+    end
+
+    context 'func{⋃} (set union)' do
+      context 'works for needed scenarios' do
+        it 'works for cases: positive' do
+          expect([].⋃([])).to eq([])
+          expect([1].⋃([])).to eq([1])
+          expect([].⋃([nil])).to eq([nil])
+          expect(%w(a a b).⋃(%w(b a a))).to eq(%w(a b))
+
+          ary_a = [1337, nil, 1337, -1]
+          ary_b = ['str', -1, nil, nil]
+          expect(ary_a.⋃(ary_b)).to eq([1337, nil, -1, 'str'])
+        end
+        it 'works for cases: negative' do
+          expect([1, 2, 3].⋃(%w(1 2 3))).to eq([1, 2, 3, '1', '2', '3'])
+        end
+        it 'catches cases: error' do
+          expect{[].⋃(nil)}.to raise_error(ArgumentError)
+          expect{[].⋃(1337)}.to raise_error(ArgumentError)
+        end
+      end
+    end
+
+    context 'func{start_with?}' do
+      context 'works for needed scenarios' do
+        it 'works for cases: positive' do
+          expect([nil].start_with?(nil)).to eq(true)
+          expect([1, '3', nil, [1, 2], 'a'].start_with?(1, '3', nil, [1, 2])).to eq(true)
+          expect(%w(a a bb).start_with?('a')).to eq(true)
+          expect(%w(a a bb).start_with?('a', 'a')).to eq(true)
+          expect(%w(a a bb).start_with?('a', 'a', 'bb')).to eq(true)
+        end
+        it 'works for cases: negative' do
+          expect([].start_with?()).to eq(false)
+          expect([nil].start_with?()).to eq(false)
+          expect([].start_with?(nil)).to eq(false)
+          expect([1, 2, 'a'].start_with?()).to eq(false)
+          expect([1, 2, 'a'].start_with?(['a'])).to eq(false)
+
+          expect([nil].start_with?(1, 2, 3, 4, 5)).to eq(false)
+        end
+      end
+    end
+
+    context 'func[start_with?] runs fast enough' do
+      it 'for scenarios: positive' do
+        expect{%w(a a bb).start_with?('a', 'a', 'bb')}.to perform_very_quickly
+      end
+      it 'for scenarios: negative' do
+        expect{[nil].start_with?(1, 2, 3, 4, 5)}.to perform_very_quickly
+      end
+    end
+
+  # Return a list containing the intersection of self and them (set of elements found both in self and them)
+  #
+  # @param [Array] them
+  #
+  # @raise [WrongParamType]
+  #
+  # @return [Array] a new array containing unique elements found in both in both arrays (self and one provided)
+  def ⋂(them) ; 🛑❓ary(:them, them) ; self.uniq & them.uniq ; end
+
+  # Return a list of unique elements found in both this array and the one provided.
+  #
+  # @param [Array] them
+  #
+  # @raise [WrongParamType]
+  #
+  # @return [Array] a new array containing unique elements found in both in both arrays (self and one provided)
+  def ⋃(them) ; 🛑❓ary(:them, them) ; self.union(them) ; end
+
+  # Simply provides reverse direction compared to {'uniq_to_me', '∖'}.
+  #
+  # @param [Array] them
+  #
+  # @raise [WrongParamType]
+  #
+  # @return [Array] a new array containing unique elements found in the provided array and not found in this array
+  def uniq_to_them(them) ; 🛑❓ary(:them, them) ; them.∖(self) ; end
+
+    context 'func{uniq_to_them}' do
+      context 'works for needed scenarios' do
+        it 'works for cases: positive' do
+          expect([1, 2, 'a', 3].uniq_to_them([3, nil, 4, 5])).to eq([nil, 4, 5])
+        end
+        it 'works for cases: error' do
+          expect{[1, 2, 3].uniq_to_them(nil)}.to raise_error(ArgumentError)
+          expect{[1, 2, 3].uniq_to_them(1337)}.to raise_error(ArgumentError)
+        end
+      end
+    end
+
+  # @param [*]
+  #
+  # @return [Boolean] true, if this array starts with the provided elements
+  def start_with?(*start)
+    return false if (start.∅? || start.length > self.length)
+    return self.first == start[0] if start.length == 1
+    self[0..(start.length-1)] == start
+  end
+
+  def last_n(n)
+    🛑❓int(:ary, n)
+    🛑 ArgumentError.new("c{Array}-> m{last_n} received arg{#{n.to_s}} is longer than this array{#{self.length}}") if n > self.length
+    return self if n == self.length
+    self[self.length-1-n..self.length-1]
+  end
+
+  def add_each(*elements)
+    elements.∀{|e|self << e}
+  end
+
 end
 
 class Integer

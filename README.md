@@ -6,7 +6,7 @@
 
 | for       | use |
 | --------- | ----------------------------------------------------------- |
-| `Gemfile`  | `gem 'ruuuby', '~> 0.0.12'`                                 |
+| `Gemfile`  | `gem 'ruuuby', '~> 0.0.13'`                                 |
 | library   | `require 'ruuuby'`                                          |
 | gem url   | https://rubygems.org/gems/ruuuby                            |
 | changelog | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -15,6 +15,9 @@
 #### Example
 
 ```ruby
+# true
+√(25) == 5
+
 # true
 'b'.∈? 'abc'
 # true
@@ -32,7 +35,7 @@ data = {hello: 'world', ye: 'ee'}
 # [false, true, false, true]
 [-5.ℕ?, 7.0.ℤ?, Complex(Float::NAN).ℝ?, Rational(2, 3).ℚ?]
 
-# [1, 2, 4]
+# [1, 4, 2]
 [1, 2, 3].⊕ [3, 4]
 
 # [4]
@@ -49,52 +52,60 @@ data = {hello: 'world', ye: 'ee'}
 #### Module Changes:
 | module(s) | func(s) added  | as c-extension? (java-wip) | notes |
 | --------- | -------------- | -------------------------- | ----- |
-| `Kernel`  | `∃module?`     | ❌                         |       |
-| `Kernel`  | `∃class?`      | ❌                         |       |
+| `Kernel`  | `√`            | ❌                         | syntax sugar for `Math.sqrt` |
+| `Kernel`  | `∃module?`     | ❌                         | a 'global func' |
+| `Kernel`  | `∃class?`      | ❌                         | a 'global func' |
 | `Module`  | `∃func_alias?` | ❌                         |       |
+| `Module`  | `∃func?`       | ❌                         |       |
 
 #### Class Changes:
-| class(es)         | func(s) added                 | as c-extension? (java-wip) | notes |
+| class(es)         | func(s) added                     | as c-extension? (java-wip) | notes |
 | ----------------- | --------------------------------- | -------------- | ----- |
-| `Object`          | `ary?`, `bool?`, `hsh?`, `int?`, `str?`, `stry?`, `sym?` | ✅            |       |
+| `Object`          | `ary?`, `bool?`, `hsh?`, `int?`, `str?`, `stry?`, `sym?` | ✅ | |
 | `Array`           | `remove_empty!`                   | ✅            |       |
 | `Array`           | `📊`                              | ❌            | get a `Hash` with keys being elements in array and values being their frequency count |
 | `Array`           | `≈`                               | ❌            | are contents equal, regardless of order (and presence of multiple types)      |
-| `Array`           | `⊕`                               | ✅ (partial)  | `⊕` is set notation for: *symmetric difference*   |
-| `Array`           | `∖`                               | ❌            | `∖` is set notation for: *relative complement*    |
-| `Array`, `String` | `∌?`                              | ❌            | `∌` is set notation for: *does not belong to*     |
-| `Array`, `String` | `>>`                              | ✅            | prepend provided arg, reverse operation of `<<`   |
-| `String`          | `∈?`, `∉?`                        | ❌            |                                                   |
-| `String`          | `ensure_start!`, `ensure_ending!` | ❌            | ⚠️ see docs on `use_partial_fill_in` before use    |
+| `Array`           | `⊕`                               | ✅ (partial)  | `⊕` is set notation for: *symmetric difference* |
+| `Array`           | `∖`                               | ❌            | `∖` is set notation for: *relative complement*, also aliased as: `uniq_to_me` |
+| `Array`, `String` | `∌?`                              | ❌            | `∌` is set notation for: *does not belong to* |
+| `Array`, `String` | `>>`                              | ✅            | prepend provided arg, reverse operation of `<<` |
+| `String`          | `∈?`, `∉?`                        | ❌            |       |
+| `Array`           | `end_with?`                       | ❌            |       |
+| `String`          | `ensure_start!`,                  | ❌            |       |
+| `String`, `Array` | `ensure_ending!`                  | ❌            |       |
 | `NilClass`        | `empty?`                          | ✅            | added for sake of `Array`'s func: `remove_empty!` |
 | `Integer`         | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
 | `Float`           | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
 | `BigDecimal`      | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
 | `Complex`         | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
 | `Rational`        | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
+| `Object`          | `🛑❓bool`, `🛑❓int`, `🛑❓ary`, `🛑❓str`, `🛑❓stry`, `🛑❓str_or_ary` | ❌ | |
 
 #### Created Aliases:
-| for      | base reference                          | alias            | notes |
-| -------- | --------------------------------------- | ---------------- | ----- |
-| `Object` | method: `object_id`                     | `🆔`             |       |
-| `Object` | method: `freeze`                        | `❄️`             |       |
-| `Object` | method: `frozen?`                       | `❄️?`            |       |
-| `Module` | method: `const_defined?`                 | `∃const?`        |       |
-| `Module` | method: `method_defined?`                | `∃func?`         |       |
-| `Module` | method: `private`                       | `🙈`             |       |
-| `Module` | method: `private_constant`              | `🙈constants⟶` |       |
-| `Array`  | method: `each`                          | `∑`, `∀`         |       |
-| `Array`  | method: `map`                           | `⨍`              |       |
-| `Hash`   | method: `key?`                          | `🔑?`, `∃🔑?`   |       |
-| `Array`  | method: `include?`                      | `∋?`             | `∋` is set notation for: *belongs to* |
+| for             | base reference                          | alias            | notes |
+| --------------- | --------------------------------------- | ---------------- | ----- |
+| `Kernel`        | method: `raise`                         | `🛑`             |       |
+| `Object`        | method: `object_id`                     | `🆔`             |       |
+| `Object`        | method: `freeze`                        | `❄️`             |       |
+| `Object`        | method: `frozen?`                       | `❄️?`            |       |
+| `Module`        | method: `const_defined?`                 | `∃const?`        |       |
+| `Module`        | method: `private_method_defined?`        | `∃🙈func?`       |       |
+| `Module`        | method: `private`                       | `🙈`             |       |
+| `Module`        | method: `private_constant`              | `🙈constants⟶` |       |
+| `Array`, `Hash` | method: `each`                          | `∑`, `∀`         |       |
+| `Array`, `Hash` | method: `map`                           | `⨍`              |       |
+| `Hash`          | method: `key?`                          | `🔑?`, `∃🔑?`   |       |
+| `Array`         | method: `include?`                      | `∋?`             | `∋` is set notation for: *belongs to* |
+| `NilClass`, `Hash`, `Array`, `String` | method: `empty?`  | `∅?`             |       |
 
 ---
 
 ### Code Base Statistics:
 | category | attribute     | value    | desc.                                                           |
 | -------- | ------------- | -------- | --------------------------------------------------------------- |
-| QA       | unit          | 171      | # of tests                                                      |
-| QA       | performance   | 86       | # of tests                                                      |
+| QA       | unit          | 183      | # of tests (non-performance & non-audit based)                  |
+| QA       | performance   | 92       | # of tests                                                      |
+| CI       | audits        | 1        | # of tests                                                      |
 | coverage | LOCs          | ???      | wip |
 | coverage | runtime       | ???      | wip |
 | coverage | documentation | ???      | wip |
@@ -113,17 +124,18 @@ data = {hello: 'world', ye: 'ee'}
 ---
 
 ### Rake Tasks:
-|  preface           | cmd                 | description                                       |
-| ------------------ | ------------------- | ------------------------------------------------- |
-| `bundle exec rake` | `rdoc`              | generate documentation coverage report            |
-| `bundle exec rake` | `spec`              | run only non-performance based unit-tests         |
-| `bundle exec rake` | `rspec_performance` | run only performance based unit-tests             |
-| `bundle exec rake` | `rspec_all`         | run all unit-tests                                |
-| `bundle exec rake` | `install`           | install gem onto local machine                    |
-| `bundle exec rake` | `compile`           | compile any native C-extensions with code changes |
-| `bundle exec rake` | `release`           | push git version tags and publish gem to Rubygems |
-| `bin/`             | `setup`             | install dependencies                              |
-| `bin/`             | `console`           | interactive console for easier experimenting      |
+|  preface           | cmd                 | description                                          |
+| ------------------ | ------------------- | ---------------------------------------------------- |
+| `bundle exec rake` | `rdoc`              | generate documentation coverage report               |
+| `bundle exec rake` | `rspec_unit`        | run all unit-tests except tags: {audit, performance} |
+| `bundle exec rake` | `rspec_audit`       | run only audit based unit-tests                      |
+| `bundle exec rake` | `rspec_performance` | run only performance based unit-tests                |
+| `bundle exec rake` | `rspec_all`         | run all unit-tests                                   |
+| `bundle exec rake` | `install`           | install gem onto local machine                       |
+| `bundle exec rake` | `compile`           | compile any native C-extensions with code changes    |
+| `bundle exec rake` | `release`           | push git version tags and publish gem to Rubygems    |
+| `bin/`             | `setup`             | install dependencies                                 |
+| `bin/`             | `console`           | interactive console for easier experimenting         |
 
 ---
 

@@ -1,3 +1,27 @@
+# 0.0.13
+ * move utility functionality from `spec_helper.rb` and others into newly created Directory: `spec/helpers/`
+ * remove param:`use_partial_fill_in` from `String`'s funcs `ensure_start!` and `ensure_ending!`
+ * heavily adjust usage/style for throwing param errors via `Ruuuby::Err` now(`Ruuuby::ParamErr`)
+ * add new type of RSpec: `audit`
+ * add the following methods/aliases:
+ 
+ | (c)lass or (m)odule      | methods/aliases added |
+ | ------------------------ | --------------------- |
+ | (c) `Hash`               | `∀` (each), `∅?` (empty) |
+ | (m) `Kernel`             | `🛑` (raise), `√` (Math.sqrt) |
+ | (m) `Module`             | `∃func?` (func created and alias removed), `∃🙈func?` (private_method_defined?) |
+ | (c) `NilClass`, `String` | `∅?` (empty) |
+ | (c) `Array`              | `ensure_ending!`, `end_with?`, `∅?` (empty), `uniq_to_me` (∖) |
+ | (c) `Object`             | `🛑❓bool`, `🛑❓int`, `🛑❓ary`, `🛑❓str`, `🛑❓stry`, `🛑❓str_or_ary` |
+
+* remove the following methods/aliases:
+
+| (c)lass or (m)odule | methods/aliases added |
+| ------------------- | --------------------- |
+| (m) `Ruuuby::Err`   | `param¬bool`, `param¬str`, `param¬stry`, `param¬ary`, `param¬module`, `param¬class` |
+
+---
+
 # 0.0.12
  * organize `ruuuby/version.rb` into major, minor, & tiny versions
  * add string generating macros for `rb_require` in `ruby_class_mods.c`
