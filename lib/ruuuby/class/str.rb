@@ -10,28 +10,28 @@ class ::String
   # @raise [WrongParamType]
   #
   # @return [Boolean] true, if this string instance contains the provided str
-  def ∋?(str) ; 🛑❓str(:str, str) ; self.include?(str) ; end
+  def ∋?(str) ; 🛑str❓(:str, str) ; self.include?(str) ; end
 
   # @param [String] str
   #
   # @raise [WrongParamType]
   #
   # @return [Boolean] true, if this string instance contains the provided str
-  def ∌?(str) ; 🛑❓str(:str, str) ; not self.include?(str) ; end
+  def ∌?(str) ; 🛑str❓(:str, str) ; not self.include?(str) ; end
 
   # @param [String|Array] content
   #
   # @raise [WrongParamType]
   #
   # @return [Boolean] true, if this string instance is not contained in the provided str (or array)
-  def ∉?(content) ; 🛑❓str_or_ary(:content, content) ; content.∌?(self) ; end
+  def ∉?(content) ; 🛑str_or_ary❓(:content, content) ; content.∌?(self) ; end
 
   # @param [String|Array] content
   #
   # @raise [WrongParamType]
   #
   # @return [Boolean] true, if this string instance is contained in the provided str (or array)
-  def ∈?(content) ; 🛑❓str_or_ary(:content, content) ; content.∋?(self) ; end
+  def ∈?(content) ; 🛑str_or_ary❓(:content, content) ; content.∋?(self) ; end
 
   # @param [String]  start the text that this string start with
   #
@@ -39,7 +39,7 @@ class ::String
   #
   # @return [String] the original string with the starting text added if at least partially missing prior
   def ensure_start!(start)
-    🛑❓str(:start, start)
+    🛑str❓(:start, start)
     return self if start.∅? || self.start_with?(start)
     return self >> start if self.∅?
     last_matched = ''
@@ -58,7 +58,7 @@ class ::String
   #
   # @return [String] the original string with ending-string added if missing prior
   def ensure_ending!(ending)
-    🛑❓str(:ending, ending)
+    🛑str❓(:ending, ending)
     return self if ending.∅? || self.end_with?(ending)
     return self << ending if self.∅?
     last_matched = ''

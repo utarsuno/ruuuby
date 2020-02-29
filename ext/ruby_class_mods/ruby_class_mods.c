@@ -5,23 +5,39 @@
  |    | |__) |__)  /\  |__) \ /    |  |\/| |__) /  \ |__)  |  /__`
  |___ | |__) |  \ /~~\ |  \  |     |  |  | |    \__/ |  \  |  .__/
 ____________________________________________________________________________________________________________________________________________________________________ */
+// ruby extension api
 #include <ruby.h>
 #include <ruby/intern.h>
 #include <ruby/debug.h>
 #include <ruby/encoding.h>
+
+#include <stdlib.h>
+
+// needed for utilizing 'statfs' and others to get file information
+#include <sys/param.h>
+#include <sys/mount.h>
+
+// additional C libs
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <string.h>
 
 /*____________________________________________________________________________________________________________________________________________________________________
   __   __        __  ___           ___                         ___  __
  /  ` /  \ |\ | /__`  |   /\  |\ |  |     \  /  /\  |    |  | |__  /__`
  \__, \__/ | \| .__/  |  /~~\ | \|  |      \/  /~~\ |___ \__/ |___ .__/
 ____________________________________________________________________________________________________________________________________________________________________ */
-#define TRUE Qtrue
-#define FALSE Qfalse
-#define NIL Qnil
+#define R_TRUE Qtrue
+#define R_FALSE Qfalse
+//#define NIL Qnil
 #define R_STR rb_cString
 #define R_OBJ rb_cObject
 #define R_NIL rb_cNilClass
 #define R_ARY rb_cArray
+#define R_FILE rb_cFile
 #define R_KRL rb_mKernel // Kernel
 #define ERROR_RUNTIME rb_eRuntimeError
 #define ERROR_ARGUMENT rb_eArgError
@@ -34,7 +50,7 @@ ________________________________________________________________________________
 #define r_get_class(r_class) rb_const_get(rb_cObject, rb_intern(r_class))
 #define r_class_add_method_public(r_class, func_name, func, num_args) rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(func), num_args);
 #define r_class_add_method_private(r_class, func_name, func, num_args) rb_define_private_method(r_class, func_name, RUBY_METHOD_FUNC(func), num_args);
-#define r_as_bool(expr) return expr ? TRUE : FALSE;
+#define r_as_bool(expr) return expr ? R_TRUE : R_FALSE;
 
 #define ensure_not_frozen(arg_to_check) rb_check_frozen(arg_to_check);
 #define r_type(arg_to_check, r_class) RB_TYPE_P(arg_to_check, r_class)
@@ -54,6 +70,7 @@ ________________________________________________________________________________
 #define len_str(str) RSTRING_LEN(str)
 
 #define raise_err_bad_arg_type(error_message, error_param) rb_raise(ERROR_ARGUMENT, error_message, rb_obj_classname(error_param));
+#define raise_err_error_opening_file(error_message, error_param) rb_raise(ERROR_RUNTIME, error_message, rb_id2str(rb_intern(error_param)));
 
 #define r_hsh_is_empty(hsh) RHASH_EMPTY_P(hsh)
 #define r_str_is_empty(str) len_str(str) == 0
@@ -104,7 +121,7 @@ r_func(m_obj_str , is_str(self))
 r_func(m_obj_stry, is_str(self) || is_sym(self))
 
 // class{NilClass} - function{empty?}
-r_func_raw(m_nil_empty, return TRUE;)
+r_func_raw(m_nil_empty, return R_TRUE;)
 
 /*____________________________________________________________________________________________________________________
  __     ___     __                   __
@@ -122,7 +139,7 @@ r_func_self_them(m_str_prepend, // function{>>}
             re_me
         }
     } else {
-        raise_err_bad_arg_type("| c{String}-> m{>>} got arg(0) w/ type{%s}, required-type{String} |", them)
+        raise_err_bad_arg_type("| c{String}-> m{>>} got arg(them) w/ type{%s}, required-type{String} |", them)
     }
 )
 
@@ -149,7 +166,7 @@ r_func_raw(m_ary_remove_empty, // function{remove_empty!}
         if (is_nil(v) || is_non_empty_str(v) || is_non_empty_ary(v) || is_non_empty_hsh(v)) {
             r_ary_del_at(self, i);
             len--;
-        } else {i++;}
+        } else {++i;}
     }
     re_me
 )
@@ -185,6 +202,7 @@ r_func_self_them(m_ary_disjunctive_union, // function{disjunctive_union}
 /  `    /  ` /  \ |  \ |__     |__  |\ |  |  |__) \ /
 \__,    \__, \__/ |__/ |___    |___ | \|  |  |  \  |
 _____________________________________________________________________________________________________________________ */
+
 c_func(Init_ruby_class_mods,
 
     // Object
@@ -195,6 +213,7 @@ c_func(Init_ruby_class_mods,
     r_class_add_method_public  (R_OBJ, "sym?"             , m_obj_sym              , 0)
     r_class_add_method_public  (R_OBJ, "str?"             , m_obj_str              , 0)
     r_class_add_method_public  (R_OBJ, "stry?"            , m_obj_stry             , 0)
+
     // Array
     r_class_add_method_public  (R_ARY, "remove_empty!"    , m_ary_remove_empty     , 0)
     r_class_add_method_private (R_ARY, "disjunctive_union", m_ary_disjunctive_union, 1)
@@ -204,6 +223,7 @@ c_func(Init_ruby_class_mods,
     // NilClass
     r_class_add_method_public  (R_NIL, "empty?"           , m_nil_empty            , 0)
 
+    autoload_default(tty-command)
     autoload_module(module)
     autoload_module(kernel)
     autoload_class(obj)

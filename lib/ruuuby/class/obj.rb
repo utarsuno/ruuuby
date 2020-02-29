@@ -20,15 +20,15 @@ class ::Object
   # @param [*]      arg
   #
   # @raise [WrongParamType]
-  def 🛑❓bool(arg_name, arg)
+  def 🛑bool❓(arg_name, arg)
     🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, [::TrueClass, ::FalseClass], arg) unless arg.bool?
   end
 
-  # @param [Symbol]           arg_name
-  # @param [*]                arg
+  # @param [Symbol] arg_name
+  # @param [*]      arg
   #
   # @raise [WrongParamType]
-  def 🛑❓int(arg_name, arg)
+  def 🛑int❓(arg_name, arg)
     🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, ::Integer, arg) unless arg.int?
   end
 
@@ -36,7 +36,7 @@ class ::Object
   # @param [*]      arg
   #
   # @raise [WrongParamType]
-  def 🛑❓ary(arg_name, arg)
+  def 🛑ary❓(arg_name, arg)
     🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, ::Array, arg) unless arg.ary?
   end
 
@@ -44,7 +44,7 @@ class ::Object
   # @param [*]      arg
   #
   # @raise [WrongParamType]
-  def 🛑❓str(arg_name, arg)
+  def 🛑str❓(arg_name, arg)
     🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, ::String, arg) unless arg.str?
   end
 
@@ -52,7 +52,7 @@ class ::Object
   # @param [*]      arg
   #
   # @raise [WrongParamType]
-  def 🛑❓stry(arg_name, arg)
+  def 🛑stry❓(arg_name, arg)
     🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, [::String, ::Symbol], arg) unless (arg.stry?)
   end
 
@@ -60,7 +60,7 @@ class ::Object
   # @param [*]      arg
   #
   # @raise [WrongParamType]
-  def 🛑❓str_or_ary(arg_name, arg)
+  def 🛑str_or_ary❓(arg_name, arg)
     🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, [::String, ::Array], arg) unless (arg.str? || arg.ary?)
   end
 

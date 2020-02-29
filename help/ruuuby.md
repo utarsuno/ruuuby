@@ -21,8 +21,11 @@
 
 #### Misc
 
+| category | symbol(s) |
+| --- | --- |
 | misc | `📊`, `🔑`, `❄️`, `🙈`, `🆔` |
 | not-used | `⚠️`, `👈`, `👉`, `🆚`, `🆕` |
+| misc-not-used | `🎲`, `📝`, `📁` |
 
 #### Emoji References
 
@@ -345,4 +348,36 @@ context 'by adding function[¹]' do
         end
       end
     end
+
+#require 'open3'
+#cmd = 'wc FILE_PATH'
+#Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
+#  puts "stdout is:" + stdout.read
+#  puts "stderr is:" + stderr.read
+#end
+
+#RbConfig
+#
+
+=begin
+        path = 'PPAATTHH'
+        d = Dir.new(path)
+
+        #d.each do |e|
+        #d.each do |e|
+        d.entries.each do |e|
+          #puts "e{#{e.class.to_s}} --> {#{e.to_s}}"
+
+          ee = "#{path}#{e.to_s}"
+
+          📝 = ::File
+          #my_file = File.new(ee)
+          #exists = File.file?(ee)
+          my_file = 📝.new(ee)
+          exists = 📝.file?(ee)
+          if exists
+            puts "FILE{#{ee}} EXISTS{#{exists.to_s}}, file{#{my_file.to_s}}, abs-path-chars{#{ee.to_s.length.to_s}}"
+          end
+=end
+
 ```

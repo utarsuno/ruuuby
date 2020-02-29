@@ -8,6 +8,13 @@ require 'helpers/helper_performance'
 require 'helpers/helper_ruuuby'
 require 'helpers/static_test_data'
 
+# TODO: fix having to require this
+require 'rdoc'
+require 'rake'
+require 'rspec'
+
+require_relative '../conditionals/gem_dependencies'
+
 require 'rspec-benchmark'
 
 RSpec.configure do |config|

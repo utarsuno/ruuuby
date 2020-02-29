@@ -23,9 +23,9 @@ module ::Ruuuby
     # tiny version of *Ruuuby*
     #
     # @type [Integer]
-    TINY = 13
+    TINY = 14
 
-    # he version of *Ruuuby*, reflected in gemspec, currently{0.0.13}
+    # the version of *Ruuuby*, reflected in gemspec, currently{0.0.14}
     #
     # @type [String]
     VERSION = "#{MAJOR.to_s}.#{MINOR.to_s}.#{TINY.to_s}".❄️

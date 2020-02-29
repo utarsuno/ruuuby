@@ -1,4 +1,4 @@
-# Ruuuby
+# Ruuuby [![Gem Version](https://badge.fury.io/rb/ruuuby.svg)](https://badge.fury.io/rb/ruuuby)
 
 ```flavored modifications & extensions for increased quality of Ruby coding life```
 
@@ -6,7 +6,7 @@
 
 | for       | use |
 | --------- | ----------------------------------------------------------- |
-| `Gemfile`  | `gem 'ruuuby', '~> 0.0.13'`                                 |
+| `Gemfile`  | `gem 'ruuuby', '~> 0.0.14'`                                 |
 | library   | `require 'ruuuby'`                                          |
 | gem url   | https://rubygems.org/gems/ruuuby                            |
 | changelog | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -71,7 +71,7 @@ data = {hello: 'world', ye: 'ee'}
 | `Array`, `String` | `>>`                              | ✅            | prepend provided arg, reverse operation of `<<` |
 | `String`          | `∈?`, `∉?`                        | ❌            |       |
 | `Array`           | `end_with?`                       | ❌            |       |
-| `String`          | `ensure_start!`,                  | ❌            |       |
+| `String`          | `ensure_start!`                   | ❌            |       |
 | `String`, `Array` | `ensure_ending!`                  | ❌            |       |
 | `NilClass`        | `empty?`                          | ✅            | added for sake of `Array`'s func: `remove_empty!` |
 | `Integer`         | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
@@ -79,7 +79,7 @@ data = {hello: 'world', ye: 'ee'}
 | `BigDecimal`      | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
 | `Complex`         | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
 | `Rational`        | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
-| `Object`          | `🛑❓bool`, `🛑❓int`, `🛑❓ary`, `🛑❓str`, `🛑❓stry`, `🛑❓str_or_ary` | ❌ | |
+| `Object`          | `🛑bool❓`, `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑str_or_ary❓` | ❌ | |
 
 #### Created Aliases:
 | for             | base reference                          | alias            | notes |
@@ -103,9 +103,9 @@ data = {hello: 'world', ye: 'ee'}
 ### Code Base Statistics:
 | category | attribute     | value    | desc.                                                           |
 | -------- | ------------- | -------- | --------------------------------------------------------------- |
-| QA       | unit          | 183      | # of tests (non-performance & non-audit based)                  |
-| QA       | performance   | 92       | # of tests                                                      |
-| CI       | audits        | 1        | # of tests                                                      |
+| QA       | unit          | 196      | # of tests (non-performance & non-audit based)                  |
+| QA       | performance   | 98       | # of tests                                                      |
+| CI       | audits        | 7        | # of tests                                                      |
 | coverage | LOCs          | ???      | wip |
 | coverage | runtime       | ???      | wip |
 | coverage | documentation | ???      | wip |
@@ -113,13 +113,15 @@ data = {hello: 'world', ye: 'ee'}
 ---
 
 ### Gems:
-| gem             | version | :development | :test | :production |
-| --------------- | ------- | ------------ | ----- | ----------- |
-| rake-compiler   | 1.1.0   | ✅           | ❌   | ❌          |
-| rdoc            | 6.2.1   | ✅           | ❌   | ❌          |
-| rake            | 13.0.1  | ✅           | ✅   | ❌          |
-| rspec           | 3.9.0   | ✅           | ✅   | ❌          |
-| rspec-benchmark | 0.5.1   | ✅           | ✅   | ❌          |
+| gem             | version | :development  | :runtime    |
+| --------------- | ------- | ------------- | ----------- |
+| tty-command     | 0.9.0   | ✅            | ✅          |
+| bundler         | 2.1.4   | ✅            | ❌          |
+| rake-compiler   | 1.1.0   | ✅            | ❌          |
+| rdoc            | 6.2.1   | ✅            | ❌          |
+| rake            | 13.0.1  | ✅            | ❌          |
+| rspec           | 3.9.0   | ✅            | ❌          |
+| rspec-benchmark | 0.5.1   | ✅            | ❌          |
 
 ---
 

@@ -1,4 +1,4 @@
-# coding: utf-8
+# encoding: utf-8
 
 # add various functions to existing class +Array+ (and explicitly create aliases to play nice with IDEs)
 class ::Array
@@ -34,7 +34,7 @@ class ::Array
   # @raise [WrongParamType]
   #
   # @return [Array] a new Array instance containing the symmetric difference between this array and the one provided
-  def ⊕(ary) ; 🛑❓ary(:ary, ary) ; self.disjunctive_union(ary) ; end
+  def ⊕(ary) ; 🛑ary❓(:ary, ary) ; self.disjunctive_union(ary) ; end
 
   # Performs the relative complement (or set difference) of these two arrays, operation order/side does matter.
   #
@@ -43,7 +43,7 @@ class ::Array
   # @raise [WrongParamType]
   #
   # @return [Array] a new Array instance containing the relative complement between this array and the one provided
-  def ∖(ary) ; 🛑❓ary(:ary, ary) ; self - ary ; end
+  def ∖(ary) ; 🛑ary❓(:ary, ary) ; self - ary ; end
 
   # Return true if both arrays are matching in contents, supports multiple types and without order mattering.
   #
@@ -53,7 +53,7 @@ class ::Array
   #
   # @return [Boolean] true, if both arrays have the same contents (order does not matter)
   def ≈(them)
-    🛑❓ary(:them, them)
+    🛑ary❓(:them, them)
     return true  if self.∅? && them.∅?
     return false if self.length != them.length
     self.📊 == them.📊

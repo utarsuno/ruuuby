@@ -31,6 +31,74 @@ RSpec.describe 'Object' do
       RuuubyTestHelper::CONFIG_OBJECT[:aliases].∀{|base_func, func_alias| expect(::Object.∃func?(func_alias)).to eq(true)}
     end
 
+    context 'by adding function[🛑bool❓]' do
+      context 'handles needed input scenarios' do
+        it 'cases[positive]' do
+          expect{🛑bool❓('0', false)}.to_not raise_error
+        end
+        it 'cases[negative]' do
+          expect{🛑bool❓('0', nil)}.to raise_error(ArgumentError)
+        end
+      end
+    end
+
+    context 'by adding function[🛑int❓]' do
+      context 'handles needed input scenarios' do
+        it 'cases[positive]' do
+          expect{🛑int❓('0', 5)}.to_not raise_error
+        end
+        it 'cases[negative]' do
+          expect{🛑int❓('0', '5')}.to raise_error(ArgumentError)
+        end
+      end
+    end
+
+    context 'by adding function[🛑ary❓]' do
+      context 'handles needed input scenarios' do
+        it 'cases[positive]' do
+          expect{🛑ary❓('0', [])}.to_not raise_error
+        end
+        it 'cases[negative]' do
+          expect{🛑ary❓('0', nil)}.to raise_error(ArgumentError)
+        end
+      end
+    end
+
+    context 'by adding function[🛑str❓]' do
+      context 'handles needed input scenarios' do
+        it 'cases[positive]' do
+          expect{🛑str❓('0', '5')}.to_not raise_error
+        end
+        it 'cases[negative]' do
+          expect{🛑str❓('0', 5)}.to raise_error(ArgumentError)
+        end
+      end
+    end
+
+    context 'by adding function[🛑stry❓]' do
+      context 'handles needed input scenarios' do
+        it 'cases[positive]' do
+          expect{🛑stry❓('0', '5')}.to_not raise_error
+          expect{🛑stry❓('0', :a_symbol)}.to_not raise_error
+        end
+        it 'cases[negative]' do
+          expect{🛑stry❓('0', 5)}.to raise_error(ArgumentError)
+        end
+      end
+    end
+
+    context 'by adding function[🛑str_or_ary❓]' do
+      context 'handles needed input scenarios' do
+        it 'cases[positive]' do
+          expect{🛑str_or_ary❓('0', '5')}.to_not raise_error
+          expect{🛑str_or_ary❓('0', [])}.to_not raise_error
+        end
+        it 'cases[negative]' do
+          expect{🛑str_or_ary❓('0', 5)}.to raise_error(ArgumentError)
+        end
+      end
+    end
+
     context 'by adding function[ary?]' do
       it 'a newly created generic object responds to it' do
         expect_response_to(Object.new, :ary?)
@@ -229,6 +297,68 @@ RSpec.describe 'Object' do
       it 'for cases: false' do
         expect{5.stry?}.to perform_extremely_quickly
       end
+    end
+
+    context 'func[🛑bool❓]: performs extremely quickly' do
+      it 'cases[positive]' do
+        expect{🛑bool❓('0', false)}.to perform_extremely_quickly
+      end
+      # TODO: missing coverage
+      #it 'cases[negative]' do
+      #  expect{🛑bool❓('0', nil)}.to perform_extremely_quickly
+      #end
+    end
+
+    context 'func[🛑int❓]: performs extremely quickly' do
+      it 'cases[positive]' do
+        expect{🛑int❓('0', 5)}.to perform_extremely_quickly
+      end
+      # TODO: missing coverage
+      #it 'cases[negative]' do
+      #  expect{🛑int❓('0', '5')}.to perform_extremely_quickly
+      #end
+    end
+
+    context 'func[🛑ary❓]: performs extremely quickly' do
+      it 'cases[positive]' do
+        expect{🛑ary❓('0', [])}.to perform_extremely_quickly
+      end
+      # TODO: missing coverage
+      #it 'cases[negative]' do
+      #  expect{🛑ary❓('0', nil)}.to perform_extremely_quickly
+      #end
+    end
+
+    context 'func[🛑str❓]: performs extremely quickly' do
+      it 'cases[positive]' do
+        expect{🛑str❓('0', '5')}.to perform_extremely_quickly
+      end
+      # TODO: missing coverage
+      #it 'cases[negative]' do
+      #  expect{🛑str❓('0', 5)}.to perform_extremely_quickly
+      #end
+    end
+
+    context 'func[🛑stry❓]: performs extremely quickly' do
+      it 'cases[positive]' do
+        expect{🛑stry❓('0', '5')}.to perform_extremely_quickly
+        expect{🛑stry❓('0', :a_symbol)}.to perform_extremely_quickly
+      end
+      # TODO: missing coverage
+      #it 'cases[negative]' do
+      #  expect{🛑stry❓('0', 5)}.to raise_error(ArgumentError)
+      #end
+    end
+
+    context 'func[🛑str_or_ary❓]: performs extremely quickly' do
+      it 'cases[positive]' do
+        expect{🛑str_or_ary❓('0', '5')}.to perform_extremely_quickly
+        expect{🛑str_or_ary❓('0', [])}.to perform_extremely_quickly
+      end
+      # TODO: missing coverage
+      #it 'cases[negative]' do
+      #  expect{🛑str_or_ary❓('0', 5)}.to perform_extremely_quickly
+      #end
     end
 
   end

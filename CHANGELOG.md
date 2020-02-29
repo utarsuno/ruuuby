@@ -1,3 +1,12 @@
+# 0.0.14
+ * add gem `'tty-command', '~> 0.9.0'` to group `runtime`
+ * adjust naming on param check functions (in `Ruuuby::ParamErr`), ex: `🛑❓bool` change to `🛑bool❓`
+ * add c headers in preparation for future functionality
+ * for use by `audit RSpecs`: start various means of tracking internal versions, configs, etc; will help form dynamically generated audits and reports
+ * misc minor clean-ups
+
+---
+
 # 0.0.13
  * move utility functionality from `spec_helper.rb` and others into newly created Directory: `spec/helpers/`
  * remove param:`use_partial_fill_in` from `String`'s funcs `ensure_start!` and `ensure_ending!`
@@ -16,7 +25,7 @@
 
 * remove the following methods/aliases:
 
-| (c)lass or (m)odule | methods/aliases added |
+| (c)lass or (m)odule | methods/aliases removed |
 | ------------------- | --------------------- |
 | (m) `Ruuuby::Err`   | `param¬bool`, `param¬str`, `param¬stry`, `param¬ary`, `param¬module`, `param¬class` |
 

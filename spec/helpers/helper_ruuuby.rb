@@ -2,7 +2,7 @@
 module RuuubyTestHelper
 
   CONFIG_OBJECT = {
-      ruby: [:🛑❓bool, :🛑❓int, :🛑❓ary, :🛑❓str, :🛑❓stry, :🛑❓str_or_ary],
+      ruby: [:🛑bool❓, :🛑int❓, :🛑ary❓, :🛑str❓, :🛑stry❓, :🛑str_or_ary❓],
       c: [:int?, :str?, :stry?, :hsh?, :ary?, :bool?, :sym?],
       aliases: {
           object_id: :🆔,

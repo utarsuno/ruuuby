@@ -14,6 +14,13 @@ RSpec.describe 'str' do
 
     context 'func{ensure_ending!}' do
       context 'handles cases' do
+        it 'preserving object_id' do
+          a = 'apple'
+          b = a.🆔
+          a.ensure_ending!('plebasdagh524yc')
+          expect(a).to eq('applebasdagh524yc')
+          expect(a.🆔).to eq(b)
+        end
         context 'positive' do
           context 'with partial fill in' do
             it 'passes simple scenarios' do
@@ -139,10 +146,10 @@ RSpec.describe 'str' do
         context 'error' do
           it 'catches wrong parameter type provided' do
             [nil, 1337, {}].∀{|a|expect{'' >> a}.to raise_exception(ArgumentError)}
-            expect{''>>([1])}.to throw_wrong_param_type(String, '>>', nil, Array, String)
-            expect{''.>>(nil)}.to throw_wrong_param_type(String, '>>', nil, NilClass, String)
-            expect{''.>>(1337)}.to throw_wrong_param_type(String, '>>', nil, Integer, String)
-            expect{'' >> {'apple' => 'aa'} }.to throw_wrong_param_type(String, '>>', nil, Hash, String)
+            expect{'' >> [1] }.to throw_wrong_param_type(String, '>>', 'them', Array, String)
+            expect{'' >> nil }.to throw_wrong_param_type(String, '>>', 'them', NilClass, String)
+            expect{'' >> 1337 }.to throw_wrong_param_type(String, '>>', 'them', Integer, String)
+            expect{'' >> {'apple' => 'aa'} }.to throw_wrong_param_type(String, '>>', 'them', Hash, String)
           end
           it 'catches frozen strings' do
             a = 'my_frozen_string'.❄️

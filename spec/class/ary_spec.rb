@@ -100,19 +100,21 @@ RSpec.describe 'ary' do
     end
 
     context 'by adding function[⊕] (symmetric difference)' do
-      it 'works correctly' do
-        expect(([1, 2, 3].⊕([3, 4])).≈([1, 2, 4])).to eq(true)
-        what = [3, 4].⊕([1, 2, 3])
-        expect(what.≈([1, 2, 4])).to eq(true)
-      end
-      it 'matches output of: (self - ary) | (ary - self)' do
-        ary_a  = [1337, 8, 2, 9, 3, 56, 1337]
-        ary_b  = [9, 2, 1337, 929645, 0]
-        result = ((ary_a - ary_b) | (ary_b - ary_a))
-        expect((ary_a.⊕(ary_b)).≈(result)).to eq(true)
-      end
-      it 'detects bad param' do
-        expect{%w().⊕ nil}.to raise_exception(ArgumentError)
+      context 'handles needed scenarios' do
+        it 'for cases: positive' do
+          expect(([1, 2, 3].⊕([3, 4])).≈([1, 2, 4])).to eq(true)
+          expect(([1, 2, 3, 1, 1].⊕([3, 4])).≈([1, 2, 4, 1, 1])).to eq(true)
+          expect([3, 4].⊕([1, 2, 3]).≈([1, 2, 4])).to eq(true)
+        end
+        it 'for matching output of: (self - ary) | (ary - self)' do
+          ary_a  = [1337, 8, 2, 9, 3, 56, 1337]
+          ary_b  = [9, 2, 1337, 929645, 0]
+          result = ((ary_a - ary_b) | (ary_b - ary_a))
+          expect((ary_a.⊕(ary_b)).≈(result)).to eq(true)
+        end
+        it 'for cases: bad param' do
+          expect{%w().⊕ nil}.to raise_exception(ArgumentError)
+        end
       end
     end
 
@@ -152,13 +154,16 @@ RSpec.describe 'ary' do
           expect(['6', 2, 3].ensure_ending!(2, 3, 3)).to eq(['6', 2, 3, 3])
           expect(['6', 2, 3].ensure_ending!(2, 3, 4)).to eq(['6', 2, 3, 4])
         end
+        it 'preserves object_id' do
+          big_node = ['CC', nil, 9]
+          node_id  = big_node.🆔
+          expect([3, 'b', big_node].ensure_ending!('b', big_node, 'aa')).to eq([3, 'b', big_node, 'aa'])
+          expect(big_node.🆔).to eq(node_id)
+        end
       end
     end
 
     context 'by adding function[∖] (relative complement)' do
-      it 'has alias: uniq_to_me' do
-        expect(::Array.∃func_alias?(:uniq_to_me, :∖)).to eq(true)
-      end
       it 'works correctly' do
         expect([2, 3, 4].∖([1, 2, 3])).to eq([4])
         expect([1, 2, 3].∖([2, 3, 4])).to eq([1])
