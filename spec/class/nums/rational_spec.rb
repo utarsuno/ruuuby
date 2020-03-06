@@ -7,6 +7,8 @@ RSpec.describe 'rational.rb' do
   let(:data_for_performance_a){Rational(1, 1)}
   let(:data_for_performance_b){Rational(-1, 1)}
 
+  let(:data_with_complex){Rational(Complex(1, 1.5), 1.5)}
+
   context 'extends class[Rational]' do
 
     context 'by adding functions for (ℕ?, ℤ?, ℂ?, ℚ?, ℝ?)' do
@@ -27,8 +29,7 @@ RSpec.describe 'rational.rb' do
           expect(Rational(1337, 1337).ℕ?).to eq(true)
         end
         it 'cases: negative' do
-          expect(Rational(-1, 1).ℕ?).to eq(false)
-          expect(Rational(-1337, 1337).ℕ?).to eq(false)
+          expect(data_with_complex.ℕ?).to eq(false)
         end
       end
     end
@@ -41,12 +42,10 @@ RSpec.describe 'rational.rb' do
           expect(Rational(0, 1).ℤ?).to eq(true)
           expect(Rational(1, 1).ℤ?).to eq(true)
           expect(Rational(1337, 1).ℤ?).to eq(true)
+          expect(Rational(Complex(3, 0), 1).ℤ?).to eq(true)
         end
         it 'cases: negative' do
-          expect(Rational(-1337, 2).ℤ?).to eq(false)
-          expect(Rational(-1, 2).ℤ?).to eq(false)
-          expect(Rational(1, 2).ℤ?).to eq(false)
-          expect(Rational(1337, 2).ℤ?).to eq(false)
+          expect(data_with_complex.ℤ?).to eq(false)
         end
       end
     end
@@ -56,6 +55,9 @@ RSpec.describe 'rational.rb' do
         it 'cases: positive' do
           expect(data_default.ℚ?).to eq(true)
         end
+        it 'cases: negative' do
+          expect(data_with_complex.ℚ?).to eq(false)
+        end
       end
     end
 
@@ -63,6 +65,7 @@ RSpec.describe 'rational.rb' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           expect(data_default.ℂ?).to eq(true)
+          expect(data_with_complex.ℂ?).to eq(true)
         end
       end
     end
@@ -71,6 +74,7 @@ RSpec.describe 'rational.rb' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           expect(data_default.ℝ?).to eq(true)
+          expect(data_with_complex.ℂ?).to eq(true)
         end
       end
     end
@@ -81,12 +85,12 @@ RSpec.describe 'rational.rb' do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
-    context 'func[ℕ?]: performs very quickly' do
+    context 'func[ℕ?]: performs extremely quickly' do
       it 'for cases: true' do
-        expect{data_for_performance_a.ℕ?}.to perform_very_quickly
+        expect{data_for_performance_a.ℕ?}.to perform_extremely_quickly
       end
-      it 'cases: negative' do
-        expect{data_for_performance_b.ℕ?}.to perform_very_quickly
+      it 'for cases: negative' do
+        expect{data_for_performance_b.ℕ?}.to perform_extremely_quickly
       end
     end
 
@@ -94,14 +98,15 @@ RSpec.describe 'rational.rb' do
       it 'for cases: true' do
         expect{data_minus_leet.ℤ?}.to perform_very_quickly
       end
-      it 'cases: negative' do
+      it 'for cases: negative' do
         expect{data_minus_leet2.ℤ?}.to perform_very_quickly
       end
     end
 
-    context 'func[ℂ?]: performs very quickly' do
+    context 'func[ℂ?]: performs extremely quickly' do
       it 'for cases: true' do
-        expect{data_default.ℂ?}.to perform_very_quickly
+        expect{data_default.ℂ?}.to perform_extremely_quickly
+        expect{data_with_complex.ℂ?}.to perform_extremely_quickly
       end
     end
 
@@ -109,11 +114,15 @@ RSpec.describe 'rational.rb' do
       it 'for cases: true' do
         expect{data_default.ℚ?}.to perform_very_quickly
       end
+      it 'for cases: negative' do
+        expect{data_with_complex.ℚ?}.to perform_very_quickly
+      end
     end
 
-    context 'func[ℝ?]: performs very quickly' do
+    context 'func[ℝ?]: performs extremely quickly' do
       it 'for cases: true' do
-        expect{data_default.ℝ?}.to perform_very_quickly
+        expect{data_default.ℝ?}.to perform_extremely_quickly
+        expect{data_with_complex.ℝ?}.to perform_extremely_quickly
       end
     end
   end

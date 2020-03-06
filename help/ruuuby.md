@@ -380,4 +380,16 @@ context 'by adding function[¹]' do
           end
 =end
 
+  def perform_big_o_constant
+    RSpec::Benchmark::Matchers::ben
+    exec_func_n_times = bench_range()
+    expect{ |n, i| }
+  end
+
+# TODO: Audit
+
+# c_extension file name should not be conftest.c
+
+
+
 ```

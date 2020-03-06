@@ -5,4 +5,5 @@ class ::Hash
   alias_method :∃🔑?, :key?
   alias_method :∀, :each
   alias_method :∅?, :empty?
+  alias_method :∋?, :include?
 end

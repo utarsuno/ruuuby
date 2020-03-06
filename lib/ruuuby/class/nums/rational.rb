@@ -3,10 +3,7 @@
 class ::Rational
 
   # @return [Boolean] true, if finite and numerator and denominator pass
-  def ℕ?
-    return false unless self.finite?
-    self.numerator.ℕ? && self.denominator.ℕ?
-  end
+  def ℕ? ; self.numerator.ℕ? && self.denominator.ℕ? ; end
 
   # @return [Boolean] true, if finite and numerator and denominator pass
   def ℤ?
@@ -16,24 +13,16 @@ class ::Rational
 
   # ⚠️, coverage missing beyond ℤ
   #
-  # @return [Boolean] true, if finite and numerator and denominator pass
+  # @return [Boolean|NilClass] true, if finite and numerator and denominator pass
   def ℚ?
-    return false unless self.finite?
     return true if self.numerator.ℤ? && self.denominator.ℤ?
     nil
   end
 
   # @return [Boolean] true, if finite and numerator and denominator pass
-  def ℂ?
-    return false unless self.finite?
-    self.numerator.ℂ? && self.denominator.ℂ?
-  end
+  def ℂ? ; self.numerator.ℂ? && self.denominator.ℂ? ; end
 
   # @return [Boolean] true, if finite and numerator and denominator pass
-  def ℝ?
-    return false unless self.finite?
-    return true if (self.numerator.ℤ? && self.denominator.ℤ?)
-    self.numerator.ℚ? && self.denominator.ℚ?
-  end
+  def ℝ? ; self.numerator.ℚ? && self.denominator.ℚ? ; end
 
 end

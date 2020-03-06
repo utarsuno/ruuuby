@@ -2,13 +2,8 @@
 
 module ::Ruuuby
 
-  # @return [String]
-  def self.version
-    ::Ruuuby::VERSION::VERSION
-  end
-
   # container for version number to ensure it does not get modified
-  module VERSION
+  module Version
 
     # major version of *Ruuuby*
     #
@@ -23,9 +18,9 @@ module ::Ruuuby
     # tiny version of *Ruuuby*
     #
     # @type [Integer]
-    TINY = 14
+    TINY = 15
 
-    # the version of *Ruuuby*, reflected in gemspec, currently{0.0.14}
+    # the version of *Ruuuby*, reflected in gemspec, currently{0.0.15}
     #
     # @type [String]
     VERSION = "#{MAJOR.to_s}.#{MINOR.to_s}.#{TINY.to_s}".❄️
@@ -34,5 +29,8 @@ module ::Ruuuby
 
     ❄️
   end
+
+  # @type [String] constant
+  VERSION = ::Ruuuby::Version::VERSION
 
 end

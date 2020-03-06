@@ -20,9 +20,9 @@ module PerformanceTestHelper
     self.run_performance_test(0.0001)
   end
 
-  # executes the tested code NUM_SAMPLES times, failing the test if any ran over 0.00001 seconds
+  # executes the tested code NUM_SAMPLES times, failing the test if any ran over 0.00002 seconds
   def perform_extremely_quickly
-    self.run_performance_test(0.00001)
+    self.run_performance_test(0.00002)
   end
 
   🙈

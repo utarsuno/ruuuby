@@ -1,9 +1,28 @@
+# 0.0.15
+ * add directory `ruuuby/class/enumerable`, move `ary.rb`, `hsh.rb` and newly created `set.rb` into it
+ * add files: `ruuuby/module/enumerable.rb` and `ruuuby/class/nums/numeric.rb`
+ * move various existing functions/aliases from sub-classes into comment parent modules and/or classes when possible, ex: `∌?` out of `Array` and into `enumerable` to share common features w/ others like `Set`
+ * move certain module/class initial definition/creation into `ruby_class_mods.c`
+ * for number classes (ex: `Integer`), fix various logical/performance/test-coverage flaws for funcs like `ℕ?`
+ * add/move the following methods/aliases:
+
+ | (c)lass or (m)odule | methods/aliases added/moved                      |
+ | ------------------- | ------------------------------------------------ |
+ | (c) `Array`         | `start_with?`, `ensure_start!`                   |
+ | (c) `Set`           | `remove_empty!`, `∅?` (empty?), `∀` (each), `∋?` |
+ | (m) `Enumerable`    | `∌?`, `⨍` (map)                                  |
+ | (c) `Numeric`       | `∞?` (infinite?)                                  |
+ | (c) `Integer`       | `finite?`, `infinite?`                             |
+
+---
+
 # 0.0.14
  * add gem `'tty-command', '~> 0.9.0'` to group `runtime`
  * adjust naming on param check functions (in `Ruuuby::ParamErr`), ex: `🛑❓bool` change to `🛑bool❓`
  * add c headers in preparation for future functionality
  * for use by `audit RSpecs`: start various means of tracking internal versions, configs, etc; will help form dynamically generated audits and reports
  * misc minor clean-ups
+ * temporarily remove `.travis.yml` (auto-generated at project creation but would be useful to utilize)
 
 ---
 

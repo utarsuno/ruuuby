@@ -6,7 +6,7 @@
 
 | for       | use |
 | --------- | ----------------------------------------------------------- |
-| `Gemfile`  | `gem 'ruuuby', '~> 0.0.14'`                                 |
+| `Gemfile`  | `gem 'ruuuby', '~> 0.0.15'`                                 |
 | library   | `require 'ruuuby'`                                          |
 | gem url   | https://rubygems.org/gems/ruuuby                            |
 | changelog | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -29,8 +29,8 @@ data = {hello: 'world', ye: 'ee'}
 # [true, false]
 [data.🔑?(:hello), data.🔑?(:non_existing_key)]
 
-# true
-[1, '1', 2, nil, [], 2].≈ [nil, 2, 2, '1', 1, []]
+# true (note: comparison via '==' would evaluate to false)
+[1, 'a', 2, nil, [], 2].≈ [nil, 2, 2, 'a', 1, []]
 
 # [false, true, false, true]
 [-5.ℕ?, 7.0.ℤ?, Complex(Float::NAN).ℝ?, Rational(2, 3).ℚ?]
@@ -52,60 +52,62 @@ data = {hello: 'world', ye: 'ee'}
 #### Module Changes:
 | module(s) | func(s) added  | as c-extension? (java-wip) | notes |
 | --------- | -------------- | -------------------------- | ----- |
-| `Kernel`  | `√`            | ❌                         | syntax sugar for `Math.sqrt` |
+| `Kernel`  | `√`            | ❌                         | syntax sugar for Math.sqrt |
 | `Kernel`  | `∃module?`     | ❌                         | a 'global func' |
 | `Kernel`  | `∃class?`      | ❌                         | a 'global func' |
 | `Module`  | `∃func_alias?` | ❌                         |       |
 | `Module`  | `∃func?`       | ❌                         |       |
 
 #### Class Changes:
-| class(es)         | func(s) added                     | as c-extension? (java-wip) | notes |
-| ----------------- | --------------------------------- | -------------- | ----- |
-| `Object`          | `ary?`, `bool?`, `hsh?`, `int?`, `str?`, `stry?`, `sym?` | ✅ | |
-| `Array`           | `remove_empty!`                   | ✅            |       |
-| `Array`           | `📊`                              | ❌            | get a `Hash` with keys being elements in array and values being their frequency count |
-| `Array`           | `≈`                               | ❌            | are contents equal, regardless of order (and presence of multiple types)      |
-| `Array`           | `⊕`                               | ✅ (partial)  | `⊕` is set notation for: *symmetric difference* |
-| `Array`           | `∖`                               | ❌            | `∖` is set notation for: *relative complement*, also aliased as: `uniq_to_me` |
-| `Array`, `String` | `∌?`                              | ❌            | `∌` is set notation for: *does not belong to* |
-| `Array`, `String` | `>>`                              | ✅            | prepend provided arg, reverse operation of `<<` |
-| `String`          | `∈?`, `∉?`                        | ❌            |       |
-| `Array`           | `end_with?`                       | ❌            |       |
-| `String`          | `ensure_start!`                   | ❌            |       |
-| `String`, `Array` | `ensure_ending!`                  | ❌            |       |
-| `NilClass`        | `empty?`                          | ✅            | added for sake of `Array`'s func: `remove_empty!` |
-| `Integer`         | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
-| `Float`           | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
-| `BigDecimal`      | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
-| `Complex`         | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
-| `Rational`        | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
-| `Object`          | `🛑bool❓`, `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑str_or_ary❓` | ❌ | |
+| class(es)              | func(s) added                     | as c-extension? (java-wip) | notes |
+| ---------------------- | --------------------------------- | -------------- | ----- |
+| `Object`               | `ary?`, `bool?`, `hsh?`, `int?`, `str?`, `stry?`, `sym?` | ✅ | |
+| `Array`                | `remove_empty!`                   | ✅            |       | |
+| `Set`                  | `remove_empty!`                   | ❌            |       | |
+| `Array`                | `📊`                              | ❌            | get a `Hash` with keys being elements in array and values being their frequency count |
+| `Array`                | `≈`                               | ❌            | are contents equal, regardless of order (and presence of multiple types)      |
+| `Array`                | `⊕`                               | ✅ (partial)  | `⊕` is set notation for: *symmetric difference* |
+| `Array`                | `∖`                               | ❌            | `∖` is set notation for: *relative complement*, also aliased as: `uniq_to_me` |
+| `Enumerable`, `String` | `∌?`                              | ❌            | `∌` is set notation for: *does not belong to* |
+| `Array`, `String`      | `>>`                              | ✅            | prepend provided arg, reverse operation of `<<` |
+| `String`               | `∈?`, `∉?`                        | ❌            |       |
+| `Array`                | `end_with?`, `start_with?`        | ❌            |       |
+| `String`, `Array`      | `ensure_start!`, `ensure_ending!` | ❌            |       |
+| `NilClass`             | `empty?`                          | ✅            | ⚠️: philosophically debatable |
+| `Integer`              | `finite?`, `infinite?`              | ✅            |       |
+| `Numeric`              | `∞?`                              | ❌            |       |
+| `Integer`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
+| `Float`                | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
+| `BigDecimal`           | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
+| `Complex`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
+| `Rational`             | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
+| `Object`               | `🛑bool❓`, `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑str_or_ary❓` | ❌ | |
 
 #### Created Aliases:
-| for             | base reference                          | alias            | notes |
-| --------------- | --------------------------------------- | ---------------- | ----- |
-| `Kernel`        | method: `raise`                         | `🛑`             |       |
-| `Object`        | method: `object_id`                     | `🆔`             |       |
-| `Object`        | method: `freeze`                        | `❄️`             |       |
-| `Object`        | method: `frozen?`                       | `❄️?`            |       |
-| `Module`        | method: `const_defined?`                 | `∃const?`        |       |
-| `Module`        | method: `private_method_defined?`        | `∃🙈func?`       |       |
-| `Module`        | method: `private`                       | `🙈`             |       |
-| `Module`        | method: `private_constant`              | `🙈constants⟶` |       |
-| `Array`, `Hash` | method: `each`                          | `∑`, `∀`         |       |
-| `Array`, `Hash` | method: `map`                           | `⨍`              |       |
-| `Hash`          | method: `key?`                          | `🔑?`, `∃🔑?`   |       |
-| `Array`         | method: `include?`                      | `∋?`             | `∋` is set notation for: *belongs to* |
-| `NilClass`, `Hash`, `Array`, `String` | method: `empty?`  | `∅?`             |       |
+| for                    | base reference                          | alias            | notes |
+| ---------------------- | --------------------------------------- | ---------------- | ----- |
+| `Kernel`               | method: `raise`                         | `🛑`             |       |
+| `Object`               | method: `object_id`                     | `🆔`             |       |
+| `Object`               | method: `freeze`                        | `❄️`             |       |
+| `Object`               | method: `frozen?`                       | `❄️?`            |       |
+| `Module`               | method: `const_defined?`                 | `∃const?`        |       |
+| `Module`               | method: `private_method_defined?`        | `∃🙈func?`       |       |
+| `Module`               | method: `private`                       | `🙈`             |       |
+| `Module`               | method: `private_constant`              | `🙈constants⟶` |       |
+| `Array`, `Hash`, `Set` | method: `each`                          | `∀`              |       |
+| `Enumerable`           | method: `map`                           | `⨍`              | automatically applies to: `Array`, `Hash`, `Set` |
+| `Enumerable`           | method: `include?`                      | `∋?`             | `∋` is set notation for: *belongs to* |
+| `Hash`                 | method: `key?`                          | `🔑?`, `∃🔑?`   |       |
+| `NilClass`, `Hash`, `Array`, `String`, `Set` | method: `empty?`  | `∅?`             |       |
 
 ---
 
 ### Code Base Statistics:
 | category | attribute     | value    | desc.                                                           |
 | -------- | ------------- | -------- | --------------------------------------------------------------- |
-| QA       | unit          | 196      | # of tests (non-performance & non-audit based)                  |
-| QA       | performance   | 98       | # of tests                                                      |
-| CI       | audits        | 7        | # of tests                                                      |
+| QA       | unit          | 219      | # of tests (non-performance & non-audit based)                  |
+| QA       | performance   | 111      | # of tests                                                      |
+| CI       | audits        | 8        | # of tests                                                      |
 | coverage | LOCs          | ???      | wip |
 | coverage | runtime       | ???      | wip |
 | coverage | documentation | ???      | wip |
@@ -125,19 +127,27 @@ data = {hello: 'world', ye: 'ee'}
 
 ---
 
-### Rake Tasks:
+## Commands
+
+#### General Tasks:
 |  preface           | cmd                 | description                                          |
 | ------------------ | ------------------- | ---------------------------------------------------- |
 | `bundle exec rake` | `rdoc`              | generate documentation coverage report               |
-| `bundle exec rake` | `rspec_unit`        | run all unit-tests except tags: {audit, performance} |
-| `bundle exec rake` | `rspec_audit`       | run only audit based unit-tests                      |
-| `bundle exec rake` | `rspec_performance` | run only performance based unit-tests                |
-| `bundle exec rake` | `rspec_all`         | run all unit-tests                                   |
 | `bundle exec rake` | `install`           | install gem onto local machine                       |
 | `bundle exec rake` | `compile`           | compile any native C-extensions with code changes    |
 | `bundle exec rake` | `release`           | push git version tags and publish gem to Rubygems    |
+| `bin/`             | `audit`             | general all-around build & health check              |
+| `bin/`             | `audit_quick`       | similar to above but only run regular unit-tests     |
 | `bin/`             | `setup`             | install dependencies                                 |
 | `bin/`             | `console`           | interactive console for easier experimenting         |
+
+#### Testing Tasks:
+| preface            | cmd                 | warnings displayed? | description |
+| ------------------ | ------------------- | ------------------- | ----------- |
+| `bundle exec rake` | `rspec_unit`        | ❌                  | run all unit-tests except tags: {audit, performance} |
+| `bundle exec rake` | `rspec_audit`       | ❌                  | run only audit based unit-tests  |
+| `bundle exec rake` | `rspec_performance` | ❌                  | run only performance based unit-tests   |
+| `bundle exec rake` | `rspec_all`         | ✅                  | run all unit-tests |
 
 ---
 

@@ -24,8 +24,8 @@ RSpec.describe ::Kernel do
           end
           context 'for cases: sub_module &' do
             it 'true-positive' do
-              expect(∃module?(:VERSION, Ruuuby)).to eq(true)
-              expect(∃module?('VERSION', Ruuuby)).to eq(true)
+              expect(∃module?(:Version, Ruuuby)).to eq(true)
+              expect(∃module?('Version', Ruuuby)).to eq(true)
             end
             it 'false-positive' do
               expect(∃module?(:VERSIONFAKE, Ruuuby)).to eq(false)
@@ -39,14 +39,14 @@ RSpec.describe ::Kernel do
           context 'for cases: bad args' do
             it 'first arg: module_name' do
               expect{∃module?(nil)
-              }.to raise_error(ArgumentError, Ruuuby::ParamErr::generate_error_text(Kernel, '∃module?', 'module_name', NilClass, [Symbol, String]))
+              }.to raise_error(ArgumentError, Ruuuby::ParamErr::generate_error_text(Kernel, :∃module?, :module_name, NilClass, [Symbol, String]))
 
               expect{∃module?(5)
-              }.to raise_error(ArgumentError, Ruuuby::ParamErr::generate_error_text(Kernel, '∃module?', 'module_name', Integer, [Symbol, String]))
+              }.to raise_error(ArgumentError, Ruuuby::ParamErr::generate_error_text(Kernel, :∃module?, :module_name, Integer, [Symbol, String]))
             end
             it 'second arg: module_owner' do
               expect{∃module?(:VERSION, 5)
-              }.to raise_error(ArgumentError, Ruuuby::ParamErr::generate_error_text(Kernel, '∃module?', 'module_owner', Integer, Module))
+              }.to raise_error(ArgumentError, Ruuuby::ParamErr::generate_error_text(Kernel, :∃module?, :module_owner, Integer, Module))
             end
           end
         end
@@ -85,17 +85,17 @@ RSpec.describe ::Kernel do
           context 'for cases: bad args' do
             it 'first arg: module_name' do
               expect{∃class?(nil)
-              }.to raise_error(Ruuuby::ParamErr::WrongParamType, Ruuuby::ParamErr::generate_error_text(Kernel, '∃class?', 'class_name', NilClass, [Symbol, String]))
+              }.to raise_error(Ruuuby::ParamErr::WrongParamType, Ruuuby::ParamErr::generate_error_text(Kernel, :∃class?, :class_name, NilClass, [Symbol, String]))
 
               expect{∃class?(5)
-              }.to raise_error(Ruuuby::ParamErr::WrongParamType, Ruuuby::ParamErr::generate_error_text(Kernel, '∃class?', 'class_name', Integer, [Symbol, String]))
+              }.to raise_error(Ruuuby::ParamErr::WrongParamType, Ruuuby::ParamErr::generate_error_text(Kernel, :∃class?, :class_name, Integer, [Symbol, String]))
             end
             it 'second arg: module_owner' do
               expect{∃class?(:VERSION, 5)
-              }.to raise_error(Ruuuby::ParamErr::WrongParamType, Ruuuby::ParamErr::generate_error_text(Kernel, '∃class?', 'class_owner', Integer, Module))
+              }.to raise_error(Ruuuby::ParamErr::WrongParamType, Ruuuby::ParamErr::generate_error_text(Kernel, :∃class?, :class_owner, Integer, Module))
 
               expect{∃class?(:VERSION, {})
-              }.to raise_error(Ruuuby::ParamErr::WrongParamType, Ruuuby::ParamErr::generate_error_text(Kernel, '∃class?', 'class_owner', Hash, Module))
+              }.to raise_error(Ruuuby::ParamErr::WrongParamType, Ruuuby::ParamErr::generate_error_text(Kernel, :∃class?, :class_owner, Hash, Module))
             end
           end
         end
@@ -138,8 +138,8 @@ RSpec.describe ::Kernel do
       end
       context 'for cases: sub_module &' do
         it 'true-positive' do
-          expect{∃module?(:VERSION, Ruuuby)}.to perform_very_quickly
-          expect{∃module?('VERSION', Ruuuby)}.to perform_very_quickly
+          expect{∃module?(:Version, Ruuuby)}.to perform_very_quickly
+          expect{∃module?('Version', Ruuuby)}.to perform_very_quickly
         end
         it 'true-negative' do
           expect{∃module?(:VERSIONFAKE, Ruuuby)}.to perform_very_quickly

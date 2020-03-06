@@ -1,8 +1,9 @@
 # coding: utf-8
 
 RSpec.describe Ruuuby do
-  let(:configs_dev){::RuuubyConfigs::GemDependencies::FOR_DEV}
-  let(:configs_prod){::RuuubyConfigs::GemDependencies::FOR_PROD}
+  let(:configs_gems){::RuuubyConfigs::GemDependencies}
+  let(:configs_dev){configs_gems::EnvironmentDevelopment::ALL_GEMS}
+  let(:configs_prod){configs_gems::EnvironmentRuntime::ALL_GEMS}
 
   context 'Ruuuby added as module' do
     it 'exists' do
@@ -10,7 +11,7 @@ RSpec.describe Ruuuby do
     end
     context 'and adds needed sub-modules & classes' do
       it 'module(VERSION) under module(::Ruuuby)' do
-        expect(∃module?(:VERSION, ::Ruuuby)).to eq(true)
+        expect(∃module?(:Version, ::Ruuuby)).to eq(true)
       end
       it 'module(Err) under module(::Ruuuby)' do
         expect(∃module?(:ParamErr, ::Ruuuby)).to eq(true)
@@ -27,40 +28,51 @@ RSpec.describe Ruuuby do
 
   context 'audits', :'audits' do
 
-    context 'bundler is healthy' do
-      it 'by having correct configs' do
-        expect(Bundler.requires_sudo?).to eq(false)
-        expect(Bundler::VERSION).to eq(configs_dev[:bundler])
+    context 'running with correct configs' do
+      it 'ruby version is correct' do
+        expect(RUBY_VERSION).to eq('2.7.0')
+        expect(RUBY_PLATFORM).to eq('x86_64-darwin18')
+        expect(RUBY_PATCHLEVEL).to eq(0)
+        expect(RUBY_REVISION).to eq('647ee6f091eafcce70ffb75ddf7e121e192ab217')
       end
     end
 
-    context 'tty-command is healthy' do
-      it 'by having correct configs' do
-        expect(TTY::Command::VERSION).to eq(configs_prod['tty-command'.to_sym])
+    context 'has correct gem versions' do
+      context 'bundler is healthy' do
+        it 'by having correct configs' do
+          expect(Bundler.requires_sudo?).to eq(false)
+          expect(Bundler::VERSION).to eq(configs_dev[configs_gems::GEM_BUNDLER])
+        end
       end
-    end
 
-    context 'rdoc is healthy' do
-      it 'by having correct configs' do
-        expect(RDoc::VERSION).to eq(configs_dev[:rdoc])
+      context 'tty-command is healthy' do
+        it 'by having correct configs' do
+          expect(TTY::Command::VERSION).to eq(configs_dev[configs_gems::GEM_TTY_COMMAND])
+        end
       end
-    end
 
-    context 'rake is healthy' do
-      it 'by having correct configs' do
-        expect(Rake::VERSION).to eq(configs_dev[:rake])
+      context 'rdoc is healthy' do
+        it 'by having correct configs' do
+          expect(RDoc::VERSION).to eq(configs_dev[configs_gems::GEM_RDOC])
+        end
       end
-    end
 
-    context 'rspec is healthy' do
-      it 'by having correct configs' do
-        expect(RSpec::Version::STRING).to eq(configs_dev[:rspec])
+      context 'rake is healthy' do
+        it 'by having correct configs' do
+          expect(Rake::VERSION).to eq(configs_dev[configs_gems::GEM_RAKE])
+        end
       end
-    end
 
-    context 'rspec-benchmark is healthy' do
-      it 'by having correct configs' do
-        expect(RSpec::Benchmark::VERSION).to eq(configs_dev['rspec-benchmark'.to_sym])
+      context 'rspec is healthy' do
+        it 'by having correct configs' do
+          expect(RSpec::Version::STRING).to eq(configs_dev[configs_gems::GEM_RSPEC])
+        end
+      end
+
+      context 'rspec-benchmark is healthy' do
+        it 'by having correct configs' do
+          expect(RSpec::Benchmark::VERSION).to eq(configs_dev[configs_gems::GEM_RSPEC_BENCHMARK])
+        end
       end
     end
 
@@ -75,7 +87,7 @@ RSpec.describe Ruuuby do
         data = {hello: 'world', ye: 'ee'}
         expect([data.🔑?(:hello), data.🔑?(:non_existing_key)]).to eq([true, false])
 
-        expect([1, '1', 2, nil, [], 2].≈ [nil, 2, 2, '1', 1, []]).to eq(true)
+        expect([1, 'a', 2, nil, [], 2].≈ [nil, 2, 2, 'a', 1, []]).to eq(true)
 
         expect([-5.ℕ?, 7.0.ℤ?, Complex(Float::NAN).ℝ?, Rational(2, 3).ℚ?]).to eq([false, true, false, true])
 

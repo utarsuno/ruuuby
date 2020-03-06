@@ -12,6 +12,7 @@ require 'helpers/static_test_data'
 require 'rdoc'
 require 'rake'
 require 'rspec'
+require 'ruuuby/version'
 
 require_relative '../conditionals/gem_dependencies'
 

@@ -20,13 +20,6 @@ class ::Array
     new_hash
   end
 
-  # Same meaning as: `arg.∉ self`
-  #
-  # @param [*] arg
-  #
-  # @return [Boolean] true, if this array instance contains the provided arg
-  def ∌?(arg) ; not self.include?(arg) ; end
-
   # Performs the symmetric difference (or disjunctive union) of these two arrays, operation order/side does not matter.
   #
   # @param [Array] ary
@@ -65,14 +58,45 @@ class ::Array
   def end_with?(*ending)
     return false if (ending.∅? || ending.length > self.length)
     return self.last == ending[0] if ending.length == 1
-    self[(self.length-ending.length)..(self.length-1)] == ending
+    self.last(ending.length) == ending
+  end
+
+  # @param [*]
+  #
+  # @return [Boolean] true, if this array starts with the provided elements
+  def start_with?(*start)
+    return false if (start.∅? || start.length > self.length)
+    return self.first == start[0] if start.length == 1
+    self.first(start.length) == start
+  end
+
+  # @param [*]
+  #
+  # @return [Array] this array instance, modified if not starting with provided starting elements
+  def ensure_start!(*start)
+    return self if (start.∅? || self.start_with?(*start))
+    return self >> start[0] if start.length == 1
+    delta        = 0
+    last_matched = nil
+    while delta <= self.length && delta <= start.length
+      ending_of_start = start[(start.length-1-delta)..(start.length-1)]
+      last_matched    = ending_of_start if self[0..delta] == ending_of_start
+      delta          += 1
+    end
+    if last_matched == nil
+      start.reverse.∀{|element| self >> element}
+    else
+      start[0..(start.length-1-last_matched.length)].reverse.∀{|element| self >> element}
+    end
+    self
   end
 
   # @param [*]
   #
   # @return [Array] this array instance, modified if not ending with provided endings elements
   def ensure_ending!(*ending)
-    return self if ending.∅? || self.end_with?(ending)
+    return self if (ending.∅? || self.end_with?(*ending))
+    return self << ending[0] if ending.length == 1
     delta        = 0
     last_matched = nil
     while delta <= self.length && delta <= ending.length
@@ -89,14 +113,12 @@ class ::Array
   end
 
   alias_method :>>, :>>
-  alias_method :∑, :each
   alias_method :∀, :each
-  alias_method :⨍, :map
-  alias_method :∋?, :include?
+  alias_method :∅?, :empty?
   alias_method :remove_empty!, :remove_empty!
   alias_method :disjunctive_union, :disjunctive_union
   alias_method :uniq_to_me, :∖
-  alias_method :∅?, :empty?
+  alias_method :∋?, :include?
 
   🙈 :disjunctive_union
 

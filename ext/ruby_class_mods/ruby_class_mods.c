@@ -32,13 +32,18 @@ ________________________________________________________________________________
 ____________________________________________________________________________________________________________________________________________________________________ */
 #define R_TRUE Qtrue
 #define R_FALSE Qfalse
-//#define NIL Qnil
+#define NIL Qnil
 #define R_STR rb_cString
 #define R_OBJ rb_cObject
+#define R_INT rb_cInteger
 #define R_NIL rb_cNilClass
+
 #define R_ARY rb_cArray
+// rb_ary_new: uses a default size of 16
+#define R_ARY_DEFAULT_SIZE 16L
 #define R_FILE rb_cFile
-#define R_KRL rb_mKernel // Kernel
+#define R_SYM rb_cSymbol
+#define R_KRL rb_mKernel
 #define ERROR_RUNTIME rb_eRuntimeError
 #define ERROR_ARGUMENT rb_eArgError
 
@@ -50,7 +55,10 @@ ________________________________________________________________________________
 #define r_get_class(r_class) rb_const_get(rb_cObject, rb_intern(r_class))
 #define r_class_add_method_public(r_class, func_name, func, num_args) rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(func), num_args);
 #define r_class_add_method_private(r_class, func_name, func, num_args) rb_define_private_method(r_class, func_name, RUBY_METHOD_FUNC(func), num_args);
-#define r_as_bool(expr) return expr ? R_TRUE : R_FALSE;
+
+#define r_module_add_child_class(class_name, parent_class, parent_module) rb_define_class_under(parent_module, "" #class_name, parent_class);
+#define r_module_add(module_name) rb_define_module("" #module_name);
+#define r_module_add_module(module_name, parent_module) rb_define_module_under(parent_module, "" #module_name);
 
 #define ensure_not_frozen(arg_to_check) rb_check_frozen(arg_to_check);
 #define r_type(arg_to_check, r_class) RB_TYPE_P(arg_to_check, r_class)
@@ -91,18 +99,17 @@ ________________________________________________________________________________
 #define r_func_raw2(func_name, param_0, param_1, expr) VALUE func_name(VALUE param_0, VALUE param_1);VALUE func_name(VALUE param_0, VALUE param_1){expr}
 #define r_func_self_them(func_name, expr) r_func_raw2(func_name, self, them, expr)
 #define r_func_me_them(func_name, expr) r_func2_raw(func_name, VALUE self, VALUE them, expr)
-#define r_func(func_name, expr) r_func_raw(func_name, r_as_bool(expr))
+#define r_func(func_name, expr) r_func_raw(func_name, return (expr) ? R_TRUE : R_FALSE;)
 #define c_func(func_name, expr) declare_func(func_name, expr, void, void)
 
 #define re_me return self;
-#define re_me_if_ary_empty(the_ary) if (r_ary_is_empty(the_ary)){re_me}
-#define re_me_if_str_empty(the_str) if (r_str_is_empty(the_str)){re_me}
 
 #define autoload_file(path)        rb_require(path);
 #define autoload_ruuuby(path)     autoload_file("ruuuby/" #path)
+#define autoload_enumerable(path) autoload_file("ruuuby/class/enumerable/" #path)
 #define autoload_module(path)     autoload_file("ruuuby/module/" #path)
 #define autoload_class(path)      autoload_file("ruuuby/class/" #path)
-#define autoload_class_nums(path) autoload_file("ruuuby/class/nums/" #path)
+#define autoload_nums(path)       autoload_file("ruuuby/class/nums/" #path)
 #define autoload_default(path)    autoload_file("" #path)
 
 /*____________________________________________________________________________________________________________________________________________________________________
@@ -111,7 +118,39 @@ ________________________________________________________________________________
  |    \__/ | \| \__, .__/ .   |__/ |___ \__, |___ /~~\ |  \ /~~\  |  | \__/ | \| .__/      |     |  |  | |    |___ |___  |  | |___ | \|  |  /~~\  |  | \__/ | \| .__/
 ____________________________________________________________________________________________________________________________________________________________________ */
 
-// class{Object}
+/*____________________________________________________________________________________________________________________
+ __                  __
+|__) |  | |  | |  | |__) \ /
+|  \ \__/ \__/ \__/ |__)  |
+
+ | 0x0 |
+    module ::Ruuuby
+        module ParamErr
+            # +WrongParamType+ extends +ArgumentError+ and provides a light wrapper for throwing more specific arg errors.
+            #
+            # fully-qualifying: +::Ruuuby::ParamErr::WrongParamType+
+            class WrongParamType < ArgumentError
+            end
+        end
+    end
+
+ | 0x1 |
+    ary?, bool?, int?, hsh?, sym?, str?, stry?
+
+_____________________________________________________________________________________________________________________ */
+
+// | 0x0 |
+VALUE module_ruuuby;
+VALUE module_param_errs;
+VALUE class_wrong_param_type;
+
+/*____________________________________________________________________________________________________________________
+ __   __        ___  __  ___
+/  \ |__)    | |__  /  `  |
+\__/ |__) \__/ |___ \__,  |
+_____________________________________________________________________________________________________________________ */
+
+// | 0x1 | class{Object} |
 r_func(m_obj_ary , is_ary(self))
 r_func(m_obj_bool, is_bool(self))
 r_func(m_obj_hash, is_hsh(self))
@@ -120,7 +159,25 @@ r_func(m_obj_sym , is_sym(self))
 r_func(m_obj_str , is_str(self))
 r_func(m_obj_stry, is_str(self) || is_sym(self))
 
-// class{NilClass} - function{empty?}
+/*___________________________________________________________________________________________________________________
+       ___  ___  __   ___  __
+| |\ |  |  |__  / _` |__  |__)
+| | \|  |  |___ \__> |___ |  \
+_____________________________________________________________________________________________________________________ */
+
+// | 0x2a | class{Integer} | function{finite?} |
+r_func_raw(m_int_is_finite, return R_TRUE;)
+
+// | 0x2b | class{Integer} | function{infinite?} |
+r_func_raw(m_int_is_not_finite, return NIL;)
+
+/*___________________________________________________________________________________________________________________
+
+|\ | | |
+| \| | |___
+_____________________________________________________________________________________________________________________ */
+
+// | 0x3 | class{NilClass} | function{empty?} |
 r_func_raw(m_nil_empty, return R_TRUE;)
 
 /*____________________________________________________________________________________________________________________
@@ -129,7 +186,8 @@ r_func_raw(m_nil_empty, return R_TRUE;)
 .__/     |     |  \    |    | \|    \__>
 _____________________________________________________________________________________________________________________ */
 
-r_func_self_them(m_str_prepend, // function{>>}
+// | 0x4 | class{String} | function{>>} |
+r_func_self_them(m_str_prepend,
     if (is_str(them)) {
         if (r_str_is_empty(them)) {
             re_me
@@ -144,20 +202,22 @@ r_func_self_them(m_str_prepend, // function{>>}
 )
 
 /*___________________________________________________________________________________________________________________
-                __      __
-        /\     |__)    |__)     /\     \ /
-       /~~\    |  \    |  \    /~~\     |
+         __      __
+ /\     |__)    |__)     /\     \ /
+/~~\    |  \    |  \    /~~\     |
 _____________________________________________________________________________________________________________________ */
 
-r_func_self_them(m_ary_prepend, // function{>>}
+// | 0x5a | class{Array} | function{>>} |
+r_func_self_them(m_ary_prepend,
     ensure_not_frozen(self)
     r_ary_prepend(self, them)
     re_me
 )
 
-r_func_raw(m_ary_remove_empty, // function{remove_empty!}
+// | 0x5b | class{Array} | function{remove_empty!} |
+r_func_raw(m_ary_remove_empty,
     ensure_not_frozen(self)
-    re_me_if_ary_empty(self)
+    if (r_ary_is_empty(self)){re_me}
     long len = len_ary(self);
     long i;
     VALUE v;
@@ -171,14 +231,15 @@ r_func_raw(m_ary_remove_empty, // function{remove_empty!}
     re_me
 )
 
-r_func_self_them(m_ary_disjunctive_union, // function{disjunctive_union}
-    VALUE output   = rb_ary_new();
+// | 0x5c | class{Array} | function{disjunctive_union!} | can assume valid, non-empty arrays provided |
+r_func_self_them(m_ary_disjunctive_union,
+    long  i;
+    VALUE n;
     long  len_me   = len_ary(self);
     long  len_them = len_ary(them);
-    long  i        = 0;
-    VALUE n;
+    VALUE output   = (len_me + len_them) < R_ARY_DEFAULT_SIZE ? rb_ary_new_capa(len_me + len_them) : rb_ary_new();
     if (len_me >= len_them) {
-        for (; i < len_them; i++) {
+        for (i = 0L; i < len_them; i++) {
             n = r_ary_get(them, i); if(!r_ary_has(self, n)){r_ary_add(output, n)}
             n = r_ary_get(self, i); if(!r_ary_has(them, n)){r_ary_add(output, n)}
         }
@@ -186,7 +247,7 @@ r_func_self_them(m_ary_disjunctive_union, // function{disjunctive_union}
             n = r_ary_get(self, i); if(!r_ary_has(them, n)){r_ary_add(output, n)}
         }
     } else {
-        for (; i < len_me; i++) {
+        for (i = 0L; i < len_me; i++) {
             n = r_ary_get(self, i); if(!r_ary_has(them, n)){r_ary_add(output, n)}
             n = r_ary_get(them, i); if(!r_ary_has(self, n)){r_ary_add(output, n)}
         }
@@ -205,7 +266,12 @@ ________________________________________________________________________________
 
 c_func(Init_ruby_class_mods,
 
-    // Object
+    // | 0x0 |
+    module_ruuuby          = r_module_add(Ruuuby)
+    module_param_errs      = r_module_add_module(ParamErr, module_ruuuby)
+    class_wrong_param_type = r_module_add_child_class(WrongParamType, ERROR_ARGUMENT, module_param_errs)
+
+    // | 0x1 |
     r_class_add_method_public  (R_OBJ, "ary?"             , m_obj_ary              , 0)
     r_class_add_method_public  (R_OBJ, "bool?"            , m_obj_bool             , 0)
     r_class_add_method_public  (R_OBJ, "int?"             , m_obj_int              , 0)
@@ -213,30 +279,36 @@ c_func(Init_ruby_class_mods,
     r_class_add_method_public  (R_OBJ, "sym?"             , m_obj_sym              , 0)
     r_class_add_method_public  (R_OBJ, "str?"             , m_obj_str              , 0)
     r_class_add_method_public  (R_OBJ, "stry?"            , m_obj_stry             , 0)
-
-    // Array
+    // | 0x2 |
+    r_class_add_method_public  (R_INT, "finite?"           , m_int_is_finite         , 0)
+    r_class_add_method_public  (R_INT, "infinite?"         , m_int_is_not_finite     , 0)
+    // | 0x3 |
+    r_class_add_method_public  (R_NIL, "empty?"           , m_nil_empty            , 0)
+    // | 0x4 |
+    r_class_add_method_public  (R_STR, ">>"               , m_str_prepend          , 1)
+    // | 0x5 |
     r_class_add_method_public  (R_ARY, "remove_empty!"    , m_ary_remove_empty     , 0)
     r_class_add_method_private (R_ARY, "disjunctive_union", m_ary_disjunctive_union, 1)
     r_class_add_method_public  (R_ARY, ">>"               , m_ary_prepend          , 1)
-    // String
-    r_class_add_method_public  (R_STR, ">>"               , m_str_prepend          , 1)
-    // NilClass
-    r_class_add_method_public  (R_NIL, "empty?"           , m_nil_empty            , 0)
 
+    // | 0x6 |
+    autoload_default(set)
     autoload_default(tty-command)
+    autoload_module(enumerable)
     autoload_module(module)
     autoload_module(kernel)
     autoload_class(obj)
     autoload_ruuuby(arg_err)
-    autoload_class(hsh)
-    autoload_class_nums(int)
-    autoload_class_nums(float)
+    autoload_enumerable(hsh)
+    autoload_nums(numeric)
+    autoload_nums(int)
+    autoload_nums(float)
     autoload_default(bigdecimal)
-    autoload_class_nums(big_decimal)
-    autoload_class_nums(rational)
-    autoload_class_nums(complex)
+    autoload_nums(big_decimal)
+    autoload_nums(rational)
+    autoload_nums(complex)
     autoload_class(nil)
-    autoload_class(ary)
+    autoload_enumerable(ary)
+    autoload_enumerable(set)
     autoload_class(str)
-    autoload_ruuuby(version)
 )

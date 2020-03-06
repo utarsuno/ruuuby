@@ -16,16 +16,17 @@ end
 # /  \  /\  .
 # \__X /~~\ .
 def add_task_rspec(task_name, additional_options=[])
-  spec_default_opts     = ['--format documentation', '--color', '--require spec_helper', '--warnings']
+  spec_default_opts     = ['--format documentation', '--color', '--require spec_helper']
   rspec_task            = RSpec::Core::RakeTask.new(task_name)
-  rspec_task.verbose    = true
+  all_options           = (spec_default_opts + additional_options)
+  rspec_task.verbose    = all_options.include?('--warnings')
   rspec_task.rspec_opts = (spec_default_opts + additional_options).join(' ')
 end
 
 add_task_rspec(:rspec_unit, ['--tag ~@performance --tag ~@audits'])
 add_task_rspec(:rspec_audit, ['--tag @audits --tag ~@performance'])
 add_task_rspec(:rspec_performance, ['--tag @performance --tag ~@audits'])
-add_task_rspec(:rspec_all)
+add_task_rspec(:rspec_all, ['--warnings'])
 
 #  __   __   __              ___      ___      ___    __
 # |  \ /  \ /  ` |  |  |\/| |__  |\ |  |   /\   |  | /  \ |\ |

@@ -33,17 +33,44 @@ module RuuubyTestHelper
   }
 
   CONFIG_HASH = {
-      aliases: {🔑?: :key?, ∃🔑?: :key?, ∀: :each, ∅?: :empty?},
+      aliases: {
+          🔑?: :key?,
+          ∃🔑?: :key?,
+          ∀: :each,
+          ∅?: :empty?,
+          ∋?: :include?,
+      },
+  }
+
+  CONFIG_NUMERIC = {
+      aliases: {
+          infinite?: :∞?
+      }
+  }
+
+  CONFIG_ENUMERABLE = {
+      ruby: [:∌?],
+      aliases: {
+          map: :⨍
+      }
+  }
+
+  CONFIG_SET = {
+      ruby: [:remove_empty!],
+      aliases: {
+          empty?: :∅?,
+          each: :∀,
+          include?: :∋?,
+      }
   }
 
   CONFIG_ARRAY = {
-      ruby: [:📊, :∌?, :⊕, :∖, :≈, :end_with?],
+      ruby: [:📊, :∌?, :⊕, :∖, :≈, :end_with?, :start_with?, :ensure_start!, :ensure_ending!],
       c: [:remove_empty!, :disjunctive_union, :>>],
       aliases: {
-          each: [:∑, :∀],
-          map: :⨍,
-          include?: :∋?,
+          each: [:∀],
           uniq_to_me: :∖,
+          include?: :∋?,
           empty?: :∅?
       }
   }

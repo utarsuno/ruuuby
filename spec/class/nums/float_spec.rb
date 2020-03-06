@@ -87,48 +87,48 @@ RSpec.describe 'float.rb' do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
-    context 'func[ℕ?]: performs extremely quickly' do
+    context 'func[ℕ?]: performs very quickly' do
       it 'for cases: true' do
-        expect{0.0.ℕ?}.to perform_extremely_quickly
+        expect{0.0.ℕ?}.to perform_very_quickly
       end
       it 'cases: negative' do
-        expect{data_nan.ℕ?}.to perform_extremely_quickly
+        expect{data_nan.ℕ?}.to perform_very_quickly
       end
     end
 
-    context 'func[ℤ?]: performs extremely quickly' do
+    context 'func[ℤ?]: performs very quickly' do
       it 'for cases: true' do
-        expect{-1337.0.ℤ?}.to perform_extremely_quickly
+        expect{-1337.0.ℤ?}.to perform_very_quickly
       end
       it 'cases: negative' do
-        expect{data_nan.ℤ?}.to perform_extremely_quickly
+        expect{data_nan.ℤ?}.to perform_very_quickly
       end
     end
 
-    context 'func[ℂ?]: performs extremely quickly' do
+    context 'func[ℂ?]: performs very quickly' do
       it 'for cases: true' do
-        expect{1.337.ℂ?}.to perform_extremely_quickly
+        expect{1.337.ℂ?}.to perform_very_quickly
       end
       it 'cases: negative' do
-        expect{data_nan.ℂ?}.to perform_extremely_quickly
+        expect{data_nan.ℂ?}.to perform_very_quickly
       end
     end
 
-    context 'func[ℚ?]: performs extremely quickly' do
+    context 'func[ℚ?]: performs very quickly' do
       it 'for cases: true' do
-        expect{1.0.ℚ?}.to perform_extremely_quickly
+        expect{1.0.ℚ?}.to perform_very_quickly
       end
       it 'cases: negative' do
-        expect{data_nan.ℚ?}.to perform_extremely_quickly
+        expect{data_nan.ℚ?}.to perform_very_quickly
       end
     end
 
-    context 'func[ℝ?]: performs extremely quickly' do
+    context 'func[ℝ?]: performs very quickly' do
       it 'for cases: true' do
-        expect{0.0.ℝ?}.to perform_extremely_quickly
+        expect{0.0.ℝ?}.to perform_very_quickly
       end
       it 'cases: negative' do
-        expect{data_nan.ℝ?}.to perform_extremely_quickly
+        expect{data_nan.ℝ?}.to perform_very_quickly
       end
     end
   end

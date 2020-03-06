@@ -38,14 +38,9 @@ class BigDecimal
   end
 
   # @return [Boolean] true, (if-valid) big decimals can be represented as complex numbers (with imaginary component of 0)
-  def ℂ?
-    return false unless self.finite?
-    true
-  end
+  alias_method :ℂ?, :finite?
 
   # @return [Boolean] true, if this big decimal is a real number
-  def ℝ?
-    return false unless self.finite?
-    true
-  end
+  alias_method :ℝ?, :finite?
+
 end
