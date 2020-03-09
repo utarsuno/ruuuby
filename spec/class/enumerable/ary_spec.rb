@@ -16,7 +16,7 @@ RSpec.describe 'ary' do
       end
     end
 
-    context 'by adding function[>>]' do
+    context 'by adding function{>>}' do
       it 'works correctly' do
         expect([] >> 1337).to eq([1337])
         expect([1337, 1337] >> 1337).to eq([1337, 1337, 1337])
@@ -38,37 +38,50 @@ RSpec.describe 'ary' do
       end
     end
 
-    context 'by adding function[≈] (equal_contents?)' do
+    context 'by adding function{≈≈} (equal_contents?)' do
       context 'handles needed scenarios' do
-        it 'for cases: positive' do
-          expect(([].≈([]))).to eq(true)
-          expect(([1].≈([1]))).to eq(true)
-          expect(([nil].≈([nil]))).to eq(true)
-          expect(([1, nil, 'a', 1].≈([nil, 'a', 1, 1]))).to eq(true)
-          expect(([nil, nil].≈([nil, nil]))).to eq(true)
-          expect(([1, 2, 3].≈([3, 1, 2]))).to eq(true)
-          expect(([1, 2, 3].≈([1, 2, 3]))).to eq(true)
-          expect(([1, 4, 2].≈([1, 2, 4]))).to eq(true)
+        context 'for cases: positive' do
+          it 'handles empty values' do
+            expect(([].≈≈([]))).to eq(true)
+          end
+          it 'handles regular checks' do
+            expect(([1].≈≈([1]))).to eq(true)
+            expect(([nil].≈≈([nil]))).to eq(true)
+            expect(([1, nil, 'a', 1].≈≈([nil, 'a', 1, 1]))).to eq(true)
+            expect(([nil, nil].≈≈([nil, nil]))).to eq(true)
+            expect(([1, 2, 3].≈≈([3, 1, 2]))).to eq(true)
+            expect(([1, 2, 3].≈≈([1, 2, 3]))).to eq(true)
+            expect(([1, 4, 2].≈≈([1, 2, 4]))).to eq(true)
+          end
         end
-        it 'for cases: negative' do
-          expect(([1, 2, 3].≈([1, 2]))).to eq(false)
-          expect(([1, 'a', 1].≈(['a', 1]))).to eq(false)
-          expect(([1, nil, 'a', 1].≈([nil, 'a', 1]))).to eq(false)
-          expect(([nil].≈([]))).to eq(false)
-          expect(([5].≈([9]))).to eq(false)
-          expect(([5].≈([]))).to eq(false)
-          expect(([].≈([9]))).to eq(false)
-          expect(([5].≈([9, 4]))).to eq(false)
+        context 'for cases: negative' do
+          it 'handles empty values' do
+            expect([].≈≈ [nil]).to eq(false)
+            expect([nil].≈≈ []).to eq(false)
+          end
+          it 'handles regular checks' do
+            expect(([1, 2, 3].≈≈([1, 2]))).to eq(false)
+            expect(([1, 'a', 1].≈≈(['a', 1]))).to eq(false)
+            expect(([1, nil, 'a', 1].≈≈([nil, 'a', 1]))).to eq(false)
+            expect(([nil].≈≈([]))).to eq(false)
+            expect(([5].≈≈([9]))).to eq(false)
+            expect(([5].≈≈([]))).to eq(false)
+            expect(([].≈≈([9]))).to eq(false)
+            expect(([5].≈≈([9, 4]))).to eq(false)
+          end
         end
       end
       it 'detects bad param' do
-        expect{%w().≈ nil}.to raise_exception(ArgumentError)
-        expect{[1, nil, 'abc'].≈({})}.to raise_exception(ArgumentError)
+        expect{%w().≈≈ nil}.to raise_exception(ArgumentError, "| c{Array}-> m{equal_contents?} got arg(them) w/ type{NilClass}, required-type{Array} |")
+        expect{[1, nil, 'abc'].≈≈({})}.to raise_exception(ArgumentError, "| c{Array}-> m{equal_contents?} got arg(them) w/ type{Hash}, required-type{Array} |")
       end
     end
 
-    context 'by adding function[📊] (frequency counts)' do
+    context 'by adding function{📊} (frequency counts)' do
       context 'handles needed scenarios' do
+        it 'for cases: empty' do
+          expect([].📊).to eq(nil)
+        end
         it 'for cases: positive' do
           results = {}
           results[nil] = 1
@@ -80,7 +93,14 @@ RSpec.describe 'ary' do
 
           expect([1, 1, 2, 'a', '1', nil, []].📊).to eq(results)
 
-          expect([].📊).to eq({})
+          results_one      = {}
+          results_one['1'] = 1
+          results_one[1]   = 1
+          expect(['1', 1].📊).to eq(results_one)
+
+          results_just_one = {}
+          results_just_one['1'] = 1
+          expect(['1'].📊).to eq(results_just_one)
 
           results2 = {}
           results2[nil] = 2
@@ -99,18 +119,23 @@ RSpec.describe 'ary' do
       end
     end
 
-    context 'by adding function[⊕] (symmetric difference)' do
+    context 'by adding function{disjunctive_union} (symmetric difference), (alias: ⊕)' do
       context 'handles needed scenarios' do
+        it 'for cases: one side is empty' do
+          expect(([].⊕ [])).to eq([])
+          expect(([1, 2, 3].⊕ [])).to eq([1, 2, 3])
+          expect(([].⊕ [1, 2, 3])).to eq([1, 2, 3])
+        end
         it 'for cases: positive' do
-          expect(([1, 2, 3].⊕([3, 4])).≈([1, 2, 4])).to eq(true)
-          expect(([1, 2, 3, 1, 1].⊕([3, 4])).≈([1, 2, 4, 1, 1])).to eq(true)
-          expect([3, 4].⊕([1, 2, 3]).≈([1, 2, 4])).to eq(true)
+          expect(([1, 2, 3].⊕([3, 4])).≈≈([1, 2, 4])).to eq(true)
+          expect(([1, 2, 3, 1, 1].⊕([3, 4])).≈≈([1, 2, 4, 1, 1])).to eq(true)
+          expect([3, 4].⊕([1, 2, 3]).≈≈([1, 2, 4])).to eq(true)
         end
         it 'for matching output of: (self - ary) | (ary - self)' do
           ary_a  = [1337, 8, 2, 9, 3, 56, 1337]
           ary_b  = [9, 2, 1337, 929645, 0]
           result = ((ary_a - ary_b) | (ary_b - ary_a))
-          expect((ary_a.⊕(ary_b)).≈(result)).to eq(true)
+          expect((ary_a.⊕(ary_b)).≈≈(result)).to eq(true)
         end
         it 'for cases: bad param' do
           expect{%w().⊕ nil}.to raise_exception(ArgumentError)
@@ -193,7 +218,7 @@ RSpec.describe 'ary' do
       end
     end
 
-    context 'by adding function[∖] (relative complement)' do
+    context 'by adding function{∖} (relative complement)' do
       it 'works correctly' do
         expect([2, 3, 4].∖([1, 2, 3])).to eq([4])
         expect([1, 2, 3].∖([2, 3, 4])).to eq([1])
@@ -254,7 +279,7 @@ RSpec.describe 'ary' do
       end
     end
 
-    context 'by adding function[remove_empty!]' do
+    context 'by adding function{remove_empty!}' do
       context 'handles cases' do
         context 'positive' do
           it 'all empty' do
@@ -309,29 +334,29 @@ RSpec.describe 'ary' do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
-    it 'func[📊] runs fast enough' do
+    it 'func{📊} runs fast enough' do
       expect{[1, nil, 'a', 1, [], 'b', 6, 6, 3, 1].📊}.to perform_very_quickly
     end
-    it 'func[≈] runs fast enough' do
-      expect{[1, 'a', nil, [], 1].≈([1, nil, 'a', 1, []])}.to perform_very_quickly
+    it 'func{≈≈} runs fast enough' do
+      expect{[1, 'a', nil, [], 1].≈≈([1, nil, 'a', 1, []])}.to perform_very_quickly
     end
-    it 'func[⊕] runs fast enough' do
+    it 'func{⊕} runs fast enough' do
       expect{[1, 2, 3].⊕ [3, 4]}.to perform_very_quickly
     end
-    it 'func[∖] runs fast enough' do
+    it 'func{∖} runs fast enough' do
       expect{[1, 2, 3].∖ [2, 3, 4]}.to perform_quickly
     end
-    it 'func[>>] runs fast enough' do
+    it 'func{>>} runs fast enough' do
       expect{[1, 2, 3] >> [2, 3, 4]}.to perform_quickly
     end
 
-    context 'func[ensure_start!] runs fast enough' do
+    context 'func{ensure_start!} runs fast enough' do
       it 'for scenarios: positive' do
         expect{expect(%w(b a a).ensure_start!('b', 'b', 'b', 'a', 'b'))}.to perform_very_quickly
       end
     end
 
-    context 'func[start_with?] runs fast enough' do
+    context 'func{start_with?} runs fast enough' do
       it 'for scenarios: positive' do
         expect{['a', 1, 3, 3, 3, 'b', nil, [], []].start_with?('a', 1, 3, 3)}.to perform_very_quickly
       end
@@ -340,7 +365,7 @@ RSpec.describe 'ary' do
       end
     end
 
-    context 'func[end_with?] runs fast enough' do
+    context 'func{end_with?} runs fast enough' do
       it 'for scenarios: positive' do
         expect{['a', ['bb'], 5, 'a', ['bb']].end_with?('a', ['bb'])}.to perform_very_quickly
       end
@@ -349,23 +374,23 @@ RSpec.describe 'ary' do
       end
     end
 
-    context 'func[ensure_ending!] runs fast enough' do
+    context 'func{ensure_ending!} runs fast enough' do
       it 'for scenarios: positive' do
         expect{[3, nil, {b: 'apple'}].ensure_ending!(nil, {b: 'apple'}, 4)}.to perform_very_quickly
       end
     end
 
-    it 'func[remove_empty!]: runs perform_quickly' do
+    it 'func{remove_empty!}: runs perform_quickly' do
       expect{[%w(a bb c)].remove_empty!}.to perform_very_quickly
       expect{[nil, nil, 'c'].remove_empty!}.to perform_very_quickly
       scenario = ['0', nil, 'a', 1337, [], {}, 0, '', 'hiya', {nil: nil}]
       expect{scenario.remove_empty!}.to perform_quickly
     end
-    it 'func[remove_empty!]: runs quickly with a bigger array' do
+    it 'func{remove_empty!}: runs quickly with a bigger array' do
       scenario = ['0', nil, 'a', 1337, [], {}, 0, '', 'hiya', {nil: nil}, nil, nil, nil, 1, [{}], [], nil, [], 1, 2, 56672323]
       expect{scenario.remove_empty!}.to perform_quickly
     end
-    it 'func[remove_empty!]: runs quickly with an even bigger array' do
+    it 'func{remove_empty!}: runs quickly with an even bigger array' do
       scenario = [123, 123, :f, :rsdvd, 532512, "fcer\n", [[[[[['a'], 'b']]]]], '0', nil, 'a', 1337, [], {}, 0, '', 'hiya', {nil: nil}, nil, nil, nil, 1, [{}], [], nil, [], 1, 2, 56672323]
       expect{scenario.remove_empty!}.to perform_quickly
     end

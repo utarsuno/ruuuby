@@ -3,6 +3,24 @@ require 'set'
 
 module ::RuuubyConfigs
 
+  module NamingSchema
+    RUUUBY_NAME_GEM       = 'ruuuby'.freeze
+    RUUUBY_NAME_EXTENSION = 'ruby_class_mods'.freeze
+  end
+
+  module Extensions
+    module RubyClassMods
+      PATH_CONF = 'ext/ruby_class_mods/extconf.rb'.freeze
+    end
+  end
+
+  module Requirements
+    RUBY_VERSION          = '2.7.0'.freeze
+    RUBY_VERSION_PATCH    = 0
+    RUBY_VERSION_REVISION = '647ee6f091eafcce70ffb75ddf7e121e192ab217'.freeze
+    RUBY_PLATFORM         = 'x86_64-darwin18'.freeze
+  end
+
   module GemDependencies
 
     GEM_TTY_COMMAND     = :'tty-command'

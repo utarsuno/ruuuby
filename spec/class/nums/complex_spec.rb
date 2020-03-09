@@ -10,17 +10,13 @@ RSpec.describe 'complex.rb' do
 
   context 'extends class[Complex]' do
 
-    context 'by adding functions for (ℕ?, ℤ?, ℂ?, ℚ?, ℝ?)' do
+    context 'by adding needed functions' do
       it 'exists' do
-        expect(::Complex.∃func?(:ℕ?)).to eq(true)
-        expect(::Complex.∃func?(:ℤ?)).to eq(true)
-        expect(::Complex.∃func?(:ℂ?)).to eq(true)
-        expect(::Complex.∃func?(:ℚ?)).to eq(true)
-        expect(::Complex.∃func?(:ℝ?)).to eq(true)
+        RuuubyTestHelper::Nums::CONFIG_COMPLEX[:ruby].∀{|c| expect(::Complex.∃func?(c)).to eq(true)}
       end
     end
 
-    context 'by adding function[ℕ?]' do
+    context 'by adding function{ℕ?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           expect(data_zero.ℕ?).to eq(true)
@@ -37,7 +33,7 @@ RSpec.describe 'complex.rb' do
       end
     end
 
-    context 'by adding function[ℤ?]' do
+    context 'by adding function{ℤ?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           expect(data_minus_leet.ℤ?).to eq(true)
@@ -55,7 +51,7 @@ RSpec.describe 'complex.rb' do
       end
     end
 
-    context 'by adding function[ℚ?]' do
+    context 'by adding function{ℚ?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           expect(dataf_one.ℚ?).to eq(true)
@@ -69,7 +65,7 @@ RSpec.describe 'complex.rb' do
       end
     end
 
-    context 'by adding function[ℂ?]' do
+    context 'by adding function{ℂ?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           expect(datac_one.ℂ?).to eq(true)
@@ -80,7 +76,7 @@ RSpec.describe 'complex.rb' do
       end
     end
 
-    context 'by adding function[ℝ?]' do
+    context 'by adding function{ℝ?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           expect(data_one.ℝ?).to eq(true)
@@ -92,13 +88,24 @@ RSpec.describe 'complex.rb' do
       end
     end
 
+    context 'by adding function{𝕌?}' do
+      context 'handles needed scenarios' do
+        it 'cases: positive' do
+          expect(data_one.𝕌?).to eq(true)
+        end
+        it 'cases: negative' do
+          expect(data_nan.𝕌?).to eq(false)
+        end
+      end
+    end
+
   end
 
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
-    context 'func[ℕ?]: performs extremely quickly' do
+    context 'func{ℕ?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{data_zero.ℕ?}.to perform_extremely_quickly
       end
@@ -107,7 +114,7 @@ RSpec.describe 'complex.rb' do
       end
     end
 
-    context 'func[ℤ?]: performs extremely quickly' do
+    context 'func{ℤ?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{data_minus_leet.ℤ?}.to perform_extremely_quickly
       end
@@ -116,7 +123,7 @@ RSpec.describe 'complex.rb' do
       end
     end
 
-    context 'func[ℂ?]: performs extremely quickly' do
+    context 'func{ℂ?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{datac_one.ℂ?}.to perform_extremely_quickly
       end
@@ -125,7 +132,7 @@ RSpec.describe 'complex.rb' do
       end
     end
 
-    context 'func[ℚ?]: performs extremely quickly' do
+    context 'func{ℚ?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{dataf_one.ℚ?}.to perform_extremely_quickly
       end
@@ -134,7 +141,7 @@ RSpec.describe 'complex.rb' do
       end
     end
 
-    context 'func[ℝ?]: performs extremely quickly' do
+    context 'func{ℝ?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{data_one.ℝ?}.to perform_extremely_quickly
       end
@@ -142,6 +149,16 @@ RSpec.describe 'complex.rb' do
         expect{data_nan.ℝ?}.to perform_extremely_quickly
       end
     end
+
+    context 'func{𝕌?}: performs extremely quickly' do
+      it 'for cases: true' do
+        expect{data_one.𝕌?}.to perform_extremely_quickly
+      end
+      it 'for cases: false' do
+        expect{data_nan.𝕌?}.to perform_extremely_quickly
+      end
+    end
+
   end
 
 end

@@ -14,7 +14,7 @@ require 'rake'
 require 'rspec'
 require 'ruuuby/version'
 
-require_relative '../conditionals/gem_dependencies'
+require_relative '../conditionals/ruuuby_configs'
 
 require 'rspec-benchmark'
 
@@ -30,6 +30,8 @@ RSpec.configure do |config|
   end
 
   config.include(RSpec::Benchmark::Matchers)
+  # TODO: only have this included during performance tests
   config.include(PerformanceTestHelper)
   config.include(GeneralTestHelper)
+
 end

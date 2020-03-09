@@ -33,7 +33,7 @@ module ::Kernel
 
   # Return the square-root of the provided argument.
   #
-  # @param [Numeric] n
+  # @param [Integer|Float|Numeric] n
   #
   # @return [Float]
   def √(n) ; Math.sqrt(n) ; end

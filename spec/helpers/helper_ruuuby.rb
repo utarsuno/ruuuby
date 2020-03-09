@@ -1,13 +1,39 @@
 
 module RuuubyTestHelper
 
+  module FeatureMath
+    NUMERICAL_SETS = [:ℕ?, :ℤ?, :ℂ?, :ℚ?, :ℝ?, :𝕌?]
+  end
+
+  module Nums
+    CONFIG_INTEGER = {
+        ruby: [:finite?, :infinite?, :∞?] + RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
+    }
+    CONFIG_FLOAT = {
+        ruby: RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
+    }
+    CONFIG_RATIONAL = {
+        ruby: RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
+    }
+    CONFIG_COMPLEX = {
+        ruby: RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
+    }
+    CONFIG_BIG_DECIMAL = {
+        ruby: RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
+    }
+    CONFIG_NUMERIC = {
+        ruby: [:∞?] + RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
+    }
+  end
+
   CONFIG_OBJECT = {
-      ruby: [:🛑bool❓, :🛑int❓, :🛑ary❓, :🛑str❓, :🛑stry❓, :🛑str_or_ary❓],
+      ruby: [:🛑bool❓, :🛑🅱️❓, :🛑int❓, :🛑ary❓, :🛑str❓, :🛑stry❓, :🛑str_or_ary❓],
       c: [:int?, :str?, :stry?, :hsh?, :ary?, :bool?, :sym?],
       aliases: {
           object_id: :🆔,
           freeze: :❄️,
-          frozen?: :❄️?
+          frozen?: :❄️?,
+          bool?: :🅱️?
       }
   }
 
@@ -36,6 +62,8 @@ module RuuubyTestHelper
       aliases: {
           🔑?: :key?,
           ∃🔑?: :key?,
+          🗝?: :key?,
+          ∃🗝?: :key?,
           ∀: :each,
           ∅?: :empty?,
           ∋?: :include?,
@@ -43,8 +71,10 @@ module RuuubyTestHelper
   }
 
   CONFIG_NUMERIC = {
+      ruby: [:𝔹?, :∞?],
       aliases: {
-          infinite?: :∞?
+          infinite?: :∞?,
+          finite?: :𝕌?
       }
   }
 
@@ -65,13 +95,16 @@ module RuuubyTestHelper
   }
 
   CONFIG_ARRAY = {
-      ruby: [:📊, :∌?, :⊕, :∖, :≈, :end_with?, :start_with?, :ensure_start!, :ensure_ending!],
-      c: [:remove_empty!, :disjunctive_union, :>>],
+      ruby: [:📊, :∌?, :⊕, :∖, :≈≈, :end_with?, :start_with?, :ensure_start!, :ensure_ending!],
+      c: [:remove_empty!, :disjunctive_union, :equal_contents?, :frequency_counts, :>>],
       aliases: {
           each: [:∀],
           uniq_to_me: :∖,
           include?: :∋?,
-          empty?: :∅?
+          empty?: :∅?,
+          reverse: :↩️,
+          reverse!: :↩️!,
+          reverse_each: :↩️∀
       }
   }
 

@@ -31,18 +31,20 @@ RSpec.describe 'Object' do
       RuuubyTestHelper::CONFIG_OBJECT[:aliases].∀{|base_func, func_alias| expect(::Object.∃func?(func_alias)).to eq(true)}
     end
 
-    context 'by adding function[🛑bool❓]' do
+    context 'by adding function{🛑bool❓}' do
       context 'handles needed input scenarios' do
         it 'cases[positive]' do
           expect{🛑bool❓('0', false)}.to_not raise_error
+          expect{🛑🅱️❓('0', true)}.to_not raise_error
         end
         it 'cases[negative]' do
           expect{🛑bool❓('0', nil)}.to raise_error(ArgumentError)
+          expect{🛑🅱️❓('0', nil)}.to raise_error(ArgumentError)
         end
       end
     end
 
-    context 'by adding function[🛑int❓]' do
+    context 'by adding function{🛑int❓}' do
       context 'handles needed input scenarios' do
         it 'cases[positive]' do
           expect{🛑int❓('0', 5)}.to_not raise_error
@@ -53,7 +55,7 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function[🛑ary❓]' do
+    context 'by adding function{🛑ary❓}' do
       context 'handles needed input scenarios' do
         it 'cases[positive]' do
           expect{🛑ary❓('0', [])}.to_not raise_error
@@ -64,7 +66,7 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function[🛑str❓]' do
+    context 'by adding function{🛑str❓}' do
       context 'handles needed input scenarios' do
         it 'cases[positive]' do
           expect{🛑str❓('0', '5')}.to_not raise_error
@@ -75,7 +77,7 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function[🛑stry❓]' do
+    context 'by adding function{🛑stry❓}' do
       context 'handles needed input scenarios' do
         it 'cases[positive]' do
           expect{🛑stry❓('0', '5')}.to_not raise_error
@@ -87,7 +89,7 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function[🛑str_or_ary❓]' do
+    context 'by adding function{🛑str_or_ary❓}' do
       context 'handles needed input scenarios' do
         it 'cases[positive]' do
           expect{🛑str_or_ary❓('0', '5')}.to_not raise_error
@@ -99,7 +101,7 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function[ary?]' do
+    context 'by adding function{ary?}' do
       it 'a newly created generic object responds to it' do
         expect_response_to(Object.new, :ary?)
       end
@@ -116,29 +118,34 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function[bool?]' do
+    context 'by adding function{bool?}' do
       it 'a newly created generic object also responds' do
         expect_response_to(Object.new, :bool?)
+        expect_response_to(Object.new, :🅱️?)
       end
       it 'without effecting TrueClass instance or FalseClass instance' do
         expect(TrueClass.bool?).to eq(false)
+        expect(TrueClass.🅱️?).to eq(false)
         expect(FalseClass.bool?).to eq(false)
+        expect(FalseClass.🅱️?).to eq(false)
         class MockTrue < TrueClass; end
         class MockFalse < TrueClass; end
         expect(MockTrue.bool?).to eq(false)
+        expect(MockTrue.🅱️?).to eq(false)
         expect(MockFalse.bool?).to eq(false)
+        expect(MockFalse.🅱️?).to eq(false)
       end
       context 'handles needed input scenarios' do
         it 'cases[positive]' do
-          [true, false, 1 == 1, 1 != 2].∀{|n|expect(n.bool?).to eq(true)}
+          [true, false, 1 == 1, 1 != 2].∀{|n|expect(n.bool? && n.🅱️?).to eq(true)}
         end
         it 'cases[negative]' do
-          [Class, Object, NilClass, '', 'true', 'False', -1, 1, 0, [], {}, [false], [true]].∀{|n|expect(n.bool?).to eq(false)}
+          [Class, Object, NilClass, '', 'true', 'False', -1, 1, 0, [], {}, [false], [true]].∀{|n|expect(n.bool? && n.🅱️?).to eq(false)}
         end
       end
     end
 
-    context 'by adding function[hsh?]' do
+    context 'by adding function{hsh?}' do
       it 'a newly created generic object responds to it' do
         expect_response_to(Object.new, :hsh?)
       end
@@ -155,7 +162,7 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function[int?]' do
+    context 'by adding function{int?}' do
       it 'a newly created generic object responds to it' do
         expect_response_to(Object.new, :int?)
       end
@@ -172,7 +179,7 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function[str?]' do
+    context 'by adding function{str?}' do
       it 'a newly created generic object responds to it' do
         expect_response_to(String.new('strstr'), :str?)
       end
@@ -191,7 +198,7 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function[stry?]' do
+    context 'by adding function{stry?}' do
       it 'a newly created generic object responds to it' do
         expect_response_to(String.new('strstr'), :str?)
         expect_response_to(String.new('strstr'), :stry?)
@@ -211,7 +218,7 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function[sym?]' do
+    context 'by adding function{sym?}' do
       context 'with correct return values of' do
         it 'true' do
           another_test = :hello
@@ -235,7 +242,7 @@ RSpec.describe 'Object' do
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
 
-    context 'func[sym?]: performs extremely quickly' do
+    context 'func{sym?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{:sym.sym?}.to perform_extremely_quickly
       end
@@ -244,7 +251,7 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'func[ary?]: performs extremely quickly' do
+    context 'func{ary?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{['a'].ary?}.to perform_extremely_quickly
       end
@@ -253,16 +260,18 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'func[bool?]: performs extremely quickly' do
+    context 'func{bool?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{true.bool?}.to perform_extremely_quickly
+        expect{true.🅱️?}.to perform_extremely_quickly
       end
       it 'for cases: false' do
         expect{0.bool?}.to perform_extremely_quickly
+        expect{0.🅱️?}.to perform_extremely_quickly
       end
     end
 
-    context 'func[hsh?]: performs extremely quickly' do
+    context 'func{hsh?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{{}.hsh?}.to perform_extremely_quickly
       end
@@ -271,7 +280,7 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'func[int?]: performs extremely quickly' do
+    context 'func{int?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{5.int?}.to perform_extremely_quickly
       end
@@ -280,7 +289,7 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'func[str?]: performs extremely quickly' do
+    context 'func{str?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{''.str?}.to perform_extremely_quickly
       end
@@ -289,7 +298,7 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'func[stry?]: performs extremely quickly' do
+    context 'func{stry?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{'a'.stry?}.to perform_extremely_quickly
         expect{:a.stry?}.to perform_extremely_quickly
@@ -299,9 +308,10 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'func[🛑bool❓]: performs extremely quickly' do
+    context 'func{🛑bool❓}: performs extremely quickly' do
       it 'cases[positive]' do
         expect{🛑bool❓('0', false)}.to perform_extremely_quickly
+        expect{🛑🅱️❓('0', true)}.to perform_extremely_quickly
       end
       # TODO: missing coverage
       #it 'cases[negative]' do
@@ -309,7 +319,7 @@ RSpec.describe 'Object' do
       #end
     end
 
-    context 'func[🛑int❓]: performs extremely quickly' do
+    context 'func{🛑int❓}: performs extremely quickly' do
       it 'cases[positive]' do
         expect{🛑int❓('0', 5)}.to perform_extremely_quickly
       end
@@ -319,7 +329,7 @@ RSpec.describe 'Object' do
       #end
     end
 
-    context 'func[🛑ary❓]: performs extremely quickly' do
+    context 'func{🛑ary❓}: performs extremely quickly' do
       it 'cases[positive]' do
         expect{🛑ary❓('0', [])}.to perform_extremely_quickly
       end
@@ -329,7 +339,7 @@ RSpec.describe 'Object' do
       #end
     end
 
-    context 'func[🛑str❓]: performs extremely quickly' do
+    context 'func{🛑str❓}: performs extremely quickly' do
       it 'cases[positive]' do
         expect{🛑str❓('0', '5')}.to perform_extremely_quickly
       end
@@ -339,7 +349,7 @@ RSpec.describe 'Object' do
       #end
     end
 
-    context 'func[🛑stry❓]: performs extremely quickly' do
+    context 'func{🛑stry❓}: performs extremely quickly' do
       it 'cases[positive]' do
         expect{🛑stry❓('0', '5')}.to perform_extremely_quickly
         expect{🛑stry❓('0', :a_symbol)}.to perform_extremely_quickly
@@ -350,7 +360,7 @@ RSpec.describe 'Object' do
       #end
     end
 
-    context 'func[🛑str_or_ary❓]: performs extremely quickly' do
+    context 'func{🛑str_or_ary❓}: performs extremely quickly' do
       it 'cases[positive]' do
         expect{🛑str_or_ary❓('0', '5')}.to perform_extremely_quickly
         expect{🛑str_or_ary❓('0', [])}.to perform_extremely_quickly

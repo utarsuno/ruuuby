@@ -17,4 +17,6 @@ class ::Complex
   # @return [Boolean] false, ℝ is notation for real numbers (true if real component is real-number and imaginary component is zero)
   def ℝ? ; self.imaginary == 0 && self.real.ℝ? ; end
 
+  # @return [Boolean] true, the universal-set(𝕌) in this context only excludes (NaN, +∞, and -∞)
+  alias_method :𝕌?, :finite?
 end

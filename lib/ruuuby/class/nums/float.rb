@@ -8,6 +8,9 @@ class ::Float
   # @return [Boolean] true, all floats are real numbers (unless non-finite)
   alias_method :ℝ?, :finite?
 
+  # @return [Boolean] true, the universal-set(𝕌) in this context only excludes (NaN, +∞, and -∞)
+  alias_method :𝕌?, :finite?
+
   # @return [Boolean] true, if there is no imaginary component and the real component is a natural number
   def ℕ?
     return false if ∞? || negative?

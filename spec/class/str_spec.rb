@@ -56,7 +56,7 @@ RSpec.describe 'str' do
         expect('abc'.∋? 'd').to eq(false)
       end
       it 'catches bad arg' do
-        expect{'b'.∋?(nil)}.to throw_wrong_param_type('String', '∋?', 'str', NilClass, String)
+        expect{'b'.∋?(nil)}.to throw_wrong_param_type('String', '∋?', 'them', NilClass, String)
       end
     end
 

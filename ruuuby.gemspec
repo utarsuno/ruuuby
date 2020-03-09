@@ -1,16 +1,21 @@
 #encoding: UTF-8
 
 Gem::Specification.new do |gem|
-  gem.name                  = 'ruuuby'
-  gem.version               = '0.0.15'
+  require_relative 'conditionals/ruuuby_configs'
+  gem_configs       = ::RuuubyConfigs
+  gem_dependencies = gem_configs::GemDependencies
+  gem_schema       = gem_configs::NamingSchema
+
+  gem.name                  = gem_schema::RUUUBY_NAME_GEM
+  gem.version               = '0.0.16'
   gem.summary               = %q{wip: increase quality of Ruby coding life}
   gem.description           = %q{wip: flavored modifications & extensions for increased quality of Ruby coding life}
   gem.authors               = ["Uladzislau Tarsunou"]
   gem.homepage              = 'https://github.com/utarsuno/ruuuby'
   gem.license               = 'MIT'
-  gem.required_ruby_version = Gem::Requirement.new('>= 2.7.0')
+  gem.required_ruby_version = Gem::Requirement.new(">= #{gem_configs::Requirements::RUBY_VERSION}")
   gem.platform              = Gem::Platform.local
-  gem.post_install_message  = "Gem{ruuuby, v0.0.15} has just been installed, cheers!"
+  gem.post_install_message  = "Gem{ruuuby, v0.0.16} has just been installed, cheers!"
   _ = gem.metadata
   _['homepage_uri']          = gem.homepage
   _['source_code_uri']       = "#{gem.homepage}.git"
@@ -30,13 +35,12 @@ Gem::Specification.new do |gem|
   gem.rdoc_options = %w(-x ext --main README.rdoc)
 
   gem.files = Dir.glob('ext/**/*.{c,rb}') + Dir.glob('lib/**/*.rb')
-  gem.extensions << 'ext/ruby_class_mods/extconf.rb'
+  gem.extensions << gem_configs::Extensions::RubyClassMods::PATH_CONF
 
-  require_relative 'conditionals/gem_dependencies'
-  ::RuuubyConfigs::GemDependencies::EnvironmentDevelopment::ALL_GEMS.each do |gem_name, gem_version|
+  gem_dependencies::EnvironmentDevelopment::ALL_GEMS.each do |gem_name, gem_version|
     gem.add_development_dependency gem_name, "~> #{gem_version}"
   end
-  ::RuuubyConfigs::GemDependencies::EnvironmentRuntime::ALL_GEMS.each do |gem_name, gem_version|
+  gem_dependencies::EnvironmentRuntime::ALL_GEMS.each do |gem_name, gem_version|
     gem.add_runtime_dependency gem_name, "~> #{gem_version}"
   end
 

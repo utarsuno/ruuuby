@@ -43,4 +43,7 @@ class BigDecimal
   # @return [Boolean] true, if this big decimal is a real number
   alias_method :ℝ?, :finite?
 
+  # @return [Boolean] true, the universal-set(𝕌) in this context only excludes (NaN, +∞, and -∞)
+  alias_method :𝕌?, :finite?
+
 end

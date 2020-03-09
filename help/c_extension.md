@@ -1,4 +1,25 @@
 
+## Ruby Methods
+
+```
+https://en.wikipedia.org/wiki/List_of_mathematical_symbols
+table taken from:
+https://we4tech.wordpress.com/2013/05/09/different-type-methods-in-ruby/
+```
+
+| flag | use-case |
+| --- | --- |
+| VM_METHOD_TYPE_ISEQ | for "any ruby method which is referenced from source code" |
+| VM_METHOD_TYPE_CFUNC | "method which is created on behalf of native C function |
+| VM_METHOD_TYPE_ATTRSET | methods "declaring attribute setter using 'attr_writer'" |
+| VM_METHOD_TYPE_IVAR | methods "declaring attribute getter using 'attr_reader'" |
+| VM_METHOD_TYPE_BMETHOD | methods "declaring method using 'define_method' and passing proc for method body" |
+| VM_METHOD_TYPE_ZSUPER | methods "explicitly declaring method scope (private, public, or protected) from the class hierarchy, ruby will redeclare method in the child class and mark that one with this flag" |
+| VM_METHOD_TYPE_UNDEF | methods "undef using (undef_method or undef) will be marked with this flag (still method exists but won't respond to) |
+| VM_METHOD_TYPE_NOTIMPLEMENTED | "if not implemented c function (which actually refers to rb_f_notimplement function)" |
+| VM_METHOD_TYPE_OPTIMIZED | "this flag is used for separating few sets of methods from rest; so that VM can handle them better and optimized way", ex: Kernel#send, Proc#call, etc |
+| VM_METHOD_TYPE_MISSING | "When method_missing is declared and
+
 ### Warnings
 ```
 // see: https://croisant.net/ruby-c-extension-cheat-sheet/
@@ -66,7 +87,7 @@ int m_file_get_last_n_bytes() {
 
     //c_file_read(fd, MYFILE)
     //if (fd == -1) {
-    //    printf("Error opening file{/Users/utarsuno/ruby_code/ruuuby/ext/ruby_class_mods/hello_world.test}\n");
+    //    printf("Error opening file{MYFILE}\n");
     //    return -1;
     //}
 
@@ -114,5 +135,63 @@ int m_file_get_last_n_bytes() {
 #define c_file_read(file_descriptor, path) file_descriptor = open(path, O_RDONLY);
 #define c_file_close(file_descriptor) fclose(file_descriptor);
 
+
+#define raise_err_error_opening_file(error_message, error_param) rb_raise(ERROR_RUNTIME, error_message, rb_id2str(rb_intern(error_param)));
+
+//#define r_hsh_has_key(hsh, key) ((!(!RHASH(hsh)->ntbl)) && (st_lookup(RHASH(hsh)->ntbl, key, 0)))
+//#define r_hsh_has_key(hsh, key) ((st_lookup(RHASH(hsh)->ntbl, key, 0)) ? R_TRUE : R_FALSE)
+#define r_hsh_has_key(hsh, key) (rb_hash_has_key(hsh, key) == Qtrue)
+
+
+# TODO: more testing
+// | 0x5c | class{Array} | function{disjunctive_union} |
+r_func_self_them(m_ary_disjunctive_union,
+    if (is_ary(them)) {
+        long  len_me   = len_ary(self);
+        long  len_them = len_ary(them);
+        if (len_me == 0) {
+            //rb_copy_generic_ivar(them, output);
+            //rb_copy_generic_ivar(output, them);
+            return rb_ary_dup(them);
+        } else if (len_them == 0) {
+            //rb_copy_generic_ivar(self, output);
+            //rb_copy_generic_ivar(output, self);
+            return rb_ary_dup(self);
+        } else {
+
+//#include <ruby/backward.h>
+//#include <ruby/backward/classext.h>
+//#include <ruby/backward/rubyio.h>
+//#include <ruby/backward/st.h>
+//#include <ruby/backward/util.h>
+//#include <ruby/io.h>
+//#include <ruby/onigmo.h>
+//#include <ruby/oniguruma.h>
+//#include <ruby/re.h>
+//#include <ruby/regex.h>
+
+//#include <stdlib.h>
+
+// needed for utilizing 'statfs' and others to get file information
+//#include <sys/param.h>
+//#include <sys/mount.h>
+
+// additional C libs
+//#include <stdio.h>
+//#include <unistd.h>
+//#include <sys/types.h>
+//#include <sys/stat.h>
+//#include <fcntl.h>
+//#include <string.h>
+
+
+// see warning at: https://docs.ruby-lang.org/en/2.4.0/extension_rdoc.html
+#define len_ary(ary) RARRAY_LEN(ary)
+#define len_str(str) RSTRING_LEN(str)
+
+
+//#define r_get_class(r_class) rb_const_get(rb_cObject, rb_intern(r_class))
+//#define r_class_add_method_private(r_class, func_name, func, num_args) rb_define_private_method(r_class, func_name, RUBY_METHOD_FUNC(func), num_args);
+//#define ensure_they_are_ary(func_name, them, expr) if (is_ary(them)) {expr} else {raise_err_array_bad_arg_type(func_name, them)}
 
 ```

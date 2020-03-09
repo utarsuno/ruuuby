@@ -31,6 +31,7 @@
 
 | for | use |
 | --- | --- |
+| Emoji Data for UTR #51 | https://unicode.org/Public/emoji/1.0/emoji-data.txt |
 | sets | https://en.wikipedia.org/wiki/ISO_31-11#Sets |
 | currency | https://unicode-table.com/en/sets/currency-symbols/ |
 | arrows   | https://coolsymbol.com/arrow-symbols-arrow-signs.html |
@@ -203,15 +204,6 @@ class Array
         end
       end
     end
-
-  # @param [*]
-  #
-  # @return [Boolean] true, if this array starts with the provided elements
-  def start_with?(*start)
-    return false if (start.∅? || start.length > self.length)
-    return self.first == start[0] if start.length == 1
-    self[0..(start.length-1)] == start
-  end
 
   def last_n(n)
     🛑❓int(:ary, n)
@@ -386,10 +378,52 @@ context 'by adding function[¹]' do
     expect{ |n, i| }
   end
 
-# TODO: Audit
+=begin
+  module ArchivedRubyCode
 
-# c_extension file name should not be conftest.c
+    module Feature_⊕
+      def self.add_comparison_version
+        class ::Array
+          # starting(v0.0.16), switched 📊 from Ruby implementation to C
+          def archived_≈(them)
+            🛑ary❓(:ary, them)
+            return true  if self.∅? && them.∅?
+            return false if self.length != them.length
+            self.📊 == them.📊
+          end
+        end
+      end
+    end
 
+  end
+=end
+
+=begin
+ * add the following gems:
+ 
+ | gem                     | version   |
+ | ----------------------- | --------- |
+ | `sqlite3`               | `1.4.2`   |
+ | `activerecord`          | `5.2.4.1` |
+ | `standalone_migrations` | `5.2.7`   |
+
+
+           'sqlite3': '1.4.2',
+          'activerecord': '5.2.4.1',
+          'standalone_migrations': '5.2.7'
+
+* 0.0.16
+ * unit:        238
+ * performance: 124
+ * audits:      12
+
+# 0.0.15
+ * unit:        219
+ * performance: 111
+ * audits:      8
+
+
+=end
 
 
 ```

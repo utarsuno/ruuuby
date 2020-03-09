@@ -5,33 +5,33 @@ class ::String
   alias_method :∅?, :empty?
   alias_method :>>, :>>
 
-  # @param [String] str
+  # @param [String] them
   #
   # @raise [WrongParamType]
   #
   # @return [Boolean] true, if this string instance contains the provided str
-  def ∋?(str) ; 🛑str❓(:str, str) ; self.include?(str) ; end
+  def ∋?(them) ; 🛑str❓(:them, them) ; self.include?(them) ; end
 
-  # @param [String] str
+  # @param [String] them
   #
   # @raise [WrongParamType]
   #
   # @return [Boolean] true, if this string instance contains the provided str
-  def ∌?(str) ; 🛑str❓(:str, str) ; not self.include?(str) ; end
+  def ∌?(them) ; 🛑str❓(:them, them) ; not self.include?(them) ; end
 
-  # @param [String|Array] content
+  # @param [String|Array] them
   #
   # @raise [WrongParamType]
   #
   # @return [Boolean] true, if this string instance is not contained in the provided str (or array)
-  def ∉?(content) ; 🛑str_or_ary❓(:content, content) ; content.∌?(self) ; end
+  def ∉?(them) ; 🛑str_or_ary❓(:them, them) ; them.∌?(self) ; end
 
-  # @param [String|Array] content
+  # @param [String|Array] them
   #
   # @raise [WrongParamType]
   #
   # @return [Boolean] true, if this string instance is contained in the provided str (or array)
-  def ∈?(content) ; 🛑str_or_ary❓(:content, content) ; content.∋?(self) ; end
+  def ∈?(them) ; 🛑str_or_ary❓(:them, them) ; them.∋?(self) ; end
 
   # @param [String]  start the text that this string start with
   #

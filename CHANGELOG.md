@@ -1,7 +1,28 @@
+# 0.0.16
+ * modify various functions to not allocate un-necessary memory (ex: call `.reverse_each` instead of `reverse.each`)
+ * `ruby_class_mods.c` headers under construction, continued expansion of C-extension use-cases
+ * continued audit on number classes (see notes from v`0.0.15`), add domain checks for `𝕌?`, `𝔹?`
+ * add first multi-step audit test against project file structure (will require better solution, just a starting point)
+ * add/move the following methods/aliases:
+
+ | (c)lass or (m)odule                  | methods/aliases added/moved                               |
+ | ------------------------------------ | --------------------------------------------------------- |
+ | (c) `Array`                          | `equal_contents?` (`≈≈` now aliases it)                    |
+ | (c) `Array`                          | `frequency_counts?` (`📊` now aliases it)                 |
+ | (c) `Array`                          | `disjunctive_union` (`⊕` now aliases it)                  |
+ | (c) `Array`                          | `↩️` (reverse), `↩️!` (reverse!), `↩️∀` (reverse_each)   |
+ | (c) `Object`                         | `🅱️?` (alias to `bool?`), `🛑🅱️❓`                       |
+ | (c) `Integer`                        | `∞?`, `𝕌?`                                                |
+ | (c) `Float`, `Complex`, `BigDecimal` | `𝕌?`                                                      |
+ | (c) `Numeric`                        | `𝕌?`, `𝔹?`                                                |
+ | (c) `Hash`                           | `🗝?`, `∃🗝?` (both alias `key?`, same as `🔑?`, `∃🔑?`) |
+
+---
+
 # 0.0.15
  * add directory `ruuuby/class/enumerable`, move `ary.rb`, `hsh.rb` and newly created `set.rb` into it
  * add files: `ruuuby/module/enumerable.rb` and `ruuuby/class/nums/numeric.rb`
- * move various existing functions/aliases from sub-classes into comment parent modules and/or classes when possible, ex: `∌?` out of `Array` and into `enumerable` to share common features w/ others like `Set`
+ * move various existing functions/aliases from sub-classes into common parent modules and/or classes where possible, ex: `∌?` out of `Array` and into `enumerable` to share common features w/ others like `Set`
  * move certain module/class initial definition/creation into `ruby_class_mods.c`
  * for number classes (ex: `Integer`), fix various logical/performance/test-coverage flaws for funcs like `ℕ?`
  * add/move the following methods/aliases:
@@ -21,7 +42,6 @@
  * adjust naming on param check functions (in `Ruuuby::ParamErr`), ex: `🛑❓bool` change to `🛑bool❓`
  * add c headers in preparation for future functionality
  * for use by `audit RSpecs`: start various means of tracking internal versions, configs, etc; will help form dynamically generated audits and reports
- * misc minor clean-ups
  * temporarily remove `.travis.yml` (auto-generated at project creation but would be useful to utilize)
 
 ---
@@ -81,7 +101,7 @@
  | (c)lass or (m)odule | methods/aliases added |
  | ------------------- | --------------------- |
  | (c) `Hash`          | `🔑?`, `∃🔑?`         |
- | (c) `Array`         | `∀`, `📊`, `≈`        |
+ | (c) `Array`         | `∀`, `📊`, `≈` |
  | (m) `Ruuuby`        | `∃module?`, `∃class?` |
 
 ---
@@ -192,7 +212,6 @@
  * add gem `'rspec-benchmark', '~> 0.5.1'`
  * remove file `.rpsec`, add rspec configurations through code
  * add performance tests along with a few missed ones
- * heavily update `README.md`
  * update `ruuuby.gemspec` to require ruby `2.7.0`
  * split testing into the following groups:
  

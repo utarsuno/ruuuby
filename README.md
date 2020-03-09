@@ -4,13 +4,13 @@
 
 ## Usage
 
-| for       | use |
-| --------- | ----------------------------------------------------------- |
-| `Gemfile`  | `gem 'ruuuby', '~> 0.0.15'`                                 |
-| library   | `require 'ruuuby'`                                          |
-| gem url   | https://rubygems.org/gems/ruuuby                            |
-| changelog | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
-
+| for                             | use                                                         |
+| ------------------------------- | ----------------------------------------------------------- |
+| `Gemfile`                        | `gem 'ruuuby', '~> 0.0.16'`                                 |
+| ruby scripts                    | `require 'ruuuby'`                                          |
+| `ruuuby` version during runtime | `require 'ruuuby/version'`                                  |
+| gem url                         | https://rubygems.org/gems/ruuuby                            |
+| changelog                       | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
 
 #### Example
 
@@ -18,19 +18,19 @@
 # true
 √(25) == 5
 
-# true
+# true, true, false
 'b'.∈? 'abc'
-# true
 'abc'.∌? 'd'
-# false
 'd'.∈? 'abc'
  
-data = {hello: 'world', ye: 'ee'}
 # [true, false]
+data = {hello: 'world', ye: 'ee'}
 [data.🔑?(:hello), data.🔑?(:non_existing_key)]
 
-# true (note: comparison via '==' would evaluate to false)
-[1, 'a', 2, nil, [], 2].≈ [nil, 2, 2, 'a', 1, []]
+# true, false
+elements_a = [1, 'a', 2, nil, [], 2]
+elements_b = [nil, 2, 2, 'a', 1, []]
+[elements_a.≈≈ elements_b, elements_a.== elements_b]
 
 # [false, true, false, true]
 [-5.ℕ?, 7.0.ℤ?, Complex(Float::NAN).ℝ?, Rational(2, 3).ℚ?]
@@ -41,8 +41,15 @@ data = {hello: 'world', ye: 'ee'}
 # [4]
 [2, 3, 4].∖ [1, 2, 3]
 
-# stdout -> 'abc'
-[1337, 'abc'.❄️].∀{|x| puts x if x.str? && x.❄️?}
+# stdout ->
+#          'world'
+#          'hello'
+['world', 1337, 'hello', 'abc'.❄️].∀{|x| puts x if x.str? && !x.❄️?}
+
+# stdout ->
+#          'hello'
+#          'world'
+['world', 1337, 'hello', 'abc'.❄️].↩️∀{|x| puts x if x.str? && !x.❄️?}
 ```
 
 ---
@@ -59,55 +66,56 @@ data = {hello: 'world', ye: 'ee'}
 | `Module`  | `∃func?`       | ❌                         |       |
 
 #### Class Changes:
-| class(es)              | func(s) added                     | as c-extension? (java-wip) | notes |
-| ---------------------- | --------------------------------- | -------------- | ----- |
-| `Object`               | `ary?`, `bool?`, `hsh?`, `int?`, `str?`, `stry?`, `sym?` | ✅ | |
-| `Array`                | `remove_empty!`                   | ✅            |       | |
-| `Set`                  | `remove_empty!`                   | ❌            |       | |
-| `Array`                | `📊`                              | ❌            | get a `Hash` with keys being elements in array and values being their frequency count |
-| `Array`                | `≈`                               | ❌            | are contents equal, regardless of order (and presence of multiple types)      |
-| `Array`                | `⊕`                               | ✅ (partial)  | `⊕` is set notation for: *symmetric difference* |
-| `Array`                | `∖`                               | ❌            | `∖` is set notation for: *relative complement*, also aliased as: `uniq_to_me` |
-| `Enumerable`, `String` | `∌?`                              | ❌            | `∌` is set notation for: *does not belong to* |
-| `Array`, `String`      | `>>`                              | ✅            | prepend provided arg, reverse operation of `<<` |
-| `String`               | `∈?`, `∉?`                        | ❌            |       |
-| `Array`                | `end_with?`, `start_with?`        | ❌            |       |
-| `String`, `Array`      | `ensure_start!`, `ensure_ending!` | ❌            |       |
-| `NilClass`             | `empty?`                          | ✅            | ⚠️: philosophically debatable |
-| `Integer`              | `finite?`, `infinite?`              | ✅            |       |
-| `Numeric`              | `∞?`                              | ❌            |       |
-| `Integer`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
-| `Float`                | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
-| `BigDecimal`           | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
-| `Complex`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
-| `Rational`             | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`      | ❌            |       |
-| `Object`               | `🛑bool❓`, `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑str_or_ary❓` | ❌ | |
+| class(es)              | func(s) added                      | as c-extension? (java-wip) | notes |
+| ---------------------- | ---------------------------------- | -------------- | ----- |
+| `Object`               | `ary?`, [`bool?`, `🅱️?`], `hsh?`, `int?`, `str?`, `stry?`, `sym?` | ✅ | |
+| `Array`                | `remove_empty!`                    | ✅ |       | |
+| `Set`                  | `remove_empty!`                    | ❌ |       | |
+| `Array`                | [`frequency_counts`, `📊`]         | ✅ | get a `Hash` with keys being elements in array and values being their frequency count |
+| `Array`                | [`equal_contents?`, `≈≈`]          | ✅ | are contents equal, regardless of order (and presence of multiple types)      |
+| `Array`                | [`disjunctive_union`, `⊕`]         | ✅ | `⊕` is set notation for: *symmetric difference* |
+| `Array`                | `∖`                                | ❌ | `∖` is set notation for: *relative complement*, also aliased as: `uniq_to_me` |
+| `Enumerable`, `String` | `∌?`                               | ❌ | `∌` is set notation for: *does not belong to* |
+| `Array`, `String`      | `>>`                               | ✅ | prepend provided arg, reverse operation of `<<` |
+| `String`               | `∈?`, `∉?`                         | ❌ |       |
+| `Array`                | `end_with?`, `start_with?`         | ❌ |       |
+| `String`, `Array`      | `ensure_start!`, `ensure_ending!`  | ❌ |       |
+| `NilClass`             | `empty?`                           | ✅ | ⚠️: philosophically debatable |
+| `Integer`              | `finite?`, `infinite?`               | ✅ |       |
+| `Numeric`              | `∞?`, `𝔹?`, `𝕌?`                   | ❌ |       |
+| `Integer`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ |       |
+| `Float`                | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ |       |
+| `BigDecimal`           | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ |       |
+| `Complex`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ |       |
+| `Rational`             | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`       | ❌ |       |
+| `Object`               | [`🛑bool❓`, `🛑🅱️❓`], `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑str_or_ary❓` | ❌ | |
 
 #### Created Aliases:
-| for                    | base reference                          | alias            | notes |
-| ---------------------- | --------------------------------------- | ---------------- | ----- |
-| `Kernel`               | method: `raise`                         | `🛑`             |       |
-| `Object`               | method: `object_id`                     | `🆔`             |       |
-| `Object`               | method: `freeze`                        | `❄️`             |       |
-| `Object`               | method: `frozen?`                       | `❄️?`            |       |
-| `Module`               | method: `const_defined?`                 | `∃const?`        |       |
-| `Module`               | method: `private_method_defined?`        | `∃🙈func?`       |       |
-| `Module`               | method: `private`                       | `🙈`             |       |
-| `Module`               | method: `private_constant`              | `🙈constants⟶` |       |
-| `Array`, `Hash`, `Set` | method: `each`                          | `∀`              |       |
-| `Enumerable`           | method: `map`                           | `⨍`              | automatically applies to: `Array`, `Hash`, `Set` |
-| `Enumerable`           | method: `include?`                      | `∋?`             | `∋` is set notation for: *belongs to* |
-| `Hash`                 | method: `key?`                          | `🔑?`, `∃🔑?`   |       |
-| `NilClass`, `Hash`, `Array`, `String`, `Set` | method: `empty?`  | `∅?`             |       |
+| for                    | base method(s) reference(s)           | alias(es)        | notes |
+| ---------------------- | ------------------------------------- | ---------------- | ----- |
+| `Kernel`               | `raise`                               | `🛑`             |       |
+| `Object`               | `object_id`                           | `🆔`             |       |
+| `Object`               | `freeze`, `frozen?`                   | `❄️`, `❄️?`      |       |
+| `Array`                | `frequency_counts`, `disjunctive_union`, `equal_contents?` | `📊`, `⊕`, `≈≈` | |
+| `Module`               | `const_defined?`                       | `∃const?`        |       |
+| `Module`               | `private_method_defined?`              | `∃🙈func?`       |       |
+| `Module`               | `private`                             | `🙈`             |       |
+| `Module`               | `private_constant`                    | `🙈constants⟶` |       |
+| `Array`, `Hash`, `Set` | `each`                                | `∀`              |       |
+| `Array`                | `reverse`, `reverse!`, `reverse_each` | `↩️`, `↩️!`, `↩️∀` |     |
+| `Enumerable`           | `map`                                 | `⨍`              | automatically applies to: `Array`, `Hash`, `Set` |
+| `Enumerable`           | `include?`                            | `∋?`             | `∋` is set notation for: *belongs to* |
+| `Hash`                 | `key?`                                | [`🔑?`, `🗝?`], [`∃🔑?`, `∃🗝?`] | |
+| `NilClass`, `Hash`, `Array`, `String`, `Set` | method: `empty?`  | `∅?` |  |
 
 ---
 
 ### Code Base Statistics:
 | category | attribute     | value    | desc.                                                           |
 | -------- | ------------- | -------- | --------------------------------------------------------------- |
-| QA       | unit          | 219      | # of tests (non-performance & non-audit based)                  |
-| QA       | performance   | 111      | # of tests                                                      |
-| CI       | audits        | 8        | # of tests                                                      |
+| QA       | unit          | 238      | # of tests (non-performance & non-audit based)                  |
+| QA       | performance   | 124      | # of tests                                                      |
+| CI       | audits        | 12       | # of tests                                                      |
 | coverage | LOCs          | ???      | wip |
 | coverage | runtime       | ???      | wip |
 | coverage | documentation | ???      | wip |
@@ -140,6 +148,7 @@ data = {hello: 'world', ye: 'ee'}
 | `bin/`             | `audit_quick`       | similar to above but only run regular unit-tests     |
 | `bin/`             | `setup`             | install dependencies                                 |
 | `bin/`             | `console`           | interactive console for easier experimenting         |
+| `gem`              | `server`            | host interactive web-page at `http://0.0.0.0:8808` to see documentation for currently installed gems |
 
 #### Testing Tasks:
 | preface            | cmd                 | warnings displayed? | description |

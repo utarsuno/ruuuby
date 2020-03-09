@@ -10,6 +10,7 @@ class ::Object
   # custom
   alias_method :ary?, :ary?
   alias_method :bool?, :bool?
+  alias_method :🅱️?, :bool?
   alias_method :hsh?, :hsh?
   alias_method :int?, :int?
   alias_method :sym?, :sym?
@@ -23,6 +24,8 @@ class ::Object
   def 🛑bool❓(arg_name, arg)
     🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, [::TrueClass, ::FalseClass], arg) unless arg.bool?
   end
+
+  alias_method :🛑🅱️❓, :🛑bool❓
 
   # @param [Symbol] arg_name
   # @param [*]      arg

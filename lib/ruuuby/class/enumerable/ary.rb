@@ -3,54 +3,14 @@
 # add various functions to existing class +Array+ (and explicitly create aliases to play nice with IDEs)
 class ::Array
 
-  # Retrieve the frequency counts of elements in this array as a hash.
-  #
-  # @example:
-  #   a = [1, 1, '1', nil, [], nil, nil].📊
-  #   a[1]   == 2
-  #   a['1'] == 1
-  #   a[nil] == 3
-  #   a[[]]  == 1
-  #
-  # @return [Hash] key: a value from the array, value: the total number of occurrences
-  def 📊
-    return {} if self.∅?
-    new_hash = Hash.new(0)
-    self.∀{|x| new_hash[x] += 1}
-    new_hash
-  end
-
-  # Performs the symmetric difference (or disjunctive union) of these two arrays, operation order/side does not matter.
-  #
-  # @param [Array] ary
-  #
-  # @raise [WrongParamType]
-  #
-  # @return [Array] a new Array instance containing the symmetric difference between this array and the one provided
-  def ⊕(ary) ; 🛑ary❓(:ary, ary) ; self.disjunctive_union(ary) ; end
-
   # Performs the relative complement (or set difference) of these two arrays, operation order/side does matter.
-  #
-  # @param [Array] ary
-  #
-  # @raise [WrongParamType]
-  #
-  # @return [Array] a new Array instance containing the relative complement between this array and the one provided
-  def ∖(ary) ; 🛑ary❓(:ary, ary) ; self - ary ; end
-
-  # Return true if both arrays are matching in contents, supports multiple types and without order mattering.
   #
   # @param [Array] them
   #
   # @raise [WrongParamType]
   #
-  # @return [Boolean] true, if both arrays have the same contents (order does not matter)
-  def ≈(them)
-    🛑ary❓(:them, them)
-    return true  if self.∅? && them.∅?
-    return false if self.length != them.length
-    self.📊 == them.📊
-  end
+  # @return [Array] a new Array instance containing the relative complement between this array and the one provided
+  def ∖(them) ; 🛑ary❓(:them, them) ; self - them ; end
 
   # @param [*]
   #
@@ -84,9 +44,9 @@ class ::Array
       delta          += 1
     end
     if last_matched == nil
-      start.reverse.∀{|element| self >> element}
+      start.↩️∀{|element| self >> element}
     else
-      start[0..(start.length-1-last_matched.length)].reverse.∀{|element| self >> element}
+      start[0..(start.length-1-last_matched.length)].↩️∀{|element| self >> element}
     end
     self
   end
@@ -114,12 +74,47 @@ class ::Array
 
   alias_method :>>, :>>
   alias_method :∀, :each
+  alias_method :↩️, :reverse
+  alias_method :↩️!, :reverse!
+  alias_method :↩️∀, :reverse_each
   alias_method :∅?, :empty?
   alias_method :remove_empty!, :remove_empty!
-  alias_method :disjunctive_union, :disjunctive_union
   alias_method :uniq_to_me, :∖
   alias_method :∋?, :include?
 
-  🙈 :disjunctive_union
+  # Return true if both arrays are matching in contents, supports multiple types and without order mattering.
+  #
+  # @param [Array] them
+  #
+  # @raise [ArgumentError]
+  #
+  # @return [Boolean] true, if both arrays have the same contents (order does not matter)
+  alias_method :equal_contents?, :equal_contents?
+  alias_method :≈≈, :equal_contents?
+
+  # Retrieve the frequency counts of elements in this array as a hash.
+  #
+  # @example:
+  #   a = [1, 1, '1', nil, [], nil, nil].📊
+  #   a[1]   == 2
+  #   a['1'] == 1
+  #   a[nil] == 3
+  #   a[[]]  == 1
+  #
+  # @raise [ArgumentError]
+  #
+  # @return [Hash|NilClass] nil if empty, otherwise returns a new hash with --> key: a value from the array, value: the total number of occurrences
+  alias_method :frequency_counts, :frequency_counts
+  alias_method :📊, :frequency_counts
+
+  # Performs the symmetric difference (or disjunctive union) of these two arrays, operation order/side does not matter.
+  #
+  # @param [Array] them
+  #
+  # @raise [ArgumentError]
+  #
+  # @return [Array] a new Array instance containing the symmetric difference between this array and the one provided
+  alias_method :disjunctive_union, :disjunctive_union
+  alias_method :⊕, :disjunctive_union
 
 end
