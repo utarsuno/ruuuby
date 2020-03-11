@@ -7,6 +7,7 @@
 ____________________________________________________________________________________________________________________________________________________________________ */
 // ruby extension api
 
+//#include "ruby/encoding.h"
 #include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.0.h"
 
 #include <ruby.h>
@@ -14,14 +15,36 @@ ________________________________________________________________________________
 #include <ruby/debug.h>
 #include <ruby/assert.h>
 #include <ruby/missing.h>
+#include <ruby/re.h>
+#include <ruby/regex.h>
 #include <ruby/ruby.h>
 #include <ruby/st.h>
 #include <ruby/subst.h>
-#include <ruby/thread.h>
-#include <ruby/thread_native.h>
+//#include <ruby/thread.h>
+//#include <ruby/thread_native.h>
 #include <ruby/util.h>
 #include <ruby/version.h>
 #include <ruby/vm.h>
+
+//#include <stdio.h>
+//#include <unistd.h>
+//#include <sys/types.h>
+//#include <sys/stat.h>
+//#include <fcntl.h>
+//#include <string.h>
+
+//#include <ruby/backward.h>
+//#include <ruby/backward/classext.h>
+//#include <ruby/backward/rubyio.h>
+//#include <ruby/backward/st.h>
+//#include <ruby/backward/util.h>
+//#include <ruby/io.h>
+//#include <ruby/onigmo.h>
+//#include <ruby/oniguruma.h>
+//#include <ruby/re.h>
+//#include <ruby/regex.h>
+
+#include <stdlib.h>
 
 /*____________________________________________________________________________________________________________________________________________________________________
   __   __        __  ___           ___                         ___  __
@@ -35,6 +58,7 @@ ________________________________________________________________________________
 #define R_OBJ rb_cObject
 #define R_INT rb_cInteger
 #define R_NIL rb_cNilClass
+#define R_NUM rb_cNumeric
 #define R_HSH rb_cHash
 #define R_ARY rb_cArray
 // rb_ary_new: uses a default size of 16
@@ -123,6 +147,10 @@ ________________________________________________________________________________
 #define autoload_class(path)      autoload_file("ruuuby/class/" #path)
 #define autoload_nums(path)       autoload_file("ruuuby/class/nums/" #path)
 #define autoload_default(path)    autoload_file("" #path)
+
+// not-finalized section:
+
+#define r_get_class(r_class) rb_const_get(rb_cObject, rb_intern(r_class));
 
 /*____________________________________________________________________________________________________________________________________________________________________
   ___            __   __       __   ___  __             __       ___    __        __                      __        ___        ___      ___      ___    __        __
@@ -353,8 +381,17 @@ c_func(Init_ruby_class_mods,
     r_class_add_method_public  (R_ARY, "frequency_counts" , m_ary_frequency_counts , 0)
 
     // | 0x6 |
+
+    // just to be safe
     autoload_default(set)
+    autoload_default(complex)
+    autoload_default(bigdecimal)
+
+    // 3rd party gem
     autoload_default(tty-command)
+
+    // ruuuuby
+    autoload_class(class)
     autoload_module(enumerable)
     autoload_module(module)
     autoload_module(kernel)
@@ -364,7 +401,6 @@ c_func(Init_ruby_class_mods,
     autoload_nums(int)
     autoload_nums(float)
     autoload_nums(numeric)
-    autoload_default(bigdecimal)
     autoload_nums(big_decimal)
     autoload_nums(rational)
     autoload_nums(complex)

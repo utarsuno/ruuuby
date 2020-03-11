@@ -2,6 +2,7 @@
 
 RSpec.describe ::Kernel do
   let(:wrong_param_type){Ruuuby::ParamErr::WrongParamType}
+  let(:empty_object){Object.🆕}
 
   context 'extends module[Kernel]' do
     context 'by adding needed functions & aliases' do
@@ -117,6 +118,44 @@ RSpec.describe ::Kernel do
         end
       end
 
+      context 'adds function[𝔠]' do
+        context 'handles needed scenarios' do
+          it 'cases: array' do
+            expect(𝔠([])).to eq(0)
+            expect(𝔠([nil])).to eq(1)
+            expect(𝔠([''])).to eq(1)
+            expect(𝔠([1])).to eq(1)
+            expect(𝔠([1, 2, 3, nil, nil, []])).to eq(6)
+          end
+          it 'cases: string' do
+            expect(𝔠('')).to eq(0)
+            expect(𝔠(' ')).to eq(1)
+            expect(𝔠("\n")).to eq(1)
+            expect(𝔠('a')).to eq(1)
+            expect(𝔠('ab')).to eq(2)
+            expect(𝔠('ab ')).to eq(3)
+            expect(𝔠(' ab')).to eq(3)
+            expect(𝔠(' ab ')).to eq(4)
+          end
+          it 'cases: set' do
+            expect(𝔠(Set[])).to eq(0)
+            expect(𝔠(Set[nil])).to eq(1)
+            expect(𝔠(Set[''])).to eq(1)
+            expect(𝔠(Set[1])).to eq(1)
+            expect(𝔠(Set[1, 2, 3, nil, nil, []])).to eq(5)
+          end
+          it 'cases: hash' do
+            expect(𝔠({})).to eq(0)
+            expect(𝔠({a: 'a'})).to eq(1)
+            expect(𝔠({a: 'a', b: {}, c: nil})).to eq(3)
+          end
+          it 'cases: -1' do
+            expect(𝔠(empty_object)).to eq(-1)
+            expect(𝔠(nil)).to eq(-1)
+          end
+        end
+      end
+
     end
   end
 
@@ -170,6 +209,23 @@ RSpec.describe ::Kernel do
         end
       end
     end
+
+    context 'func[∃class?] runs fast enough' do
+      context 'for needed scenarios:' do
+        it 'cases: positive' do
+          expect{𝔠({a: 'a'})}.to perform_very_quickly
+          expect{𝔠(Set[nil])}.to perform_very_quickly
+          expect{𝔠('aaa bb c')}.to perform_very_quickly
+          expect{𝔠([1])}.to perform_very_quickly
+        end
+        it 'cases: negative' do
+          expect{𝔠(empty_object)}.to perform_very_quickly
+          expect{𝔠(nil)}.to perform_very_quickly
+        end
+      end
+    end
+
+    # TODO: Add performance tests for (𝔠)
 
   end
 

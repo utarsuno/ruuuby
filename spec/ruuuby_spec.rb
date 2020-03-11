@@ -11,10 +11,10 @@ RSpec.describe Ruuuby do
       expect(∃module?(:Ruuuby)).to eq(true)
     end
     context 'and adds needed sub-modules & classes' do
-      it 'module(VERSION) under module(::Ruuuby)' do
+      it 'module(Version) under module(::Ruuuby)' do
         expect(∃module?(:Version, ::Ruuuby)).to eq(true)
       end
-      it 'module(Err) under module(::Ruuuby)' do
+      it 'module(ParamErr) under module(::Ruuuby)' do
         expect(∃module?(:ParamErr, ::Ruuuby)).to eq(true)
       end
       it 'class(WrongParamType) under module(::Ruuuby::ParamErr)' do
@@ -33,7 +33,7 @@ RSpec.describe Ruuuby do
       path_project_base         = File.dirname(File.dirname(__FILE__))
       @relative_paths_to_ignore = %w(. .. .DS_Store)
       @path_dir_c_extensions    = "#{path_project_base.to_s}/ext"
-      @directory_ext            = Dir.new(@path_dir_c_extensions)
+      @directory_ext            = Dir.🆕(@path_dir_c_extensions)
     end
 
     context 'passes file structure audits' do
@@ -51,7 +51,7 @@ RSpec.describe Ruuuby do
               puts "\t\t| checking if directory: {#{path_current_extension}}"
               expect(is_directory).to eq(true)
               if is_directory
-                sub_paths             = Dir.new("#{path_current_extension}/")
+                sub_paths             = Dir.🆕("#{path_current_extension}/")
                 directory_has_content = false
                 puts "\t\t\t| traversing directory: {#{path_current_extension}/}"
                 sub_paths.each do |sub_path|
@@ -72,7 +72,7 @@ RSpec.describe Ruuuby do
                         # do nothing =)
                       else
                         puts "\t\t\t\t| unexpected-file{#{sub_path.to_s}}, which is not supported!"
-                        raise RuntimeError.new("unexpected-file{#{sub_path.to_s}}, for directory{#{path_current_extension}}")
+                        raise RuntimeError.🆕("unexpected-file{#{sub_path.to_s}}, for directory{#{path_current_extension}}")
                       end
                     end
                   end
@@ -141,6 +141,11 @@ RSpec.describe Ruuuby do
     context 'README.md examples' do
       it 'works as described' do
         expect(√(25) == 5).to eq(true)
+
+        expect(5^²).to eq(5 * 5)
+
+        expect(-5^⁴).to eq(-5 * -5 * -5 * -5)
+
 
         expect('b'.∈? 'abc').to eq(true)
         expect('abc'.∌? 'd').to eq(true)

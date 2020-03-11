@@ -14,7 +14,7 @@ module ::Ruuuby
     #
     # @return [String]
     def self.throw(name_class, name_method, name_arg, arg_types_needed, arg_received)
-      ParamErr::WrongParamType.new(self.generate_error_text(name_class, name_method, name_arg, arg_received.class, arg_types_needed))
+      ParamErr::WrongParamType.🆕(self.generate_error_text(name_class, name_method, name_arg, arg_received.class, arg_types_needed))
     end
 
     # utility function to generate error message for the exception(WrongParamType)

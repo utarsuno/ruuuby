@@ -1,9 +1,9 @@
 # coding: utf-8
 
 RSpec.describe 'complex.rb' do
-  let(:data_nan){Complex(Float::NAN)}
-  let(:data_zero){Complex(0)}
-  let(:data_one){Complex(1)}
+  let(:data_nan_with_complex){Complex(Float::NAN, 1.5)}
+  let(:data_infinity_with_complex){Complex(1.0/0.0, 1.5)}
+  let(:data_negative_infinity_with_complex){Complex(1.0/0.0, 1.5)}
   let(:dataf_one){Complex(1.0)}
   let(:datac_one){Complex(1, 1)}
   let(:data_minus_leet){Complex(-1337)}
@@ -19,16 +19,22 @@ RSpec.describe 'complex.rb' do
     context 'by adding function{ℕ?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
-          expect(data_zero.ℕ?).to eq(true)
-          expect(data_one.ℕ?).to eq(true)
-          expect(Complex(1337).ℕ?).to eq(true)
+          expect(data_complex_zero.ℕ?).to eq(true)
+          expect(data_complex_one.ℕ?).to eq(true)
+          expect(data_complex_leet.ℕ?).to eq(true)
         end
-        it 'cases: negative' do
-          expect(data_nan.ℕ?).to eq(false)
-          expect(Complex(0, 1).ℕ?).to eq(false)
-          expect(datac_one.ℕ?).to eq(false)
-          expect(Complex(-1).ℕ?).to eq(false)
-          expect(Complex(1337.1337).ℕ?).to eq(false)
+        context 'cases: negative' do
+          it 'normal non-matching data' do
+            expect(Complex(0, 1).ℕ?).to eq(false)
+            expect(datac_one.ℕ?).to eq(false)
+            expect(Complex(-1).ℕ?).to eq(false)
+            expect(Complex(1337.1337).ℕ?).to eq(false)
+          end
+          it 'NaNs' do
+            expect(data_complex_nan.ℕ?).to eq(false)
+            expect(data_complex_inf.ℕ?).to eq(false)
+            expect(data_complex_negative_inf.ℕ?).to eq(false)
+          end
         end
       end
     end
@@ -38,12 +44,12 @@ RSpec.describe 'complex.rb' do
         it 'cases: positive' do
           expect(data_minus_leet.ℤ?).to eq(true)
           expect(Complex(-1).ℤ?).to eq(true)
-          expect(data_zero.ℤ?).to eq(true)
-          expect(data_one.ℤ?).to eq(true)
-          expect(Complex(1337).ℤ?).to eq(true)
+          expect(data_complex_zero.ℤ?).to eq(true)
+          expect(data_complex_one.ℤ?).to eq(true)
+          expect(data_complex_leet.ℤ?).to eq(true)
         end
         it 'cases: negative' do
-          expect(data_nan.ℤ?).to eq(false)
+          expect(data_complex_nan.ℤ?).to eq(false)
           expect(Complex(0, 1).ℤ?).to eq(false)
           expect(datac_one.ℤ?).to eq(false)
           expect(Complex(1337.1337).ℤ?).to eq(false)
@@ -57,7 +63,7 @@ RSpec.describe 'complex.rb' do
           expect(dataf_one.ℚ?).to eq(true)
         end
         it 'cases: negative' do
-          expect(data_nan.ℚ?).to eq(false)
+          expect(data_complex_nan.ℚ?).to eq(false)
         end
         it 'cases: un-covered scope' do
           expect(Complex(1.1337).ℚ?).to eq(nil)
@@ -71,7 +77,7 @@ RSpec.describe 'complex.rb' do
           expect(datac_one.ℂ?).to eq(true)
         end
         it 'cases: negative' do
-          expect(data_nan.ℂ?).to eq(false)
+          expect(data_complex_nan.ℂ?).to eq(false)
         end
       end
     end
@@ -79,11 +85,11 @@ RSpec.describe 'complex.rb' do
     context 'by adding function{ℝ?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
-          expect(data_one.ℝ?).to eq(true)
+          expect(data_complex_one.ℝ?).to eq(true)
         end
         it 'cases: negative' do
           expect(datac_one.ℝ?).to eq(false)
-          expect(data_nan.ℂ?).to eq(false)
+          expect(data_complex_nan.ℂ?).to eq(false)
         end
       end
     end
@@ -91,10 +97,10 @@ RSpec.describe 'complex.rb' do
     context 'by adding function{𝕌?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
-          expect(data_one.𝕌?).to eq(true)
+          expect(data_complex_one.𝕌?).to eq(true)
         end
         it 'cases: negative' do
-          expect(data_nan.𝕌?).to eq(false)
+          expect(data_complex_nan.𝕌?).to eq(false)
         end
       end
     end
@@ -107,10 +113,10 @@ RSpec.describe 'complex.rb' do
   context 'performance', :'performance' do
     context 'func{ℕ?}: performs extremely quickly' do
       it 'for cases: true' do
-        expect{data_zero.ℕ?}.to perform_extremely_quickly
+        expect{data_complex_zero.ℕ?}.to perform_extremely_quickly
       end
       it 'for cases: false' do
-        expect{data_nan.ℕ?}.to perform_extremely_quickly
+        expect{data_complex_nan.ℕ?}.to perform_extremely_quickly
       end
     end
 
@@ -119,7 +125,7 @@ RSpec.describe 'complex.rb' do
         expect{data_minus_leet.ℤ?}.to perform_extremely_quickly
       end
       it 'for cases: false' do
-        expect{data_nan.ℤ?}.to perform_extremely_quickly
+        expect{data_complex_nan.ℤ?}.to perform_extremely_quickly
       end
     end
 
@@ -128,7 +134,7 @@ RSpec.describe 'complex.rb' do
         expect{datac_one.ℂ?}.to perform_extremely_quickly
       end
       it 'for cases: false' do
-        expect{data_nan.ℂ?}.to perform_extremely_quickly
+        expect{data_complex_nan.ℂ?}.to perform_extremely_quickly
       end
     end
 
@@ -137,25 +143,26 @@ RSpec.describe 'complex.rb' do
         expect{dataf_one.ℚ?}.to perform_extremely_quickly
       end
       it 'for cases: false' do
-        expect{data_nan.ℚ?}.to perform_extremely_quickly
+        expect{data_complex_nan.ℚ?}.to perform_extremely_quickly
       end
     end
 
     context 'func{ℝ?}: performs extremely quickly' do
       it 'for cases: true' do
-        expect{data_one.ℝ?}.to perform_extremely_quickly
+        expect{data_complex_one.ℝ?}.to perform_extremely_quickly
       end
       it 'for cases: false' do
-        expect{data_nan.ℝ?}.to perform_extremely_quickly
+        expect{data_complex_nan.ℝ?}.to perform_extremely_quickly
       end
     end
 
     context 'func{𝕌?}: performs extremely quickly' do
       it 'for cases: true' do
-        expect{data_one.𝕌?}.to perform_extremely_quickly
+        expect{data_complex_one.𝕌?}.to perform_extremely_quickly
       end
       it 'for cases: false' do
-        expect{data_nan.𝕌?}.to perform_extremely_quickly
+        expect{data_complex_nan.𝕌?}.to perform_extremely_quickly
+
       end
     end
 

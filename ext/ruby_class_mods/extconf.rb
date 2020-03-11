@@ -20,16 +20,21 @@ module ExtconfConfigHelper
     SOURCE_B               = '/usr/local/bin'
     RUBY_INSTALLED_HEADERS = RbConfig::CONFIG['includedir']
     RUBY_INSTALLED_LIBS    = RbConfig::CONFIG['libdir']
-    #FALLBACK               = '/usr/include'
+    FALLBACK               = '/usr/include'
     DIRS_HEADER            = [] #[SOURCE_A]#, SOURCE_B]#, RUBY_INSTALLED_HEADERS]#, FALLBACK] #MACPORTS (for index 0)
     DIRS_LIB               = []#[SOURCE_A]#, SOURCE_B]#, RUBY_INSTALLED_LIBS]#, FALLBACK] #MACPORTS (for index 0)
+
+    #DIRS_HEADER            = [SOURCE_A, SOURCE_B, RUBY_INSTALLED_HEADERS, FALLBACK] #MACPORTS (for index 0)
+    #DIRS_LIB               = [SOURCE_A, SOURCE_B, RUBY_INSTALLED_LIBS, FALLBACK] #MACPORTS (for index 0)
+
   end
 
   module Headers
     FOR_RUBY = %w(ruby ruby/assert ruby/debug ruby/defines ruby/encoding ruby/intern ruby/version)
     #FOR_C    = %w(stdio unistd sys/types sys/stat sys/param sys/mount fcntl string stdlib)
-    #ALL      = FOR_RUBY + FOR_C
-    ALL = FOR_RUBY
+    FOR_C    = %w(sys/types string stdlib)
+    ALL      = FOR_RUBY + FOR_C
+      #ALL = FOR_RUBY
   end
 
 end

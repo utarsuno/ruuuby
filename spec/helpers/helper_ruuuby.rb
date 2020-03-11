@@ -22,7 +22,10 @@ module RuuubyTestHelper
         ruby: RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
     }
     CONFIG_NUMERIC = {
-        ruby: [:∞?] + RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
+        ruby: [:∞?, :𝔹?] + RuuubyTestHelper::FeatureMath::NUMERICAL_SETS,
+        aliases: {
+            finite?: :𝕌?
+        }
     }
   end
 
@@ -41,6 +44,7 @@ module RuuubyTestHelper
       ruby: [:∃func_alias?, :∃func?],
       aliases: {
           private: :🙈,
+          protected: :🛡️,
           🙈constants⟶: :private_constant,
           ∃const?: :const_defined?,
           private_method_defined?: :∃🙈func?
@@ -50,7 +54,10 @@ module RuuubyTestHelper
   CONFIG_STRING = {
       ruby: [:∋?, :∌?, :∉?, :∈?, :ensure_start!, :ensure_ending!],
       c: [:>>],
-      aliases: {∅?: :empty?}
+      aliases: {
+          ∅?: :empty?,
+          𝔠: :length
+      }
   }
 
   CONFIG_NIL = {
@@ -67,11 +74,12 @@ module RuuubyTestHelper
           ∀: :each,
           ∅?: :empty?,
           ∋?: :include?,
+          𝔠: :length
       },
   }
 
   CONFIG_NUMERIC = {
-      ruby: [:𝔹?, :∞?],
+      ruby: [:𝔹?, :𝕌?, :∞?],
       aliases: {
           infinite?: :∞?,
           finite?: :𝕌?
@@ -91,6 +99,7 @@ module RuuubyTestHelper
           empty?: :∅?,
           each: :∀,
           include?: :∋?,
+          length: :𝔠
       }
   }
 
@@ -104,7 +113,8 @@ module RuuubyTestHelper
           empty?: :∅?,
           reverse: :↩️,
           reverse!: :↩️!,
-          reverse_each: :↩️∀
+          reverse_each: :↩️∀,
+          length: :𝔠
       }
   }
 

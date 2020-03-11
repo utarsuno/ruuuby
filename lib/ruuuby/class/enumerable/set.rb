@@ -2,9 +2,14 @@
 
 # add various functions to existing class +Set+ (and explicitly create aliases to play nice with IDEs)
 class ::Set
-  alias_method :∅?, :empty?
   alias_method :∀, :each
   alias_method :∋?, :include?
+
+  # | feature | *f03* | ------------------------------------------------------------------------------------------------
+  alias_method :𝔠, :length
+  # | feature | *f04* | ------------------------------------------------------------------------------------------------
+  alias_method :∅?, :empty?
+  # | ------------------------------------------------------------------------------------------------------------------
 
   # removes all elements for this set that have func{∅?} and respond true
   #

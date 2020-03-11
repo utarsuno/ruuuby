@@ -1,7 +1,7 @@
 # coding: utf-8
 
 RSpec.describe 'Object' do
-  let(:data_default){Object.new}
+  let(:data_default){Object.🆕}
 
   context 'creates Ruuuby aliases' do
     it '🆔 --> object_id' do
@@ -103,7 +103,7 @@ RSpec.describe 'Object' do
 
     context 'by adding function{ary?}' do
       it 'a newly created generic object responds to it' do
-        expect_response_to(Object.new, :ary?)
+        expect_response_to(Object.🆕, :ary?)
       end
       it 'without effecting Array instance' do
         expect(Array.ary?).to eq(false)
@@ -120,8 +120,8 @@ RSpec.describe 'Object' do
 
     context 'by adding function{bool?}' do
       it 'a newly created generic object also responds' do
-        expect_response_to(Object.new, :bool?)
-        expect_response_to(Object.new, :🅱️?)
+        expect_response_to(Object.🆕, :bool?)
+        expect_response_to(Object.🆕, :🅱️?)
       end
       it 'without effecting TrueClass instance or FalseClass instance' do
         expect(TrueClass.bool?).to eq(false)
@@ -147,7 +147,7 @@ RSpec.describe 'Object' do
 
     context 'by adding function{hsh?}' do
       it 'a newly created generic object responds to it' do
-        expect_response_to(Object.new, :hsh?)
+        expect_response_to(Object.🆕, :hsh?)
       end
       it 'without effecting Integer instance' do
         expect(Hash.hsh?).to eq(false)
@@ -164,7 +164,7 @@ RSpec.describe 'Object' do
 
     context 'by adding function{int?}' do
       it 'a newly created generic object responds to it' do
-        expect_response_to(Object.new, :int?)
+        expect_response_to(Object.🆕, :int?)
       end
       it 'without effecting Integer instance' do
         expect(Integer.int?).to eq(false)
@@ -181,7 +181,7 @@ RSpec.describe 'Object' do
 
     context 'by adding function{str?}' do
       it 'a newly created generic object responds to it' do
-        expect_response_to(String.new('strstr'), :str?)
+        expect_response_to(String.🆕('strstr'), :str?)
       end
       context 'with correct return values of' do
         it 'true' do
@@ -192,7 +192,7 @@ RSpec.describe 'Object' do
         end
         it 'a newly created object inheriting String (does not match)' do
           class MockString < String; end
-          mock_str = MockString.new('my_str')
+          mock_str = MockString.🆕('my_str')
           expect(mock_str.str?).to eq(false)
         end
       end
@@ -200,8 +200,8 @@ RSpec.describe 'Object' do
 
     context 'by adding function{stry?}' do
       it 'a newly created generic object responds to it' do
-        expect_response_to(String.new('strstr'), :str?)
-        expect_response_to(String.new('strstr'), :stry?)
+        expect_response_to(String.🆕('strstr'), :str?)
+        expect_response_to(String.🆕('strstr'), :stry?)
       end
       context 'with correct return values of' do
         it 'true' do
@@ -212,7 +212,7 @@ RSpec.describe 'Object' do
         end
         it 'a newly created object inheriting String (does not match)' do
           class MockString < String; end
-          mock_str = MockString.new('my_str')
+          mock_str = MockString.🆕('my_str')
           expect(mock_str.stry?).to eq(false)
         end
       end

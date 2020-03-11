@@ -4,7 +4,7 @@
 # add various functions to existing class +BigDecimal+
 class BigDecimal
 
-  # @return [Boolean] true, if this number falls in the set of natural-numbers(ℕ)
+  # @return [Boolean] true, if this number falls in the set of natural-numbers(+ℕ+)
   def ℕ?
     case self.sign
     when BigDecimal::SIGN_NaN, BigDecimal::SIGN_POSITIVE_INFINITE, BigDecimal::SIGN_NEGATIVE_INFINITE, BigDecimal::SIGN_NEGATIVE_FINITE
@@ -16,7 +16,7 @@ class BigDecimal
     end
   end
 
-  # @return [Boolean] true, if this number's contents are equivalent to any number in the set of math-integers(ℤ)
+  # @return [Boolean] true, if this number's contents are equivalent to any number in the set of math-integers(+ℤ+)
   def ℤ?
     case self.sign
     when BigDecimal::SIGN_NaN, BigDecimal::SIGN_POSITIVE_INFINITE, BigDecimal::SIGN_NEGATIVE_INFINITE
@@ -40,10 +40,10 @@ class BigDecimal
   # @return [Boolean] true, (if-valid) big decimals can be represented as complex numbers (with imaginary component of 0)
   alias_method :ℂ?, :finite?
 
-  # @return [Boolean] true, if this big decimal is a real number
+  # @return [Boolean] true, if this big decimal is a real-number(+ℝ+)
   alias_method :ℝ?, :finite?
 
-  # @return [Boolean] true, the universal-set(𝕌) in this context only excludes (NaN, +∞, and -∞)
+  # @return [Boolean] true, the universal-set(+𝕌+) in this context only excludes (NaN, +∞, and -∞)
   alias_method :𝕌?, :finite?
 
 end

@@ -2,8 +2,14 @@
 
 # add various functions to existing class +String+ (and explicitly create aliases to play nice with IDEs)
 class ::String
+
+  # | feature | *f03* | ------------------------------------------------------------------------------------------------
+  alias_method :𝔠, :length
+  # | feature | *f04* | ------------------------------------------------------------------------------------------------
   alias_method :∅?, :empty?
+  # | feature | *f05* | ------------------------------------------------------------------------------------------------
   alias_method :>>, :>>
+  # | ------------------------------------------------------------------------------------------------------------------
 
   # @param [String] them
   #
@@ -44,12 +50,12 @@ class ::String
     return self >> start if self.∅?
     last_matched = ''
     delta        = 0
-    while delta <= self.length && delta <= start.length
-      ending_of_start = start[(start.length-1-delta)..(start.length-1)]
+    while delta <= self.𝔠 && delta <= start.𝔠
+      ending_of_start = start[(start.𝔠-1-delta)..(start.𝔠-1)]
       last_matched    = ending_of_start if self[0..delta] == ending_of_start
       delta          += 1
     end
-    self >> (last_matched == '' ? start : start[0..(start.length-1-last_matched.length)])
+    self >> (last_matched == '' ? start : start[0..(start.𝔠-1-last_matched.𝔠)])
   end
 
   # @param [String] ending the text that this string should end with
@@ -63,12 +69,12 @@ class ::String
     return self << ending if self.∅?
     last_matched = ''
     delta        = 0
-    while delta <= self.length && delta <= ending.length
+    while delta <= self.𝔠 && delta <= ending.𝔠
       starting_of_end = ending[0..delta]
-      last_matched    = starting_of_end if self[(self.length-1-delta)..(self.length-1)] == starting_of_end
+      last_matched    = starting_of_end if self[(self.𝔠-1-delta)..(self.𝔠-1)] == starting_of_end
       delta          += 1
     end
-    self << (last_matched == '' ? ending : ending[last_matched.length..ending.length-1])
+    self << (last_matched == '' ? ending : ending[last_matched.𝔠..ending.𝔠-1])
   end
 
 end

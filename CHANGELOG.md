@@ -1,3 +1,25 @@
+# 0.0.17
+ * ⚠️ (full coverage of this patch to be concluded in `0.0.18`)
+ * add file: `ruuuby/class/class.rb`
+ * start general, wide-scale, re-structuring to manage changes into categorized `features`
+ * continued audit on number classes (see notes from v`0.0.15` and v`0.0.16`)
+ * (to be expanded upon next patch) add support for raising to powers `0-9` for `Integer` and `Float`
+ * for math related `RSpecs`, move common/shared `let` definitions into `spec_helper.rb`, add additional ones to form a general schema for testing data
+ * add the following methods/aliases:
+ 
+ | (c)lass or (m)odule                  | methods/aliases added | feature |
+ | ------------------------------------ | --------------------- | --- |
+ | (m) `Kernel`                         | `𝔠`                   | `f03` |
+ | (c) `String`, `Set`, `Array`, `Hash` | `𝔠` (length)          | `f03` |
+ | (c) `Class`                          | `🆕` (new)            | `TODO` |
+ | (c) `Object`                         | `⁰`, `¹`, `²`, `³`, `⁴`, `⁵`, `⁶`, `⁷`, `⁸`, `⁹` | `TODO` |
+ | (c) `Object` | `🛡️funcs` (protected_methods), `🙈funcs` (private_methods) | [`f01`, `f02`] |
+ | (m) `Module` | `🛡️` (protected), `∃🛡️func?` (protected_method_defined?), `🛡️instance_funcs` (protected_instance_methods), `🙈instance_funcs` (private_instance_methods), `🙈class_func` (private_class_method) | [`f01`, `f02`] |
+ | (c) `Integer`                        | `^`, `preserved_reference_to_bitwise_or` | `TODO` |
+ | (c) `Float`                          | `^` | `TODO` |
+
+---
+
 # 0.0.16
  * modify various functions to not allocate un-necessary memory (ex: call `.reverse_each` instead of `reverse.each`)
  * `ruby_class_mods.c` headers under construction, continued expansion of C-extension use-cases
@@ -7,8 +29,8 @@
 
  | (c)lass or (m)odule                  | methods/aliases added/moved                               |
  | ------------------------------------ | --------------------------------------------------------- |
- | (c) `Array`                          | `equal_contents?` (`≈≈` now aliases it)                    |
- | (c) `Array`                          | `frequency_counts?` (`📊` now aliases it)                 |
+ | (c) `Array`                          | `equal_contents?` (`≈≈` now aliases it)                   |
+ | (c) `Array`                          | `frequency_counts` (`📊` now aliases it)                  |
  | (c) `Array`                          | `disjunctive_union` (`⊕` now aliases it)                  |
  | (c) `Array`                          | `↩️` (reverse), `↩️!` (reverse!), `↩️∀` (reverse_each)   |
  | (c) `Object`                         | `🅱️?` (alias to `bool?`), `🛑🅱️❓`                       |

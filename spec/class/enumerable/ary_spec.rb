@@ -314,7 +314,7 @@ RSpec.describe 'ary' do
             expect(scenario).to eq([5, 6])
           end
           it 'does not perform deep copy on individual elements' do
-            new_obj   = Object.new
+            new_obj   = Object.🆕
             ary_obj   = %w(a bb c)
             ary_id    = ary_obj.🆔
             scenario  = [ary_obj, [], 1337, nil, new_obj]

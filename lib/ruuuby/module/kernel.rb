@@ -38,4 +38,19 @@ module ::Kernel
   # @return [Float]
   def √(n) ; Math.sqrt(n) ; end
 
+  # | feature | *f03* | ------------------------------------------------------------------------------------------------
+
+  # Return the *cardinality(𝔠)* (the length/size) of the provided argument.
+  #
+  # @param [*]
+  #
+  # @return {Integer} -1 is returned when provided arg does not have function for .length or .size
+  def 𝔠(n)
+    return n.length if n.respond_to?(:length)
+    return n.size   if n.respond_to?(:size)
+    -1
+  end
+
+  # | ------------------------------------------------------------------------------------------------------------------
+
 end
