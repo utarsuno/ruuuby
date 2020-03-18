@@ -57,13 +57,13 @@ RSpec.describe 'module' do
     context 'func[∃func_alias?] runs fast enough' do
       context 'for cases: global &' do
         it 'true-positive' do
-          expect{::Module.∃func_alias?(:const_defined?, :∃const?)}.to perform_very_quickly
+          expect{::Module.∃func_alias?(:const_defined?, :∃const?)}.to perform_quickly
         end
         it 'true-negative' do
-          expect{::Module.∃func_alias?(:bla, :bla)}.to perform_very_quickly
+          expect{::Module.∃func_alias?(:bla, :bla)}.to perform_quickly
         end
         it 'false-positive' do
-          expect{::Module.∃func_alias?(:const_defined?, :AAA)}.to perform_very_quickly
+          expect{::Module.∃func_alias?(:const_defined?, :AAA)}.to perform_quickly
         end
       end
     end

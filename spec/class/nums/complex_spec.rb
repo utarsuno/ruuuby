@@ -111,57 +111,57 @@ RSpec.describe 'complex.rb' do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
-    context 'func{ℕ?}: performs extremely quickly' do
+    context 'func{ℕ?}: performs very quickly' do
       it 'for cases: true' do
-        expect{data_complex_zero.ℕ?}.to perform_extremely_quickly
+        expect{data_complex_zero.ℕ?}.to perform_very_quickly
       end
       it 'for cases: false' do
-        expect{data_complex_nan.ℕ?}.to perform_extremely_quickly
+        expect{data_complex_nan.ℕ?}.to perform_very_quickly
       end
     end
 
-    context 'func{ℤ?}: performs extremely quickly' do
+    context 'func{ℤ?}: performs very quickly' do
       it 'for cases: true' do
-        expect{data_minus_leet.ℤ?}.to perform_extremely_quickly
+        expect{data_minus_leet.ℤ?}.to perform_very_quickly
       end
       it 'for cases: false' do
-        expect{data_complex_nan.ℤ?}.to perform_extremely_quickly
+        expect{data_complex_nan.ℤ?}.to perform_very_quickly
       end
     end
 
-    context 'func{ℂ?}: performs extremely quickly' do
+    context 'func{ℂ?}: performs very quickly' do
       it 'for cases: true' do
-        expect{datac_one.ℂ?}.to perform_extremely_quickly
+        expect{datac_one.ℂ?}.to perform_very_quickly
       end
       it 'for cases: false' do
-        expect{data_complex_nan.ℂ?}.to perform_extremely_quickly
+        expect{data_complex_nan.ℂ?}.to perform_very_quickly
       end
     end
 
-    context 'func{ℚ?}: performs extremely quickly' do
+    context 'func{ℚ?}: performs very quickly' do
       it 'for cases: true' do
-        expect{dataf_one.ℚ?}.to perform_extremely_quickly
+        expect{dataf_one.ℚ?}.to perform_very_quickly
       end
       it 'for cases: false' do
-        expect{data_complex_nan.ℚ?}.to perform_extremely_quickly
+        expect{data_complex_nan.ℚ?}.to perform_very_quickly
       end
     end
 
-    context 'func{ℝ?}: performs extremely quickly' do
+    context 'func{ℝ?}: performs very quickly' do
       it 'for cases: true' do
-        expect{data_complex_one.ℝ?}.to perform_extremely_quickly
+        expect{data_complex_one.ℝ?}.to perform_very_quickly
       end
       it 'for cases: false' do
-        expect{data_complex_nan.ℝ?}.to perform_extremely_quickly
+        expect{data_complex_nan.ℝ?}.to perform_very_quickly
       end
     end
 
-    context 'func{𝕌?}: performs extremely quickly' do
+    context 'func{𝕌?}: performs very quickly' do
       it 'for cases: true' do
-        expect{data_complex_one.𝕌?}.to perform_extremely_quickly
+        expect{data_complex_one.𝕌?}.to perform_very_quickly
       end
       it 'for cases: false' do
-        expect{data_complex_nan.𝕌?}.to perform_extremely_quickly
+        expect{data_complex_nan.𝕌?}.to perform_very_quickly
 
       end
     end

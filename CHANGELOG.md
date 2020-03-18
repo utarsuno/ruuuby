@@ -1,34 +1,84 @@
+---
+### (upcoming patches) v0.0.19-v0.0.22
+ * resolve missing coverage from `v0.0.17`
+ * resolve missing coverage from `v0.0.18`
+
+#### Abstract
+ * start automation/abstraction of state & configs for CLI based APIs, tools, and scripts (gem `tty-command` providing core functionality)
+ * start automation/abstraction of code-file (content) management
+ * continuation of (`f15`) in relation to above 2 points
+---
+
+# v0.0.18
+ * ⚠️ intermediate patch (full testing coverage of this patch to be concluded in `0.0.19`)
+ * renaming existing func(`🛑str_or_ary❓`) to(`🛑countable❓`); it now checks for `Set` as well
+ * move all duplicated aliases (for playing nice with IDEs, happens from funcs created in `C-extension`) into `conditionals/ide_helper.rb`
+ * add `gem 'sqlite3', '~> 1.4.2'`
+ * add `gem 'activerecord', '~> 5.2.4.1'`
+ * start process of tracking language changes across versions into `ORM`/`db`
+   * start process of auto-generating documentation from these objects
+
+| added path | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/ruuuby/class/io/file.rb` | ``File`` |  | `f12` |
+| `lib/ruuuby/class/io/dir.rb` | ``Dir`` |  | `f12` |
+| `lib/ruuuby/types.rb` | ``Ruuuby::VirtualTypes`` | adds (module-scoped) constants `🅱️`, `STRY`, `NUMS`, `COUNTABLES`  | `f06` |
+| `app/models/application_record.rb` | ``ApplicationRecord`` |  | `f15` |
+| `app/models/ruuuby_changelog.rb` | ``RuuubyChangelog`` |  | `f15` |
+| `app/models/ruuuby_feature.rb` | ``RuuubyFeature`` |  | `f15` |
+| `app/models/ruuuby_release.rb` | ``RuuubyRelease`` |  | `f15` |
+| `lib/ruuuby/class/method.rb` | ``Method`` |  |  |
+| `conditionals/ide_helper.rb` |  |  |  |
+| `db/db.rb` |  |  | `f15` |
+| `db/seed.rb` |  |  | `f15` |
+
+| class(es) | method(s) added | feature(s) |
+| --- | --- | --- |
+| `File`, `Dir` | `∃?` | `f12` |
+| `File` | `dirname²`, `dirname³` | `f12` |
+| `Kernel` | `📁` (`::File`), `📂` (`::File`), `🗄️` (`::Dir`) | `f12` |
+| `Object` | `flt?`, `num?` | `f06` |
+| `Integer`, `Numeric` | `♾️?` (infinite?) | `f11` |
+| `Method` | `🏠` (`source_location`) | `f10` |
+
+---
+
 # 0.0.17
- * ⚠️ (full coverage of this patch to be concluded in `0.0.18`)
- * add file: `ruuuby/class/class.rb`
- * start general, wide-scale, re-structuring to manage changes into categorized `features`
- * continued audit on number classes (see notes from v`0.0.15` and v`0.0.16`)
- * (to be expanded upon next patch) add support for raising to powers `0-9` for `Integer` and `Float`
+
+#### Abstract
+ * (`f15`): start general, wide-scale, re-structuring to manage changes into categorized `features`
+
+#### Discrete
+ * ⚠️ (full coverage of this patch to be concluded in future patch)
+ * continued audit on number classes (see notes from v`0.0.15-16`)
+ * (⚠️ missing coverage) add support for raising to powers `0-9` for `Integer` and `Float`
  * for math related `RSpecs`, move common/shared `let` definitions into `spec_helper.rb`, add additional ones to form a general schema for testing data
- * add the following methods/aliases:
  
+#### Methods & Aliases:
  | (c)lass or (m)odule                  | methods/aliases added | feature |
- | ------------------------------------ | --------------------- | --- |
+ | ------------------------------------ | --------------------- | ------- |
  | (m) `Kernel`                         | `𝔠`                   | `f03` |
  | (c) `String`, `Set`, `Array`, `Hash` | `𝔠` (length)          | `f03` |
- | (c) `Class`                          | `🆕` (new)            | `TODO` |
- | (c) `Object`                         | `⁰`, `¹`, `²`, `³`, `⁴`, `⁵`, `⁶`, `⁷`, `⁸`, `⁹` | `TODO` |
+ | (c) `Class`                          | `🆕` (new)            | `TODO: feature label` |
+ | (c) `Object`                         | `⁰`, `¹`, `²`, `³`, `⁴`, `⁵`, `⁶`, `⁷`, `⁸`, `⁹` | `TODO: feature label` |
  | (c) `Object` | `🛡️funcs` (protected_methods), `🙈funcs` (private_methods) | [`f01`, `f02`] |
  | (m) `Module` | `🛡️` (protected), `∃🛡️func?` (protected_method_defined?), `🛡️instance_funcs` (protected_instance_methods), `🙈instance_funcs` (private_instance_methods), `🙈class_func` (private_class_method) | [`f01`, `f02`] |
- | (c) `Integer`                        | `^`, `preserved_reference_to_bitwise_or` | `TODO` |
- | (c) `Float`                          | `^` | `TODO` |
+ | (c) `Integer`                        | `^`, `preserved_reference_to_bitwise_or` | `TODO: feature label` |
+ | (c) `Float`                          | `^` | `TODO: feature label` |
+
+#### Files Added:
+ * `ruuuby/class/class.rb`
 
 ---
 
 # 0.0.16
  * modify various functions to not allocate un-necessary memory (ex: call `.reverse_each` instead of `reverse.each`)
- * `ruby_class_mods.c` headers under construction, continued expansion of C-extension use-cases
  * continued audit on number classes (see notes from v`0.0.15`), add domain checks for `𝕌?`, `𝔹?`
  * add first multi-step audit test against project file structure (will require better solution, just a starting point)
  * add/move the following methods/aliases:
 
- | (c)lass or (m)odule                  | methods/aliases added/moved                               |
- | ------------------------------------ | --------------------------------------------------------- |
+ | (c)lass or (m)odule                  | methods/aliases added/moved                               | feature |
+ | ------------------------------------ | --------------------------------------------------------- | ------- |
  | (c) `Array`                          | `equal_contents?` (`≈≈` now aliases it)                   |
  | (c) `Array`                          | `frequency_counts` (`📊` now aliases it)                  |
  | (c) `Array`                          | `disjunctive_union` (`⊕` now aliases it)                  |
@@ -47,24 +97,25 @@
  * move various existing functions/aliases from sub-classes into common parent modules and/or classes where possible, ex: `∌?` out of `Array` and into `enumerable` to share common features w/ others like `Set`
  * move certain module/class initial definition/creation into `ruby_class_mods.c`
  * for number classes (ex: `Integer`), fix various logical/performance/test-coverage flaws for funcs like `ℕ?`
- * add/move the following methods/aliases:
 
- | (c)lass or (m)odule | methods/aliases added/moved                      |
- | ------------------- | ------------------------------------------------ |
- | (c) `Array`         | `start_with?`, `ensure_start!`                   |
- | (c) `Set`           | `remove_empty!`, `∅?` (empty?), `∀` (each), `∋?` |
- | (m) `Enumerable`    | `∌?`, `⨍` (map)                                  |
- | (c) `Numeric`       | `∞?` (infinite?)                                  |
- | (c) `Integer`       | `finite?`, `infinite?`                             |
+ | (c)lass or (m)odule | methods/aliases added/moved                      | feature |
+ | ------------------- | ------------------------------------------------ | ------- |
+ | (c) `Array`         | `start_with?`, `ensure_start!`                   | `f08`   |
+ | (c) `Set`           | `remove_empty!`, `∅?` (empty?), `∀` (each), `∋?` | `f09`   |
+ | (m) `Enumerable`    | `∌?`, `⨍` (map)                                  | `f09`   |
+ | (c) `Numeric`       | `∞?` (infinite?)                                  | `f10`   |
+ | (c) `Integer`       | `finite?`, `infinite?`                             | `f11`   |
 
 ---
 
 # 0.0.14
  * add gem `'tty-command', '~> 0.9.0'` to group `runtime`
- * adjust naming on param check functions (in `Ruuuby::ParamErr`), ex: `🛑❓bool` change to `🛑bool❓`
- * add c headers in preparation for future functionality
  * for use by `audit RSpecs`: start various means of tracking internal versions, configs, etc; will help form dynamically generated audits and reports
  * temporarily remove `.travis.yml` (auto-generated at project creation but would be useful to utilize)
+
+| feature | change |
+| ------- | ------ |
+| `f14`   | adjust naming on param check functions (in `Ruuuby::ParamErr`), ex: `🛑❓bool` change to `🛑bool❓` |
 
 ---
 
@@ -73,16 +124,15 @@
  * remove param:`use_partial_fill_in` from `String`'s funcs `ensure_start!` and `ensure_ending!`
  * heavily adjust usage/style for throwing param errors via `Ruuuby::Err` now(`Ruuuby::ParamErr`)
  * add new type of RSpec: `audit`
- * add the following methods/aliases:
  
- | (c)lass or (m)odule      | methods/aliases added |
- | ------------------------ | --------------------- |
- | (c) `Hash`               | `∀` (each), `∅?` (empty) |
- | (m) `Kernel`             | `🛑` (raise), `√` (Math.sqrt) |
- | (m) `Module`             | `∃func?` (func created and alias removed), `∃🙈func?` (private_method_defined?) |
- | (c) `NilClass`, `String` | `∅?` (empty) |
- | (c) `Array`              | `ensure_ending!`, `end_with?`, `∅?` (empty), `uniq_to_me` (∖) |
- | (c) `Object`             | `🛑❓bool`, `🛑❓int`, `🛑❓ary`, `🛑❓str`, `🛑❓stry`, `🛑❓str_or_ary` |
+ | (c)lass or (m)odule      | methods/aliases added | feature |
+ | ------------------------ | --------------------- | ------- |
+ | (c) `Hash`               | `∀` (each), `∅?` (empty) | `f09`, `f04` |
+ | (m) `Kernel`             | `🛑` (raise), `√` (Math.sqrt) | `f14`, `f10` |
+ | (m) `Module`             | `∃func?` (func created and alias removed), `∃🙈func?` (private_method_defined?) | `f13` |
+ | (c) `NilClass`, `String` | `∅?` (empty) | `f04` |
+ | (c) `Array`              | `ensure_ending!`, `end_with?`, `∅?` (empty), `uniq_to_me` (∖) | `f09`, `f04` |
+ | (c) `Object`             | `🛑❓bool`, `🛑❓int`, `🛑❓ary`, `🛑❓str`, `🛑❓stry`, `🛑❓str_or_ary` | `f14` |
 
 * remove the following methods/aliases:
 
@@ -98,15 +148,14 @@
  * remove certain helper funcs from `spec_helper.rb` as core language adds similar wrappers
  * add organization and new information to `help/ruuuby.md`
  * add files: `ruuuby/module/kernel.rb`, `ruuuby/module/module.rb`, and `ruuuby/arg_err.rb`
- * add the following methods/aliases:
  
- | (c)lass or (m)odule | methods/aliases added |
- | ------------------- | --------------------- |
- | (m) `Module`        | `🙈`, `🙈constants⟶`, `∃const?`, `∃func?`, `∃func_alias?` |
- | (m) `Kernel`        | `∃module?`, `∃class?` |
- | (m) `Ruuuby::Err`   | `param¬bool`, `param¬str`, `param¬stry`, `param¬ary`, `param¬module`, `param¬class` |
- | (c) `Ruuuby::Err::WrongParamType` | `generate_error_text`, `throw` |
- | (c) `Object`        | `stry?`              |
+ | (c)lass or (m)odule | methods/aliases added | feature |
+ | ------------------- | --------------------- | ------- |
+ | (m) `Module`        | `🙈`, `🙈constants⟶`, `∃const?`, `∃func?`, `∃func_alias?` | `f13` |
+ | (m) `Kernel`        | `∃module?`, `∃class?` | `f13`   |
+ | (m) `Ruuuby::Err`   | `param¬bool`, `param¬str`, `param¬stry`, `param¬ary`, `param¬module`, `param¬class` | `f14` |
+ | (c) `Ruuuby::Err::WrongParamType` | `generate_error_text`, `throw` | `f14` |
+ | (c) `Object`        | `stry?`               | `f06`   |
 
 ---
 
@@ -118,13 +167,12 @@
    * move `Array`'s added method `>>`
    * move `String`'s added method `>>`
    * add private method `disjunctive_union` to `Array` for use in method`⊕`
- * add the following methods/aliases:
  
- | (c)lass or (m)odule | methods/aliases added |
- | ------------------- | --------------------- |
- | (c) `Hash`          | `🔑?`, `∃🔑?`         |
- | (c) `Array`         | `∀`, `📊`, `≈` |
- | (m) `Ruuuby`        | `∃module?`, `∃class?` |
+ | (c)lass or (m)odule | methods/aliases added | feature |
+ | ------------------- | --------------------- | ------- |
+ | (c) `Hash`          | `🔑?`, `∃🔑?`         | `f10`   |
+ | (c) `Array`         | `∀`, `📊`, `≈`        | `f09`   |
+ | (m) `Ruuuby`        | `∃module?`, `∃class?` | `f13`   |
 
 ---
 
@@ -134,15 +182,14 @@
  * add/update minor details to `README.md`
  * add `help/jruby.md` to document jruby extensions gotchas along the way
  * add initial `Dockerfile` and `docker-compose.yml`
- * add the following methods:
  
- | class        | methods added                |
- | -----------  | ---------------------------- |
- | `Integer`    | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
- | `Float`      | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
- | `BigDecimal` | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` | 
- | `Complex`    | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
- | `Rational`   | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
+ | class        | methods added                | feature |
+ | -----------  | ---------------------------- | ------- |
+ | `Integer`    | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` | `f11`   |
+ | `Float`      | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` | `f11`   |
+ | `BigDecimal` | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` | `f11`   |
+ | `Complex`    | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` | `f11`   |
+ | `Rational`   | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` | `f11`   |
 
 ---
 
@@ -150,10 +197,10 @@
  * add example usage in `README.md`
  * add various aliases and functions for additional set math operations
  
- | class    | method(s)/alias(es) added |
- | -------  | ------------------------- |
- | `Array`  | `∌?`, `∋?`                |
- | `String` | `∌?`, `∋?`, `∈?`, `∉?`    |
+ | class    | method(s)/alias(es) added | feature |
+ | -------  | ------------------------- | ------- |
+ | `Array`  | `∌?`, `∋?`                | `f09`   |
+ | `String` | `∌?`, `∋?`, `∈?`, `∉?`    | `f09`   |
  
 ---
 
@@ -165,28 +212,28 @@
  * increase scope of performance RSpecs, light adjustments to remaining RSpecs for clarity & future scope
  * add various aliases to existing Ruby functions/fields/constants/etc
  
-| class           | base reference                          | alias         | notes |
-| --------------- | --------------------------------------- | ------------- | ----- |
-| `Object`        | field: `object_id`                       | `🆔`          |       |
-| `Object`        | method: `freeze`                        | `❄️`          |       |
-| `Object`        | method: `frozen?`                       | `❄️ ?`        |       |
-| `Array`         | method: `∑`                             | `each`        |       |
-| `Array`         | method: `⨍`                             | `map`         |       |
+| class           | base reference                          | alias         | feature |
+| --------------- | --------------------------------------- | ------------- | ------- |
+| `Object`        | method: `object_id`                     | `🆔`          | `f10`   |
+| `Object`        | method: `freeze`                        | `❄️`          | `f00`   |
+| `Object`        | method: `frozen?`                       | `❄️ ?`        | `f00`   |
+| `Array`         | method: `∑`                             | `each`        | `f10`   |
+| `Array`         | method: `⨍`                             | `map`         | `f10`   |
 
  * added the following methods:
  
- | class    | method added     |
- | -------  | ---------------- |
- | `Array`  | `>>`             |
- | `Array`  | `⊕`              |
- | `Array`  | `∖`              |
+ | class    | method added     | feature |
+ | -------  | ---------------- | ------- |
+ | `Array`  | `>>`             | `f05`   |
+ | `Array`  | `⊕`              | `f09`   |
+ | `Array`  | `∖`              | `f09`   |
 
  * add/replace various Ruby functions with native C-extensions (`ruuuby/ext/ruby_class_mods/ruby_class_mods.c`):
  
- | modified class   | funcs added/replaced  |
- | --------------- | --------------------- |
- | `Object`        | `hsh?`                |
- | `Array`         | `remove_empty!`       |
+ | modified class   | funcs added/replaced  | feature |
+ | --------------- | --------------------- | ------- |
+ | `Object`        | `hsh?`                | `f06`   |
+ | `Array`         | `remove_empty!`       | `f07`   |
 
 ---
 
@@ -196,10 +243,10 @@
  * added section `project layout` and update formatting to `README.md`
  * replace various Ruby functions with native C-extensions (`ruuuby/ext/ruby_class_mods/ruby_class_mods.c`):
  
- | modified class   | funcs replaced  |
- | --------------- | --------------- |
- | `Object`        | `ary?`, `bool?`, `int?`, `str?`, `sym?` |
- | `NilClass`      | `empty?` |
+ | modified class   | funcs replaced                          | feature |
+ | --------------- | --------------------------------------- | ------- |
+ | `Object`        | `ary?`, `bool?`, `int?`, `str?`, `sym?` | `f06`   |
+ | `NilClass`      | `empty?`                                | `f04`   |
 
 ---
 
@@ -207,14 +254,13 @@
  * add {`Ruuuby::Enum::Text`}
  * minor changes/functions-added to DRY some code
  * add `Gemfile.lock` to `.gitignore`
- * add the following methods:
  
- | class    | method added     |
- | -------  | ---------------- |
- | `Object` | `sym?`           |
- | `String` | `>>`             |
- | `String` | `ensure_start!`  | 
- | `String` | `ensure_ending!` |
+ | class    | method added     | feature |
+ | -------  | ---------------- | ------- |
+ | `Object` | `sym?`           | `f06`   |
+ | `String` | `>>`             | `f05`   |
+ | `String` | `ensure_start!`  | `f08`   |
+ | `String` | `ensure_ending!` | `f08`   |
 
 ---
 
@@ -222,11 +268,10 @@
  * for time being, remove ruby `v2.7` requirement
  * `freeze` various constants and modules
  * slightly clean-up (with helper functions) and expand RSpec scenario coverage
- * add the following method:
  
- | class  | method added    |
- | -----  | ------------- |
- | `Object` | `str?`      |
+ | class    | method added | feature |
+ | -------- | ------------ | ------- |
+ | `Object` | `str?`       | `f06`   |
 
 ---
 
@@ -237,48 +282,55 @@
  * update `ruuuby.gemspec` to require ruby `2.7.0`
  * split testing into the following groups:
  
-| category | command |
-| -------- | ------- |
-| all but performance | `bundle exec rake rspec` |
-| only performance | `bundle exec rake rspec_performance` |
-| all tests | `bundle exec rake rspec_all` |
+| category            | command                              |
+| ------------------- | ------------------------------------ |
+| all but performance | `bundle exec rake rspec`             |
+| only performance    | `bundle exec rake rspec_performance` |
+| all tests           | `bundle exec rake rspec_all`         |
 
 ---
 
-# 0.0.3
- * modify {`Ruuuby::Enum::Emoji`} from strings to symbols
+# v0.0.3
+ * modify `Ruuuby::Enum::Emoji` from `Strings` to `Symbols`
  * fix gemspec to reflect correct git URLs
- * add first update to `README.md`
- * add the following methods:
 
-| class  | method added    |
-| -----  | ------------- |
-| `Object` | `int?`          |
-| `Object` | `ary?`          |
-| `Array`  | `remove_empty!` |
+| added path | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/class/ary.rb` | ``Array`` |  | `f07`, `f06` |
+| `lib/class/int.rb` | ``Integer`` |  | `f06` |
 
----
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Object` | `int?` | `f06` |
+| `Object` | `ary?` | `f06` |
+| `Array` | `remove_empty!` | `f07` |
 
-# 0.0.2
- * add the following method:
-
-| class  | method added    |
-| -----  | ------------- |
-| `Object` | `bool?`         |
 
 ---
 
-# 0.0.1
- * add `CHANGELOG.md`
- * add {`Ruuuby::Enum::Emoji`}
- * add bin/audit (for running rdoc, rspecs, and coverage reports)
- * add the following method:
-
-| class    | method added    |
-| -----    | ------------- |
-| `NilClass` | `empty?`        |
+# v0.0.2
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Object` | `bool?` | `f06` |
 
 ---
 
-# 0.0.0
+# v0.0.1
+
+| added path | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `CHANGELOG.md` |  |  |  |
+| `lib/ruuuby/class/nil.rb` | ``NilClass`` |  | `f04` |
+| `lib/ruuuby/enum/emoji.rb` |  | Ruuuby::Enum::Emoji |  |
+| `bin/audit` |  | for running rdoc, rspecs, and coverage reports |  |
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `NilClass` | `empty?` | `f04` |
+
+---
+
+# v0.0.0
  * initial project creation
+
+---

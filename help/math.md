@@ -41,5 +41,12 @@
 𝔼 (expected value)
 ∂ (partial derivative)
 
+* Transcendental number
+* https://en.wikipedia.org/wiki/Transcendental_number
+
+* Golden Ratio *
+* https://en.wikipedia.org/wiki/Golden_ratio
+"The Greek letter phi symbolizes the golden ratio. Usually, the lowercase form (φ or φ) is used."
+
 ```
 

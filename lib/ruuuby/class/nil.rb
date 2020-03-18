@@ -1,10 +1,9 @@
 # coding: utf-8
 
-# add various functions to existing class +NilClass+ (and explicitly create aliases to play nice with IDEs)
+# add various functions to existing class +NilClass+
 class ::NilClass
 
-  # | feature | *f04* | ------------------------------------------------------------------------------------------------
-  alias_method :empty?, :empty?
+  # ---------------------------------------------------------------------------------------------------------- | *f04* |
   alias_method :∅?, :empty?
   # | ------------------------------------------------------------------------------------------------------------------
 

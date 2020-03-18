@@ -30,6 +30,8 @@ module ::RuuubyConfigs
     GEM_RDOC            = :rdoc
     GEM_RAKE_COMPILER   = :'rake-compiler'
     GEM_RSPEC_BENCHMARK = :'rspec-benchmark'
+    GEM_SQLITE3         = :sqlite3
+    GEM_ACTIVERECORD    = :activerecord
 
     module EnvironmentRuntime
       ALL_GEMS = {'tty-command': '0.9.0'}
@@ -42,7 +44,9 @@ module ::RuuubyConfigs
           'rspec': '3.9.0',
           'rdoc': '6.2.1',
           'rake-compiler': '1.1.0',
-          'rspec-benchmark': '0.5.1'
+          'rspec-benchmark': '0.5.1',
+          'sqlite3': '1.4.2',
+          'activerecord': '5.2.4.1',
       }.merge!(::RuuubyConfigs::GemDependencies::EnvironmentRuntime::ALL_GEMS)
     end
 

@@ -89,14 +89,15 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function{🛑str_or_ary❓}' do
+    context 'by adding function{🛑countable❓}' do
       context 'handles needed input scenarios' do
         it 'cases[positive]' do
-          expect{🛑str_or_ary❓('0', '5')}.to_not raise_error
-          expect{🛑str_or_ary❓('0', [])}.to_not raise_error
+          expect{🛑countable❓('0', '5')}.to_not raise_error
+          expect{🛑countable❓('0', data_ary_leet)}.to_not raise_error
+          expect{🛑countable❓('0', data_set_leet)}.to_not raise_error
         end
         it 'cases[negative]' do
-          expect{🛑str_or_ary❓('0', 5)}.to raise_error(ArgumentError)
+          expect{🛑countable❓('0', 5)}.to raise_error(ArgumentError)
         end
       end
     end
@@ -360,14 +361,15 @@ RSpec.describe 'Object' do
       #end
     end
 
-    context 'func{🛑str_or_ary❓}: performs extremely quickly' do
+    context 'func{🛑countable❓}: performs extremely quickly' do
       it 'cases[positive]' do
-        expect{🛑str_or_ary❓('0', '5')}.to perform_extremely_quickly
-        expect{🛑str_or_ary❓('0', [])}.to perform_extremely_quickly
+        expect{🛑countable❓('0', '5')}.to perform_extremely_quickly
+        expect{🛑countable❓('0', data_ary_leet)}.to perform_extremely_quickly
+        expect{🛑countable❓('0', data_set_leet)}.to perform_extremely_quickly
       end
       # TODO: missing coverage
       #it 'cases[negative]' do
-      #  expect{🛑str_or_ary❓('0', 5)}.to perform_extremely_quickly
+      #  expect{🛑countable❓('0', 5)}.to perform_extremely_quickly
       #end
     end
 

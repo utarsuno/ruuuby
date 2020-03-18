@@ -72,37 +72,37 @@ RSpec.describe 'numeric.rb' do
         expect{-1.0.∞?}.to perform_very_quickly
       end
     end
-    context 'func[𝔹?]: performs extremely quickly' do
+    context 'func[𝔹?]: performs very quickly' do
       it 'for cases: true' do
-        expect{0.𝔹?}.to perform_extremely_quickly
-        expect{1.0.𝔹?}.to perform_extremely_quickly
+        expect{0.𝔹?}.to perform_very_quickly
+        expect{1.0.𝔹?}.to perform_very_quickly
       end
       context 'cases: negative' do
         it 'for floats' do
-          data_float_error_cases.∀{|n| expect{n.𝔹?}.to perform_extremely_quickly}
+          data_float_error_cases.∀{|n| expect{n.𝔹?}.to perform_very_quickly}
         end
         it 'for big-decimals' do
-          data_big_decimal_error_cases.∀{|n| expect{n.𝔹?}.to perform_extremely_quickly}
+          data_big_decimal_error_cases.∀{|n| expect{n.𝔹?}.to perform_very_quickly}
         end
         it 'for complexes' do
-          data_complex_error_cases.∀{|n| expect{n.𝔹?}.to perform_extremely_quickly}
+          data_complex_error_cases.∀{|n| expect{n.𝔹?}.to perform_very_quickly}
         end
       end
     end
-    context 'func[𝕌?]: performs extremely quickly' do
+    context 'func[𝕌?]: performs very quickly' do
       it 'for cases: true' do
-        expect{55.𝕌?}.to perform_extremely_quickly
-        expect{-1.𝕌?}.to perform_extremely_quickly
+        expect{55.𝕌?}.to perform_very_quickly
+        expect{-1.𝕌?}.to perform_very_quickly
       end
       context 'cases: negative' do
         it 'for floats' do
-          data_float_error_cases.∀{|n| expect{n.𝕌?}.to perform_extremely_quickly}
+          data_float_error_cases.∀{|n| expect{n.𝕌?}.to perform_very_quickly}
         end
         it 'for big-decimals' do
-          data_big_decimal_error_cases.∀{|n| expect{n.𝕌?}.to perform_extremely_quickly}
+          data_big_decimal_error_cases.∀{|n| expect{n.𝕌?}.to perform_very_quickly}
         end
         it 'for complexes' do
-          data_complex_error_cases.∀{|n| expect{n.𝕌?}.to perform_extremely_quickly}
+          data_complex_error_cases.∀{|n| expect{n.𝕌?}.to perform_very_quickly}
         end
       end
     end

@@ -7,7 +7,7 @@ module RuuubyTestHelper
 
   module Nums
     CONFIG_INTEGER = {
-        ruby: [:finite?, :infinite?, :∞?] + RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
+        ruby: [:finite?, :infinite?, :♾️?, :∞?] + RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
     }
     CONFIG_FLOAT = {
         ruby: RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
@@ -22,15 +22,25 @@ module RuuubyTestHelper
         ruby: RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
     }
     CONFIG_NUMERIC = {
-        ruby: [:∞?, :𝔹?] + RuuubyTestHelper::FeatureMath::NUMERICAL_SETS,
+        ruby: [:∞?, :♾️?, :𝔹?] + RuuubyTestHelper::FeatureMath::NUMERICAL_SETS,
         aliases: {
             finite?: :𝕌?
         }
     }
   end
 
+  module IO
+    CONFIG_FILE = {
+        ruby: [:∃?, :dirname², :dirname³]
+    }
+
+    CONFIG_DIR = {
+        ruby: [:∃?]
+    }
+  end
+
   CONFIG_OBJECT = {
-      ruby: [:🛑bool❓, :🛑🅱️❓, :🛑int❓, :🛑ary❓, :🛑str❓, :🛑stry❓, :🛑str_or_ary❓],
+      ruby: [:🛑bool❓, :🛑🅱️❓, :🛑int❓, :🛑ary❓, :🛑str❓, :🛑stry❓, :🛑countable❓],
       c: [:int?, :str?, :stry?, :hsh?, :ary?, :bool?, :sym?],
       aliases: {
           object_id: :🆔,
@@ -48,6 +58,12 @@ module RuuubyTestHelper
           🙈constants⟶: :private_constant,
           ∃const?: :const_defined?,
           private_method_defined?: :∃🙈func?
+      }
+  }
+
+  CONFIG_METHOD = {
+      aliases: {
+          source_location: :🏠
       }
   }
 

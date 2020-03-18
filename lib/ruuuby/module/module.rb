@@ -1,16 +1,16 @@
 
-# add various functions to existing module +Module+ (and explicitly create aliases to play nice with IDEs)
+# add various functions to existing module +Module+
 class ::Module
 
   alias_method :∃const?, :const_defined?
 
-  # | feature | *f01* | ------------------------------------------------------------------------------------------------
+  # ---------------------------------------------------------------------------------------------------------- | *f01* |
   alias_method :🙈, :private
   alias_method :∃🙈func?, :private_method_defined?
   alias_method :🙈constants⟶, :private_constant
   alias_method :🙈class_func, :private_class_method
   alias_method :🙈instance_funcs, :private_instance_methods
-  # | feature | *f02* | ------------------------------------------------------------------------------------------------
+  # ---------------------------------------------------------------------------------------------------------- | *f02* |
   alias_method :🛡️, :protected
   alias_method :∃🛡️func?, :protected_method_defined?
   alias_method :🛡️instance_funcs, :protected_instance_methods

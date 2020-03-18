@@ -1,12 +1,32 @@
 
+`quick in the following context means easy to use/read, not performance`
+
 | 🆔 | feature |
 | --- | --- |
-| f00 | `❄️` to alias `freeze`                      |
-| f01 | `🙈` to alias `private`                     |
-| f02 | `🛡️` to alias `protected`                   |
-| f03 | `𝔠` to alias concept of `cardinality`       |
-| f04 | `∅` to alias concept of `empty`             |
-| f05 | `>>` to offer reverse functionality of `<<` |
+| f00 | `❄️` to alias `freeze`                                                 |
+| f01 | `🙈` to alias `private`                                                |
+| f02 | `🛡️` to alias `protected`                                              |
+| f03 | `𝔠` to alias concept of `cardinality` (offered in both styles of `OOP` & `'functional'`) |
+| f04 | `∅` to alias concept of `empty`                                        |
+| f05 | `>>` to offer reverse functionality of `<<`                            |
+| f06 | enable quick type checks against any object (ex: `variable.int?`)      |
+| f07 | enable quick clean up functions for `enumerables`                      |
+| f08 | enable quick editing functions for `enumerables` (& `String`)          |
+| f09 | add math `set operations` (especially for `enumerables` & `String`)    |
+| f10 | offer special character aliases for natural ease of readability        |
+| f11 | add math `number sets` (ex: `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `∞?`, `♾️?`) |
+| f12 | enable quick `file/directory io` and alias as file(`📂`) and dir(`🗄️`)   |
+| f13 | `∃` to alias concept of `does this(arg) exist?`                        |
+| f14 | enable easier catching and throwing of parameter type errors           |
+| f15 | enable quicker tracking and auditing of features across versions       |
+| f96 | automate local `git` configurations                                     |
+| f97 | `JRuby-extensions`                                                     |
+| f98 | `C-extensions`                                                         |
+| f99 | enable a pure `Ruby` only build (without `C-extensions`)               |
+
+---
+
+#### TODO: Auto-generate these:
 
 ## f00
  * `class/obj.rb`
@@ -44,6 +64,9 @@
    * `𝔠` --> `length`
 
 ## f04
+ * `class/nil.rb`
+   * `empty?`
+   * `∅?` --> `empty?`
  * `class/string.rb`
    * `∅?` --> `empty?`
  * `class/ary.rb`

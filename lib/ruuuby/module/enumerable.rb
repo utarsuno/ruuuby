@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-# add various functions to existing module +Enumerable+ (and explicitly create aliases to play nice with IDEs)
+# add various functions to existing module +Enumerable+
 #
 # this module is included-in:
 #  * +Array+

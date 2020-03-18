@@ -6,7 +6,7 @@
 
 | for                             | use                                                         |
 | :-----------------------------: | :---------------------------------------------------------: |
-| `Gemfile`                        | `gem 'ruuuby', '~> 0.0.17'`                                 |
+| `Gemfile`                        | `gem 'ruuuby', '~> 0.0.18'`                                 |
 | ruby scripts                    | `require 'ruuuby'`                                          |
 | `ruuuby` version during runtime | `require 'ruuuby/version'`                                  |
 | gem url                         | https://rubygems.org/gems/ruuuby                            |
@@ -15,10 +15,9 @@
 #### Example
 
 ```ruby
-# true, true, true
-√(25) == 5
-5^² == 25
--5^⁴ == 625
+# true, true
+√(1787569)      == 1337
+√(√(-1337.0^⁴)) == 1337
 
 # true, true, false
 'b'.∈? 'abc'
@@ -58,47 +57,64 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 
 ## Language Changes:
 
+#### Glossary (for table content & tags)
+
+> {`static`} implies following context: `Class` instance, not the actual `object`
+> <br/>(`fNN`) is feature tag syntax, let (`N ∈ ℕ`); (`full use-case wip`)
+> <br/> symbol(`∃`) means `there exists some ...`
+> <br/> symbol(`⊕`) is set notation for: *symmetric difference*
+> <br/> symbol(`∋`) is set notation for: *belongs to*, ex: (`a` belongs to set `b`: `b ∋ a`); bool-reversed: symbol(`∌`)
+> <br/> symbol(`∖`) is set notation for: *relative complement*
+
 #### Operations Supported (patched in)
-| class(es) | functionality                              | example | notes |
-| --------: | ------------------------------------------ | ------- | ----- |
-| `Integer` | raising to powers `0-9` with operator(`^`) | `5^²`   | co-exists with `Integer`'s default existing `bitwise XOR` functionality |
-| `Float`   | raising to powers `0-9` with operator(`^`) | `5.0^²` |       |
+
+> (⚠️ full-coverage wip): raising to powers(via-superscripts: `⁰, ¹, ², ..., ⁹`) with operator(`^`)
+
+| class(es) | example | notes |
+| ---------:| ------- | ----- |
+| `Integer` | `1337^²`   | - coexists with `Integer`'s default existing `bitwise XOR` functionality <br/> - current `performance penalties` scenario benchmarks range: (`75%`-`200%` `slower`) |
+| `Float`   | `1337.1337^²` |       |
 
 #### Module Changes:
-| module(s) | func(s) added  | as C-extension? (java-wip) | notes |
-| --------: | -------------- | :------------------------: | ----- |
-| `Kernel`  | `√`            | ❌                         | a 'global func' <br/> syntax sugar for Math.sqrt |
-| `Kernel`  | `𝔠`            | ❌                         | a 'global func' <br/> gets the `cardinality` (length/size) of arg <br/> feature(`f03`) |
-| `Kernel`  | `∃module?`     | ❌                         | a 'global func' <br/> ex: `∃module?(:Ruuuby)` |
-| `Kernel`  | `∃class?`      | ❌                         | a 'global func' <br/> ex: `∃class?(:Array)` |
-| `Module`  | `∃func_alias?` | ❌                         | ex: `::Array.∃func_alias?(:equal_contents?, :≈≈)` |
-| `Module`  | `∃func?`       | ❌                         | ex: `::Array.∃func?(:≈≈)` |
+
+` instance methods for Kernel will act as 'globally-scoped functions; meaning they can essentially can be called from anywhere with caller of the method ignored for all contextes`
+
+| module(s) | func(s) added     | as C-extension? (java-wip) | notes |
+| --------: | ----------------- | :------------------------: | ----- |
+| `Kernel`  | `📁`, `📂`, `🗄️` | ❌                         | - aliases for `::File`, `::Dir` <br/> - (`f12`) |
+| `Kernel`  | `√`               | ❌                         | syntax sugar for `Math.sqrt` |
+| `Kernel`  | `𝔠`               | ❌                         | - gets the `cardinality` (length/size) of arg <br/> - (`f03`) |
+| `Kernel`  | `∃module?`        | ❌                         | - ex: `∃module?(:Ruuuby)` |
+| `Kernel`  | `∃class?`         | ❌                         | - ex: `∃class?(:Array)` |
+| `Module`  | `∃func_alias?`    | ❌                         | - {`static`} <br/> - ex: `::Array.∃func_alias?(:equal_contents?, :≈≈)` |
+| `Module`  | `∃func?`          | ❌                         | - {`static`} <br/> - ex: `::Array.∃func?(:≈≈)` |
 
 #### Class Changes:
-| class(es)              | func(s) added                      | as C-extension? (java-wip) | notes |
-| ---------------------: | ---------------------------------- | :------------------------: | ----- |
-| `Object`               | `ary?`, [`bool?`, `🅱️?`], `hsh?`, `int?`, `str?`, `stry?`, `sym?` | ✅ | |
-| `Array`                | `remove_empty!`                    | ✅ | |
-| `Set`                  | `remove_empty!`                    | ❌ | |
-| `Array`                | [`frequency_counts`, `📊`]         | ✅ | get a `Hash` with keys being elements in array and values being their frequency count |
-| `Array`                | [`equal_contents?`, `≈≈`]          | ✅ | regardless of order and presence of multiple types |
-| `Array`                | [`disjunctive_union`, `⊕`]         | ✅ | `⊕` is set notation for: *symmetric difference* |
-| `Array`                | `∖`                                | ❌ | `∖` is set notation for: *relative complement*, also aliased as: `uniq_to_me` |
-| `Enumerable`, `String` | `∌?`                               | ❌ | `∌` is set notation for: *does not belong to* |
-| `Array`, `String`      | `>>`                               | ✅ | prepend provided arg, reverse operation of `<<` |
-| `String`               | `∈?`, `∉?`                         | ❌ |       |
-| `Array`                | `end_with?`, `start_with?`         | ❌ |       |
-| `String`, `Array`      | `ensure_start!`, `ensure_ending!`  | ❌ |       |
-| `NilClass`             | `empty?`                           | ✅ | ⚠️: philosophically debatable <br/> *feature*(`f04`) |
-| `Integer`              | `finite?`, `infinite?`               | ✅ |       |
-| `Numeric`              | `∞?`, `𝔹?`, `𝕌?`                   | ❌ |       |
-| `Integer`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ |       |
-| `Float`                | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ |       |
-| `BigDecimal`           | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ |       |
-| `Complex`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ |       |
-| `Rational`             | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`       | ❌ |       |
-| `Object`               | [`🛑bool❓`, `🛑🅱️❓`], `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑str_or_ary❓` | ❌ | |
-| `Object`               | `⁰`, `¹`, `²`, `³`, `⁴`, `⁵`, `⁶`, `⁷`, `⁸`, `⁹` | ❌ | added to support operations on `Numeric`s for raising to a power |
+| class(es)              | func(s) added                      | as C-extension? (java-wip) | notes   |
+| ---------------------: | ---------------------------------- | :------------------------: | ------- |
+| `File`, `Dir`          | {`static`} `∃?`                    | ❌                         | (`f12`) |
+| `File`                 | {`static`} `dirname²`, `dirname³`  | ❌                         | (`f12`) |
+| `Object`               | `ary?`, [`bool?`, `🅱️?`], `hsh?`, `int?`, `flt?`, `num?`, `str?`, `stry?`, `sym?` | ✅ | (`f06`) |
+| `Array`                | `remove_empty!`                    | ✅                         | (`f07`) |
+| `Set`                  | `remove_empty!`                    | ❌                         | (`f07`) |
+| `Array`                | [`frequency_counts`, `📊`]         | ✅ | - get the frequency count of values in array <br/> - (`f09`) |
+| `Array`                | [`equal_contents?`, `≈≈`]          | ✅ | - regardless of order and presence of multiple types <br/> - (`f09`) |
+| `Array`                | [`disjunctive_union`, `⊕`]         | ✅ | (`f09`) |
+| `Array`                | `∖`                                | ❌ | - aliased-by(`uniq_to_me`) <br/> - (`f09`) |
+| `Enumerable`, `String` | `∌?`                               | ❌ | (`f09`) |
+| `Array`, `String`      | `>>`                               | ✅ | - prepend provided arg, reverse operation of `<<` <br/> - (`f05`) |
+| `String`               | `∈?`, `∉?`                         | ❌ | (`f09`) |
+| `Array`                | `end_with?`, `start_with?`         | ❌ | (`f08`) |
+| `String`, `Array`      | `ensure_start!`, `ensure_ending!`  | ❌ | (`f08`) |
+| `NilClass`             | `empty?`                           | ✅ | - ⚠️: philosophically debatable <br/> - (`f04`) |
+| `Integer`              | `finite?`, `infinite?`               | ✅ | (`f11`) |
+| `Numeric`              | `∞?`, `𝔹?`, `𝕌?`                   | ❌ | (`f11`) |
+| `Integer`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
+| `Float`                | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
+| `BigDecimal`           | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
+| `Complex`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
+| `Rational`             | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`       | ❌ | (`f11`) |
+| `Object`               | [`🛑bool❓`, `🛑🅱️❓`], `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑countable❓` | ❌ | (`f04`) |
 
 #### Created Aliases:
 | for                    | base method(s) reference(s)               | alias(es)               | notes     |
@@ -106,44 +122,47 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Kernel`               | `raise`                                   | `🛑`                    |           |
 | `Object`               | `object_id`                               | `🆔`                    |           |
 | `Class`                | `new`                                     | `🆕`                    |           |
-| `Object`               | `freeze`, `frozen?`                       | `❄️`, `❄️?`             | *feature*(`f00`) |
-| `Object`               | `protected_methods`, `private_methods`    | `🛡️funcs`, `🙈funcs`    | *features*(`f01`,`f02`) |
+| `Object`               | `freeze`, `frozen?`                       | `❄️`, `❄️?`             | (`f00`)   |
+| `Object`               | `protected_instance_methods`, `private_methods` | `🛡️funcs`, `🙈funcs` | (`f01`,`f02`) |
 | `Array`                | `frequency_counts`, `disjunctive_union`, `equal_contents?` | `📊`, `⊕`, `≈≈` |  |
 | `Module`               | `const_defined?`, `private_method_defined?` | `∃const?`, `∃🙈func?`   |           |
-| `Module`               | `private`, `private_constant`             | `🙈`, `🙈constants⟶`  |           |
-| `Array`, `Hash`, `Set` | `each`                                    | `∀`                     |            |
+| `Module`               | `private`, `private_constant`             | `🙈`, `🙈constants⟶`  | (`f01`)   |
+| `Module`               | `protected`, `protected_method_defined?`   | `🛡️`, `∃🛡️func?`        | (`f02`)   |
+| `Array`, `Hash`, `Set` | `each`                                    | `∀`                     |           |
 | `Array`                | `reverse`, `reverse!`, `reverse_each`     | `↩️`, `↩️!`, `↩️∀`     |            |
 | `Enumerable`           | `map`                                     | `⨍`                     | automatically applies to: `Array`, `Hash`, `Set` |
-| `Enumerable`           | `include?`                                | `∋?`                    | `∋` is set notation for: *belongs to* |
+| `Enumerable`           | `include?`                                | `∋?`                    | |
 | `Hash`                 | `key?`                                    | [`🔑?`, `🗝?`], [`∃🔑?`, `∃🗝?`] |  |
-| `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                    | *feature*(`f04`) |
-| `String`, `Array`, `Set`, `Hash`             | `length`            | `𝔠`                     | *feature*(`f03`) |
+| `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                    | (`f04`) |
+| `String`, `Array`, `Set`, `Hash`             | `length`            | `𝔠`                     | (`f03`) |
 
 ---
 
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 274      | # of tests (non-performance & non-audit based)                  |
-| QA        | performance   | 132      | # of tests                                                      |
-| CI        | audits        | 12       | # of tests                                                      |
-| structure | features      | 6        | # of distinct features (that are categorized & tracked)         |
-| coverage  | LOCs          | ???      | wip |
-| coverage  | runtime       | ???      | wip |
-| coverage  | documentation | ???      | wip |
+| QA        | unit          | 292      | # of tests (non-performance & non-audit based)                  |
+| QA        | performance   | 143      | # of tests                                                      |
+| CI        | audits        | 29       | # of tests                                                      |
+| structure | features      | ~20      | # of distinct features (that are categorized & tracked) `wip`   |
+| coverage  | LOCs          | ???      | `wip` |
+| coverage  | runtime       | ???      | `wip` |
+| coverage  | documentation | ???      | `wip` |
 
 ---
 
 ### Gems:
-| gem             | version | :development  | :runtime    |
-| --------------: | :-----: | :-----------: | :---------: |
-| tty-command     | 0.9.0   | ✅            | ✅          |
-| bundler         | 2.1.4   | ✅            | ❌          |
-| rake-compiler   | 1.1.0   | ✅            | ❌          |
-| rdoc            | 6.2.1   | ✅            | ❌          |
-| rake            | 13.0.1  | ✅            | ❌          |
-| rspec           | 3.9.0   | ✅            | ❌          |
-| rspec-benchmark | 0.5.1   | ✅            | ❌          |
+| gem               | version   | :development  | :runtime    |
+| ----------------: | :-------: | :-----------: | :---------: |
+| `tty-command`     | `0.9.0`   | ✅            | ✅          |
+| `sqlite3`         | `1.4.2`   | ✅            | ❌          |
+| `activerecord`    | `5.2.4.1` | ✅            | ❌          |
+| `bundler`         | `2.1.4`   | ✅            | ❌          |
+| `rake-compiler`   | `1.1.0`   | ✅            | ❌          |
+| `rdoc`            | `6.2.1`   | ✅            | ❌          |
+| `rake`            | `13.0.1`  | ✅            | ❌          |
+| `rspec`           | `3.9.0`   | ✅            | ❌          |
+| `rspec-benchmark` | `0.5.1`   | ✅            | ❌          |
 
 ---
 
@@ -163,18 +182,18 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `gem`              | `server`            | host interactive web-page at `http://0.0.0.0:8808` to see documentation for currently installed gems |
 
 #### Testing Tasks:
-| preface            | cmd                 | warnings displayed? | description |
-| -----------------: | ------------------- | ------------------- | ----------- |
-| `bundle exec rake` | `rspec_unit`        | ❌                  | run all unit-tests except tags: {audit, performance} |
-| `bundle exec rake` | `rspec_audit`       | ❌                  | run only audit based unit-tests  |
-| `bundle exec rake` | `rspec_performance` | ❌                  | run only performance based unit-tests   |
-| `bundle exec rake` | `rspec_all`         | ✅                  | run all unit-tests |
+| preface            | cmd                 | w/ warnings? | description |
+| -----------------: | ------------------- | :----------: | ----------- |
+| `bundle exec rake` | `rspec_unit`        | ❌           | run all unit-tests except tags: {audit, performance} |
+| `bundle exec rake` | `rspec_audit`       | ❌           | run only audit based unit-tests  |
+| `bundle exec rake` | `rspec_performance` | ❌           | run only performance based unit-tests   |
+| `bundle exec rake` | `rspec_all`         | ✅           | run all unit-tests |
 
 ---
 
 ### Project Layout:
 |  directory     | description of contents                        |
-| -------------: | ---------------------------------------------- |
+| -------------: | --------------------------------------------- |
 | `bin`          | executable files                                |
 | `ext`          | C portion of this Gem's code (and future location for JRuby extensions) |
 | `lib`          | ruby portion of this Gem's code                |

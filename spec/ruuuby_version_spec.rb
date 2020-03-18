@@ -12,12 +12,9 @@ RSpec.describe Ruuuby::Version do
       expect(subject::VERSION.split('.')[1].to_i).to eq(0)
     end
     it 'tiny version matches' do
-      expect(subject::VERSION.split('.')[2].to_i).to eq(17)
+      expect(subject::VERSION.split('.')[2].to_i).to eq(18)
     end
     context 'preventing changes' do
-      it 'version sub-numbers are private' do
-        expect{subject::TINY}.to raise_error(NameError, "private constant Ruuuby::Version::TINY referenced")
-      end
       it 'version number can not be changed' do
         expect{::Ruuuby::Version::MAJOR   = 1337}.to raise_error(FrozenError)
         expect{::Ruuuby::Version::MINOR   = 1337}.to raise_error(FrozenError)

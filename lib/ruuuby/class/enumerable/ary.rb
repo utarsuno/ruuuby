@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-# add various functions to existing class +Array+ (and explicitly create aliases to play nice with IDEs)
+# add various functions to existing class +Array+
 class ::Array
 
   # Performs the relative complement (or set difference) of these two arrays, operation order/side does matter.
@@ -72,11 +72,11 @@ class ::Array
     self
   end
 
-  # | feature | *f03* | ------------------------------------------------------------------------------------------------
+  # ---------------------------------------------------------------------------------------------------------- | *f03* |
   alias_method :𝔠, :length
-  # | feature | *f04* | ------------------------------------------------------------------------------------------------
+  # ---------------------------------------------------------------------------------------------------------- | *f04* |
   alias_method :∅?, :empty?
-  # | feature | *f05* | ------------------------------------------------------------------------------------------------
+  # ---------------------------------------------------------------------------------------------------------- | *f05* |
   alias_method :>>, :>>
   # | ------------------------------------------------------------------------------------------------------------------
 
@@ -84,7 +84,6 @@ class ::Array
   alias_method :↩️, :reverse
   alias_method :↩️!, :reverse!
   alias_method :↩️∀, :reverse_each
-  alias_method :remove_empty!, :remove_empty!
   alias_method :uniq_to_me, :∖
   alias_method :∋?, :include?
 
@@ -95,7 +94,6 @@ class ::Array
   # @raise [ArgumentError]
   #
   # @return [Boolean] true, if both arrays have the same contents (order does not matter)
-  alias_method :equal_contents?, :equal_contents?
   alias_method :≈≈, :equal_contents?
 
   # Retrieve the frequency counts of elements in this array as a hash.
@@ -110,7 +108,6 @@ class ::Array
   # @raise [ArgumentError]
   #
   # @return [Hash|NilClass] nil if empty, otherwise returns a new hash with --> key: a value from the array, value: the total number of occurrences
-  alias_method :frequency_counts, :frequency_counts
   alias_method :📊, :frequency_counts
 
   # Performs the symmetric difference (or disjunctive union) of these two arrays, operation order/side does not matter.
@@ -120,7 +117,6 @@ class ::Array
   # @raise [ArgumentError]
   #
   # @return [Array] a new Array instance containing the symmetric difference between this array and the one provided
-  alias_method :disjunctive_union, :disjunctive_union
   alias_method :⊕, :disjunctive_union
 
 end

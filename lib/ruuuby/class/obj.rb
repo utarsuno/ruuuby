@@ -1,33 +1,24 @@
 # coding: utf-8
 
-# add various functions to existing class +Object+ (and explicitly create aliases to play nice with IDEs)
+# add various functions to existing class +Object+
 class ::Object
 
-  alias_method :🆔, :object_id
-  alias_method :ary?, :ary?
-  alias_method :bool?, :bool?
-  alias_method :🅱️?, :bool?
-  alias_method :hsh?, :hsh?
-  alias_method :int?, :int?
-  alias_method :sym?, :sym?
-  alias_method :str?, :str?
-  alias_method :stry?, :stry?
-
-  # | feature | *f00* | ------------------------------------------------------------------------------------------------
+  # ---------------------------------------------------------------------------------------------------------- | *f00* |
   alias_method :❄️, :freeze
   alias_method :❄️?, :frozen?
-  # | feature | *f01* | ------------------------------------------------------------------------------------------------
+  # ---------------------------------------------------------------------------------------------------------- | *f01* |
   alias_method :🙈funcs, :private_methods
-  # | feature | *f02* | ------------------------------------------------------------------------------------------------
+  # ---------------------------------------------------------------------------------------------------------- | *f02* |
   alias_method :🛡️funcs, :protected_methods
-  # | ------------------------------------------------------------------------------------------------------------------
+  # ---------------------------------------------------------------------------------------------------------- | *f06* |
+  alias_method :🅱️?, :bool?
 
   # @param [Symbol] arg_name
   # @param [*]      arg
   #
   # @raise [WrongParamType]
   def 🛑bool❓(arg_name, arg)
-    🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, [::TrueClass, ::FalseClass], arg) unless arg.bool?
+    🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, ::Ruuuby::VirtualTypes::🅱️, arg) unless arg.bool?
   end
 
   alias_method :🛑🅱️❓, :🛑bool❓
@@ -38,6 +29,14 @@ class ::Object
   # @raise [WrongParamType]
   def 🛑int❓(arg_name, arg)
     🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, ::Integer, arg) unless arg.int?
+  end
+
+  # @param [Symbol] arg_name
+  # @param [*]      arg
+  #
+  # @raise [WrongParamType]
+  def 🛑num❓(arg_name, arg)
+    🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, ::Ruuuby::VirtualTypes::NUMS, arg) unless arg.num?
   end
 
   # @param [Symbol] arg_name
@@ -61,16 +60,18 @@ class ::Object
   #
   # @raise [WrongParamType]
   def 🛑stry❓(arg_name, arg)
-    🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, [::String, ::Symbol], arg) unless arg.stry?
+    🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, ::Ruuuby::VirtualTypes::STRY, arg) unless arg.stry?
   end
 
   # @param [Symbol] arg_name
   # @param [*]      arg
   #
   # @raise [WrongParamType]
-  def 🛑str_or_ary❓(arg_name, arg)
-    🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, [::String, ::Array], arg) unless (arg.str? || arg.ary?)
+  def 🛑countable❓(arg_name, arg)
+    🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, ::Ruuuby::VirtualTypes::COUNTABLES, arg) unless (arg.str? || arg.ary? || arg.is_a?(Set))
   end
+
+  # ---------------------------------------------------------------------------------------------------------- | *f11* |
 
   # @return [Symbol]
   def ⁰ ; :⁰ ; end
@@ -101,5 +102,9 @@ class ::Object
 
   # @return [Symbol]
   def ⁹ ; :⁹ ; end
+
+  # | ------------------------------------------------------------------------------------------------------------------
+
+  alias_method :🆔, :object_id
 
 end

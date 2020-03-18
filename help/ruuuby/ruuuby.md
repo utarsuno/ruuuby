@@ -1,6 +1,12 @@
 
 ### Ruuuby Glossary
 
+#### TODOs D:
+```
+ * https://www.honeybadger.io/blog/ruby-unicode-normalization/
+
+```
+
 #### Arrows
 
 | symbol(s) | description and/or use-cases |
@@ -74,6 +80,9 @@ CC=/usr/bin/gcc rbenv install 2.7.0
 
 
 ##### TODOs
+
+ * from: https://makandracards.com/makandra/20633-ruby-constant-lookup-the-good-the-bad-and-the-ugly
+   * "Never make a class name for which an existing class name is a suffix. E.g. don't create a class Api::User when you also have a ::User."
 
  * document this: https://blog.bigbinary.com/2016/11/18/ruby-2-4-unifies-fixnum-and-bignum-into-integer.html
  
@@ -292,10 +301,17 @@ end
 
 # TODO: automate this type of tracking (ex: parse git history)
 
+# 0.0.18
+ * unit:        294
+ * performance: n
+ * audits:      18
+ * features:    20
+
 # 0.0.17
  * unit:        274
  * performance: 132
  * audits:      12
+ * features:    6
 
 * 0.0.16
  * unit:        238
@@ -706,10 +722,149 @@ end
   # @return
   #def ❌ ; -1337 ; end
 
-#TODO: Section for tech_debts
+
+module ::Ruuuby
+
+  class LocalCLI
+    module LocalGIT
+      CMD_LIST_CONFIGS                  = 'git config --list'.❄️
+      CONFIG_WINDOWS_NEWLINE_PREVENTION = 'core.autocrlf'.❄️
+    end
+
+    def initialize
+      @tty_cmd = nil
+      @out     = nil
+      @err     = nil
+    end
+
+    # @return [TTY::Command]
+    def tty_cmd
+      # printer options:
+      #  * :null     (no output)
+      #  * :pretty   (colorful output)
+      #  * :progress (minimal output with green dot for success and F for failure)
+      #  * :quiet    (only output actual command stdout and stderr)
+      @tty_cmd ||= TTY::Command.new(printer: :progress)
+    end
+
+    def run(cmd)
+      @out, @err = self.tty_cmd.run(cmd)
+      🛑 RuntimeError.new("cmd{#{cmd.to_s}} failed{#{@err}}") unless @err.∅?
+
+    end
+  end
+  
+end
 
 
 =end
 
+=begin
+      it 'has global config ' do
+
+        #git config --list
+        #git config --global core.autocrlf true
+
+        #core.autocrlf=true
+
+        cmd = TTY::Command.new(printer: :progress)
+        #out, err = cmd.run('git config --list')
+        out, err = cmd.run(::Ruuuby::CLI::GIT::CMD_LIST_CONFIGS)
+
+        puts err.class
+        puts err.length
+
+        puts "OUTPUT!!!"
+        #puts out
+        puts out.class
+
+        my_out = out.split("\n")
+        puts my_out.class
+
+        my_out.each do |line|
+          splitted = line.split('=')
+          #puts splitted.to_s
+          if splitted[0] == ::Ruuuby::CLI::GIT::CONFIG_WINDOWS_NEWLINE_PREVENTION
+            puts line
+            puts line
+            puts splitted[0]
+            puts splitted[1]
+          end
+        end
+
+
+        # TODO: USE REGEX TO PARSE CURRENTLY KNOWN FORMAT RULES!
+
+=end
+
+class ::Integer
+=begin
+
+  # default operation{"Bitwise EXCLUSIVE OR"}; a check is added in to allow operations such as `5^²`
+  #
+  # @overload
+  #
+  # @param [Numeric|Symbol] them | if 🆔 matches a power (ex: ²), then essentially perform: Math.pow(self, them); otherwise default bitwise operation
+  #
+  # @return [Numeric] "The result may be an Integer, a Float, a Rational, or a complex number."
+  #def ^(them)
+  #  return self.bitwise_xor(them) if them.int?
+    #if block_given?
+      #end
+    #if ::Numeric::MATH_SET_EXPONENTS.∋?(them.object_id)
+    #  ::Numeric::MATH_SET_EXPONENTS.find_index
+    #end
+
+  #  case(::Numeric::MATH_OPERATIONS_POWERS.fetch(them.🆔, -1337))
+  #  when -1337
+  #    self.bitwise_xor(them)
+  #  when 0
+  #    return 1
+  #  when 1
+  #    self
+  #  else
+  #    self ** ::Numeric::MATH_OPERATIONS_POWERS[them.🆔]
+  #  end
+  #end
+
+    pow_match = ::Numeric::MATH_OPERATIONS_POWERS.fetch(them.🆔, -1337)
+    case(pow_match)
+    when -1337
+      self.bitwise_xor(them)
+    when 0
+      return 1
+    when 1
+      self
+    else
+      self ** pow_match
+    end
+=end
+
+end
+
+class ::Array
+  # @return [Boolean] true, if this array has a length(+𝔠+) of *1*
+  def 𝔠₁?; self.𝔠 == 1; end
+
+  # @return [Boolean] true, if this array has a length(+𝔠+) of *2*
+  def 𝔠₂?; self.𝔠 == 2; end
+
+  # @return [Boolean] true, if this array has a length(+𝔠+) of *2*
+  def 𝔠₃?; self.𝔠 == 3; end
+end
+
+class ApplicationRecord < ActiveRecord::Base
+  # @abstract
+  #
+  # @return [String]
+  def uid ; raise RuntimeError.new('abstract m{uid} for c{ApplicationRecord} not implemented!') ; end
+end
+    it 'defines func{uid}' do
+      expect(::ApplicationRecord.∃func?(:uid)).to eq(true)
+    end
+
+
+
+#TODO: Section for tech_debts
 
 ```
