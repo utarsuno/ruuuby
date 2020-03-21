@@ -1,4 +1,28 @@
 
+RSpec.shared_context 'lets_language_deltas' do
+
+  let(:cΔ_Integer){RuuubyTestHelper::Nums::CONFIG_INTEGER}
+  let(:cΔ_Float){RuuubyTestHelper::Nums::CONFIG_FLOAT}
+  let(:cΔ_NilClass){RuuubyTestHelper::CONFIG_NIL}
+
+  def expect_added_ruby_methods(the_class, the_configs)
+    the_configs[:ruby].∀{|c| expect(the_class.∃func?(c)).to eq(true)}
+  end
+
+  def expect_added_c_methods(the_class, the_configs)
+    the_configs[:c].∀{|c| expect(the_class.∃func?(c)).to eq(true)}
+  end
+
+  def expect_added_method_aliases(the_class, the_configs)
+    the_configs[:aliases].∀{|base_func, aliased_name| expect(the_class.∃func_alias?(base_func, aliased_name)).to eq(true)}
+  end
+
+  def throw_wrong_param_type(the_class, the_method, arg_name, received_type, expected_types)
+    raise_error(ArgumentError, Ruuuby::ParamErr::generate_error_text(the_class, the_method, arg_name, received_type, expected_types))
+  end
+
+end
+
 module RuuubyTestHelper
 
   module FeatureMath
@@ -40,7 +64,7 @@ module RuuubyTestHelper
   end
 
   CONFIG_OBJECT = {
-      ruby: [:🛑bool❓, :🛑🅱️❓, :🛑int❓, :🛑ary❓, :🛑str❓, :🛑stry❓, :🛑countable❓],
+      ruby: [:🛑bool❓, :🛑🅱️❓, :🛑int❓, :🛑ary❓, :🛑str❓, :🛑stry❓, :🛑countable❓, :⁻¹, :⁻², :⁻³, :⁻⁴, :⁻⁵, :⁻⁶, :⁻⁷, :⁻⁸, :⁻⁹],
       c: [:int?, :str?, :stry?, :hsh?, :ary?, :bool?, :sym?],
       aliases: {
           object_id: :🆔,
@@ -78,7 +102,7 @@ module RuuubyTestHelper
 
   CONFIG_NIL = {
       c: [:empty?],
-      aliases: {∅?: :empty?}
+      aliases: {empty?: :∅?}
   }
 
   CONFIG_HASH = {

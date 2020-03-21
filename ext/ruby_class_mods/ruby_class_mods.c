@@ -60,6 +60,7 @@ ________________________________________________________________________________
 #define R_STR rb_cString
 #define R_OBJ rb_cObject
 #define R_INT rb_cInteger
+#define R_FLT rb_cFloat
 #define R_NIL rb_cNilClass
 #define R_NUM rb_cNumeric
 #define R_COMPLEX rb_cComplex
@@ -79,22 +80,22 @@ static VALUE class_wrong_param_type;
 
 static VALUE module_types;
 
-static VALUE r_class_big_decimal;
+static VALUE cached_class_big_decimal;
 static VALUE cached_rb_intern_ints_bitwise_xor;
-static VALUE cached_rb_intern_ints_raise_to_power;
+static VALUE cached_rb_intern_raise_to_power;
+static VALUE cached_rb_intern_is_a;
 
-// | 0x5d | 0x5e |
-static const VALUE CONST_NUMBER_ONE = LONG2FIX(1L);
-
-static unsigned long exponential_ids[NUMBER_OF_EXPONENTIALS];
-static int exponential_indexes[NUMBER_OF_EXPONENTIALS];
-
+// make these const ints?
+static int           memory_address_exponential_ids;
+static unsigned long exponential_ids[𝔠EXPONENTS];
+static int           exponential_indexes[𝔠EXPONENTS];
 
 /*____________________________________________________________________________________________________________________________________________________________________
             __   __   __   __       __   __   ___     __   __   __   __   ___  __   __          __
  |\/|  /\  /  ` |__) /  \ /__` .   |__) |__) |__  __ |__) |__) /  \ /  ` |__  /__` /__` | |\ | / _`
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
+
 #define ext_api_add_public_method_0args_to_class(r_class, func_name, the_func) rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 0);
 #define ext_api_add_public_method_1args_to_class(r_class, func_name, the_func) rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 1);
 
@@ -103,7 +104,7 @@ ________________________________________________________________________________
 #define ext_api_add_module_under(under_me, str) rb_define_module_under(under_me, str);
 #define ext_api_add_new_sub_class_under(under_me, base_class, str) rb_define_class_under(under_me, str, base_class);
 
-#define ext_api_add_func_alias(kclass, previous_func_name, new_func_name) rb_define_alias(kclass, previous_func_name, new_func_name);
+#define ext_api_add_func_alias(kclass, new_func_name, previous_func_name) rb_define_alias(kclass, new_func_name, previous_func_name);
 
 #define r_type(arg_to_check, r_class) RB_TYPE_P(arg_to_check, r_class)
 #define is_nil(arg_to_check) RTEST(NIL_P(v))
@@ -125,6 +126,7 @@ ________________________________________________________________________________
 #define raise_err_bad_arg_type(error_message, error_param) rb_raise(ERROR_ARGUMENT, error_message, rb_obj_classname(error_param));
 #define raise_err_array_bad_arg_type(func_name, them) raise_err_bad_arg_type("| c{Array}-> m{" #func_name "} got arg(them) w/ type{%s}, required-type{Array} |", them)
 #define raise_err_string_bad_arg_type(func_name, them) raise_err_bad_arg_type("| c{String}-> m{" #func_name "} got arg(them) w/ type{%s}, required-type{String} |", them)
+
 #define ensure_not_frozen(arg_to_check) rb_check_frozen(arg_to_check);
 
 #define is_empty_hsh(arg) RHASH_EMPTY_P(arg)
@@ -139,7 +141,7 @@ ________________________________________________________________________________
 #define cstr_to_rstr(arg) rb_str_new_cstr(arg)
 
 #define r_hsh_increment_keys_val(hsh, key) rb_hash_aset(hsh, key, LONG2FIX(RB_FIX2LONG(rb_hash_aref(hsh, key)) + 1));
-#define r_hsh_set_val_to_one(hsh, key) rb_hash_aset(hsh, key, CONST_NUMBER_ONE);
+#define r_hsh_set_val_to_one(hsh, key) rb_hash_aset(hsh, key, ℤ1);
 
 #define r_hsh_has_key(hsh, key) (rb_hash_has_key(hsh, key) == Qtrue)
 #define r_ary_has(ary, elem) rb_ary_includes(ary, elem)
@@ -156,9 +158,13 @@ ________________________________________________________________________________
 #define r_func(func_name, expr) r_func_raw(func_name, return (expr) ? R_TRUE : R_FALSE;)
 #define c_func(func_name, expr) declare_func(func_name, expr, void, void)
 
-#define re_ye return R_TRUE;
-#define re_no return R_FALSE;
-#define re_me return self;
+#define re_ye  return R_TRUE;
+#define re_no  return R_FALSE;
+#define re_me  return self;
+#define re_1   return ℤ1;
+#define re_n1  return ℤn1;
+// essentially returns "self.send(func_name, arg)"
+#define re_me_func_1args(func_name, arg) return rb_funcall(self, func_name, 1, arg);
 
 #define ensure_file_loaded(path)        rb_require(path);
 #define ensure_loaded_ruuuby(path)     ensure_file_loaded("ruuuby/" #path)
@@ -169,8 +175,6 @@ ________________________________________________________________________________
 #define ensure_loaded_nums(path)       ensure_file_loaded("ruuuby/class/nums/" #path)
 #define ensure_loaded_default(path)    ensure_file_loaded("" #path)
 
-#define is_big_decimal(arg) RB_TYPE_P(arg, r_class_big_decimal)
-
 #define r_add_global_const(const_name, const_value) rb_define_global_const(const_name, const_value);
 #define r_add_global_const_str(const_name, const_value) r_add_global_const("" #const_name, cstr_to_rstr("" #const_value))
 #define r_get_class(r_class) rb_const_get(rb_cObject, rb_intern(r_class));
@@ -178,11 +182,36 @@ ________________________________________________________________________________
 #define get_numerical_const(the_num) NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern(the_num))))
 #define internal_define_set_exponential(num) exponential_ids[num] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_" #num))));
 
+#define bsearch_ulong(val_to_find) (unsigned long *) bsearch (&val_to_find, exponential_ids, 𝔠EXPONENTS, 𝔠ULONG, internal_only_compare_func_4_object_id);
+
 /*____________________________________________________________________________________________________________________________________________________________________
   ___            __   __       __   ___  __             __       ___    __        __                      __        ___        ___      ___      ___    __        __
  |__  |  | |\ | /  ` /__` .   |  \ |__  /  ` |     /\  |__)  /\   |  | /  \ |\ | /__`    __|__   |  |\/| |__) |    |__   |\/| |__  |\ |  |   /\   |  | /  \ |\ | /__`
  |    \__/ | \| \__, .__/ .   |__/ |___ \__, |___ /~~\ |  \ /~~\  |  | \__/ | \| .__/      |     |  |  | |    |___ |___  |  | |___ | \|  |  /~~\  |  | \__/ | \| .__/
 ____________________________________________________________________________________________________________________________________________________________________ */
+
+/*____________________________________________________________________________________________________________________
+   __            ___  ___  __                          ___       __   ___  __   __
+  /  `    | |\ |  |  |__  |__) |\ |  /\  |       |__| |__  |    |__) |__  |__) /__`
+  \__,    | | \|  |  |___ |  \ | \| /~~\ |___    |  | |___ |___ |    |___ |  \ .__/
+_____________________________________________________________________________________________________________________ */
+
+static inline void assign_exponential_index_position(const unsigned long object_id, const int represented_integer) {
+    unsigned long * the_index = bsearch_ulong(object_id)
+    if(the_index != NULL) {
+        exponential_indexes[(int)(((int)the_index - (int)exponential_ids) / 𝔠ULONG)] = represented_integer;
+    } else {
+        printf("C-Extension-Error! {func{assign_exponential_index_position}->{%lu} could not be found for int{%d}}\n", * the_index, represented_integer);
+        rb_raise(rb_eRuntimeError, "Error-code{%d}", 137);
+    }
+}
+
+// original source modified from: https://stackoverflow.com/questions/36681906/c-qsort-doesnt-seem-to-work-with-unsigned-long
+static int internal_only_compare_func_4_object_id(const void * l, const void * r) {
+    const unsigned long ai = *(const unsigned long *)(l);
+    const unsigned long bi = *(const unsigned long *)(r);
+    if (ai < bi) {return -1;} else if(ai > bi) {return 1;} else {return 0;}
+}
 
 /*____________________________________________________________________________________________________________________
  __   __        ___  __  ___
@@ -216,7 +245,7 @@ r_func_raw(m_obj_num,
     	case RUBY_T_COMPLEX:
     		return R_TRUE;
     	default:
-    	    return R_FALSE;
+            re_me_func_1args(cached_rb_intern_is_a, cached_class_big_decimal)
     }
 )
 
@@ -234,28 +263,66 @@ r_func_raw(m_int_is_not_finite, re_no)
 
 r_func_self_them(m_int_patch_for_exponentials,
     if (is_int(them)) {
-        // returns "self ^ them"
-        return rb_funcall(self, cached_rb_intern_ints_bitwise_xor, 1, them);
-    }
-    unsigned long id_to_find    = NUM2ULONG(rb_obj_id(them));
-    unsigned long * the_result = (unsigned long *) bsearch (&id_to_find, exponential_ids, NUMBER_OF_EXPONENTIALS, sizeof(unsigned long), compare_func_4_object_id);
-    if(the_result != NULL) {
-        //int found_index       = ((int)the_result - (int)exponential_ids) / sizeof(unsigned long);
-        int power_to_raise_to = exponential_indexes[(((int)the_result - (int)exponential_ids) / sizeof(unsigned long))];
-        switch(power_to_raise_to) {
-        case 0:
-            return CONST_NUMBER_ONE;
-        case 1:
-            re_me
-        default:
-            // returns "self ** them"
-            return rb_funcall(self, cached_rb_intern_ints_raise_to_power, 1, ULONG2NUM(power_to_raise_to));
-        }
+        re_me_func_1args(cached_rb_intern_ints_bitwise_xor, them)
     } else {
-        // TODO: raise elegant error
-        printf("Item = %lu could not be found\n", id_to_find);
-        re_me
+        const unsigned long id_to_find = NUM2ULONG(rb_obj_id(them));
+        unsigned long * the_result    = bsearch_ulong(id_to_find)
+        if(the_result != NULL) {
+            //int found_index       = ((int)the_result - (int)exponential_ids) / 𝔠ULONG;
+            int power_to_raise_to = exponential_indexes[(((int)the_result - (int)exponential_ids) / 𝔠ULONG)];
+            switch(power_to_raise_to) {
+            case 0: re_1
+            case 1: re_me
+            case 2: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ2)
+            case 3: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ3)
+            case 4: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ4)
+            case 5: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ5)
+            case 6: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ6)
+            case 7: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ7)
+            case 8: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ8)
+            case 9: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ9)
+            default:
+                re_me_func_1args(cached_rb_intern_ints_bitwise_xor, them)
+            }
+        } else { re_me_func_1args(cached_rb_intern_ints_bitwise_xor, them) }
     }
+)
+
+/*___________________________________________________________________________________________________________________
+ ___       __       ___
+|__  |    /  \  /\   |
+|    |___ \__/ /~~\  |
+_____________________________________________________________________________________________________________________ */
+
+r_func_self_them(m_flt_patch_for_exponentials,
+    if (is_sym(them)) {
+        const unsigned long id_to_find = NUM2ULONG(rb_obj_id(them));
+        unsigned long * the_result    = bsearch_ulong(id_to_find);
+        if(the_result != NULL) {
+            const int power_to_raise_to = exponential_indexes[(((int)the_result - (int)exponential_ids) / 𝔠ULONG)];
+            const double val_self       = NUM2DBL(self);
+            if (isnan(val_self)) {rb_raise(ERROR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") may not be raised to an exponential power |", self);}
+            switch(power_to_raise_to) {
+            case 0:
+                if (isinf(val_self)) {
+                    rb_raise(ERROR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") may not be raised to an exponential power(0) |", self);
+                } else if (val_self >= 0) { re_1 } else { re_n1 }
+            case 1: re_me
+            case 2: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ2)
+            case 3: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ3)
+            case 4: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ4)
+            case 5: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ5)
+            case 6: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ6)
+            case 7: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ7)
+            case 8: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ8)
+            case 9: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ9)
+            default:
+                rb_raise(ERROR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") received invalid argument(%"PRIsVALUE") |", self, them);
+            }
+        } else {
+            rb_raise(ERROR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
+        }
+    } else { re_me_func_1args(cached_rb_intern_raise_to_power, them) }
 )
 
 /*___________________________________________________________________________________________________________________
@@ -303,14 +370,14 @@ r_func_self_them(m_ary_prepend,
 r_func_raw(m_ary_remove_empty,
     ensure_not_frozen(self)
     if (is_empty_ary(self)){re_me}
-    long len = len_ary(self);
+    long len_me = len_ary(self);
     long i;
     VALUE v;
-    for (i = 0; i < len;) {
+    for (i = 0; i < len_me;) {
         v = RARRAY_PTR(self)[i];
         if (is_nil(v) || is_non_empty_str(v) || is_non_empty_ary(v) || is_non_empty_hsh(v)) {
             r_ary_del_at(self, i);
-            len--;
+            --len_me;
         } else {++i;}
     }
     re_me
@@ -319,8 +386,8 @@ r_func_raw(m_ary_remove_empty,
 // | 0x5c | class{Array} | function{disjunctive_union} |
 r_func_self_them(m_ary_disjunctive_union,
     if (is_ary(them)) {
-        long  len_me   = len_ary(self);
-        long  len_them = len_ary(them);
+        const long len_me   = len_ary(self);
+        const long len_them = len_ary(them);
         if (len_me == 0 && len_them == 0) {
             return rb_ary_new_capa(0L);
         } else if (len_me == 0) {
@@ -330,7 +397,7 @@ r_func_self_them(m_ary_disjunctive_union,
         } else {
             long  i;
             VALUE n;
-            VALUE output = (len_me + len_them) < R_ARY_DEFAULT_SIZE ? rb_ary_new_capa(len_me + len_them) : rb_ary_new();
+            VALUE output = (len_me + len_them) < 𝔠ARY_DEFAULT ? rb_ary_new_capa(len_me + len_them) : rb_ary_new();
             if (len_me >= len_them) {
                 for (i = 0L; i < len_them; i++) {
                     n = r_ary_get(them, i); if(!r_ary_has(self, n)){r_ary_add(output, n)}
@@ -355,8 +422,8 @@ r_func_self_them(m_ary_disjunctive_union,
 
 // | 0x5d | class{Array} | function(frequency_counts} |
 r_func_raw(m_ary_frequency_counts,
-    long len_me;
-    if ((len_me = len_ary(self)) == 0) {return Qnil;}
+    const long len_me = len_ary(self);
+    if (len_me == 0) {return Qnil;}
     VALUE hsh = rb_hash_new();
     long i;
     VALUE n;
@@ -370,7 +437,7 @@ r_func_raw(m_ary_frequency_counts,
 // | 0x5e | class{Array} | function(equal_contents?} |
 r_func_self_them(m_ary_equal_contents,
     if (is_ary(them)) {
-        long len_me = len_ary(self);
+        const long len_me = len_ary(self);
         if ((len_me - len_ary(them)) != 0) {re_no} else if (len_me == 0) {re_ye} else {
             VALUE hsh = rb_hash_new();
             long i;
@@ -398,61 +465,6 @@ r_func_self_them(m_ary_equal_contents,
 )
 
 /*____________________________________________________________________________________________________________________
-   __            ___  ___  __                          ___       __   ___  __   __
-  /  `    | |\ |  |  |__  |__) |\ |  /\  |       |__| |__  |    |__) |__  |__) /__`
-  \__,    | | \|  |  |___ |  \ | \| /~~\ |___    |  | |___ |___ |    |___ |  \ .__/
-_____________________________________________________________________________________________________________________ */
-
-static inline void assign_exponential_index_position(unsigned long object_id, int represented_integer) {
-    unsigned long * the_index = (unsigned long *) bsearch (&object_id, exponential_ids, NUMBER_OF_EXPONENTIALS, sizeof(unsigned long), compare_func_4_object_id);
-    if(the_index != NULL) {
-        //printf("Found item = %lu\n", *the_index);
-        int found_index = (int)((int)the_index - (int)exponential_ids) / sizeof(unsigned long);
-        //printf("Index is{%d}\n", found_index);
-        exponential_indexes[found_index] = represented_integer;
-    } else {
-        // TODO: RAISE AN ERROR HERE!!!
-        printf("Item = %lu could not be found\n", *the_index);
-    }
-}
-
-// original source modified from: https://stackoverflow.com/questions/36681906/c-qsort-doesnt-seem-to-work-with-unsigned-long
-int compare_func_4_object_id( const void* l , const void* r ) {
-    const unsigned long ai = *( const unsigned long* )(l);
-    const unsigned long bi = *( const unsigned long* )(r);
-    if(ai < bi) {
-        return -1;
-    } else if( ai > bi ) {
-        return 1;
-    } else {
-        return 0;
-    }
-}
-
-int index_of_exponential(unsigned long the_exp) {
-    int i;
-    for (i = 0; i < NUMBER_OF_EXPONENTIALS; i++) {
-        if (exponential_ids[i] == the_exp) {
-            return i;
-        }
-    }
-    rb_raise(rb_eRuntimeError, "index_of_exponential(%lu) | not found |\n", the_exp);
-    return -1337;
-}
-
-/*
-unsigned long get_exponential_val(VALUE obj) {
-    unsigned long number_to_match = NUM2ULONG(rb_obj_id(obj));
-    int index = 4;
-
-    while (index != -1337) {
-        if (number_to_match == exponential_ids[index]) {
-
-        }
-    }
-}*/
-
-/*____________________________________________________________________________________________________________________
  __      __   __   __   ___     ___      ___  __
 /  `    /  ` /  \ |  \ |__     |__  |\ |  |  |__) \ /
 \__,    \__, \__/ |__/ |___    |___ | \|  |  |  \  |
@@ -469,9 +481,10 @@ c_func(Init_ruby_class_mods,
     ext_api_add_func_alias(R_INT, "bitwise_xor", "^")
 
     // save class reference for later
-    r_class_big_decimal                  = r_get_class("BigDecimal");
-    cached_rb_intern_ints_bitwise_xor    = rb_intern("bitwise_xor");
-    cached_rb_intern_ints_raise_to_power = rb_intern("**");
+    cached_class_big_decimal          = r_get_class("BigDecimal");
+    cached_rb_intern_is_a             = rb_intern("is_a?");
+    cached_rb_intern_ints_bitwise_xor = rb_intern("bitwise_xor");
+    cached_rb_intern_raise_to_power   = rb_intern("**");
 
     /*___________________________________________________________________________________________________________
      __                  __
@@ -508,6 +521,8 @@ c_func(Init_ruby_class_mods,
     ext_api_add_public_method_0args_to_class(R_INT, "finite?"  , m_int_is_finite)
     ext_api_add_public_method_0args_to_class(R_INT, "infinite?", m_int_is_not_finite)
     ext_api_add_public_method_1args_to_class(R_INT, "^"       , m_int_patch_for_exponentials)
+
+    ext_api_add_public_method_1args_to_class(R_FLT, "^"       , m_flt_patch_for_exponentials)
 
     ext_api_add_public_method_0args_to_class(R_NIL, "empty?", m_nil_empty)
 
@@ -546,6 +561,7 @@ c_func(Init_ruby_class_mods,
     ensure_loaded_enumerable(ary)
     ensure_loaded_enumerable(set)
     ensure_loaded_class(str)
+    ensure_loaded_ruuuby(version)
 
     // ____________________________________ ⚠️ ____________________________________
 
@@ -560,7 +576,7 @@ c_func(Init_ruby_class_mods,
     internal_define_set_exponential(8)
     internal_define_set_exponential(9)
 
-    qsort(exponential_ids, NUMBER_OF_EXPONENTIALS, sizeof(unsigned long), compare_func_4_object_id);
+    qsort(exponential_ids, 𝔠EXPONENTS, 𝔠ULONG, internal_only_compare_func_4_object_id);
 
     assign_exponential_index_position(get_numerical_const("EXPONENTIAL_0"), 0);
     assign_exponential_index_position(get_numerical_const("EXPONENTIAL_1"), 1);
@@ -572,6 +588,8 @@ c_func(Init_ruby_class_mods,
     assign_exponential_index_position(get_numerical_const("EXPONENTIAL_7"), 7);
     assign_exponential_index_position(get_numerical_const("EXPONENTIAL_8"), 8);
     assign_exponential_index_position(get_numerical_const("EXPONENTIAL_9"), 9);
+
+    memory_address_exponential_ids = (int) exponential_ids;
 
     // ____________________________________ ⚠️ ____________________________________
 

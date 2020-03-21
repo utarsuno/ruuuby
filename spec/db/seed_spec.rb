@@ -10,7 +10,8 @@ RSpec.describe 'db/seed.rb' do
   let(:v0_0_2){RuuubyRelease.all[2]}
   let(:v0_0_3){RuuubyRelease.all[3]}
   #let(:v0_0_4){RuuubyRelease.all[4]}
-  let(:v0_0_18){RuuubyRelease.all[-1]}
+  let(:v0_0_18){RuuubyRelease.by_version(0, 0, 18)}
+  let(:v0_0_19){RuuubyRelease.by_version(0, 0, 19)}
 
   let(:f04){RuuubyFeature.by_id_num(4)}
   let(:f06){RuuubyFeature.by_id_num(6)}
@@ -19,31 +20,35 @@ RSpec.describe 'db/seed.rb' do
   let(:f11){RuuubyFeature.by_id_num(11)}
   let(:f12){RuuubyFeature.by_id_num(12)}
   let(:f15){RuuubyFeature.by_id_num(15)}
+  let(:f16){RuuubyFeature.by_id_num(16)}
 
   context 'has historical release data', :audits do
 
     context 'defines features' do
 
       it 'defines f04' do
-        feature_tests(f04, 'f04', '`∅` to alias concept of `empty`')
+        audit_feature(f04, 'f04', '`∅` to alias concept of `empty`')
       end
       it 'defines f06' do
-        feature_tests(f06, 'f06', 'enable quick type checks against any object (ex: `variable.int?`)')
+        audit_feature(f06, 'f06', 'enable quick type checks against any object (ex: `variable.int?`)')
       end
       it 'defines f07' do
-        feature_tests(f07, 'f07', 'enable quick clean up functions for `enumerables`')
+        audit_feature(f07, 'f07', 'enable quick clean up functions for `enumerables`')
       end
       it 'defines f10' do
-        feature_tests(f10, 'f10', 'offer special character aliases for natural ease of readability')
+        audit_feature(f10, 'f10', 'offer special character aliases for natural ease of readability')
       end
       it 'defines f11' do
-        feature_tests(f11, 'f11', 'add math `number sets` (ex: `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `∞?`, `♾️?`)')
+        audit_feature(f11, 'f11', 'add math `number sets` (ex: `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `∞?`, `♾️?`)')
       end
       it 'defines f12' do
-        feature_tests(f12, 'f12', 'enable quick `file/directory io` and alias as file(`📂`) and dir(`🗄️`)')
+        audit_feature(f12, 'f12', 'enable quick `file/directory io` and alias as file(`📂`) and dir(`🗄️`)')
       end
       it 'defines f15' do
-        feature_tests(f15, 'f15', 'enable quicker tracking and auditing of features across versions')
+        audit_feature(f15, 'f15', 'enable quicker tracking and auditing of features across versions')
+      end
+      it 'defines f16' do
+        audit_feature(f16, 'f16', "add operation: raising to exponents (`superscript`) via operator(`^`) on `Numeric`'s")
       end
     end # end: features
 
@@ -84,6 +89,12 @@ RSpec.describe 'db/seed.rb' do
       context 'v0.0.18' do
         it 'as expected' do
           audit_version(v0_0_18, 'v0.0.18')
+        end
+      end
+
+      context 'v0.0.19' do
+        it 'as expected' do
+          audit_version(v0_0_19, 'v0.0.19')
         end
       end
     end

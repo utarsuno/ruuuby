@@ -2,6 +2,9 @@
 # -------------------------------------------- ⚠️ --------------------------------------------
 
 class RuuubyFeature < ApplicationRecord
+  validates :description, presence: true
+  validates :id_num, presence: true
+
   #belongs_to :ruuuby_release, class_name: 'RuuubyRelease'
   #has_many :ruuuby_feature_deltas, class_name: 'RuuubyFeatureDelta'
   #has_and_belongs_to_many :ruuuby_feature_deltas, class_name: 'RuuubyFeatureDelta'

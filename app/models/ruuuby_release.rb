@@ -2,6 +2,11 @@
 # -------------------------------------------- ⚠️ --------------------------------------------
 
 class RuuubyRelease < ApplicationRecord
+  validates :vmajor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :vminor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :vtiny, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+  #validates_uniqueness_of :vtiny, scope: [:vmajor, :vminor]
 
   #has_many :ruuuby_features, class_name: 'RuuubyFeature'
   #has_many :ruuuby_feature_deltas, class_name: 'RuuubyFeatureDelta'
@@ -57,17 +62,9 @@ class RuuubyRelease < ApplicationRecord
 
   include RuuubyRelease::AttributeChangelog
 
-  def self.spawn(major, minor, tiny)
-    RuuubyRelease.create!(version_major: major, version_minor: minor, version_tiny: tiny)
-  end
 
-  # @param [Integer] major
-  # @param [Integer] minor
-  # @param [Integer] tiny
-  #
-  # @return [RuuubyRelease]
-  def self.by_version(major, minor, tiny)
-    RuuubyRelease.where('version_major = ? AND version_minor = ? AND version_tiny = ?', major, minor, tiny).first
+  def self.spawn(major, minor, tiny)
+    RuuubyRelease.create!(vmajor: major, vminor: minor, vtiny: tiny)
   end
 
   def gems_added
@@ -142,9 +139,18 @@ class RuuubyRelease < ApplicationRecord
     changes
   end
 
+  # @param [Integer] major
+  # @param [Integer] minor
+  # @param [Integer] tiny
+  #
+  # @return [RuuubyRelease]
+  def self.by_version(major, minor, tiny)
+    RuuubyRelease.where('vmajor = ? AND vminor = ? AND vtiny = ?', major, minor, tiny).first
+  end
+
   # @return [String] vM.m.T (M: Major, m: minor, T: tiny)
   def version
-    "v#{self.version_major.to_s}.#{self.version_minor.to_s}.#{self.version_tiny.to_s}"
+    "v#{self.vmajor.to_s}.#{self.vminor.to_s}.#{self.vtiny.to_s}"
   end
 
   alias_method :uid, :version

@@ -30,8 +30,7 @@
 | category | symbol(s) |
 | --- | --- |
 | misc | `📊`, `🔑`, `❄️`, `🙈`, `🆔` |
-| not-used | `⚠️`, `👈`, `👉`, `🆚`, `🆕` |
-| misc-not-used | `🎲`, `📝`, `📁` |
+| not-used | `⚠️`, `👈`, `👉`, `🆚`, `📝` |
 
 #### Emoji References
 
@@ -145,27 +144,6 @@ class Array
       end
     end
 
-    context 'func{start_with?}' do
-      context 'works for needed scenarios' do
-        it 'works for cases: positive' do
-          expect([nil].start_with?(nil)).to eq(true)
-          expect([1, '3', nil, [1, 2], 'a'].start_with?(1, '3', nil, [1, 2])).to eq(true)
-          expect(%w(a a bb).start_with?('a')).to eq(true)
-          expect(%w(a a bb).start_with?('a', 'a')).to eq(true)
-          expect(%w(a a bb).start_with?('a', 'a', 'bb')).to eq(true)
-        end
-        it 'works for cases: negative' do
-          expect([].start_with?()).to eq(false)
-          expect([nil].start_with?()).to eq(false)
-          expect([].start_with?(nil)).to eq(false)
-          expect([1, 2, 'a'].start_with?()).to eq(false)
-          expect([1, 2, 'a'].start_with?(['a'])).to eq(false)
-
-          expect([nil].start_with?(1, 2, 3, 4, 5)).to eq(false)
-        end
-      end
-    end
-
   # Return a list containing the intersection of self and them (set of elements found both in self and them)
   #
   # @param [Array] them
@@ -204,17 +182,6 @@ class Array
         end
       end
     end
-
-  def last_n(n)
-    🛑❓int(:ary, n)
-    🛑 ArgumentError.new("c{Array}-> m{last_n} received arg{#{n.to_s}} is longer than this array{#{self.length}}") if n > self.length
-    return self if n == self.length
-    self[self.length-1-n..self.length-1]
-  end
-
-  def add_each(*elements)
-    elements.∀{|e|self << e}
-  end
 
 end
 
@@ -286,26 +253,19 @@ end
 
 
 =begin
- * add the following gems:
- 
- | gem                     | version   |
- | ----------------------- | --------- |
- | `sqlite3`               | `1.4.2`   |
- | `activerecord`          | `5.2.4.1` |
- | `standalone_migrations` | `5.2.7`   |
-
-
-           'sqlite3': '1.4.2',
-          'activerecord': '5.2.4.1',
-          'standalone_migrations': '5.2.7'
 
 # TODO: automate this type of tracking (ex: parse git history)
+# 0.0.18
+ * unit:        n
+ * performance: n
+ * audits:      n
+ * features:    ~21
 
 # 0.0.18
- * unit:        294
- * performance: n
- * audits:      18
- * features:    20
+ * unit:        292
+ * performance: 143
+ * audits:      29
+ * features:    ~20
 
 # 0.0.17
  * unit:        274
@@ -468,45 +428,6 @@ end
           end
         end
       end
-
-
-
-  # @return [Symbol]
-  def ⁻⁹ ; :⁻⁹ ; end
-
-  # @return [Symbol]
-  def ⁻⁸ ; :⁻⁸ ; end
-
-  # @return [Symbol]
-  def ⁻⁷ ; :⁻⁷ ; end
-
-  # @return [Symbol]
-  def ⁻⁶ ; :⁻⁶ ; end
-
-  # @return [Symbol]
-  def ⁻⁵ ; :⁻⁵ ; end
-
-  # @return [Symbol]
-  def ⁻⁴ ; :⁻⁴ ; end
-
-  # @return [Symbol]
-  def ⁻³ ; :⁻³ ; end
-
-  # @return [Symbol]
-  def ⁻² ; :⁻² ; end
-
-  # @return [Symbol]
-  def ⁻¹ ; :⁻¹ ; end
-
-      :⁻⁹.🆔 => -9,
-      :⁻⁸.🆔 => -8,
-      :⁻⁷.🆔 => -7,
-      :⁻⁶.🆔 => -6,
-      :⁻⁵.🆔 => -5,
-      :⁻⁴.🆔 => -4,
-      :⁻³.🆔 => -3,
-      :⁻².🆔 => -2,
-      :⁻¹.🆔 => -1,
 
     context 'by supporting operation {^⁻⁹}' do
       context 'handles needed scenarios' do
@@ -854,16 +775,11 @@ class ::Array
 end
 
 class ApplicationRecord < ActiveRecord::Base
-  # @abstract
-  #
-  # @return [String]
-  def uid ; raise RuntimeError.new('abstract m{uid} for c{ApplicationRecord} not implemented!') ; end
+
 end
     it 'defines func{uid}' do
       expect(::ApplicationRecord.∃func?(:uid)).to eq(true)
     end
-
-
 
 #TODO: Section for tech_debts
 

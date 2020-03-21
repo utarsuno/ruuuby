@@ -3,7 +3,6 @@
 require 'bundler/setup'
 require 'ruuuby'
 
-require 'helpers/helper_testing'
 require 'helpers/helper_performance'
 require 'helpers/helper_ruuuby'
 require 'helpers/static_test_data'
@@ -12,7 +11,6 @@ require 'helpers/static_test_data'
 require 'rdoc'
 require 'rake'
 require 'rspec'
-require 'ruuuby/version'
 require_relative '../db/db'
 
 require_relative '../conditionals/ruuuby_configs'
@@ -45,7 +43,11 @@ RSpec.shared_context 'RSPEC_GLOBAL_UTILITIES' do
   let(:data_range_complex_simple){[Complex(-1337.0), Complex(-10.0), Complex(-1.0), Complex(0.0), Complex(1.0), Complex(10.0), Complex(1337.0)]}
   let(:data_range_complex){[Complex(-1337.0, 1.25), Complex(-10.0, 1.25), Complex(-1.0, 1.25), Complex(0.0, 1.25), Complex(1.0, 1.25), Complex(10.0, 1.25), Complex(1337.0, 1.25)]}
   let(:data_range_floats){[-1337.0, -10.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 10.0, 1337.0]}
+  let(:data_range_floats_zero_to_positive){[0.0, 1.0, 2.0, 3.0, 10.0, 1337.0]}
+  let(:data_range_floats_negative){[-1337.0, -10.0, -3.0, -2.0, -1.0]}
+  let(:data_range_floats_boolean){[-1.0, 0.0, 1.0]}
   let(:data_range_ints){[-1337, -10, -3, -2, -1, 0, 1, 2, 3, 10, 1337]}
+  let(:data_range_ints_boolean){[-1, 0, 1]}
   let(:data_range_ints_zero_to_positive){[0, 1, 2, 3, 10, 1337]}
   let(:data_range_ints_negative){[-1337, -10, -3, -2, -1]}
   let(:data_rational_default){Rational(2, 3)}
@@ -64,7 +66,7 @@ end
 
 module AuditHelpers
 
-  def feature_tests(the_feature, feature_str, description)
+  def audit_feature(the_feature, feature_str, description)
     expect(the_feature.class).to eq(RuuubyFeature)
     expect(the_feature.id.class).to eq(Integer)
     expect(the_feature.description).to eq(description)
@@ -81,6 +83,7 @@ module AuditHelpers
 end
 
 RSpec.configure do |config|
+
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
 
@@ -91,11 +94,13 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.include(RSpec::Benchmark::Matchers)
-  config.include(GeneralTestHelper)
+  config.include_context 'lets_language_deltas'
   config.include_context 'RSPEC_GLOBAL_UTILITIES'
 
-  config.include PerformanceTestHelper, :performance
   config.include AuditHelpers, :audits
+
+  config.include PerformanceTestHelper, :performance
+  config.include RSpec::Benchmark::Matchers, :performance
+  config.include_context 'lets_performance', :performance
 
 end

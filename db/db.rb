@@ -14,17 +14,22 @@ ActiveRecord::Base.establish_connection(
 # ⚠️: JUST STARTING POINT, tons of TODOs here
 ActiveRecord::Schema.define do
   create_table :ruuuby_releases, force: true do |t|
-    t.integer :version_major, limit: 1
-    t.integer :version_minor, limit: 1
-    t.integer :version_tiny, limit: 1
+    t.integer :vmajor, limit: 1
+    t.integer :vminor, limit: 1
+    t.integer :vtiny, limit: 1
+
+    t.index [:vmajor, :vminor, :vtiny], unique: true
   end
   create_table :ruuuby_features, force: true do |t|
     t.integer :id_num
     t.string :description
+
+    t.index :id_num, unique: true
   end
   create_table :ruuuby_changelogs, force: true do |t|
     t.integer :ruuuby_version_id
     t.integer :ruuuby_feature_id
     t.string :description
   end
+
 end

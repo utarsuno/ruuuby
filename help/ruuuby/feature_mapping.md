@@ -19,6 +19,7 @@
 | f13 | `∃` to alias concept of `does this(arg) exist?`                        |
 | f14 | enable easier catching and throwing of parameter type errors           |
 | f15 | enable quicker tracking and auditing of features across versions       |
+| f16 | add operation: raising to exponents (`superscript`) via operator(`^`) on `Numeric`'s |
 | f96 | automate local `git` configurations                                     |
 | f97 | `JRuby-extensions`                                                     |
 | f98 | `C-extensions`                                                         |

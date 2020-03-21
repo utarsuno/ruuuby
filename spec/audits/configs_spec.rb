@@ -3,6 +3,7 @@
 RSpec.describe 'general configs' do
   let(:configs_requirements){::RuuubyConfigs::Requirements}
   let(:configs_gems){::RuuubyConfigs::GemDependencies}
+  let(:configs_internal){configs_gems::EnvironmentInternal::ALL_GEMS}
   let(:configs_dev){configs_gems::EnvironmentDevelopment::ALL_GEMS}
   let(:configs_prod){configs_gems::EnvironmentRuntime::ALL_GEMS}
 
@@ -13,10 +14,9 @@ RSpec.describe 'general configs' do
   context 'audits', :'audits' do
 
     before :all do
-      path_project_base         = File.dirname³(__FILE__)
-      @relative_paths_to_ignore = %w(. .. .DS_Store)
-      @path_dir_c_extensions    = "#{path_project_base.to_s}/ext"
-      @directory_ext            = Dir.🆕(@path_dir_c_extensions)
+      path_project_base      = File.dirname³(__FILE__)
+      @path_dir_c_extensions = "#{path_project_base.to_s}/ext"
+      @directory_ext         = Dir.🆕(@path_dir_c_extensions)
     end
 
     context 'passes file structure audits' do
@@ -27,38 +27,31 @@ RSpec.describe 'general configs' do
           puts "\t\t| #{@path_dir_c_extensions.to_s} |"
           puts "\t\t| ------------------------------- "
 
-          @directory_ext.each do |path|
-            unless @relative_paths_to_ignore.include?(path)
-              path_current_extension = "#{@path_dir_c_extensions.to_s}/#{path.to_s}"
-              puts "\t\t| checking if directory: {#{path_current_extension}}"
-              expect(🗄️.∃?(path_current_extension)).to eq(true)
-              sub_paths             = 🗄️.🆕("#{path_current_extension}/")
-              directory_has_content = false
-              puts "\t\t\t| traversing directory: {#{path_current_extension}/}"
-              sub_paths.each do |sub_path|
-                unless @relative_paths_to_ignore.include?(sub_path)
-                  sub_full_path = "#{path_current_extension}/#{sub_path}"
-                  puts "\t\t\t| checking if file: {#{sub_full_path.to_s}}"
-                  expect(📁.∃?(sub_full_path)).to eq(true)
-                  directory_has_content = true
-                  if sub_path.end_with?('.c')
-                    puts "\t\t\t\t| parent-dir-name{#{path.to_s}} should equal file-name{#{sub_path.to_s}}"
-                    expect(path.to_s).to eq(sub_path[0..sub_path.length-3].to_s)
+          @directory_ext.normalized_paths do |path|
+            path_current_extension = "#{@path_dir_c_extensions.to_s}/#{path.to_s}"
+            puts "\t\t| checking if directory: {#{path_current_extension}} w/ content"
+            expect(🗄️.∃?(path_current_extension)).to eq(true)
+            sub_paths = 🗄️.🆕("#{path_current_extension}/")
+            expect(sub_paths.∅?).to eq(false)
+            puts "\t\t\t| traversing directory: {#{path_current_extension}/}"
+            sub_paths.normalized_paths do |sub_path|
+              sub_full_path = "#{path_current_extension}/#{sub_path}"
+              puts "\t\t\t| checking if file: {#{sub_full_path.to_s}}"
+              expect(📁.∃?(sub_full_path)).to eq(true)
+              if sub_path.end_with?('.c')
+                puts "\t\t\t\t| parent-dir-name{#{path.to_s}} should equal file-name{#{sub_path.to_s}}"
+                expect(path.to_s).to eq(sub_path[0..sub_path.length-3].to_s)
 
-                    puts "\t\t\t\t| file-name{#{sub_path.to_s}} should not equal {conftest.c}"
-                    expect(sub_path).to_not eq('conftest.c')
-                  elsif sub_path.end_with?('.rb') || sub_path.end_with?('.h')
-                    # do nothing =)
-                  else
-                    puts "\t\t\t\t| unexpected-file{#{sub_path.to_s}}, which is not supported!"
-                    raise RuntimeError.🆕("unexpected-file{#{sub_path.to_s}}, for directory{#{path_current_extension}}")
-                  end
-                end
+                puts "\t\t\t\t| file-name{#{sub_path.to_s}} should not equal {conftest.c}"
+                expect(sub_path).to_not eq('conftest.c')
+              elsif sub_path.end_with?('.rb') || sub_path.end_with?('.h')
+                # do nothing =)
+              else
+                puts "\t\t\t\t| unexpected-file{#{sub_path.to_s}}, which is not supported!"
+                raise RuntimeError.🆕("unexpected-file{#{sub_path.to_s}}, for directory{#{path_current_extension}}")
               end
-              puts "\t\t\t| the directory had contents"
-              expect(directory_has_content).to eq(true)
             end
-          end #end{@directory_ext.each do |path|}
+          end
         end # end{directory{ext/} is healthy}
       end # end{extension files have correct file schema}
     end
@@ -148,6 +141,12 @@ RSpec.describe 'general configs' do
       context 'activerecord is healthy' do
         it 'by having correct configs' do
           expect(ActiveRecord::VERSION::STRING).to eq(configs_dev[configs_gems::GEM_ACTIVERECORD])
+        end
+      end
+
+      context 'ruuuby is healthy' do
+        it 'by having correct configs' do
+          expect(Ruuuby::VERSION).to eq(configs_internal[configs_gems::GEM_RUUUBY])
         end
       end
     end

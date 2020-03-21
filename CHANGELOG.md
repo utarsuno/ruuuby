@@ -1,5 +1,5 @@
 ---
-### (upcoming patches) v0.0.19-v0.0.22
+### (upcoming patches) v0.0.20-v0.0.22
  * resolve missing coverage from `v0.0.17`
  * resolve missing coverage from `v0.0.18`
 
@@ -7,10 +7,31 @@
  * start automation/abstraction of state & configs for CLI based APIs, tools, and scripts (gem `tty-command` providing core functionality)
  * start automation/abstraction of code-file (content) management
  * continuation of (`f15`) in relation to above 2 points
+
+---
+
+# v0.0.19
+ * add some data-type/db-validation for `ORM`, still lots of TODOs here
+ * purge `ruuuby/version.rb` of all content except `constant String`: `VERSION` (as `ORM` functionality will cover prior needed use-cases)
+ * add missing test cases for power-operations and `Object's` funcs(`flt?`, `num?`)
+ * power-operations for `Float` moved into `ruby_class_mods.c`
+ * general improvements for performance-testing and `RSpec` structuring
+ * `ruby_class_mods.c` to start using `non-ascii` based `#define` statements
+ * start adding code for negative-exponents
+ 
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `File`, `Dir` | `∅?` | `f04` |
+| `ApplicationRecord` | `♻️`, `♻️!` | `f10` |
+| `Kernel` | `🎲`, `∛`, `π`, `φ`, `γ` | `f10` |
+| `Kernel` | `⁻¹`, `⁻²`, `⁻³`, `⁻⁴`, `⁻⁵`, `⁻⁶`, `⁻⁷`, `⁻⁸`, `⁻⁹` | `f16` |
+| `Dir` | `normalized_paths` | `f12` |
+
+
 ---
 
 # v0.0.18
- * ⚠️ intermediate patch (full testing coverage of this patch to be concluded in `0.0.19`)
+ * ⚠️ intermediate patch (full testing coverage of this patch to be concluded within `0.0.19`-`0.0.22`)
  * renaming existing func(`🛑str_or_ary❓`) to(`🛑countable❓`); it now checks for `Set` as well
  * move all duplicated aliases (for playing nice with IDEs, happens from funcs created in `C-extension`) into `conditionals/ide_helper.rb`
  * add `gem 'sqlite3', '~> 1.4.2'`

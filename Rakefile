@@ -25,8 +25,15 @@ end
 # /  \  /\  .
 # \__X /~~\ .
 # ______________________________________________________________________________________________________________________
+
+# TODO: ORGANIZE IN VERSION(0.0.20)
+
 def add_task_rspec(task_name, additional_options=[])
-  spec_default_opts     = ['--format documentation', '--color', '--require spec_helper']
+  #spec_default_opts     = ['--format documentation', '--color', '--require spec_helper']
+  spec_default_opts     = ['--format progress', '--color', '--require spec_helper']
+
+  # --format progress
+
   rspec_task            = RSpec::Core::RakeTask.new(task_name)
   all_options           = (spec_default_opts + additional_options)
   rspec_task.verbose    = all_options.include?('--warnings')
@@ -39,6 +46,7 @@ add_task_rspec(:rspec_performance, ['--tag @performance --tag ~@audits --tag ~@p
 add_task_rspec(:rspec_ruby, ['--tag ~@performance --tag ~@audits --tag @preserving_ruby_original_functionality'])
 add_task_rspec(:rspec_all, ['--warnings'])
 
+
 # ______________________________________________________________________________________________________________________
 #  __       ___       __        __   ___
 # |  \  /\   |   /\  |__)  /\  /__` |__
@@ -47,8 +55,6 @@ add_task_rspec(:rspec_all, ['--warnings'])
 
 #require 'sqlite3'
 #require 'active_record'
-#require 'standalone_migrations'
-#StandaloneMigrations::Tasks.load_tasks
 
 # ______________________________________________________________________________________________________________________
 #  __   __   __              ___      ___      ___    __

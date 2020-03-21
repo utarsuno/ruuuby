@@ -3,31 +3,6 @@
 # add various functions to existing module +Numeric+
 class ::Numeric
 
-  EXPONENTIAL_0 = :⁰
-  EXPONENTIAL_1 = :¹
-  EXPONENTIAL_2 = :²
-  EXPONENTIAL_3 = :³
-  EXPONENTIAL_4 = :⁴
-  EXPONENTIAL_5 = :⁵
-  EXPONENTIAL_6 = :⁶
-  EXPONENTIAL_7 = :⁷
-  EXPONENTIAL_8 = :⁸
-  EXPONENTIAL_9 = :⁹
-
-  # @type [Hash]
-  MATH_OPERATIONS_POWERS = {
-      :⁰.🆔 => 0,
-      :¹.🆔 => 1,
-      :².🆔 => 2,
-      :³.🆔 => 3,
-      :⁴.🆔 => 4,
-      :⁵.🆔 => 5,
-      :⁶.🆔 => 6,
-      :⁷.🆔 => 7,
-      :⁸.🆔 => 8,
-      :⁹.🆔 => 9
-  }.freeze
-
   # ---------------------------------------------------------------------------------------------------------- | *f11* |
 
   # @return [Boolean] true, if this number is neither NaN or ±∞
@@ -39,6 +14,38 @@ class ::Numeric
 
   # @return [Boolean] true, the universal-set(+𝕌+) in this context only excludes (NaN, +∞, and -∞)
   alias_method :𝕌?, :finite?
+
+  # ---------------------------------------------------------------------------------------------------------- | *f16* |
+
+  # @type [Symbol]
+  EXPONENTIAL_0 = :⁰
+
+  # @type [Symbol]
+  EXPONENTIAL_1 = :¹
+
+  # @type [Symbol]
+  EXPONENTIAL_2 = :²
+
+  # @type [Symbol]
+  EXPONENTIAL_3 = :³
+
+  # @type [Symbol]
+  EXPONENTIAL_4 = :⁴
+
+  # @type [Symbol]
+  EXPONENTIAL_5 = :⁵
+
+  # @type [Symbol]
+  EXPONENTIAL_6 = :⁶
+
+  # @type [Symbol]
+  EXPONENTIAL_7 = :⁷
+
+  # @type [Symbol]
+  EXPONENTIAL_8 = :⁸
+
+  # @type [Symbol]
+  EXPONENTIAL_9 = :⁹
 
   # | ------------------------------------------------------------------------------------------------------------------
 

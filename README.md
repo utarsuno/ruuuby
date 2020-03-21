@@ -4,13 +4,12 @@
 
 ## Usage
 
-| for                             | use                                                         |
-| :-----------------------------: | :---------------------------------------------------------: |
-| `Gemfile`                        | `gem 'ruuuby', '~> 0.0.18'`                                 |
-| ruby scripts                    | `require 'ruuuby'`                                          |
-| `ruuuby` version during runtime | `require 'ruuuby/version'`                                  |
-| gem url                         | https://rubygems.org/gems/ruuuby                            |
-| changelog                       | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
+| for           | use                                                         |
+| ------------: | :---------------------------------------------------------- |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.19'`                                 |
+| ruby scripts  | `require 'ruuuby'`                                          |
+| gem url       | https://rubygems.org/gems/ruuuby                            |
+| changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
 
 #### Example
 
@@ -60,6 +59,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 #### Glossary (for table content & tags)
 
 > {`static`} implies following context: `Class` instance, not the actual `object`
+> <br/> `performance penalties` implies: values across designated scenario benchmarks
 > <br/>(`fNN`) is feature tag syntax, let (`N ∈ ℕ`); (`full use-case wip`)
 > <br/> symbol(`∃`) means `there exists some ...`
 > <br/> symbol(`⊕`) is set notation for: *symmetric difference*
@@ -70,19 +70,20 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 
 > (⚠️ full-coverage wip): raising to powers(via-superscripts: `⁰, ¹, ², ..., ⁹`) with operator(`^`)
 
-| class(es) | example | notes |
-| ---------:| ------- | ----- |
-| `Integer` | `1337^²`   | - coexists with `Integer`'s default existing `bitwise XOR` functionality <br/> - current `performance penalties` scenario benchmarks range: (`75%`-`200%` `slower`) |
-| `Float`   | `1337.1337^²` |       |
+| class(es)  | example | notes |
+| ----------:| ------- | ----- |
+| `Integer`  | `1337^²`   | - coexists with `Integer`'s default existing `bitwise XOR` functionality <br/> - `performance penalties`: `50%`-`90%` `slower` than using operator(`**`) |
+| `Float`    | `1337.1337^²` | `performance penalties`: `75%`-`80%` `slower` than using operator(`**`) |
+| `Rational`, `Complex`, `BigDecimal` | `inc` | `inc` |
 
 #### Module Changes:
 
-` instance methods for Kernel will act as 'globally-scoped functions; meaning they can essentially can be called from anywhere with caller of the method ignored for all contextes`
+`instance methods for Kernel will act as 'globally-scoped functions'; meaning they can essentially can be called from anywhere with caller of the method ignored for all contextes`
 
-| module(s) | func(s) added     | as C-extension? (java-wip) | notes |
+| module(s) | func(s) added     | as C-extension? <br/> (java-wip) | notes |
 | --------: | ----------------- | :------------------------: | ----- |
 | `Kernel`  | `📁`, `📂`, `🗄️` | ❌                         | - aliases for `::File`, `::Dir` <br/> - (`f12`) |
-| `Kernel`  | `√`               | ❌                         | syntax sugar for `Math.sqrt` |
+| `Kernel`  | `🎲`, `√`, `∛`, `π`, `φ`, `γ` | ❌             | syntax sugar for funcs/constants (mostly) from module(`Math`) |
 | `Kernel`  | `𝔠`               | ❌                         | - gets the `cardinality` (length/size) of arg <br/> - (`f03`) |
 | `Kernel`  | `∃module?`        | ❌                         | - ex: `∃module?(:Ruuuby)` |
 | `Kernel`  | `∃class?`         | ❌                         | - ex: `∃class?(:Array)` |
@@ -90,10 +91,12 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Module`  | `∃func?`          | ❌                         | - {`static`} <br/> - ex: `::Array.∃func?(:≈≈)` |
 
 #### Class Changes:
-| class(es)              | func(s) added                      | as C-extension? (java-wip) | notes   |
+| class(es)              | func(s) added                      | as C-extension? <br/> (java-wip) | notes   |
 | ---------------------: | ---------------------------------- | :------------------------: | ------- |
 | `File`, `Dir`          | {`static`} `∃?`                    | ❌                         | (`f12`) |
 | `File`                 | {`static`} `dirname²`, `dirname³`  | ❌                         | (`f12`) |
+| `Dir`                  | `normalized_paths`                 | ❌                         | (`f12`) |
+| `File`, `Dir`          | `∅?`                               | ❌                         | (`f04`) |
 | `Object`               | `ary?`, [`bool?`, `🅱️?`], `hsh?`, `int?`, `flt?`, `num?`, `str?`, `stry?`, `sym?` | ✅ | (`f06`) |
 | `Array`                | `remove_empty!`                    | ✅                         | (`f07`) |
 | `Set`                  | `remove_empty!`                    | ❌                         | (`f07`) |
@@ -119,9 +122,10 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 #### Created Aliases:
 | for                    | base method(s) reference(s)               | alias(es)               | notes     |
 | ---------------------: | ----------------------------------------- | ----------------------- | --------- |
-| `Kernel`               | `raise`                                   | `🛑`                    |           |
-| `Object`               | `object_id`                               | `🆔`                    |           |
-| `Class`                | `new`                                     | `🆕`                    |           |
+| `Kernel`               | `raise`                                   | `🛑`                    | (`f10`)   |
+| `Object`               | `object_id`                               | `🆔`                    | (`f10`)   |
+| `Class`                | `new`                                     | `🆕`                    | (`f10`)   |
+| `ApplicationRecord`    | `destroy`, `destroy!`                     | `♻️`, `♻️!`             | (`f10`)   |
 | `Object`               | `freeze`, `frozen?`                       | `❄️`, `❄️?`             | (`f00`)   |
 | `Object`               | `protected_instance_methods`, `private_methods` | `🛡️funcs`, `🙈funcs` | (`f01`,`f02`) |
 | `Array`                | `frequency_counts`, `disjunctive_union`, `equal_contents?` | `📊`, `⊕`, `≈≈` |  |
@@ -141,10 +145,10 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 292      | # of tests (non-performance & non-audit based)                  |
-| QA        | performance   | 143      | # of tests                                                      |
-| CI        | audits        | 29       | # of tests                                                      |
-| structure | features      | ~20      | # of distinct features (that are categorized & tracked) `wip`   |
+| QA        | unit          | 302      | # of tests (non-performance & non-audit based)                  |
+| QA        | performance   | 156      | # of tests                                                      |
+| CI        | audits        | 32       | # of tests                                                      |
+| structure | features      | ~21      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |
 | coverage  | documentation | ???      | `wip` |
@@ -192,14 +196,16 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 ---
 
 ### Project Layout:
-|  directory     | description of contents                        |
-| -------------: | --------------------------------------------- |
-| `bin`          | executable files                                |
-| `ext`          | C portion of this Gem's code (and future location for JRuby extensions) |
-| `lib`          | ruby portion of this Gem's code                |
-| `spec`         | RSpecs (unit tests)                            |
-| `help`         | any helpful trouble-shooting and tips          |
-| `conditionals` | temporary design |
+|  directory     | description of contents                         |
+| -------------: | ----------------------------------------------- |
+| `app`          | currently only holds `ORM` definitions           |
+| `bin`          | `executable` files                               |
+| `conditionals` | temporary design                                |
+| `db`           | database `schema`, `seed`, and `migrations`     |
+| `ext`          | `C` portion of this Gem's code <br/> (and future location for `JRuby-extensions`) |
+| `help`         | any helpful additional `documentation & notes`  |
+| `lib`          | `Ruuuby` portion of this `Gem's code`           |
+| `spec`         | `RSpecs` (unit tests + other `QA` and `Audits`) |
 
 ---
 

@@ -5,7 +5,7 @@ RSpec.describe 'Object' do
 
   context 'creates Ruuuby aliases' do
     it '🆔 --> object_id' do
-      expect_response_to(::Object, :🆔)
+      expect(::Object.respond_to?(:🆔)).to eq(true)
       leet = 1337
       expect(leet.object_id == leet.🆔).to eq(true)
     end
@@ -103,9 +103,6 @@ RSpec.describe 'Object' do
     end
 
     context 'by adding function{ary?}' do
-      it 'a newly created generic object responds to it' do
-        expect_response_to(Object.🆕, :ary?)
-      end
       it 'without effecting Array instance' do
         expect(Array.ary?).to eq(false)
       end
@@ -120,10 +117,6 @@ RSpec.describe 'Object' do
     end
 
     context 'by adding function{bool?}' do
-      it 'a newly created generic object also responds' do
-        expect_response_to(Object.🆕, :bool?)
-        expect_response_to(Object.🆕, :🅱️?)
-      end
       it 'without effecting TrueClass instance or FalseClass instance' do
         expect(TrueClass.bool?).to eq(false)
         expect(TrueClass.🅱️?).to eq(false)
@@ -147,9 +140,6 @@ RSpec.describe 'Object' do
     end
 
     context 'by adding function{hsh?}' do
-      it 'a newly created generic object responds to it' do
-        expect_response_to(Object.🆕, :hsh?)
-      end
       it 'without effecting Integer instance' do
         expect(Hash.hsh?).to eq(false)
       end
@@ -164,15 +154,12 @@ RSpec.describe 'Object' do
     end
 
     context 'by adding function{int?}' do
-      it 'a newly created generic object responds to it' do
-        expect_response_to(Object.🆕, :int?)
-      end
-      it 'without effecting Integer instance' do
+      it 'without effecting Class-instance{Integer}' do
         expect(Integer.int?).to eq(false)
       end
       context 'handles needed input scenarios' do
         it 'returns correct value{true}' do
-          [-1337, -1, 0, 1, 1337].∀{|n| expect(n.int?).to eq(true)}
+          data_range_ints_boolean.∀{|n| expect(n.int?).to eq(true)}
         end
         it 'returns correct value{false}' do
           [nil, '', '1337', {}, []].∀{|n| expect(n.int?).to eq(false)}
@@ -180,10 +167,43 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function{str?}' do
-      it 'a newly created generic object responds to it' do
-        expect_response_to(String.🆕('strstr'), :str?)
+    context 'by adding function{flt?}' do
+      it 'without effecting Class-instance{Float}' do
+        expect(Float.flt?).to eq(false)
       end
+      context 'handles needed input scenarios' do
+        it 'returns correct value{true}' do
+          data_range_floats_boolean.∀{|n| expect(n.flt?).to eq(true)}
+        end
+        it 'returns correct value{false}' do
+          [nil, '', '1337', {}, [], 2].∀{|n| expect(n.flt?).to eq(false)}
+        end
+      end
+    end
+
+    context 'by adding function{num?}' do
+      it 'without effecting Class-instance{Integer, Float, Rational, Complex, BigDecimal}' do
+        expect(::Integer.num?).to eq(false)
+        expect(::Float.num?).to eq(false)
+        expect(::Rational.num?).to eq(false)
+        expect(::Complex.num?).to eq(false)
+        expect(::BigDecimal.num?).to eq(false)
+      end
+      context 'handles needed input scenarios' do
+        it 'returns correct value{true}' do
+          expect(1.num?).to eq(true)
+          expect(1.0.num?).to eq(true)
+          expect(Rational(1, 1).num?).to eq(true)
+          expect(Complex(1, 1).num?).to eq(true)
+          expect(data_big_decimal_one.num?).to eq(true)
+        end
+        it 'returns correct value{false}' do
+          [nil, '', '1337', {}, []].∀{|n| expect(n.num?).to eq(false)}
+        end
+      end
+    end
+
+    context 'by adding function{str?}' do
       context 'with correct return values of' do
         it 'true' do
           ['', ' ', 'hello world', '2', 'nil', 2.to_s].∀{|s|expect(s.str?).to eq(true)}
@@ -200,10 +220,6 @@ RSpec.describe 'Object' do
     end
 
     context 'by adding function{stry?}' do
-      it 'a newly created generic object responds to it' do
-        expect_response_to(String.🆕('strstr'), :str?)
-        expect_response_to(String.🆕('strstr'), :stry?)
-      end
       context 'with correct return values of' do
         it 'true' do
           ['hello_world', '_2', 'nil', 2.to_s].∀{|s|expect(s.stry? && s.to_sym.stry?).to eq(true)}
@@ -265,6 +281,8 @@ RSpec.describe 'Object' do
       it 'for cases: true' do
         expect{true.bool?}.to perform_extremely_quickly
         expect{true.🅱️?}.to perform_extremely_quickly
+        expect{false.bool?}.to perform_extremely_quickly
+        expect{false.🅱️?}.to perform_extremely_quickly
       end
       it 'for cases: false' do
         expect{0.bool?}.to perform_extremely_quickly
@@ -287,6 +305,31 @@ RSpec.describe 'Object' do
       end
       it 'for cases: false' do
         expect{'0'.int?}.to perform_extremely_quickly
+      end
+    end
+
+    context 'func{flt?}: performs extremely quickly' do
+      it 'for cases: true' do
+        expect{5.0.flt?}.to perform_extremely_quickly
+      end
+      it 'for cases: false' do
+        expect{'0'.flt?}.to perform_extremely_quickly
+      end
+    end
+
+    context 'func{num?}: performs very quickly' do
+      it 'for cases: true' do
+        expect{1.num?}.to perform_very_quickly
+        expect{1.0.num?}.to perform_very_quickly
+        expect{data_rational_one.num?}.to perform_very_quickly
+        expect{data_complex_one.num?}.to perform_very_quickly
+        expect{data_big_decimal_one.num?}.to perform_very_quickly
+
+      end
+      it 'for cases: false' do
+        expect{'0'.num?}.to perform_very_quickly
+        expect{nil.num?}.to perform_very_quickly
+        expect{::Integer.num?}.to perform_very_quickly
       end
     end
 
