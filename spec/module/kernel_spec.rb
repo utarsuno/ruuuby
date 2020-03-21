@@ -5,7 +5,41 @@ RSpec.describe ::Kernel do
   let(:empty_object){Object.🆕}
 
   context 'extends module[Kernel]' do
+
     context 'by adding needed functions & aliases' do
+
+      context 'adds function{√}' do
+        it 'equals (Math.sqrt)' do
+          expect(√(25)).to eq(Math.sqrt(25))
+        end
+      end
+
+      context 'adds function{√}' do
+        it 'equals (Math.cbrt)' do
+          expect(∛(25)).to eq(Math.cbrt(25))
+        end
+      end
+
+      context 'adds function{π}' do
+        it 'aliases{Math::PI}' do
+          expect(π).to eq(Math::PI)
+        end
+      end
+
+      context 'adds function{φ}' do
+        it 'equals ((1+Math.sqrt(5))/(2.0))' do
+          expect(φ).to eq(((1+Math.sqrt(5))/(2.0)))
+        end
+      end
+
+      context 'adds function{γ}' do
+        it 'defines up to first 50 digits' do
+          as_string = γ.to_s
+          first_50   = '0.57721566490153286060651209008240243104215933593992'
+          expect(γ).to eq(0.5772156649015329)
+          expect(as_string[0..as_string.length-2]).to eq(first_50[0..16])
+        end
+      end
 
       context 'adds function: ∃module?' do
         context 'handling needed scenarios' do
@@ -25,8 +59,8 @@ RSpec.describe ::Kernel do
           end
           context 'for cases: sub_module &' do
             it 'true-positive' do
-              expect(∃module?(:Version, Ruuuby)).to eq(true)
-              expect(∃module?('Version', Ruuuby)).to eq(true)
+              expect(∃module?(:ParamErr, Ruuuby)).to eq(true)
+              expect(∃module?('ParamErr', Ruuuby)).to eq(true)
             end
             it 'false-positive' do
               expect(∃module?(:VERSIONFAKE, Ruuuby)).to eq(false)

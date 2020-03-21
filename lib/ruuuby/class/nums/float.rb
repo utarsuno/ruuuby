@@ -32,22 +32,4 @@ class ::Float
     nil
   end
 
-  # @param [Numeric|Symbol] them | if 🆔 matches a power (ex: ²), then essentially perform: Math.pow(self, them)
-  def ^(them)
-    pow_match = ::Numeric::MATH_OPERATIONS_POWERS.fetch(them.🆔, -1337)
-    case(pow_match)
-    when -1337
-      🛑 ArgumentError.🆕("| c{Float}-> m{^}, got arg(them) as{#{them.to_s}}, a {#{them.class.to_s}}, it's object_id did not match any of the pre-defined math power symbols |")
-    when 0
-      return 1 if self.𝕌?
-      🛑 RuntimeError.🆕("| c{Float}-> m{^}, self is{#{self.to_s}}, which may not be raised to power(0) |")
-    when 1
-      return self unless self.nan?
-      🛑 RuntimeError.🆕("| c{Float}-> m{^}, self is{#{self.to_s}}, which may not be raised to power(1) |")
-    else
-      return self ** pow_match unless self.nan?
-      🛑 RuntimeError.🆕("| c{Float}-> m{^}, self is{#{self.to_s}}, which may not be raised to power(#{pow_match.to_s}) |")
-    end
-  end
-
 end

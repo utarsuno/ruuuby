@@ -32,6 +32,11 @@ module ::RuuubyConfigs
     GEM_RSPEC_BENCHMARK = :'rspec-benchmark'
     GEM_SQLITE3         = :sqlite3
     GEM_ACTIVERECORD    = :activerecord
+    GEM_RUUUBY          = :ruuuby
+
+    module EnvironmentInternal
+      ALL_GEMS = {ruuuby: '0.0.19'}
+    end
 
     module EnvironmentRuntime
       ALL_GEMS = {'tty-command': '0.9.0'}

@@ -10,16 +10,12 @@ RSpec.describe 'db/db.rb' do
   let(:v0_0_2){RuuubyRelease.all[2]}
   let(:v0_0_3){RuuubyRelease.all[3]}
   #let(:v0_0_4){RuuubyRelease.all[4]}
-  let(:v0_0_18){RuuubyRelease.all[-1]}
+  let(:v0_0_18){RuuubyRelease.by_version(0, 0, 18)}
 
   context 'static search functions work' do
     context 'RuuubyRelease' do
       it 'by_version' do
         expect(RuuubyRelease.by_version(0, 0, 0)).to eq(v0_0_0)
-        expect(RuuubyRelease.by_version(0, 0, 1)).to eq(v0_0_1)
-        expect(RuuubyRelease.by_version(0, 0, 2)).to eq(v0_0_2)
-        expect(RuuubyRelease.by_version(0, 0, 3)).to eq(v0_0_3)
-        #expect(RuuubyRelease.by_version(0, 0, 4)).to eq(v0_0_4)
         expect(RuuubyRelease.by_version(0, 0, 18)).to eq(v0_0_18)
       end
     end

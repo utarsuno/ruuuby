@@ -8,6 +8,7 @@ f10 = RuuubyFeature.spawn(10, 'offer special character aliases for natural ease 
 f11 = RuuubyFeature.spawn(11, 'add math `number sets` (ex: `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `∞?`, `♾️?`)')
 f12 = RuuubyFeature.spawn(12, 'enable quick `file/directory io` and alias as file(`📂`) and dir(`🗄️`)')
 f15 = RuuubyFeature.spawn(15, 'enable quicker tracking and auditing of features across versions')
+f16 = RuuubyFeature.spawn(16, "add operation: raising to exponents (`superscript`) via operator(`^`) on `Numeric`'s")
 
 v0_0_0 = RuuubyRelease.spawn(0, 0, 0)
 v0_0_0.add_comments('initial project creation')
@@ -75,14 +76,41 @@ v0_0_18.changelog.added_methods_to_class(f11, [[:♾️?, ::Integer], [:♾️?,
 v0_0_18.changelog.added_method_to_class(f10, :🏠, ::Method)
 
 
+v0_0_19 = RuuubyRelease.spawn(0, 0, 19)
+v0_0_19.add_comments(
+    [
+        "add data-validation and more narrowly define data types for `ORM`, still lots of TODOs here",
+        "purge `ruuuby/version.rb` of all content except `constant String`: `VERSION` (as `ORM` functionality will cover prior needed use-cases)",
+        "add missing test cases for power-operations and `Object's` funcs(`flt?`, `num?`)",
+        "power-operations for `Float` moved into `ruby_class_mods.c`",
+        "general improvements for performance-testing and general structuring",
+        "`ruby_class_mods.c` to start using `non-ascii` based `#define` statements"
+    ]
+)
+v0_0_19.changelog.added_method_to_class(f04, :∅?, ::File)
+v0_0_19.changelog.added_method_to_class(f04, :∅?, ::Dir)
+v0_0_19.changelog.added_method_to_class(f10, :♻️, ::ApplicationRecord)
+v0_0_19.changelog.added_method_to_class(f10, :♻️!, ::ApplicationRecord)
+v0_0_19.changelog.added_method_to_class(f10, :🎲, ::Kernel)
+v0_0_19.changelog.added_method_to_class(f10, :π, ::Kernel)
+v0_0_19.changelog.added_method_to_class(f10, :φ, ::Kernel)
+v0_0_19.changelog.added_method_to_class(f12, :normalized_paths, ::Dir)
+
+#:⁻¹, :⁻², :⁻³, :⁻⁴, :⁻⁵, :⁻⁶, :⁻⁷, :⁻⁸, :⁻⁹
+v0_0_19.changelog.added_method_to_class(f16, :⁻¹, ::Kernel)
+v0_0_19.changelog.added_method_to_class(f16, :⁻², ::Kernel)
+
 =begin
 puts "PRINTING DOCS"
+v0_0_19.docs_changelog.each do |line|
+  puts line
+end
 v0_0_18.docs_changelog.each do |line|
   puts line
 end
-v0_0_4.docs_changelog.each do |line|
-  puts line
-end
+#v0_0_4.docs_changelog.each do |line|
+#  puts line
+#end
 v0_0_3.docs_changelog.each do |line|
   puts line
 end

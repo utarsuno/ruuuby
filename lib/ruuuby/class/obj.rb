@@ -71,7 +71,36 @@ class ::Object
     🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, ::Ruuuby::VirtualTypes::COUNTABLES, arg) unless (arg.str? || arg.ary? || arg.is_a?(Set))
   end
 
-  # ---------------------------------------------------------------------------------------------------------- | *f11* |
+  # ---------------------------------------------------------------------------------------------------------- | *f10* |
+  alias_method :🆔, :object_id
+  # ---------------------------------------------------------------------------------------------------------- | *f16* |
+
+  # @return [Symbol]
+  def ⁻⁹ ; :⁻⁹ ; end
+
+  # @return [Symbol]
+  def ⁻⁸ ; :⁻⁸ ; end
+
+  # @return [Symbol]
+  def ⁻⁷ ; :⁻⁷ ; end
+
+  # @return [Symbol]
+  def ⁻⁶ ; :⁻⁶ ; end
+
+  # @return [Symbol]
+  def ⁻⁵ ; :⁻⁵ ; end
+
+  # @return [Symbol]
+  def ⁻⁴ ; :⁻⁴ ; end
+
+  # @return [Symbol]
+  def ⁻³ ; :⁻³ ; end
+
+  # @return [Symbol]
+  def ⁻² ; :⁻² ; end
+
+  # @return [Symbol]
+  def ⁻¹ ; :⁻¹ ; end
 
   # @return [Symbol]
   def ⁰ ; :⁰ ; end
@@ -104,7 +133,5 @@ class ::Object
   def ⁹ ; :⁹ ; end
 
   # | ------------------------------------------------------------------------------------------------------------------
-
-  alias_method :🆔, :object_id
 
 end

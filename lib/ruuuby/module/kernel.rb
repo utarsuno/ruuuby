@@ -31,13 +31,6 @@ module ::Kernel
     class_owner.∃const?(class_name) && class_owner.const_get(class_name).instance_of?(::Class)
   end
 
-  # Return the square-root of the provided argument.
-  #
-  # @param [Integer|Float|Numeric] n
-  #
-  # @return [Float]
-  def √(n) ; ::Math.sqrt(n) ; end
-
   # ---------------------------------------------------------------------------------------------------------- | *f03* |
 
   # Return the *cardinality(𝔠)* (the length/size) of the provided argument.
@@ -61,6 +54,36 @@ module ::Kernel
 
   # @return [::Dir]
   def 🗄️; ::Dir ; end
+
+  # ---------------------------------------------------------------------------------------------------------- | *f10* |
+  alias_method :🎲, :rand
+
+  # Return the square-root of the provided argument.
+  #
+  # @param [Integer|Float|Numeric] n
+  #
+  # @return [Float|Numeric]
+  def √(n) ; ::Math.sqrt(n) ; end
+
+  # Return the cube-root of the provided argument.
+  #
+  # @param [Integer|Float|Numeric] n
+  #
+  # @return [Float|Numeric]
+  def ∛(n) ; ::Math.cbrt(n) ; end
+
+  # @return [Float]
+  def π ; Math::PI ; end
+
+  # ((1+Math.sqrt(5))/(2.0))
+  #
+  # @return [Float]
+  def φ ; 1.618033988749895 ; end
+
+  # for when 50 digit version will eventually be needed: {0.57721566490153286060651209008240243104215933593992}
+  #
+  # @return [Float]
+  def γ ; 0.5772156649015329 ; end
 
   # | ------------------------------------------------------------------------------------------------------------------
 

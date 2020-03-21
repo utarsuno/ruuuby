@@ -10,7 +10,17 @@ RSpec.describe 'ruuuby_feature.rb' do
 
       expect(fake_feature.feature_id).to eq('f01')
 
-      fake_feature.destroy!
+      fake_feature.♻️!
+    end
+
+    it 'prevents duplicate id_nums from being created' do
+      expect{
+        RuuubyFeature.spawn(1337, '1337')
+        RuuubyFeature.spawn(1337, '1337')
+      }.to raise_error(ActiveRecord::RecordNotUnique)
+
+      result = RuuubyFeature.by_id_num(1337)
+      result.♻️!
     end
   end
 

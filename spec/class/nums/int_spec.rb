@@ -1,11 +1,15 @@
 # coding: utf-8
 
 RSpec.describe 'int.rb' do
+
+  #let(:random_sizes){bench_range(8, 32768)}
+  #let(:random_ints){random_sizes.map{|n| Array.new(n) { 🎲(n) } }}
+
   context 'extends class[Integer]' do
 
     context 'by adding needed functions' do
       it 'exists' do
-        RuuubyTestHelper::Nums::CONFIG_INTEGER[:ruby].∀{|c| expect(::Integer.∃func?(c)).to eq(true)}
+        expect_added_ruby_methods(::Integer, cΔ_Integer)
       end
     end
 
@@ -162,11 +166,10 @@ RSpec.describe 'int.rb' do
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
 
-    context 'funcs performing O(1), extremely quickly' do
+    context 'funcs extremely quickly' do
       context 'func{finite?}' do
         it 'for cases: true' do
           expect{data_int_leet.finite?}.to perform_extremely_quickly
-          expect{data_int_leet.finite?}.to perform_O1
         end
       end
 
@@ -174,43 +177,36 @@ RSpec.describe 'int.rb' do
         it 'for cases: false' do
           expect{data_int_leet.∞?}.to perform_extremely_quickly
           expect{data_int_leet.infinite?}.to perform_extremely_quickly
-          expect{data_int_leet.∞?}.to perform_O1
-          expect{data_int_leet.infinite?}.to perform_O1
         end
       end
 
       context 'func{ℤ?}' do
         it 'for cases: true' do
           expect{data_int_negative_one.ℤ?}.to perform_extremely_quickly
-          expect{data_int_negative_one.ℤ?}.to perform_O1
         end
       end
 
       context 'func{ℂ?}' do
         it 'for cases: true' do
           expect{1.ℂ?}.to perform_extremely_quickly
-          expect{1.ℂ?}.to perform_O1
         end
       end
 
       context 'func{ℚ?}' do
         it 'for cases: true' do
           expect{data_int_leet.ℚ?}.to perform_extremely_quickly
-          expect{data_int_leet.ℚ?}.to perform_O1
         end
       end
 
       context 'func{ℝ?}' do
         it 'for cases: true' do
           expect{data_int_leet.ℝ?}.to perform_extremely_quickly
-          expect{data_int_leet.ℝ?}.to perform_O1
         end
       end
 
       context 'func{𝕌?}' do
         it 'for cases: true' do
           expect{data_int_leet.𝕌?}.to perform_extremely_quickly
-          expect{data_int_leet.𝕌?}.to perform_O1
         end
       end
     end
@@ -225,58 +221,59 @@ RSpec.describe 'int.rb' do
     end
 
     context 'roughly preserves original pre-extension-performance' do
-
-      it 'performance hit for bitwise_xor is under 75%' do
-        expect{(1^1)}.to perform_slower_than {(1.bitwise_xor(1))}.at_most(1.75).times
-        expect{(0^1)}.to perform_slower_than {(0.bitwise_xor(1))}.at_most(1.75).times
-        expect{(1^0)}.to perform_slower_than {(1.bitwise_xor(0))}.at_most(1.75).times
-        expect{(0^0)}.to perform_slower_than {(0.bitwise_xor(0))}.at_most(1.75).times
+      context 'performance hit for following funcs, are under 50%' do
+        it 'patched bitwise_xor' do
+          expect {1^1}.to perform_slower_than {1.bitwise_xor(1)}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_50)
+          expect {0^1}.to perform_slower_than {0.bitwise_xor(1)}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_50)
+          expect {1^0}.to perform_slower_than {1.bitwise_xor(0)}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_50)
+          expect {0^0}.to perform_slower_than {0.bitwise_xor(0)}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_50)
+        end
       end
 
-      it 'performance hit for `^0` (compared to `** 0`) is under 85%' do
-        expect{(1^⁰)}.to perform_slower_than {(1 ** 0)}.at_most(1.85).times
+      context 'performance hit for following funcs, are under 75%' do
+        it '`^0` (compared to `** 0`)' do
+          expect {3^⁰}.to perform_slower_than {3 ** 0}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_75)
+        end
+
+        it '`^1` (compared to `** 1`)' do
+          expect {3^¹}.to perform_slower_than {3 ** 1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_75)
+        end
       end
 
-      it 'performance hit for `^1` (compared to `** 1`) is under 85%' do
-        expect{(1^¹)}.to perform_slower_than {(1 ** 1)}.at_most(1.85).times
+      context 'performance hit for following funcs, are under 90%' do
+        it '`^2` (compared to `** 2`)' do
+          expect {3^²}.to perform_slower_than {3 ** 2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
+        end
+
+        it '`^3` (compared to `** 3`)' do
+          expect {3^³}.to perform_slower_than {3 ** 3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
+        end
+
+        it '`^4` (compared to `** 4`)' do
+          expect {3^⁴}.to perform_slower_than {3 ** 4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
+        end
+
+        it '`^5` (compared to `** 5`)' do
+          expect {3^⁵}.to perform_slower_than {3 ** 5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
+        end
+
+        it '`^6` (compared to `** 6`)' do
+          expect {3^⁶}.to perform_slower_than {3 ** 6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
+        end
+
+        it '`^7` (compared to `** 7`)' do
+          expect {3^⁷}.to perform_slower_than {3 ** 7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
+        end
+
+        it '`^8` (compared to `** 8`)' do
+          expect {3^⁸}.to perform_slower_than {3 ** 8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
+        end
+
+        it '`^9` (compared to `** 9`)' do
+          expect {3^⁹}.to perform_slower_than {3 ** 9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
+        end
       end
-
-      it 'performance hit for `^2` (compared to `** 2`) is under 200%' do
-        expect{(1^²)}.to perform_slower_than {(1 ** 2)}.at_most(3).times
-      end
-
-      it 'performance hit for `^3` (compared to `** 3`) is under 200%' do
-        expect{(1^³)}.to perform_slower_than {(1 ** 3)}.at_most(3).times
-      end
-
-      it 'performance hit for `^4` (compared to `** 4`) is under 200%' do
-        expect{(1^⁴)}.to perform_slower_than {(1 ** 4)}.at_most(3).times
-      end
-
-      it 'performance hit for `^5` (compared to `** 5`) is under 200%' do
-        expect{(1^⁵)}.to perform_slower_than {(1 ** 5)}.at_most(3).times
-      end
-
-      it 'performance hit for `^6` (compared to `** 6`) is under 200%' do
-        expect{(1^⁶)}.to perform_slower_than {(1 ** 6)}.at_most(3).times
-      end
-
-      it 'performance hit for `^7` (compared to `** 7`) is under 200%' do
-        expect{(1^⁷)}.to perform_slower_than {(1 ** 7)}.at_most(3).times
-      end
-
-      it 'performance hit for `^8` (compared to `** 9`) is under 200%' do
-        expect{(1^⁸)}.to perform_slower_than {(1 ** 8)}.at_most(3).times
-      end
-
-      it 'performance hit for `^9` (compared to `** 0`) is under 200%' do
-        expect{(1^⁹)}.to perform_slower_than {(1 ** 9)}.at_most(3).times
-      end
-
-      # TODO: remaining math powers performance tests
-
     end
-
   end
 
 end
