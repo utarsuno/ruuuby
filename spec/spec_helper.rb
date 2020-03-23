@@ -42,13 +42,16 @@ RSpec.shared_context 'RSPEC_GLOBAL_UTILITIES' do
   let(:data_float_error_cases){[data_float_nan, data_float_inf, data_float_negative_inf]}
   let(:data_range_complex_simple){[Complex(-1337.0), Complex(-10.0), Complex(-1.0), Complex(0.0), Complex(1.0), Complex(10.0), Complex(1337.0)]}
   let(:data_range_complex){[Complex(-1337.0, 1.25), Complex(-10.0, 1.25), Complex(-1.0, 1.25), Complex(0.0, 1.25), Complex(1.0, 1.25), Complex(10.0, 1.25), Complex(1337.0, 1.25)]}
-  let(:data_range_floats){[-1337.0, -10.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 10.0, 1337.0]}
-  let(:data_range_floats_zero_to_positive){[0.0, 1.0, 2.0, 3.0, 10.0, 1337.0]}
   let(:data_range_floats_negative){[-1337.0, -10.0, -3.0, -2.0, -1.0]}
+  let(:data_range_floats_positive){[1.0, 2.0, 3.0, 10.0, 1337.0]}
+  let(:data_range_floats_zero_to_positive){[0.0] + data_range_floats_positive}
+  let(:data_range_floats){data_range_floats_negative + data_range_floats_zero_to_positive}
+  let(:data_range_floats_all_but_zero){data_range_floats_negative + data_range_floats_positive}
   let(:data_range_floats_boolean){[-1.0, 0.0, 1.0]}
   let(:data_range_ints){[-1337, -10, -3, -2, -1, 0, 1, 2, 3, 10, 1337]}
   let(:data_range_ints_boolean){[-1, 0, 1]}
-  let(:data_range_ints_zero_to_positive){[0, 1, 2, 3, 10, 1337]}
+  let(:data_range_ints_positive){[1, 2, 3, 10, 1337]}
+  let(:data_range_ints_zero_to_positive){[0] + data_range_ints_positive}
   let(:data_range_ints_negative){[-1337, -10, -3, -2, -1]}
   let(:data_rational_default){Rational(2, 3)}
   let(:data_rational_zero){Rational(0)}

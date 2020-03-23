@@ -4,8 +4,16 @@
  /  ` /  \ |\ | /__`  |   /\  |\ |  |     \  /  /\  |    |  | |__  /__`
  \__, \__/ | \| .__/  |  /~~\ | \|  |      \/  /~~\ |___ \__/ |___ .__/
 ____________________________________________________________________________________________________________________________________________________________________ */
-// superscripts: 0-10
-#define 𝔠EXPONENTS 10
+#define ERROR_RUNTIME        rb_eRuntimeError
+#define ERROR_ARGUMENT       rb_eArgError
+#define ERROR_DIVIDE_BY_ZERO rb_eZeroDivError
+
+#define CUSTOM_ERROR_CODE 137
+
+#define M_PIE 3.14159265358979323846264338327950288
+
+// superscripts: -9 to +9
+#define 𝔠EXPONENTS 19
 #define 𝔠ULONG sizeof(unsigned long)
 // rb_ary_new: uses a default size of 16
 #define 𝔠ARY_DEFAULT 16L
@@ -30,6 +38,26 @@ static const VALUE ℤ7  = INT2NUM(7);
 static const VALUE ℤ8  = INT2NUM(8);
 static const VALUE ℤ9  = INT2NUM(9);
 
+/*____________________________________________________________________________________________________________________________________________________________________
+  __        __        ___
+ /  `  /\  /  ` |__| |__
+ \__, /~~\ \__, |  | |___
+____________________________________________________________________________________________________________________________________________________________________ */
+
+// | 0x0 |
+static VALUE cached_module_ruuuby;
+static VALUE cached_module_param_err;
+// | --- |
+
+static VALUE cached_class_big_decimal;
+static VALUE cached_rb_intern_ints_bitwise_xor;
+static VALUE cached_rb_intern_raise_to_power;
+static VALUE cached_rb_intern_is_a;
+
+// make these const ints?
+static unsigned long exponential_ids[𝔠EXPONENTS];
+static int           exponential_indexes[𝔠EXPONENTS];
+
 /*____________________________________________________________________________________________________________________
   ___            __   __       __   ___  __             __       ___    __        __
  |__  |  | |\ | /  ` /__` .   |  \ |__  /  ` |     /\  |__)  /\   |  | /  \ |\ | /__`
@@ -43,4 +71,6 @@ static int internal_only_compare_func_4_object_id(const void * l , const void * 
 /*
 //unsigned long id_7 = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_ID_7"))));
 
+// static VALUE cached_module_virtual_types; // = ext_api_add_module_under(module_ruuuby, "VirtualTypes")
+//static VALUE cached_class_wrong_param_type; // = ext_api_add_new_sub_class_under(cached_module_param_err, ERROR_ARGUMENT, "WrongParamType")
 */

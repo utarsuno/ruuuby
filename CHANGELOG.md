@@ -1,5 +1,10 @@
 ---
-### (upcoming patches) v0.0.20-v0.0.22
+#### (upcoming patches) 
+
+#### v0.1.0
+ * `automatic differentiation`
+
+#### v0.0.21-v0.0.24
  * resolve missing coverage from `v0.0.17`
  * resolve missing coverage from `v0.0.18`
 
@@ -7,6 +12,29 @@
  * start automation/abstraction of state & configs for CLI based APIs, tools, and scripts (gem `tty-command` providing core functionality)
  * start automation/abstraction of code-file (content) management
  * continuation of (`f15`) in relation to above 2 points
+
+---
+
+# v0.0.20
+ * (`f98`) add consts `RATIO_DEGREES_TO_RADIAN` and `RATIO_RADIANS_TO_DEGREE` into module `Math`
+ * power-operations for `Integer` and `Float` given support for raising from `-1` to `-9` via superscripts(`⁻¹` to `⁻⁹`)
+
+| added path | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/ruuuby/module/math.rb` | ``Math`` |  | `f17` |
+| `help/math/automatic_differentiation.rb` |  | `Ruuuby's` current main focus to add functionality support to | `f19` |
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Object` | `🛑flt❓` | `f06` |
+| `Float` | `≈≈` | `f17` |
+| `Kernel` | `sin` | `f17` |
+| `Kernel` | `sin°` | `f17` |
+| `Kernel` | `cos` | `f17` |
+| `Kernel` | `cos°` | `f17` |
+| `Kernel` | `∠ᶜ` | `f17` |
+| `Kernel` | `∠°` | `f17` |
+
 
 ---
 
@@ -24,7 +52,7 @@
 | `File`, `Dir` | `∅?` | `f04` |
 | `ApplicationRecord` | `♻️`, `♻️!` | `f10` |
 | `Kernel` | `🎲`, `∛`, `π`, `φ`, `γ` | `f10` |
-| `Kernel` | `⁻¹`, `⁻²`, `⁻³`, `⁻⁴`, `⁻⁵`, `⁻⁶`, `⁻⁷`, `⁻⁸`, `⁻⁹` | `f16` |
+| `Object` | `⁻¹`, `⁻²`, `⁻³`, `⁻⁴`, `⁻⁵`, `⁻⁶`, `⁻⁷`, `⁻⁸`, `⁻⁹` | `f16` |
 | `Dir` | `normalized_paths` | `f12` |
 
 
@@ -33,7 +61,6 @@
 # v0.0.18
  * ⚠️ intermediate patch (full testing coverage of this patch to be concluded within `0.0.19`-`0.0.22`)
  * renaming existing func(`🛑str_or_ary❓`) to(`🛑countable❓`); it now checks for `Set` as well
- * move all duplicated aliases (for playing nice with IDEs, happens from funcs created in `C-extension`) into `conditionals/ide_helper.rb`
  * add `gem 'sqlite3', '~> 1.4.2'`
  * add `gem 'activerecord', '~> 5.2.4.1'`
  * start process of tracking language changes across versions into `ORM`/`db`
@@ -49,7 +76,7 @@
 | `app/models/ruuuby_feature.rb` | ``RuuubyFeature`` |  | `f15` |
 | `app/models/ruuuby_release.rb` | ``RuuubyRelease`` |  | `f15` |
 | `lib/ruuuby/class/method.rb` | ``Method`` |  |  |
-| `conditionals/ide_helper.rb` |  |  |  |
+| `conditionals/ide_helper.rb` |  | received all duplicated aliases (for playing nice with IDEs, happens from funcs created in `C-extension`)  |  |
 | `db/db.rb` |  |  | `f15` |
 | `db/seed.rb` |  |  | `f15` |
 
@@ -236,8 +263,8 @@
 | class           | base reference                          | alias         | feature |
 | --------------- | --------------------------------------- | ------------- | ------- |
 | `Object`        | method: `object_id`                     | `🆔`          | `f10`   |
-| `Object`        | method: `freeze`                        | `❄️`          | `f00`   |
-| `Object`        | method: `frozen?`                       | `❄️ ?`        | `f00`   |
+| `Object`        | method: `freeze`                        | `❄️`          | `f10`   |
+| `Object`        | method: `frozen?`                       | `❄️?`         | `f10`   |
 | `Array`         | method: `∑`                             | `each`        | `f10`   |
 | `Array`         | method: `⨍`                             | `map`         | `f10`   |
 

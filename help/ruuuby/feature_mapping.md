@@ -3,7 +3,7 @@
 
 | 🆔 | feature |
 | --- | --- |
-| f00 | `❄️` to alias `freeze`                                                 |
+| f00 | |
 | f01 | `🙈` to alias `private`                                                |
 | f02 | `🛡️` to alias `protected`                                              |
 | f03 | `𝔠` to alias concept of `cardinality` (offered in both styles of `OOP` & `'functional'`) |
@@ -20,6 +20,7 @@
 | f14 | enable easier catching and throwing of parameter type errors           |
 | f15 | enable quicker tracking and auditing of features across versions       |
 | f16 | add operation: raising to exponents (`superscript`) via operator(`^`) on `Numeric`'s |
+| f17 | enable easier math operations                                          |
 | f96 | automate local `git` configurations                                     |
 | f97 | `JRuby-extensions`                                                     |
 | f98 | `C-extensions`                                                         |
@@ -28,11 +29,6 @@
 ---
 
 #### TODO: Auto-generate these:
-
-## f00
- * `class/obj.rb`
-   * `❄️` --> `freeze`
-   * `❄️?` --> `frozen?`
 
 ## f01
  * `module/module.rb`

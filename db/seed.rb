@@ -9,6 +9,9 @@ f11 = RuuubyFeature.spawn(11, 'add math `number sets` (ex: `ℕ?`, `ℤ?`, `ℚ?
 f12 = RuuubyFeature.spawn(12, 'enable quick `file/directory io` and alias as file(`📂`) and dir(`🗄️`)')
 f15 = RuuubyFeature.spawn(15, 'enable quicker tracking and auditing of features across versions')
 f16 = RuuubyFeature.spawn(16, "add operation: raising to exponents (`superscript`) via operator(`^`) on `Numeric`'s")
+f17 = RuuubyFeature.spawn(17, 'enable easier math operations')
+f18 = RuuubyFeature.spawn(18, 'simplify import/require statements')
+f19 = RuuubyFeature.spawn(19, 'add support for automatic-differentiation')
 
 v0_0_0 = RuuubyRelease.spawn(0, 0, 0)
 v0_0_0.add_comments('initial project creation')
@@ -96,12 +99,43 @@ v0_0_19.changelog.added_method_to_class(f10, :π, ::Kernel)
 v0_0_19.changelog.added_method_to_class(f10, :φ, ::Kernel)
 v0_0_19.changelog.added_method_to_class(f12, :normalized_paths, ::Dir)
 
-#:⁻¹, :⁻², :⁻³, :⁻⁴, :⁻⁵, :⁻⁶, :⁻⁷, :⁻⁸, :⁻⁹
-v0_0_19.changelog.added_method_to_class(f16, :⁻¹, ::Kernel)
-v0_0_19.changelog.added_method_to_class(f16, :⁻², ::Kernel)
+v0_0_19.changelog.added_method_to_class(f16, :⁻¹, ::Object)
+v0_0_19.changelog.added_method_to_class(f16, :⁻², ::Object)
+v0_0_19.changelog.added_method_to_class(f16, :⁻², ::Object)
+v0_0_19.changelog.added_method_to_class(f16, :⁻³, ::Object)
+v0_0_19.changelog.added_method_to_class(f16, :⁻⁴, ::Object)
+v0_0_19.changelog.added_method_to_class(f16, :⁻⁵, ::Object)
+v0_0_19.changelog.added_method_to_class(f16, :⁻⁶, ::Object)
+v0_0_19.changelog.added_method_to_class(f16, :⁻⁷, ::Object)
+v0_0_19.changelog.added_method_to_class(f16, :⁻⁸, ::Object)
+v0_0_19.changelog.added_method_to_class(f16, :⁻⁹, ::Object)
+
+
+v0_0_20 = RuuubyRelease.spawn(0, 0, 20)
+v0_0_20.add_comments(
+    [
+        '(`f98`) add consts `RATIO_DEGREES_TO_RADIAN` and `RATIO_RADIANS_TO_DEGREE` into module `Math`',
+        'power-operations for `Integer` and `Float` given support for raising from (-1)`⁻¹` to (-9)`⁻⁹`',
+
+    ]
+)
+v0_0_20.add_file('lib/ruuuby/module/math.rb', ::Math, '', f17)
+v0_0_20.add_file('help/math/automatic_differentiation.rb', '', '`Ruuuby\'s` current main focus to add functionality support to', f19)
+v0_0_20.changelog.added_method_to_class(f06, :🛑flt❓, ::Object)
+v0_0_20.changelog.added_method_to_class(f17, :≈≈, ::Float)
+v0_0_20.changelog.added_method_to_class(f17, :sin, ::Kernel)
+v0_0_20.changelog.added_method_to_class(f17, :sin°, ::Kernel)
+v0_0_20.changelog.added_method_to_class(f17, :cos, ::Kernel)
+v0_0_20.changelog.added_method_to_class(f17, :cos°, ::Kernel)
+v0_0_20.changelog.added_method_to_class(f17, :∠ᶜ, ::Kernel)
+v0_0_20.changelog.added_method_to_class(f17, :∠°, ::Kernel)
+
 
 =begin
 puts "PRINTING DOCS"
+v0_0_20.docs_changelog.each do |line|
+  puts line
+end
 v0_0_19.docs_changelog.each do |line|
   puts line
 end

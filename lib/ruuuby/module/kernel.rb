@@ -55,8 +55,36 @@ module ::Kernel
   # @return [::Dir]
   def 🗄️; ::Dir ; end
 
-  # ---------------------------------------------------------------------------------------------------------- | *f10* |
+  # -------------------------------------------------------------------------------------------------- | *f10* | *f17* |
   alias_method :🎲, :rand
+
+  # Return the sin of the provided radian.
+  #
+  # @param [Integer|Float|Numeric] radian
+  #
+  # @return [Float|Numeric]
+  def sin(radian) ; ::Math.sin(radian) ; end
+
+  # Return the sin of the provided radian.
+  #
+  # @param [Integer|Float|Numeric] radian
+  #
+  # @return [Float|Numeric]
+  def cos(radian) ; ::Math.cos(radian) ; end
+
+  # Return the sin of the provided angle.
+  #
+  # @param [Integer|Float|Numeric] angle
+  #
+  # @return [Float|Numeric]
+  def sin°(degrees) ; ::Math.sin(∠ᶜ(degrees)) ; end
+
+  # Return the cos of the provided angle.
+  #
+  # @param [Integer|Float|Numeric] angle
+  #
+  # @return [Float|Numeric]
+  def cos°(degrees) ; ::Math.cos(∠ᶜ(degrees)) ; end
 
   # Return the square-root of the provided argument.
   #
@@ -73,17 +101,29 @@ module ::Kernel
   def ∛(n) ; ::Math.cbrt(n) ; end
 
   # @return [Float]
-  def π ; Math::PI ; end
+  def π ; ::Math::PI ; end
 
-  # ((1+Math.sqrt(5))/(2.0))
+  # pre-computed value of `golden-ratio`
   #
   # @return [Float]
   def φ ; 1.618033988749895 ; end
 
+  # pre-computed value of `Euler-Mascheroni constant`
+  #
   # for when 50 digit version will eventually be needed: {0.57721566490153286060651209008240243104215933593992}
   #
   # @return [Float]
   def γ ; 0.5772156649015329 ; end
+
+  # @param [Float] n angle in degree
+  #
+  # @return [Float] angle in radians
+  def ∠ᶜ(n) ; ::Math::RATIO_DEGREES_TO_RADIAN * n ; end
+
+  # @param [Float] n angle in radians
+  #
+  # @return [Float] angle in degrees
+  def ∠°(n) ; ::Math::RATIO_RADIANS_TO_DEGREE * n ; end
 
   # | ------------------------------------------------------------------------------------------------------------------
 

@@ -3,9 +3,6 @@
 # add various functions to existing class +Object+
 class ::Object
 
-  # ---------------------------------------------------------------------------------------------------------- | *f00* |
-  alias_method :❄️, :freeze
-  alias_method :❄️?, :frozen?
   # ---------------------------------------------------------------------------------------------------------- | *f01* |
   alias_method :🙈funcs, :private_methods
   # ---------------------------------------------------------------------------------------------------------- | *f02* |
@@ -29,6 +26,14 @@ class ::Object
   # @raise [WrongParamType]
   def 🛑int❓(arg_name, arg)
     🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, ::Integer, arg) unless arg.int?
+  end
+
+  # @param [Symbol] arg_name
+  # @param [*]      arg
+  #
+  # @raise [WrongParamType]
+  def 🛑flt❓(arg_name, arg)
+    🛑 Ruuuby::ParamErr::throw(self.class, caller_locations.first.label.to_s, arg_name.to_s, ::Float, arg) unless arg.flt?
   end
 
   # @param [Symbol] arg_name
@@ -73,6 +78,8 @@ class ::Object
 
   # ---------------------------------------------------------------------------------------------------------- | *f10* |
   alias_method :🆔, :object_id
+  alias_method :❄️, :freeze
+  alias_method :❄️?, :frozen?
   # ---------------------------------------------------------------------------------------------------------- | *f16* |
 
   # @return [Symbol]

@@ -12,6 +12,7 @@ RSpec.describe 'db/seed.rb' do
   #let(:v0_0_4){RuuubyRelease.all[4]}
   let(:v0_0_18){RuuubyRelease.by_version(0, 0, 18)}
   let(:v0_0_19){RuuubyRelease.by_version(0, 0, 19)}
+  let(:v0_0_20){RuuubyRelease.by_version(0, 0, 20)}
 
   let(:f04){RuuubyFeature.by_id_num(4)}
   let(:f06){RuuubyFeature.by_id_num(6)}
@@ -21,6 +22,9 @@ RSpec.describe 'db/seed.rb' do
   let(:f12){RuuubyFeature.by_id_num(12)}
   let(:f15){RuuubyFeature.by_id_num(15)}
   let(:f16){RuuubyFeature.by_id_num(16)}
+  let(:f17){RuuubyFeature.by_id_num(17)}
+  let(:f18){RuuubyFeature.by_id_num(18)}
+  let(:f19){RuuubyFeature.by_id_num(19)}
 
   context 'has historical release data', :audits do
 
@@ -49,6 +53,15 @@ RSpec.describe 'db/seed.rb' do
       end
       it 'defines f16' do
         audit_feature(f16, 'f16', "add operation: raising to exponents (`superscript`) via operator(`^`) on `Numeric`'s")
+      end
+      it 'defines f17' do
+        audit_feature(f17, 'f17', 'enable easier math operations')
+      end
+      it 'defines f18' do
+        audit_feature(f18, 'f18', 'simplify import/require statements')
+      end
+      it 'defines f19' do
+        audit_feature(f19, 'f19', 'add support for automatic-differentiation')
       end
     end # end: features
 
@@ -95,6 +108,12 @@ RSpec.describe 'db/seed.rb' do
       context 'v0.0.19' do
         it 'as expected' do
           audit_version(v0_0_19, 'v0.0.19')
+        end
+      end
+
+      context 'v0.0.20' do
+        it 'as expected' do
+          audit_version(v0_0_20, 'v0.0.20')
         end
       end
     end

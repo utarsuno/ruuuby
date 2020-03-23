@@ -7,7 +7,6 @@ require 'rspec/core/rake_task'
 require 'rdoc/rdoc'
 
 
-
 # ______________________________________________________________________________________________________________________
 #  __   __         __                 __
 # /  ` /  \  |\/| |__) | |    | |\ | / _`
@@ -26,7 +25,7 @@ end
 # \__X /~~\ .
 # ______________________________________________________________________________________________________________________
 
-# TODO: ORGANIZE IN VERSION(0.0.20)
+# TODO: ORGANIZE BEFORE VERSION(0.1.0)
 
 def add_task_rspec(task_name, additional_options=[])
   #spec_default_opts     = ['--format documentation', '--color', '--require spec_helper']
@@ -40,10 +39,10 @@ def add_task_rspec(task_name, additional_options=[])
   rspec_task.rspec_opts = (spec_default_opts + additional_options).join(' ')
 end
 
-add_task_rspec(:rspec_unit, ['--tag ~@performance --tag ~@audits --tag ~@preserving_ruby_original_functionality'])
-add_task_rspec(:rspec_audit, ['--tag @audits --tag ~@performance --tag ~@preserving_ruby_original_functionality'])
-add_task_rspec(:rspec_performance, ['--tag @performance --tag ~@audits --tag ~@preserving_ruby_original_functionality'])
-add_task_rspec(:rspec_ruby, ['--tag ~@performance --tag ~@audits --tag @preserving_ruby_original_functionality'])
+add_task_rspec(:rspec_unit, ['--tag ~@performance --tag ~@audits'])
+add_task_rspec(:rspec_audit, ['--tag @audits --tag ~@performance'])
+add_task_rspec(:rspec_performance, ['--tag @performance --tag ~@audits'])
+add_task_rspec(:rspec_ruby, ['--tag ~@performance --tag ~@audits'])
 add_task_rspec(:rspec_all, ['--warnings'])
 
 

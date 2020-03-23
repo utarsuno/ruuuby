@@ -18,6 +18,33 @@ class ::Numeric
   # ---------------------------------------------------------------------------------------------------------- | *f16* |
 
   # @type [Symbol]
+  EXPONENTIAL_n9 = :⁻⁹
+
+  # @type [Symbol]
+  EXPONENTIAL_n8 = :⁻⁸
+
+  # @type [Symbol]
+  EXPONENTIAL_n7 = :⁻⁷
+
+  # @type [Symbol]
+  EXPONENTIAL_n6 = :⁻⁶
+
+  # @type [Symbol]
+  EXPONENTIAL_n5 = :⁻⁵
+
+  # @type [Symbol]
+  EXPONENTIAL_n4 = :⁻⁴
+
+  # @type [Symbol]
+  EXPONENTIAL_n3 = :⁻³
+
+  # @type [Symbol]
+  EXPONENTIAL_n2 = :⁻²
+
+  # @type [Symbol]
+  EXPONENTIAL_n1 = :⁻¹
+
+  # @type [Symbol]
   EXPONENTIAL_0 = :⁰
 
   # @type [Symbol]

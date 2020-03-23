@@ -213,48 +213,7 @@ r_func_self_them(m_ary_disjunctive_union,
     power_2 = rb_str_export_locale(power_2);
 
     rb_define_global_const(rb_str_to_cstr(power_2), rb_int_new(2));
-    //rb_define_global_const(StringValueCStr(rb_str_new_literal("²")), rb_int_new(2));
 
     //return rb_ary_new_capa(0L);
 
-
-    //INT2FIX
-    //INT2NUM
-    /*rb_define_const(module_math_pows, "POW_0", rb_int_new(0));
-    rb_define_const(module_math_pows, "POW_1", rb_int_new(1));
-    rb_define_const(module_math_pows, "POW_2", rb_int_new(2));
-    rb_define_const(module_math_pows, "POW_3", rb_int_new(3));
-    rb_define_const(module_math_pows, "POW_4", rb_int_new(4));
-    rb_define_const(module_math_pows, "POW_5", rb_int_new(5));
-    rb_define_const(module_math_pows, "POW_6", rb_int_new(6));
-    rb_define_const(module_math_pows, "POW_7", rb_int_new(7));
-    rb_define_const(module_math_pows, "POW_8", rb_int_new(8));
-
-        rb_define_const(module_math_pows, "POW_0", rb_int_new(0));
-        rb_define_const(module_math_pows, "POW_1", rb_int_new(1));
-        rb_define_const(module_math_pows, "POW_2", rb_int_new(2));
-        rb_define_const(module_math_pows, "POW_3", rb_int_new(3));
-        rb_define_const(module_math_pows, "POW_4", rb_int_new(4));
-        rb_define_const(module_math_pows, "POW_5", rb_int_new(5));
-        rb_define_const(module_math_pows, "POW_6", rb_int_new(6));
-        rb_define_const(module_math_pows, "POW_7", rb_int_new(7));
-        rb_define_const(module_math_pows, "POW_8", rb_int_new(8));
-
-    field_math_pows = rb_ary_new_capa(9L);
-    r_ary_add(field_math_pows, rb_const_get(module_math_pows, rb_intern("POW_0")));
-    r_ary_add(field_math_pows, rb_const_get(module_math_pows, rb_intern("POW_1")));
-    r_ary_add(field_math_pows, rb_const_get(module_math_pows, rb_intern("POW_2")));
-    r_ary_add(field_math_pows, rb_const_get(module_math_pows, rb_intern("POW_3")));
-    r_ary_add(field_math_pows, rb_const_get(module_math_pows, rb_intern("POW_4")));
-    r_ary_add(field_math_pows, rb_const_get(module_math_pows, rb_intern("POW_5")));
-    r_ary_add(field_math_pows, rb_const_get(module_math_pows, rb_intern("POW_6")));
-    r_ary_add(field_math_pows, rb_const_get(module_math_pows, rb_intern("POW_7")));
-    r_ary_add(field_math_pows, rb_const_get(module_math_pows, rb_intern("POW_8")));
-    rb_define_const(module_math_pows, "POW_IDS", field_math_pows);*/
-
-    //🆔
-
-static VALUE field_math_pows;
-static VALUE module_math_pows;
-module_math_pows       = r_module_add_module(Operation, R_NUM)
 ```

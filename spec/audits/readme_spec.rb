@@ -10,11 +10,12 @@ RSpec.describe 'README.md' do
 
     context 'README.md examples' do
       it 'works as described' do
-        expect(√(25) == 5).to eq(true)
 
-        expect(5^²).to eq(5 * 5)
+        expect(√(1787569)).to eq(1337)
+        expect(√(√(-1337.0^⁴))).to eq(1337)
 
-        expect(-5^⁴).to eq(-5 * -5 * -5 * -5)
+        expect(φ).to eq(1 + (φ^⁻¹))
+        expect(φ.≈≈(2 * sin°(54))).to eq(true)
 
         expect('b'.∈? 'abc').to eq(true)
         expect('abc'.∌? 'd').to eq(true)
@@ -31,15 +32,16 @@ RSpec.describe 'README.md' do
 
         expect([-5.ℕ?, 7.0.ℤ?, Complex(Float::NAN).ℝ?, Rational(2, 3).ℚ?]).to eq([false, true, false, true])
 
+        expect(φ).to eq(1 + Rational(1, φ))
+
         expect([1, 2, 3].⊕ [3, 4]).to eq([1, 4, 2])
 
         expect([2, 3, 4].∖ [1, 2, 3]).to eq([4])
       end
 
       it 'alternative version works too' do
-        expect(√(25) == 5.0).to eq(true)
-        expect(√(25.0) == 5).to eq(true)
-        expect(√(25.0) == 5.0).to eq(true)
+
+        expect(φ.≈≈(2 * sin(∠ᶜ(54.0)))).to eq(true)
 
         data = {hello: 'world', ye: 'ee'}
         expect([data.🗝?(:hello), data.🗝?(:non_existing_key)]).to eq([true, false])
@@ -50,6 +52,15 @@ RSpec.describe 'README.md' do
 
         result_b = [2, 3, 4].∖ [1, 2, 3]
         expect(result_b).to eq([4])
+      end
+
+      it 'deprecated examples still work' do
+        expect(√(25) == 5).to eq(true)
+        expect(5^²).to eq(5 * 5)
+        expect(-5^⁴).to eq(-5 * -5 * -5 * -5)
+        expect(√(25) == 5.0).to eq(true)
+        expect(√(25.0) == 5).to eq(true)
+        expect(√(25.0) == 5.0).to eq(true)
       end
 
     end

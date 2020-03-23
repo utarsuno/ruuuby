@@ -83,7 +83,7 @@ RSpec.describe 'int.rb' do
 
     context 'adds support for power operations' do
 
-      context 'without breaking existing XOR operations', :'preserving_ruby_original_functionality' do
+      context 'without breaking existing XOR operations' do
         it 'matches XOR truth table' do
           expect(0 ^ 0).to eq(0)
           expect(0 ^ 1).to eq(1)
@@ -94,6 +94,113 @@ RSpec.describe 'int.rb' do
           expect(1337 ^ 1337).to eq(0)
           expect(1337 ^ 0).to eq(1337)
           expect(0 ^ 1337).to eq(1337)
+        end
+      end
+
+      context 'by supporting operation {^⁻⁹}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_ints_positive.∀{|n| expect(n^⁻⁹).to eq(Rational(1, n ** 9))}
+            data_range_ints_positive.∀{|n| expect(n^⁻⁹).to eq(n ** -9)}
+          end
+          it 'cases: negative' do
+            expect{0^⁻⁹}.to raise_error(ZeroDivisionError)
+          end
+        end
+      end
+
+      context 'by supporting operation {^⁻⁸}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_ints_positive.∀{|n| expect(n^⁻⁸).to eq(Rational(1, n ** 8))}
+            data_range_ints_positive.∀{|n| expect(n^⁻⁸).to eq(n ** -8)}
+          end
+          it 'cases: negative' do
+            expect{0^⁻⁸}.to raise_error(ZeroDivisionError)
+          end
+        end
+      end
+
+      context 'by supporting operation {^⁻⁷}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_ints_positive.∀{|n| expect(n^⁻⁷).to eq(Rational(1, n ** 7))}
+            data_range_ints_positive.∀{|n| expect(n^⁻⁷).to eq(n ** -7)}
+          end
+          it 'cases: negative' do
+            expect{0^⁻⁷}.to raise_error(ZeroDivisionError)
+          end
+        end
+      end
+
+      context 'by supporting operation {^⁻⁶}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_ints_positive.∀{|n| expect(n^⁻⁶).to eq(Rational(1, n ** 6))}
+            data_range_ints_positive.∀{|n| expect(n^⁻⁶).to eq(n ** -6)}
+          end
+          it 'cases: negative' do
+            expect{0^⁻⁶}.to raise_error(ZeroDivisionError)
+          end
+        end
+      end
+
+      context 'by supporting operation {^⁻⁵}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_ints_positive.∀{|n| expect(n^⁻⁵).to eq(Rational(1, n ** 5))}
+            data_range_ints_positive.∀{|n| expect(n^⁻⁵).to eq(n ** -5)}
+          end
+          it 'cases: negative' do
+            expect{0^⁻⁵}.to raise_error(ZeroDivisionError)
+          end
+        end
+      end
+
+      context 'by supporting operation {^⁻⁴}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_ints_positive.∀{|n| expect(n^⁻⁴).to eq(Rational(1, n ** 4))}
+            data_range_ints_positive.∀{|n| expect(n^⁻⁴).to eq(n ** -4)}
+          end
+          it 'cases: negative' do
+            expect{0^⁻⁴}.to raise_error(ZeroDivisionError)
+          end
+        end
+      end
+
+      context 'by supporting operation {^⁻³}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_ints_positive.∀{|n| expect(n^⁻³).to eq(Rational(1, n ** 3))}
+            data_range_ints_positive.∀{|n| expect(n^⁻³).to eq(n ** -3)}
+          end
+          it 'cases: negative' do
+            expect{0^⁻³}.to raise_error(ZeroDivisionError)
+          end
+        end
+      end
+
+      context 'by supporting operation {^⁻²}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_ints_positive.∀{|n| expect(n^⁻²).to eq(Rational(1, n ** 2))}
+            data_range_ints_positive.∀{|n| expect(n^⁻²).to eq(n ** -2)}
+          end
+          it 'cases: negative' do
+            expect{0^⁻²}.to raise_error(ZeroDivisionError)
+          end
+        end
+      end
+
+      context 'by supporting operation {^⁻¹}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_ints_positive.∀{|n| expect(n^⁻¹).to eq(Rational(1, n))}
+          end
+          it 'cases: negative' do
+            expect{0^⁻¹}.to raise_error(ZeroDivisionError)
+          end
         end
       end
 
@@ -231,46 +338,86 @@ RSpec.describe 'int.rb' do
       end
 
       context 'performance hit for following funcs, are under 75%' do
-        it '`^0` (compared to `** 0`)' do
+
+        it '`^⁻¹` (compared to `** -1`)' do
+          expect {3^⁻¹}.to perform_slower_than {3 ** -1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_75)
+        end
+
+        it '`^⁰` (compared to `** 0`)' do
           expect {3^⁰}.to perform_slower_than {3 ** 0}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_75)
         end
 
-        it '`^1` (compared to `** 1`)' do
+        it '`^¹` (compared to `** 1`)' do
           expect {3^¹}.to perform_slower_than {3 ** 1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_75)
         end
       end
 
-      context 'performance hit for following funcs, are under 90%' do
-        it '`^2` (compared to `** 2`)' do
-          expect {3^²}.to perform_slower_than {3 ** 2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
-        end
+      context 'performance hit for following funcs, are under 105%' do
+        context 'positive exponents' do
+          it '`^²` (compared to `** 2`)' do
+            expect {3^²}.to perform_slower_than {3 ** 2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
 
-        it '`^3` (compared to `** 3`)' do
-          expect {3^³}.to perform_slower_than {3 ** 3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
-        end
+          it '`^³` (compared to `** 3`)' do
+            expect {3^³}.to perform_slower_than {3 ** 3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
 
-        it '`^4` (compared to `** 4`)' do
-          expect {3^⁴}.to perform_slower_than {3 ** 4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
-        end
+          it '`^⁴` (compared to `** 4`)' do
+            expect {3^⁴}.to perform_slower_than {3 ** 4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
 
-        it '`^5` (compared to `** 5`)' do
-          expect {3^⁵}.to perform_slower_than {3 ** 5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
-        end
+          it '`^⁵` (compared to `** 5`)' do
+            expect {3^⁵}.to perform_slower_than {3 ** 5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
 
-        it '`^6` (compared to `** 6`)' do
-          expect {3^⁶}.to perform_slower_than {3 ** 6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
-        end
+          it '`^⁶` (compared to `** 6`)' do
+            expect {3^⁶}.to perform_slower_than {3 ** 6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
 
-        it '`^7` (compared to `** 7`)' do
-          expect {3^⁷}.to perform_slower_than {3 ** 7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
-        end
+          it '`^⁷` (compared to `** 7`)' do
+            expect {3^⁷}.to perform_slower_than {3 ** 7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
 
-        it '`^8` (compared to `** 8`)' do
-          expect {3^⁸}.to perform_slower_than {3 ** 8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
-        end
+          it '`^⁸` (compared to `** 8`)' do
+            expect {3^⁸}.to perform_slower_than {3 ** 8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
 
-        it '`^9` (compared to `** 9`)' do
-          expect {3^⁹}.to perform_slower_than {3 ** 9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
+          it '`^⁹` (compared to `** 9`)' do
+            expect {3^⁹}.to perform_slower_than {3 ** 9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
+        end
+        context 'negative exponents' do
+          it '`^⁻²` (compared to `** -2`)' do
+            expect {3^⁻²}.to perform_slower_than {3 ** -2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
+
+          it '`^⁻³` (compared to `** -3`)' do
+            expect {3^⁻³}.to perform_slower_than {3 ** -3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
+
+          it '`^⁻⁴` (compared to `** -4`)' do
+            expect {3^⁻⁴}.to perform_slower_than {3 ** -4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
+
+          it '`^⁻⁵` (compared to `** -5`)' do
+            expect {3^⁻⁵}.to perform_slower_than {3 ** -5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
+
+          it '`^⁻⁶` (compared to `** -6`)' do
+            expect {3^⁻⁶}.to perform_slower_than {3 ** -6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
+
+          it '`^⁻⁷` (compared to `** -7`)' do
+            expect {3^⁻⁷}.to perform_slower_than {3 ** -7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
+
+          it '`^⁻⁸` (compared to `** -8`)' do
+            expect {3^⁻⁸}.to perform_slower_than {3 ** -8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
+
+          it '`^⁻⁹` (compared to `** -9`)' do
+            expect {3^⁻⁹}.to perform_slower_than {3 ** -9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          end
         end
       end
     end

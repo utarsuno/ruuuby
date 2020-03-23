@@ -25,12 +25,21 @@
 | 0x07 | `Euler-Mascheroni constant` | `γ` |the `limiting` difference between the `harmonic series` and the `natural logarithm` | "a mathematical constant recurring in analysis and number theory` |
 | 0x08 | `Ordinary Differential Equation` | | a `differential equation` involving only ordinary derivatives with respect to a single independent variable |
 | 0x09 | `Partial Differential Equation` | | a `differential equation` involving partial derivatives with respect to more than one independent variable |
-| 0x10 | `method of least squares` | | `TODO:` add notes with respect to `α` and `β` for minimizing `S` (`partial derivatives` to be zero) |
+| 0x11 | `Lagarias arithmetic derivative` | `number derivative` | D(p) = 1 for any `prime` p <br/> D(pq) = D(q)p + pD(q) for any p, q ∈ ℕ | "a function defined for `integers`, based on `prime factorization`, by analogy with the `product rule` for the `derivative of a function` that is used in `mathematical analysis` |
+| 0x12 | `Integer factorization` | | (context: `Number Theory`) "the decomposition of a `composite number` into a product of smaller integers" |
+| 0x13 | `prime factorization` | | (context: `Number Theory`), integer factorization when the `factors` are restricted to `prime numbers` |
 
 | # | more | example |
 | --- | --- | --- |
-| 0x0 | "in the natural numbers `ℕ` and all of its supersets(`ℤ`, `ℚ`, `ℝ`, or `ℂ`), the `additive identity` is `0`. Thus for any one of these numbers `n`, `n + 0 = n = 0 + n`" | `5 + 0 = 5 = 0 + 5` |
-| 0x6 | is solution to  `x² - x -1 = 0` which is `φ = (1 + √(5))/2` | |
+| 0x00 | "in the natural numbers `ℕ` and all of its supersets(`ℤ`, `ℚ`, `ℝ`, or `ℂ`), the `additive identity` is `0`. Thus for any one of these numbers `n`, `n + 0 = n = 0 + n`" | `5 + 0 = 5 = 0 + 5` |
+| 0x06 | is solution to  `x² - x -1 = 0` which is `φ = (1 + √(5))/2` | `φ = 1 + 1/φ` |
+
+### Sequences
+
+| # | term | definition |
+| --- | --- | --- |
+| 0x0 | `arithmetic sequence` | "the difference between one term and the next is a constant` |
+| 0x1 | `geometric sequence` | "each term is found by multiplying the previous term by a constant" |
 
 ### Properties of Exponents
 
@@ -39,10 +48,26 @@
  * `(xᵃ)ᵇ = xᵃᵇ`
  * `(x⋅y)ᵃ = xᵃ⋅xᵇ`
  * `(x/y)ᵃ = xᵃ/yᵃ`
+ * TODO:
+   * `(d/dx)x^ᵃ = ax^ᵃ⁻ᵇ, {ᵇ=1}`
+
+### TODO: Unit-Tests
+ * `additive identity` for each `Numeric` sub-class
 
 #### TODOs
 
+* http://functions.wolfram.com/Constants/ComplexInfinity/introductions/Symbols/ShowAll.html
+* https://en.wikipedia.org/wiki/Directed_infinity
+* https://en.wikipedia.org/wiki/Argument_(complex_analysis)
+
 ```
+
+| 0x10 | `method of least squares` | | `TODO:` add notes with respect to `α` and `β` for minimizing `S` (`partial derivatives` to be zero) |
+
+ * Jacobian matrix
+ * Lagarias arithmetic derivative
+
+ε
 ℙ
 𝕀
 ℍ (quaternions)
