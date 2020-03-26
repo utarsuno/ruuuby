@@ -2,8 +2,23 @@
 # -------------------------------------------- ⚠️ --------------------------------------------
 
 class RuuubyFeature < ApplicationRecord
+  include ::ApplicationRecord::ORMAttributeUID
+  include ::ApplicationRecord::ORMAttributeCache
+
   validates :description, presence: true
   validates :id_num, presence: true
+
+  # useful components for building `Regular Expressions`
+  module Syntax
+
+    # @type [String]
+    FEATURE_ID           = 'f\d\d'.❄️
+
+    # @type [String]
+    DOCS_FEATURE_MAPPING = '| f\d\d | (.*)? |'.❄️
+
+    ❄️
+  end
 
   #belongs_to :ruuuby_release, class_name: 'RuuubyRelease'
   #has_many :ruuuby_feature_deltas, class_name: 'RuuubyFeatureDelta'
@@ -34,14 +49,16 @@ class RuuubyFeature < ApplicationRecord
   end
 
   # @return [String]
-  def feature_id
-    return "f0#{self.id_num.to_s}" if self.id_num < 10
-    "f#{self.id_num.to_s}"
+  def docs_feature_mapping
+    "| #{self.uid} | #{self.description} |"
   end
 
-  # @return [String]
-  def docs_feature_mapping
-    "| #{self.feature_id} | #{self.description} |"
+  🙈
+
+  # @return [String] fNN (let N >= 0)
+  def cache_calculate_uid
+    return "f0#{self.id_num.to_s}" if self.id_num < 10
+    "f#{self.id_num.to_s}"
   end
 
 end

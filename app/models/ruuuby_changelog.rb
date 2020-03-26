@@ -23,7 +23,7 @@ class RuuubyChangelog < ApplicationRecord
         class_name = text[4..-2]
         #puts "CLASS_NAME: {#{class_name}}"
         ruuuby_feature = RuuubyFeature.where('id = ?', self.ruuuby_feature_id).first
-        return "| `#{class_name}` | `#{func_name}` | `#{ruuuby_feature.feature_id}` |"
+        return "| `#{class_name}` | `#{func_name}` | `#{ruuuby_feature.uid}` |"
       end
       raise RuntimeError.new("RuuubyChangelog#docs_changelog, description{#{self.description}}")
       #puts "text: {#{text}}"

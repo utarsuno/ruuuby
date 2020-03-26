@@ -238,268 +238,282 @@ RSpec.describe 'float.rb' do
       end
     end
 
-    context 'by supporting operation {^⁻⁹}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats_all_but_zero.∀ do |n|
-            expect((n^⁻⁹).≈≈(Rational(1, n ** 9))).to eq(true)
+    context 'supports feature(`f16`)' do
+      context 'handles bad args' do
+        it 'non-symbols' do
+          expect{0.0^9}.to raise_error(RuntimeError)
+          expect{0.0^(9.9)}.to raise_error(RuntimeError)
+          expect{0.0^(nil)}.to raise_error(RuntimeError)
+        end
+        it 'un-supported dynamic evaluation' do
+          expect{0.0^⁻⁹⁹}.to raise_error(NameError)
+          expect{0.0^⁻}.to raise_error(NameError)
+        end
+      end
+
+      context 'by supporting operation {^⁻⁹}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats_all_but_zero.∀ do |n|
+              expect((n^⁻⁹).≈≈(Rational(1, n ** 9))).to eq(true)
+            end
+          end
+          it 'cases: negative' do
+            expect{0.0^⁻⁹}.to raise_error(ZeroDivisionError)
+            expect{data_float_nan^⁻⁹}.to raise_error(RuntimeError)
+            expect(data_float_inf^⁻⁹).to eq(0)
+            expect(data_float_negative_inf^⁻⁹).to eq(0)
           end
         end
-        it 'cases: negative' do
-          expect{0.0^⁻⁹}.to raise_error(ZeroDivisionError)
-          expect{data_float_nan^⁻⁹}.to raise_error(RuntimeError)
-          expect(data_float_inf^⁻⁹).to eq(0)
-          expect(data_float_negative_inf^⁻⁹).to eq(0)
-        end
       end
-    end
 
-    context 'by supporting operation {^⁻⁸}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats_all_but_zero.∀ do |n|
-            expect((n^⁻⁸).≈≈(Rational(1, n ** 8))).to eq(true)
+      context 'by supporting operation {^⁻⁸}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats_all_but_zero.∀ do |n|
+              expect((n^⁻⁸).≈≈(Rational(1, n ** 8))).to eq(true)
+            end
+          end
+          it 'cases: negative' do
+            expect{0.0^⁻⁸}.to raise_error(ZeroDivisionError)
+            expect{data_float_nan^⁻⁸}.to raise_error(RuntimeError)
+            expect(data_float_inf^⁻⁸).to eq(0)
+            expect(data_float_negative_inf^⁻⁸).to eq(0)
           end
         end
-        it 'cases: negative' do
-          expect{0.0^⁻⁸}.to raise_error(ZeroDivisionError)
-          expect{data_float_nan^⁻⁸}.to raise_error(RuntimeError)
-          expect(data_float_inf^⁻⁸).to eq(0)
-          expect(data_float_negative_inf^⁻⁸).to eq(0)
-        end
       end
-    end
 
-    context 'by supporting operation {^⁻⁷}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats_all_but_zero.∀ do |n|
-            expect((n^⁻⁷).≈≈(Rational(1, n ** 7))).to eq(true)
+      context 'by supporting operation {^⁻⁷}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats_all_but_zero.∀ do |n|
+              expect((n^⁻⁷).≈≈(Rational(1, n ** 7))).to eq(true)
+            end
+          end
+          it 'cases: negative' do
+            expect{0.0^⁻⁷}.to raise_error(ZeroDivisionError)
+            expect{data_float_nan^⁻⁷}.to raise_error(RuntimeError)
+            expect(data_float_inf^⁻⁷).to eq(0)
+            expect(data_float_negative_inf^⁻⁷).to eq(0)
           end
         end
-        it 'cases: negative' do
-          expect{0.0^⁻⁷}.to raise_error(ZeroDivisionError)
-          expect{data_float_nan^⁻⁷}.to raise_error(RuntimeError)
-          expect(data_float_inf^⁻⁷).to eq(0)
-          expect(data_float_negative_inf^⁻⁷).to eq(0)
-        end
       end
-    end
 
-    context 'by supporting operation {^⁻⁶}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats_all_but_zero.∀ do |n|
-            expect((n^⁻⁶).≈≈(Rational(1, n ** 6))).to eq(true)
+      context 'by supporting operation {^⁻⁶}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats_all_but_zero.∀ do |n|
+              expect((n^⁻⁶).≈≈(Rational(1, n ** 6))).to eq(true)
+            end
+          end
+          it 'cases: negative' do
+            expect{0.0^⁻⁶}.to raise_error(ZeroDivisionError)
+            expect{data_float_nan^⁻⁶}.to raise_error(RuntimeError)
+            expect(data_float_inf^⁻⁶).to eq(0)
+            expect(data_float_negative_inf^⁻⁶).to eq(0)
           end
         end
-        it 'cases: negative' do
-          expect{0.0^⁻⁶}.to raise_error(ZeroDivisionError)
-          expect{data_float_nan^⁻⁶}.to raise_error(RuntimeError)
-          expect(data_float_inf^⁻⁶).to eq(0)
-          expect(data_float_negative_inf^⁻⁶).to eq(0)
-        end
       end
-    end
 
-    context 'by supporting operation {^⁻⁵}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats_all_but_zero.∀{|n| expect(n^⁻⁵).to eq(Rational(1, n ** 5))}
-        end
-        it 'cases: negative' do
-          expect{0.0^⁻⁵}.to raise_error(ZeroDivisionError)
-          expect{data_float_nan^⁻⁵}.to raise_error(RuntimeError)
-          expect(data_float_inf^⁻⁵).to eq(0)
-          expect(data_float_negative_inf^⁻⁵).to eq(0)
+      context 'by supporting operation {^⁻⁵}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats_all_but_zero.∀{|n| expect(n^⁻⁵).to eq(Rational(1, n ** 5))}
+          end
+          it 'cases: negative' do
+            expect{0.0^⁻⁵}.to raise_error(ZeroDivisionError)
+            expect{data_float_nan^⁻⁵}.to raise_error(RuntimeError)
+            expect(data_float_inf^⁻⁵).to eq(0)
+            expect(data_float_negative_inf^⁻⁵).to eq(0)
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^⁻⁴}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats_all_but_zero.∀{|n| expect(n^⁻⁴).to eq(Rational(1, n ** 4))}
-        end
-        it 'cases: negative' do
-          expect{0.0^⁻⁴}.to raise_error(ZeroDivisionError)
-          expect{data_float_nan^⁻⁴}.to raise_error(RuntimeError)
-          expect(data_float_inf^⁻⁴).to eq(0)
-          expect(data_float_negative_inf^⁻⁴).to eq(0)
+      context 'by supporting operation {^⁻⁴}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats_all_but_zero.∀{|n| expect(n^⁻⁴).to eq(Rational(1, n ** 4))}
+          end
+          it 'cases: negative' do
+            expect{0.0^⁻⁴}.to raise_error(ZeroDivisionError)
+            expect{data_float_nan^⁻⁴}.to raise_error(RuntimeError)
+            expect(data_float_inf^⁻⁴).to eq(0)
+            expect(data_float_negative_inf^⁻⁴).to eq(0)
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^⁻³}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats_all_but_zero.∀{|n| expect(n^⁻³).to eq(Rational(1, n ** 3))}
-        end
-        it 'cases: negative' do
-          expect{0.0^⁻³}.to raise_error(ZeroDivisionError)
-          expect{data_float_nan^⁻³}.to raise_error(RuntimeError)
-          expect(data_float_inf^⁻³).to eq(0)
-          expect(data_float_negative_inf^⁻³).to eq(0)
+      context 'by supporting operation {^⁻³}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats_all_but_zero.∀{|n| expect(n^⁻³).to eq(Rational(1, n ** 3))}
+          end
+          it 'cases: negative' do
+            expect{0.0^⁻³}.to raise_error(ZeroDivisionError)
+            expect{data_float_nan^⁻³}.to raise_error(RuntimeError)
+            expect(data_float_inf^⁻³).to eq(0)
+            expect(data_float_negative_inf^⁻³).to eq(0)
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^⁻²}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats_all_but_zero.∀{|n| expect(n^⁻²).to eq(Rational(1, n ** 2))}
-        end
-        it 'cases: negative' do
-          expect{0.0^⁻²}.to raise_error(ZeroDivisionError)
-          expect{data_float_nan^⁻²}.to raise_error(RuntimeError)
-          expect(data_float_inf^⁻²).to eq(0)
-          expect(data_float_negative_inf^⁻²).to eq(0)
+      context 'by supporting operation {^⁻²}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats_all_but_zero.∀{|n| expect(n^⁻²).to eq(Rational(1, n ** 2))}
+          end
+          it 'cases: negative' do
+            expect{0.0^⁻²}.to raise_error(ZeroDivisionError)
+            expect{data_float_nan^⁻²}.to raise_error(RuntimeError)
+            expect(data_float_inf^⁻²).to eq(0)
+            expect(data_float_negative_inf^⁻²).to eq(0)
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^⁻¹}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats_all_but_zero.∀{|n| expect(n^⁻¹).to eq(Rational(1, n))}
-        end
-        it 'cases: negative' do
-          expect{0.0^⁻¹}.to raise_error(ZeroDivisionError)
-          expect{data_float_nan^⁻¹}.to raise_error(RuntimeError)
-          expect(data_float_inf^⁻¹).to eq(0)
-          expect(data_float_negative_inf^⁻¹).to eq(0)
+      context 'by supporting operation {^⁻¹}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats_all_but_zero.∀{|n| expect(n^⁻¹).to eq(Rational(1, n))}
+          end
+          it 'cases: negative' do
+            expect{0.0^⁻¹}.to raise_error(ZeroDivisionError)
+            expect{data_float_nan^⁻¹}.to raise_error(RuntimeError)
+            expect(data_float_inf^⁻¹).to eq(0)
+            expect(data_float_negative_inf^⁻¹).to eq(0)
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^⁰}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats_zero_to_positive.∀{|n| expect(n^⁰).to eq(1)}
-          data_range_floats_negative.∀{|n| expect(n^⁰).to eq(-1)}
-        end
-        it 'cases: negative' do
-          data_float_error_cases.∀{|n| expect{n^⁰}.to raise_error(RuntimeError)}
+      context 'by supporting operation {^⁰}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats_zero_to_positive.∀{|n| expect(n^⁰).to eq(1)}
+            data_range_floats_negative.∀{|n| expect(n^⁰).to eq(-1)}
+          end
+          it 'cases: negative' do
+            data_float_error_cases.∀{|n| expect{n^⁰}.to raise_error(RuntimeError)}
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^¹}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats.∀{|n| expect(n^¹).to eq(n)}
-          expect(data_float_inf^¹).to eq(data_float_inf)
-          expect(data_float_negative_inf^¹).to eq(data_float_negative_inf)
-        end
-        it 'cases: negative' do
-          expect{data_float_nan^¹}.to raise_error(RuntimeError)
+      context 'by supporting operation {^¹}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats.∀{|n| expect(n^¹).to eq(n)}
+            expect(data_float_inf^¹).to eq(data_float_inf)
+            expect(data_float_negative_inf^¹).to eq(data_float_negative_inf)
+          end
+          it 'cases: negative' do
+            expect{data_float_nan^¹}.to raise_error(RuntimeError)
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^²}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats.∀{|n| expect(n^²).to eq(n ** 2)}
-          expect(data_float_inf^²).to eq(data_float_inf)
-          expect(data_float_negative_inf^²).to eq(data_float_inf)
-        end
-        it 'cases: negative' do
-          expect{data_float_nan^²}.to raise_error(RuntimeError)
+      context 'by supporting operation {^²}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats.∀{|n| expect(n^²).to eq(n ** 2)}
+            expect(data_float_inf^²).to eq(data_float_inf)
+            expect(data_float_negative_inf^²).to eq(data_float_inf)
+          end
+          it 'cases: negative' do
+            expect{data_float_nan^²}.to raise_error(RuntimeError)
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^³}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats.∀{|n| expect(n^³).to eq(n ** 3)}
-          expect(data_float_inf^³).to eq(data_float_inf)
-          expect(data_float_negative_inf^³).to eq(data_float_negative_inf)
-        end
-        it 'cases: negative' do
-          expect{data_float_nan^³}.to raise_error(RuntimeError)
+      context 'by supporting operation {^³}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats.∀{|n| expect(n^³).to eq(n ** 3)}
+            expect(data_float_inf^³).to eq(data_float_inf)
+            expect(data_float_negative_inf^³).to eq(data_float_negative_inf)
+          end
+          it 'cases: negative' do
+            expect{data_float_nan^³}.to raise_error(RuntimeError)
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^⁴}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats.∀{|n| expect(n^⁴).to eq(n ** 4)}
-          expect(data_float_inf^⁴).to eq(data_float_inf)
-          expect(data_float_negative_inf^⁴).to eq(data_float_inf)
-        end
-        it 'cases: negative' do
-          expect{data_float_nan^⁴}.to raise_error(RuntimeError)
+      context 'by supporting operation {^⁴}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats.∀{|n| expect(n^⁴).to eq(n ** 4)}
+            expect(data_float_inf^⁴).to eq(data_float_inf)
+            expect(data_float_negative_inf^⁴).to eq(data_float_inf)
+          end
+          it 'cases: negative' do
+            expect{data_float_nan^⁴}.to raise_error(RuntimeError)
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^⁵}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats.∀{|n| expect(n^⁵).to eq(n ** 5)}
-          expect(data_float_inf^⁵).to eq(data_float_inf)
-          expect(data_float_negative_inf^⁵).to eq(data_float_negative_inf)
-        end
-        it 'cases: negative' do
-          expect{data_float_nan^⁵}.to raise_error(RuntimeError)
+      context 'by supporting operation {^⁵}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats.∀{|n| expect(n^⁵).to eq(n ** 5)}
+            expect(data_float_inf^⁵).to eq(data_float_inf)
+            expect(data_float_negative_inf^⁵).to eq(data_float_negative_inf)
+          end
+          it 'cases: negative' do
+            expect{data_float_nan^⁵}.to raise_error(RuntimeError)
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^⁶}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats.∀{|n| expect(n^⁶).to eq(n ** 6)}
-          expect(data_float_inf^⁶).to eq(data_float_inf)
-          expect(data_float_negative_inf^⁶).to eq(data_float_inf)
-        end
-        it 'cases: negative' do
-          expect{data_float_nan^⁶}.to raise_error(RuntimeError)
+      context 'by supporting operation {^⁶}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats.∀{|n| expect(n^⁶).to eq(n ** 6)}
+            expect(data_float_inf^⁶).to eq(data_float_inf)
+            expect(data_float_negative_inf^⁶).to eq(data_float_inf)
+          end
+          it 'cases: negative' do
+            expect{data_float_nan^⁶}.to raise_error(RuntimeError)
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^⁷}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats.∀{|n| expect(n^⁷).to eq(n ** 7)}
-          expect(data_float_inf^⁷).to eq(data_float_inf)
-          expect(data_float_negative_inf^⁷).to eq(data_float_negative_inf)
-        end
-        it 'cases: negative' do
-          expect{data_float_nan^⁷}.to raise_error(RuntimeError)
+      context 'by supporting operation {^⁷}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats.∀{|n| expect(n^⁷).to eq(n ** 7)}
+            expect(data_float_inf^⁷).to eq(data_float_inf)
+            expect(data_float_negative_inf^⁷).to eq(data_float_negative_inf)
+          end
+          it 'cases: negative' do
+            expect{data_float_nan^⁷}.to raise_error(RuntimeError)
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^⁸}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats.∀{|n| expect(n^⁸).to eq(n ** 8)}
-          expect(data_float_inf^⁸).to eq(data_float_inf)
-          expect(data_float_negative_inf^⁸).to eq(data_float_inf)
-        end
-        it 'cases: negative' do
-          expect{data_float_nan^⁸}.to raise_error(RuntimeError)
+      context 'by supporting operation {^⁸}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats.∀{|n| expect(n^⁸).to eq(n ** 8)}
+            expect(data_float_inf^⁸).to eq(data_float_inf)
+            expect(data_float_negative_inf^⁸).to eq(data_float_inf)
+          end
+          it 'cases: negative' do
+            expect{data_float_nan^⁸}.to raise_error(RuntimeError)
+          end
         end
       end
-    end
 
-    context 'by supporting operation {^⁹}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats.∀{|n| expect(n^⁹).to eq(n ** 9)}
-          expect(data_float_inf^⁹).to eq(data_float_inf)
-          expect(data_float_negative_inf^⁹).to eq(data_float_negative_inf)
-        end
-        it 'cases: negative' do
-          expect{data_float_nan^⁹}.to raise_error(RuntimeError)
+      context 'by supporting operation {^⁹}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            data_range_floats.∀{|n| expect(n^⁹).to eq(n ** 9)}
+            expect(data_float_inf^⁹).to eq(data_float_inf)
+            expect(data_float_negative_inf^⁹).to eq(data_float_negative_inf)
+          end
+          it 'cases: negative' do
+            expect{data_float_nan^⁹}.to raise_error(RuntimeError)
+          end
         end
       end
-    end
+    end # end-of: supports feature(`f16`)
 
   end
 

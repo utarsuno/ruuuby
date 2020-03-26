@@ -7,7 +7,7 @@ RSpec.describe 'big_decimal.rb' do
 
     context 'by adding needed functions' do
       it 'exists' do
-        RuuubyTestHelper::Nums::CONFIG_BIG_DECIMAL[:ruby].∀{|c| expect(::BigDecimal.∃func?(c)).to eq(true)}
+        RuuubyTestHelper::Nums::CONFIG_BIG_DECIMAL[:ruby].∀{|c| expect(::BigDecimal.∃⨍?(c)).to eq(true)}
       end
     end
 

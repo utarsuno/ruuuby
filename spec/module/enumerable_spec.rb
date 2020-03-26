@@ -12,9 +12,9 @@ RSpec.describe ::Enumerable do
   context 'extends module[Enumerable]' do
 
     it 'by creating needed aliases' do
-      RuuubyTestHelper::CONFIG_ENUMERABLE[:ruby].∀{|func| expect(::Enumerable.∃func?(func)).to eq(true)}
+      expect_added_ruby_methods(::Enumerable, cΔ_Enumerable)
       RuuubyTestHelper::CONFIG_ENUMERABLE[:aliases].∀ do |base_func, aliases|
-        expect(::Enumerable.∃func?(aliases)).to eq(true)
+        expect(::Enumerable.∃⨍?(aliases)).to eq(true)
       end
     end
 

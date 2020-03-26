@@ -4,17 +4,24 @@ RSpec.shared_context 'lets_language_deltas' do
   let(:cΔ_Integer){RuuubyTestHelper::Nums::CONFIG_INTEGER}
   let(:cΔ_Float){RuuubyTestHelper::Nums::CONFIG_FLOAT}
   let(:cΔ_NilClass){RuuubyTestHelper::CONFIG_NIL}
+  let(:cΔ_Enumerable){RuuubyTestHelper::CONFIG_ENUMERABLE}
+  let(:cΔ_Set){RuuubyTestHelper::CONFIG_SET}
+  let(:cΔ_Array){RuuubyTestHelper::CONFIG_ARRAY}
+  let(:cΔ_Hash){RuuubyTestHelper::CONFIG_HASH}
+  let(:cΔ_Numeric){RuuubyTestHelper::CONFIG_NUMERIC}
+  let(:cΔ_Module){RuuubyTestHelper::CONFIG_MODULE}
+  let(:cΔ_Object){RuuubyTestHelper::CONFIG_OBJECT}
 
   def expect_added_ruby_methods(the_class, the_configs)
-    the_configs[:ruby].∀{|c| expect(the_class.∃func?(c)).to eq(true)}
+    the_configs[:ruby].∀{|c| expect(the_class.∃⨍?(c)).to eq(true)}
   end
 
   def expect_added_c_methods(the_class, the_configs)
-    the_configs[:c].∀{|c| expect(the_class.∃func?(c)).to eq(true)}
+    the_configs[:c].∀{|c| expect(the_class.∃⨍?(c)).to eq(true)}
   end
 
   def expect_added_method_aliases(the_class, the_configs)
-    the_configs[:aliases].∀{|base_func, aliased_name| expect(the_class.∃func_alias?(base_func, aliased_name)).to eq(true)}
+    the_configs[:aliases].∀{|base_func, aliased_name| expect(the_class.∃⨍_alias?(base_func, aliased_name)).to eq(true)}
   end
 
   def throw_wrong_param_type(the_class, the_method, arg_name, received_type, expected_types)
@@ -23,6 +30,7 @@ RSpec.shared_context 'lets_language_deltas' do
 
 end
 
+# TODO: ORM SHOULD BE ABLE TO DYNAMICALLY GENERATE THIS DATA ONCE ALL VERSION HISTORY IS TRACKED & ABSTRACTED
 module RuuubyTestHelper
 
   module FeatureMath
@@ -75,7 +83,7 @@ module RuuubyTestHelper
   }
 
   CONFIG_MODULE = {
-      ruby: [:∃func_alias?, :∃func?],
+      ruby: [:∃⨍_alias?, :∃⨍?],
       aliases: {
           private: :🙈,
           protected: :🛡️,

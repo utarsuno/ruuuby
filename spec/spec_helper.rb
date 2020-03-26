@@ -60,6 +60,7 @@ RSpec.shared_context 'RSPEC_GLOBAL_UTILITIES' do
   let(:data_rational_leet){Rational(1337, 1)}
   let(:data_rational_negative_leet){Rational(-1337, 1)}
 
+  let(:data_ary_empty){[]}
   let(:data_ary_leet){[1, 3, 3, 7]}
   let(:data_set_leet){Set[1, 3, 3, 7]}
 
@@ -73,14 +74,57 @@ module AuditHelpers
     expect(the_feature.class).to eq(RuuubyFeature)
     expect(the_feature.id.class).to eq(Integer)
     expect(the_feature.description).to eq(description)
-    expect(the_feature.feature_id).to eq(feature_str)
+    expect(the_feature.uid).to eq(feature_str)
+    expect(the_feature.uid.match?(re_ruuuby_feature_id)).to eq(true)
     expect(the_feature.docs_feature_mapping).to eq("| #{feature_str} | #{description} |")
+    expect(the_feature.docs_feature_mapping.match?(re_ruuuby_feature_docs_feature_mapping)).to eq(true)
   end
 
   def audit_version(the_version, version_str)
     expect(the_version.class).to eq(RuuubyRelease)
-    expect(the_version.version).to eq(version_str)
+    expect(the_version.uid).to eq(version_str)
+    expect(version_str.match?(re_ruuuby_release_version)).to eq(true)
     expect(the_version.id.class).to eq(Integer)
+  end
+
+end
+
+RSpec.shared_context 'RSpecContextAudit' do
+  let(:re_ruuuby_feature){RuuubyFeature::Syntax}
+  let(:re_ruuuby_feature_id){RuuubyFeature.cache_fetch(re_ruuuby_feature::FEATURE_ID)}
+  let(:re_ruuuby_feature_docs_feature_mapping){RuuubyFeature.cache_fetch(re_ruuuby_feature::DOCS_FEATURE_MAPPING)}
+  let(:re_ruuuby_release){RuuubyRelease::Syntax}
+  let(:re_ruuuby_release_version){RuuubyRelease.cache_fetch(re_ruuuby_release::VERSION)}
+end
+
+module HelpersGeneral
+
+  def expect_∃class(the_class, owner=nil, expected_result=true)
+    if owner != nil
+      expect(∃class?(the_class.to_sym, owner)).to eq(expected_result)
+      expect(∃class?(the_class.to_s, owner)).to eq(expected_result)
+    else
+      expect(∃class?(the_class.to_sym)).to eq(expected_result)
+      expect(∃class?(the_class.to_s)).to eq(expected_result)
+    end
+  end
+
+  def do_not_expect_∃class(the_class, owner=nil)
+    expect_∃class(the_class, owner, false)
+  end
+
+  def expect_∃module(the_module, owner=nil, expected_result=true)
+    if owner != nil
+      expect(∃module?(the_module.to_sym, owner)).to eq(expected_result)
+      expect(∃module?(the_module.to_s, owner)).to eq(expected_result)
+    else
+      expect(∃module?(the_module.to_sym)).to eq(expected_result)
+      expect(∃module?(the_module.to_s)).to eq(expected_result)
+    end
+  end
+
+  def do_not_expect_∃module(the_module, owner=nil)
+    expect_∃module(the_module, owner, false)
   end
 
 end
@@ -100,6 +144,9 @@ RSpec.configure do |config|
   config.include_context 'lets_language_deltas'
   config.include_context 'RSPEC_GLOBAL_UTILITIES'
 
+  config.include HelpersGeneral
+
+  config.include_context 'RSpecContextAudit', :audits
   config.include AuditHelpers, :audits
 
   config.include PerformanceTestHelper, :performance

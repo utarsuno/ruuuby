@@ -5,13 +5,14 @@ RSpec.describe 'ary' do
   context 'extends class[Object]' do
 
     it 'by creating needed aliases' do
-      RuuubyTestHelper::CONFIG_ARRAY[:ruby].∀{|func| expect(::Array.∃func?(func)).to eq(true)}
-      RuuubyTestHelper::CONFIG_ARRAY[:c].∀{|func| expect(::Array.∃func?(func)).to eq(true)}
+      expect_added_ruby_methods(::Array, cΔ_Array)
+
+      RuuubyTestHelper::CONFIG_ARRAY[:c].∀{|func| expect(::Array.∃⨍?(func)).to eq(true)}
       RuuubyTestHelper::CONFIG_ARRAY[:aliases].∀ do |base_func, aliases|
         if aliases.ary?
-          aliases.∀{|a| expect(::Array.∃func?(a)).to eq(true)}
+          aliases.∀{|a| expect(::Array.∃⨍?(a)).to eq(true)}
         else
-          expect(::Array.∃func?(aliases)).to eq(true)
+          expect(::Array.∃⨍?(aliases)).to eq(true)
         end
       end
     end

@@ -21,6 +21,9 @@
 | f15 | enable quicker tracking and auditing of features across versions       |
 | f16 | add operation: raising to exponents (`superscript`) via operator(`^`) on `Numeric`'s |
 | f17 | enable easier math operations                                          |
+| f18 | simplify import/require statements                                     |
+| f19 | add support for automatic-differentiation                              |
+| f20 | enable easier (general) syntax & pattern parsing                       |
 | f96 | automate local `git` configurations                                     |
 | f97 | `JRuby-extensions`                                                     |
 | f98 | `C-extensions`                                                         |

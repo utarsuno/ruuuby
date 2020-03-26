@@ -4,7 +4,7 @@
 #### v0.1.0
  * `automatic differentiation`
 
-#### v0.0.21-v0.0.24
+#### v0.0.22-v0.0.25
  * resolve missing coverage from `v0.0.17`
  * resolve missing coverage from `v0.0.18`
 
@@ -12,6 +12,32 @@
  * start automation/abstraction of state & configs for CLI based APIs, tools, and scripts (gem `tty-command` providing core functionality)
  * start automation/abstraction of code-file (content) management
  * continuation of (`f15`) in relation to above 2 points
+
+---
+
+# v0.0.21
+ * add const `NUCLEOTIDES` to `Ruuuby::VirtualTypes`
+ * add missing scenarios & tests for `spec/helpers/static_test_data.rb`
+ * rename m(`Module`)'s func(`∃func?`) to(`∃⨍?`)
+ * rename m(`Module`)'s func(`∃func_alias?`) to(`∃⨍_alias?`)
+ * (`f98`) add `global-constant`(`$PRM_MANY`), param-type checking functions expanded for multi-param check use-cases
+ * add modules `ORMAttributeUID` and `ORMAttributeCache` to `ApplicationRecord` as well as module(`Syntax`), which each `ORM Class` will also define
+
+| added path | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `bin/console_db` |  | same as `/bin/console` but also pre-loads `db/seed.rb` |  |
+| `lib/ruuuby/class/re.rb` | ``Regexp`` |  | `f20` |
+| `app/models/db_schema.rb` | ``RuuubyDBSchema`` | `temporary design` | `f15` |
+| `lib/ruuuby/module/attribute_extendable/static_attribute_syntax_cache` | `::Ruuuby::StaticAttributeSyntaxCache` | | |
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Object` | `class?`, `module?`, `nucleotide?` | `f06` |
+| `Module` | `∋?`, `∌?`, `∈?`, `∉?` | `f09` |
+| `Object` | `🛑ℤ❓` | `f14` |
+
+ * ⚠️ :
+   * full `TDD` still omitted for `ORM` while certain design areas are more susceptible to needed refactors
 
 ---
 

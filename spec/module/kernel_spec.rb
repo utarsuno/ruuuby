@@ -125,44 +125,49 @@ RSpec.describe ::Kernel do
       context 'adds function: ∃module?' do
         context 'handling needed scenarios' do
           context 'for cases: global &' do
-            it 'true-positive' do
-              expect(∃module?(:Ruuuby)).to eq(true)
-              expect(∃module?('Ruuuby')).to eq(true)
+            it 'positive' do
+              expect_∃module(:Ruuuby)
+              expect_∃module(:QAModule)
             end
-            it 'false-positive' do
-              expect(∃module?(:BigDecimal)).to eq(false)
-              expect(∃module?('BigDecimal')).to eq(false)
-            end
-            it 'true-negative' do
-              expect(∃module?(:RuuubyFake)).to eq(false)
-              expect(∃module?('RuuubyFake')).to eq(false)
+            it 'negative' do
+              do_not_expect_∃module(:BigDecimal)
+              do_not_expect_∃module(:RuuubyFake)
             end
           end
           context 'for cases: sub_module &' do
-            it 'true-positive' do
-              expect(∃module?(:ParamErr, Ruuuby)).to eq(true)
-              expect(∃module?('ParamErr', Ruuuby)).to eq(true)
+            it 'positive' do
+              expect_∃module(:ParamErr, Ruuuby)
+              expect_∃module(:InnerModuleDepth1, QAClass)
+              expect_∃module(:InnerModuleDepth1, QAModule)
             end
-            it 'false-positive' do
-              expect(∃module?(:VERSIONFAKE, Ruuuby)).to eq(false)
-              expect(∃module?('VERSIONFAKE', Ruuuby)).to eq(false)
+            it 'negative' do
+              do_not_expect_∃module(:VERSIONFAKE, Ruuuby)
+              do_not_expect_∃module(:InnerModuleDepth1, Ruuuby)
+              do_not_expect_∃module(:InnerModuleDepth1, Ruuuby)
+              do_not_expect_∃module(:InnerModuleDepthFake, QAClass)
+              do_not_expect_∃module(:InnerModuleDepthFake, QAModule)
+              do_not_expect_∃module(:InnerClassDepth1, QAClass)
+              do_not_expect_∃module(:InnerClassDepth1, QAModule)
             end
-            it 'true-negative' do
-              expect(∃module?(:RuuubyFake)).to eq(false)
-              expect(∃module?('RuuubyFake')).to eq(false)
+          end
+          context 'for cases: sub_sub_module &' do
+            it 'positive' do
+              expect_∃module(:InnerModuleDepth2, QAClass::InnerModuleDepth1)
+              expect_∃module(:InnerModuleDepth2, QAModule::InnerModuleDepth1)
+            end
+            it 'negative' do
+              do_not_expect_∃module(:InnerModuleDepthFake, QAClass::InnerModuleDepth1)
+              do_not_expect_∃module(:InnerModuleDepthFake, QAModule::InnerModuleDepth1)
             end
           end
           context 'for cases: bad args' do
             it 'first arg: module_name' do
-              expect{∃module?(nil)
-              }.to raise_error(ArgumentError, Ruuuby::ParamErr::generate_error_text(Kernel, :∃module?, :module_name, NilClass, [Symbol, String]))
-
-              expect{∃module?(5)
-              }.to raise_error(ArgumentError, Ruuuby::ParamErr::generate_error_text(Kernel, :∃module?, :module_name, Integer, [Symbol, String]))
+              expect{∃module?(nil) }.to raise_error(ArgumentError)
+              expect{∃module?(5) }.to raise_error(ArgumentError)
             end
             it 'second arg: module_owner' do
-              expect{∃module?(:VERSION, 5)
-              }.to raise_error(ArgumentError, Ruuuby::ParamErr::generate_error_text(Kernel, :∃module?, :module_owner, Integer, Module))
+              expect{∃module?(:VERSION, nil) }.to raise_error(ArgumentError)
+              expect{∃module?(:VERSION, 5) }.to raise_error(ArgumentError)
             end
           end
         end
@@ -171,47 +176,38 @@ RSpec.describe ::Kernel do
       context 'adds function: ∃class?' do
         context 'handling needed scenarios' do
           context 'for cases: global &' do
-            it 'true-positive' do
-              expect(∃class?(:TestDataGlobalClass)).to eq(true)
-              expect(∃class?('TestDataGlobalClass')).to eq(true)
+            it 'positive' do
+              expect_∃class(:QAClass)
             end
-            it 'false-positive' do
-              expect(∃class?(:TestDataGlobalClassFake)).to eq(false)
-              expect(∃class?('TestDataGlobalClassFake')).to eq(false)
-            end
-            it 'true-negative' do
-              expect(∃class?(:Ruuuby)).to eq(false)
-              expect(∃class?('Ruuuby')).to eq(false)
+            it 'negative' do
+              do_not_expect_∃class(:QAClassFake)
+              do_not_expect_∃class(:Ruuuby)
             end
           end
           context 'for cases: sub_classes &' do
-            it 'true-positive' do
-              expect(∃class?(:TestDataInternalClass, TestDataGlobalClass)).to eq(true)
-              expect(∃class?('TestDataInternalClass', TestDataGlobalClass)).to eq(true)
+            it 'positive' do
+              expect_∃class(:InnerClassDepth1, QAClass)
+              expect_∃class(:InnerClassDepth1, QAModule)
+
+              expect_∃class(:WrongParamType, ::Ruuuby::ParamErr)
             end
-            it 'false-positive' do
-              expect(∃class?(:TestDataInternalClassFake, TestDataGlobalClass)).to eq(false)
-              expect(∃class?('TestDataInternalClassFake', TestDataGlobalClass)).to eq(false)
-            end
-            it 'true-negative' do
-              expect(∃class?(:TestDataInternalModule, TestDataGlobalClass)).to eq(false)
-              expect(∃class?('TestDataInternalModule', TestDataGlobalClass)).to eq(false)
+            it 'negative' do
+              do_not_expect_∃class(:InnerClassDepth1, Ruuuby)
+              do_not_expect_∃class(:InnerClassDepth1, Ruuuby)
+              do_not_expect_∃class(:InnerModuleDepth1, QAClass)
+              do_not_expect_∃class(:InnerModuleDepth1, QAModule)
+              do_not_expect_∃class(:InnerClassDepthFake, QAClass)
+              do_not_expect_∃class(:InnerClassDepthFake, QAModule)
             end
           end
           context 'for cases: bad args' do
             it 'first arg: module_name' do
-              expect{∃class?(nil)
-              }.to raise_error(Ruuuby::ParamErr::WrongParamType, Ruuuby::ParamErr::generate_error_text(Kernel, :∃class?, :class_name, NilClass, [Symbol, String]))
-
-              expect{∃class?(5)
-              }.to raise_error(Ruuuby::ParamErr::WrongParamType, Ruuuby::ParamErr::generate_error_text(Kernel, :∃class?, :class_name, Integer, [Symbol, String]))
+              expect{∃class?(nil)}.to raise_error(ArgumentError)
+              expect{∃class?(5)}.to raise_error(ArgumentError)
             end
             it 'second arg: module_owner' do
-              expect{∃class?(:VERSION, 5)
-              }.to raise_error(Ruuuby::ParamErr::WrongParamType, Ruuuby::ParamErr::generate_error_text(Kernel, :∃class?, :class_owner, Integer, Module))
-
-              expect{∃class?(:VERSION, {})
-              }.to raise_error(Ruuuby::ParamErr::WrongParamType, Ruuuby::ParamErr::generate_error_text(Kernel, :∃class?, :class_owner, Hash, Module))
+              expect{∃class?(:VERSION, 5)}.to raise_error(ArgumentError)
+              expect{∃class?(:VERSION, {})}.to raise_error(ArgumentError)
             end
           end
         end
@@ -305,8 +301,8 @@ RSpec.describe ::Kernel do
     context 'func[∃class?] runs fast enough' do
       context 'for cases: global &' do
         it 'true-positive' do
-          expect{∃class?(:TestDataGlobalClass)}.to perform_very_quickly
-          expect{∃class?('TestDataGlobalClass')}.to perform_very_quickly
+          expect{∃class?(:QAClass)}.to perform_very_quickly
+          expect{∃class?('QAClass')}.to perform_very_quickly
         end
         it 'true-negative' do
           expect{∃class?(:Ruuuby)}.to perform_very_quickly
@@ -315,12 +311,12 @@ RSpec.describe ::Kernel do
       end
       context 'for cases: sub_class &' do
         it 'true-positive' do
-          expect{∃class?(:TestDataInternalClass, TestDataGlobalClass)}.to perform_very_quickly
-          expect{∃class?('TestDataInternalClass', TestDataGlobalClass)}.to perform_very_quickly
+          expect{∃class?(:InnerClassDepth1, QAClass)}.to perform_very_quickly
+          expect{∃class?('InnerClassDepth1', QAClass)}.to perform_very_quickly
         end
         it 'true-negative' do
-          expect{∃class?(:TestDataInternalModule, TestDataGlobalClass)}.to perform_very_quickly
-          expect{∃class?('TestDataInternalModule', TestDataGlobalClass)}.to perform_very_quickly
+          expect{∃class?(:InnerModuleDepth1, QAClass)}.to perform_very_quickly
+          expect{∃class?('InnerModuleDepth1', QAClass)}.to perform_very_quickly
         end
       end
     end

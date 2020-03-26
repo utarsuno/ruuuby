@@ -12,7 +12,7 @@ RSpec.describe 'complex.rb' do
 
     context 'by adding needed functions' do
       it 'exists' do
-        RuuubyTestHelper::Nums::CONFIG_COMPLEX[:ruby].∀{|c| expect(::Complex.∃func?(c)).to eq(true)}
+        RuuubyTestHelper::Nums::CONFIG_COMPLEX[:ruby].∀{|c| expect(::Complex.∃⨍?(c)).to eq(true)}
       end
     end
 

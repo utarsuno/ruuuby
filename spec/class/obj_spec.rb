@@ -26,78 +26,152 @@ RSpec.describe 'Object' do
   context 'extends class[Object]' do
 
     it 'has needed aliases' do
-      RuuubyTestHelper::CONFIG_OBJECT[:ruby].∀{|c| expect(::Object.∃func?(c)).to eq(true)}
-      RuuubyTestHelper::CONFIG_OBJECT[:c].∀{|config| expect(::Object.∃func?(config)).to eq(true)}
-      RuuubyTestHelper::CONFIG_OBJECT[:aliases].∀{|base_func, func_alias| expect(::Object.∃func?(func_alias)).to eq(true)}
+      expect_added_ruby_methods(::Object, cΔ_Object)
+      RuuubyTestHelper::CONFIG_OBJECT[:c].∀{|config| expect(::Object.∃⨍?(config)).to eq(true)}
+      RuuubyTestHelper::CONFIG_OBJECT[:aliases].∀{|base_func, func_alias| expect(::Object.∃⨍?(func_alias)).to eq(true)}
     end
 
     context 'by adding function{🛑bool❓}' do
       context 'handles needed input scenarios' do
-        it 'cases[positive]' do
-          expect{🛑bool❓('0', false)}.to_not raise_error
-          expect{🛑🅱️❓('0', true)}.to_not raise_error
+        context 'cases: positive' do
+          it 'w/ single param' do
+            expect{🛑bool❓('0', false)}.to_not raise_error
+            expect{🛑🅱️❓('0', true)}.to_not raise_error
+          end
+          it 'w/ many params' do
+            expect{🛑bool❓($PRM_MANY, [true, false])}.to_not raise_error
+            expect{🛑🅱️❓($PRM_MANY, [true, false])}.to_not raise_error
+          end
         end
-        it 'cases[negative]' do
-          expect{🛑bool❓('0', nil)}.to raise_error(ArgumentError)
-          expect{🛑🅱️❓('0', nil)}.to raise_error(ArgumentError)
+        context 'cases: negative' do
+          it 'w/ single param' do
+            expect{🛑bool❓('0', nil)}.to raise_error(ArgumentError)
+            expect{🛑🅱️❓('0', nil)}.to raise_error(ArgumentError)
+          end
+          it 'w/ many params' do
+            expect{🛑bool❓($PRM_MANY, [true, nil])}.to raise_error(ArgumentError)
+            expect{🛑🅱️❓($PRM_MANY, [nil, false])}.to raise_error(ArgumentError)
+            expect{🛑🅱️❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+          end
         end
       end
     end
 
     context 'by adding function{🛑int❓}' do
       context 'handles needed input scenarios' do
-        it 'cases[positive]' do
-          expect{🛑int❓('0', 5)}.to_not raise_error
+        context 'cases: positive' do
+          it 'w/ single param' do
+            expect{🛑int❓('0', 5)}.to_not raise_error
+          end
+          it 'w/ many params' do
+            expect{🛑int❓($PRM_MANY, [-1, 0, 1])}.to_not raise_error
+          end
         end
-        it 'cases[negative]' do
-          expect{🛑int❓('0', '5')}.to raise_error(ArgumentError)
+        context 'cases: negative' do
+          it 'w/ single param' do
+            expect{🛑int❓('0', '5')}.to raise_error(ArgumentError)
+          end
+          it 'w/ many params' do
+            expect{🛑int❓($PRM_MANY, [-1, 0, nil])}.to raise_error(ArgumentError)
+            expect{🛑int❓($PRM_MANY, [-1, '1', 1])}.to raise_error(ArgumentError)
+            expect{🛑int❓($PRM_MANY, [[], 0, 1])}.to raise_error(ArgumentError)
+            expect{🛑int❓($PRM_MANY, [nil, nil, nil])}.to raise_error(ArgumentError)
+          end
         end
       end
     end
 
     context 'by adding function{🛑ary❓}' do
       context 'handles needed input scenarios' do
-        it 'cases[positive]' do
-          expect{🛑ary❓('0', [])}.to_not raise_error
+        context 'cases: positive' do
+          it 'w/ single param' do
+            expect{🛑ary❓('0', [])}.to_not raise_error
+          end
+          it 'w/ many params' do
+            expect{🛑ary❓($PRM_MANY, [[], [1], [[nil]]])}.to_not raise_error
+          end
         end
-        it 'cases[negative]' do
-          expect{🛑ary❓('0', nil)}.to raise_error(ArgumentError)
+        context 'cases: negative' do
+          it 'w/ single param' do
+            expect{🛑ary❓('0', nil)}.to raise_error(ArgumentError)
+          end
+          it 'w/ many params' do
+            expect{🛑ary❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
+            expect{🛑ary❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+            expect{🛑ary❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+          end
         end
       end
     end
 
     context 'by adding function{🛑str❓}' do
       context 'handles needed input scenarios' do
-        it 'cases[positive]' do
-          expect{🛑str❓('0', '5')}.to_not raise_error
+        context 'cases: positive' do
+          it 'w/ single param' do
+            expect{🛑str❓('0', '5')}.to_not raise_error
+          end
+          it 'w/ many params' do
+            expect{🛑str❓($PRM_MANY, %w(a bb))}.to_not raise_error
+          end
         end
-        it 'cases[negative]' do
-          expect{🛑str❓('0', 5)}.to raise_error(ArgumentError)
+        context 'cases: negative' do
+          it 'w/ single param' do
+            expect{🛑str❓('0', nil)}.to raise_error(ArgumentError)
+          end
+          it 'w/ many params' do
+            expect{🛑str❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
+            expect{🛑str❓($PRM_MANY, [5, '5'])}.to raise_error(ArgumentError)
+            expect{🛑str❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+          end
         end
       end
     end
 
     context 'by adding function{🛑stry❓}' do
       context 'handles needed input scenarios' do
-        it 'cases[positive]' do
-          expect{🛑stry❓('0', '5')}.to_not raise_error
-          expect{🛑stry❓('0', :a_symbol)}.to_not raise_error
+        context 'cases: positive' do
+          it 'w/ single param' do
+            expect{🛑stry❓('0', '5')}.to_not raise_error
+            expect{🛑stry❓('0', :symbol_fake)}.to_not raise_error
+          end
+          it 'w/ many params' do
+            expect{🛑stry❓($PRM_MANY, ['symbol_fake', :symbol_fake])}.to_not raise_error
+          end
         end
-        it 'cases[negative]' do
-          expect{🛑stry❓('0', 5)}.to raise_error(ArgumentError)
+        context 'cases: negative' do
+          it 'w/ single param' do
+            expect{🛑stry❓('0', nil)}.to raise_error(ArgumentError)
+          end
+          it 'w/ many params' do
+            expect{🛑stry❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
+            expect{🛑stry❓($PRM_MANY, [5, :symbol_fake])}.to raise_error(ArgumentError)
+            expect{🛑stry❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+          end
         end
       end
     end
 
     context 'by adding function{🛑countable❓}' do
       context 'handles needed input scenarios' do
-        it 'cases[positive]' do
-          expect{🛑countable❓('0', '5')}.to_not raise_error
-          expect{🛑countable❓('0', data_ary_leet)}.to_not raise_error
-          expect{🛑countable❓('0', data_set_leet)}.to_not raise_error
+        context 'cases: positive' do
+          it 'w/ single param' do
+            expect{🛑countable❓('0', '5')}.to_not raise_error
+            expect{🛑countable❓('0', data_ary_leet)}.to_not raise_error
+            expect{🛑countable❓('0', data_set_leet)}.to_not raise_error
+          end
+          it 'w/ many params' do
+            expect{🛑countable❓($PRM_MANY, ['symbol_fake', data_ary_leet, data_set_leet])}.to_not raise_error
+          end
         end
-        it 'cases[negative]' do
-          expect{🛑countable❓('0', 5)}.to raise_error(ArgumentError)
+        context 'cases: negative' do
+          it 'w/ single param' do
+            expect{🛑countable❓('0', nil)}.to raise_error(ArgumentError)
+          end
+          it 'w/ many params' do
+            expect{🛑countable❓($PRM_MANY, ['1337', nil])}.to raise_error(ArgumentError)
+            expect{🛑countable❓($PRM_MANY, [1337, data_ary_leet])}.to raise_error(ArgumentError)
+            expect{🛑countable❓($PRM_MANY, [data_set_leet, nil])}.to raise_error(ArgumentError)
+          end
         end
       end
     end
@@ -112,6 +186,57 @@ RSpec.describe 'Object' do
         end
         it 'cases[negative]' do
           [TrueClass, FalseClass, Class, Object, NilClass, '', 'true', 'false', -1, 1, 0, {}].∀{|n|expect(n.ary?).to eq(false)}
+        end
+      end
+    end
+
+    context 'by adding function{module?}' do
+      context 'handles needed scenarios' do
+        it 'cases: positive' do
+          expect(Ruuuby.module?).to eq(true)
+          expect(Kernel.module?).to eq(true)
+        end
+        it 'cases: negative' do
+          expect(Class.module?).to eq(false)
+          expect(String.module?).to eq(false)
+          expect(NilClass.module?).to eq(false)
+          expect(nil.module?).to eq(false)
+          expect(:Symbol.module?).to eq(false)
+          expect('String'.module?).to eq(false)
+        end
+      end
+    end
+
+    context 'by adding function{class?}' do
+      context 'handles needed scenarios' do
+        it 'cases: positive' do
+          expect(Class.class?).to eq(true)
+          expect(String.class?).to eq(true)
+          expect(NilClass.class?).to eq(true)
+        end
+        it 'cases: negative' do
+          expect(Ruuuby.class?).to eq(false)
+          expect(nil.class?).to eq(false)
+          expect(:Symbol.class?).to eq(false)
+          expect('String'.class?).to eq(false)
+        end
+      end
+    end
+
+    context 'by adding function{nucleotide?}' do
+      context 'handles needed scenarios' do
+        it 'cases: positive' do
+          expect(Ruuuby.nucleotide?).to eq(true)
+          expect(Kernel.nucleotide?).to eq(true)
+          expect(Class.nucleotide?).to eq(true)
+          expect(String.nucleotide?).to eq(true)
+          expect(NilClass.nucleotide?).to eq(true)
+        end
+        it 'cases: negative' do
+          expect(nil.nucleotide?).to eq(false)
+          expect(:Symbol.nucleotide?).to eq(false)
+          expect('String'.nucleotide?).to eq(false)
+          expect([].nucleotide?).to eq(false)
         end
       end
     end
@@ -259,6 +384,33 @@ RSpec.describe 'Object' do
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
 
+    context 'func{class?}: performs very quickly' do
+      it 'for cases: true' do
+        expect{NilClass.class?}.to perform_very_quickly
+      end
+      it 'for cases: false' do
+        expect{nil.class?}.to perform_very_quickly
+      end
+    end
+
+    context 'func{module?}: performs very quickly' do
+      it 'for cases: true' do
+        expect{Ruuuby.module?}.to perform_very_quickly
+      end
+      it 'for cases: false' do
+        expect{String.module?}.to perform_very_quickly
+      end
+    end
+
+    context 'func{nucleotide?}: performs very quickly' do
+      it 'for cases: true' do
+        expect{Ruuuby.nucleotide?}.to perform_very_quickly
+      end
+      it 'for cases: false' do
+        expect{nil.nucleotide?}.to perform_very_quickly
+      end
+    end
+
     context 'func{sym?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{:sym.sym?}.to perform_extremely_quickly
@@ -373,9 +525,19 @@ RSpec.describe 'Object' do
       #end
     end
 
+    context 'func{🛑ℤ❓}: performs very quickly' do
+      it 'cases[positive]' do
+        expect{🛑ℤ❓('0', 5)}.to perform_extremely_quickly
+      end
+      # TODO: missing coverage
+      #it 'cases[negative]' do
+      #  expect{🛑ℤ❓('0', '5')}.to perform_extremely_quickly
+      #end
+    end
+
     context 'func{🛑ary❓}: performs extremely quickly' do
       it 'cases[positive]' do
-        expect{🛑ary❓('0', [])}.to perform_extremely_quickly
+        expect{🛑ary❓('0', data_ary_empty)}.to perform_extremely_quickly
       end
       # TODO: missing coverage
       #it 'cases[negative]' do

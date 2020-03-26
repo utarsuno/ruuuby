@@ -2,13 +2,28 @@
 
 RSpec.describe Ruuuby do
 
+  context 'C-extensions' do
+    context 'defines needed globals' do
+      context 'readonly_global{$PRM_MANY}' do
+        it 'exists' do
+          expect($PRM_MANY).to eq(:'*args')
+        end
+        it "can't be changed" do
+          expect{$PRM_MANY = 5}.to raise_error(NameError)
+        end
+      end
+    end
+  end
+
   context 'defines a version number' do
+
     it 'has a version number' do
       expect(Ruuuby::VERSION.str?).to eq(true)
       expect(Ruuuby::VERSION.❄️?).to eq(true)
     end
+
     it 'with valid syntax' do
-      expect(%r(\A\d.\d.\d(\d?)\z).match?(Ruuuby::VERSION)).to eq(true)
+      expect(("v#{Ruuuby::VERSION}").match?(RuuubyRelease::Syntax::VERSION)).to eq(true)
     end
 
     # evaluating use-case necessity

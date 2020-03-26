@@ -2,9 +2,24 @@
 # -------------------------------------------- ⚠️ --------------------------------------------
 
 class RuuubyRelease < ApplicationRecord
+  include ::ApplicationRecord::ORMAttributeUID
+  include ::ApplicationRecord::ORMAttributeCache
+
   validates :vmajor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :vminor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :vtiny, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+  # useful components for building `Regular Expressions`
+  module Syntax
+
+    # @type [String]
+    VERSION  = 'v\d.\d.\d(\d?)'.❄️
+
+    # @type [String]
+    FIND_UID = 'vmajor = ? AND vminor = ? AND vtiny = ?'.❄️
+
+    ❄️
+  end
 
   #validates_uniqueness_of :vtiny, scope: [:vmajor, :vminor]
 
@@ -103,11 +118,11 @@ class RuuubyRelease < ApplicationRecord
     feats = ''
     if features.ary?
       features.each do |f|
-        feats += "`#{f.feature_id}`, "
+        feats += "`#{f.uid}`, "
       end
       feats = feats[0..feats.length-3]
     else
-      feats = features.to_s.empty? ? '' : "`#{features.feature_id}`"
+      feats = features.to_s.empty? ? '' : "`#{features.uid}`"
     end
     self.files_added << [path, reference, notes, feats]
   end
@@ -119,7 +134,7 @@ class RuuubyRelease < ApplicationRecord
   # @return [Array]
   def docs_changelog
     changes = []
-    changes << "\n---\n\n# #{self.version}\n"
+    changes << "\n---\n\n# #{self.uid}\n"
     unless @comments.empty?
       @comments.each do |c|
         changes << " * #{c}"
@@ -139,21 +154,26 @@ class RuuubyRelease < ApplicationRecord
     changes
   end
 
-  # @param [Integer] major
-  # @param [Integer] minor
-  # @param [Integer] tiny
-  #
-  # @return [RuuubyRelease]
-  def self.by_version(major, minor, tiny)
-    RuuubyRelease.where('vmajor = ? AND vminor = ? AND vtiny = ?', major, minor, tiny).first
+  def self.generate_query_uid(*args)
+    🛑 ArgumentError.new("| c{Class}-> m{generate_query_uid} received no args |") if args.∅?
+    if args.length == 1 && args[0].str? && args[0].match?(RuuubyRelease.cache_fetch(RuuubyRelease::Syntax::VERSION))
+      all_args = args[0][1..args[0].length-1]
+      all_args = all_args.split('.')
+      🛑ℤ❓(:'*all_args', all_args)
+      return RuuubyRelease.generate_query_uid(*all_args)
+    end
+    🛑ℤ❓(:'*args', args)
+    #RuuubyRelease.where('vmajor = ? AND vminor = ? AND vtiny = ?', args[0], args[1], args[2])
+    RuuubyRelease.where(::RuuubyRelease::Syntax::FIND_UID, args[0], args[1], args[2])
   end
 
+  🙈
+
   # @return [String] vM.m.T (M: Major, m: minor, T: tiny)
-  def version
+  def cache_calculate_uid
     "v#{self.vmajor.to_s}.#{self.vminor.to_s}.#{self.vtiny.to_s}"
   end
 
-  alias_method :uid, :version
 end
 
 # -------------------------------------------- ⚠️ --------------------------------------------

@@ -4,6 +4,7 @@
 class ::Integer
 
   # ---------------------------------------------------------------------------------------------------------- | *f11* |
+
   # @return [Boolean] false, there are no Ruby/Math integers(+ℤ+) representing infinity
   alias_method :∞?, :infinite?
   alias_method :♾️?, :infinite?

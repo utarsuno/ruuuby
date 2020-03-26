@@ -35,7 +35,7 @@ module ::RuuubyConfigs
     GEM_RUUUBY          = :ruuuby
 
     module EnvironmentInternal
-      ALL_GEMS = {ruuuby: '0.0.19'}
+      ALL_GEMS = {ruuuby: '0.0.21'}
     end
 
     module EnvironmentRuntime

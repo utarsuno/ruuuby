@@ -10,7 +10,7 @@ RSpec.describe 'rational.rb' do
 
     context 'by adding needed functions' do
       it 'exists' do
-        RuuubyTestHelper::Nums::CONFIG_RATIONAL[:ruby].∀{|c| expect(::Rational.∃func?(c)).to eq(true)}
+        RuuubyTestHelper::Nums::CONFIG_RATIONAL[:ruby].∀{|c| expect(::Rational.∃⨍?(c)).to eq(true)}
       end
     end
 

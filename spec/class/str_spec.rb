@@ -7,9 +7,9 @@ RSpec.describe 'str' do
   context 'extends class[String]' do
 
     it 'by creating needed aliases' do
-      RuuubyTestHelper::CONFIG_STRING[:ruby].∀{ |func| expect(::String.∃func?(func)).to eq(true) }
-      RuuubyTestHelper::CONFIG_STRING[:c].∀{ |func| expect(::String.∃func?(func)).to eq(true) }
-      RuuubyTestHelper::CONFIG_STRING[:aliases].∀{ |aliased_func, base_func| expect(::String.∃func?(aliased_func)).to eq(true) }
+      RuuubyTestHelper::CONFIG_STRING[:ruby].∀{ |func| expect(::String.∃⨍?(func)).to eq(true) }
+      RuuubyTestHelper::CONFIG_STRING[:c].∀{ |func| expect(::String.∃⨍?(func)).to eq(true) }
+      RuuubyTestHelper::CONFIG_STRING[:aliases].∀{ |aliased_func, base_func| expect(::String.∃⨍?(aliased_func)).to eq(true) }
     end
 
     context 'func{ensure_ending!}' do

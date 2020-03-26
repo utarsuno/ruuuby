@@ -5,7 +5,7 @@ RSpec.describe 'numeric.rb' do
 
     context 'by adding functions {∞?, 𝕌?}' do
       it 'exists' do
-        RuuubyTestHelper::CONFIG_NUMERIC[:ruby].∀{|func_name| expect(::Numeric.∃func?(func_name)).to eq(true)}
+        expect_added_ruby_methods(::Numeric, cΔ_Numeric)
       end
     end
 

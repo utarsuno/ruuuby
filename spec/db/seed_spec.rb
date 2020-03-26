@@ -10,9 +10,12 @@ RSpec.describe 'db/seed.rb' do
   let(:v0_0_2){RuuubyRelease.all[2]}
   let(:v0_0_3){RuuubyRelease.all[3]}
   #let(:v0_0_4){RuuubyRelease.all[4]}
-  let(:v0_0_18){RuuubyRelease.by_version(0, 0, 18)}
-  let(:v0_0_19){RuuubyRelease.by_version(0, 0, 19)}
-  let(:v0_0_20){RuuubyRelease.by_version(0, 0, 20)}
+  #let(:v0_0_18){RuuubyRelease.by_version(0, 0, 18)}
+  #let(:v0_0_18){RuuubyRelease.find_by_uid(0, 0, 18)}
+  let(:v0_0_18){RuuubyRelease.find_by_uid('v0.0.18')}
+  let(:v0_0_19){RuuubyRelease.find_by_uid(0, 0, 19)}
+  let(:v0_0_20){RuuubyRelease.find_by_uid(0, 0, 20)}
+  let(:v0_0_21){RuuubyRelease.find_by_uid(0, 0, 21)}
 
   let(:f04){RuuubyFeature.by_id_num(4)}
   let(:f06){RuuubyFeature.by_id_num(6)}
@@ -25,6 +28,18 @@ RSpec.describe 'db/seed.rb' do
   let(:f17){RuuubyFeature.by_id_num(17)}
   let(:f18){RuuubyFeature.by_id_num(18)}
   let(:f19){RuuubyFeature.by_id_num(19)}
+
+  context 'static functions work' do
+    context 'func{find_by_uid} handles needed scenarios' do
+      it 'positive' do
+        expect(RuuubyRelease.find_by_uid('v0.0.18')).to eq(RuuubyRelease.find_by_uid(0, 0, 18))
+      end
+      it 'negative' do
+        # version DNE
+        expect{RuuubyRelease.find_by_uid(0, 0, 200)}.to raise_error(RuntimeError)
+      end
+    end
+  end
 
   context 'has historical release data', :audits do
 
@@ -114,6 +129,12 @@ RSpec.describe 'db/seed.rb' do
       context 'v0.0.20' do
         it 'as expected' do
           audit_version(v0_0_20, 'v0.0.20')
+        end
+      end
+
+      context 'v0.0.21' do
+        it 'as expected' do
+          audit_version(v0_0_21, 'v0.0.21')
         end
       end
     end

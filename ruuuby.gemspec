@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem_schema       = gem_configs::NamingSchema
 
   gem.name                  = gem_schema::RUUUBY_NAME_GEM
-  gem.version               = '0.0.20'
+  gem.version               = '0.0.21'
   gem.summary               = %q{wip: increase quality of Ruby coding life}
   gem.description           = %q{wip: flavored modifications & extensions for increased quality of Ruby coding life}
   gem.authors               = ["Uladzislau Tarsunou"]
@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.license               = 'MIT'
   gem.required_ruby_version = Gem::Requirement.new(">= #{gem_configs::Requirements::RUBY_VERSION}")
   gem.platform              = Gem::Platform.local
-  gem.post_install_message  = "Gem{ruuuby, v0.0.20} has just been installed, cheers!"
+  gem.post_install_message  = "Gem{ruuuby, v0.0.21} has just been installed, cheers!"
   _ = gem.metadata
   _['homepage_uri']          = gem.homepage
   _['source_code_uri']       = "#{gem.homepage}.git"

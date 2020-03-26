@@ -3,37 +3,37 @@
 module ::Kernel
   alias_method :🛑, :raise
 
-  # Check if a module exists on global scope, if provided a second argument, the first will be owner/scope.
+  # check if a module exists on 'global-scope' or under the provided argument(`owner`)
   #
   # @param [Symbol|String] module_name
-  # @param [Module]        module_owner (default⟶Kernel)
-  #
-  # @raise [WrongParamType]
-  #
-  # @return [Boolean] true, if the module exists on global scope or in the provided owner
-  def ∃module?(module_name, module_owner=(::Kernel))
-    🛑 Ruuuby::ParamErr::throw(::Kernel, :∃module?, :module_name, ::Ruuuby::VirtualTypes::STRY, module_name) unless module_name.stry?
-    🛑 Ruuuby::ParamErr::throw(::Kernel, :∃module?, :module_owner, ::Module, module_owner) unless (module_owner == ::Kernel || module_owner.instance_of?(::Module))
-    module_owner.∃const?(module_name) && module_owner.const_get(module_name).instance_of?(::Module)
-  end
-
-  # Check if a class exists on 'global-scope', if provided a second argument, the first will be owner/scope.
-  #
-  # @param [Symbol|String] class_name
-  # @param [Class]         class_owner (default⟶Kernel)
+  # @param [Module]        owner (default⟶Kernel)
   #
   # @raise [WrongParamType]
   #
   # @return [Boolean] true, if the module exists on 'global-scope' or in the provided owner
-  def ∃class?(class_name, class_owner=(::Kernel))
+  def ∃module?(module_name, owner=(::Kernel))
+    🛑 Ruuuby::ParamErr::throw(::Kernel, :∃module?, :module_name, ::Ruuuby::VirtualTypes::STRY, module_name) unless module_name.stry?
+    🛑 Ruuuby::ParamErr::throw(::Kernel, :∃module?, :owner, ::Ruuuby::VirtualTypes::NUCLEOTIDES, owner) unless owner.nucleotide?
+    owner.∃const?(module_name) && owner.const_get(module_name).instance_of?(::Module)
+  end
+
+  # check if a class exists on 'global-scope' or under the provided argument(owner)
+  #
+  # @param [Symbol|String] class_name
+  # @param [Class]         owner (default⟶Kernel)
+  #
+  # @raise [WrongParamType]
+  #
+  # @return [Boolean] true, if the module exists on 'global-scope' or in the provided owner
+  def ∃class?(class_name, owner=(::Kernel))
     🛑 ::Ruuuby::ParamErr::throw(::Kernel, :∃class?, :class_name, ::Ruuuby::VirtualTypes::STRY, class_name) unless class_name.stry?
-    🛑 ::Ruuuby::ParamErr::throw(::Kernel, :∃class?, :class_owner, ::Module, class_owner) unless (class_owner == ::Kernel || class_owner.is_a?(::Module))
-    class_owner.∃const?(class_name) && class_owner.const_get(class_name).instance_of?(::Class)
+    🛑 ::Ruuuby::ParamErr::throw(::Kernel, :∃class?, :owner, ::Ruuuby::VirtualTypes::NUCLEOTIDES, owner) unless owner.nucleotide?
+    owner.∃const?(class_name) && owner.const_get(class_name).instance_of?(::Class)
   end
 
   # ---------------------------------------------------------------------------------------------------------- | *f03* |
 
-  # Return the *cardinality(𝔠)* (the length/size) of the provided argument.
+  # return the *cardinality(𝔠)* (the length/size) of the provided argument(`n`)
   #
   # @param [*] n
   #
@@ -58,28 +58,28 @@ module ::Kernel
   # -------------------------------------------------------------------------------------------------- | *f10* | *f17* |
   alias_method :🎲, :rand
 
-  # Return the sin of the provided radian.
+  # return the sin of the provided angle in radians
   #
   # @param [Integer|Float|Numeric] radian
   #
   # @return [Float|Numeric]
   def sin(radian) ; ::Math.sin(radian) ; end
 
-  # Return the sin of the provided radian.
-  #
-  # @param [Integer|Float|Numeric] radian
-  #
-  # @return [Float|Numeric]
-  def cos(radian) ; ::Math.cos(radian) ; end
-
-  # Return the sin of the provided angle.
+  # return the sin of the provided angle in degrees
   #
   # @param [Integer|Float|Numeric] angle
   #
   # @return [Float|Numeric]
   def sin°(degrees) ; ::Math.sin(∠ᶜ(degrees)) ; end
 
-  # Return the cos of the provided angle.
+  # return the cos of the provided angle in radians
+  #
+  # @param [Integer|Float|Numeric] radian
+  #
+  # @return [Float|Numeric]
+  def cos(radian) ; ::Math.cos(radian) ; end
+
+  # return the cos of the provided angle in degrees
   #
   # @param [Integer|Float|Numeric] angle
   #

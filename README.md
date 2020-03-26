@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.20'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.21'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -91,8 +91,8 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Kernel`  | `𝔠`               | ❌                         | - gets the `cardinality` (length/size) of arg <br/> - (`f03`) |
 | `Kernel`  | `∃module?`        | ❌                         | true-example: `∃module?(:Ruuuby)` |
 | `Kernel`  | `∃class?`         | ❌                         | true-example: `∃class?(:Array)` |
-| `Module`  | `∃func_alias?`    | ❌                         | - {`static`} <br/> - true-example: `::Array.∃func_alias?(:equal_contents?, :≈≈)` |
-| `Module`  | `∃func?`          | ❌                         | - {`static`} <br/> - true-example: `::Array.∃func?(:≈≈)` |
+| `Module`  | `∃⨍_alias?`       | ❌                         | - {`static`} <br/> - true-example: `::Array.∃⨍_alias?(:equal_contents?, :≈≈)` |
+| `Module`  | `∃⨍?`             | ❌                         | - {`static`} <br/> - true-example: `::Array.∃⨍?(:≈≈)` |
 | `Math`    | {`static`} `relative_Δ` | ❌                   | (`f17`) |
 
 #### Class Changes:
@@ -103,12 +103,14 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Dir`                  | `normalized_paths`                 | ❌ | (`f12`) |
 | `File`, `Dir`          | `∅?`                               | ❌ | (`f04`) |
 | `Object`               | `ary?`, [`bool?`, `🅱️?`], `hsh?`, `int?`, `flt?`, `num?`, `str?`, `stry?`, `sym?` | ✅ | (`f06`) |
+| `Object`               | `class?`, `module?`, `nucleotide?` | ❌ | (`f06`) |
 | `Array`                | `remove_empty!`                    | ✅ | (`f07`) |
 | `Set`                  | `remove_empty!`                    | ❌ | (`f07`) |
 | `Array`                | [`frequency_counts`, `📊`]         | ✅ | - get the frequency count of values in array <br/> - (`f09`) |
 | `Array`                | [`equal_contents?`, `≈≈`]          | ✅ | - regardless of order and presence of multiple types <br/> - (`f09`) |
 | `Array`                | [`disjunctive_union`, `⊕`]         | ✅ | (`f09`) |
 | `Array`                | `∖`                                | ❌ | - aliased-by(`uniq_to_me`) <br/> - (`f09`) |
+| `Module`               | `∋?`, `∌?`, `∈?`, `∉?`             | ❌ | (`f09`) |
 | `Enumerable`, `String` | `∌?`                               | ❌ | (`f09`) |
 | `Array`, `String`      | `>>`                               | ✅ | - prepend provided arg, reverse operation of `<<` <br/> - (`f05`) |
 | `String`               | `∈?`, `∉?`                         | ❌ | (`f09`) |
@@ -123,7 +125,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Complex`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
 | `Rational`             | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`       | ❌ | (`f11`) |
 | `Float`                | `≈≈`                               | ❌ | (`f17`) |
-| `Object`               | [`🛑bool❓`, `🛑🅱️❓`], `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑countable❓` | ❌ | (`f04`) |
+| `Object`               | [`🛑bool❓`, `🛑🅱️❓`], `🛑int❓`, `🛑ℤ❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑countable❓` | ❌ | (`f04`) |
 
 #### Created Aliases:
 | for                    | base method(s) reference(s)               | alias(es)               | notes     |
@@ -151,10 +153,10 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 366      | # of tests (non-performance & non-audit based)                  |
-| QA        | performance   | 175      | # of tests                                                      |
-| CI        | audits        | 37       | # of tests                                                      |
-| structure | features      | ~21      | # of distinct features (that are categorized & tracked) `wip`   |
+| QA        | unit          | 415      | # of tests (non-performance & non-audit based)                  |
+| QA        | performance   | 189      | # of tests (non-unit & non-audit based)                         |
+| CI        | audits        | 38       | # of tests (non-performance & non-unit based)                   |
+| structure | features      | ~23      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |
 | coverage  | documentation | ???      | `wip` |

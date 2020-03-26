@@ -3,7 +3,7 @@ module ::Ruuuby
 
   # ---------------------------------------------------------------------------------------------------------- | *f06* |
 
-  # +VirtualTypes+ represents conceptual types that can be enforced
+  # conceptual types that can be enforced
   module VirtualTypes
 
     # @type [Array]
@@ -17,6 +17,9 @@ module ::Ruuuby
 
     # @type [Array]
     const_set(:COUNTABLES, [::String, ::Set, ::Array])
+
+    # @type [Array]
+    const_set(:NUCLEOTIDES, [::Module, ::Class])
 
     ❄️
   end

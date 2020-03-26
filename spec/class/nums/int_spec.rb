@@ -81,7 +81,7 @@ RSpec.describe 'int.rb' do
       end
     end
 
-    context 'adds support for power operations' do
+    context 'feature(`f16`): adds support for power operations' do
 
       context 'without breaking existing XOR operations' do
         it 'matches XOR truth table' do
@@ -94,6 +94,16 @@ RSpec.describe 'int.rb' do
           expect(1337 ^ 1337).to eq(0)
           expect(1337 ^ 0).to eq(1337)
           expect(0 ^ 1337).to eq(1337)
+        end
+      end
+
+      context 'handles bad args' do
+        it 'non-symbols & non-numeric' do
+          expect{0^(nil)}.to raise_error(TypeError)
+        end
+        it 'un-supported dynamic evaluation' do
+          expect{0^⁻⁹⁹}.to raise_error(NameError)
+          expect{0^⁻}.to raise_error(NameError)
         end
       end
 

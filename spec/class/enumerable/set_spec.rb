@@ -5,9 +5,9 @@ RSpec.describe 'set' do
   context 'extends class[Set]' do
 
     it 'by creating needed aliases' do
-      RuuubyTestHelper::CONFIG_SET[:ruby].∀{|func| expect(::Set.∃func?(func)).to eq(true)}
+      expect_added_ruby_methods(::Set, cΔ_Set)
       RuuubyTestHelper::CONFIG_SET[:aliases].∀ do |base_func, aliases|
-        expect(::Set.∃func?(aliases)).to eq(true)
+        expect(::Set.∃⨍?(aliases)).to eq(true)
       end
     end
 

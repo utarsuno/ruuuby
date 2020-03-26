@@ -336,7 +336,8 @@ r_func_self_them(m_flt_patch_for_exponentials,
         } else {
             rb_raise(ERROR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
         }
-    } else { re_me_func_1args(cached_rb_intern_raise_to_power, them) }
+    } else { rb_raise(ERROR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them); }
+    //} else { re_me_func_1args(cached_rb_intern_raise_to_power, them) }
 )
 
 /*___________________________________________________________________________________________________________________
@@ -478,6 +479,8 @@ r_func_self_them(m_ary_equal_contents,
     } else {raise_err_array_bad_arg_type(equal_contents?, them)}
 )
 
+static VALUE global_sym_many_args;
+
 /*____________________________________________________________________________________________________________________
  __      __   __   __   ___     ___      ___  __
 /  `    /  ` /  \ |  \ |__     |__  |\ |  |  |__) \ /
@@ -499,6 +502,7 @@ c_func(Init_ruby_class_mods,
     cached_rb_intern_is_a             = rb_intern("is_a?");
     cached_rb_intern_ints_bitwise_xor = rb_intern("bitwise_xor");
     cached_rb_intern_raise_to_power   = rb_intern("**");
+    // | --------------------------------- |
 
     /*___________________________________________________________________________________________________________
      __                  __
@@ -519,6 +523,9 @@ c_func(Init_ruby_class_mods,
     cached_module_param_err = ext_api_add_module_under(cached_module_ruuuby, "ParamErr")
     ext_api_add_module_under(cached_module_ruuuby, "VirtualTypes")
     ext_api_add_new_sub_class_under(cached_module_param_err, ERROR_ARGUMENT, "WrongParamType")
+
+    global_sym_many_args = ID2SYM(rb_intern("*args"));
+    rb_define_readonly_variable("$PRM_MANY", &global_sym_many_args);
 
     ext_api_add_const_under(rb_mMath, "RATIO_DEGREES_TO_RADIAN", DBL2NUM(M_PIE / 180.0));
     ext_api_add_const_under(rb_mMath, "RATIO_RADIANS_TO_DEGREE", DBL2NUM(180.0 / M_PIE));
@@ -557,13 +564,14 @@ c_func(Init_ruby_class_mods,
 
     // ruuuuby
     ensure_loaded_class(class)
-    ensure_loaded_io(file)
-    ensure_loaded_io(dir)
+    //ensure_loaded_io(file)
+    //ensure_loaded_io(dir)
     ensure_loaded_module(enumerable)
     ensure_loaded_module(module)
     ensure_loaded_module(kernel)
     ensure_loaded_module(math)
     ensure_loaded_class(obj)
+    ensure_loaded_class(re)
     ensure_loaded_ruuuby(types)
     ensure_loaded_class(method)
     ensure_loaded_ruuuby(arg_err)
@@ -579,6 +587,11 @@ c_func(Init_ruby_class_mods,
     ensure_loaded_enumerable(set)
     ensure_loaded_class(str)
     ensure_loaded_ruuuby(version)
+
+    ensure_loaded_module(attribute_extendable/static_attribute_syntax_cache)
+
+    ensure_loaded_io(file)
+    ensure_loaded_io(dir)
     // | --------------------------------- |
 
     // ____________________________________ ⚠️ ____________________________________
