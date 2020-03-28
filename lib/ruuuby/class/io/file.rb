@@ -1,13 +1,26 @@
+# coding: UTF-8
 
 # add various aliases/functions to existing class +File+, (aliased globally by +Kernel+'s function +📁+ and +📂+)
 class ::File
-  extend(::Ruuuby::StaticAttributeSyntaxCache)
+  extend ::Ruuuby::Attribute::Extendable::SyntaxCache
 
   # useful components for building `Regular Expressions`
   module Syntax
 
     # commonly used file meta-data
     module SourceCode
+
+      # commonly used *README* file meta-data
+      module README
+
+        # @type [String]
+        CONTENT = '.md'.❄️
+
+        # @type [Array]
+        ALL = [CONTENT].❄️
+
+        ❄️
+      end
 
       # commonly used *C* file meta-data
       module C
@@ -43,6 +56,7 @@ class ::File
 
   # @return [Boolean] true, if this file does not exist or has zero contents
   def ∅? ; ::File.empty?(self.path) ; end
+
   # ---------------------------------------------------------------------------------------------------------- | *f12* |
 
   # @param [String] path (to a non-directory file)

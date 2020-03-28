@@ -2,24 +2,28 @@
 # -------------------------------------------- ⚠️ --------------------------------------------
 
 class RuuubyRelease < ApplicationRecord
+
+  # useful components for syntax parsing
+  module Syntax
+
+    # @type [String]
+    UID     = '(v?)\d.\d.\d(\d?)'.❄️
+
+    # @type [String]
+    SQL_UID = 'vmajor = ? AND vminor = ? AND vtiny = ?'.❄️
+
+    ❄️
+  end
+
+end
+
+class RuuubyRelease < ApplicationRecord
   include ::ApplicationRecord::ORMAttributeUID
   include ::ApplicationRecord::ORMAttributeCache
 
   validates :vmajor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :vminor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :vtiny, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-
-  # useful components for building `Regular Expressions`
-  module Syntax
-
-    # @type [String]
-    VERSION  = 'v\d.\d.\d(\d?)'.❄️
-
-    # @type [String]
-    FIND_UID = 'vmajor = ? AND vminor = ? AND vtiny = ?'.❄️
-
-    ❄️
-  end
 
   #validates_uniqueness_of :vtiny, scope: [:vmajor, :vminor]
 
@@ -154,20 +158,29 @@ class RuuubyRelease < ApplicationRecord
     changes
   end
 
+
   def self.generate_query_uid(*args)
     🛑 ArgumentError.new("| c{Class}-> m{generate_query_uid} received no args |") if args.∅?
-    if args.length == 1 && args[0].str? && args[0].match?(RuuubyRelease.cache_fetch(RuuubyRelease::Syntax::VERSION))
-      all_args = args[0][1..args[0].length-1]
-      all_args = all_args.split('.')
-      🛑ℤ❓(:'*all_args', all_args)
-      return RuuubyRelease.generate_query_uid(*all_args)
+    if args.length == 1 && args[0].str? && args[0].match?(RuuubyRelease.cache_fetch(RuuubyRelease::Syntax::UID))
+      return RuuubyRelease.generate_query_uid(*(self.parse_version_str(args[0])))
     end
-    🛑ℤ❓(:'*args', args)
-    #RuuubyRelease.where('vmajor = ? AND vminor = ? AND vtiny = ?', args[0], args[1], args[2])
-    RuuubyRelease.where(::RuuubyRelease::Syntax::FIND_UID, args[0], args[1], args[2])
+    🛑ℤ❓($PRM_MANY, args)
+    RuuubyRelease.where(::RuuubyRelease::Syntax::SQL_UID, args[0], args[1], args[2])
   end
 
   🙈
+
+  # @param [String|Symbol] version_str the version UID of the RuuubyRelease with or without the starting 'v'
+  #
+  # @raise [WrongParamType]
+  #
+  # @return [Array] new array with 3 elements for each corresponding version identifying component
+  def self.parse_version_str(version_str)
+    🛑str❓(:version_str, version_str)
+    version_str = version_str[1..version_str.length-1] if version_str.start_with?('v')
+    args        = version_str.split('.')
+    args.η̂!(:ℕ)
+  end
 
   # @return [String] vM.m.T (M: Major, m: minor, T: tiny)
   def cache_calculate_uid

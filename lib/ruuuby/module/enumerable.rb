@@ -9,6 +9,7 @@
 module ::Enumerable
 
   alias_method :⨍, :map
+  alias_method :∀ₓᵢ, :each_with_index
 
   # Same meaning as: `arg.∉ self`
   #

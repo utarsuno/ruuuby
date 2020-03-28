@@ -19,3 +19,37 @@ module RuuubyDBSchema
   end
 
 end
+
+=begin
+module Ruuuby
+
+  module MetaData
+
+    class RuuubyVersionControl
+
+      def initialize
+        @all_versions = RuuubyRelease.all.to_ary
+      end
+
+      def docs_features
+
+      end
+
+      def docs_changelog
+        @all_docs ||= []
+        if @all_docs.∅? && !(@all_versions.∅?)
+          @all_versions.∀ do |ruuuby_release|
+            ruuuby_release.docs_changelog.∀ do |docs_line|
+              @all_docs << docs_line
+            end
+          end
+        end
+        @all_docs
+      end
+
+    end
+
+  end
+
+end
+=end

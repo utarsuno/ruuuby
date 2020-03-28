@@ -2,23 +2,27 @@
 # -------------------------------------------- ⚠️ --------------------------------------------
 
 class RuuubyFeature < ApplicationRecord
-  include ::ApplicationRecord::ORMAttributeUID
-  include ::ApplicationRecord::ORMAttributeCache
-
-  validates :description, presence: true
-  validates :id_num, presence: true
 
   # useful components for building `Regular Expressions`
   module Syntax
 
     # @type [String]
-    FEATURE_ID           = 'f\d\d'.❄️
+    UID                  = 'f\d\d'.❄️
 
     # @type [String]
     DOCS_FEATURE_MAPPING = '| f\d\d | (.*)? |'.❄️
 
     ❄️
   end
+
+end
+
+class RuuubyFeature < ApplicationRecord
+  include ::ApplicationRecord::ORMAttributeUID
+  include ::ApplicationRecord::ORMAttributeCache
+
+  validates :description, presence: true
+  validates :id_num, presence: true
 
   #belongs_to :ruuuby_release, class_name: 'RuuubyRelease'
   #has_many :ruuuby_feature_deltas, class_name: 'RuuubyFeatureDelta'

@@ -1,17 +1,49 @@
 ---
 #### (upcoming patches) 
 
-#### v0.1.0
+#### v0.2.0
  * `automatic differentiation`
 
-#### v0.0.22-v0.0.25
+#### v0.1.0
+ * clear `tech debt` and all `feature abstracts`
+   * adding `automatic differentiation` should involve near `0% (of time allocation)` towards `version-relating documentation & audits`
+
+#### v0.0.23-v0.0.25
  * resolve missing coverage from `v0.0.17`
  * resolve missing coverage from `v0.0.18`
-
+ * resolve missing coverage from `v0.0.22`
+  
 #### Abstract
  * start automation/abstraction of state & configs for CLI based APIs, tools, and scripts (gem `tty-command` providing core functionality)
  * start automation/abstraction of code-file (content) management
  * continuation of (`f15`) in relation to above 2 points
+
+---
+
+# v0.0.22
+ * continued (minor) improvements to catching bad parameters & throwing needed errors
+ * (`f98`) add func(`err_to_num`) to class(`String`) as a utility function for throwing errors
+ * start organizing groups of functions into modules labeled by their `Feature` or `Attribute` (`includable` or `extendable`)
+ * tech debt accumulation to be dealt with by `v0.1.0` to remove all `🍝 code` prior to adding support to `automatic differentiation`
+
+| added path | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/ruuuby/class/sym.rb` | ``Symbol`` |  | `f10` |
+| `lib/ruuuby/module/attribute/includable/attribute_cardinality.rb` | ``Ruuuby::Attribute::Includable::Cardinality`` |  | `f04` |
+| `lib/ruuuby/module/attribute/includable/attribute_subscript_indexing.rb` | ``Ruuuby::Attribute::Includable::SubscriptIndexing`` |  | `f10` |
+| `lib/ruuuby/module/attribute/includable/attribute_syntax_cache.rb` | ``Ruuuby::Attribute::Includable::SyntaxCache`` |  | `f10` |
+| `lib/ruuuby/module/attribute/extendable/attribute_syntax_cache.rb` | ``Ruuuby::Attribute::Extendable::SyntaxCache`` |  | `f10` |
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Object` | `🛑𝕌❓` | `f06` |
+| `Array` | `η̂!` | `f08` |
+| `Symbol` | (downcase, upcase) `⬇️`, `⬇`, `🔡`, `⬆️`, `⬆`, `🔠` | `f10` |
+| `String` | (downcase, upcase) `⬇️`, `⬇`, `🔡`, `⬆️`, `⬆`, `🔠`, `⬇️!`, `⬇!`, `🔡!`, `⬆️!`, `⬆!`, `🔠!` | `f10` |
+| `Enumerable` | `∀ₓᵢ` (each_with_index) | `f10` |
+| `Object` | `define_singleton_⨍` (define_singleton_function) | `f10` |
+| `Kernel` | `🌽_previous_⨍` | `f10` |
+| `String` | `digit?`, `to_num`, `to_num?` | `f21` |
 
 ---
 

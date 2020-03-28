@@ -9,13 +9,11 @@ RSpec.describe 'db/seed.rb' do
   let(:v0_0_1){RuuubyRelease.all[1]}
   let(:v0_0_2){RuuubyRelease.all[2]}
   let(:v0_0_3){RuuubyRelease.all[3]}
-  #let(:v0_0_4){RuuubyRelease.all[4]}
-  #let(:v0_0_18){RuuubyRelease.by_version(0, 0, 18)}
-  #let(:v0_0_18){RuuubyRelease.find_by_uid(0, 0, 18)}
-  let(:v0_0_18){RuuubyRelease.find_by_uid('v0.0.18')}
+  let(:v0_0_18){RuuubyRelease.find_by_uid(0, 0, 18)}
   let(:v0_0_19){RuuubyRelease.find_by_uid(0, 0, 19)}
   let(:v0_0_20){RuuubyRelease.find_by_uid(0, 0, 20)}
   let(:v0_0_21){RuuubyRelease.find_by_uid(0, 0, 21)}
+  let(:v0_0_22){RuuubyRelease.find_by_uid(0, 0, 22)}
 
   let(:f04){RuuubyFeature.by_id_num(4)}
   let(:f06){RuuubyFeature.by_id_num(6)}
@@ -28,15 +26,17 @@ RSpec.describe 'db/seed.rb' do
   let(:f17){RuuubyFeature.by_id_num(17)}
   let(:f18){RuuubyFeature.by_id_num(18)}
   let(:f19){RuuubyFeature.by_id_num(19)}
+  let(:f20){RuuubyFeature.by_id_num(20)}
+  let(:f21){RuuubyFeature.by_id_num(21)}
 
   context 'static functions work' do
     context 'func{find_by_uid} handles needed scenarios' do
       it 'positive' do
-        expect(RuuubyRelease.find_by_uid('v0.0.18')).to eq(RuuubyRelease.find_by_uid(0, 0, 18))
+        expect(RuuubyRelease.find_by_uid('v0.0.22')).to eq(RuuubyRelease.find_by_uid(0, 0, 22))
+        expect(RuuubyRelease.find_by_uid('0.0.22')).to eq(RuuubyRelease.find_by_uid(0, 0, 22))
       end
-      it 'negative' do
-        # version DNE
-        expect{RuuubyRelease.find_by_uid(0, 0, 200)}.to raise_error(RuntimeError)
+      it 'negative (version DNE)' do
+        expect{RuuubyRelease.find_by_uid(0, 0, 1337)}.to raise_error(RuntimeError)
       end
     end
   end
@@ -78,6 +78,12 @@ RSpec.describe 'db/seed.rb' do
       it 'defines f19' do
         audit_feature(f19, 'f19', 'add support for automatic-differentiation')
       end
+      it 'defines f20' do
+        audit_feature(f20, 'f20', 'enable easier (general) syntax & pattern parsing')
+      end
+      it 'defines f21' do
+        audit_feature(f21, 'f21', 'enable easier textual/numerical/syntax parsing')
+      end
     end # end: features
 
     context 'defines versions' do
@@ -108,11 +114,7 @@ RSpec.describe 'db/seed.rb' do
         end
       end
 
-      #context 'v0.0.4' do
-      #  it 'as expected' do
-      #    audit_version(v0_0_4, 'v0.0.4')
-      #  end
-      #end
+      # TODO: add missing versions
 
       context 'v0.0.18' do
         it 'as expected' do
@@ -135,6 +137,12 @@ RSpec.describe 'db/seed.rb' do
       context 'v0.0.21' do
         it 'as expected' do
           audit_version(v0_0_21, 'v0.0.21')
+        end
+      end
+
+      context 'v0.0.22' do
+        it 'as expected' do
+          audit_version(v0_0_22, 'v0.0.22')
         end
       end
     end

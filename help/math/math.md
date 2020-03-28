@@ -53,6 +53,8 @@
 | 0x21 | `inverse image` | `preimage` | "the `preimage` of a given subset `B` of the `codomain` of `f` is the set of all elements of the `domain` that map to the members of `B` | |
 | 0x22 | `injective function` | `injection`, `one-to-one function` | "a `function` that `maps distinct elements` of its `domain` to `distinct elements` of its `codomain`" | "every element of the `function's codomain` is the `image` of at most one element of its `domain` |
 | 0x23 | `bijective functions` | | "`functions` such that each element in the `codomain` is an `image` of exactly on element in the `domain` | |
+| 0x24 | `Jacobian matrix` | | "In `vector calculus`, the `Jacobian matrix`, of a `vector-valued function` in several variables is the `matrix` of all its first-order `partial derivatives`" | |
+
 
 | # | more | example |
 | --- | --- | --- |
@@ -84,7 +86,7 @@
 
 #### TODOs
 
-
+* https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant
 * https://en.wikipedia.org/wiki/Category_theory
 * https://en.wikipedia.org/wiki/Image_(mathematics)
 * https://en.wikipedia.org/wiki/Functor

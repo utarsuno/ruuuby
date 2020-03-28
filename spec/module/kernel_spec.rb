@@ -8,6 +8,8 @@ RSpec.describe ::Kernel do
 
     context 'by adding needed functions & aliases' do
 
+      # TODO: unit-tests needed for (🌽_previous_⨍)
+
       context 'adds function{√}' do
         it 'equals (Math.sqrt)' do
           expect(√(25)).to eq(Math.sqrt(25))

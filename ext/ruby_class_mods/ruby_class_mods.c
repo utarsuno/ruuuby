@@ -78,6 +78,8 @@ ________________________________________________________________________________
 
 #define ext_api_add_public_method_0args_to_class(r_class, func_name, the_func) rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 0);
 #define ext_api_add_public_method_1args_to_class(r_class, func_name, the_func) rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 1);
+#define ext_api_add_private_method_0args_to_class(r_class, func_name, the_func) rb_define_private_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 0);
+#define ext_api_add_private_method_1args_to_class(r_class, func_name, the_func) rb_define_private_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 1);
 
 #define ext_api_add_global_const_str(const_name, const_value)      rb_define_global_const(const_name, r_str_new_frozen_literal(const_value));
 #define ext_api_add_global_module(str)                             rb_define_module(str);
@@ -149,15 +151,6 @@ ________________________________________________________________________________
 #define re_n1  return ℤn1;
 // essentially returns "self.send(func_name, arg)"
 #define re_me_func_1args(func_name, arg) return rb_funcall(self, func_name, 1, arg);
-
-#define ensure_file_loaded(path)        rb_require(path);
-#define ensure_loaded_ruuuby(path)     ensure_file_loaded("ruuuby/" #path)
-#define ensure_loaded_io(path)         ensure_file_loaded("ruuuby/class/io/" #path)
-#define ensure_loaded_enumerable(path) ensure_file_loaded("ruuuby/class/enumerable/" #path)
-#define ensure_loaded_module(path)     ensure_file_loaded("ruuuby/module/" #path)
-#define ensure_loaded_class(path)      ensure_file_loaded("ruuuby/class/" #path)
-#define ensure_loaded_nums(path)       ensure_file_loaded("ruuuby/class/nums/" #path)
-#define ensure_loaded_default(path)    ensure_file_loaded("" #path)
 
 #define r_add_global_const(const_name, const_value) rb_define_global_const(const_name, const_value);
 #define r_add_global_const_str(const_name, const_value) r_add_global_const("" #const_name, cstr_to_rstr("" #const_value))
@@ -368,6 +361,11 @@ r_func_self_them(m_str_prepend,
     } else {raise_err_string_bad_arg_type(>>, them)}
 )
 
+// | function{err_to_num} |
+r_func_raw(m_str_err_to_num,
+     rb_raise(ERROR_RUNTIME, "| c{String}-> m{to_num} may not convert self(%"PRIsVALUE") into a valid numeric |", self);
+)
+
 /*___________________________________________________________________________________________________________________
          __      __
  /\     |__)    |__)     /\     \ /
@@ -471,15 +469,15 @@ r_func_self_them(m_ary_equal_contents,
                         rb_hash_aset(hsh, n, LONG2FIX(current_count - 1));
                     }
                 // key was not found so the arrays are not equal in contents
+                // TODO: compare against 'rb_gc_mark'
                 } else {rb_free_generic_ivar(hsh); re_no}
             }
             // all keys were matched
+            // TODO: compare against 'rb_gc_mark'
             rb_free_generic_ivar(hsh); re_ye
         }
     } else {raise_err_array_bad_arg_type(equal_contents?, them)}
 )
-
-static VALUE global_sym_many_args;
 
 /*____________________________________________________________________________________________________________________
  __      __   __   __   ___     ___      ___  __
@@ -524,8 +522,8 @@ c_func(Init_ruby_class_mods,
     ext_api_add_module_under(cached_module_ruuuby, "VirtualTypes")
     ext_api_add_new_sub_class_under(cached_module_param_err, ERROR_ARGUMENT, "WrongParamType")
 
-    global_sym_many_args = ID2SYM(rb_intern("*args"));
-    rb_define_readonly_variable("$PRM_MANY", &global_sym_many_args);
+    cached_global_sym_many_args = ID2SYM(rb_intern("*args"));
+    rb_define_readonly_variable("$PRM_MANY", &cached_global_sym_many_args);
 
     ext_api_add_const_under(rb_mMath, "RATIO_DEGREES_TO_RADIAN", DBL2NUM(M_PIE / 180.0));
     ext_api_add_const_under(rb_mMath, "RATIO_RADIANS_TO_DEGREE", DBL2NUM(180.0 / M_PIE));
@@ -549,6 +547,7 @@ c_func(Init_ruby_class_mods,
     ext_api_add_public_method_0args_to_class(R_NIL, "empty?", m_nil_empty)
 
     ext_api_add_public_method_1args_to_class(R_STR, ">>", m_str_prepend)
+    ext_api_add_public_method_0args_to_class(R_STR, "err_to_num", m_str_err_to_num)
 
     ext_api_add_public_method_0args_to_class(R_ARY, "remove_empty!"    , m_ary_remove_empty)
     ext_api_add_public_method_0args_to_class(R_ARY, "frequency_counts" , m_ary_frequency_counts)
@@ -563,9 +562,11 @@ c_func(Init_ruby_class_mods,
     ensure_loaded_default(tty-command)
 
     // ruuuuby
+
+    ensure_loaded_attribute_includable(cardinality)
+    ensure_loaded_attribute_includable(subscript_indexing)
+
     ensure_loaded_class(class)
-    //ensure_loaded_io(file)
-    //ensure_loaded_io(dir)
     ensure_loaded_module(enumerable)
     ensure_loaded_module(module)
     ensure_loaded_module(kernel)
@@ -585,13 +586,17 @@ c_func(Init_ruby_class_mods,
     ensure_loaded_class(nil)
     ensure_loaded_enumerable(ary)
     ensure_loaded_enumerable(set)
-    ensure_loaded_class(str)
+
+    ensure_loaded_attribute_includable(syntax_cache)
+    ensure_loaded_attribute_extendable(syntax_cache)
+
+    ensure_loaded_class(sym)
+
+    ensure_loaded_class(str) // must be after{attribute_syntax_cache, attribute_cardinality}
+    ensure_loaded_io(file)    // must be after{attribute_syntax_cache}
+    ensure_loaded_io(dir)    // must be after{attribute_syntax_cache}
+
     ensure_loaded_ruuuby(version)
-
-    ensure_loaded_module(attribute_extendable/static_attribute_syntax_cache)
-
-    ensure_loaded_io(file)
-    ensure_loaded_io(dir)
     // | --------------------------------- |
 
     // ____________________________________ ⚠️ ____________________________________
@@ -639,5 +644,8 @@ c_func(Init_ruby_class_mods,
     assign_exponential_index_position(get_numerical_const("EXPONENTIAL_9"), 9);
 
     // ____________________________________ ⚠️ ____________________________________
+
+    // TODO: investigate if globals created in C (but not needed/exposed to Ruby) needed to guarded against garbage collection
+    //rb_global_variable();
 
 )

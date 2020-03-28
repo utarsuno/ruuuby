@@ -17,6 +17,44 @@ RSpec.describe 'ary' do
       end
     end
 
+    context 'by adding function{η̂!}' do
+      context 'handles needed scenarios' do
+        context 'cases: positive' do
+          it 'empty data' do
+            the_ary    = []
+            the_ary_id = the_ary.🆔
+            the_ary.η̂!(:ℕ)
+            expect(the_ary).to eq([])
+            expect(the_ary.🆔).to eq(the_ary_id)
+          end
+          it 'with numeric data' do
+            the_ary    = [0, 1, 2, 3, 1337]
+            the_ary_id = the_ary.🆔
+            the_ary.η̂!(:ℕ)
+            expect(the_ary).to eq([0, 1, 2, 3, 1337])
+            expect(the_ary.🆔).to eq(the_ary_id)
+          end
+          it 'with string (numeric-like) data' do
+            the_ary    = [0, 1, 2, 3, 1337, '0', '1', '2', '3', '1337']
+            the_ary_id = the_ary.🆔
+            the_ary.η̂!(:ℕ)
+            expect(the_ary).to eq([0, 1, 2, 3, 1337, 0, 1, 2, 3, 1337])
+            expect(the_ary.🆔).to eq(the_ary_id)
+          end
+        end
+        context 'cases: error' do
+          it 'with numeric data (outside of ℕ)' do
+            the_ary    = [-1337, -1, 0, 1, 1337]
+            expect{the_ary.η̂!(:ℕ)}.to raise_error(RuntimeError)
+          end
+          it 'with string data (outside of ℕ)' do
+            the_ary    = ['-1337', 1337]
+            expect{the_ary.η̂!(:ℕ)}.to raise_error(RuntimeError)
+          end
+        end
+      end
+    end
+
     context 'by adding function{>>}' do
       it 'works correctly' do
         expect([] >> 1337).to eq([1337])
@@ -395,6 +433,8 @@ RSpec.describe 'ary' do
       scenario = [123, 123, :f, :rsdvd, 532512, "fcer\n", [[[[[['a'], 'b']]]]], '0', nil, 'a', 1337, [], {}, 0, '', 'hiya', {nil: nil}, nil, nil, nil, 1, [{}], [], nil, [], 1, 2, 56672323]
       expect{scenario.remove_empty!}.to perform_quickly
     end
+
+    # TODO: performance tests for: {η̂!}
   end
 
 end

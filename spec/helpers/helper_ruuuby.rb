@@ -11,6 +11,8 @@ RSpec.shared_context 'lets_language_deltas' do
   let(:cΔ_Numeric){RuuubyTestHelper::CONFIG_NUMERIC}
   let(:cΔ_Module){RuuubyTestHelper::CONFIG_MODULE}
   let(:cΔ_Object){RuuubyTestHelper::CONFIG_OBJECT}
+  let(:cΔ_Symbol){RuuubyTestHelper::CONFIG_SYMBOL}
+  let(:cΔ_String){RuuubyTestHelper::CONFIG_STRING}
 
   def expect_added_ruby_methods(the_class, the_configs)
     the_configs[:ruby].∀{|c| expect(the_class.∃⨍?(c)).to eq(true)}
@@ -104,7 +106,30 @@ module RuuubyTestHelper
       c: [:>>],
       aliases: {
           ∅?: :empty?,
-          𝔠: :length
+          𝔠: :length,
+          ⬇️: :downcase,
+          ⬇️!: :downcase!,
+          ⬇: :downcase,
+          ⬇!: :downcase!,
+          🔡: :downcase,
+          🔡!: :downcase!,
+          ⬆️: :upcase,
+          ⬆️: :upcase!,
+          ⬆: :upcase,
+          ⬆: :upcase!,
+          🔠: :upcase!,
+          🔠!: :upcase!,
+      }
+  }
+
+  CONFIG_SYMBOL = {
+      aliases: {
+          ⬇️: :downcase,
+          ⬇: :downcase,
+          🔡: :downcase,
+          ⬆️: :upcase,
+          ⬆: :upcase,
+          🔠: :upcase
       }
   }
 
@@ -137,7 +162,8 @@ module RuuubyTestHelper
   CONFIG_ENUMERABLE = {
       ruby: [:∌?],
       aliases: {
-          map: :⨍
+          map: :⨍,
+          each_with_index: :∀ₓᵢ,
       }
   }
 

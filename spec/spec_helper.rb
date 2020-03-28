@@ -49,6 +49,7 @@ RSpec.shared_context 'RSPEC_GLOBAL_UTILITIES' do
   let(:data_range_floats_all_but_zero){data_range_floats_negative + data_range_floats_positive}
   let(:data_range_floats_boolean){[-1.0, 0.0, 1.0]}
   let(:data_range_ints){[-1337, -10, -3, -2, -1, 0, 1, 2, 3, 10, 1337]}
+  let(:data_range_ints_zero_to_nine){[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}
   let(:data_range_ints_boolean){[-1, 0, 1]}
   let(:data_range_ints_positive){[1, 2, 3, 10, 1337]}
   let(:data_range_ints_zero_to_positive){[0] + data_range_ints_positive}
@@ -91,13 +92,23 @@ end
 
 RSpec.shared_context 'RSpecContextAudit' do
   let(:re_ruuuby_feature){RuuubyFeature::Syntax}
-  let(:re_ruuuby_feature_id){RuuubyFeature.cache_fetch(re_ruuuby_feature::FEATURE_ID)}
+  let(:re_ruuuby_feature_id){RuuubyFeature.cache_fetch(re_ruuuby_feature::UID)}
   let(:re_ruuuby_feature_docs_feature_mapping){RuuubyFeature.cache_fetch(re_ruuuby_feature::DOCS_FEATURE_MAPPING)}
   let(:re_ruuuby_release){RuuubyRelease::Syntax}
-  let(:re_ruuuby_release_version){RuuubyRelease.cache_fetch(re_ruuuby_release::VERSION)}
+  let(:re_ruuuby_release_version){RuuubyRelease.cache_fetch(re_ruuuby_release::UID)}
 end
 
 module HelpersGeneral
+
+  def expect_regular_int(val_scenario, val_expected)
+    expect(val_scenario).to eq(val_expected)
+    expect(val_scenario.class).to eq(Integer)
+  end
+
+  def expect_regular_flt(val_scenario, val_expected)
+    expect(val_scenario).to eq(val_expected)
+    expect(val_scenario.class).to eq(Float)
+  end
 
   def expect_∃class(the_class, owner=nil, expected_result=true)
     if owner != nil

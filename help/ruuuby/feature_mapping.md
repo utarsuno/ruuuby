@@ -24,6 +24,7 @@
 | f18 | simplify import/require statements                                     |
 | f19 | add support for automatic-differentiation                              |
 | f20 | enable easier (general) syntax & pattern parsing                       |
+| f21 | enable easier textual/numerical/syntax parsing                         |
 | f96 | automate local `git` configurations                                     |
 | f97 | `JRuby-extensions`                                                     |
 | f98 | `C-extensions`                                                         |

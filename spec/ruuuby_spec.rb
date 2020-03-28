@@ -23,7 +23,7 @@ RSpec.describe Ruuuby do
     end
 
     it 'with valid syntax' do
-      expect(("v#{Ruuuby::VERSION}").match?(RuuubyRelease::Syntax::VERSION)).to eq(true)
+      expect(("v#{Ruuuby::VERSION}").match?(RuuubyRelease::Syntax::UID)).to eq(true)
     end
 
     # evaluating use-case necessity

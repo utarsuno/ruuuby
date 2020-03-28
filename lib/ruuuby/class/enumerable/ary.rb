@@ -1,91 +1,131 @@
 # encoding: utf-8
 
-# add various functions to existing class +Array+
+# `Ruuuby` modifications to c(`Array`)
+module ::Ruuuby
+
+  # (not-final-design): attributes that are to be included/extended an absolute maximum of once per Class & Runtime
+  module Feature
+
+    # defines the operations needed to support Feature(`f08`) that are applied to Class(`Array`)
+    module F08Array
+
+      # @param [*]
+      #
+      # @return [Boolean] true, if this array ends with the provided elements
+      def end_with?(*ending)
+        return false if (ending.∅? || ending.𝔠 > self.𝔠)
+        return self.last == ending.₀ if ending.𝔠₁?
+        self.last(ending.𝔠) == ending
+      end
+
+      # @param [*]
+      #
+      # @return [Boolean] true, if this array starts with the provided elements
+      def start_with?(*start)
+        return false if (start.∅? || start.𝔠 > self.𝔠)
+        return self.first == start.₀ if start.𝔠₁?
+        self.first(start.𝔠) == start
+      end
+
+      # @param [*]
+      #
+      # @return [Array] this array instance, modified if not starting with provided starting elements
+      def ensure_start!(*start)
+        return self if (start.∅? || self.start_with?(*start))
+        return self >> start.₀ if start.𝔠₁?
+        delta        = 0
+        last_matched = nil
+        while delta <= self.𝔠 && delta <= start.𝔠
+          ending_of_start = start[start.𝔠₋(delta)..start.𝔠₋]
+          last_matched    = ending_of_start if self[0..delta] == ending_of_start
+          delta          += 1
+        end
+        if last_matched == nil
+          start.↩️∀{|element| self >> element}
+        else
+          start[0..start.𝔠₋(last_matched.𝔠)].↩️∀{|element| self >> element}
+        end
+        self
+      end
+
+      # @param [*]
+      #
+      # @return [Array] this array instance, modified if not ending with provided endings elements
+      def ensure_ending!(*ending)
+        return self if (ending.∅? || self.end_with?(*ending))
+        return self << ending.₀ if ending.𝔠₁?
+        delta        = 0
+        last_matched = nil
+        while delta <= self.𝔠 && delta <= ending.𝔠
+          starting_of_end = ending[0..delta]
+          last_matched    = starting_of_end if self[self.𝔠₋(delta)..self.𝔠₋] == starting_of_end
+          delta          += 1
+        end
+        if last_matched == nil
+          ending.∀{|element| self << element }
+        else
+          ending[last_matched.𝔠..ending.𝔠₋].∀{|element| self << element}
+        end
+        self
+      end
+
+      # TODO: lots of feature-coverage to add
+      #
+      # @param [Symbol] normalization_opts
+      #
+      # @return [Array] self, modified if any normalization needed to occur
+      def η̂!(normalization_opts)
+        if normalization_opts == :ℕ
+          self.∀ₓᵢ do |element, i|
+            if element.num?
+              🛑 RuntimeError.🆕("c{Array}-> m{η̂}-> arg(normalization_opts){#{normalization_opts.to_s}}, internal_element[#{i.to_s}]{#{element.to_s}} is not within(ℕ)") if (!element.ℕ?)
+            elsif element.str?
+              as_num = element.to_num
+              🛑 RuntimeError.🆕("c{Array}-> m{η̂}-> arg(normalization_opts){#{normalization_opts.to_s}}, internal_element[#{i.to_s}]{#{element.to_s}} is not within(ℕ)") if (!as_num.ℕ?)
+              self[i] = as_num
+            else
+              🛑 RuntimeError.🆕("c{Array}-> m{η̂}-> arg(normalization_opts){#{normalization_opts.to_s}}, internal_element[#{i.to_s}]{#{element.to_s}} is not within(ℕ)")
+            end
+          end
+        else
+          🛑 RuntimeError.🆕("c{Array}-> m{η̂} received arg(normalization_opts) with un-supported value(#{normalization_opts.to_s})")
+        end
+        self
+      end
+
+    end # end: f08
+
+    # defines the operations needed to support Feature(`f09`) that are applied to Class(`Array`)
+    module F09Array
+
+      # Performs the relative complement (or set difference) of these two arrays, operation order/side does matter.
+      #
+      # @param [Array] them
+      #
+      # @raise [WrongParamType]
+      #
+      # @return [Array] a new Array instance containing the relative complement between this array and the one provided
+      def ∖(them) ; 🛑ary❓(:them, them) ; self - them ; end
+
+    end # end: f09
+
+  end
+
+end
+
+# add various aliases & functions to existing Class(+Array+)
 class ::Array
 
-  # Performs the relative complement (or set difference) of these two arrays, operation order/side does matter.
-  #
-  # @param [Array] them
-  #
-  # @raise [WrongParamType]
-  #
-  # @return [Array] a new Array instance containing the relative complement between this array and the one provided
-  def ∖(them) ; 🛑ary❓(:them, them) ; self - them ; end
-
-  # @param [*]
-  #
-  # @return [Boolean] true, if this array ends with the provided elements
-  def end_with?(*ending)
-    return false if (ending.∅? || ending.𝔠 > self.𝔠)
-    return self.last == ending[0] if ending.𝔠 == 1
-    self.last(ending.𝔠) == ending
-  end
-
-  # @param [*]
-  #
-  # @return [Boolean] true, if this array starts with the provided elements
-  def start_with?(*start)
-    return false if (start.∅? || start.𝔠 > self.𝔠)
-    return self.first == start[0] if start.𝔠 == 1
-    self.first(start.𝔠) == start
-  end
-
-  # @param [*]
-  #
-  # @return [Array] this array instance, modified if not starting with provided starting elements
-  def ensure_start!(*start)
-    return self if (start.∅? || self.start_with?(*start))
-    return self >> start[0] if start.𝔠 == 1
-    delta        = 0
-    last_matched = nil
-    while delta <= self.𝔠 && delta <= start.𝔠
-      ending_of_start = start[(start.𝔠-1-delta)..(start.𝔠-1)]
-      last_matched    = ending_of_start if self[0..delta] == ending_of_start
-      delta          += 1
-    end
-    if last_matched == nil
-      start.↩️∀{|element| self >> element}
-    else
-      start[0..(start.𝔠-1-last_matched.𝔠)].↩️∀{|element| self >> element}
-    end
-    self
-  end
-
-  # @param [*]
-  #
-  # @return [Array] this array instance, modified if not ending with provided endings elements
-  def ensure_ending!(*ending)
-    return self if (ending.∅? || self.end_with?(*ending))
-    return self << ending[0] if ending.𝔠 == 1
-    delta        = 0
-    last_matched = nil
-    while delta <= self.𝔠 && delta <= ending.𝔠
-      starting_of_end = ending[0..delta]
-      last_matched    = starting_of_end if self[(self.𝔠-1-delta)..(self.𝔠-1)] == starting_of_end
-      delta          += 1
-    end
-    if last_matched == nil
-      ending.∀{|element| self << element }
-    else
-      ending[(last_matched.𝔠)..(ending.𝔠-1)].∀{|element| self << element }
-    end
-    self
-  end
+  include ::Ruuuby::Attribute::Includable::SubscriptIndexing
 
   # ---------------------------------------------------------------------------------------------------------- | *f03* |
-  alias_method :𝔠, :length
-  # ---------------------------------------------------------------------------------------------------------- | *f04* |
-  alias_method :∅?, :empty?
-  # ---------------------------------------------------------------------------------------------------------- | *f05* |
-  alias_method :>>, :>>
-  # | ------------------------------------------------------------------------------------------------------------------
-
-  alias_method :∀, :each
-  alias_method :↩️, :reverse
-  alias_method :↩️!, :reverse!
-  alias_method :↩️∀, :reverse_each
-  alias_method :uniq_to_me, :∖
+  include ::Ruuuby::Attribute::Includable::Cardinality
+  # ---------------------------------------------------------------------------------------------------------- | *f08* |
+  include ::Ruuuby::Feature::F08Array
+  # ---------------------------------------------------------------------------------------------------------- | *f09* |
+  include ::Ruuuby::Feature::F09Array
   alias_method :∋?, :include?
+  alias_method :uniq_to_me, :∖
 
   # Return true if both arrays are matching in contents, supports multiple types and without order mattering.
   #
@@ -118,5 +158,18 @@ class ::Array
   #
   # @return [Array] a new Array instance containing the symmetric difference between this array and the one provided
   alias_method :⊕, :disjunctive_union
+
+  # ---------------------------------------------------------------------------------------------------------- | *f03* |
+  alias_method :𝔠, :length
+  # ---------------------------------------------------------------------------------------------------------- | *f04* |
+  alias_method :∅?, :empty?
+  # ---------------------------------------------------------------------------------------------------------- | *f05* |
+  alias_method :>>, :>>
+  # ---------------------------------------------------------------------------------------------------------- | *f10* |
+  alias_method :∀, :each
+  alias_method :↩️, :reverse
+  alias_method :↩️!, :reverse!
+  alias_method :↩️∀, :reverse_each
+  # | ------------------------------------------------------------------------------------------------------------------
 
 end

@@ -4,6 +4,7 @@ require_relative 'db'
 f04 = RuuubyFeature.spawn(4, '`∅` to alias concept of `empty`')
 f06 = RuuubyFeature.spawn(6, 'enable quick type checks against any object (ex: `variable.int?`)')
 f07 = RuuubyFeature.spawn(7, 'enable quick clean up functions for `enumerables`')
+f08 = RuuubyFeature.spawn(8, 'enable quick editing functions for `enumerables` (& `String`)')
 f09 = RuuubyFeature.spawn(9, 'add math `set operations` (especially for `enumerables` & `String`)')
 f10 = RuuubyFeature.spawn(10, 'offer special character aliases for natural ease of readability')
 f11 = RuuubyFeature.spawn(11, 'add math `number sets` (ex: `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `∞?`, `♾️?`)')
@@ -15,6 +16,7 @@ f17 = RuuubyFeature.spawn(17, 'enable easier math operations')
 f18 = RuuubyFeature.spawn(18, 'simplify import/require statements')
 f19 = RuuubyFeature.spawn(19, 'add support for automatic-differentiation')
 f20 = RuuubyFeature.spawn(20, 'enable easier (general) syntax & pattern parsing')
+f21 = RuuubyFeature.spawn(21, 'enable easier textual/numerical/syntax parsing')
 
 v0_0_0 = RuuubyRelease.spawn(0, 0, 0)
 v0_0_0.add_comments('initial project creation')
@@ -156,11 +158,63 @@ v0_0_21.changelog.added_method_to_class(f09, :∈?, ::Module)
 v0_0_21.changelog.added_method_to_class(f09, :∉?, ::Module)
 v0_0_21.changelog.added_method_to_class(f14, :🛑ℤ❓, ::Object)
 
-# TODO: FOR v0.0.22 (), ADD OBJECT/FUNC TO GATHER ALL RELEASES AND THEN PRINT OUT CHANGELOG
+v0_0_22 = RuuubyRelease.spawn(0, 0, 22)
+v0_0_22.add_file('lib/ruuuby/class/sym.rb', ::Symbol, '', f10)
+v0_0_22.add_file('lib/ruuuby/module/attribute/includable/attribute_cardinality.rb', ::Ruuuby::Attribute::Includable::Cardinality, '', f04)
+v0_0_22.add_file('lib/ruuuby/module/attribute/includable/attribute_subscript_indexing.rb', ::Ruuuby::Attribute::Includable::SubscriptIndexing, '', f10)
+v0_0_22.add_file('lib/ruuuby/module/attribute/includable/attribute_syntax_cache.rb', ::Ruuuby::Attribute::Includable::SyntaxCache, '', f10)
+v0_0_22.add_file('lib/ruuuby/module/attribute/extendable/attribute_syntax_cache.rb', ::Ruuuby::Attribute::Extendable::SyntaxCache, '', f10)
+
+v0_0_22.add_comments(
+    [
+        'continued (minor) improvements to catching bad parameters & throwing needed errors',
+        '(`f98`) add func(`err_to_num`) to class(`String`) as a utility function for throwing errors',
+        'start organizing groups of functions into modules labeled by their `Feature` or `Attribute` (`includable` or `extendable`)',
+        'tech debt accumulation to be dealt with by `v0.1.0` to remove all `🍝 code` prior to adding support to `automatic differentiation`'
+    ]
+)
+v0_0_22.changelog.added_method_to_class(f08, :η̂!, ::Array)
+
+v0_0_22.changelog.added_method_to_class(f10, :⬇️, ::Symbol)
+v0_0_22.changelog.added_method_to_class(f10, :⬇, ::Symbol)
+v0_0_22.changelog.added_method_to_class(f10, :🔡, ::Symbol)
+v0_0_22.changelog.added_method_to_class(f10, :⬆️, ::Symbol)
+v0_0_22.changelog.added_method_to_class(f10, :⬆, ::Symbol)
+v0_0_22.changelog.added_method_to_class(f10, :🔠, ::Symbol)
+
+v0_0_22.changelog.added_method_to_class(f10, :⬇️, ::String)
+v0_0_22.changelog.added_method_to_class(f10, :⬇, ::String)
+v0_0_22.changelog.added_method_to_class(f10, :🔡, ::String)
+v0_0_22.changelog.added_method_to_class(f10, :⬆️, ::String)
+v0_0_22.changelog.added_method_to_class(f10, :⬆, ::String)
+v0_0_22.changelog.added_method_to_class(f10, :🔠, ::String)
+v0_0_22.changelog.added_method_to_class(f10, :⬇️!, ::String)
+v0_0_22.changelog.added_method_to_class(f10, :⬇!, ::String)
+v0_0_22.changelog.added_method_to_class(f10, :🔡!, ::String)
+v0_0_22.changelog.added_method_to_class(f10, :⬆️!, ::String)
+v0_0_22.changelog.added_method_to_class(f10, :⬆!, ::String)
+v0_0_22.changelog.added_method_to_class(f10, :🔠!, ::String)
+
+v0_0_22.changelog.added_method_to_class(f10, :∀ₓᵢ, ::Enumerable)
+v0_0_22.changelog.added_method_to_class(f10, :define_singleton_⨍, ::Object)
+v0_0_22.changelog.added_method_to_class(f10, :🌽_previous_⨍, ::Kernel)
+
+v0_0_22.changelog.added_method_to_class(f06, :🛑𝕌❓, ::Object)
+
+v0_0_22.changelog.added_method_to_class(f21, :digit?, ::String)
+v0_0_22.changelog.added_method_to_class(f21, :to_num, ::String)
+v0_0_22.changelog.added_method_to_class(f21, :to_num?, ::String)
+
+
+
+# TODO: FOR v0.0.23? (), ADD OBJECT/FUNC TO GATHER ALL RELEASES AND THEN PRINT OUT CHANGELOG
 # (to remove code below)
 
 =begin
 puts "PRINTING DOCS"
+v0_0_22.docs_changelog.each do |line|
+    puts line
+end
 v0_0_21.docs_changelog.each do |line|
     puts line
 end

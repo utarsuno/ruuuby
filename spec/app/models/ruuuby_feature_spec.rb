@@ -8,13 +8,31 @@ RSpec.describe 'ruuuby_feature.rb' do
       it 'exists' do
         expect_∃module(:Syntax, ::RuuubyFeature)
       end
+
+      context 'dynamically adds needed fetch functions' do
+        context 'func{syntax_uid}' do
+          it 'exists as needed' do
+            expect(RuuubyFeature.respond_to?(:syntax_uid)).to eq(true)
+            expect(RuuubyFeature.syntax_uid.class).to eq(Regexp)
+            expect(RuuubyFeature.syntax_uid.source).to eq("\\A#{RuuubyFeature::Syntax::UID}\\z")
+          end
+        end
+        context 'func{syntax_docs_feature_mapping}' do
+          it 'exists as needed' do
+            expect(RuuubyFeature.respond_to?(:syntax_docs_feature_mapping)).to eq(true)
+            expect(RuuubyFeature.syntax_docs_feature_mapping.class).to eq(Regexp)
+            expect(RuuubyFeature.syntax_docs_feature_mapping.source).to eq("\\A#{RuuubyFeature::Syntax::DOCS_FEATURE_MAPPING}\\z")
+          end
+        end
+      end
+
       context 'with needed constants' do
-        context '::RuuubyFeature::Syntax::FEATURE_ID' do
+        context '::RuuubyFeature::Syntax::UID' do
           it 'exists' do
-            expect(RuuubyFeature::Syntax::FEATURE_ID).to eq('f\d\d')
+            expect(RuuubyFeature::Syntax::UID).to eq('f\d\d')
           end
           it "can't be changed" do
-            expect{RuuubyFeature::Syntax::FEATURE_ID = 5}.to raise_error(FrozenError)
+            expect{RuuubyFeature::Syntax::UID = 5}.to raise_error(FrozenError)
           end
         end
         context '::RuuubyFeature::Syntax::DOCS_FEATURE_MAPPING' do

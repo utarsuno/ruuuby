@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.21'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.22'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -89,6 +89,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Kernel`  | `📁`, `📂`, `🗄️` | ❌                         | - aliases for `::File`, `::Dir` <br/> - (`f12`) |
 | `Kernel`  | `√`, `∛`, `π`, `φ`, `γ`, `∠ᶜ`, `∠°`, `sin`, `sin°`, `cos`, `cos°` | ❌ | - math syntax sugar <br/> - (`f10`, `f17`) |
 | `Kernel`  | `𝔠`               | ❌                         | - gets the `cardinality` (length/size) of arg <br/> - (`f03`) |
+| `Kernel`  | `🌽_previous_⨍`   | ❌                        | (`f10`) |
 | `Kernel`  | `∃module?`        | ❌                         | true-example: `∃module?(:Ruuuby)` |
 | `Kernel`  | `∃class?`         | ❌                         | true-example: `∃class?(:Array)` |
 | `Module`  | `∃⨍_alias?`       | ❌                         | - {`static`} <br/> - true-example: `::Array.∃⨍_alias?(:equal_contents?, :≈≈)` |
@@ -106,7 +107,8 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Object`               | `class?`, `module?`, `nucleotide?` | ❌ | (`f06`) |
 | `Array`                | `remove_empty!`                    | ✅ | (`f07`) |
 | `Set`                  | `remove_empty!`                    | ❌ | (`f07`) |
-| `Array`                | [`frequency_counts`, `📊`]         | ✅ | - get the frequency count of values in array <br/> - (`f09`) |
+| `Array`                | `η̂!`                               | ❌ | (`f08`) |
+| `Array`                | [`frequency_counts`, `📊`]         | ✅ | (`f09`) |
 | `Array`                | [`equal_contents?`, `≈≈`]          | ✅ | - regardless of order and presence of multiple types <br/> - (`f09`) |
 | `Array`                | [`disjunctive_union`, `⊕`]         | ✅ | (`f09`) |
 | `Array`                | `∖`                                | ❌ | - aliased-by(`uniq_to_me`) <br/> - (`f09`) |
@@ -114,6 +116,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Enumerable`, `String` | `∌?`                               | ❌ | (`f09`) |
 | `Array`, `String`      | `>>`                               | ✅ | - prepend provided arg, reverse operation of `<<` <br/> - (`f05`) |
 | `String`               | `∈?`, `∉?`                         | ❌ | (`f09`) |
+| `String`               | `digit?`, `to_num`, `to_num?`      | ❌ | (`f21`) |
 | `Array`                | `end_with?`, `start_with?`         | ❌ | (`f08`) |
 | `String`, `Array`      | `ensure_start!`, `ensure_ending!`  | ❌ | (`f08`) |
 | `NilClass`             | `empty?`                           | ✅ | - ⚠️: philosophically debatable <br/> - (`f04`) |
@@ -125,38 +128,42 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Complex`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
 | `Rational`             | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`       | ❌ | (`f11`) |
 | `Float`                | `≈≈`                               | ❌ | (`f17`) |
-| `Object`               | [`🛑bool❓`, `🛑🅱️❓`], `🛑int❓`, `🛑ℤ❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑countable❓` | ❌ | (`f04`) |
+| `Object`               | [`🛑bool❓`, `🛑🅱️❓`], `🛑int❓`, `🛑ℤ❓`, `🛑𝕌❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑countable❓` | ❌ | (`f04`) |
 
 #### Created Aliases:
-| for                    | base method(s) reference(s)               | alias(es)               | notes     |
-| ---------------------: | ----------------------------------------- | ----------------------- | --------- |
-| `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲`             | (`f10`)   |
-| `Object`               | `object_id`                               | `🆔`                    | (`f10`)   |
-| `Class`                | `new`                                     | `🆕`                    | (`f10`)   |
-| `ApplicationRecord`    | `destroy`, `destroy!`                     | `♻️`, `♻️!`             | (`f10`)   |
-| `Object`               | `freeze`, `frozen?`                       | `❄️`, `❄️?`             | (`f10`)   |
+| for                    | base method(s) reference(s)               | alias(es)                 | notes     |
+| ---------------------: | ----------------------------------------- | ------------------------- | --------- |
+| `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲`                | (`f10`)   |
+| `Object`               | `object_id`, `define_singleton_function`   | `🆔`, `define_singleton_⨍` | (`f10`)   |
+| `Class`                | `new`                                     | `🆕`                      | (`f10`)   |
+| `ApplicationRecord`    | `destroy`, `destroy!`                     | `♻️`, `♻️!`               | (`f10`)   |
+| `Object`               | `freeze`, `frozen?`                       | `❄️`, `❄️?`               | (`f10`)   |
+| `String`, `Symbol`     | `upcase`                                  | `⬆️`, `⬆`, `🔠`          | (`f10`)   |
+| `String`, `Symbol`     | `downcase`                                | `⬇️`, `⬇`, `🔡`          | (`f10`)   |
+| `String`               | `upcase!`, `downcase!`                    | [`⬆️!`, `⬆!`, `🔠!`], [`⬇️!`, `⬇!`, `🔡!`] | (`f10`) |
 | `Object`               | `protected_instance_methods`, `private_methods` | `🛡️funcs`, `🙈funcs` | (`f01`,`f02`) |
 | `Array`                | `frequency_counts`, `disjunctive_union`, `equal_contents?` | `📊`, `⊕`, `≈≈` |  |
-| `Module`               | `const_defined?`, `private_method_defined?` | `∃const?`, `∃🙈func?`   |           |
-| `Module`               | `private`, `private_constant`             | `🙈`, `🙈constants⟶`  | (`f01`)   |
-| `Module`               | `protected`, `protected_method_defined?`   | `🛡️`, `∃🛡️func?`        | (`f02`)   |
-| `Array`, `Hash`, `Set` | `each`                                    | `∀`                     |            |
-| `Array`                | `reverse`, `reverse!`, `reverse_each`     | `↩️`, `↩️!`, `↩️∀`     |            |
-| `Enumerable`           | `map`                                     | `⨍`                     | automatically applies to: `Array`, `Hash`, `Set` |
-| `Enumerable`           | `include?`                                | `∋?`                    | |
+| `Module`               | `const_defined?`, `private_method_defined?` | `∃const?`, `∃🙈func?`     |           |
+| `Module`               | `private`, `private_constant`             | `🙈`, `🙈constants⟶`    | (`f01`)   |
+| `Module`               | `protected`, `protected_method_defined?`   | `🛡️`, `∃🛡️func?`          | (`f02`)   |
+| `Array`, `Hash`, `Set` | `each`                                    | `∀`                       | (`f10`) |
+| `Array`                | `reverse`, `reverse!`, `reverse_each`     | `↩️`, `↩️!`, `↩️∀`        | (`f10`) |
+| `Enumerable`           | `map`                                     | `⨍`                       | - automatically applies to: `Array`, `Hash`, `Set` <br/> - (`f10`) |
+| `Enumerable`           | `include?`                                | `∋?`                      | (`f10`) |
+| `Enumerable`           | `each_with_index`                         | `∀ₓᵢ`                     | (`f10`) |
 | `Hash`                 | `key?`                                    | [`🔑?`, `🗝?`], [`∃🔑?`, `∃🗝?`] |  |
-| `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                    | (`f04`) |
-| `String`, `Array`, `Set`, `Hash`             | `length`            | `𝔠`                     | (`f03`) |
+| `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                      | (`f04`) |
+| `String`, `Array`, `Set`, `Hash`             | `length`            | `𝔠`                        | (`f03`) |
 
 ---
 
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 415      | # of tests (non-performance & non-audit based)                  |
+| QA        | unit          | 456      | # of tests (non-performance & non-audit based)                  |
 | QA        | performance   | 189      | # of tests (non-unit & non-audit based)                         |
-| CI        | audits        | 38       | # of tests (non-performance & non-unit based)                   |
-| structure | features      | ~23      | # of distinct features (that are categorized & tracked) `wip`   |
+| CI        | audits        | 41       | # of tests (non-performance & non-unit based)                   |
+| structure | features      | ~24      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |
 | coverage  | documentation | ???      | `wip` |

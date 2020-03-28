@@ -1,5 +1,22 @@
 
 /*____________________________________________________________________________________________________________________________________________________________________
+            __   __   __   __       __   __   ___     __   __   __   __   ___  __   __          __
+ |\/|  /\  /  ` |__) /  \ /__` .   |__) |__) |__  __ |__) |__) /  \ /  ` |__  /__` /__` | |\ | / _`
+ |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
+____________________________________________________________________________________________________________________________________________________________________ */
+
+#define ensure_file_loaded(path)                  rb_require(path);
+#define ensure_loaded_ruuuby(path)               ensure_file_loaded("ruuuby/" #path)
+#define ensure_loaded_io(path)                   ensure_file_loaded("ruuuby/class/io/" #path)
+#define ensure_loaded_enumerable(path)           ensure_file_loaded("ruuuby/class/enumerable/" #path)
+#define ensure_loaded_module(path)               ensure_file_loaded("ruuuby/module/" #path)
+#define ensure_loaded_attribute_includable(path) ensure_file_loaded("ruuuby/module/attribute/includable/attribute_" #path)
+#define ensure_loaded_attribute_extendable(path) ensure_file_loaded("ruuuby/module/attribute/extendable/attribute_" #path)
+#define ensure_loaded_class(path)                ensure_file_loaded("ruuuby/class/" #path)
+#define ensure_loaded_nums(path)                 ensure_file_loaded("ruuuby/class/nums/" #path)
+#define ensure_loaded_default(path)              ensure_file_loaded("" #path)
+
+/*____________________________________________________________________________________________________________________________________________________________________
   __   __        __  ___           ___                         ___  __
  /  ` /  \ |\ | /__`  |   /\  |\ |  |     \  /  /\  |    |  | |__  /__`
  \__, \__/ | \| .__/  |  /~~\ | \|  |      \/  /~~\ |___ \__/ |___ .__/
@@ -49,13 +66,15 @@ static VALUE cached_module_ruuuby;
 static VALUE cached_module_param_err;
 // | --- |
 
+static VALUE cached_global_sym_many_args;
+
 static VALUE cached_class_big_decimal;
 static VALUE cached_rb_intern_ints_bitwise_xor;
 static VALUE cached_rb_intern_raise_to_power;
 static VALUE cached_rb_intern_is_a;
 
-// make these const ints?
 static unsigned long exponential_ids[𝔠EXPONENTS];
+// make these const ints?
 static int           exponential_indexes[𝔠EXPONENTS];
 
 /*____________________________________________________________________________________________________________________

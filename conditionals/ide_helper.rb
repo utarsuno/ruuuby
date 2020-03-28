@@ -1,6 +1,11 @@
 # encoding: UTF-8
 
 # explicitly expose semi-hidden aliases to play nice with IDEs
+class ::Object
+  alias_method :define_singleton_⨍, :define_singleton_⨍
+end
+
+# explicitly expose semi-hidden aliases to play nice with IDEs
 class ::Integer
   # ---------------------------------------------------------------------------------------------------------- | *f16* |
   alias_method :bitwise_xor, :bitwise_xor

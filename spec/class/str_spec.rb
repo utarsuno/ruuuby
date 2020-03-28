@@ -6,11 +6,262 @@ RSpec.describe 'str' do
 
   context 'extends class[String]' do
 
+    context 'by adding needed static functions' do
+
+      context 'syntax-functions' do
+
+        it 'func{syntax_len_any}' do
+          expect(::String.respond_to?(:syntax_len_any)).to eq(true)
+          expect(::String.syntax_len_any.class).to eq(Regexp)
+          expect(::String.syntax_len_any.source).to eq("\\A#{::String::Syntax::LEN_ANY}\\z")
+        end
+
+        it 'func{syntax_len_any_as_int}' do
+          expect(::String.respond_to?(:syntax_len_any_as_int)).to eq(true)
+          expect(::String.syntax_len_any_as_int.class).to eq(Regexp)
+          expect(::String.syntax_len_any_as_int.source).to eq("\\A#{::String::Syntax::LEN_ANY_AS_INT}\\z")
+        end
+
+        it 'func{syntax_len_3_as_inf' do
+          expect(::String.respond_to?(:syntax_len_3_as_inf)).to eq(true)
+          expect(::String.syntax_len_3_as_inf.class).to eq(Regexp)
+          expect(::String.syntax_len_3_as_inf.source).to eq("\\A#{::String::Syntax::LEN_3_AS_INF}\\z")
+        end
+
+        it 'func{syntax_len_3_as_int' do
+          expect(::String.respond_to?(:syntax_len_3_as_int)).to eq(true)
+          expect(::String.syntax_len_3_as_int.class).to eq(Regexp)
+          expect(::String.syntax_len_3_as_int.source).to eq("\\A#{::String::Syntax::LEN_3_AS_INT}\\z")
+        end
+
+        it 'func{syntax_len_3_as_flt' do
+          expect(::String.respond_to?(:syntax_len_3_as_flt)).to eq(true)
+          expect(::String.syntax_len_3_as_flt.class).to eq(Regexp)
+          expect(::String.syntax_len_3_as_flt.source).to eq("\\A#{::String::Syntax::LEN_3_AS_FLT}\\z")
+        end
+
+      end
+
+    end
+
     it 'by creating needed aliases' do
-      RuuubyTestHelper::CONFIG_STRING[:ruby].∀{ |func| expect(::String.∃⨍?(func)).to eq(true) }
+      expect_added_ruby_methods(::String, cΔ_String)
+
       RuuubyTestHelper::CONFIG_STRING[:c].∀{ |func| expect(::String.∃⨍?(func)).to eq(true) }
       RuuubyTestHelper::CONFIG_STRING[:aliases].∀{ |aliased_func, base_func| expect(::String.∃⨍?(aliased_func)).to eq(true) }
     end
+
+    context 'func{digit?}' do
+      context 'handles needed scenarios' do
+        it 'cases: positive' do
+          data_range_ints_zero_to_nine.∀ do |scenario|
+            expect(scenario.to_s.digit?).to eq(true)
+          end
+        end
+        it 'cases: negative' do
+          expect('+1'.digit?).to eq(false)
+          expect('-1'.digit?).to eq(false)
+          expect('1.'.digit?).to eq(false)
+          expect('1.0'.digit?).to eq(false)
+          expect('.1'.digit?).to eq(false)
+        end
+      end
+    end
+
+    context 'func{∞?}' do
+      context 'handles needed scenarios' do
+        it 'cases: positive' do
+          expect('∞'.∞?).to eq(true)
+          expect('+∞'.∞?).to eq(true)
+          expect('-∞'.∞?).to eq(true)
+
+          expect('♾️'.∞?).to eq(true)
+          expect('+♾️'.∞?).to eq(true)
+          expect('-♾️'.∞?).to eq(true)
+        end
+        it 'cases: negative' do
+          expect('∞∞'.∞?).to eq(false)
+          expect('++∞'.∞?).to eq(false)
+          expect('- ∞'.∞?).to eq(false)
+
+          expect('♾️∞'.∞?).to eq(false)
+          expect('♾️+'.∞?).to eq(false)
+          expect('--♾️'.∞?).to eq(false)
+        end
+      end
+    end
+
+    context 'func{to_num} and func{to_num?}' do
+      context 'handles needed scenarios' do
+        context 'cases: positive' do
+
+          context 'validates special formats and characters' do
+            it 'infinity' do
+              expect('∞'.to_num).to eq(data_float_inf)
+              expect('+∞'.to_num).to eq(data_float_inf)
+              expect('-∞'.to_num).to eq(data_float_negative_inf)
+
+              expect('♾️'.to_num).to eq(data_float_inf)
+              expect('+♾️'.to_num).to eq(data_float_inf)
+              expect('-♾️'.to_num).to eq(data_float_negative_inf)
+            end
+            it 'pie(π)' do
+              expect('π'.to_num).to eq(π)
+              expect('+π'.to_num).to eq(π)
+              expect('-π'.to_num).to eq(-π)
+            end
+            it 'golden-ratio(φ)' do
+              expect('φ'.to_num).to eq(φ)
+              expect('+φ'.to_num).to eq(φ)
+              expect('-φ'.to_num).to eq(-φ)
+            end
+
+            context 'for func{to_num?}' do
+              it 'same-cases' do
+                expect('∞'.to_num?).to eq(true)
+                expect('+∞'.to_num?).to eq(true)
+                expect('-∞'.to_num?).to eq(true)
+
+                expect('♾️'.to_num?).to eq(true)
+                expect('+♾️'.to_num?).to eq(true)
+                expect('-♾️'.to_num?).to eq(true)
+
+                expect('π'.to_num?).to eq(true)
+                expect('+π'.to_num?).to eq(true)
+                expect('-π'.to_num?).to eq(true)
+
+                expect('φ'.to_num?).to eq(true)
+                expect('+φ'.to_num?).to eq(true)
+                expect('-φ'.to_num?).to eq(true)
+              end
+            end
+          end
+
+          context 'valid formats of length 1' do
+            it 'all cases' do
+              data_range_ints_zero_to_nine.∀ do |scenario|
+                expect_regular_int(scenario.to_s.to_num, scenario)
+              end
+            end
+            context 'for func{to_num?}' do
+              it 'same-cases' do
+                data_range_ints_zero_to_nine.∀ do |scenario|
+                  expect(scenario.to_s.to_num?).to eq(true)
+                end
+              end
+            end
+          end
+
+          context 'valid formats of length 2' do
+            it 'equaling 0' do
+              expect_regular_int('00'.to_num, 0)
+              expect_regular_int('-0'.to_num, 0)
+              expect_regular_int('+0'.to_num, 0)
+              expect_regular_flt('.0'.to_num, 0.0)
+            end
+            it 'equaling whole number' do
+              expect_regular_int('01'.to_num, 1)
+              expect_regular_int('10'.to_num, 10)
+              expect_regular_int('13'.to_num, 13)
+            end
+            it 'equaling decimal number' do
+              expect_regular_flt('.1'.to_num, 0.1)
+              expect_regular_flt('.9'.to_num, 0.9)
+            end
+            context 'for func{to_num?}' do
+              it 'same-cases' do
+                %w(00 -0 +0 .0 01 10 13 .1 .9).∀ do |scenario|
+                  expect(scenario.to_num?).to eq(true)
+                end
+              end
+            end
+          end
+          context 'valid formats of length 3' do
+            it 'equaling 0' do
+              expect_regular_int('000'.to_num, 0)
+              expect_regular_int('-00'.to_num, 0)
+              expect_regular_int('+00'.to_num, 0)
+              expect_regular_flt('0.0'.to_num, 0)
+            end
+            it 'equaling whole number' do
+              expect_regular_int('001'.to_num, 1)
+              expect_regular_int('+01'.to_num, 1)
+              expect_regular_int('-01'.to_num, -1)
+              expect_regular_int('456'.to_num, 456)
+              expect_regular_int('+56'.to_num, 56)
+              expect_regular_int('-56'.to_num, -56)
+              expect_regular_flt('4.0'.to_num, 4.0)
+              expect_regular_flt('4.7'.to_num, 4.7)
+            end
+            it 'equaling decimal number' do
+              expect_regular_flt('+.1'.to_num, 0.1)
+              expect_regular_flt('-.1'.to_num, -0.1)
+              expect_regular_flt('1.1'.to_num, 1.1)
+            end
+            it 'scientific notation' do
+              expect_regular_flt('1e1'.to_num, 10.0)
+              expect_regular_flt('4e5'.to_num, 4e5)
+            end
+            context 'for func{to_num?}' do
+              it 'same-cases' do
+                %w(000 -00 +00 0.0 001 +01 -01 456 +56 -56 4.0 4.7 +.1 -.1 1.1 1e1 4e5).∀ do |scenario|
+                  expect(scenario.to_num?).to eq(true)
+                end
+              end
+            end
+          end
+          context 'valid formats of length > 3' do
+            it 'handles all' do
+              expect_regular_int('1337133713371337'.to_num, 1337133713371337)
+              expect_regular_int('+1337133713371337'.to_num, 1337133713371337)
+              expect_regular_int('-1337133713371337'.to_num, -1337133713371337)
+
+              expect_regular_flt('-3e33'.to_num, -3e33)
+              expect_regular_flt('1.3371337e3'.to_num, (1.3371337e3))
+              expect_regular_flt('+1.3371337e3'.to_num, (1.3371337e3))
+              expect_regular_flt('-1.3371337e3'.to_num, (-1.3371337e3))
+            end
+            context 'for func{to_num?}' do
+              it 'same-cases' do
+                %w(1337133713371337 +1337133713371337 -1337133713371337 -3e33 1.3371337e3 +1.3371337e3 -1.3371337e3).∀ do |scenario|
+                  expect(scenario.to_num?).to eq(true)
+                end
+              end
+            end
+          end
+        end
+        context 'cases: error' do
+          it 'empty string' do
+            expect{''.to_num}.to raise_error(RuntimeError)
+          end
+          it 'invalid formats of length 1' do
+            expect{'-'.to_num}.to raise_error(RuntimeError)
+            expect{'+'.to_num}.to raise_error(RuntimeError)
+            expect{'.'.to_num}.to raise_error(RuntimeError)
+            expect{'a'.to_num}.to raise_error(RuntimeError)
+            expect{"\n".to_num}.to raise_error(RuntimeError)
+          end
+          it 'invalid formats of length 2' do
+            expect{'-+'.to_num}.to raise_error(RuntimeError)
+            expect{'1+'.to_num}.to raise_error(RuntimeError)
+            expect{'+.'.to_num}.to raise_error(RuntimeError)
+            expect{'aa'.to_num}.to raise_error(RuntimeError)
+
+            # such scenarios will not be allowed
+            expect{'0.'.to_num}.to raise_error(RuntimeError)
+            expect{'7.'.to_num}.to raise_error(RuntimeError)
+          end
+          context 'for func{to_num?}' do
+            it 'same-cases' do
+              %w(- + . a \n -+ 1+ +. aa 0. 7.).∀ do |scenario|
+                expect(scenario.to_num?).to eq(false)
+              end
+            end
+          end
+        end
+      end
+    end
+
 
     context 'func{ensure_ending!}' do
       context 'handles cases' do
@@ -199,6 +450,8 @@ RSpec.describe 'str' do
     let(:big_str){'ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^'}
     let(:a_str){'any54wyv45hv'}
 
+    # TODO: HEAVY COVERAGE AUDIT REQUIRED
+
     it 'func[∋?] runs fast enough' do
       expect{a_str.∋? 'c'}.to perform_very_quickly
     end
@@ -238,6 +491,9 @@ RSpec.describe 'str' do
         end
       end
     end
+
+    # TODO: LOTS OF MISSING COVERAGE
+
   end
 
 end
