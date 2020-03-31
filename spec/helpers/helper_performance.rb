@@ -8,6 +8,10 @@ RSpec.shared_context 'lets_performance' do
   let(:pΔ_85){1.85}
   let(:pΔ_90){1.90}
   let(:pΔ_105){2.05}
+  let(:pΔ_400){5.00}
+  let(:pΔ_600){7.00}
+  let(:pΔ_700){8.00}
+
 end
 
 module PerformanceTestHelper

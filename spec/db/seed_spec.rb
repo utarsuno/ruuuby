@@ -14,6 +14,7 @@ RSpec.describe 'db/seed.rb' do
   let(:v0_0_20){RuuubyRelease.find_by_uid(0, 0, 20)}
   let(:v0_0_21){RuuubyRelease.find_by_uid(0, 0, 21)}
   let(:v0_0_22){RuuubyRelease.find_by_uid(0, 0, 22)}
+  let(:v0_0_23){RuuubyRelease.find_by_uid(0, 0, 23)}
 
   let(:f04){RuuubyFeature.by_id_num(4)}
   let(:f06){RuuubyFeature.by_id_num(6)}
@@ -28,12 +29,13 @@ RSpec.describe 'db/seed.rb' do
   let(:f19){RuuubyFeature.by_id_num(19)}
   let(:f20){RuuubyFeature.by_id_num(20)}
   let(:f21){RuuubyFeature.by_id_num(21)}
+  let(:f22){RuuubyFeature.by_id_num(22)}
 
   context 'static functions work' do
     context 'func{find_by_uid} handles needed scenarios' do
       it 'positive' do
-        expect(RuuubyRelease.find_by_uid('v0.0.22')).to eq(RuuubyRelease.find_by_uid(0, 0, 22))
-        expect(RuuubyRelease.find_by_uid('0.0.22')).to eq(RuuubyRelease.find_by_uid(0, 0, 22))
+        expect(RuuubyRelease.find_by_uid('v0.0.23')).to eq(RuuubyRelease.find_by_uid(0, 0, 23))
+        expect(RuuubyRelease.find_by_uid('0.0.23')).to eq(RuuubyRelease.find_by_uid(0, 0, 23))
       end
       it 'negative (version DNE)' do
         expect{RuuubyRelease.find_by_uid(0, 0, 1337)}.to raise_error(RuntimeError)
@@ -83,6 +85,9 @@ RSpec.describe 'db/seed.rb' do
       end
       it 'defines f21' do
         audit_feature(f21, 'f21', 'enable easier textual/numerical/syntax parsing')
+      end
+      it 'defines f22' do
+        audit_feature(f22, 'f22', "create or extend a `numeric` in order to properly support `Complex Infinity`")
       end
     end # end: features
 
@@ -143,6 +148,12 @@ RSpec.describe 'db/seed.rb' do
       context 'v0.0.22' do
         it 'as expected' do
           audit_version(v0_0_22, 'v0.0.22')
+        end
+      end
+
+      context 'v0.0.23' do
+        it 'as expected' do
+          audit_version(v0_0_23, 'v0.0.23')
         end
       end
     end

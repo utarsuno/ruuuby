@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.22'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.23'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -74,11 +74,12 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 
 > (⚠️ full-coverage wip): raising to powers(via-superscripts: `⁻⁹...⁻¹, ⁰, ¹...⁹`) with operator(`^`)
 
-| class(es)  | example | notes |
-| ----------:| ------- | ----- |
-| `Integer`  | `1337^²`   | - coexists with `Integer`'s default existing `bitwise XOR` functionality <br/> - `performance penalties`: up to `105%` `slower` than using operator(`**`) |
-| `Float`    | `1337.1337^²` | `performance penalties`: up to `90%` `slower` than using operator(`**`) |
-| `Rational`, `Complex`, `BigDecimal` | `inc` | `inc` |
+| class(es)  | example | utilizing C-extension? <br/> (java-wip) | notes |
+| ----------:| ------- | :---: |----- |
+| `Integer`  | `1337^²` | ✅ | - coexists with `Integer`'s default existing `bitwise XOR` functionality <br/> - `performance penalties`: up to `105%` `slower` than using operator(`**`) |
+| `Float`    | `1337.1337^²` | ✅ | `performance penalties`: up to `90%` `slower` than using operator(`**`) |
+| `Rational` | `3/4r^²` | ❌ | `performance penalties`: up to `700% slower` than using operator(`**`) |
+| `Complex`, `BigDecimal` | `inc` | `inc` | `inc` |
 
 #### Module Changes:
 
@@ -87,7 +88,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | module(s) | func(s) added     | as C-extension? <br/> (java-wip) | notes |
 | --------: | ----------------- | :------------------------: | ----- |
 | `Kernel`  | `📁`, `📂`, `🗄️` | ❌                         | - aliases for `::File`, `::Dir` <br/> - (`f12`) |
-| `Kernel`  | `√`, `∛`, `π`, `φ`, `γ`, `∠ᶜ`, `∠°`, `sin`, `sin°`, `cos`, `cos°` | ❌ | - math syntax sugar <br/> - (`f10`, `f17`) |
+| `Kernel`  | `√`, `∛`, `π`, `∞`, `∞ℂ`, `¿`, `φ`, `γ`, `∠ᶜ`, `∠°`, `sin`, `sin°`, `cos`, `cos°` | ❌ | - math syntax sugar <br/> - (`f10`, `f17`) |
 | `Kernel`  | `𝔠`               | ❌                         | - gets the `cardinality` (length/size) of arg <br/> - (`f03`) |
 | `Kernel`  | `🌽_previous_⨍`   | ❌                        | (`f10`) |
 | `Kernel`  | `∃module?`        | ❌                         | true-example: `∃module?(:Ruuuby)` |
@@ -127,7 +128,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `BigDecimal`           | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
 | `Complex`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
 | `Rational`             | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`       | ❌ | (`f11`) |
-| `Float`                | `≈≈`                               | ❌ | (`f17`) |
+| `Float`                | `≈≈`, `∞ℂ?`                        | ❌ | (`f17`) |
 | `Object`               | [`🛑bool❓`, `🛑🅱️❓`], `🛑int❓`, `🛑ℤ❓`, `🛑𝕌❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑countable❓` | ❌ | (`f04`) |
 
 #### Created Aliases:
@@ -154,16 +155,18 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Hash`                 | `key?`                                    | [`🔑?`, `🗝?`], [`∃🔑?`, `∃🗝?`] |  |
 | `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                      | (`f04`) |
 | `String`, `Array`, `Set`, `Hash`             | `length`            | `𝔠`                        | (`f03`) |
+| `Float`                | `nan?`                                    | `¿?`                      | (`f17`) |
+| `Integer`              | `finite?`                                  | `∞ℂ?`, `¿?`, `∞ℂ?`        | (`f17`) |
 
 ---
 
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 456      | # of tests (non-performance & non-audit based)                  |
-| QA        | performance   | 189      | # of tests (non-unit & non-audit based)                         |
-| CI        | audits        | 41       | # of tests (non-performance & non-unit based)                   |
-| structure | features      | ~24      | # of distinct features (that are categorized & tracked) `wip`   |
+| QA        | unit          | 562      | # of tests (non-performance & non-audit based)                  |
+| QA        | performance   | 214      | # of tests (non-unit & non-audit based)                         |
+| CI        | audits        | 43       | # of tests (non-performance & non-unit based)                   |
+| structure | features      | ~25      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |
 | coverage  | documentation | ???      | `wip` |

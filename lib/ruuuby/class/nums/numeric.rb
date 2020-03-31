@@ -74,6 +74,12 @@ class ::Numeric
   # @type [Symbol]
   EXPONENTIAL_9 = :⁹
 
+  # @type [Symbol]
+  EXPONENTIAL_INF = :∞
+
+  # @type [Symbol]
+  EXPONENTIAL_NEGATIVE_INF = :'-∞'
+
   # | ------------------------------------------------------------------------------------------------------------------
 
 end

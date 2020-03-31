@@ -46,6 +46,7 @@ RSpec.shared_context 'RSPEC_GLOBAL_UTILITIES' do
   let(:data_range_floats_positive){[1.0, 2.0, 3.0, 10.0, 1337.0]}
   let(:data_range_floats_zero_to_positive){[0.0] + data_range_floats_positive}
   let(:data_range_floats){data_range_floats_negative + data_range_floats_zero_to_positive}
+  let(:data_range_floats_w_infs){data_range_floats + [data_float_inf, data_float_negative_inf]}
   let(:data_range_floats_all_but_zero){data_range_floats_negative + data_range_floats_positive}
   let(:data_range_floats_boolean){[-1.0, 0.0, 1.0]}
   let(:data_range_ints){[-1337, -10, -3, -2, -1, 0, 1, 2, 3, 10, 1337]}
@@ -54,9 +55,17 @@ RSpec.shared_context 'RSPEC_GLOBAL_UTILITIES' do
   let(:data_range_ints_positive){[1, 2, 3, 10, 1337]}
   let(:data_range_ints_zero_to_positive){[0] + data_range_ints_positive}
   let(:data_range_ints_negative){[-1337, -10, -3, -2, -1]}
+  let(:data_range_rational_positive){[Rational(1, 1), Rational(2, 1), Rational(3, 1), Rational(10, 1), Rational(1337, 1)]}
+  let(:data_range_rational_positive_decimals){[Rational(1, 1.5), Rational(2, 1.5), Rational(10, 1.5), Rational(1337, 1.5)]}
+  let(:data_range_rational_zero_to_positive){[Rational(0)] + data_range_rational_positive}
+  let(:data_range_rational_negative){[Rational(-1337, 1), Rational(-10, 1), Rational(-3, 1), Rational(-2, 1), Rational(-1, 1)]}
+  let(:data_range_rational_all_but_zero){data_range_rational_negative + data_range_rational_positive}
+  let(:data_range_rational){data_range_rational_negative + data_range_rational_zero_to_positive}
   let(:data_rational_default){Rational(2, 3)}
   let(:data_rational_zero){Rational(0)}
   let(:data_rational_one){Rational(1, 1)}
+  let(:data_rational_3){Rational(3, 1)}
+  let(:data_rational_negative_3){Rational(-3, 1)}
   let(:data_rational_negative_one){Rational(-1, 1)}
   let(:data_rational_leet){Rational(1337, 1)}
   let(:data_rational_negative_leet){Rational(-1337, 1)}
@@ -96,6 +105,31 @@ RSpec.shared_context 'RSpecContextAudit' do
   let(:re_ruuuby_feature_docs_feature_mapping){RuuubyFeature.cache_fetch(re_ruuuby_feature::DOCS_FEATURE_MAPPING)}
   let(:re_ruuuby_release){RuuubyRelease::Syntax}
   let(:re_ruuuby_release_version){RuuubyRelease.cache_fetch(re_ruuuby_release::UID)}
+end
+
+module HelpersFeature16
+
+  def expect_scenarios_power_operations(scenarios, superscripts, power_operation, to_pass=true)
+
+    if power_operation == 0
+      scenarios.∀ do |n|
+        expect((n^(superscripts)) == 1).to eq(to_pass)
+      end
+    elsif power_operation == 1
+      scenarios.∀ do |n|
+        expect((n^(superscripts)) == n).to eq(to_pass)
+      end
+    elsif power_operation < 0
+      scenarios.∀ do |n|
+        expect((n^(superscripts)) == (Rational(1, n ** (-power_operation)))).to eq(to_pass)
+      end
+    else
+      scenarios.∀ do |n|
+        expect((n^(superscripts)) == (n ** power_operation)).to eq(to_pass)
+      end
+    end
+  end
+
 end
 
 module HelpersGeneral
@@ -156,6 +190,7 @@ RSpec.configure do |config|
   config.include_context 'RSPEC_GLOBAL_UTILITIES'
 
   config.include HelpersGeneral
+  config.include HelpersFeature16
 
   config.include_context 'RSpecContextAudit', :audits
   config.include AuditHelpers, :audits

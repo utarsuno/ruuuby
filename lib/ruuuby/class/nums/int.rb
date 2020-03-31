@@ -8,6 +8,9 @@ class ::Integer
   # @return [Boolean] false, there are no Ruby/Math integers(+ℤ+) representing infinity
   alias_method :∞?, :infinite?
   alias_method :♾️?, :infinite?
+  alias_method :∞ℂ?, :infinite?
+  alias_method :nan?, :infinite?
+  alias_method :¿?, :infinite?
 
   # @return [Boolean] true, all *non-negative* integers(+ℤ+) are considered in the set of natural-numbers(+ℕ+)
   def ℕ? ; self >= 0; end

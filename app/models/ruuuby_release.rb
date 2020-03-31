@@ -15,9 +15,6 @@ class RuuubyRelease < ApplicationRecord
     ❄️
   end
 
-end
-
-class RuuubyRelease < ApplicationRecord
   include ::ApplicationRecord::ORMAttributeUID
   include ::ApplicationRecord::ORMAttributeCache
 
@@ -165,7 +162,7 @@ class RuuubyRelease < ApplicationRecord
       return RuuubyRelease.generate_query_uid(*(self.parse_version_str(args[0])))
     end
     🛑ℤ❓($PRM_MANY, args)
-    RuuubyRelease.where(::RuuubyRelease::Syntax::SQL_UID, args[0], args[1], args[2])
+    RuuubyRelease.where(::RuuubyRelease::Syntax::SQL_UID, args[0].to_i, args[1].to_i, args[2].to_i)
   end
 
   🙈

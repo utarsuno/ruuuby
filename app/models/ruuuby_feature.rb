@@ -15,9 +15,7 @@ class RuuubyFeature < ApplicationRecord
     ❄️
   end
 
-end
 
-class RuuubyFeature < ApplicationRecord
   include ::ApplicationRecord::ORMAttributeUID
   include ::ApplicationRecord::ORMAttributeCache
 

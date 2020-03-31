@@ -52,18 +52,23 @@ module ::Ruuuby
       # @raise [WrongParamType]
       def 🛑ℤ❓(arg_name, arg)
         unless arg_name == $PRM_MANY
-          🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Integer, arg) unless (arg.int? && arg.ℤ?)
+          if arg.str? && arg.to_num?
+            as_num = arg.to_num
+            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Integer, arg) unless (as_num.num? && as_num.ℤ?)
+          else
+            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Integer, arg) unless (arg.num? && arg.ℤ?)
+          end
         else
           arg.∀ₓᵢ do |x, i|
             if x.str?
               if x.to_num?
                 as_num = x.to_num
-                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Integer, x) unless (as_num.int? && as_num.ℤ?)
+                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Integer, x) unless (as_num.num? && as_num.ℤ?)
               else
                 🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Integer, x)
               end
-            elsif x.int?
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Integer, x) unless (x.int? && x.ℤ?)
+            elsif x.num?
+              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Integer, x) unless (x.num? && x.ℤ?)
             else
               🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Integer, x)
             end
@@ -77,7 +82,12 @@ module ::Ruuuby
       # @raise [WrongParamType]
       def 🛑𝕌❓(arg_name, arg)
         unless arg_name == $PRM_MANY
-          🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, :𝕌, arg) unless (arg.num? && arg.𝕌?)
+          if arg.str? && arg.to_num?
+            as_num = arg.to_num
+            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", :𝕌, x) unless (as_num.num? && as_num.𝕌?)
+          else
+            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, :𝕌, arg) unless (arg.num? && arg.𝕌?)
+          end
         else
           arg.∀ₓᵢ do |x, i|
             if x.str?
@@ -131,8 +141,6 @@ module ::Ruuuby
       #
       # @raise [WrongParamType]
       def 🛑ary❓(arg_name, arg)
-        #caller_locations.first.label.to_s
-        #caller_locations_prev_func
         unless arg_name == $PRM_MANY
           🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Array, arg) unless arg.ary?
         else

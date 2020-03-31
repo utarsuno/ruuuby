@@ -30,7 +30,7 @@ module ExtconfConfigHelper
   end
 
   module Headers
-    FOR_RUBY = %w(ruby ruby/assert ruby/debug ruby/defines ruby/encoding ruby/intern ruby/version)
+    FOR_RUBY = %w(ruby ruby/assert ruby/debug ruby/defines ruby/encoding ruby/intern ruby/version ruby/missing)
     #FOR_C    = %w(stdio unistd sys/types sys/stat sys/param sys/mount fcntl string stdlib)
     FOR_C    = %w(sys/types string stdlib)
     ALL      = FOR_RUBY + FOR_C + ["ruby_class_mods"]

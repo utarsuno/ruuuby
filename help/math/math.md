@@ -54,6 +54,7 @@
 | 0x22 | `injective function` | `injection`, `one-to-one function` | "a `function` that `maps distinct elements` of its `domain` to `distinct elements` of its `codomain`" | "every element of the `function's codomain` is the `image` of at most one element of its `domain` |
 | 0x23 | `bijective functions` | | "`functions` such that each element in the `codomain` is an `image` of exactly on element in the `domain` | |
 | 0x24 | `Jacobian matrix` | | "In `vector calculus`, the `Jacobian matrix`, of a `vector-valued function` in several variables is the `matrix` of all its first-order `partial derivatives`" | |
+| 0x25 | `Reimann sphere` | | "is a `model` of the `extended complex plane`, the `complex plane` plus a `point at infinity`" | "this `extended plane` represents the `extended complex numbers`, that is, the `complex numbers` plus a value `∞` for `infinity` |
 
 
 | # | more | example |
@@ -81,11 +82,22 @@
  * TODO:
    * `(d/dx)x^ᵃ = ax^ᵃ⁻ᵇ, {ᵇ=1}`
 
+### Rationals
+
+ * `0/0` means `⟶0 / ⟶0` where `⟶0` means `approaching to`
+ * `⟶∞` and `∞` are equivalent notation
+ * `⟶0` and `0` are not equivalent notation
+   * ex: the ONLY answer for (`5/0`) is `division by zero not defined`
+   * ex: `0/0` is `not defined`
+   * ex: `⟶0 / ⟶0` is `indeterminate`
+
+
 ### TODO: Unit-Tests
  * `additive identity` for each `Numeric` sub-class
 
 #### TODOs
 
+* https://en.wikipedia.org/wiki/Riemann_sphere
 * https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant
 * https://en.wikipedia.org/wiki/Category_theory
 * https://en.wikipedia.org/wiki/Image_(mathematics)
@@ -97,6 +109,7 @@
 * http://functions.wolfram.com/Constants/ComplexInfinity/introductions/Symbols/ShowAll.html
 * https://en.wikipedia.org/wiki/Directed_infinity
 * https://en.wikipedia.org/wiki/Argument_(complex_analysis)
+* https://www.quora.com/What-is-the-value-of-one-to-the-power-infinity
 
 ```
 

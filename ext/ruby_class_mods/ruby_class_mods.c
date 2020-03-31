@@ -112,6 +112,11 @@ ________________________________________________________________________________
 #define raise_err_bad_arg_type(error_message, error_param) rb_raise(ERROR_ARGUMENT, error_message, rb_obj_classname(error_param));
 #define raise_err_array_bad_arg_type(func_name, them)      raise_err_bad_arg_type("| c{Array}-> m{" #func_name "} got arg(them) w/ type{%s}, required-type{Array} |", them)
 #define raise_err_string_bad_arg_type(func_name, them)     raise_err_bad_arg_type("| c{String}-> m{" #func_name "} got arg(them) w/ type{%s}, required-type{String} |", them)
+#define raise_err_int_bad_power                            rb_raise(ERROR_RUNTIME,"| c{Integer}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
+#define raise_err_flt_bad_power                             rb_raise(ERROR_RUNTIME,"| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
+#define raise_err_rational_bad_power                       rb_raise(ERROR_RUNTIME,"| c{Rational}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
+
+#define raise_err_if_power_does_not_match_1337_or_1338_or_1339(err_to_raise) if(power_to_raise_to != 1337 && power_to_raise_to != 1338 && power_to_raise_to != 1339){err_to_raise}
 
 #define ensure_not_frozen(arg_to_check) rb_check_frozen(arg_to_check);
 
@@ -144,11 +149,16 @@ ________________________________________________________________________________
 #define r_func(func_name, expr) r_func_raw(func_name, return (expr) ? Qtrue : Qfalse;)
 #define c_func(func_name, expr) declare_func(func_name, expr, void, void)
 
-#define re_ye  return Qtrue;
-#define re_no  return Qfalse;
-#define re_me  return self;
-#define re_1   return ℤ1;
-#define re_n1  return ℤn1;
+#define re_ye           return Qtrue;
+#define re_no           return Qfalse;
+#define re_me           return self;
+#define re_0            return ℤ0;
+#define re_nan          return cached_flt_nan;
+#define re_inf          return cached_flt_inf;
+#define re_negative_inf return cached_flt_negative_inf;
+#define re_inf_complex  return cached_flt_inf_complex;
+#define re_1            return ℤ1;
+#define re_n1           return ℤn1;
 // essentially returns "self.send(func_name, arg)"
 #define re_me_func_1args(func_name, arg) return rb_funcall(self, func_name, 1, arg);
 
@@ -157,6 +167,7 @@ ________________________________________________________________________________
 #define r_get_class(r_class) rb_const_get(rb_cObject, rb_intern(r_class));
 
 #define get_numerical_const(the_num) NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern(the_num))))
+#define get_float_const(the_num) NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cFloat, rb_intern(the_num))))
 #define internal_define_set_exponential_negative(num_position, num_val) exponential_ids[num_position] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_n" #num_val))));
 #define internal_define_set_exponential(num_position, num_val)          exponential_ids[num_position] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_" #num_val))));
 
@@ -255,30 +266,63 @@ r_func_self_them(m_int_patch_for_exponentials,
         const unsigned long id_to_find = NUM2ULONG(rb_obj_id(them));
         unsigned long * the_result    = bsearch_ulong(id_to_find)
         if(the_result != NULL) {
-            switch(exponential_indexes[(((int)the_result - (int)exponential_ids) / 𝔠ULONG)]) {
-            case -9: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn9)
-            case -8: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn8)
-            case -7: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn7)
-            case -6: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn6)
-            case -5: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn5)
-            case -4: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn4)
-            case -3: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn3)
-            case -2: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn2)
-            case -1: return rb_rational_new(ℤ1, self);
-            case 0: re_1
-            case 1: re_me
-            case 2: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ2)
-            case 3: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ3)
-            case 4: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ4)
-            case 5: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ5)
-            case 6: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ6)
-            case 7: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ7)
-            case 8: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ8)
-            case 9: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ9)
-            default:
-                re_me_func_1args(cached_rb_intern_ints_bitwise_xor, them)
+
+            const int power_to_raise_to = exponential_indexes[(((int)the_result - (int)exponential_ids) / 𝔠ULONG)];
+
+            if (power_to_raise_to < 10) {
+                switch(power_to_raise_to) {
+                case -9: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn9)
+                case -8: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn8)
+                case -7: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn7)
+                case -6: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn6)
+                case -5: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn5)
+                case -4: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn4)
+                case -3: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn3)
+                case -2: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn2)
+                case -1: return rb_rational_new(ℤ1, self);
+                case 0:  re_1
+                case 1:  re_me
+                case 2:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ2)
+                case 3:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ3)
+                case 4:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ4)
+                case 5:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ5)
+                case 6:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ6)
+                case 7:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ7)
+                case 8:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ8)
+                case 9:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ9)
+                default: re_me_func_1args(cached_rb_intern_ints_bitwise_xor, them)
+                }
+            } else {
+                raise_err_if_power_does_not_match_1337_or_1338_or_1339(raise_err_int_bad_power)
+
+                const int val_self = NUM2INT(self);
+
+                if (power_to_raise_to == 1339) {
+                    if (val_self == 0) {
+                        re_0
+                    } else {
+                        re_nan
+                    }
+                }
+
+                if (val_self == 1 || val_self == -1) {
+                    re_nan
+                } else if (val_self == 0) {
+                    if (power_to_raise_to == 1337) {
+                        re_0
+                    } else {
+                        re_inf_complex
+                    }
+                } else if (power_to_raise_to == 1338) {
+                    re_0
+                } else if (val_self > 1) {
+                    re_inf
+                } else {
+                    re_negative_inf
+                }
             }
-        } else { re_me_func_1args(cached_rb_intern_ints_bitwise_xor, them) }
+        } else { raise_err_int_bad_power }
+        //} else { re_me_func_1args(cached_rb_intern_ints_bitwise_xor, them) }
     }
 )
 
@@ -290,47 +334,81 @@ ________________________________________________________________________________
 
 // | function{^} |
 r_func_self_them(m_flt_patch_for_exponentials,
+
+    // TODO: skip the 'is_sym' check?
     if (is_sym(them)) {
         const unsigned long id_to_find = NUM2ULONG(rb_obj_id(them));
         unsigned long * the_result    = bsearch_ulong(id_to_find);
-        if(the_result != NULL) {
+        if (the_result != NULL) {
             const double val_self = NUM2DBL(self); // RFLOAT_VALUE(self);
             if (isnan(val_self)) {rb_raise(ERROR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") may not be raised to an exponential power |", self);}
             const int power_to_raise_to = exponential_indexes[(((int)the_result - (int)exponential_ids) / 𝔠ULONG)];
             if (val_self == 0.0 && power_to_raise_to < 0) {
                 rb_raise(ERROR_DIVIDE_BY_ZERO, "| c{Float}-> m{^} self(%"PRIsVALUE") may not be raised to a negative exponential power |", self);
             }
-            switch(power_to_raise_to) {
-            case -9: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn9)
-            case -8: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn8)
-            case -7: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn7)
-            case -6: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn6)
-            case -5: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn5)
-            case -4: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn4)
-            case -3: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn3)
-            case -2: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn2)
-            case -1: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn1)
-            case 0:
-                if (isinf(val_self)) {
-                    rb_raise(ERROR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") may not be raised to an exponential power(0) |", self);
-                } else if (val_self >= 0) { re_1 } else { re_n1 }
-            case 1: re_me
-            case 2: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ2)
-            case 3: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ3)
-            case 4: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ4)
-            case 5: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ5)
-            case 6: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ6)
-            case 7: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ7)
-            case 8: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ8)
-            case 9: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ9)
-            default:
-                rb_raise(ERROR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") received invalid argument(%"PRIsVALUE") |", self, them);
+
+            if (power_to_raise_to < 10) {
+                switch(power_to_raise_to) {
+                case -9: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn9)
+                case -8: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn8)
+                case -7: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn7)
+                case -6: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn6)
+                case -5: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn5)
+                case -4: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn4)
+                case -3: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn3)
+                case -2: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn2)
+                case -1: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn1)
+                case 0:  if (isinf(val_self)) {re_nan} else { re_1 }
+                case 1:  re_me
+                case 2:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ2)
+                case 3:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ3)
+                case 4:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ4)
+                case 5:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ5)
+                case 6:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ6)
+                case 7:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ7)
+                case 8:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ8)
+                case 9:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ9)
+                default: raise_err_flt_bad_power
+                }
+            } else {
+                raise_err_if_power_does_not_match_1337_or_1338_or_1339(raise_err_flt_bad_power)
+
+                if (val_self == 1.0 || val_self == -1.0) {
+                    re_nan
+                } else if (power_to_raise_to == 1337) {
+                    if (isinf(val_self)) {
+                        re_inf_complex
+                    } else if (val_self >= 0.0 && val_self < 1.0) {
+                        re_0
+                    } else if (val_self > 1.0) {
+                        re_inf
+                    } else if (val_self < 0.0 && val_self > -1.0) {
+                        re_0
+                    } else {
+                        re_negative_inf
+                    }
+                } else if (power_to_raise_to == 1338) {
+                    if (val_self == 0.0) {
+                        re_inf_complex
+                    } else if (val_self > 0.0 && val_self < 1.0) {
+                        re_inf
+                    } else if (val_self > 1.0) {
+                        re_0
+                    } else if (val_self < 0.0 && val_self > -1.0) {
+                        re_negative_inf
+                    } else {
+                        re_0
+                    }
+                } else {
+                    if (val_self == 0.0) {
+                        re_0
+                    } else {
+                        re_nan
+                    }
+                }
             }
-        } else {
-            rb_raise(ERROR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
-        }
-    } else { rb_raise(ERROR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them); }
-    //} else { re_me_func_1args(cached_rb_intern_raise_to_power, them) }
+        } else { raise_err_flt_bad_power }
+    } else { raise_err_flt_bad_power }
 )
 
 /*___________________________________________________________________________________________________________________
@@ -590,7 +668,7 @@ c_func(Init_ruby_class_mods,
     ensure_loaded_attribute_includable(syntax_cache)
     ensure_loaded_attribute_extendable(syntax_cache)
 
-    ensure_loaded_class(sym)
+    ensure_loaded_class(sym) // must be after{attribute_cardinality}
 
     ensure_loaded_class(str) // must be after{attribute_syntax_cache, attribute_cardinality}
     ensure_loaded_io(file)    // must be after{attribute_syntax_cache}
@@ -598,6 +676,11 @@ c_func(Init_ruby_class_mods,
 
     ensure_loaded_ruuuby(version)
     // | --------------------------------- |
+
+    cached_flt_nan          = rb_const_get_at(R_FLT, rb_intern("NAN"));
+    cached_flt_inf          = rb_const_get_at(R_FLT, rb_intern("INFINITY"));
+    cached_flt_negative_inf = rb_const_get_at(R_FLT, rb_intern("INFINITY_NEGATIVE"));
+    cached_flt_inf_complex  = rb_const_get_at(R_FLT, rb_intern("INFINITY_COMPLEX"));
 
     // ____________________________________ ⚠️ ____________________________________
 
@@ -620,6 +703,9 @@ c_func(Init_ruby_class_mods,
     internal_define_set_exponential(16, 7)
     internal_define_set_exponential(17, 8)
     internal_define_set_exponential(18, 9)
+    exponential_ids[19] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_INF"))));
+    exponential_ids[20] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_NEGATIVE_INF"))));
+    exponential_ids[21] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cFloat, rb_intern("INFINITY_COMPLEX"))));
 
     qsort(exponential_ids, 𝔠EXPONENTS, 𝔠ULONG, internal_only_compare_func_4_object_id);
 
@@ -642,6 +728,9 @@ c_func(Init_ruby_class_mods,
     assign_exponential_index_position(get_numerical_const("EXPONENTIAL_7"), 7);
     assign_exponential_index_position(get_numerical_const("EXPONENTIAL_8"), 8);
     assign_exponential_index_position(get_numerical_const("EXPONENTIAL_9"), 9);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_INF"), 1337);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_NEGATIVE_INF"), 1338);
+    assign_exponential_index_position(get_float_const("INFINITY_COMPLEX"), 1339);
 
     // ____________________________________ ⚠️ ____________________________________
 

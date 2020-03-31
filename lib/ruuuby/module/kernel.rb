@@ -112,6 +112,15 @@ module ::Kernel
   # @return [Float]
   def π ; ::Math::PI ; end
 
+  # @return [Float] Float::INFINITY
+  def ∞ ; ::Float::INFINITY ; end
+
+  # @return [Float] Float::NAN
+  def ¿ ; ::Float::NAN ; end
+
+  # @return [Symbol] 'complex-infinity'
+  def ∞ℂ ; :∞ℂ ; end
+
   # pre-computed value of `golden-ratio`
   #
   # @return [Float]

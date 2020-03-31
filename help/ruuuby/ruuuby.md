@@ -45,12 +45,6 @@
 | special-symbols | https://unicode-table.com/en/sets/special-symbols/ |
 | unicode-math | https://en.wikipedia.org/wiki/Mathematical_operators_and_symbols_in_Unicode |
 
-#### Ruby Build
-
-```
-CC=/usr/bin/gcc rbenv install 2.7.0
-```
-
 
 #### helpful links
 
@@ -64,20 +58,10 @@ CC=/usr/bin/gcc rbenv install 2.7.0
 
  * document this: https://blog.bigbinary.com/2016/11/18/ruby-2-4-unifies-fixnum-and-bignum-into-integer.html
  
- * https://silverhammermba.github.io/emberb/c/#string // You can pass the string VALUE to rb_str_export_locale() to get a new VALUE with your locale’s encoding
-
 #### Temporary Code (to be cleaned up for future versions)
 
 ```ruby
 
-module Kernel
-  # @param [String] path
-  #
-  # @return [::Dir] a new Dir object with the provided path
-  def 📁(path)
-    ::Dir.new(path)
-  end
-end
 
 class Array
   #  :⋂, :⋃, :uniq_to_them
@@ -225,142 +209,6 @@ end
   end
 =end
 
-  def ₋₂ ; self[-2] ; end
-  def ₋₁ ; self[-1] ; end
-  def ₀  ; self[0]  ; end
-  def ₁  ; self[1]  ; end
-
-
-=begin
-
-# TODO: automate this type of tracking (ex: parse git history)
-# 0.0.18
- * unit:        n
- * performance: n
- * audits:      n
- * features:    ~21
-
-# 0.0.18
- * unit:        292
- * performance: 143
- * audits:      29
- * features:    ~20
-
-# 0.0.17
- * unit:        274
- * performance: 132
- * audits:      12
- * features:    6
-
-* 0.0.16
- * unit:        238
- * performance: 124
- * audits:      12
-
-# 0.0.15
- * unit:        219
- * performance: 111
- * audits:      8
-
-
-    context 'adds support for power operations' do
-
-      context 'by supporting operation {^⁰}' do
-        context 'handles needed scenarios' do
-          it 'cases: positive' do
-            data_range_complex_simple.∀{|n| expect(n^⁰).to eq(1)}
-            data_range_complex.∀{|n| expect(n^⁰).to eq(1)}
-          end
-          it 'cases: negative' do
-            data_complex_error_cases.∀{|n| expect{n^⁰}.to raise_error(RuntimeError)}
-            expect{data_infinity_with_complex^⁰}.to raise_error(RuntimeError)
-            expect{data_negative_infinity_with_complex^⁰}.to raise_error(RuntimeError)
-            expect{data_nan_with_complex^⁰}.to raise_error(RuntimeError)
-          end
-        end
-      end
-
-      context 'by supporting operation {^¹}' do
-        context 'handles needed scenarios' do
-          it 'cases: positive' do
-            data_range_complex_simple.∀{|n| expect(n^¹).to eq(n)}
-            data_range_complex.∀{|n| expect(n^¹).to eq(n)}
-            expect(data_complex_inf^¹).to eq(data_complex_inf)
-            expect(data_complex_negative_inf^¹).to eq(data_complex_negative_inf)
-            expect(data_infinity_with_complex^¹).to eq(data_infinity_with_complex)
-            expect(data_negative_infinity_with_complex^¹).to eq(data_negative_infinity_with_complex)
-          end
-          it 'cases: negative' do
-            expect{data_complex_nan^¹}.to raise_error(RuntimeError)
-            expect{data_nan_with_complex^¹}.to raise_error(RuntimeError)
-          end
-        end
-      end
-
-      context 'by supporting operation {^²}' do
-        context 'handles needed scenarios' do
-          it 'cases: positive' do
-            data_range_complex_simple.∀{|n| expect(n^²).to eq(n * n)}
-            data_range_complex.∀{|n| expect(n^²).to eq(n * n)}
-            expect(data_complex_inf^²).to eq(data_complex_inf)
-            expect(data_complex_negative_inf^²).to eq(data_complex_inf)
-            expect(data_infinity_with_complex^²).to eq(data_infinity_with_complex)
-            expect(data_negative_infinity_with_complex^²).to eq(data_negative_infinity_with_complex)
-          end
-          it 'cases: negative' do
-            expect{data_complex_nan^²}.to raise_error(RuntimeError)
-            expect{data_nan_with_complex^²}.to raise_error(RuntimeError)
-          end
-        end
-      end
-
-    end
-
-
-  # @param [Numeric|Symbol] them | if 🆔 matches a power (ex: ²), then essentially perform: Math.pow(self, them)
-  def ^(them)
-    pow_match = ::Numeric::POW_IDS_OBJ_ID_TO_INTS.fetch(them.🆔, -1337)
-    case(pow_match)
-    when -1337
-      🛑 ArgumentError.🆕("| c{Complex}-> m{^}, got arg(them) as{#{them.to_s}}, a {#{them.class.to_s}}, it's object_id did not match any of the pre-defined math power symbols |")
-    when 0
-      return 1 if self.𝕌?
-      🛑 RuntimeError.🆕("| c{Complex}-> m{^}, self is{#{self.to_s}}, which may not be raised to power(0) |")
-    when 1
-      return self unless self.real.nan?
-      🛑 RuntimeError.🆕("| c{Complex}-> m{^}, self is{#{self.to_s}}, which may not be raised to power(1) |")
-    else
-      return self ** pow_match unless self.real.nan?
-      🛑 RuntimeError.🆕("| c{Complex}-> m{^}, self is{#{self.to_s}}, which may not be raised to power(#{pow_match.to_s}) |")
-    end
-  end
-
-  # @param [Numeric|Symbol] them | if 🆔 matches a power (ex: ²), then essentially perform: Math.pow(self, them)
-  def ^(them)
-    pow_match = self.get_pow_match(them.🆔)
-    case(pow_match)
-    when -1337
-      🛑 ArgumentError.🆕("| c{BigDecimal}-> m{^}, got arg(them) as{#{them.to_s}}, a {#{them.class.to_s}}, it's object_id did not match any of the pre-defined math power symbols |")
-    else
-      self ** pow_match
-    end
-  end
-
-  # @param [Numeric|Symbol] them | if 🆔 matches a power (ex: ²), then essentially perform: Math.pow(self, them)
-  def ^(them)
-    pow_match = self.get_pow_match(them.🆔)
-    case(pow_match)
-    when -1
-      🛑 ArgumentError.🆕("| c{Rational}-> m{^}, got arg(them) as{#{them.to_s}}, a {#{them.class.to_s}}, it's object_id did not match any of the pre-defined math power symbols |")
-    else
-      self ** pow_match
-    end
-  end
-
-
-  # @return
-  #def ❌ ; -1337 ; end
-
 
 module ::Ruuuby
 
@@ -431,72 +279,6 @@ end
           end
         end
 
-
         # TODO: USE REGEX TO PARSE CURRENTLY KNOWN FORMAT RULES!
 
 =end
-
-class ::Integer
-=begin
-
-  # default operation{"Bitwise EXCLUSIVE OR"}; a check is added in to allow operations such as `5^²`
-  #
-  # @overload
-  #
-  # @param [Numeric|Symbol] them | if 🆔 matches a power (ex: ²), then essentially perform: Math.pow(self, them); otherwise default bitwise operation
-  #
-  # @return [Numeric] "The result may be an Integer, a Float, a Rational, or a complex number."
-  #def ^(them)
-  #  return self.bitwise_xor(them) if them.int?
-    #if ::Numeric::MATH_SET_EXPONENTS.∋?(them.object_id)
-    #  ::Numeric::MATH_SET_EXPONENTS.find_index
-    #end
-
-  #  case(::Numeric::MATH_OPERATIONS_POWERS.fetch(them.🆔, -1337))
-  #  when -1337
-  #    self.bitwise_xor(them)
-  #  when 0
-  #    return 1
-  #  when 1
-  #    self
-  #  else
-  #    self ** ::Numeric::MATH_OPERATIONS_POWERS[them.🆔]
-  #  end
-  #end
-
-    pow_match = ::Numeric::MATH_OPERATIONS_POWERS.fetch(them.🆔, -1337)
-    case(pow_match)
-    when -1337
-      self.bitwise_xor(them)
-    when 0
-      return 1
-    when 1
-      self
-    else
-      self ** pow_match
-    end
-=end
-
-end
-
-class ::Array
-  # @return [Boolean] true, if this array has a length(+𝔠+) of *1*
-  def 𝔠₁?; self.𝔠 == 1; end
-
-  # @return [Boolean] true, if this array has a length(+𝔠+) of *2*
-  def 𝔠₂?; self.𝔠 == 2; end
-
-  # @return [Boolean] true, if this array has a length(+𝔠+) of *2*
-  def 𝔠₃?; self.𝔠 == 3; end
-end
-
-class ApplicationRecord < ActiveRecord::Base
-
-end
-    it 'defines func{uid}' do
-      expect(::ApplicationRecord.∃func?(:uid)).to eq(true)
-    end
-
-#TODO: Section for tech_debts
-
-```

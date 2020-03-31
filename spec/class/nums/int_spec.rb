@@ -75,8 +75,15 @@ RSpec.describe 'int.rb' do
     context 'by adding function{infinite?}' do
       context 'handles needed scenarios' do
         it 'cases: false' do
-          data_range_ints.∀{|n| expect(n.infinite?).to eq(false)}
-          data_range_ints.∀{|n| expect(n.∞?).to eq(false)}
+          data_range_ints.∀{|n| expect(n.infinite? || n.∞? || n.♾️? || n.∞ℂ?).to eq(false)}
+        end
+      end
+    end
+
+    context 'by adding functions{nan?, ¿?}' do
+      context 'handles needed scenarios' do
+        it 'cases: false' do
+          data_range_ints.∀{|n| expect(n.nan? || n.¿?).to eq(false)}
         end
       end
     end
@@ -94,16 +101,6 @@ RSpec.describe 'int.rb' do
           expect(1337 ^ 1337).to eq(0)
           expect(1337 ^ 0).to eq(1337)
           expect(0 ^ 1337).to eq(1337)
-        end
-      end
-
-      context 'handles bad args' do
-        it 'non-symbols & non-numeric' do
-          expect{0^(nil)}.to raise_error(TypeError)
-        end
-        it 'un-supported dynamic evaluation' do
-          expect{0^⁻⁹⁹}.to raise_error(NameError)
-          expect{0^⁻}.to raise_error(NameError)
         end
       end
 
@@ -294,6 +291,14 @@ RSpec.describe 'int.rb' do
         it 'for cases: false' do
           expect{data_int_leet.∞?}.to perform_extremely_quickly
           expect{data_int_leet.infinite?}.to perform_extremely_quickly
+          expect{data_int_leet.∞ℂ?}.to perform_extremely_quickly
+        end
+      end
+
+      context 'func{nan?}' do
+        it 'for cases: false' do
+          expect{data_int_leet.nan?}.to perform_extremely_quickly
+          expect{data_int_leet.¿?}.to perform_extremely_quickly
         end
       end
 

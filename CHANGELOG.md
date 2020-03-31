@@ -8,7 +8,7 @@
  * clear `tech debt` and all `feature abstracts`
    * adding `automatic differentiation` should involve near `0% (of time allocation)` towards `version-relating documentation & audits`
 
-#### v0.0.23-v0.0.25
+#### v0.0.24-v0.0.30
  * resolve missing coverage from `v0.0.17`
  * resolve missing coverage from `v0.0.18`
  * resolve missing coverage from `v0.0.22`
@@ -17,6 +17,23 @@
  * start automation/abstraction of state & configs for CLI based APIs, tools, and scripts (gem `tty-command` providing core functionality)
  * start automation/abstraction of code-file (content) management
  * continuation of (`f15`) in relation to above 2 points
+
+---
+
+# v0.0.23
+ * (starting-point) add support for representing `Complex Infinity`; (for now) via Symbol(`∞ℂ`)
+ * add Feature(`f03`) and Attribute(`SubscriptIndexing`) to Class(`Symbol`)
+ * add missing tests and fix bugs (missing scenario coverage) for c(`Object`)'s funcs `🛑ℤ❓` and `🛑𝕌❓`
+ * `power-operations` given support for working with 'custom' `infinitity values`, Class(`Rational`) given support for `superscript-power-operations`
+ * various consts defined into c(`Float`) but to soon be moved into (`f98`)
+ 
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Kernel` | `¿`, `∞`, `∞ℂ` | `f10`, `f17` |
+| `Integer` | `¿?`, `nan?`, `∞ℂ?` | `f17` |
+| `Float` | `¿?`, `∞ℂ?` | `f17` |
+| `Symbol` | `power?`, `pow_to_i` | `TODO_LABEL` |
+| `Rational` | `^` | `f16` |
 
 ---
 
@@ -117,7 +134,7 @@
 ---
 
 # v0.0.18
- * ⚠️ intermediate patch (full testing coverage of this patch to be concluded within `0.0.19`-`0.0.22`)
+ * ⚠️ intermediate patch (full testing coverage of this patch to be concluded within `0.0.19`-`0.0.30`)
  * renaming existing func(`🛑str_or_ary❓`) to(`🛑countable❓`); it now checks for `Set` as well
  * add `gem 'sqlite3', '~> 1.4.2'`
  * add `gem 'activerecord', '~> 5.2.4.1'`

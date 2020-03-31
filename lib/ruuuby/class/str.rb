@@ -90,8 +90,8 @@ module ::Ruuuby
       def ∞?
         case(self.length)
         when 1 ; self == '∞'
-        when 2 ; %w(+∞ -∞ ♾️).include?(self)
-        when 3 ; %w(+♾️ -♾️).include?(self)
+        when 2 ; ::String::Syntax::SQL_LEN_2_INF.∋?(self)
+        when 3 ; ::String::Syntax::SQL_LEN_3_INF.∋?(self)
         else   ; false
         end
       end
@@ -106,7 +106,7 @@ module ::Ruuuby
 
       # @raise [WrongParamType]
       #
-      # @return [Numeric]
+      # @return [Numeric, Symbol]
       def to_num
         case(self.length)
         when 0
@@ -121,6 +121,7 @@ module ::Ruuuby
           end
         when 2
           if self.∞?
+            return ::Float::INFINITY_COMPLEX if self == '∞ℂ'
             return self.₀?('-') ? -Float::INFINITY : Float::INFINITY
           end
           case(self.₀)
@@ -195,18 +196,14 @@ class ::String
     # @type [String]
     LEN_ANY        = '[+-]?\d+?((\.\d+e?\d*)|(e\d+))?'.❄️
 
-    #DIRECT_REPRESENTATIONS = ['π', 'φ', '∞'].❄️
-    #REPRESENTATIONS        = '[+-]?(π|φ|∞|♾️)'.❄️
-    #POSITIVE_INFINITIES    = %w(+∞ -∞ ♾️).❄️
-    #INFINITIES             = %w(∞ ♾️).❄️
+    # @type [Array]
+    SQL_LEN_2_INF = %w(+∞ -∞ ♾️ ∞ℂ).❄️
+
+    # @type [Array]
+    SQL_LEN_3_INF = %w(+♾️ -♾️).❄️
 
     ❄️
   end
-
-end
-
-# add various functions to existing class +String+
-class ::String
 
   include ::Ruuuby::Attribute::Includable::SubscriptIndexing
 
@@ -219,6 +216,7 @@ class ::String
   include ::Ruuuby::Feature::F09String
   # ---------------------------------------------------------------------------------------------------------- | *f21* |
   alias_method :🛑⨍_to_num, :err_to_num
+
   include ::Ruuuby::Feature::F21String
   # ---------------------------------------------------------------------------------------------------------- | *f03* |
   alias_method :𝔠, :length

@@ -25,6 +25,7 @@
 | f19 | add support for automatic-differentiation                              |
 | f20 | enable easier (general) syntax & pattern parsing                       |
 | f21 | enable easier textual/numerical/syntax parsing                         |
+| f22 | create or extend a `numeric` in order to properly support `Complex Infinity` |
 | f96 | automate local `git` configurations                                     |
 | f97 | `JRuby-extensions`                                                     |
 | f98 | `C-extensions`                                                         |

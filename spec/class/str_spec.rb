@@ -78,6 +78,8 @@ RSpec.describe 'str' do
           expect('♾️'.∞?).to eq(true)
           expect('+♾️'.∞?).to eq(true)
           expect('-♾️'.∞?).to eq(true)
+
+          expect('∞ℂ'.∞?).to eq(true)
         end
         it 'cases: negative' do
           expect('∞∞'.∞?).to eq(false)
@@ -87,6 +89,8 @@ RSpec.describe 'str' do
           expect('♾️∞'.∞?).to eq(false)
           expect('♾️+'.∞?).to eq(false)
           expect('--♾️'.∞?).to eq(false)
+
+          expect('ℂ∞'.∞?).to eq(false)
         end
       end
     end
@@ -104,6 +108,8 @@ RSpec.describe 'str' do
               expect('♾️'.to_num).to eq(data_float_inf)
               expect('+♾️'.to_num).to eq(data_float_inf)
               expect('-♾️'.to_num).to eq(data_float_negative_inf)
+
+              expect('∞ℂ'.to_num).to eq(::Float::INFINITY_COMPLEX)
             end
             it 'pie(π)' do
               expect('π'.to_num).to eq(π)
@@ -115,7 +121,6 @@ RSpec.describe 'str' do
               expect('+φ'.to_num).to eq(φ)
               expect('-φ'.to_num).to eq(-φ)
             end
-
             context 'for func{to_num?}' do
               it 'same-cases' do
                 expect('∞'.to_num?).to eq(true)
@@ -125,6 +130,8 @@ RSpec.describe 'str' do
                 expect('♾️'.to_num?).to eq(true)
                 expect('+♾️'.to_num?).to eq(true)
                 expect('-♾️'.to_num?).to eq(true)
+
+                expect('∞ℂ'.to_num?).to eq(true)
 
                 expect('π'.to_num?).to eq(true)
                 expect('+π'.to_num?).to eq(true)

@@ -29,8 +29,10 @@ ________________________________________________________________________________
 
 #define M_PIE 3.14159265358979323846264338327950288
 
-// superscripts: -9 to +9
-#define 𝔠EXPONENTS 19
+#define RELATIVE_ERROR 0.00001
+
+// superscripts: -9 to +9 (and 3 spots for infs)
+#define 𝔠EXPONENTS 22
 #define 𝔠ULONG sizeof(unsigned long)
 // rb_ary_new: uses a default size of 16
 #define 𝔠ARY_DEFAULT 16L
@@ -60,6 +62,11 @@ static const VALUE ℤ9  = INT2NUM(9);
  /  `  /\  /  ` |__| |__
  \__, /~~\ \__, |  | |___
 ____________________________________________________________________________________________________________________________________________________________________ */
+
+static VALUE cached_flt_nan;
+static VALUE cached_flt_inf;
+static VALUE cached_flt_negative_inf;
+static VALUE cached_flt_inf_complex;
 
 // | 0x0 |
 static VALUE cached_module_ruuuby;

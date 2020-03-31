@@ -41,7 +41,7 @@ module RuuubyTestHelper
 
   module Nums
     CONFIG_INTEGER = {
-        ruby: [:finite?, :infinite?, :♾️?, :∞?] + RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
+        ruby: [:finite?, :infinite?, :♾️?, :∞?, :∞ℂ?, :nan?, :¿?] + RuuubyTestHelper::FeatureMath::NUMERICAL_SETS
     }
     CONFIG_FLOAT = {
         ruby: RuuubyTestHelper::FeatureMath::NUMERICAL_SETS

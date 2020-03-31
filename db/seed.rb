@@ -17,6 +17,7 @@ f18 = RuuubyFeature.spawn(18, 'simplify import/require statements')
 f19 = RuuubyFeature.spawn(19, 'add support for automatic-differentiation')
 f20 = RuuubyFeature.spawn(20, 'enable easier (general) syntax & pattern parsing')
 f21 = RuuubyFeature.spawn(21, 'enable easier textual/numerical/syntax parsing')
+f22 = RuuubyFeature.spawn(22, 'create or extend a `numeric` in order to properly support `Complex Infinity`')
 
 v0_0_0 = RuuubyRelease.spawn(0, 0, 0)
 v0_0_0.add_comments('initial project creation')
@@ -205,13 +206,33 @@ v0_0_22.changelog.added_method_to_class(f21, :digit?, ::String)
 v0_0_22.changelog.added_method_to_class(f21, :to_num, ::String)
 v0_0_22.changelog.added_method_to_class(f21, :to_num?, ::String)
 
+v0_0_23 = RuuubyRelease.spawn(0, 0, 23)
+v0_0_23.add_comments(
+    [
+        '(starting-point) add support for representing `Complex Infinity` through Symbol(`∞ℂ`)',
+        'add Feature(`f03`) and Attribute(`SubscriptIndexing`) to Class(`Symbol`)',
+        'add missing tests and fix bugs with c(`Object`)\'s funcs `🛑ℤ❓` and `🛑𝕌❓`',
+        '`power-operations` given support for working with `infinitity values`, Class(`Rational`) given support for `superscript-power-operations`',
+        'various consts defined into c(`Float`) but to soon be moved into (`f98`)'
+    ]
+)
+v0_0_23.changelog.added_method_to_class(f10, :∞ℂ, ::Kernel)
+v0_0_23.changelog.added_method_to_class(f10, :∞, ::Kernel)
+v0_0_23.changelog.added_method_to_class(f10, :¿, ::Kernel)
+v0_0_23.changelog.added_method_to_class(f17, :¿?, ::Integer)
+v0_0_23.changelog.added_method_to_class(f17, :nan?, ::Integer)
+v0_0_23.changelog.added_method_to_class(f17, :∞ℂ?, ::Integer)
+v0_0_23.changelog.added_method_to_class(f17, :¿?, ::Float)
+v0_0_23.changelog.added_method_to_class(f17, :∞ℂ?, ::Float)
 
-
-# TODO: FOR v0.0.23? (), ADD OBJECT/FUNC TO GATHER ALL RELEASES AND THEN PRINT OUT CHANGELOG
+# TODO: FOR v0.0.24? (), ADD OBJECT/FUNC TO GATHER ALL RELEASES AND THEN PRINT OUT CHANGELOG
 # (to remove code below)
 
 =begin
 puts "PRINTING DOCS"
+v0_0_23.docs_changelog.each do |line|
+    puts line
+end
 v0_0_22.docs_changelog.each do |line|
     puts line
 end

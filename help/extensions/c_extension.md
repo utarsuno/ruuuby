@@ -1,9 +1,14 @@
 
+| resources |
+| --- |
+| https://docs.ruby-lang.org/en/2.7.0/extension_rdoc.html#label-Ruby+Language+Core |
+
 ## Ruby Methods
 
 ```
-https://en.wikipedia.org/wiki/List_of_mathematical_symbols
-table taken from:
+
+# TODO: finish documenting this (look for option to create stackless-func-call)
+table from:
 https://we4tech.wordpress.com/2013/05/09/different-type-methods-in-ruby/
 ```
 
@@ -72,6 +77,9 @@ static inline int rb_toupper(int c) { return rb_islower(c) ? (c&0x5f) : c; }
 ### WIP :P
 
 ```c
+
+ * https://silverhammermba.github.io/emberb/c/#string // You can pass the string VALUE to rb_str_export_locale() to get a new VALUE with your locale’s encoding
+
 
 #define MYFILE "FILE_PATH_=)"
 int m_file_get_last_n_bytes();

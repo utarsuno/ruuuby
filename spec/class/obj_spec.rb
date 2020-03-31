@@ -151,6 +151,112 @@ RSpec.describe 'Object' do
       end
     end
 
+    context 'by adding function{🛑ℤ❓}' do
+      context 'handles needed input scenarios' do
+        context 'cases: positive' do
+          context 'w/ single param' do
+            it 'handles numericals' do
+              expect{🛑ℤ❓('0', 3)}.to_not raise_error
+              expect{🛑ℤ❓('0', 3.0)}.to_not raise_error
+              expect{🛑ℤ❓('0', Rational(3, 1))}.to_not raise_error
+              expect{🛑ℤ❓('0', Complex(3, 0))}.to_not raise_error
+              expect{🛑ℤ❓('0', BigDecimal('3.0'))}.to_not raise_error
+            end
+            it 'handles strings representing numericals' do
+              expect{🛑ℤ❓('0', '0')}.to_not raise_error
+              expect{🛑ℤ❓('0', '1.0')}.to_not raise_error
+            end
+          end
+          context 'w/ many params' do
+            it 'handles numericals' do
+              expect{🛑ℤ❓($PRM_MANY, [0, 3, 3.0, Rational(3, 1), Complex(3, 0), BigDecimal('3.0')])}.to_not raise_error
+            end
+            it 'handles strings representing numericals' do
+              expect{🛑ℤ❓($PRM_MANY, [0, 1, 2, '3'])}.to_not raise_error
+              expect{🛑ℤ❓($PRM_MANY, ['0', 0, '3', '3.0', 5])}.to_not raise_error
+            end
+          end
+        end
+        context 'cases: negative' do
+          context 'w/ single param' do
+            it 'handles numericals not falling within ℤ' do
+              expect{🛑ℤ❓('0', data_float_nan)}.to raise_error(ArgumentError)
+              expect{🛑ℤ❓('0', data_float_inf)}.to raise_error(ArgumentError)
+              expect{🛑ℤ❓('0', data_float_negative_inf)}.to raise_error(ArgumentError)
+            end
+            it 'handles string-numericals not falling within ℤ' do
+              expect{🛑ℤ❓('0', '-∞')}.to raise_error(ArgumentError)
+            end
+          end
+          context 'w/ many params' do
+            it 'handles numericals not falling within 𝕌' do
+              expect{🛑ℤ❓($PRM_MANY, [0, 3, data_float_nan])}.to raise_error(ArgumentError)
+              expect{🛑ℤ❓($PRM_MANY, [0, 3, '-∞'])}.to raise_error(ArgumentError)
+            end
+            it 'handles non-numericals' do
+              expect{🛑ℤ❓($PRM_MANY, [0, nil, 1])}.to raise_error(ArgumentError)
+              expect{🛑ℤ❓($PRM_MANY, ['', 0, 1])}.to raise_error(ArgumentError)
+              expect{🛑ℤ❓($PRM_MANY, [0, 1, []])}.to raise_error(ArgumentError)
+            end
+          end
+        end
+      end
+    end
+
+    context 'by adding function{🛑𝕌❓}' do
+      context 'handles needed input scenarios' do
+        context 'cases: positive' do
+          context 'w/ single param' do
+            it 'handles numericals' do
+              expect{🛑𝕌❓('0', 0)}.to_not raise_error
+              expect{🛑𝕌❓('0', 1.337)}.to_not raise_error
+              expect{🛑𝕌❓('0', Rational(3, 5))}.to_not raise_error
+              expect{🛑𝕌❓('0', Complex(2, 3))}.to_not raise_error
+              expect{🛑𝕌❓('0', BigDecimal('1.337'))}.to_not raise_error
+            end
+            it 'handles strings representing numericals' do
+              expect{🛑𝕌❓('0', '0')}.to_not raise_error
+              expect{🛑𝕌❓('0', '-1.337')}.to_not raise_error
+            end
+          end
+          context 'w/ many params' do
+            it 'handles numericals' do
+              expect{🛑𝕌❓($PRM_MANY, [0, 3, 3.0, Rational(3, 1), Complex(3, 0), BigDecimal('3.0')])}.to_not raise_error
+            end
+            it 'handles strings representing numericals' do
+              expect{🛑𝕌❓($PRM_MANY, [-1, 0, 1, 2, '3'])}.to_not raise_error
+            end
+          end
+        end
+        context 'cases: negative' do
+          context 'w/ single param' do
+            it 'handles numericals not falling within 𝕌' do
+              expect{🛑𝕌❓('0', data_float_nan)}.to raise_error(ArgumentError)
+              expect{🛑𝕌❓('0', data_float_inf)}.to raise_error(ArgumentError)
+              expect{🛑𝕌❓('0', data_float_negative_inf)}.to raise_error(ArgumentError)
+            end
+            it 'handles non-numericals' do
+              expect{🛑𝕌❓('0', nil)}.to raise_error(ArgumentError)
+              expect{🛑𝕌❓('0', [])}.to raise_error(ArgumentError)
+              expect{🛑𝕌❓('0', '')}.to raise_error(ArgumentError)
+            end
+          end
+          context 'w/ many params' do
+            it 'handles numericals not falling within 𝕌' do
+              expect{🛑𝕌❓($PRM_MANY, [0, data_float_nan, 1])}.to raise_error(ArgumentError)
+              expect{🛑𝕌❓($PRM_MANY, [data_float_inf, 0, 1])}.to raise_error(ArgumentError)
+              expect{🛑𝕌❓($PRM_MANY, [0, 1, data_float_negative_inf])}.to raise_error(ArgumentError)
+            end
+            it 'handles non-numerical types' do
+              expect{🛑𝕌❓($PRM_MANY, [0, nil, 1])}.to raise_error(ArgumentError)
+              expect{🛑𝕌❓($PRM_MANY, ['', 0, 1])}.to raise_error(ArgumentError)
+              expect{🛑𝕌❓($PRM_MANY, [0, 1, []])}.to raise_error(ArgumentError)
+            end
+          end
+        end
+      end
+    end
+
     context 'by adding function{🛑countable❓}' do
       context 'handles needed input scenarios' do
         context 'cases: positive' do
@@ -532,6 +638,16 @@ RSpec.describe 'Object' do
       # TODO: missing coverage
       #it 'cases[negative]' do
       #  expect{🛑ℤ❓('0', '5')}.to perform_extremely_quickly
+      #end
+    end
+
+    context 'func{🛑𝕌❓}: performs very quickly' do
+      it 'cases[positive]' do
+        expect{🛑𝕌❓('0', 5)}.to perform_extremely_quickly
+      end
+      # TODO: missing coverage
+      #it 'cases[negative]' do
+      #  expect{🛑𝕌❓('0', '5')}.to perform_extremely_quickly
       #end
     end
 
