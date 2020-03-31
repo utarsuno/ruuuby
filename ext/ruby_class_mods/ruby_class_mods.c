@@ -63,7 +63,7 @@ ________________________________________________________________________________
 #define R_NIL      rb_cNilClass
 #define R_NUM      rb_cNumeric
 #define R_COMPLEX  rb_cComplex
-#define R_RATIONAL rb_cRational;
+#define R_RATIONAL rb_cRational
 #define R_HSH      rb_cHash
 #define R_ARY      rb_cArray
 #define R_FILE     rb_cFile
@@ -91,19 +91,20 @@ ________________________________________________________________________________
 
 #define r_type(arg_to_check, r_class) RB_TYPE_P(arg_to_check, r_class)
 
-#define is_nil(arg)           RTEST(NIL_P(arg))
-#define is_ary(arg)           r_type(arg, T_ARRAY)
-#define is_non_empty_ary(arg) (is_ary(arg) && is_empty_ary(arg))
-#define is_hsh(arg)           RB_TYPE_P(arg, T_HASH)
-#define is_non_empty_hsh(arg) (is_hsh(arg) && is_empty_hsh(arg))
-#define is_str(arg)           (CLASS_OF(arg) == R_STR)
-#define is_non_empty_str(arg) (is_str(arg) && is_empty_str(arg))
-#define is_int(arg)           RB_INTEGER_TYPE_P(arg)
-#define is_float(arg)          RB_FLOAT_TYPE_P(arg)
-#define is_fix_num(arg)        FIXNUM_P(arg)
-#define is_big_num(arg)       RB_TYPE_P(arg, T_BIGNUM)
-#define is_sym(arg)           SYMBOL_P(arg)
-#define is_bool(arg)          (r_type(arg, T_TRUE) || r_type(arg, T_FALSE))
+#define is_nil(arg)               RTEST(NIL_P(arg))
+#define is_ary(arg)               r_type(arg, T_ARRAY)
+#define is_non_empty_ary(arg)     (is_ary(arg) && is_empty_ary(arg))
+#define is_hsh(arg)               RB_TYPE_P(arg, T_HASH)
+#define is_non_empty_hsh(arg)     (is_hsh(arg) && is_empty_hsh(arg))
+#define is_str(arg)               (CLASS_OF(arg) == R_STR)
+#define is_non_empty_str(arg)     (is_str(arg) && is_empty_str(arg))
+#define is_int(arg)               RB_INTEGER_TYPE_P(arg)
+#define is_float(arg)              RB_FLOAT_TYPE_P(arg)
+#define is_fix_num(arg)            FIXNUM_P(arg)
+#define is_big_num(arg)           RB_TYPE_P(arg, T_BIGNUM)
+#define is_sym(arg)               SYMBOL_P(arg)
+#define is_bool(arg)              (r_type(arg, T_TRUE) || r_type(arg, T_FALSE))
+#define is_non_empty_generic(arg) (rb_respond_to(arg, cached_rb_intern_is_empty) && rb_funcall(arg, cached_rb_intern_is_empty, 0) == Qtrue)
 
 #define len_ary(ary) RARRAY_LEN(ary)
 #define len_str(str) RSTRING_LEN(str)
@@ -460,13 +461,13 @@ r_func_self_them(m_ary_prepend,
 // | function{remove_empty!} |
 r_func_raw(m_ary_remove_empty,
     ensure_not_frozen(self)
-    if (is_empty_ary(self)){re_me}
     long len_me = len_ary(self);
+    if (len_me == 0){re_me}
     long i;
     VALUE v;
     for (i = 0; i < len_me;) {
         v = RARRAY_PTR(self)[i];
-        if (is_nil(v) || is_non_empty_str(v) || is_non_empty_ary(v) || is_non_empty_hsh(v)) {
+        if (is_nil(v) || is_non_empty_str(v) || is_non_empty_ary(v) || is_non_empty_hsh(v) || is_non_empty_generic(v)) {
             r_ary_del_at(self, i);
             --len_me;
         } else {++i;}
@@ -563,11 +564,13 @@ r_func_self_them(m_ary_equal_contents,
 \__,    \__, \__/ |__/ |___    |___ | \|  |  |  \  |
 _____________________________________________________________________________________________________________________ */
 
+//static void at_exit (void) {
+    //printf("for when needed, this func will run after END {} blocks\n");
+//}
+
 c_func(Init_ruby_class_mods,
 
     // | f18 | load various Ruby internals |
-    ensure_loaded_default(set)
-    ensure_loaded_default(complex)
     ensure_loaded_default(bigdecimal)
     // | --------------------------------- |
 
@@ -578,6 +581,7 @@ c_func(Init_ruby_class_mods,
     cached_rb_intern_is_a             = rb_intern("is_a?");
     cached_rb_intern_ints_bitwise_xor = rb_intern("bitwise_xor");
     cached_rb_intern_raise_to_power   = rb_intern("**");
+    cached_rb_intern_is_empty         = rb_intern("empty?");
     // | --------------------------------- |
 
     /*___________________________________________________________________________________________________________
@@ -674,6 +678,7 @@ c_func(Init_ruby_class_mods,
     ensure_loaded_io(file)    // must be after{attribute_syntax_cache}
     ensure_loaded_io(dir)    // must be after{attribute_syntax_cache}
 
+    ensure_loaded_ruuuby(configs)
     ensure_loaded_ruuuby(version)
     // | --------------------------------- |
 
@@ -734,7 +739,42 @@ c_func(Init_ruby_class_mods,
 
     // ____________________________________ ⚠️ ____________________________________
 
-    // TODO: investigate if globals created in C (but not needed/exposed to Ruby) needed to guarded against garbage collection
-    //rb_global_variable();
+    rb_global_variable(& ℤn9);
+    rb_global_variable(& ℤn8);
+    rb_global_variable(& ℤn7);
+    rb_global_variable(& ℤn6);
+    rb_global_variable(& ℤn5);
+    rb_global_variable(& ℤn4);
+    rb_global_variable(& ℤn3);
+    rb_global_variable(& ℤn2);
+    rb_global_variable(& ℤn1);
+    rb_global_variable(& ℤ0);
+    rb_global_variable(& ℤ1);
+    rb_global_variable(& ℤ2);
+    rb_global_variable(& ℤ3);
+    rb_global_variable(& ℤ4);
+    rb_global_variable(& ℤ5);
+    rb_global_variable(& ℤ6);
+    rb_global_variable(& ℤ7);
+    rb_global_variable(& ℤ8);
+    rb_global_variable(& ℤ9);
+    rb_global_variable(& cached_rb_intern_is_a);
+    rb_global_variable(& cached_rb_intern_raise_to_power);
+    rb_global_variable(& cached_rb_intern_ints_bitwise_xor);
+    rb_global_variable(& cached_global_sym_many_args);
+    rb_global_variable(& cached_module_param_err);
+    rb_global_variable(& cached_module_ruuuby);
+    rb_global_variable(& cached_rb_intern_is_empty);
+    /*rb_global_variable(& cached_class_big_decimal);
+    rb_global_variable(& cached_flt_inf_complex);
+    rb_global_variable(& cached_flt_negative_inf);
+    rb_global_variable(& cached_flt_inf);
+    rb_global_variable(& cached_flt_nan);*/
 
+    //size_t rb_obj_memsize_of(VALUE);
+
+    //ruby_vm_at_exit(& at_exit);
+
+    // TODO: expand investigation
+    rb_gc_verify_internal_consistency();
 )

@@ -18,6 +18,7 @@ f19 = RuuubyFeature.spawn(19, 'add support for automatic-differentiation')
 f20 = RuuubyFeature.spawn(20, 'enable easier (general) syntax & pattern parsing')
 f21 = RuuubyFeature.spawn(21, 'enable easier textual/numerical/syntax parsing')
 f22 = RuuubyFeature.spawn(22, 'create or extend a `numeric` in order to properly support `Complex Infinity`')
+f23 = RuuubyFeature.spawn(23, 'gather statistics (and/or more debugging information) on `Ruuuby`')
 
 v0_0_0 = RuuubyRelease.spawn(0, 0, 0)
 v0_0_0.add_comments('initial project creation')
@@ -225,11 +226,23 @@ v0_0_23.changelog.added_method_to_class(f17, :∞ℂ?, ::Integer)
 v0_0_23.changelog.added_method_to_class(f17, :¿?, ::Float)
 v0_0_23.changelog.added_method_to_class(f17, :∞ℂ?, ::Float)
 
+v0_0_24 = RuuubyRelease.spawn(0, 0, 24)
+v0_0_24.add_file('lib/ruuuby/configs.rb', '', '', f23)
+v0_0_24.add_comments(
+    [
+        'ensure `Ruby` data created from `C-extensions` get safe-guarded against `garbage-collection`',
+        'start utilizing configs for `Ruuuby`, especially for debugging information'
+    ]
+)
+
 # TODO: FOR v0.0.24? (), ADD OBJECT/FUNC TO GATHER ALL RELEASES AND THEN PRINT OUT CHANGELOG
 # (to remove code below)
 
 =begin
 puts "PRINTING DOCS"
+v0_0_24.docs_changelog.each do |line|
+    puts line
+end
 v0_0_23.docs_changelog.each do |line|
     puts line
 end

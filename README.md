@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.23'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.24'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -165,8 +165,8 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
 | QA        | unit          | 562      | # of tests (non-performance & non-audit based)                  |
 | QA        | performance   | 214      | # of tests (non-unit & non-audit based)                         |
-| CI        | audits        | 43       | # of tests (non-performance & non-unit based)                   |
-| structure | features      | ~25      | # of distinct features (that are categorized & tracked) `wip`   |
+| CI        | audits        | 45       | # of tests (non-performance & non-unit based)                   |
+| structure | features      | ~26      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |
 | coverage  | documentation | ???      | `wip` |

@@ -323,8 +323,8 @@ RSpec.describe 'ary' do
         context 'positive' do
           it 'all empty' do
             expect([].remove_empty!).to eq([])
-            expect([nil, nil, nil, nil, nil, nil].remove_empty!).to eq([])
-            expect([nil, 1, nil, nil, nil, nil].remove_empty!).to eq([1])
+            expect([nil, nil, '', nil, [], Set[]].remove_empty!).to eq([])
+            expect([{}, 1, nil, nil, nil, nil].remove_empty!).to eq([1])
             expect([nil, nil, 'a', nil, 2, 'aa'].remove_empty!).to eq(['a', 2, 'aa'])
             expect([1, 2, 3].remove_empty!).to eq([1, 2, 3])
           end

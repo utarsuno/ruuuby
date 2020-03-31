@@ -5,7 +5,7 @@
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
 
-#define ensure_file_loaded(path)                  rb_require(path);
+#define ensure_file_loaded(path)                  if (rb_require(path) != Qtrue){printf("FAILED TO LOAD PATH{%s}\n", path);};
 #define ensure_loaded_ruuuby(path)               ensure_file_loaded("ruuuby/" #path)
 #define ensure_loaded_io(path)                   ensure_file_loaded("ruuuby/class/io/" #path)
 #define ensure_loaded_enumerable(path)           ensure_file_loaded("ruuuby/class/enumerable/" #path)
@@ -37,25 +37,25 @@ ________________________________________________________________________________
 // rb_ary_new: uses a default size of 16
 #define 𝔠ARY_DEFAULT 16L
 
-static const VALUE ℤn9 = INT2NUM(-9);
-static const VALUE ℤn8 = INT2NUM(-8);
-static const VALUE ℤn7 = INT2NUM(-7);
-static const VALUE ℤn6 = INT2NUM(-6);
-static const VALUE ℤn5 = INT2NUM(-5);
-static const VALUE ℤn4 = INT2NUM(-4);
-static const VALUE ℤn3 = INT2NUM(-3);
-static const VALUE ℤn2 = INT2NUM(-2);
-static const VALUE ℤn1 = INT2NUM(-1);
-static const VALUE ℤ0  = INT2NUM(0);
-static const VALUE ℤ1  = INT2NUM(1);
-static const VALUE ℤ2  = INT2NUM(2);
-static const VALUE ℤ3  = INT2NUM(3);
-static const VALUE ℤ4  = INT2NUM(4);
-static const VALUE ℤ5  = INT2NUM(5);
-static const VALUE ℤ6  = INT2NUM(6);
-static const VALUE ℤ7  = INT2NUM(7);
-static const VALUE ℤ8  = INT2NUM(8);
-static const VALUE ℤ9  = INT2NUM(9);
+static VALUE ℤn9 = INT2NUM(-9);
+static VALUE ℤn8 = INT2NUM(-8);
+static VALUE ℤn7 = INT2NUM(-7);
+static VALUE ℤn6 = INT2NUM(-6);
+static VALUE ℤn5 = INT2NUM(-5);
+static VALUE ℤn4 = INT2NUM(-4);
+static VALUE ℤn3 = INT2NUM(-3);
+static VALUE ℤn2 = INT2NUM(-2);
+static VALUE ℤn1 = INT2NUM(-1);
+static VALUE ℤ0  = INT2NUM(0);
+static VALUE ℤ1  = INT2NUM(1);
+static VALUE ℤ2  = INT2NUM(2);
+static VALUE ℤ3  = INT2NUM(3);
+static VALUE ℤ4  = INT2NUM(4);
+static VALUE ℤ5  = INT2NUM(5);
+static VALUE ℤ6  = INT2NUM(6);
+static VALUE ℤ7  = INT2NUM(7);
+static VALUE ℤ8  = INT2NUM(8);
+static VALUE ℤ9  = INT2NUM(9);
 
 /*____________________________________________________________________________________________________________________________________________________________________
   __        __        ___
@@ -79,6 +79,7 @@ static VALUE cached_class_big_decimal;
 static VALUE cached_rb_intern_ints_bitwise_xor;
 static VALUE cached_rb_intern_raise_to_power;
 static VALUE cached_rb_intern_is_a;
+static VALUE cached_rb_intern_is_empty;
 
 static unsigned long exponential_ids[𝔠EXPONENTS];
 // make these const ints?

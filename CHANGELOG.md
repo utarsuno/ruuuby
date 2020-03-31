@@ -8,7 +8,7 @@
  * clear `tech debt` and all `feature abstracts`
    * adding `automatic differentiation` should involve near `0% (of time allocation)` towards `version-relating documentation & audits`
 
-#### v0.0.24-v0.0.30
+#### v0.0.25-v0.0.30
  * resolve missing coverage from `v0.0.17`
  * resolve missing coverage from `v0.0.18`
  * resolve missing coverage from `v0.0.22`
@@ -17,6 +17,16 @@
  * start automation/abstraction of state & configs for CLI based APIs, tools, and scripts (gem `tty-command` providing core functionality)
  * start automation/abstraction of code-file (content) management
  * continuation of (`f15`) in relation to above 2 points
+
+---
+
+# v0.0.24
+ * ensure `Ruby` data created from `C-extensions` gets guarded against `garbage-collection`
+ * start utilizing configs for `Ruuuby`, especially for debugging information
+
+| added path | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/ruuuby/configs.rb` |  |  | `f23` |
 
 ---
 
