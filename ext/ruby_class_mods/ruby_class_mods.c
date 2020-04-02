@@ -28,7 +28,9 @@ ________________________________________________________________________________
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifndef CRUUUBY_H
 #include "ruby_class_mods.h"
+#endif
 
 //#include <unistd.h>
 //#include <sys/types.h>
@@ -47,83 +49,15 @@ ________________________________________________________________________________
 //#include <ruby/re.h>
 //#include <ruby/regex.h>
 
-
-/*____________________________________________________________________________________________________________________________________________________________________
-  __   __        __  ___           ___                         ___  __
- /  ` /  \ |\ | /__`  |   /\  |\ |  |     \  /  /\  |    |  | |__  /__`
- \__, \__/ | \| .__/  |  /~~\ | \|  |      \/  /~~\ |___ \__/ |___ .__/
-____________________________________________________________________________________________________________________________________________________________________ */
-// true  --> Qtrue
-// false --> Qfalse
-// nil   --> Qnil
-#define R_STR      rb_cString
-#define R_OBJ      rb_cObject
-#define R_INT      rb_cInteger
-#define R_FLT      rb_cFloat
-#define R_NIL      rb_cNilClass
-#define R_NUM      rb_cNumeric
-#define R_COMPLEX  rb_cComplex
-#define R_RATIONAL rb_cRational
-#define R_HSH      rb_cHash
-#define R_ARY      rb_cArray
-#define R_FILE     rb_cFile
-#define R_SYM      rb_cSymbol
-#define R_KRL      rb_mKernel
-
 /*____________________________________________________________________________________________________________________________________________________________________
             __   __   __   __       __   __   ___     __   __   __   __   ___  __   __          __
  |\/|  /\  /  ` |__) /  \ /__` .   |__) |__) |__  __ |__) |__) /  \ /  ` |__  /__` /__` | |\ | / _`
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
 
-#define ext_api_add_public_method_0args_to_class(r_class, func_name, the_func) rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 0);
-#define ext_api_add_public_method_1args_to_class(r_class, func_name, the_func) rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 1);
-#define ext_api_add_private_method_0args_to_class(r_class, func_name, the_func) rb_define_private_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 0);
-#define ext_api_add_private_method_1args_to_class(r_class, func_name, the_func) rb_define_private_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 1);
-
-#define ext_api_add_global_const_str(const_name, const_value)      rb_define_global_const(const_name, r_str_new_frozen_literal(const_value));
-#define ext_api_add_global_module(str)                             rb_define_module(str);
-#define ext_api_add_module_under(under_me, str)                    rb_define_module_under(under_me, str);
-#define ext_api_add_new_sub_class_under(under_me, base_class, str) rb_define_class_under(under_me, str, base_class);
-
-#define ext_api_add_func_alias(kclass, new_func_name, previous_func_name) rb_define_alias(kclass, new_func_name, previous_func_name);
-#define ext_api_add_const_under(kclass, const_name, const_value) rb_define_const(kclass, const_name, const_value);
-
-#define r_type(arg_to_check, r_class) RB_TYPE_P(arg_to_check, r_class)
-
-#define is_nil(arg)               RTEST(NIL_P(arg))
-#define is_ary(arg)               r_type(arg, T_ARRAY)
-#define is_non_empty_ary(arg)     (is_ary(arg) && is_empty_ary(arg))
-#define is_hsh(arg)               RB_TYPE_P(arg, T_HASH)
-#define is_non_empty_hsh(arg)     (is_hsh(arg) && is_empty_hsh(arg))
-#define is_str(arg)               (CLASS_OF(arg) == R_STR)
-#define is_non_empty_str(arg)     (is_str(arg) && is_empty_str(arg))
-#define is_int(arg)               RB_INTEGER_TYPE_P(arg)
-#define is_float(arg)              RB_FLOAT_TYPE_P(arg)
-#define is_fix_num(arg)            FIXNUM_P(arg)
-#define is_big_num(arg)           RB_TYPE_P(arg, T_BIGNUM)
-#define is_sym(arg)               SYMBOL_P(arg)
-#define is_bool(arg)              (r_type(arg, T_TRUE) || r_type(arg, T_FALSE))
-#define is_non_empty_generic(arg) (rb_respond_to(arg, cached_rb_intern_is_empty) && rb_funcall(arg, cached_rb_intern_is_empty, 0) == Qtrue)
-
-#define len_ary(ary) RARRAY_LEN(ary)
-#define len_str(str) RSTRING_LEN(str)
-#define len_hsh(hsh) RHASH_SIZE(hsh)
-
-#define raise_err_bad_arg_type(error_message, error_param) rb_raise(ERROR_ARGUMENT, error_message, rb_obj_classname(error_param));
-#define raise_err_array_bad_arg_type(func_name, them)      raise_err_bad_arg_type("| c{Array}-> m{" #func_name "} got arg(them) w/ type{%s}, required-type{Array} |", them)
-#define raise_err_string_bad_arg_type(func_name, them)     raise_err_bad_arg_type("| c{String}-> m{" #func_name "} got arg(them) w/ type{%s}, required-type{String} |", them)
-#define raise_err_int_bad_power                            rb_raise(ERROR_RUNTIME,"| c{Integer}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
-#define raise_err_flt_bad_power                             rb_raise(ERROR_RUNTIME,"| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
-#define raise_err_rational_bad_power                       rb_raise(ERROR_RUNTIME,"| c{Rational}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
-
 #define raise_err_if_power_does_not_match_1337_or_1338_or_1339(err_to_raise) if(power_to_raise_to != 1337 && power_to_raise_to != 1338 && power_to_raise_to != 1339){err_to_raise}
 
 #define ensure_not_frozen(arg_to_check) rb_check_frozen(arg_to_check);
-
-#define is_empty_hsh(arg) RHASH_EMPTY_P(arg)
-#define is_empty_str(arg) len_str(arg) == 0
-#define is_empty_ary(arg) len_ary(arg) == 0
 
 #define r_str_prepend(str, elem) rb_str_update(str, 0L, 0L, elem);
 #define r_ary_prepend(ary, elem) rb_ary_unshift(ary, elem);
@@ -138,10 +72,6 @@ ________________________________________________________________________________
 #define r_hsh_has_key(hsh, key) (rb_hash_has_key(hsh, key) == Qtrue)
 #define r_ary_has(ary, elem) rb_ary_includes(ary, elem)
 
-#define r_ary_get(ary, index) rb_ary_entry(ary, index)
-#define r_ary_add(ary, elem) rb_ary_push(ary, elem);
-#define r_ary_del_at(ary, index) rb_ary_delete_at(ary, index);
-
 #define declare_func(func_name, expr, return_type, single_param) return_type func_name(single_param);return_type func_name(single_param){expr}
 #define declare_static_func(func_name, expr, return_type, single_param) static return_type func_name(single_param);static return_type func_name(single_param){expr}
 #define r_func_raw(func_name, expr) declare_static_func(func_name, expr, VALUE, VALUE self)
@@ -150,25 +80,15 @@ ________________________________________________________________________________
 #define r_func(func_name, expr) r_func_raw(func_name, return (expr) ? Qtrue : Qfalse;)
 #define c_func(func_name, expr) declare_func(func_name, expr, void, void)
 
-#define re_ye           return Qtrue;
-#define re_no           return Qfalse;
-#define re_me           return self;
-#define re_0            return ℤ0;
-#define re_nan          return cached_flt_nan;
-#define re_inf          return cached_flt_inf;
-#define re_negative_inf return cached_flt_negative_inf;
-#define re_inf_complex  return cached_flt_inf_complex;
-#define re_1            return ℤ1;
-#define re_n1           return ℤn1;
-// essentially returns "self.send(func_name, arg)"
-#define re_me_func_1args(func_name, arg) return rb_funcall(self, func_name, 1, arg);
-
 #define r_add_global_const(const_name, const_value) rb_define_global_const(const_name, const_value);
 #define r_add_global_const_str(const_name, const_value) r_add_global_const("" #const_name, cstr_to_rstr("" #const_value))
 #define r_get_class(r_class) rb_const_get(rb_cObject, rb_intern(r_class));
 
 #define get_numerical_const(the_num) NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern(the_num))))
 #define get_float_const(the_num) NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cFloat, rb_intern(the_num))))
+
+
+
 #define internal_define_set_exponential_negative(num_position, num_val) exponential_ids[num_position] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_n" #num_val))));
 #define internal_define_set_exponential(num_position, num_val)          exponential_ids[num_position] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_" #num_val))));
 
@@ -185,6 +105,167 @@ ________________________________________________________________________________
   /  `    | |\ |  |  |__  |__) |\ |  /\  |       |__| |__  |    |__) |__  |__) /__`
   \__,    | | \|  |  |___ |  \ | \| /~~\ |___    |  | |___ |___ |    |___ |  \ .__/
 _____________________________________________________________________________________________________________________ */
+
+static inline void internal_only_prepare_f16() {
+    cached_flt_nan          = rb_const_get_at(R_FLT, rb_intern("NAN"));
+    cached_flt_inf          = rb_const_get_at(R_FLT, rb_intern("INFINITY"));
+    cached_flt_negative_inf = rb_const_get_at(R_FLT, rb_intern("INFINITY_NEGATIVE"));
+    cached_flt_inf_complex  = rb_const_get_at(R_FLT, rb_intern("INFINITY_COMPLEX"));
+
+    internal_define_set_exponential_negative(0, 9)
+    internal_define_set_exponential_negative(1, 8)
+    internal_define_set_exponential_negative(2, 7)
+    internal_define_set_exponential_negative(3, 6)
+    internal_define_set_exponential_negative(4, 5)
+    internal_define_set_exponential_negative(5, 4)
+    internal_define_set_exponential_negative(6, 3)
+    internal_define_set_exponential_negative(7, 2)
+    internal_define_set_exponential_negative(8, 1)
+    internal_define_set_exponential(9, 0)
+    internal_define_set_exponential(10, 1)
+    internal_define_set_exponential(11, 2)
+    internal_define_set_exponential(12, 3)
+    internal_define_set_exponential(13, 4)
+    internal_define_set_exponential(14, 5)
+    internal_define_set_exponential(15, 6)
+    internal_define_set_exponential(16, 7)
+    internal_define_set_exponential(17, 8)
+    internal_define_set_exponential(18, 9)
+    exponential_ids[19] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_INF"))));
+    exponential_ids[20] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_NEGATIVE_INF"))));
+    exponential_ids[21] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cFloat, rb_intern("INFINITY_COMPLEX"))));
+
+    qsort(exponential_ids, 𝔠EXPONENTS, 𝔠ULONG, internal_only_compare_func_4_object_id);
+
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n9"), -9);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n8"), -8);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n7"), -7);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n6"), -6);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n5"), -5);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n4"), -4);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n3"), -3);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n2"), -2);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n1"), -1);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_0"), 0);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_1"), 1);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_2"), 2);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_3"), 3);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_4"), 4);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_5"), 5);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_6"), 6);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_7"), 7);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_8"), 8);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_9"), 9);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_INF"), 1337);
+    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_NEGATIVE_INF"), 1338);
+    assign_exponential_index_position(get_float_const("INFINITY_COMPLEX"), 1339);
+}
+
+static inline void internal_only_protect_against_gc(void) {
+    rb_global_variable(& ℤn9);
+    rb_global_variable(& ℤn8);
+    rb_global_variable(& ℤn7);
+    rb_global_variable(& ℤn6);
+    rb_global_variable(& ℤn5);
+    rb_global_variable(& ℤn4);
+    rb_global_variable(& ℤn3);
+    rb_global_variable(& ℤn2);
+    rb_global_variable(& ℤn1);
+    rb_global_variable(& ℤ0);
+    rb_global_variable(& ℤ1);
+    rb_global_variable(& ℤ2);
+    rb_global_variable(& ℤ3);
+    rb_global_variable(& ℤ4);
+    rb_global_variable(& ℤ5);
+    rb_global_variable(& ℤ6);
+    rb_global_variable(& ℤ7);
+    rb_global_variable(& ℤ8);
+    rb_global_variable(& ℤ9);
+    rb_global_variable(& cached_rb_intern_is_a);
+    rb_global_variable(& cached_rb_intern_raise_to_power);
+    rb_global_variable(& cached_rb_intern_ints_bitwise_xor);
+    rb_global_variable(& cached_global_sym_many_args);
+    rb_global_variable(& cached_module_param_err);
+    rb_global_variable(& cached_module_ruuuby);
+    rb_global_variable(& cached_rb_intern_is_empty);
+    /*rb_global_variable(& cached_class_big_decimal);
+    rb_global_variable(& cached_flt_inf_complex);
+    rb_global_variable(& cached_flt_negative_inf);
+    rb_global_variable(& cached_flt_inf);
+    rb_global_variable(& cached_flt_nan);*/
+    // TODO: expand investigation
+    //size_t rb_obj_memsize_of(VALUE);
+    rb_gc_verify_internal_consistency();
+}
+
+static inline void internal_only_before_loading_extension(void) {
+    // | f18 | load various Ruby internals |
+    ensure_loaded_default(bigdecimal)
+    // | --------------------------------- |
+
+    cached_class_big_decimal          = r_get_class("BigDecimal");
+    cached_class_set                  = r_get_class("Set");
+    cached_rb_intern_is_a             = rb_intern("is_a?");
+    cached_rb_intern_ints_bitwise_xor = rb_intern("bitwise_xor");
+    cached_rb_intern_raise_to_power   = rb_intern("**");
+    cached_rb_intern_is_empty         = rb_intern("empty?");
+    // | --------------------------------- |
+
+    cached_module_ruuuby               = ext_api_add_global_module("Ruuuby")
+    cached_module_attribute            = ext_api_add_module_under(cached_module_ruuuby, "Attribute")
+    cached_module_attribute_includable = ext_api_add_module_under(cached_module_ruuuby, "Includable")
+    cached_module_attribute_extendable = ext_api_add_module_under(cached_module_ruuuby, "Extendable")
+    cached_module_param_err            = ext_api_add_module_under(cached_module_ruuuby, "ParamErr")
+    ext_api_add_module_under(cached_module_ruuuby, "VirtualTypes")
+    ext_api_add_new_sub_class_under(cached_module_param_err, R_ERR_ARG, "WrongParamType")
+}
+
+static inline void internal_only_load_needed_ruuuby_files(void) {
+    // | f18 | load various Ruby internals |
+
+    // 3rd party gem
+    ensure_loaded_default(tty-command)
+
+    // ruuuuby
+
+    ensure_loaded_attribute_includable(cardinality)
+    ensure_loaded_attribute_includable(subscript_indexing)
+
+    ensure_loaded_class(class)
+    ensure_loaded_module(enumerable)
+    ensure_loaded_module(module)
+    ensure_loaded_module(kernel)
+    ensure_loaded_module(math)
+    ensure_loaded_class(obj)
+    ensure_loaded_class(re)
+    ensure_loaded_ruuuby(types)
+    ensure_loaded_class(method)
+    ensure_loaded_ruuuby(arg_err)
+    ensure_loaded_enumerable(hsh)
+    ensure_loaded_nums(int)
+    ensure_loaded_nums(float)
+    ensure_loaded_nums(numeric)
+    ensure_loaded_nums(big_decimal)
+    ensure_loaded_nums(rational)
+    ensure_loaded_nums(complex)
+    ensure_loaded_class(nil)
+    ensure_loaded_enumerable(ary)
+    ensure_loaded_enumerable(set)
+
+    ensure_loaded_attribute_includable(syntax_cache)
+    ensure_loaded_attribute_extendable(syntax_cache)
+
+    ensure_loaded_class(sym) // must be after{attribute_cardinality}
+
+    ensure_loaded_class(str) // must be after{attribute_syntax_cache, attribute_cardinality}
+    ensure_loaded_io(file)    // must be after{attribute_syntax_cache}
+    ensure_loaded_io(dir)    // must be after{attribute_syntax_cache}
+
+    ensure_loaded_ruuuby(configs)
+    ensure_loaded_ruuuby(version)
+    //ensure_loaded_ruuuby(engine/global_funcs)
+    // | --------------------------------- |
+}
 
 static inline void assign_exponential_index_position(const unsigned long object_id, const int represented_integer) {
     unsigned long * the_index = bsearch_ulong(object_id)
@@ -266,11 +347,11 @@ r_func_self_them(m_int_patch_for_exponentials,
     } else {
         const unsigned long id_to_find = NUM2ULONG(rb_obj_id(them));
         unsigned long * the_result    = bsearch_ulong(id_to_find)
-        if(the_result != NULL) {
+        if (the_result != NULL) {
 
             const int power_to_raise_to = exponential_indexes[(((int)the_result - (int)exponential_ids) / 𝔠ULONG)];
 
-            if (power_to_raise_to < 10) {
+            if (power_to_raise_to < 2) {
                 switch(power_to_raise_to) {
                 case -9: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn9)
                 case -8: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn8)
@@ -282,19 +363,22 @@ r_func_self_them(m_int_patch_for_exponentials,
                 case -2: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn2)
                 case -1: return rb_rational_new(ℤ1, self);
                 case 0:  re_1
-                case 1:  re_me
-                case 2:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ2)
-                case 3:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ3)
-                case 4:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ4)
-                case 5:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ5)
-                case 6:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ6)
-                case 7:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ7)
-                case 8:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ8)
-                case 9:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ9)
-                default: re_me_func_1args(cached_rb_intern_ints_bitwise_xor, them)
+                default: re_me
+                }
+            } else if (power_to_raise_to < 10) {
+                const int val_self = NUM2INT(self);
+                switch(power_to_raise_to) {
+                case 2:  return rb_int_positive_pow(val_self, 2UL);
+                case 3:  return rb_int_positive_pow(val_self, 3UL);
+                case 4:  return rb_int_positive_pow(val_self, 4UL);
+                case 5:  return rb_int_positive_pow(val_self, 5UL);
+                case 6:  return rb_int_positive_pow(val_self, 6UL);
+                case 7:  return rb_int_positive_pow(val_self, 7UL);
+                case 8:  return rb_int_positive_pow(val_self, 8UL);
+                default: return rb_int_positive_pow(val_self, 9UL);
                 }
             } else {
-                raise_err_if_power_does_not_match_1337_or_1338_or_1339(raise_err_int_bad_power)
+                raise_err_if_power_does_not_match_1337_or_1338_or_1339(ext_api_raise_err_int_bad_power)
 
                 const int val_self = NUM2INT(self);
 
@@ -322,7 +406,7 @@ r_func_self_them(m_int_patch_for_exponentials,
                     re_negative_inf
                 }
             }
-        } else { raise_err_int_bad_power }
+        } else { ext_api_raise_err_int_bad_power }
         //} else { re_me_func_1args(cached_rb_intern_ints_bitwise_xor, them) }
     }
 )
@@ -342,10 +426,10 @@ r_func_self_them(m_flt_patch_for_exponentials,
         unsigned long * the_result    = bsearch_ulong(id_to_find);
         if (the_result != NULL) {
             const double val_self = NUM2DBL(self); // RFLOAT_VALUE(self);
-            if (isnan(val_self)) {rb_raise(ERROR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") may not be raised to an exponential power |", self);}
+            if (isnan(val_self)) {rb_raise(R_ERR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") may not be raised to an exponential power |", self);}
             const int power_to_raise_to = exponential_indexes[(((int)the_result - (int)exponential_ids) / 𝔠ULONG)];
             if (val_self == 0.0 && power_to_raise_to < 0) {
-                rb_raise(ERROR_DIVIDE_BY_ZERO, "| c{Float}-> m{^} self(%"PRIsVALUE") may not be raised to a negative exponential power |", self);
+                rb_raise(R_ERR_ZERO_DIVISION, "| c{Float}-> m{^} self(%"PRIsVALUE") may not be raised to a negative exponential power |", self);
             }
 
             if (power_to_raise_to < 10) {
@@ -369,10 +453,10 @@ r_func_self_them(m_flt_patch_for_exponentials,
                 case 7:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ7)
                 case 8:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ8)
                 case 9:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ9)
-                default: raise_err_flt_bad_power
+                default: ext_api_raise_err_flt_bad_power
                 }
             } else {
-                raise_err_if_power_does_not_match_1337_or_1338_or_1339(raise_err_flt_bad_power)
+                raise_err_if_power_does_not_match_1337_or_1338_or_1339(ext_api_raise_err_flt_bad_power)
 
                 if (val_self == 1.0 || val_self == -1.0) {
                     re_nan
@@ -408,8 +492,8 @@ r_func_self_them(m_flt_patch_for_exponentials,
                     }
                 }
             }
-        } else { raise_err_flt_bad_power }
-    } else { raise_err_flt_bad_power }
+        } else { ext_api_raise_err_flt_bad_power }
+    } else { ext_api_raise_err_flt_bad_power }
 )
 
 /*___________________________________________________________________________________________________________________
@@ -437,12 +521,12 @@ r_func_self_them(m_str_prepend,
             r_str_prepend(self, them)
             re_me
         }
-    } else {raise_err_string_bad_arg_type(>>, them)}
+    } else {ext_api_raise_err_string_arg_type(>>, them)}
 )
 
 // | function{err_to_num} |
 r_func_raw(m_str_err_to_num,
-     rb_raise(ERROR_RUNTIME, "| c{String}-> m{to_num} may not convert self(%"PRIsVALUE") into a valid numeric |", self);
+     rb_raise(R_ERR_RUNTIME, "| c{String}-> m{to_num} may not convert self(%"PRIsVALUE") into a valid numeric |", self);
 )
 
 /*___________________________________________________________________________________________________________________
@@ -468,7 +552,7 @@ r_func_raw(m_ary_remove_empty,
     for (i = 0; i < len_me;) {
         v = RARRAY_PTR(self)[i];
         if (is_nil(v) || is_non_empty_str(v) || is_non_empty_ary(v) || is_non_empty_hsh(v) || is_non_empty_generic(v)) {
-            r_ary_del_at(self, i);
+            r_ary_del(self, i);
             --len_me;
         } else {++i;}
     }
@@ -492,24 +576,24 @@ r_func_self_them(m_ary_disjunctive_union,
             VALUE output = (len_me + len_them) < 𝔠ARY_DEFAULT ? rb_ary_new_capa(len_me + len_them) : rb_ary_new();
             if (len_me >= len_them) {
                 for (i = 0L; i < len_them; i++) {
-                    n = r_ary_get(them, i); if(!r_ary_has(self, n)){r_ary_add(output, n)}
-                    n = r_ary_get(self, i); if(!r_ary_has(them, n)){r_ary_add(output, n)}
+                    n = r_ary_get(them, i) if(!r_ary_has(self, n)){r_ary_add(output, n)}
+                    n = r_ary_get(self, i) if(!r_ary_has(them, n)){r_ary_add(output, n)}
                 }
                 for (; i < len_me; i++) {
-                    n = r_ary_get(self, i); if(!r_ary_has(them, n)){r_ary_add(output, n)}
+                    n = r_ary_get(self, i) if(!r_ary_has(them, n)){r_ary_add(output, n)}
                 }
             } else {
                 for (i = 0L; i < len_me; i++) {
-                    n = r_ary_get(self, i); if(!r_ary_has(them, n)){r_ary_add(output, n)}
-                    n = r_ary_get(them, i); if(!r_ary_has(self, n)){r_ary_add(output, n)}
+                    n = r_ary_get(self, i) if(!r_ary_has(them, n)){r_ary_add(output, n)}
+                    n = r_ary_get(them, i) if(!r_ary_has(self, n)){r_ary_add(output, n)}
                 }
                 for (; i < len_them; i++) {
-                    n = r_ary_get(them, i); if(!r_ary_has(self, n)){r_ary_add(output, n)}
+                    n = r_ary_get(them, i) if(!r_ary_has(self, n)){r_ary_add(output, n)}
                 }
             }
             return output;
         }
-    } else {raise_err_array_bad_arg_type(disjunctive_union, them)}
+    } else {ext_api_raise_err_array_arg_type(disjunctive_union, them)}
 )
 
 // | function(frequency_counts} |
@@ -532,6 +616,7 @@ r_func_self_them(m_ary_equal_contents,
         const long len_me = len_ary(self);
         if ((len_me - len_ary(them)) != 0) {re_no} else if (len_me == 0) {re_ye} else {
             VALUE hsh = rb_hash_new();
+            //VALUE hsh = rb_hash_new2((len_me + 1) / 2);
             long i;
             VALUE n;
             for (i = 0; i < len_me; i++) {
@@ -555,7 +640,7 @@ r_func_self_them(m_ary_equal_contents,
             // TODO: compare against 'rb_gc_mark'
             rb_free_generic_ivar(hsh); re_ye
         }
-    } else {raise_err_array_bad_arg_type(equal_contents?, them)}
+    } else {ext_api_raise_err_array_arg_type(equal_contents?, them)}
 )
 
 /*____________________________________________________________________________________________________________________
@@ -568,47 +653,17 @@ ________________________________________________________________________________
     //printf("for when needed, this func will run after END {} blocks\n");
 //}
 
-c_func(Init_ruby_class_mods,
-
-    // | f18 | load various Ruby internals |
-    ensure_loaded_default(bigdecimal)
-    // | --------------------------------- |
-
-    // | f11 | creates alias of Integer's func{^} which is originally provided for bitwise XOR
-    ext_api_add_func_alias(R_INT, "bitwise_xor", "^")
-
-    cached_class_big_decimal          = r_get_class("BigDecimal");
-    cached_rb_intern_is_a             = rb_intern("is_a?");
-    cached_rb_intern_ints_bitwise_xor = rb_intern("bitwise_xor");
-    cached_rb_intern_raise_to_power   = rb_intern("**");
-    cached_rb_intern_is_empty         = rb_intern("empty?");
-    // | --------------------------------- |
-
-    /*___________________________________________________________________________________________________________
-     __                  __
-    |__) |  | |  | |  | |__) \ /
-    |  \ \__/ \__/ \__/ |__)  |
-
-     | 0x0 |
-        module ::Ruuuby
-            module ParamErr
-                # +WrongParamType+ extends +ArgumentError+ and provides a light wrapper for throwing more specific arg errors.
-                class WrongParamType < ArgumentError
-                end
-            end
-        end
-    _____________________________________________________________________________________________________________ */
-    // | 0x0 | ::Ruuuby::ParamErr::WrongParamType
-    cached_module_ruuuby    = ext_api_add_global_module("Ruuuby")
-    cached_module_param_err = ext_api_add_module_under(cached_module_ruuuby, "ParamErr")
-    ext_api_add_module_under(cached_module_ruuuby, "VirtualTypes")
-    ext_api_add_new_sub_class_under(cached_module_param_err, ERROR_ARGUMENT, "WrongParamType")
-
+static inline void internal_only_add_ruuuby_c_extensions() {
     cached_global_sym_many_args = ID2SYM(rb_intern("*args"));
     rb_define_readonly_variable("$PRM_MANY", &cached_global_sym_many_args);
 
-    ext_api_add_const_under(rb_mMath, "RATIO_DEGREES_TO_RADIAN", DBL2NUM(M_PIE / 180.0));
-    ext_api_add_const_under(rb_mMath, "RATIO_RADIANS_TO_DEGREE", DBL2NUM(180.0 / M_PIE));
+    ext_api_add_const_under(R_MATH, "RATIO_DEGREES_TO_RADIAN", DBL2NUM(M_PIE / 180.0))
+    ext_api_add_const_under(R_MATH, "RATIO_RADIANS_TO_DEGREE", DBL2NUM(180.0 / M_PIE))
+    ext_api_add_const_under(R_FLT, "RELATIVE_ERROR", DBL2NUM(M_FLT_RELATIVE_ERROR))
+    ext_api_add_const_under(R_FLT, "MIN_NORMAL", DBL2NUM(M_FLT_MIN_NORMAL))
+    ext_api_add_const_under(R_FLT, "GOLDEN_RATIO", DBL2NUM(M_FLT_GOLDEN_RATIO))
+    ext_api_add_const_under(R_FLT, "EULER_MASCHERONI_CONSTANT", DBL2NUM(M_FLT_EULER_MASCHERONI_CONSTANT))
+    ext_api_add_const_under(R_FLT, "SMALLEST_RELATIVE_ERROR", DBL2NUM(M_FLT_RELATIVE_ERROR * M_FLT_MIN_NORMAL));
 
     ext_api_add_public_method_0args_to_class(R_OBJ, "ary?" , m_obj_ary)
     ext_api_add_public_method_0args_to_class(R_OBJ, "bool?", m_obj_bool)
@@ -622,6 +677,9 @@ c_func(Init_ruby_class_mods,
 
     ext_api_add_public_method_0args_to_class(R_INT, "finite?"  , m_int_is_finite)
     ext_api_add_public_method_0args_to_class(R_INT, "infinite?", m_int_is_not_finite)
+
+    // | f11 | creates alias of Integer's func{^} which is originally provided for bitwise XOR
+    ext_api_add_func_alias(R_INT, "bitwise_xor", "^")
     ext_api_add_public_method_1args_to_class(R_INT, "^"       , m_int_patch_for_exponentials)
 
     ext_api_add_public_method_1args_to_class(R_FLT, "^"       , m_flt_patch_for_exponentials)
@@ -636,145 +694,19 @@ c_func(Init_ruby_class_mods,
     ext_api_add_public_method_1args_to_class(R_ARY, "disjunctive_union", m_ary_disjunctive_union)
     ext_api_add_public_method_1args_to_class(R_ARY, "equal_contents?"  , m_ary_equal_contents)
     ext_api_add_public_method_1args_to_class(R_ARY, ">>"               , m_ary_prepend)
+}
 
+c_func(Init_ruby_class_mods,
 
-    // | f18 | load various Ruby internals |
+    internal_only_before_loading_extension();
 
-    // 3rd party gem
-    ensure_loaded_default(tty-command)
+    internal_only_add_ruuuby_c_extensions();
 
-    // ruuuuby
+    internal_only_load_needed_ruuuby_files();
 
-    ensure_loaded_attribute_includable(cardinality)
-    ensure_loaded_attribute_includable(subscript_indexing)
-
-    ensure_loaded_class(class)
-    ensure_loaded_module(enumerable)
-    ensure_loaded_module(module)
-    ensure_loaded_module(kernel)
-    ensure_loaded_module(math)
-    ensure_loaded_class(obj)
-    ensure_loaded_class(re)
-    ensure_loaded_ruuuby(types)
-    ensure_loaded_class(method)
-    ensure_loaded_ruuuby(arg_err)
-    ensure_loaded_enumerable(hsh)
-    ensure_loaded_nums(int)
-    ensure_loaded_nums(float)
-    ensure_loaded_nums(numeric)
-    ensure_loaded_nums(big_decimal)
-    ensure_loaded_nums(rational)
-    ensure_loaded_nums(complex)
-    ensure_loaded_class(nil)
-    ensure_loaded_enumerable(ary)
-    ensure_loaded_enumerable(set)
-
-    ensure_loaded_attribute_includable(syntax_cache)
-    ensure_loaded_attribute_extendable(syntax_cache)
-
-    ensure_loaded_class(sym) // must be after{attribute_cardinality}
-
-    ensure_loaded_class(str) // must be after{attribute_syntax_cache, attribute_cardinality}
-    ensure_loaded_io(file)    // must be after{attribute_syntax_cache}
-    ensure_loaded_io(dir)    // must be after{attribute_syntax_cache}
-
-    ensure_loaded_ruuuby(configs)
-    ensure_loaded_ruuuby(version)
-    // | --------------------------------- |
-
-    cached_flt_nan          = rb_const_get_at(R_FLT, rb_intern("NAN"));
-    cached_flt_inf          = rb_const_get_at(R_FLT, rb_intern("INFINITY"));
-    cached_flt_negative_inf = rb_const_get_at(R_FLT, rb_intern("INFINITY_NEGATIVE"));
-    cached_flt_inf_complex  = rb_const_get_at(R_FLT, rb_intern("INFINITY_COMPLEX"));
-
-    // ____________________________________ ⚠️ ____________________________________
-
-    internal_define_set_exponential_negative(0, 9)
-    internal_define_set_exponential_negative(1, 8)
-    internal_define_set_exponential_negative(2, 7)
-    internal_define_set_exponential_negative(3, 6)
-    internal_define_set_exponential_negative(4, 5)
-    internal_define_set_exponential_negative(5, 4)
-    internal_define_set_exponential_negative(6, 3)
-    internal_define_set_exponential_negative(7, 2)
-    internal_define_set_exponential_negative(8, 1)
-    internal_define_set_exponential(9, 0)
-    internal_define_set_exponential(10, 1)
-    internal_define_set_exponential(11, 2)
-    internal_define_set_exponential(12, 3)
-    internal_define_set_exponential(13, 4)
-    internal_define_set_exponential(14, 5)
-    internal_define_set_exponential(15, 6)
-    internal_define_set_exponential(16, 7)
-    internal_define_set_exponential(17, 8)
-    internal_define_set_exponential(18, 9)
-    exponential_ids[19] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_INF"))));
-    exponential_ids[20] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_NEGATIVE_INF"))));
-    exponential_ids[21] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cFloat, rb_intern("INFINITY_COMPLEX"))));
-
-    qsort(exponential_ids, 𝔠EXPONENTS, 𝔠ULONG, internal_only_compare_func_4_object_id);
-
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n9"), -9);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n8"), -8);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n7"), -7);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n6"), -6);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n5"), -5);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n4"), -4);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n3"), -3);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n2"), -2);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n1"), -1);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_0"), 0);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_1"), 1);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_2"), 2);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_3"), 3);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_4"), 4);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_5"), 5);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_6"), 6);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_7"), 7);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_8"), 8);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_9"), 9);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_INF"), 1337);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_NEGATIVE_INF"), 1338);
-    assign_exponential_index_position(get_float_const("INFINITY_COMPLEX"), 1339);
-
-    // ____________________________________ ⚠️ ____________________________________
-
-    rb_global_variable(& ℤn9);
-    rb_global_variable(& ℤn8);
-    rb_global_variable(& ℤn7);
-    rb_global_variable(& ℤn6);
-    rb_global_variable(& ℤn5);
-    rb_global_variable(& ℤn4);
-    rb_global_variable(& ℤn3);
-    rb_global_variable(& ℤn2);
-    rb_global_variable(& ℤn1);
-    rb_global_variable(& ℤ0);
-    rb_global_variable(& ℤ1);
-    rb_global_variable(& ℤ2);
-    rb_global_variable(& ℤ3);
-    rb_global_variable(& ℤ4);
-    rb_global_variable(& ℤ5);
-    rb_global_variable(& ℤ6);
-    rb_global_variable(& ℤ7);
-    rb_global_variable(& ℤ8);
-    rb_global_variable(& ℤ9);
-    rb_global_variable(& cached_rb_intern_is_a);
-    rb_global_variable(& cached_rb_intern_raise_to_power);
-    rb_global_variable(& cached_rb_intern_ints_bitwise_xor);
-    rb_global_variable(& cached_global_sym_many_args);
-    rb_global_variable(& cached_module_param_err);
-    rb_global_variable(& cached_module_ruuuby);
-    rb_global_variable(& cached_rb_intern_is_empty);
-    /*rb_global_variable(& cached_class_big_decimal);
-    rb_global_variable(& cached_flt_inf_complex);
-    rb_global_variable(& cached_flt_negative_inf);
-    rb_global_variable(& cached_flt_inf);
-    rb_global_variable(& cached_flt_nan);*/
-
-    //size_t rb_obj_memsize_of(VALUE);
+    internal_only_prepare_f16();
 
     //ruby_vm_at_exit(& at_exit);
 
-    // TODO: expand investigation
-    rb_gc_verify_internal_consistency();
+    internal_only_protect_against_gc();
 )

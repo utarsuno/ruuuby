@@ -1,6 +1,18 @@
 
 # ------------------------------------------------------------------------------------------------------------ | *f23* |
 
+BEGIN {
+  require_relative 'global_funcs'
+
+  # add these methods onto the `main` object (similar to (just of smaller scope) adding methods to `Kernel` )
+  class << self
+    include ::Ruuuby::Feature::Extendable::MainF12
+    include ::Ruuuby::Feature::Extendable::MainF17::MathAliases
+    include ::Ruuuby::Feature::Extendable::MainF17::FloatAliases
+    include ::Ruuuby::Feature::Extendable::MainF17::Trigonometry
+  end
+}
+
 END {
   if ENV['RUUUBY_DBG'].str? && ENV['RUUUBY_DBG'] == 't'
 

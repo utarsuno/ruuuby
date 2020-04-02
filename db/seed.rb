@@ -1,6 +1,10 @@
 
 require_relative 'db'
 
+f00 = RuuubyFeature.spawn(0, "`η̂` to alias concept of `normalization` (any be offered in any applicable context)")
+f01 = RuuubyFeature.spawn(1, "`🙈` to alias `private`")
+f02 = RuuubyFeature.spawn(2, "`🛡️` to alias `protected`")
+f03 = RuuubyFeature.spawn(3, "`𝔠` to alias concept of `cardinality` (offered in both styles of `OOP` & `'functional'`)")
 f04 = RuuubyFeature.spawn(4, '`∅` to alias concept of `empty`')
 f06 = RuuubyFeature.spawn(6, 'enable quick type checks against any object (ex: `variable.int?`)')
 f07 = RuuubyFeature.spawn(7, 'enable quick clean up functions for `enumerables`')
@@ -19,6 +23,7 @@ f20 = RuuubyFeature.spawn(20, 'enable easier (general) syntax & pattern parsing'
 f21 = RuuubyFeature.spawn(21, 'enable easier textual/numerical/syntax parsing')
 f22 = RuuubyFeature.spawn(22, 'create or extend a `numeric` in order to properly support `Complex Infinity`')
 f23 = RuuubyFeature.spawn(23, 'gather statistics (and/or more debugging information) on `Ruuuby`')
+f98 = RuuubyFeature.spawn(98, '`C-extensions`')
 
 v0_0_0 = RuuubyRelease.spawn(0, 0, 0)
 v0_0_0.add_comments('initial project creation')
@@ -235,11 +240,43 @@ v0_0_24.add_comments(
     ]
 )
 
-# TODO: FOR v0.0.24? (), ADD OBJECT/FUNC TO GATHER ALL RELEASES AND THEN PRINT OUT CHANGELOG
+v0_0_25 = RuuubyRelease.spawn(0, 0, 25)
+v0_0_25.add_file('lib/ruuuby/global_funcs.rb', '', '', f15)
+v0_0_25.add_file('ext/ruby/class_mods/c0_constants.h', '', '', f98)
+v0_0_25.add_file('ext/ruby/class_mods/c1_typed_checks.h', '', '', f98)
+v0_0_25.add_file('ext/ruby/class_mods/c2_extension_memory.h', '', '', f98)
+v0_0_25.add_file('ext/ruby/class_mods/c3_macro_utilities.h', '', '', f98)
+v0_0_25.add_comments(
+    [
+        'start dividing (`f98`)/`C-code` across multiple header files, lots of small misc changes (ex: moved various constants definitions from `Ruby\'s` `Float`)',
+        're-structure `Feature` <-> `Module` mapping, add `audit` tests to verify pattern is present/consistent',
+        'move certain funcs out of `Kernel` and directly add them to `TOPLEVEL_BINDING` to avoid polluting other classes',
+        '(`f00`) start formalization of existing funcs w/ name(`η̂`, `normalize`) and/or when `normalization` is applied to `args` (any context)',
+        'symbolic-math support being added only for niche use-cases, `automatic-differentiation` features to take priority in case of any feature-conflicts',
+    ]
+)
+v0_0_25.changelog.added_method_to_class(f08, :♻️until!, ::String)
+v0_0_25.changelog.added_method_to_class(f10, :♻️∅!, ::Array)
+v0_0_25.changelog.added_method_to_class(f10, :♻️∅!, ::Set)
+v0_0_25.changelog.added_method_to_class(f10, :↩️, ::String)
+v0_0_25.changelog.added_method_to_class(f10, :↩️!, ::String)
+v0_0_25.changelog.added_method_to_class(f10, :↩, ::String)
+v0_0_25.changelog.added_method_to_class(f10, :↩!, ::String)
+v0_0_25.changelog.added_method_to_class(f10, :↩, ::Array)
+v0_0_25.changelog.added_method_to_class(f10, :↩!, ::Array)
+v0_0_25.changelog.added_method_to_class(f10, :↩∀, ::Array)
+v0_0_25.changelog.added_method_to_class(f17, :tan, TOPLEVEL_BINDING)
+v0_0_25.changelog.added_method_to_class(f17, :tan°, TOPLEVEL_BINDING)
+v0_0_25.changelog.added_method_to_class(f17, :to_radian, ::String)
+
+# TODO: FOR v0.0.25? (), ADD OBJECT/FUNC TO GATHER ALL RELEASES AND THEN PRINT OUT CHANGELOG
 # (to remove code below)
 
 =begin
 puts "PRINTING DOCS"
+v0_0_25.docs_changelog.each do |line|
+  puts line
+end
 v0_0_24.docs_changelog.each do |line|
     puts line
 end

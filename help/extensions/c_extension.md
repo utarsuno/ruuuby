@@ -144,7 +144,7 @@ int m_file_get_last_n_bytes() {
 #define c_file_close(file_descriptor) fclose(file_descriptor);
 
 
-#define raise_err_error_opening_file(error_message, error_param) rb_raise(ERROR_RUNTIME, error_message, rb_id2str(rb_intern(error_param)));
+#define raise_err_error_opening_file(error_message, error_param) rb_raise(R_ERR_RUNTIME, error_message, rb_id2str(rb_intern(error_param)));
 
 //#define r_hsh_has_key(hsh, key) ((!(!RHASH(hsh)->ntbl)) && (st_lookup(RHASH(hsh)->ntbl, key, 0)))
 //#define r_hsh_has_key(hsh, key) ((st_lookup(RHASH(hsh)->ntbl, key, 0)) ? R_TRUE : R_FALSE)

@@ -16,7 +16,7 @@ class ::Regexp
     CHAR_PERIOD  = '\.'.❄️
 
     # @type [String]
-    CHAR_DIGIT   = '\d'.❄️
+    CHAR_STAR    = '\*'.❄️
 
     ❄️
   end

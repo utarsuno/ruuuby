@@ -563,7 +563,7 @@ RSpec.describe 'float.rb' do
         end
       end
 
-      context 'performance hit for following funcs, are under 80%' do
+      context 'performance hit for following funcs, are under 90%' do
         context 'positive exponents' do
           it '`^²` (compared to `** 2`)' do
             expect {3.0^²}.to perform_slower_than {3.0 ** 2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)

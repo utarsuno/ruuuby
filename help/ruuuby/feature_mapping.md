@@ -3,7 +3,7 @@
 
 | 🆔 | feature |
 | --- | --- |
-| f00 | |
+| f00 | `η̂` to alias concept of `normalization` (any be offered in any applicable context) |
 | f01 | `🙈` to alias `private`                                                |
 | f02 | `🛡️` to alias `protected`                                              |
 | f03 | `𝔠` to alias concept of `cardinality` (offered in both styles of `OOP` & `'functional'`) |

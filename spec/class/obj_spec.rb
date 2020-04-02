@@ -107,21 +107,45 @@ RSpec.describe 'Object' do
     context 'by adding function{🛑str❓}' do
       context 'handles needed input scenarios' do
         context 'cases: positive' do
-          it 'w/ single param' do
-            expect{🛑str❓('0', '5')}.to_not raise_error
+          context 'w/ normalization{!∅}' do
+            it 'w/ single param' do
+              expect{🛑str❓('0', '5', :'!∅')}.to_not raise_error
+              expect{🛑str❓('0', ' ', :'!∅')}.to_not raise_error
+              expect{🛑str❓('0', "\n", :'!∅')}.to_not raise_error
+            end
+            it 'w/ many params' do
+              expect{🛑str❓($PRM_MANY, %w(a bb), :'!∅')}.to_not raise_error
+            end
           end
-          it 'w/ many params' do
-            expect{🛑str❓($PRM_MANY, %w(a bb))}.to_not raise_error
+          context 'w/o extra normalization' do
+            it 'w/ single param' do
+              expect{🛑str❓('0', '5')}.to_not raise_error
+              expect{🛑str❓('0', ' ')}.to_not raise_error
+              expect{🛑str❓('0', "\n")}.to_not raise_error
+            end
+            it 'w/ many params' do
+              expect{🛑str❓($PRM_MANY, %w(a bb))}.to_not raise_error
+            end
           end
         end
         context 'cases: negative' do
-          it 'w/ single param' do
-            expect{🛑str❓('0', nil)}.to raise_error(ArgumentError)
+          context 'w/ normalization{!∅}' do
+            it 'w/ single param' do
+              expect{🛑str❓('0', '', :'!∅')}.to raise_error(ArgumentError)
+            end
+            it 'w/ many params' do
+              expect{🛑str❓($PRM_MANY, ['a', '', 'bb'], :'!∅')}.to raise_error(ArgumentError)
+            end
           end
-          it 'w/ many params' do
-            expect{🛑str❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
-            expect{🛑str❓($PRM_MANY, [5, '5'])}.to raise_error(ArgumentError)
-            expect{🛑str❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+          context 'w/o extra normalization' do
+            it 'w/ single param' do
+              expect{🛑str❓('0', nil)}.to raise_error(ArgumentError)
+            end
+            it 'w/ many params' do
+              expect{🛑str❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
+              expect{🛑str❓($PRM_MANY, [5, '5'])}.to raise_error(ArgumentError)
+              expect{🛑str❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+            end
           end
         end
       end

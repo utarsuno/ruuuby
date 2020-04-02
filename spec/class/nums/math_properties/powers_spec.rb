@@ -1,7 +1,29 @@
 
 RSpec.describe 'math-operations: raise to subscript powers' do
 
-  context 'handles raising to +∞ and -∞' do
+  context 'preserves: properties-of-exponents' do
+    it 'xᵃ⋅xᵇ = xᵃ⁺ᵇ' do
+      expect((3^²) * (3^³)).to eq(3^⁵)
+    end
+    it 'xᵃ/xᵇ = xᵃ⁻ᵇ' do
+      expect((3^⁴) / (3^¹)).to eq(3^³)
+    end
+    it '(xᵃ)ᵇ = xᵃᵇ' do
+      expect((3^²)^⁴).to eq(3^⁸)
+    end
+    it '(x⋅y)ᵃ = xᵃ⋅xᵇ' do
+      expect((3*6)^⁴).to eq((3^⁴) * (6^⁴))
+      expect((3*6)^⁴).to eq(3 ** 4 * 6 ** 4)
+      expect((3*6)^⁴).to eq((3 ** 4) * (6 ** 4))
+    end
+    it '(x/y)ᵃ = xᵃ/yᵃ' do
+      expect((3/4)^⁴).to eq((3^⁴) / (4^⁴))
+      expect((3/4)^⁴).to eq(3 ** 4 / 4 ** 4)
+      expect((3/4)^⁴).to eq((3 ** 4) / (4 ** 4))
+    end
+  end
+
+  context 'handles raising to +∞, -∞, and ∞ℂ' do
 
     context 'for integers' do
       it 'handles vals > 1' do

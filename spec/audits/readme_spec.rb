@@ -32,8 +32,6 @@ RSpec.describe 'README.md' do
 
         expect([-5.ℕ?, 7.0.ℤ?, Complex(Float::NAN).ℝ?, Rational(2, 3).ℚ?]).to eq([false, true, false, true])
 
-        expect(φ).to eq(1 + Rational(1, φ))
-
         expect([1, 2, 3].⊕ [3, 4]).to eq([1, 4, 2])
 
         expect([2, 3, 4].∖ [1, 2, 3]).to eq([4])
@@ -42,6 +40,7 @@ RSpec.describe 'README.md' do
       it 'alternative version works too' do
 
         expect(φ.≈≈(2 * sin(∠ᶜ(54.0)))).to eq(true)
+        expect(φ).to eq(1 + Rational(1, φ))
 
         data = {hello: 'world', ye: 'ee'}
         expect([data.🗝?(:hello), data.🗝?(:non_existing_key)]).to eq([true, false])

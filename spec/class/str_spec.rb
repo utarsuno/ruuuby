@@ -95,6 +95,32 @@ RSpec.describe 'str' do
       end
     end
 
+    context 'func{to_radian}' do
+      context 'handles needed scenarios' do
+        context 'cases: positive' do
+          it 'format A' do
+            expect('0'.to_radian).to eq(0.0)
+            expect('π'.to_radian).to eq(180.0)
+          end
+          it 'format B' do
+            expect('2π'.to_radian).to eq(360.0)
+            expect('3π'.to_radian).to eq(540.0)
+          end
+          it 'format C' do
+            expect('2π/3'.to_radian).to eq(120)
+          end
+        end
+        it 'cases: error' do
+          expect{''.to_radian}.to raise_error(RuntimeError)
+          expect{'a'.to_radian}.to raise_error(RuntimeError)
+          expect{'ππ'.to_radian}.to raise_error(RuntimeError)
+          expect{'/3'.to_radian}.to raise_error(RuntimeError)
+          expect{'2'.to_radian}.to raise_error(RuntimeError)
+          expect{'π / 3'.to_radian}.to raise_error(RuntimeError)
+        end
+      end
+    end
+
     context 'func{to_num} and func{to_num?}' do
       context 'handles needed scenarios' do
         context 'cases: positive' do
@@ -269,6 +295,44 @@ RSpec.describe 'str' do
       end
     end
 
+    context 'fund{♻️until!}' do
+      context 'handles needed scenarios' do
+        context 'cases: positive' do
+          it 'single char terminating pattern' do
+            expect('a'.♻️until!('a')).to eq('')
+            expect('a '.♻️until!(' ')).to eq('')
+            expect(' a'.♻️until!(' ')).to eq('a')
+            expect('ab'.♻️until!('a')).to eq('b')
+            expect('ab'.♻️until!('b')).to eq('')
+            expect('bb aab'.♻️until!('a')).to eq('ab')
+            expect('abab'.♻️until!('b')).to eq('ab')
+          end
+          it 'multi char terminating pattern' do
+            expect('abab'.♻️until!('ab')).to eq('ab')
+            expect('ababab'.♻️until!('ab')).to eq('abab')
+            expect('ababab'.♻️until!('ab')).to eq('abab')
+
+            specific_data = "5v\t32rfdfkds S\nDgr@ G<RFG9k@,ex \t\t\n m9t♻️y4f 4v3tbh 54h"
+            expect(specific_data.♻️until!('♻️')).to eq("y4f 4v3tbh 54h")
+          end
+          it 'preserves object ID' do
+            a_str = 'abc'
+            a_id  = a_str.🆔
+            a_str.♻️until!('b')
+            expect(a_id).to eq(a_str.🆔)
+          end
+        end
+        context 'cases: error' do
+          it 'bad args' do
+            expect{'a'.♻️until!('')}.to raise_error(ArgumentError)
+          end
+          it 'runtime errors' do
+            expect{''.♻️until!('a')}.to raise_error(RuntimeError)
+            expect{'ab'.♻️until!('aa')}.to raise_error(RuntimeError)
+          end
+        end
+      end
+    end
 
     context 'func{ensure_ending!}' do
       context 'handles cases' do
@@ -309,12 +373,16 @@ RSpec.describe 'str' do
     end
 
     context 'func{∋?} (include?)' do
-      it 'works correctly' do
-        expect('abc'.∋? 'b').to eq(true)
-        expect('abc'.∋? 'd').to eq(false)
-      end
-      it 'catches bad arg' do
-        expect{'b'.∋?(nil)}.to throw_wrong_param_type('String', '∋?', 'them', NilClass, String)
+      context 'handles needed scenarios' do
+        it 'cases: positive' do
+          expect('abc'.∋? 'b').to eq(true)
+        end
+        it 'cases: negative' do
+          expect('abc'.∋? 'd').to eq(false)
+        end
+        it 'cases: error' do
+          expect{'b'.∋?(nil)}.to throw_wrong_param_type('String', '∋?', 'them', NilClass, String)
+        end
       end
     end
 
@@ -331,10 +399,6 @@ RSpec.describe 'str' do
           expect{'b'.∌? 1337}.to raise_exception(ArgumentError)
           expect{'b'.∌? %w(a cc b)}.to raise_exception(ArgumentError)
         end
-      end
-      it 'works correctly' do
-        expect('abc'.∌? 'd').to eq(true)
-        expect('abc'.∌? 'b').to eq(false)
       end
     end
 
@@ -454,32 +518,77 @@ RSpec.describe 'str' do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :'performance' do
-    let(:big_str){'ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^'}
+    let(:big_str){'ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^AT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^'}
     let(:a_str){'any54wyv45hv'}
 
     # TODO: HEAVY COVERAGE AUDIT REQUIRED
 
-    it 'func[∋?] runs fast enough' do
-      expect{a_str.∋? 'c'}.to perform_very_quickly
+    context 'func{∋?} runs fast enough' do
+      context 'for needed scenarios' do
+        it 'cases: positive' do
+          expect{a_str.∋?('c')}.to perform_very_quickly
+        end
+        it 'cases: negative' do
+          expect{'abc'.∋?('d')}.to perform_very_quickly
+        end
+      end
     end
 
-    it 'func[∌?] runs fast enough' do
-      expect{a_str.∌? 'c'}.to perform_very_quickly
+    context 'func{∌?} runs fast enough' do
+      context 'for needed scenarios' do
+        it 'cases: positive' do
+          expect{a_str.∌?('c')}.to perform_very_quickly
+        end
+        it 'cases: negative' do
+          expect{'abc'.∌?('b')}.to perform_very_quickly
+        end
+      end
     end
 
-    it 'func[∈?] runs fast enough' do
-      expect{a_str.∈? 'c'}.to perform_very_quickly
+    context 'func{∈?} runs fast enough' do
+      context 'for needed scenarios' do
+        it 'cases: positive' do
+          expect{a_str.∈?('c')}.to perform_very_quickly
+        end
+        it 'cases: negative' do
+          expect{'d'.∈?('abc')}.to perform_very_quickly
+        end
+      end
     end
 
-    it 'func[∉?] runs fast enough' do
-      expect{a_str.∉? 'c'}.to perform_very_quickly
+    context 'func{∉?} runs fast enough' do
+      context 'for needed scenarios' do
+        it 'cases: positive' do
+          expect{a_str.∉?('c')}.to perform_very_quickly
+        end
+        it 'cases: negative' do
+          expect{'b'.∉?(%w(a cc b))}.to perform_very_quickly
+        end
+      end
     end
 
-    it 'func[>>] runs fast enough' do
+    it 'func{>>} runs fast enough' do
+      expect{''.>> ''}.to perform_extremely_quickly
+      expect{''.>> 'bASDVASb5t4t'}.to perform_very_quickly
       expect{a_str.>> 'bASDVASb5t4t'}.to perform_very_quickly
     end
 
+    context 'func{♻️until!} runs rast enough' do
+      # TODO: ADD TEST CASES TO MEASURE BIG-O NOTATION
+      context 'handles performance for needed scenarios (for now, more needed)' do
+        it 'searching for len-1-match' do
+          a_str = 'ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^A♻♻️T$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^'
+          expect{a_str.♻️until!('♻')}.to perform_very_quickly
+        end
+        it 'searching for len-2-match' do
+          a_str = 'ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^A♻♻️T$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^ABT$JM^#$^'
+          expect{a_str.♻️until!('♻️')}.to perform_very_quickly
+        end
+      end
+    end
+
     context 'with partial fill in, performs quickly' do
+      # TODO: ADD TEST CASES TO MEASURE BIG-O NOTATION
       it 'func[ensure_ending!]' do
         [%w(hello ?a), ['', big_str], [big_str, '']].∀{|a|expect{a[0].ensure_ending!(a[1])}.to perform_quickly}
       end
@@ -489,12 +598,32 @@ RSpec.describe 'str' do
     end
 
     context 'func{∅?} (alias for "remove_empty!")' do
-      context 'handles needed scenarios extremely quickly' do
+      # TODO: ADD TEST CASES TO MEASURE BIG-O NOTATION
+      context 'handles needed scenarios very quickly' do
         it 'cases: positive' do
           expect{''.∅?}.to perform_very_quickly
         end
         it 'cases: negative' do
           expect{' '.∅?}.to perform_very_quickly
+        end
+      end
+    end
+
+    context 'func{to_radian}' do
+      context 'handles needed scenarios very quickly' do
+        context 'cases: positive' do
+          it 'format A' do
+            expect{'0'.to_radian}.to perform_very_quickly
+            expect{'π'.to_radian}.to perform_very_quickly
+          end
+          it 'format B' do
+            expect{'2π'.to_radian}.to perform_very_quickly
+            expect{'1337π'.to_radian}.to perform_very_quickly
+          end
+          it 'format C' do
+            expect{'2π/3'.to_radian}.to perform_very_quickly
+            expect{'1337π/1337'.to_radian}.to perform_very_quickly
+          end
         end
       end
     end

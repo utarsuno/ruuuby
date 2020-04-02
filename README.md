@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.24'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.25'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -76,19 +76,26 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 
 | class(es)  | example | utilizing C-extension? <br/> (java-wip) | notes |
 | ----------:| ------- | :---: |----- |
-| `Integer`  | `1337^²` | ✅ | - coexists with `Integer`'s default existing `bitwise XOR` functionality <br/> - `performance penalties`: up to `105%` `slower` than using operator(`**`) |
+| `Integer`  | `1337^²` | ✅ | - coexists with `Integer`'s default existing `bitwise XOR` functionality <br/> - `performance penalties`: up to `95%` `slower` than using operator(`**`) |
 | `Float`    | `1337.1337^²` | ✅ | `performance penalties`: up to `90%` `slower` than using operator(`**`) |
 | `Rational` | `3/4r^²` | ❌ | `performance penalties`: up to `700% slower` than using operator(`**`) |
 | `Complex`, `BigDecimal` | `inc` | `inc` | `inc` |
 
-#### Module Changes:
+### Changes for TOPLEVEL_BINDING:
+
+| (`global`) func(s) added | notes | as C-extension? <br/> (java-wip) |
+| ---: | :--- | :----: |
+| `√`, `∛`, `π` | (`f17`) | ❌ |
+| `∞`, `∞ℂ`, `¿`, `φ`, `γ` | (`f17`) | ❌ |
+| `∠ᶜ`, `∠°`, `sin`, `sin°`, `cos`, `cos°`, `tan`, `tan°` | (`f17`) | ❌ |
+| `📁`, `📂`, `🗄️` | - aliases for `::File`, `::Dir` <br/> - (`f12`) | ❌ |
+
+### Changes to Modules:
 
 `instance methods for Kernel will act as 'globally-scoped functions'; meaning they can essentially can be called from anywhere with caller of the method ignored for all contextes`
 
 | module(s) | func(s) added     | as C-extension? <br/> (java-wip) | notes |
-| --------: | ----------------- | :------------------------: | ----- |
-| `Kernel`  | `📁`, `📂`, `🗄️` | ❌                         | - aliases for `::File`, `::Dir` <br/> - (`f12`) |
-| `Kernel`  | `√`, `∛`, `π`, `∞`, `∞ℂ`, `¿`, `φ`, `γ`, `∠ᶜ`, `∠°`, `sin`, `sin°`, `cos`, `cos°` | ❌ | - math syntax sugar <br/> - (`f10`, `f17`) |
+| --------: | :---------------: | :------------------------: | ----- |
 | `Kernel`  | `𝔠`               | ❌                         | - gets the `cardinality` (length/size) of arg <br/> - (`f03`) |
 | `Kernel`  | `🌽_previous_⨍`   | ❌                        | (`f10`) |
 | `Kernel`  | `∃module?`        | ❌                         | true-example: `∃module?(:Ruuuby)` |
@@ -97,9 +104,10 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Module`  | `∃⨍?`             | ❌                         | - {`static`} <br/> - true-example: `::Array.∃⨍?(:≈≈)` |
 | `Math`    | {`static`} `relative_Δ` | ❌                   | (`f17`) |
 
-#### Class Changes:
+### Changes to Classes:
+
 | class(es)              | func(s) added                      | as C-extension? <br/> (java-wip) | notes   |
-| ---------------------: | ---------------------------------- | :------------------------: | ------- |
+| ---------------------: | --------------------------------- | :------------------------: | ------- |
 | `File`, `Dir`          | {`static`} `∃?`                    | ❌ | (`f12`) |
 | `File`                 | {`static`} `dirname²`, `dirname³`  | ❌ | (`f12`) |
 | `Dir`                  | `normalized_paths`                 | ❌ | (`f12`) |
@@ -108,6 +116,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Object`               | `class?`, `module?`, `nucleotide?` | ❌ | (`f06`) |
 | `Array`                | `remove_empty!`                    | ✅ | (`f07`) |
 | `Set`                  | `remove_empty!`                    | ❌ | (`f07`) |
+| `String`               | `♻️until!`                         | ❌ | (`f08`) |
 | `Array`                | `η̂!`                               | ❌ | (`f08`) |
 | `Array`                | [`frequency_counts`, `📊`]         | ✅ | (`f09`) |
 | `Array`                | [`equal_contents?`, `≈≈`]          | ✅ | - regardless of order and presence of multiple types <br/> - (`f09`) |
@@ -129,6 +138,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Complex`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
 | `Rational`             | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`       | ❌ | (`f11`) |
 | `Float`                | `≈≈`, `∞ℂ?`                        | ❌ | (`f17`) |
+| `String`               | `to_radian`                        | ❌ | (`f17`) |
 | `Object`               | [`🛑bool❓`, `🛑🅱️❓`], `🛑int❓`, `🛑ℤ❓`, `🛑𝕌❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑countable❓` | ❌ | (`f04`) |
 
 #### Created Aliases:
@@ -138,6 +148,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Object`               | `object_id`, `define_singleton_function`   | `🆔`, `define_singleton_⨍` | (`f10`)   |
 | `Class`                | `new`                                     | `🆕`                      | (`f10`)   |
 | `ApplicationRecord`    | `destroy`, `destroy!`                     | `♻️`, `♻️!`               | (`f10`)   |
+| `Array`, `Set`         | `remove_empty!`                           | `♻️∅!`                    | (`f10`)   |      
 | `Object`               | `freeze`, `frozen?`                       | `❄️`, `❄️?`               | (`f10`)   |
 | `String`, `Symbol`     | `upcase`                                  | `⬆️`, `⬆`, `🔠`          | (`f10`)   |
 | `String`, `Symbol`     | `downcase`                                | `⬇️`, `⬇`, `🔡`          | (`f10`)   |
@@ -148,7 +159,8 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Module`               | `private`, `private_constant`             | `🙈`, `🙈constants⟶`    | (`f01`)   |
 | `Module`               | `protected`, `protected_method_defined?`   | `🛡️`, `∃🛡️func?`          | (`f02`)   |
 | `Array`, `Hash`, `Set` | `each`                                    | `∀`                       | (`f10`) |
-| `Array`                | `reverse`, `reverse!`, `reverse_each`     | `↩️`, `↩️!`, `↩️∀`        | (`f10`) |
+| `Array`, `String`      | `reverse`, `reverse!`                     | [`↩️`, `↩`], [`↩️!`, `↩!`] | (`f10`) |
+| `Array`                | `reverse_each`                            | `↩️∀`, `∀↩`               | (`f10`) |
 | `Enumerable`           | `map`                                     | `⨍`                       | - automatically applies to: `Array`, `Hash`, `Set` <br/> - (`f10`) |
 | `Enumerable`           | `include?`                                | `∋?`                      | (`f10`) |
 | `Enumerable`           | `each_with_index`                         | `∀ₓᵢ`                     | (`f10`) |
@@ -163,10 +175,10 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 562      | # of tests (non-performance & non-audit based)                  |
-| QA        | performance   | 214      | # of tests (non-unit & non-audit based)                         |
-| CI        | audits        | 45       | # of tests (non-performance & non-unit based)                   |
-| structure | features      | ~26      | # of distinct features (that are categorized & tracked) `wip`   |
+| QA        | unit          | 580      | # of tests (non-performance & non-audit based)                  |
+| QA        | performance   | 223      | # of tests (non-unit & non-audit based)                         |
+| CI        | audits        | 66       | # of tests (non-performance & non-unit based)                   |
+| structure | features      | ~27      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |
 | coverage  | documentation | ???      | `wip` |

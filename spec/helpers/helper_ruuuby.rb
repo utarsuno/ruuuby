@@ -188,7 +188,7 @@ module RuuubyTestHelper
           reverse: :↩️,
           reverse!: :↩️!,
           reverse_each: :↩️∀,
-          length: :𝔠
+          length: :𝔠,
       }
   }
 

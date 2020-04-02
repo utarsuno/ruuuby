@@ -3,19 +3,10 @@
 class ::Float
 
   # @type [Float]
-  INFINITY_NEGATIVE       = (-::Float::INFINITY).❄️
+  INFINITY_NEGATIVE = (-::Float::INFINITY).❄️
 
   # @type [Symbol]
-  INFINITY_COMPLEX        = :∞ℂ
-
-  # @type [Float]
-  MIN_NORMAL              = (1.17549435E-38).❄️
-
-  # @type [Float]
-  RELATIVE_ERROR          = (0.00001).❄️
-
-  # @type [Float]
-  SMALLEST_RELATIVE_ERROR = (::Float::RELATIVE_ERROR * ::Float::MIN_NORMAL).❄️
+  INFINITY_COMPLEX  = :∞ℂ
 
   # original source code referenced from:
   # @see https://floating-point-gui.de/errors/NearlyEqualsTest.java

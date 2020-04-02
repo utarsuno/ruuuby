@@ -8,7 +8,7 @@
  * clear `tech debt` and all `feature abstracts`
    * adding `automatic differentiation` should involve near `0% (of time allocation)` towards `version-relating documentation & audits`
 
-#### v0.0.25-v0.0.30
+#### v0.0.26-v0.0.30
  * resolve missing coverage from `v0.0.17`
  * resolve missing coverage from `v0.0.18`
  * resolve missing coverage from `v0.0.22`
@@ -17,6 +17,36 @@
  * start automation/abstraction of state & configs for CLI based APIs, tools, and scripts (gem `tty-command` providing core functionality)
  * start automation/abstraction of code-file (content) management
  * continuation of (`f15`) in relation to above 2 points
+
+---
+
+# v0.0.25
+ * start dividing (`f98`)/`C-code` across multiple header files, lots of small misc changes (ex: moved various constants definitions from `Ruby's` `Float`)
+ * re-structure `Feature` <-> `Module` mapping, add `audit` tests to verify pattern is present/consistent
+ * move certain funcs out of `Kernel` and directly add them to `TOPLEVEL_BINDING` to avoid polluting other classes
+ * (`f00`) start formalization of existing funcs w/ name(`η̂`, `normalize`) and/or when `normalization` is applied to `args` (any context)
+ * symbolic-math support being added only for niche use-cases, `automatic-differentiation` features to take priority in case of any feature-conflicts
+
+| added path | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/ruuuby/global_funcs.rb` |  |  | `f15` |
+| `ext/ruby/class_mods/c0_constants.h` |  |  | `f98` |
+| `ext/ruby/class_mods/c1_typed_checks.h` |  |  | `f98` |
+| `ext/ruby/class_mods/c2_extension_memory.h` |  |  | `f98` |
+| `ext/ruby/class_mods/c3_macro_utilities.h` |  |  | `f98` |
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `String` | `♻️until!` | `f08` |
+| `TOPLEVEL_BINDING` | `tan`, `tan°` | `f17` |
+| `String` | `to_radian` | `f17` |
+
+| class | alias(es) added | feature(s) |
+| --- | --- | --- |
+| `Array` | (remove_empty!): `♻️∅!` | `f10` |
+| `Set` | (remove_empty!): `♻️∅!` | `f10` |
+| `String` | (reverse): `↩️`, `↩️!`, `↩`, `↩!` | `f10` |
+| `Array` | (reverse): `↩`, `↩!`, `↩∀` | `f10` |
 
 ---
 

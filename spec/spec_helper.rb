@@ -70,6 +70,26 @@ RSpec.shared_context 'RSPEC_GLOBAL_UTILITIES' do
   let(:data_rational_leet){Rational(1337, 1)}
   let(:data_rational_negative_leet){Rational(-1337, 1)}
 
+  let(:data_unit_circle_points){[
+      [0  , '0'    , 0.0],
+      [30 , 'π/6'  , π / 6],
+      [45 , 'π/4'  , π / 4],
+      [60 , 'π/3'  , π / 3],
+      [90 , 'π/2'  , π / 2],
+      [120, '2π/3' , (2 * π) / 3],
+      [135, '3π/4' , (3 * π) / 4],
+      [150, '5π/6' , (5 * π) / 6],
+      [180, 'π'    , π],
+      [210, '7π/6' , π * (7.0/6)],
+      [225, '5π/4' , (5 * π) / 4],
+      [240, '4π/3' , (4 * π) / 3],
+      [270, '3π/2' , (3 * π) / 2],
+      [300, '5π/3' , (5 * π) / 3],
+      [315, '7π/4' , (7 * π) / 4],
+      [330, '11π/6', (11 * π) / 6],
+      [360, '2π'   , 2 * π],
+  ]}
+
   let(:data_ary_empty){[]}
   let(:data_ary_leet){[1, 3, 3, 7]}
   let(:data_set_leet){Set[1, 3, 3, 7]}
@@ -144,6 +164,10 @@ module HelpersGeneral
     expect(val_scenario.class).to eq(Float)
   end
 
+  def expect_∃⨍(the_func, owner, expected_result=true)
+    expect(owner.∃⨍?(the_func)).to eq(expected_result)
+  end
+
   def expect_∃class(the_class, owner=nil, expected_result=true)
     if owner != nil
       expect(∃class?(the_class.to_sym, owner)).to eq(expected_result)
@@ -185,6 +209,12 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  require_relative '../lib/ruuuby/global_funcs'
+  config.include ::Ruuuby::Feature::Extendable::MainF12
+  config.include ::Ruuuby::Feature::Extendable::MainF17::MathAliases
+  config.include ::Ruuuby::Feature::Extendable::MainF17::FloatAliases
+  config.include ::Ruuuby::Feature::Extendable::MainF17::Trigonometry
 
   config.include_context 'lets_language_deltas'
   config.include_context 'RSPEC_GLOBAL_UTILITIES'

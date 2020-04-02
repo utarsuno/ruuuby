@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-# add various aliases & functions to existing module +Math+
+# add various aliases & functions to existing Module(+Math+)
 module ::Math
 
   # @param [Integer|Float|Numeric] value_a

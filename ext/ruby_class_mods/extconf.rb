@@ -33,7 +33,7 @@ module ExtconfConfigHelper
     FOR_RUBY = %w(ruby ruby/assert ruby/debug ruby/defines ruby/encoding ruby/intern ruby/version ruby/missing)
     #FOR_C    = %w(stdio unistd sys/types sys/stat sys/param sys/mount fcntl string stdlib)
     FOR_C    = %w(sys/types string stdlib)
-    ALL      = FOR_RUBY + FOR_C + ["ruby_class_mods"]
+    ALL      = FOR_RUBY + FOR_C + %w(c0_constants c1_typed_checks c2_extension_memory c3_macro_utilities ruby_class_mods)
       #ALL = FOR_RUBY
   end
 

@@ -16,7 +16,9 @@ class ::Set
   # @return [Set] this same set instance, potentially with modifications
   def remove_empty!
     return self if self.∅?
-    self.keep_if{ |x| !x.respond_to?(:∅?) || !x.∅? }
+    self.keep_if{|x| !x.respond_to?(:∅?) || !x.∅?}
     self
   end
+
+  alias_method :♻️∅!, :remove_empty!
 end

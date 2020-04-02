@@ -1,15 +1,43 @@
 
 # Numbers
 
-| symbol | set              | domain                           | description |
-| ------ | ---------------- | -------------------------------- | ----------- |
-| 𝔹      | boolean domain   | {0, 1}                           |             |
-| ℕ      | Natural Numbers  | {0, 1, 2, 3...}                  |             |
-| ℤ      | Integers         | {..., -3, -2, -1, 0, 1, 2, 3...} |             |
-| ℂ      | Complex Numbers  |                                  |             |
-| ℚ      | Rational Numbers |                                  |             |
-| ℝ      | Real Numbers     |                                  |             |
-| 𝕌      | Universal        | all but following: {NaN, +∞, -∞} |             |
+| symbol | set              | domain                                    | description |
+| ------ | ---------------- | ----------------------------------------- | ----------- |
+| 𝔹      | boolean domain   | {0, 1}                                    |             |
+| ℕ      | Natural Numbers  | {0, 1, 2, 3...}                           |             |
+| ℤ      | Integers         | {..., -3, -2, -1, 0, 1, 2, 3...}          | set of all whole numbers |
+| ℂ      | Complex Numbers  |                                           |             |
+| ℚ      | Rational Numbers | `p/q` where `p` and `q` `∈ ℤ` and `q ≠ 0` | |
+| ℝ      | Real Numbers     |                                           | |
+| 𝕌      | Universal        | any `n` where `n ∉ {NaN, +∞, -∞}`         | |
+
+### ℤ
+
+ * single operation: `+` (`-` operation is just adding a negative integer)
+ * `x + y -> an integer` "closed under addition"
+ * `x / y -> not an integer` "not closed under division"
+
+### Group
+
+ * set of elements `G`
+ * set of operations, ex: `+`, `*`
+ * closer under operation `x, y ∈ G -> x * y ∈ G`
+ * inverse `x⁻¹` exists for all `x`
+   * `x * x⁻¹ = e`
+ * identity: `y * e = e * y = y`
+ * associativity: `(a * b) * c = a * (b * c)`
+ * may not be `commutative`
+ * if `G` is `commutative`, it's called `Abelian`/`Commutative` group
+ * if `G` is not `commutative`, `noncommutative`/`non-abelian` group
+
+### Ring
+
+ * set of elements where you can `+`, `-`, `*`
+   * may not have `division`
+ * adding two elements in a ring will give another element from the ring
+ * `*` may be `non-commutative`
+ * multiplication is `associative`
+ * `distributive property`: `a * (b + c) = a * b + a * c`
 
 # Vocab
 
@@ -55,7 +83,11 @@
 | 0x23 | `bijective functions` | | "`functions` such that each element in the `codomain` is an `image` of exactly on element in the `domain` | |
 | 0x24 | `Jacobian matrix` | | "In `vector calculus`, the `Jacobian matrix`, of a `vector-valued function` in several variables is the `matrix` of all its first-order `partial derivatives`" | |
 | 0x25 | `Reimann sphere` | | "is a `model` of the `extended complex plane`, the `complex plane` plus a `point at infinity`" | "this `extended plane` represents the `extended complex numbers`, that is, the `complex numbers` plus a value `∞` for `infinity` |
-
+| 0x26 | `ring` | | "one of the fundamental `algebraic structures` used in `abstract algebra`. In consists of a `set` equipped with two `binary operations` that generalize the  `arithmetic operations` of `addition` and `multiplication`. Through this generalization, theorems from `arithmetic` are extended to non-numerical objects such as `polynomials`, `series`, `matrices`, and `functions` | "a `ring` is an `abelian group` with a second `binary operation` that is `associative`, is `distributive` over the `abelian group operation` and has an `identity element`" |
+| 0x27 | `trigonometric functions` | `circular functions`, `angle functions`, `goniometric functions` | "are `real functions` which relate an angle of a `right-angled triangle` to ratios fo two side lengths" | |
+| 0x28 | `Niven's Theorem` | | if `x/π` and `sin(x)` are both `rational`, then the `sine` takes values `0, ±1/2, and ±1` | |
+| 0x29 | `measure zero` | | "a set of points capable of being enclosed in intervals whose total length is arbitrarily small" | |
+| 0x30 | `first-order logic` | `predicate logic`, `quantificational logic`, `first-order predicate calculus` | "a collection of `formal systems` used in mathematics, philosophy, linguistics, and computer science" | |
 
 | # | more | example |
 | --- | --- | --- |
@@ -64,6 +96,12 @@
 | 0x20, 0x21 | `f: X → Y` is a `function` from the `set X` to the `set Y` |
 | 0x22 | `one-to-one function` is different than `one-to-one correspondence` (`bijective functions`)(0x23) |
 
+### Properties
+
+| # | term | definition |
+| --- | --- | --- |
+| 0x0 | `commutative property` | "a `binary operation` is `commutative` if changing the order of the `operands` does not change the result. It is a fundamental property of many `binary operations`, and many `mathematrical proofs` depend on it" |
+| 0x1 | `distributive property` | "in `abstract algebra` and `formal logic`, the `distributive property` of `binary operations` generalizes the `distributive law` from `Boolean algebra` and `elementary algebra`. In `propositional logic`, `distribution` refers to two `valid rules of replacement`. The rules allow one to reformulate `conjunctions` and `disjunctions` with `logical proofs`" |
 
 ### Sequences
 
@@ -84,7 +122,7 @@
 
 ### Rationals
 
- * `0/0` means `⟶0 / ⟶0` where `⟶0` means `approaching to`
+ * `0/0` means `⟶0 / ⟶0` where `⟶0` means `approaching to 0`
  * `⟶∞` and `∞` are equivalent notation
  * `⟶0` and `0` are not equivalent notation
    * ex: the ONLY answer for (`5/0`) is `division by zero not defined`
@@ -97,6 +135,8 @@
 
 #### TODOs
 
+* https://en.wikipedia.org/wiki/Ring_(mathematics)
+* https://en.wikipedia.org/wiki/Lie_algebra
 * https://en.wikipedia.org/wiki/Riemann_sphere
 * https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant
 * https://en.wikipedia.org/wiki/Category_theory
@@ -129,4 +169,8 @@
 * https://en.wikipedia.org/wiki/Transcendental_number
 
 ```
+
+
+
+Clock Arithmetic similair to Modular Arthimetic
 
