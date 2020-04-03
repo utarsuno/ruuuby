@@ -2,6 +2,14 @@
 
 RSpec.describe Ruuuby do
 
+  context 'defines needed Feature modules' do
+    it 'with needed sub-modules' do
+      expect_∃module(:Feature, ::Ruuuby)
+      expect_∃module(:Extendable, ::Ruuuby::Feature)
+      expect_∃module(:Includable, ::Ruuuby::Feature)
+    end
+  end
+
   context 'C-extensions' do
     context 'defines needed globals' do
       context 'readonly_global{$PRM_MANY}' do
@@ -54,6 +62,7 @@ RSpec.describe Ruuuby do
 #  /~~\    \__/    |__/    |     |     .__/
 
   context 'audits', :'audits' do
+
 
 
   end

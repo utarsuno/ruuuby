@@ -1,5 +1,9 @@
+# encoding: utf-8
 
-# add various functions to existing class +Float+
+# add various aliases & functions to existing Class(+Float+)
+#
+# == Documentation Variables
+# [RF] all/any possible
 class ::Float
 
   # @type [Float]
@@ -40,14 +44,13 @@ class ::Float
 
   alias_method :¿?, :nan?
 
-  # @return [Boolean] true, (if-valid) all floats can be represented as complex numbers (with imaginary component of 0)
-  alias_method :ℂ?, :finite?
-
-  # @return [Boolean] true, all floats are real numbers(+ℝ+); unless non-finite
-  alias_method :ℝ?, :finite?
-
-  # @return [Boolean] true, the universal-set(+𝕌+) in this context only excludes (NaN, +∞, and -∞)
-  alias_method :𝕌?, :finite?
+  # all floats can be represented as:
+  #
+  #   - complex-numbers(+ℂ+)   (with imaginary component of 0)
+  #   - real-numbers(+ℝ+)      (unless non-finite)
+  #   - universal-numbers(+𝕌+) (unless non-finite)
+  #
+  ⨍_add_aliases(:finite?, [:ℂ?, :ℝ?, :𝕌?])
 
   # @return [Boolean] true, if there is no imaginary component and the real component is a natural-number(+ℕ+)
   def ℕ? ; (!(∞? || negative?)) && (self == 0 || ((self % 1) == 0)) ; end

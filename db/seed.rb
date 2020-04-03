@@ -269,11 +269,42 @@ v0_0_25.changelog.added_method_to_class(f17, :tan, TOPLEVEL_BINDING)
 v0_0_25.changelog.added_method_to_class(f17, :tan°, TOPLEVEL_BINDING)
 v0_0_25.changelog.added_method_to_class(f17, :to_radian, ::String)
 
-# TODO: FOR v0.0.25? (), ADD OBJECT/FUNC TO GATHER ALL RELEASES AND THEN PRINT OUT CHANGELOG
+v0_0_26 = RuuubyRelease.spawn(0, 0, 26)
+v0_0_26.add_file('lib/ruuuby/module/attribute/includable/notation_set_mathematics.rb', ::Ruuuby::Attribute::Includable::Notation::SetMathematics, '', f09)
+v0_0_26.add_file('lib/ruuuby/ruuuby/ruuuby_metadata.rb', ::Ruuuby::MetaData, 'design pending')
+v0_0_26.remove_file('conditionals/ruuuby_configs.rb', 'configs not needed during runtime should be dynamically handled, not with conditionally loaded files (created explicitly for such need)')
+v0_0_26.add_comments(
+    [
+        'cleanup creation of function aliases (remove redundant declarations, move needed ones into `ide_helper`, and use new func{`⨍_add_aliases`} where possible)',
+        'attribute-module(`Cardinality`) now auto-assigns the alias `𝔠`, this design helps with `DRY`',
+        'reduce number of locations requiring manual edits when releasing version updates',
+        'add normalizer_option(`:ℕ`) to func(🛑int❓)',
+        'add `RSpec` section `db`, clean-up various locations where `db/seed` was loaded before'
+    ]
+)
+v0_0_26.changelog.added_method_to_class(f10, :⨍_add_aliases, ::Module)
+v0_0_26.changelog.added_method_to_class(f10, :❄, ::Object)
+v0_0_26.changelog.added_method_to_class(f10, :❄?, ::Object)
+v0_0_26.changelog.added_method_to_class(f12, :replace_expr_with, ::File)
+v0_0_26.changelog.added_method_to_class(f12, :replace_expr_with!, ::File)
+v0_0_26.changelog.added_method_to_class(f15, :<, ::RuuubyRelease)
+v0_0_26.changelog.added_method_to_class(f15, :>, ::RuuubyRelease)
+v0_0_26.changelog.added_method_to_class(f15, :get_next_version_uid, ::RuuubyRelease)
+v0_0_26.changelog.added_method_to_class(f15, :get_latest_version_uid, ::RuuubyRelease)
+
+v0_0_25.released = true
+v0_0_25.save!
+v0_0_26.released = false
+v0_0_26.save!
+
+# TODO: FOR v0.0.26? (), ADD OBJECT/FUNC TO GATHER ALL RELEASES AND THEN PRINT OUT CHANGELOG
 # (to remove code below)
 
 =begin
 puts "PRINTING DOCS"
+v0_0_26.docs_changelog.each do |line|
+  puts line
+end
 v0_0_25.docs_changelog.each do |line|
   puts line
 end

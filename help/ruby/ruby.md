@@ -56,6 +56,20 @@
 | $$ | The Ruby interpreter's process ID |
 | $? | The exit status of last executed child process |
 
+### Syntax Sugar
+
+`table from: https://simpleror.wordpress.com/2009/03/15/q-q-w-w-x-r-s/#x`
+
+| format | example | description |
+| --- | --- | --- |
+| %Q | %Q("hi") -> \"hi\" | alternative for "" |
+| %q | | same as above but for single-quoted strings (no expression substitution or escape sequences) |
+| %W | | for double-quoted array elements |
+| %w | | same as above but for single-quoted strings |
+| %x | | returns standard output of ran `cmd` |
+| %r | | used to create `Regular Expressions` |
+| %s | | used to created symbols (not subject to expression substitution or escape sequences) |
+
 ## Important Documentation from Ruby Source
 
 ```ruby

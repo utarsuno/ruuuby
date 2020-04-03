@@ -60,17 +60,10 @@ class ::Symbol
   include ::Ruuuby::Attribute::Includable::SubscriptIndexing
 
   # ---------------------------------------------------------------------------------------------------------- | *f03* |
-  alias_method :𝔠, :length
-
   include ::Ruuuby::Attribute::Includable::Cardinality
   # ---------------------------------------------------------------------------------------------------------- | *f10* |
-  alias_method :⬇️, :downcase
-  alias_method :⬇, :downcase
-  alias_method :🔡, :downcase
-
-  alias_method :⬆️, :upcase
-  alias_method :⬆, :upcase
-  alias_method :🔠, :upcase
+  ⨍_add_aliases(:downcase, [:⬇️, :⬇, :🔡])
+  ⨍_add_aliases(:upcase, [:⬆️, :⬆, :🔠])
   # ---------------------------------------------------------------------------------------------------------- | *f16* |
 
   # negative sign power is 8315, 0 is 8304, 1 is 185

@@ -8,7 +8,7 @@
  * clear `tech debt` and all `feature abstracts`
    * adding `automatic differentiation` should involve near `0% (of time allocation)` towards `version-relating documentation & audits`
 
-#### v0.0.26-v0.0.30
+#### v0.0.27-v0.0.30
  * resolve missing coverage from `v0.0.17`
  * resolve missing coverage from `v0.0.18`
  * resolve missing coverage from `v0.0.22`
@@ -20,9 +20,37 @@
 
 ---
 
+# v0.0.26
+ * cleanup creation of function aliases (remove redundant declarations, move needed ones into `ide_helper`, and use new func{`⨍_add_aliases`} where possible)
+ * `DRY`: attribute-module(`Cardinality`) now auto-assigns the alias `𝔠`
+ * reduce number of locations requiring manual edits/checks when releasing version updates
+ * add normalizer_option(`:ℕ`) to func(🛑int❓)
+ * add `RSpec` section `db`, clean-up various locations where `db/seed` was loaded before
+
+| added path | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/ruuuby/module/attribute/includable/notation_set_mathematics.rb` | ``Ruuuby::Attribute::Includable::Notation::SetMathematics`` |  | `f09` |
+| `lib/ruuuby/ruuuby/ruuuby_metadata.rb` | ``Ruuuby::MetaData`` | design pending | |
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Module` | `⨍_add_aliases` | `f10` |
+| `File` | `replace_expr_with`, `replace_expr_with!` | `f12` |
+| `RuuubyRelease` | `<`, `>`, `get_next_version_uid`, `get_latest_version_uid` | `f15` |
+
+| class | alias(es) added | feature(s) |
+| --- | --- | --- |
+| `Object` | (freeze) `❄`, `❄?` | `f10` |
+
+| path removed | notes |
+| ---: | --- |
+| `conditionals/ruuuby_configs.rb` | configs not needed during runtime should be dynamically handled, not with conditionally loaded files (created explicitly for such need) |
+
+---
+
 # v0.0.25
- * start dividing (`f98`)/`C-code` across multiple header files, lots of small misc changes (ex: moved various constants definitions from `Ruby's` `Float`)
- * re-structure `Feature` <-> `Module` mapping, add `audit` tests to verify pattern is present/consistent
+ * start dividing (`f98`)/`C-code` across multiple header files, lots of small misc changes (ex: moved various constants definitions from `Ruuuby's` `Float`)
+ * re-structure `Feature` <---> `Module` mapping, add `audit` tests to verify pattern is present/consistent
  * move certain funcs out of `Kernel` and directly add them to `TOPLEVEL_BINDING` to avoid polluting other classes
  * (`f00`) start formalization of existing funcs w/ name(`η̂`, `normalize`) and/or when `normalization` is applied to `args` (any context)
  * symbolic-math support being added only for niche use-cases, `automatic-differentiation` features to take priority in case of any feature-conflicts
@@ -86,10 +114,10 @@
 | added path | reference | notes | feature(s) |
 | ---: | --- | --- | --- |
 | `lib/ruuuby/class/sym.rb` | ``Symbol`` |  | `f10` |
-| `lib/ruuuby/module/attribute/includable/attribute_cardinality.rb` | ``Ruuuby::Attribute::Includable::Cardinality`` |  | `f04` |
-| `lib/ruuuby/module/attribute/includable/attribute_subscript_indexing.rb` | ``Ruuuby::Attribute::Includable::SubscriptIndexing`` |  | `f10` |
-| `lib/ruuuby/module/attribute/includable/attribute_syntax_cache.rb` | ``Ruuuby::Attribute::Includable::SyntaxCache`` |  | `f10` |
-| `lib/ruuuby/module/attribute/extendable/attribute_syntax_cache.rb` | ``Ruuuby::Attribute::Extendable::SyntaxCache`` |  | `f10` |
+| `lib/ruuuby/module/attribute/includable/cardinality.rb` | ``Ruuuby::Attribute::Includable::Cardinality`` |  | `f04` |
+| `lib/ruuuby/module/attribute/includable/subscript_indexing.rb` | ``Ruuuby::Attribute::Includable::SubscriptIndexing`` |  | `f10` |
+| `lib/ruuuby/module/attribute/includable/syntax_cache.rb` | ``Ruuuby::Attribute::Includable::SyntaxCache`` |  | `f10` |
+| `lib/ruuuby/module/attribute/extendable/syntax_cache.rb` | ``Ruuuby::Attribute::Extendable::SyntaxCache`` |  | `f10` |
 
 | class | method(s) added | feature(s) |
 | --- | --- | --- |

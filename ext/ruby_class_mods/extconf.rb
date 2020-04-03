@@ -1,9 +1,5 @@
 # coding: utf-8
 
-require_relative '../../conditionals/ruuuby_configs'
-gem_configs = ::RuuubyConfigs
-gem_schema = gem_configs::NamingSchema
-
 require 'mkmf'
 
 $VERBOSE = true
@@ -39,11 +35,11 @@ module ExtconfConfigHelper
 
 end
 
-dir_config(gem_schema::RUUUBY_NAME_EXTENSION, ExtconfConfigHelper::Dir::DIRS_HEADER, ExtconfConfigHelper::Dir::DIRS_LIB)
+dir_config(ExtconfConfigHelper::EXTENSION_NAME, ExtconfConfigHelper::Dir::DIRS_HEADER, ExtconfConfigHelper::Dir::DIRS_LIB)
 
 ExtconfConfigHelper::Headers::ALL.each do |h|
   current_header = "#{h}.h"
   abort("Unable to find header{#{current_header.to_s}}") unless find_header(current_header)
 end
 
-create_makefile(gem_schema::RUUUBY_NAME_EXTENSION)
+create_makefile(ExtconfConfigHelper::EXTENSION_NAME)

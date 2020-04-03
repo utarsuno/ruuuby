@@ -127,8 +127,8 @@ class ::Array
   include ::Ruuuby::Feature::Includable::ArrayF08
   # ---------------------------------------------------------------------------------------------------------- | *f09* |
   include ::Ruuuby::Feature::Includable::ArrayF09
+  include ::Ruuuby::Attribute::Includable::Notation::SetMathematics
 
-  alias_method :∋?, :include?
   alias_method :uniq_to_me, :∖
 
   # Return true if both arrays are matching in contents, supports multiple types and without order mattering.
@@ -163,21 +163,15 @@ class ::Array
   # @return [Array] a new Array instance containing the symmetric difference between this array and the one provided
   alias_method :⊕, :disjunctive_union
 
-  # ---------------------------------------------------------------------------------------------------------- | *f03* |
-  alias_method :𝔠, :length
   # ---------------------------------------------------------------------------------------------------------- | *f04* |
   alias_method :∅?, :empty?
   alias_method :♻️∅!, :remove_empty!
-  # ---------------------------------------------------------------------------------------------------------- | *f05* |
-  alias_method :>>, :>>
   # ---------------------------------------------------------------------------------------------------------- | *f10* |
-  alias_method :∀, :each
-  alias_method :↩️, :reverse
-  alias_method :↩️!, :reverse!
-  alias_method :↩️∀, :reverse_each
-  alias_method :↩, :reverse
-  alias_method :↩!, :reverse!
-  alias_method :↩∀, :reverse_each
+
+  ⨍_add_aliases(:reverse, [:↩️, :↩])
+  ⨍_add_aliases(:reverse!, [:↩️!, :↩!])
+  ⨍_add_aliases(:reverse_each, [:↩️∀, :↩∀])
+
   # | ------------------------------------------------------------------------------------------------------------------
 
 end

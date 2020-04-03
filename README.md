@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.25'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.26'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -100,9 +100,10 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Kernel`  | `🌽_previous_⨍`   | ❌                        | (`f10`) |
 | `Kernel`  | `∃module?`        | ❌                         | true-example: `∃module?(:Ruuuby)` |
 | `Kernel`  | `∃class?`         | ❌                         | true-example: `∃class?(:Array)` |
-| `Module`  | `∃⨍_alias?`       | ❌                         | - {`static`} <br/> - true-example: `::Array.∃⨍_alias?(:equal_contents?, :≈≈)` |
-| `Module`  | `∃⨍?`             | ❌                         | - {`static`} <br/> - true-example: `::Array.∃⨍?(:≈≈)` |
-| `Math`    | {`static`} `relative_Δ` | ❌                   | (`f17`) |
+| `Module`  | {`static`} `∃⨍_alias?`    | ❌                 | true-example: `::Array.∃⨍_alias?(:equal_contents?, :≈≈)` |
+| `Module`  | {`static`} `∃⨍?`          | ❌                 | true-example: `::Array.∃⨍?(:≈≈)` |
+| `Module`  | {`static`} `⨍_add_aliases`| ❌                 | |
+| `Math`    | {`static`} `relative_Δ`   | ❌                 | (`f17`) |
 
 ### Changes to Classes:
 
@@ -110,6 +111,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | ---------------------: | --------------------------------- | :------------------------: | ------- |
 | `File`, `Dir`          | {`static`} `∃?`                    | ❌ | (`f12`) |
 | `File`                 | {`static`} `dirname²`, `dirname³`  | ❌ | (`f12`) |
+| `File`                 | `replace_expr_with`, `replace_expr_with!` | ❌ | (`f12`) |
 | `Dir`                  | `normalized_paths`                 | ❌ | (`f12`) |
 | `File`, `Dir`          | `∅?`                               | ❌ | (`f04`) |
 | `Object`               | `ary?`, [`bool?`, `🅱️?`], `hsh?`, `int?`, `flt?`, `num?`, `str?`, `stry?`, `sym?` | ✅ | (`f06`) |
@@ -141,43 +143,43 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `String`               | `to_radian`                        | ❌ | (`f17`) |
 | `Object`               | [`🛑bool❓`, `🛑🅱️❓`], `🛑int❓`, `🛑ℤ❓`, `🛑𝕌❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑countable❓` | ❌ | (`f04`) |
 
-#### Created Aliases:
-| for                    | base method(s) reference(s)               | alias(es)                 | notes     |
-| ---------------------: | ----------------------------------------- | ------------------------- | --------- |
-| `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲`                | (`f10`)   |
-| `Object`               | `object_id`, `define_singleton_function`   | `🆔`, `define_singleton_⨍` | (`f10`)   |
-| `Class`                | `new`                                     | `🆕`                      | (`f10`)   |
-| `ApplicationRecord`    | `destroy`, `destroy!`                     | `♻️`, `♻️!`               | (`f10`)   |
-| `Array`, `Set`         | `remove_empty!`                           | `♻️∅!`                    | (`f10`)   |      
-| `Object`               | `freeze`, `frozen?`                       | `❄️`, `❄️?`               | (`f10`)   |
-| `String`, `Symbol`     | `upcase`                                  | `⬆️`, `⬆`, `🔠`          | (`f10`)   |
-| `String`, `Symbol`     | `downcase`                                | `⬇️`, `⬇`, `🔡`          | (`f10`)   |
+#### Created Aliases (for Ruby Classes):
+| for                    | base method(s) reference(s)               | alias(es)                  | notes     |
+| ---------------------: | ----------------------------------------- | -------------------------- | --------- |
+| `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲`                 | (`f10`)   |
+| `Object`               | `object_id`, `define_singleton_function`   | `🆔`, `define_singleton_⨍`  | (`f10`)   |
+| `Class`                | `new`                                     | `🆕`                       | (`f10`)   |
+| `Array`, `Set`         | `remove_empty!`                           | `♻️∅!`                     | (`f10`)   |      
+| `Object`               | `freeze`, `frozen?`                       | [`❄️`, `❄`], [`❄️?`, `❄?`] | (`f10`)   |
+| `String`, `Symbol`     | `upcase`                                  | `⬆️`, `⬆`, `🔠`           | (`f10`)   |
+| `String`, `Symbol`     | `downcase`                                | `⬇️`, `⬇`, `🔡`           | (`f10`)   |
 | `String`               | `upcase!`, `downcase!`                    | [`⬆️!`, `⬆!`, `🔠!`], [`⬇️!`, `⬇!`, `🔡!`] | (`f10`) |
 | `Object`               | `protected_instance_methods`, `private_methods` | `🛡️funcs`, `🙈funcs` | (`f01`,`f02`) |
 | `Array`                | `frequency_counts`, `disjunctive_union`, `equal_contents?` | `📊`, `⊕`, `≈≈` |  |
-| `Module`               | `const_defined?`, `private_method_defined?` | `∃const?`, `∃🙈func?`     |           |
-| `Module`               | `private`, `private_constant`             | `🙈`, `🙈constants⟶`    | (`f01`)   |
-| `Module`               | `protected`, `protected_method_defined?`   | `🛡️`, `∃🛡️func?`          | (`f02`)   |
-| `Array`, `Hash`, `Set` | `each`                                    | `∀`                       | (`f10`) |
+| `Module`               | `const_defined?`, `private_method_defined?` | `∃const?`, `∃🙈func?`      |           |
+| `Module`               | `private`, `private_constant`             | `🙈`, `🙈constants⟶`     | (`f01`)   |
+| `Module`               | `protected`, `protected_method_defined?`   | `🛡️`, `∃🛡️func?`           | (`f02`)   |
+| `Array`, `Hash`, `Set` | `each`                                    | `∀`                        | (`f10`) |
 | `Array`, `String`      | `reverse`, `reverse!`                     | [`↩️`, `↩`], [`↩️!`, `↩!`] | (`f10`) |
-| `Array`                | `reverse_each`                            | `↩️∀`, `∀↩`               | (`f10`) |
-| `Enumerable`           | `map`                                     | `⨍`                       | - automatically applies to: `Array`, `Hash`, `Set` <br/> - (`f10`) |
-| `Enumerable`           | `include?`                                | `∋?`                      | (`f10`) |
-| `Enumerable`           | `each_with_index`                         | `∀ₓᵢ`                     | (`f10`) |
+| `Array`                | `reverse_each`                            | `↩️∀`, `∀↩`                | (`f10`) |
+| `Enumerable`           | `map`                                     | `⨍`                        | - automatically applies to: `Array`, `Hash`, `Set` <br/> - (`f10`) |
+| `Enumerable`           | `include?`                                | `∋?`                       | (`f10`) |
+| `Enumerable`           | `each_with_index`                         | `∀ₓᵢ`                      | (`f10`) |
 | `Hash`                 | `key?`                                    | [`🔑?`, `🗝?`], [`∃🔑?`, `∃🗝?`] |  |
-| `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                      | (`f04`) |
+| `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                       | (`f04`) |
 | `String`, `Array`, `Set`, `Hash`             | `length`            | `𝔠`                        | (`f03`) |
-| `Float`                | `nan?`                                    | `¿?`                      | (`f17`) |
-| `Integer`              | `finite?`                                  | `∞ℂ?`, `¿?`, `∞ℂ?`        | (`f17`) |
+| `Float`                | `nan?`                                    | `¿?`                       | (`f17`) |
+| `Integer`              | `finite?`                                  | `∞ℂ?`, `¿?`, `∞ℂ?`         | (`f17`) |
 
 ---
 
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 580      | # of tests (non-performance & non-audit based)                  |
-| QA        | performance   | 223      | # of tests (non-unit & non-audit based)                         |
-| CI        | audits        | 66       | # of tests (non-performance & non-unit based)                   |
+| QA        | unit          | 574      | # of tests (solely relating to core functionality)              |
+| QA        | performance   | 223      | # of tests (solely relating to performance)                     |
+| QA        | DB            | 58       | # of tests (solely relating to the database)                    |
+| CI        | audits        | 32       | # of tests (solely relating to non-functionality based audits)  |
 | structure | features      | ~27      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |
@@ -218,7 +220,8 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 #### Testing Tasks:
 | preface            | cmd                 | w/ warnings? | description |
 | -----------------: | ------------------- | :----------: | ----------- |
-| `bundle exec rake` | `rspec_unit`        | ❌           | run all unit-tests except tags: {audit, performance} |
+| `bundle exec rake` | `rspec_unit`        | ❌           | run all unit-tests except tags: {audit, performance, db} |
+| `bundle exec rake` | `rspec_db`          | ❌           | run only db based unit-tests |
 | `bundle exec rake` | `rspec_audit`       | ❌           | run only audit based unit-tests  |
 | `bundle exec rake` | `rspec_performance` | ❌           | run only performance based unit-tests   |
 | `bundle exec rake` | `rspec_all`         | ✅           | run all unit-tests |

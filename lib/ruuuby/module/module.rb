@@ -64,4 +64,15 @@ class ::Module
 
   # | ------------------------------------------------------------------------------------------------------------------
 
+  # @param [Symbol]        the_⨍
+  # @param [Array<Symbol>] aliases
+  #
+  # @raise [RuntimeError]  occurs when trying to apply this function outside of a Class definition (TODO: have Ruuuby handle this ahead of time by removing it from un-needed scopes)
+  #
+  # @return [*]            self
+  def ⨍_add_aliases(the_⨍, aliases)
+    🛑 RuntimeError.🆕("m{Module}-> f{⨍_add_aliases} must only apply to Classes but self is a{#{self.class.to_s}}") unless self.class?
+    aliases.each {|a| self.alias_method a, the_⨍}
+  end
+
 end

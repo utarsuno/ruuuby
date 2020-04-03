@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-# add various functions to existing module +Numeric+
+# add various aliases & functions to existing Class(+Numeric+)
 class ::Numeric
 
   # ---------------------------------------------------------------------------------------------------------- | *f11* |

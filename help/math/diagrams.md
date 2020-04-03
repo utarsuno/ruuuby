@@ -1,9 +1,10 @@
 
 ### Diagrams
 
-| id | for | link |
-| --- | --- | --- |
-| 0x25 | `Riemann sphere` | https://kids.kiddle.co/images/thumb/0/03/RiemannKugel.jpg/642px-RiemannKugel.jpg |
+| category | id | for | link |
+| --- |--- | --- | --- |
+| function | 0x0 | `sigmoid function` | https://upload.wikimedia.org/wikipedia/commons/6/6f/Gjl-t%28x%29.svg |
+| vocab    | 0x25 | `Riemann sphere` | https://kids.kiddle.co/images/thumb/0/03/RiemannKugel.jpg/642px-RiemannKugel.jpg |
 
 ### Bonus
 

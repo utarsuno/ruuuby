@@ -4,7 +4,7 @@
 BEGIN {
   require_relative 'global_funcs'
 
-  # add these methods onto the `main` object (similar to (just of smaller scope) adding methods to `Kernel` )
+  # add these methods onto the `main` object (similar to adding methods to `Kernel`, but of smaller scope to avoid polluting other Classes)
   class << self
     include ::Ruuuby::Feature::Extendable::MainF12
     include ::Ruuuby::Feature::Extendable::MainF17::MathAliases

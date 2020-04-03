@@ -88,6 +88,7 @@
 | 0x28 | `Niven's Theorem` | | if `x/π` and `sin(x)` are both `rational`, then the `sine` takes values `0, ±1/2, and ±1` | |
 | 0x29 | `measure zero` | | "a set of points capable of being enclosed in intervals whose total length is arbitrarily small" | |
 | 0x30 | `first-order logic` | `predicate logic`, `quantificational logic`, `first-order predicate calculus` | "a collection of `formal systems` used in mathematics, philosophy, linguistics, and computer science" | |
+| 0x31 | `even & odd functions` | | "functions which satisfy particular `symmetry` relations, with respect to taking `additive inverses`" | |
 
 | # | more | example |
 | --- | --- | --- |
@@ -96,12 +97,19 @@
 | 0x20, 0x21 | `f: X → Y` is a `function` from the `set X` to the `set Y` |
 | 0x22 | `one-to-one function` is different than `one-to-one correspondence` (`bijective functions`)(0x23) |
 
+TODO formal def: `logistic distribution`
+TODO formal def: `normal distrubtion`
+
 ### Properties
 
 | # | term | definition |
 | --- | --- | --- |
 | 0x0 | `commutative property` | "a `binary operation` is `commutative` if changing the order of the `operands` does not change the result. It is a fundamental property of many `binary operations`, and many `mathematrical proofs` depend on it" |
 | 0x1 | `distributive property` | "in `abstract algebra` and `formal logic`, the `distributive property` of `binary operations` generalizes the `distributive law` from `Boolean algebra` and `elementary algebra`. In `propositional logic`, `distribution` refers to two `valid rules of replacement`. The rules allow one to reformulate `conjunctions` and `disjunctions` with `logical proofs`" |
+| 0x2 | `reflexive property` | "for every real number `x`, `x = x`" |
+| 0x3 | `symmetric property` | "for all real numbers `x` and `y`, if `x = y`, then `y = x`" |
+| 0x4 | `transitive property` | "for all real numbers `x`, `y`, and `z`, if `x = y` and `y = z`, then `x = z`" |
+| 0x5 | `substitution property` | "if `x = y` and `y = z`, then `x = z` |
 
 ### Sequences
 
@@ -109,6 +117,18 @@
 | --- | --- | --- |
 | 0x0 | `arithmetic sequence` | "the difference between one term and the next is a constant` |
 | 0x1 | `geometric sequence` | "each term is found by multiplying the previous term by a constant" |
+
+### Functions
+
+| # | term | definition |
+| --- | --- | --- |
+| 0x0 | `Sigmoid function` | | 
+| 0x1 | `logistic function` | | 
+| 0x2 | `odd function` | "Let `f` be a real-valued function of a real variable. Then `f` is `odd` if the following equation holds for all `x` such that `x` and `-x` are in the domain of `f`: <br/> `-f(x) = f(-x)` <br/> or equivalently if the following equation holds for all such `x`: <br/> `f(x) + f(-x) = 0`" |
+| 0x3 | `even functions` | "Let `f` be a real-valued function of a real variable. Then `f` is `even` if the following equation holds for all `x such that x` and `-x` in the domain of `f`: <br/> `f(x) = f(-x)` <br/> or equivalently if the following equation holds for all such `x`: `f(x) - f(-x) = 0`" |
+| 0x4 | `hyperbolic tangent function` | TODO: ADD DESCRIPTION!!! |
+| 0x5 | `error function erf` | TODO: !!!!!!!!!!!!!!!!!!!!!!! |
+
 
 ### Properties of Exponents
 
@@ -128,6 +148,61 @@
    * ex: the ONLY answer for (`5/0`) is `division by zero not defined`
    * ex: `0/0` is `not defined`
    * ex: `⟶0 / ⟶0` is `indeterminate`
+
+#### Examples of `even-functions`:
+
+ * `x -> |x|`
+ * `x -> x^2`
+ * `x -> x^4`
+ * `costine cos`
+ * `hyperbolic cosine cosh`
+
+#### Examples of `odd-functions`:
+
+ * (identity function) `x -> x`
+ * `x -> x^3`
+ * `sine sin`
+ * `hyperbolic sine sinh`
+ * (error function) `erf`
+
+### Properties of `even-functions` & `odd-functions`
+
+Uniqueness:
+
+ * "If a function is both `even` and `odd`, it is equal to `0` everywhere it is defined"
+ * "If a function is `odd`, the `absolute value` of that function is an `even` function"
+ 
+Addition and Subtraction:
+
+ * "The `sum` of two `even` functions is `even`"
+ * "The `sum` of two `odd` functions is `odd`"
+ * "The `difference` between two `odd` functions is `odd`"
+ * "The `difference` between two `even` functions if `even`"
+ * "The `sum` of an `even` and `odd` function is neither `even` nor `odd`, unless one of the functions is equal to `zero over the given domain`"
+
+Multiplication and Division:
+
+ * "The `product` of two `even` functions is an `even` function"
+ * "The `product` of two `odd` functions is an `even` function"
+ * "The `product` of an `even` function and an `odd` function is an `odd` function"
+ * "The `quotient` of two `even` functions is an `even` function"
+ * "The `quotient` of two `odd` functions is an `even` function"
+ * "The `quotient` of an `even` function and an `odd` function is an `odd` function"
+
+Composition:
+
+ * "The `composition` of two `even` functions is `even`"
+ * "The `composition` of two `odd` functions is `odd`"
+ * "The `composition` of an `even` function and an `odd` function is `even`"
+ * "The `composition` of any function with an `even` function is `even` (but not vice versa)"
+
+Even-odd Decomposition:
+
+ * "Every function may be `uniquely decomposed` as the `sum` of an `even` and an `odd` function, which are called respectively the `event part` and the `odd part` of the function; if one defines"
+   * `fe(x) = (f(x) + f(-x)) / 2`
+   * `fo(x) = (f(x) - f(-x)) / 2`
+   * then `fe` is `even` and `fo` is `odd`, and: `f(x) = fe(x) + fo(x)`
+
 
 
 ### TODO: Unit-Tests

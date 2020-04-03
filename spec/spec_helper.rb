@@ -6,14 +6,12 @@ require 'ruuuby'
 require 'helpers/helper_performance'
 require 'helpers/helper_ruuuby'
 require 'helpers/static_test_data'
+require 'helpers/helper_db'
 
 # TODO: fix having to require this
 require 'rdoc'
 require 'rake'
 require 'rspec'
-require_relative '../db/db'
-
-require_relative '../conditionals/ruuuby_configs'
 
 require 'rspec-benchmark'
 
@@ -96,35 +94,6 @@ RSpec.shared_context 'RSPEC_GLOBAL_UTILITIES' do
 
   let(:data_str_fake_name){'fake_name'}
   let(:data_str_fake_name2){'second_fake_name'}
-end
-
-module AuditHelpers
-
-  def audit_feature(the_feature, feature_str, description)
-    expect(the_feature.class).to eq(RuuubyFeature)
-    expect(the_feature.id.class).to eq(Integer)
-    expect(the_feature.description).to eq(description)
-    expect(the_feature.uid).to eq(feature_str)
-    expect(the_feature.uid.match?(re_ruuuby_feature_id)).to eq(true)
-    expect(the_feature.docs_feature_mapping).to eq("| #{feature_str} | #{description} |")
-    expect(the_feature.docs_feature_mapping.match?(re_ruuuby_feature_docs_feature_mapping)).to eq(true)
-  end
-
-  def audit_version(the_version, version_str)
-    expect(the_version.class).to eq(RuuubyRelease)
-    expect(the_version.uid).to eq(version_str)
-    expect(version_str.match?(re_ruuuby_release_version)).to eq(true)
-    expect(the_version.id.class).to eq(Integer)
-  end
-
-end
-
-RSpec.shared_context 'RSpecContextAudit' do
-  let(:re_ruuuby_feature){RuuubyFeature::Syntax}
-  let(:re_ruuuby_feature_id){RuuubyFeature.cache_fetch(re_ruuuby_feature::UID)}
-  let(:re_ruuuby_feature_docs_feature_mapping){RuuubyFeature.cache_fetch(re_ruuuby_feature::DOCS_FEATURE_MAPPING)}
-  let(:re_ruuuby_release){RuuubyRelease::Syntax}
-  let(:re_ruuuby_release_version){RuuubyRelease.cache_fetch(re_ruuuby_release::UID)}
 end
 
 module HelpersFeature16
@@ -222,8 +191,8 @@ RSpec.configure do |config|
   config.include HelpersGeneral
   config.include HelpersFeature16
 
-  config.include_context 'RSpecContextAudit', :audits
-  config.include AuditHelpers, :audits
+  config.include HelpersDB, :db
+  config.include_context 'shared_context_db', :db
 
   config.include PerformanceTestHelper, :performance
   config.include RSpec::Benchmark::Matchers, :performance

@@ -11,13 +11,14 @@ class ::Complex
   # @return [Boolean] true, if there is no imaginary-component and the real-component can be represented as a rational-number(+ℚ+)
   def ℚ? ; self.imaginary == 0 && self.real.ℚ? ; end
 
-  # @return [Boolean] true, +ℂ+ is notation for complex-numbers so only false case is non-finite nums
-  alias_method :ℂ?, :finite?
-
   # @return [Boolean] false, (+ℝ+) is notation for real-numbers (true if real component is real-number and imaginary-component is zero)
   def ℝ? ; self.imaginary == 0 && self.real.ℝ? ; end
 
-  # @return [Boolean] true, the universal-set(+𝕌+) in this context only excludes (NaN, +∞, and -∞)
-  alias_method :𝕌?, :finite?
+  # all complex-numbers can be represented as:
+  #
+  #   - complex-numbers(+ℂ+)   (unless non-finite)
+  #   - universal-numbers(+𝕌+) (unless non-finite)
+  #
+  ⨍_add_aliases(:finite?, [:ℂ?, :𝕌?])
 
 end

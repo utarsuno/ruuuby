@@ -16,7 +16,7 @@ module ::Ruuuby
         #
         # @raise [WrongParamType, RuntimeError] thrown when arg(terminating_pattern) was not found in self
         #
-        # @return [String] self, with all content leading up to the first matched arg(terminating_pattern)
+        # @return [String] self, with all content (leading up to arg{terminating_pattern}) removed
         def ♻️until!(terminating_pattern)
           🛑str❓(:terminating_pattern, terminating_pattern, :'!∅')
           return '' if self == terminating_pattern
@@ -37,7 +37,7 @@ module ::Ruuuby
           return self if start.∅? || self.start_with?(start)
           return self >> start if self.∅?
           last_matched = ''
-          delta      = 0
+          delta        = 0
           while delta <= self.𝔠 && delta <= start.𝔠
             ending_of_start = start[(start.𝔠-1-delta)..(start.𝔠-1)]
             last_matched    = ending_of_start if self[0..delta] == ending_of_start
@@ -64,7 +64,6 @@ module ::Ruuuby
           end
           self << (last_matched.∅? ? ending : ending[last_matched.𝔠..ending.𝔠-1])
         end
-
 
       end
 
@@ -272,31 +271,18 @@ class ::String
   alias_method :🛑⨍_to_num, :err_to_num
 
   include ::Ruuuby::Feature::Includable::StringF21
-  # ---------------------------------------------------------------------------------------------------------- | *f03* |
-  alias_method :𝔠, :length
   # ---------------------------------------------------------------------------------------------------------- | *f04* |
   alias_method :∅?, :empty?
-  # ---------------------------------------------------------------------------------------------------------- | *f05* |
-  alias_method :>>, :>>
   # ---------------------------------------------------------------------------------------------------------- | *f10* |
-  alias_method :⬇️, :downcase
-  alias_method :⬇️!, :downcase!
-  alias_method :⬇, :downcase
-  alias_method :⬇!, :downcase!
-  alias_method :🔡, :downcase
-  alias_method :🔡!, :downcase!
 
-  alias_method :⬆️, :upcase
-  alias_method :⬆️!, :upcase!
-  alias_method :⬆, :upcase
-  alias_method :⬆!, :upcase!
-  alias_method :🔠, :upcase
-  alias_method :🔠!, :upcase!
+  ⨍_add_aliases(:downcase, [:⬇️, :⬇, :🔡])
+  ⨍_add_aliases(:downcase!, [:⬇️!, :⬇!, :🔡!])
+  ⨍_add_aliases(:upcase, [:⬆️, :⬆, :🔠])
+  ⨍_add_aliases(:upcase!, [:⬆️!, :⬆!, :🔠!])
+
   # | ------------------------------------------------------------------------------------------------------------------
 
-  alias_method :↩️, :reverse
-  alias_method :↩️!, :reverse!
-  alias_method :↩, :reverse
-  alias_method :↩!, :reverse!
+  ⨍_add_aliases(:reverse, [:↩️, :↩])
+  ⨍_add_aliases(:reverse!, [:↩️!, :↩!])
 
 end

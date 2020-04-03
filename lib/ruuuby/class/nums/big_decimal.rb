@@ -37,13 +37,12 @@ class BigDecimal
     nil
   end
 
-  # @return [Boolean] true, (if-valid) big decimals can be represented as complex numbers (with imaginary component of 0)
-  alias_method :ℂ?, :finite?
-
-  # @return [Boolean] true, if this big decimal is a real-number(+ℝ+)
-  alias_method :ℝ?, :finite?
-
-  # @return [Boolean] true, the universal-set(+𝕌+) in this context only excludes (NaN, +∞, and -∞)
-  alias_method :𝕌?, :finite?
+  # all big-decimals can be represented as:
+  #
+  #   - complex-numbers(+ℂ+)   (with imaginary component of 0)
+  #   - real-numbers(+ℝ+)      (unless non-finite)
+  #   - universal-numbers(+𝕌+) (unless non-finite)
+  #
+  ⨍_add_aliases(:finite?, [:ℂ?, :ℝ?, :𝕌?])
 
 end

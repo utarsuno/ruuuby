@@ -1,11 +1,10 @@
 # coding: utf-8
 
 RSpec.describe 'general configs' do
-  let(:configs_requirements){::RuuubyConfigs::Requirements}
-  let(:configs_gems){::RuuubyConfigs::GemDependencies}
-  let(:configs_internal){configs_gems::EnvironmentInternal::ALL_GEMS}
-  let(:configs_dev){configs_gems::EnvironmentDevelopment::ALL_GEMS}
-  let(:configs_prod){configs_gems::EnvironmentRuntime::ALL_GEMS}
+  let(:ruuuby_metadata){::Ruuuby::MetaData}
+  let(:ruuuby_gems){ruuuby_metadata::BuiltWith::GemDependencies}
+  let(:configs_dev){ruuuby_gems::Environment::Development::ALL_GEMS}
+  let(:configs_prod){ruuuby_gems::Environment::Runtime::ALL_GEMS}
   let(:configs_code){::File::Syntax::SourceCode}
 
   #                   __          ___     __
@@ -84,14 +83,14 @@ RSpec.describe 'general configs' do
 
     context 'running with correct Ruby configs' do
       it 'ruby major version is correct' do
-        expect(RUBY_VERSION).to eq(configs_requirements::RUBY_VERSION)
+        expect(RUBY_VERSION).to eq(ruuuby_metadata::BuiltWith::RUBY_VERSION)
       end
       it 'ruby minor version is correct' do
-        expect(RUBY_PATCHLEVEL).to eq(configs_requirements::RUBY_VERSION_PATCH)
-        expect(RUBY_REVISION).to eq(configs_requirements::RUBY_VERSION_REVISION)
+        expect(RUBY_PATCHLEVEL).to eq(ruuuby_metadata::BuiltWith::RUBY_VERSION_PATCH)
+        expect(RUBY_REVISION).to eq(ruuuby_metadata::BuiltWith::RUBY_VERSION_REVISION)
       end
       it 'current platform is compatible' do
-        expect(RUBY_PLATFORM).to eq(configs_requirements::RUBY_PLATFORM)
+        expect(RUBY_PLATFORM).to eq(ruuuby_metadata::BuiltWith::RUBY_PLATFORM)
       end
     end
 
@@ -99,55 +98,55 @@ RSpec.describe 'general configs' do
       context 'bundler is healthy' do
         it 'by having correct configs' do
           expect(Bundler.requires_sudo?).to eq(false)
-          expect(Bundler::VERSION).to eq(configs_dev[configs_gems::GEM_BUNDLER])
+          expect(Bundler::VERSION).to eq(configs_dev[ruuuby_gems::GEM_BUNDLER])
         end
       end
 
       context 'tty-command is healthy' do
         it 'by having correct configs' do
-          expect(TTY::Command::VERSION).to eq(configs_dev[configs_gems::GEM_TTY_COMMAND])
+          expect(TTY::Command::VERSION).to eq(configs_prod[ruuuby_gems::GEM_TTY_COMMAND])
         end
       end
 
       context 'rdoc is healthy' do
         it 'by having correct configs' do
-          expect(RDoc::VERSION).to eq(configs_dev[configs_gems::GEM_RDOC])
+          expect(RDoc::VERSION).to eq(configs_dev[ruuuby_gems::GEM_RDOC])
         end
       end
 
       context 'rake is healthy' do
         it 'by having correct configs' do
-          expect(Rake::VERSION).to eq(configs_dev[configs_gems::GEM_RAKE])
+          expect(Rake::VERSION).to eq(configs_dev[ruuuby_gems::GEM_RAKE])
         end
       end
 
       context 'rspec is healthy' do
         it 'by having correct configs' do
-          expect(RSpec::Version::STRING).to eq(configs_dev[configs_gems::GEM_RSPEC])
+          expect(RSpec::Version::STRING).to eq(configs_dev[ruuuby_gems::GEM_RSPEC])
         end
       end
 
       context 'rspec-benchmark is healthy' do
         it 'by having correct configs' do
-          expect(RSpec::Benchmark::VERSION).to eq(configs_dev[configs_gems::GEM_RSPEC_BENCHMARK])
+          expect(RSpec::Benchmark::VERSION).to eq(configs_dev[ruuuby_gems::GEM_RSPEC_BENCHMARK])
         end
       end
 
       context 'sqlite3 is healthy' do
         it 'by having correct configs' do
-          expect(SQLite3::VERSION).to eq(configs_dev[configs_gems::GEM_SQLITE3])
+          expect(SQLite3::VERSION).to eq(configs_dev[ruuuby_gems::GEM_SQLITE3])
         end
       end
 
       context 'activerecord is healthy' do
         it 'by having correct configs' do
-          expect(ActiveRecord::VERSION::STRING).to eq(configs_dev[configs_gems::GEM_ACTIVERECORD])
+          expect(ActiveRecord::VERSION::STRING).to eq(configs_dev[ruuuby_gems::GEM_ACTIVERECORD])
         end
       end
 
       context 'ruuuby is healthy' do
         it 'by having correct configs' do
-          expect(Ruuuby::VERSION).to eq(configs_internal[configs_gems::GEM_RUUUBY])
+          expect(Ruuuby::VERSION).to eq(::Ruuuby::VERSION)
         end
       end
     end

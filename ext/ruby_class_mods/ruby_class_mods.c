@@ -201,6 +201,7 @@ static inline void internal_only_protect_against_gc(void) {
 static inline void internal_only_before_loading_extension(void) {
     // | f18 | load various Ruby internals |
     ensure_loaded_default(bigdecimal)
+    ensure_loaded_default(tempfile)
     // | --------------------------------- |
 
     cached_class_big_decimal          = r_get_class("BigDecimal");
@@ -220,15 +221,14 @@ static inline void internal_only_before_loading_extension(void) {
     ext_api_add_new_sub_class_under(cached_module_param_err, R_ERR_ARG, "WrongParamType")
 }
 
-static inline void internal_only_load_needed_ruuuby_files(void) {
-    // | f18 | load various Ruby internals |
-
+static inline void internal_only_load_needed_ruuuby_files(void) { // -------------------------------------------- | f18 |
     // 3rd party gem
     ensure_loaded_default(tty-command)
 
     // ruuuuby
 
     ensure_loaded_attribute_includable(cardinality)
+    ensure_loaded_attribute_includable(notation_set_mathematics)
     ensure_loaded_attribute_includable(subscript_indexing)
 
     ensure_loaded_class(class)
@@ -241,7 +241,8 @@ static inline void internal_only_load_needed_ruuuby_files(void) {
     ensure_loaded_ruuuby(types)
     ensure_loaded_class(method)
     ensure_loaded_ruuuby(arg_err)
-    ensure_loaded_enumerable(hsh)
+    ensure_loaded_enumerable(ary)
+    ensure_loaded_enumerable(hsh) // must be after{ary}
     ensure_loaded_nums(int)
     ensure_loaded_nums(float)
     ensure_loaded_nums(numeric)
@@ -249,7 +250,6 @@ static inline void internal_only_load_needed_ruuuby_files(void) {
     ensure_loaded_nums(rational)
     ensure_loaded_nums(complex)
     ensure_loaded_class(nil)
-    ensure_loaded_enumerable(ary)
     ensure_loaded_enumerable(set)
 
     ensure_loaded_attribute_includable(syntax_cache)
@@ -263,9 +263,7 @@ static inline void internal_only_load_needed_ruuuby_files(void) {
 
     ensure_loaded_ruuuby(configs)
     ensure_loaded_ruuuby(version)
-    //ensure_loaded_ruuuby(engine/global_funcs)
-    // | --------------------------------- |
-}
+} // | -----------------------------------------------------------------------------------------------------------------
 
 static inline void assign_exponential_index_position(const unsigned long object_id, const int represented_integer) {
     unsigned long * the_index = bsearch_ulong(object_id)

@@ -12,6 +12,15 @@ module ::Ruuuby
       # provide additional functionality to check various `cardinality` lengths, via help with `subscripts`
       module Cardinality
 
+        # ensure the instance of `Class` that is currently including Module(`Cardinality`) will define the `𝔠` alias
+        #
+        # @param [Class] kclass
+        #
+        # @return [Class] kclass
+        def self.included(kclass)
+          kclass.alias_method(:𝔠, :length)
+        end
+
         # @param [Integer] additional_delta
         #
         # @return [Integer] `self.cardinality - 1`

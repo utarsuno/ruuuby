@@ -47,11 +47,11 @@ RSpec.describe 'ruuuby_feature.rb' do
     end
 
     it 'can be created' do
-      fake_feature = RuuubyFeature.create!(id_num: 1, description: data_str_fake_name)
-      expect(fake_feature.id_num).to eq(1)
+      fake_feature = RuuubyFeature.create!(id_num: 1337, description: data_str_fake_name)
+      expect(fake_feature.id_num).to eq(1337)
       expect(fake_feature.description).to eq(data_str_fake_name)
 
-      expect(fake_feature.uid).to eq('f01')
+      expect(fake_feature.uid).to eq('f1337')
 
       fake_feature.♻️!
     end

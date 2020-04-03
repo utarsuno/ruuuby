@@ -2,7 +2,7 @@
 require 'sqlite3'
 require 'active_record'
 require_relative '../app/models/db_schema'
-require_relative '../lib/ruuuby/module/attribute/extendable/attribute_syntax_cache'
+require_relative '../lib/ruuuby/module/attribute/extendable/syntax_cache'
 require_relative '../app/models/application_record'
 require_relative '../app/models/ruuuby_release'
 require_relative '../app/models/ruuuby_feature'
@@ -16,15 +16,17 @@ ActiveRecord::Base.establish_connection(
 # ⚠️: JUST STARTING POINT, tons of TODOs here
 ActiveRecord::Schema.define do
   create_table :ruuuby_releases, force: true do |t|
-    t.integer :vmajor, limit: 1
-    t.integer :vminor, limit: 1
-    t.integer :vtiny, limit: 1
+    t.integer :vmajor, limit: 1, :null => false
+    t.integer :vminor, limit: 1, :null => false
+    t.integer :vtiny, limit: 1, :null => false
+
+    t.boolean :released, :default => false, :null => false
 
     t.index [:vmajor, :vminor, :vtiny], unique: true
   end
   create_table :ruuuby_features, force: true do |t|
-    t.integer :id_num
-    t.string :description
+    t.integer :id_num, :null => false
+    t.string :description, :null => false
 
     t.index :id_num, unique: true
   end

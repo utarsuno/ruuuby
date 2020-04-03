@@ -1,25 +1,30 @@
-#encoding: UTF-8
+# encoding: UTF-8
 
 Gem::Specification.new do |gem|
-  require_relative 'conditionals/ruuuby_configs'
-  gem_configs       = ::RuuubyConfigs
-  gem_dependencies = gem_configs::GemDependencies
-  gem_schema       = gem_configs::NamingSchema
+  require_relative 'lib/ruuuby/version'
+  require_relative 'lib/ruuuby/ruuuby/ruuuby_metadata'
 
-  gem.name                  = gem_schema::RUUUBY_NAME_GEM
-  gem.version               = '0.0.25'
-  gem.summary               = %q{wip: increase quality of Ruby coding life}
-  gem.description           = %q{wip: flavored modifications & extensions for increased quality of Ruby coding life}
+  ruuuby_metadata = ::Ruuuby::MetaData
+  ruuuby_urls     = ruuuby_metadata::References
+
+  gem_version     = ::Ruuuby::VERSION
+
+  gem.name                  = 'ruuuby'
+  gem.version               = gem_version
+  gem.summary               = 'wip: increase quality of Ruby coding life'
+  gem.description           = '{wip: flavored modifications & extensions for increased quality of Ruby coding life}'
   gem.authors               = ["Uladzislau Tarsunou"]
-  gem.homepage              = 'https://github.com/utarsuno/ruuuby'
+  gem.homepage              = ruuuby_urls::URI_HOME
   gem.license               = 'MIT'
-  gem.required_ruby_version = Gem::Requirement.new(">= #{gem_configs::Requirements::RUBY_VERSION}")
+  gem.required_ruby_version = Gem::Requirement.new(">= #{ruuuby_metadata::BuiltWith::RUBY_VERSION}")
   gem.platform              = Gem::Platform.local
-  gem.post_install_message  = "Gem{ruuuby, v0.0.25} has just been installed, cheers!"
-  _ = gem.metadata
-  _['homepage_uri']          = gem.homepage
-  _['source_code_uri']       = "#{gem.homepage}.git"
-  _['changelog_uri']         = "#{gem.homepage}/blob/master/CHANGELOG.md"
+  gem.post_install_message  = "Gem{ruuuby, v#{gem_version.to_s}} has just been installed, cheers!"
+  gem_metadata              = gem.metadata
+
+  gem_metadata['homepage_uri']      = ruuuby_urls::URI_HOME
+  gem_metadata['source_code_uri']   = ruuuby_urls::URI_GIT
+  gem_metadata['changelog_uri']     = ruuuby_urls::URI_CHANGELOG
+  gem_metadata['documentation_uri'] = ruuuby_urls::URI_DOCUMENTATION
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -34,14 +39,16 @@ Gem::Specification.new do |gem|
 
   gem.rdoc_options = %w(-x ext --main README.rdoc)
 
-  gem.files = Dir.glob('ext/**/*.{c,rb}') + Dir.glob('lib/**/*.rb')
-  gem.extensions << gem_configs::Extensions::RubyClassMods::PATH_CONF
+  gem.files = Dir.glob('ext/**/*.{c,rb,h}') + Dir.glob('lib/**/*.rb')
+  gem.extensions << 'ext/ruby_class_mods/extconf.rb'
 
-  gem_dependencies::EnvironmentDevelopment::ALL_GEMS.each do |gem_name, gem_version|
-    gem.add_development_dependency gem_name, "~> #{gem_version}"
+  ruuuby_metadata::BuiltWith::GemDependencies::Environment::Development::ALL_GEMS.each do |gem_name, gem_version|
+    gem.add_development_dependency(gem_name, "~> #{gem_version}")
   end
-  gem_dependencies::EnvironmentRuntime::ALL_GEMS.each do |gem_name, gem_version|
-    gem.add_runtime_dependency gem_name, "~> #{gem_version}"
+
+  ruuuby_metadata::BuiltWith::GemDependencies::Environment::Runtime::ALL_GEMS.each do |gem_name, gem_version|
+    gem.add_development_dependency(gem_name, "~> #{gem_version}")
+    gem.add_runtime_dependency(gem_name, "~> #{gem_version}")
   end
 
 end

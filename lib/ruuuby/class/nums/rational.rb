@@ -1,5 +1,5 @@
 
-# add various functions to existing class +Rational+
+# add various aliases & functions to existing Class(+Rational+)
 class ::Rational
 
   # @return [Boolean] true, if finite and numerator and denominator pass

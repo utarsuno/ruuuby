@@ -13,13 +13,13 @@
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
 
-#define ensure_file_loaded(path)                  if (rb_require(path) != Qtrue){printf("FAILED TO LOAD PATH{%s}\n", path);};
+#define ensure_file_loaded(path)                  if (rb_require(path) != Qtrue){printf("FAILED TO LOAD PATH (and/or already-required?) {%s}\n", path);};
 #define ensure_loaded_ruuuby(path)               ensure_file_loaded("ruuuby/" #path)
 #define ensure_loaded_io(path)                   ensure_file_loaded("ruuuby/class/io/" #path)
 #define ensure_loaded_enumerable(path)           ensure_file_loaded("ruuuby/class/enumerable/" #path)
 #define ensure_loaded_module(path)               ensure_file_loaded("ruuuby/module/" #path)
-#define ensure_loaded_attribute_includable(path) ensure_file_loaded("ruuuby/module/attribute/includable/attribute_" #path)
-#define ensure_loaded_attribute_extendable(path) ensure_file_loaded("ruuuby/module/attribute/extendable/attribute_" #path)
+#define ensure_loaded_attribute_includable(path) ensure_file_loaded("ruuuby/module/attribute/includable/" #path)
+#define ensure_loaded_attribute_extendable(path) ensure_file_loaded("ruuuby/module/attribute/extendable/" #path)
 #define ensure_loaded_class(path)                ensure_file_loaded("ruuuby/class/" #path)
 #define ensure_loaded_nums(path)                 ensure_file_loaded("ruuuby/class/nums/" #path)
 #define ensure_loaded_default(path)              ensure_file_loaded("" #path)

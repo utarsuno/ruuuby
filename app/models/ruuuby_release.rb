@@ -78,26 +78,18 @@ class RuuubyRelease < ApplicationRecord
 
   include RuuubyRelease::AttributeChangelog
 
-
   def self.spawn(major, minor, tiny)
     RuuubyRelease.create!(vmajor: major, vminor: minor, vtiny: tiny)
   end
 
-  def gems_added
-    @gems_added ||= []
-  end
+  def gems_added ; @gems_added ||= [] ; end
+  def comments ; @comments ||= [] ; end
+  def files_added ; @files_added ||= [] ; end
+  def files_removed ; @files_removed ||= [] ; end
 
   def add_gem(gem_name, gem_version)
     self.gems_added << [gem_name, gem_version]
     self.comments << "add `gem '#{gem_name}', '~> #{gem_version}'`"
-  end
-
-  def comments
-    @comments ||= []
-  end
-
-  def files_added
-    @files_added ||= []
   end
 
   def add_comments(comments)
@@ -110,13 +102,15 @@ class RuuubyRelease < ApplicationRecord
     end
   end
 
-  def add_file(path, reference='', notes='', features='')
-
+  def remove_file(path, notes='')
     path = path.to_s.empty? ? '' : "`#{path.to_s}`"
+    self.files_removed << [path, notes]
+  end
 
+  def add_file(path, reference='', notes='', features='')
+    path      = path.to_s.empty? ? '' : "`#{path.to_s}`"
     reference = reference.to_s.empty? ? '' : "`#{reference.to_s}`"
-
-    feats = ''
+    feats     = ''
     if features.ary?
       features.each do |f|
         feats += "`#{f.uid}`, "
@@ -142,8 +136,8 @@ class RuuubyRelease < ApplicationRecord
       end
     end
     unless @files_added.empty?
-      changes << ""
-      changes << "| added path | reference | notes | feature(s) |\n"
+      changes << "\n"
+      changes << "| path added | reference | notes | feature(s) |\n"
       changes << "| ---: | --- | --- | --- |\n"
       @files_added.each do |c|
         c1 = c[1].empty? ? '' : "`#{c[1]}`"
@@ -151,10 +145,18 @@ class RuuubyRelease < ApplicationRecord
       end
       changes << "\n"
     end
+    unless @files_removed.empty?
+      changes << "\n"
+      changes << "| path removed | notes |\n"
+      changes << "| ---: | --- |\n"
+      @files_removed.each do |f|
+        changes << "| #{f[0]} | #{f[1]} |\n"
+      end
+      changes << "\n"
+    end
     changes += self.changelog.get_docs
     changes
   end
-
 
   def self.generate_query_uid(*args)
     🛑 ArgumentError.new("| c{Class}-> m{generate_query_uid} received no args |") if args.∅?
@@ -163,6 +165,43 @@ class RuuubyRelease < ApplicationRecord
     end
     🛑ℤ❓($PRM_MANY, args)
     RuuubyRelease.where(::RuuubyRelease::Syntax::SQL_UID, args[0].to_i, args[1].to_i, args[2].to_i)
+  end
+
+  # @param [RuuubyRelease] ruuuby_release
+  #
+  # @raise [ArgumentError] raised if parameter provided of not of Class(`RuuubyRelease`)
+  #
+  # @return [Boolean] true, if version of self is less than the compared(`RuuubyRelease`)
+  def <(ruuuby_release)
+    🛑 ArgumentError.new("| c{RuuubyRelease}-> m{<} got arg(ruuuby_release) w/ type{#{ruuuby_release.class.to_s}} when a{RuuubyRelease} is required |") unless ruuuby_release.is_a?(RuuubyRelease)
+    return true if self.vmajor < ruuuby_release.vmajor
+    return true if self.vminor < ruuuby_release.vminor
+    return true if self.vtiny  < ruuuby_release.vtiny
+    false
+  end
+
+  # @param [RuuubyRelease] ruuuby_release
+  #
+  # @raise [ArgumentError] raised if parameter provided of not of Class(`RuuubyRelease`)
+  #
+  # @return [Boolean] true, if version of self is greater than the compared(`RuuubyRelease`)
+  def >(ruuuby_release)
+    🛑 ArgumentError.new("| c{RuuubyRelease}-> m{<} got arg(ruuuby_release) w/ type{#{ruuuby_release.class.to_s}} when a{RuuubyRelease} is required |") unless ruuuby_release.is_a?(RuuubyRelease)
+    return true if self.vmajor > ruuuby_release.vmajor
+    return true if self.vminor > ruuuby_release.vminor
+    return true if self.vtiny  > ruuuby_release.vtiny
+    false
+  end
+
+  # @return [String] the version UID of the next future release
+  def self.get_next_version_uid
+    latest_version = RuuubyRelease.where('released = ?', true).last
+    "v#{latest_version.vmajor.to_s}.#{latest_version.vminor.to_s}.#{(latest_version.vtiny + 1).to_s}"
+  end
+
+  # @return [String] the version UID of the latest release
+  def self.get_latest_version_uid
+    RuuubyRelease.where('released = ?', true).last.uid
   end
 
   🙈

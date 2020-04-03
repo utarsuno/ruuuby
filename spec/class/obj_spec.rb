@@ -60,22 +60,50 @@ RSpec.describe 'Object' do
     context 'by adding function{🛑int❓}' do
       context 'handles needed input scenarios' do
         context 'cases: positive' do
-          it 'w/ single param' do
-            expect{🛑int❓('0', 5)}.to_not raise_error
+          context 'w/ normalization{ℕ}' do
+            it 'w/ single param' do
+              expect{🛑int❓('0', 5, :ℕ)}.to_not raise_error
+            end
+            it 'w/ many params' do
+              expect{🛑int❓($PRM_MANY, [0, 1, 3, 1337], :ℕ)}.to_not raise_error
+            end
           end
-          it 'w/ many params' do
-            expect{🛑int❓($PRM_MANY, [-1, 0, 1])}.to_not raise_error
+          context 'w/o extra normalization' do
+            it 'w/ single param' do
+              expect{🛑int❓('0', 5)}.to_not raise_error
+            end
+            it 'w/ many params' do
+              expect{🛑int❓($PRM_MANY, [-1, 0, 1])}.to_not raise_error
+            end
           end
         end
         context 'cases: negative' do
-          it 'w/ single param' do
-            expect{🛑int❓('0', '5')}.to raise_error(ArgumentError)
+          context 'w/ bad normalizer' do
+            it 'w/ single param' do
+              expect{🛑int❓('0', 1337, nil)}.to raise_error(RuntimeError)
+            end
+            it 'w/ many params' do
+              expect{🛑int❓('0', [-1, 0, 1], nil)}.to raise_error(RuntimeError)
+            end
           end
-          it 'w/ many params' do
-            expect{🛑int❓($PRM_MANY, [-1, 0, nil])}.to raise_error(ArgumentError)
-            expect{🛑int❓($PRM_MANY, [-1, '1', 1])}.to raise_error(ArgumentError)
-            expect{🛑int❓($PRM_MANY, [[], 0, 1])}.to raise_error(ArgumentError)
-            expect{🛑int❓($PRM_MANY, [nil, nil, nil])}.to raise_error(ArgumentError)
+          context 'w/ normalization{ℕ}' do
+            it 'w/ single param' do
+              expect{🛑int❓('0', -1337, :ℕ)}.to raise_error(ArgumentError)
+            end
+            it 'w/ many params' do
+              expect{🛑int❓($PRM_MANY, [-1, 0, 1], :ℕ)}.to raise_error(ArgumentError)
+            end
+          end
+          context 'w/o extra normalization' do
+            it 'w/ single param' do
+              expect{🛑int❓('0', '5')}.to raise_error(ArgumentError)
+            end
+            it 'w/ many params' do
+              expect{🛑int❓($PRM_MANY, [-1, 0, nil])}.to raise_error(ArgumentError)
+              expect{🛑int❓($PRM_MANY, [-1, '1', 1])}.to raise_error(ArgumentError)
+              expect{🛑int❓($PRM_MANY, [[], 0, 1])}.to raise_error(ArgumentError)
+              expect{🛑int❓($PRM_MANY, [nil, nil, nil])}.to raise_error(ArgumentError)
+            end
           end
         end
       end
@@ -129,6 +157,14 @@ RSpec.describe 'Object' do
           end
         end
         context 'cases: negative' do
+          context 'w/ bad normalizer' do
+            it 'w/ single param' do
+              expect{🛑str❓('0', '', nil)}.to raise_error(RuntimeError)
+            end
+            it 'w/ many params' do
+              expect{🛑str❓('0', ['a', '', 'bb'], nil)}.to raise_error(RuntimeError)
+            end
+          end
           context 'w/ normalization{!∅}' do
             it 'w/ single param' do
               expect{🛑str❓('0', '', :'!∅')}.to raise_error(ArgumentError)
