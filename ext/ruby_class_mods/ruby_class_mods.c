@@ -72,14 +72,6 @@ ________________________________________________________________________________
 #define r_hsh_has_key(hsh, key) (rb_hash_has_key(hsh, key) == Qtrue)
 #define r_ary_has(ary, elem) rb_ary_includes(ary, elem)
 
-#define declare_func(func_name, expr, return_type, single_param) return_type func_name(single_param);return_type func_name(single_param){expr}
-#define declare_static_func(func_name, expr, return_type, single_param) static return_type func_name(single_param);static return_type func_name(single_param){expr}
-#define r_func_raw(func_name, expr) declare_static_func(func_name, expr, VALUE, VALUE self)
-#define r_func_raw2(func_name, param_0, param_1, expr) VALUE func_name(VALUE param_0, VALUE param_1);VALUE func_name(VALUE param_0, VALUE param_1){expr}
-#define r_func_self_them(func_name, expr) r_func_raw2(func_name, self, them, expr)
-#define r_func(func_name, expr) r_func_raw(func_name, return (expr) ? Qtrue : Qfalse;)
-#define c_func(func_name, expr) declare_func(func_name, expr, void, void)
-
 #define r_add_global_const(const_name, const_value) rb_define_global_const(const_name, const_value);
 #define r_add_global_const_str(const_name, const_value) r_add_global_const("" #const_name, cstr_to_rstr("" #const_value))
 #define r_get_class(r_class) rb_const_get(rb_cObject, rb_intern(r_class));
@@ -87,24 +79,25 @@ ________________________________________________________________________________
 #define get_numerical_const(the_num) NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern(the_num))))
 #define get_float_const(the_num) NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cFloat, rb_intern(the_num))))
 
-
-
 #define internal_define_set_exponential_negative(num_position, num_val) exponential_ids[num_position] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_n" #num_val))));
 #define internal_define_set_exponential(num_position, num_val)          exponential_ids[num_position] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_" #num_val))));
 
 #define bsearch_ulong(val_to_find) (unsigned long *) bsearch (&val_to_find, exponential_ids, 𝔠EXPONENTS, 𝔠ULONG, internal_only_compare_func_4_object_id);
-
-/*____________________________________________________________________________________________________________________________________________________________________
-  ___            __   __       __   ___  __             __       ___    __        __                      __        ___        ___      ___      ___    __        __
- |__  |  | |\ | /  ` /__` .   |  \ |__  /  ` |     /\  |__)  /\   |  | /  \ |\ | /__`    __|__   |  |\/| |__) |    |__   |\/| |__  |\ |  |   /\   |  | /  \ |\ | /__`
- |    \__/ | \| \__, .__/ .   |__/ |___ \__, |___ /~~\ |  \ /~~\  |  | \__/ | \| .__/      |     |  |  | |    |___ |___  |  | |___ | \|  |  /~~\  |  | \__/ | \| .__/
-____________________________________________________________________________________________________________________________________________________________________ */
 
 /*____________________________________________________________________________________________________________________
    __            ___  ___  __                          ___       __   ___  __   __
   /  `    | |\ |  |  |__  |__) |\ |  /\  |       |__| |__  |    |__) |__  |__) /__`
   \__,    | | \|  |  |___ |  \ | \| /~~\ |___    |  | |___ |___ |    |___ |  \ .__/
 _____________________________________________________________________________________________________________________ */
+
+// in case of any errors lol, previous code to use
+//ID old_id = rb_check_id(& param_a);
+//if (!old_id) {rb_print_undef_str(self, param_a);}
+static inline ID health_check_for_existing_func_name(VALUE context_self, VALUE * func_name_as_str) {
+    ID func_id = rb_check_id(func_name_as_str);
+    if (!func_id) {rb_print_undef_str(context_self, * func_name_as_str);}
+    return func_id;
+}
 
 static inline void internal_only_prepare_f16() {
     cached_flt_nan          = rb_const_get_at(R_FLT, rb_intern("NAN"));
@@ -202,6 +195,7 @@ static inline void internal_only_before_loading_extension(void) {
     // | f18 | load various Ruby internals |
     ensure_loaded_default(bigdecimal)
     ensure_loaded_default(tempfile)
+    ensure_loaded_default(singleton)
     // | --------------------------------- |
 
     cached_class_big_decimal          = r_get_class("BigDecimal");
@@ -263,6 +257,8 @@ static inline void internal_only_load_needed_ruuuby_files(void) { // -----------
 
     ensure_loaded_ruuuby(configs)
     ensure_loaded_ruuuby(version)
+    ensure_loaded_ruuuby(ruuuby/routine)
+    ensure_loaded_ruuuby(ruuuby/ruuuby_api)
 } // | -----------------------------------------------------------------------------------------------------------------
 
 static inline void assign_exponential_index_position(const unsigned long object_id, const int represented_integer) {
@@ -281,6 +277,12 @@ static int internal_only_compare_func_4_object_id(const void * l, const void * r
     const unsigned long bi = *(const unsigned long *)(r);
     if (ai < bi) {return -1;} else if(ai > bi) {return 1;} else {return 0;}
 }
+
+/*____________________________________________________________________________________________________________________________________________________________________
+  ___            __   __       __   ___  __             __       ___    __        __                      __        ___        ___      ___      ___    __        __
+ |__  |  | |\ | /  ` /__` .   |  \ |__  /  ` |     /\  |__)  /\   |  | /  \ |\ | /__`    __|__   |  |\/| |__) |    |__   |\/| |__  |\ |  |   /\   |  | /  \ |\ | /__`
+ |    \__/ | \| \__, .__/ .   |__/ |___ \__, |___ /~~\ |  \ /~~\  |  | \__/ | \| .__/      |     |  |  | |    |___ |___  |  | |___ | \|  |  /~~\  |  | \__/ | \| .__/
+____________________________________________________________________________________________________________________________________________________________________ */
 
 /*____________________________________________________________________________________________________________________
  __   __        ___  __  ___
@@ -641,6 +643,34 @@ r_func_self_them(m_ary_equal_contents,
     } else {ext_api_raise_err_array_arg_type(equal_contents?, them)}
 )
 
+/*___________________________________________________________________________________________________________________
+      __   __             ___
+|\/| /  \ |  \ |  | |    |__
+|  | \__/ |__/ \__/ |___ |___
+_____________________________________________________________________________________________________________________ */
+
+// | function(⨍_add_aliases} |
+r_func_self_a_b(m_module_add_aliases,
+    if (is_ary(param_b)) {
+        const long len_them = len_ary(param_b);
+        if (len_them == 0){re_me}
+        long i;
+        VALUE v;
+        ID old_id = health_check_for_existing_func_name(self, & param_a);
+        for (i = 0; i < len_them; i++) {
+            v = RARRAY_PTR(param_b)[i];
+            if (is_sym(v)) {
+                rb_alias(self, rb_to_id(v), old_id);
+            } else {
+                macro_only_raise_err_bad_arg_type("| m{Module}-> m{f_add_aliases} got element in Array-arg(func_aliases) w/ type{%s}, required-type{Symbol} |", v)
+            }
+        }
+        re_me
+    } else {
+        macro_only_raise_err_bad_arg_type("| m{Module}-> m{f_add_aliases} got arg(func_aliases) w/ type{%s}, required-type{Array} |", param_b)
+    }
+)
+
 /*____________________________________________________________________________________________________________________
  __      __   __   __   ___     ___      ___  __
 /  `    /  ` /  \ |  \ |__     |__  |\ |  |  |__) \ /
@@ -692,6 +722,8 @@ static inline void internal_only_add_ruuuby_c_extensions() {
     ext_api_add_public_method_1args_to_class(R_ARY, "disjunctive_union", m_ary_disjunctive_union)
     ext_api_add_public_method_1args_to_class(R_ARY, "equal_contents?"  , m_ary_equal_contents)
     ext_api_add_public_method_1args_to_class(R_ARY, ">>"               , m_ary_prepend)
+
+    ext_api_add_public_method_2args_to_class(R_MODULE, "f_add_aliases", m_module_add_aliases)
 }
 
 c_func(Init_ruby_class_mods,

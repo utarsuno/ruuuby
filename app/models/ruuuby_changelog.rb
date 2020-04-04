@@ -3,10 +3,6 @@
 
 class RuuubyChangelog < ApplicationRecord
 
-  #t.integer :ruuuby_version_id
-  #t.integer :ruuuby_feature_id
-  #t.string :description
-
   # @return [RuuubyChangelog]
   def self.spawn(ruuuby_version_id, ruuuby_feature_id, description)
     version_id = ruuuby_version_id.int? ? ruuuby_version_id : ruuuby_version_id.id

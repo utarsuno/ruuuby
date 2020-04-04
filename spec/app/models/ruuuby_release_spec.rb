@@ -78,13 +78,13 @@ RSpec.describe 'ruuuby_release.rb' do
 
         context 'adds func{get_latest_version_uid}' do
           it 'works' do
-            expect(RuuubyRelease.get_latest_version_uid).to eq('v0.0.25')
+            expect(RuuubyRelease.get_latest_version_uid).to eq('v0.0.26')
           end
         end
 
         context 'adds func{get_next_version_uid}' do
           it 'works' do
-            expect(RuuubyRelease.get_next_version_uid).to eq('v0.0.26')
+            expect(RuuubyRelease.get_next_version_uid).to eq('v0.0.27')
           end
         end
 

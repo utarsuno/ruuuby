@@ -144,21 +144,13 @@ RSpec.describe 'general configs' do
         end
       end
 
+      context 'schema_plus_foreign_keys is healthy' do
+        # TODO: version audits?
+      end
+
       context 'ruuuby is healthy' do
         it 'by having correct configs' do
           expect(Ruuuby::VERSION).to eq(::Ruuuby::VERSION)
-        end
-      end
-    end
-
-    context 'has correct db configs' do
-      context 'has correct directory structure' do
-        it 'directory{db} exists' do
-          expect(🗄️.∃?('./db')).to eq(true)
-        end
-        it 'directory{db/migrate} exists' do
-          expect(🗄️.∃?('./db/migrate')).to eq(true)
-          expect(📁.∃?('./db/migrate.rb')).to eq(false)
         end
       end
     end

@@ -36,6 +36,7 @@ ________________________________________________________________________________
 #define R_RATIONAL rb_cRational
 #define R_HSH      rb_cHash
 #define R_ARY      rb_cArray
+#define R_MODULE   rb_cModule
 #define R_FILE     rb_cFile
 #define R_SYM      rb_cSymbol
 #define R_KRL      rb_mKernel

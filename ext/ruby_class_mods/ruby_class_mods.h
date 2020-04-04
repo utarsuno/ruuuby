@@ -13,6 +13,8 @@
  |    \__/ | \| \__, .__/ .   |__/ |___ \__, |___ /~~\ |  \ /~~\  |  | \__/ | \| .__/
 _____________________________________________________________________________________________________________________ */
 
+static inline ID health_check_for_existing_func_name(VALUE context_self, VALUE * func_name_as_str);
+
 static inline void internal_only_before_loading_extension(void);
 static inline void internal_only_add_ruuuby_c_extensions(void);
 static inline void internal_only_load_needed_ruuuby_files(void);
@@ -38,8 +40,19 @@ ________________________________________________________________________________
 
 #define ext_api_add_public_method_0args_to_class(r_class, func_name, the_func)  rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 0);
 #define ext_api_add_public_method_1args_to_class(r_class, func_name, the_func)  rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 1);
+#define ext_api_add_public_method_2args_to_class(r_class, func_name, the_func)  rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 2);
 #define ext_api_add_private_method_0args_to_class(r_class, func_name, the_func) rb_define_private_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 0);
 #define ext_api_add_private_method_1args_to_class(r_class, func_name, the_func) rb_define_private_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 1);
+
+#define declare_func(func_name, expr, return_type, single_param) return_type func_name(single_param);return_type func_name(single_param){expr}
+#define declare_static_func(func_name, expr, return_type, single_param) static return_type func_name(single_param);static return_type func_name(single_param){expr}
+#define r_func_raw(func_name, expr) declare_static_func(func_name, expr, VALUE, VALUE self)
+#define r_func_raw2(func_name, param_0, param_1, expr) VALUE func_name(VALUE param_0, VALUE param_1);VALUE func_name(VALUE param_0, VALUE param_1){expr}
+#define r_func_raw3(func_name, param_0, param_1, param_2, expr) VALUE func_name(VALUE param_0, VALUE param_1, VALUE param_2);VALUE func_name(VALUE param_0, VALUE param_1, VALUE param_2){expr}
+#define r_func_self_them(func_name, expr) r_func_raw2(func_name, self, them, expr)
+#define r_func_self_a_b(func_name, expr) r_func_raw3(func_name, self, param_a, param_b, expr)
+#define r_func(func_name, expr) r_func_raw(func_name, return (expr) ? Qtrue : Qfalse;)
+#define c_func(func_name, expr) declare_func(func_name, expr, void, void)
 
 #define ext_api_add_global_const_str(const_name, const_value)      rb_define_global_const(const_name, r_str_new_frozen_literal(const_value));
 #define ext_api_add_global_module(str)                             rb_define_module(str);

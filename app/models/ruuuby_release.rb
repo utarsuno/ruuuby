@@ -22,14 +22,7 @@ class RuuubyRelease < ApplicationRecord
   validates :vminor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :vtiny, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  #validates_uniqueness_of :vtiny, scope: [:vmajor, :vminor]
-
-  #has_many :ruuuby_features, class_name: 'RuuubyFeature'
-  #has_many :ruuuby_feature_deltas, class_name: 'RuuubyFeatureDelta'
-  #has_and_belongs_to_many :ruuuby_feature_deltas, class_name: 'RuuubyFeatureDelta'
-
-  #has_many :ruuuby_feature_deltas, class_name: 'RuuubyFeatureDelta', foreign_key: 'ruuuby_feature_delta_id'
-  #has_many :ruuuby_features, through: :ruuuby_feature_deltas
+  has_many :git_commits, class_name: 'GitCommit'
 
   module AttributeChangelog
 
@@ -202,6 +195,10 @@ class RuuubyRelease < ApplicationRecord
   # @return [String] the version UID of the latest release
   def self.get_latest_version_uid
     RuuubyRelease.where('released = ?', true).last.uid
+  end
+
+  def spawn_git_commit(*args)
+    GitCommit.spawn(args[0], args[1], args[2], self)
   end
 
   🙈

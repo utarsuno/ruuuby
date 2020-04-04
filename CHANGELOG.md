@@ -8,7 +8,7 @@
  * clear `tech debt` and all `feature abstracts`
    * adding `automatic differentiation` should involve near `0% (of time allocation)` towards `version-relating documentation & audits`
 
-#### v0.0.27-v0.0.30
+#### v0.0.28-v0.0.30
  * resolve missing coverage from `v0.0.17`
  * resolve missing coverage from `v0.0.18`
  * resolve missing coverage from `v0.0.22`
@@ -17,6 +17,31 @@
  * start automation/abstraction of state & configs for CLI based APIs, tools, and scripts (gem `tty-command` providing core functionality)
  * start automation/abstraction of code-file (content) management
  * continuation of (`f15`) in relation to above 2 points
+
+---
+
+# v0.0.27
+ * contents in `db/seed.rb` split across files in newly created dir: `db/seeds/`; also add new `ORM: GitCommit`, (one `RuuubyRelease` to many `GitCommits`)
+ * performing update of version number for `README.md` and `lib/ruuuby/version.rb` is now automated
+ * (`f98`): m{`Module`}'s func{`⨍_add_aliases`} converted to alias the func{`f_add_aliases`} created from `C-extensions`
+
+| gem added | version |
+| ---: | :---- |
+| `schema_plus_foreign_keys` | `0.1.8` |
+
+
+| path added | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `db/seeds/git_commits.rb` |  |  | `f15` |
+| `db/seeds/ruuuby_features.rb` |  |  | `f15` |
+| `db/seeds/ruuuby_releases.rb` |  |  | `f15` |
+| `app/models/git_commit.rb` | `::GitCommit` |  | `f15` |
+| `lib/ruuuby/ruuuby/ruuuby_api.rb` | `::Ruuuby::RuuubyAPI` |  | `f15` |
+| `lib/ruuuby/ruuuby/routine.rb` |  | `example usage: Routine::CMD.new` | `f15` |
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `File` | `dirname⁴` | `f12` |
 
 ---
 

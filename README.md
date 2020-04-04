@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.26'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.27'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -102,7 +102,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Kernel`  | `∃class?`         | ❌                         | true-example: `∃class?(:Array)` |
 | `Module`  | {`static`} `∃⨍_alias?`    | ❌                 | true-example: `::Array.∃⨍_alias?(:equal_contents?, :≈≈)` |
 | `Module`  | {`static`} `∃⨍?`          | ❌                 | true-example: `::Array.∃⨍?(:≈≈)` |
-| `Module`  | {`static`} `⨍_add_aliases`| ❌                 | |
+| `Module`  | {`static`} `⨍_add_aliases`| ✅                 | example: (inside Class scope) `⨍_add_aliases(:infinite?, [:∞?, :♾️?])` |
 | `Math`    | {`static`} `relative_Δ`   | ❌                 | (`f17`) |
 
 ### Changes to Classes:
@@ -110,7 +110,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | class(es)              | func(s) added                      | as C-extension? <br/> (java-wip) | notes   |
 | ---------------------: | --------------------------------- | :------------------------: | ------- |
 | `File`, `Dir`          | {`static`} `∃?`                    | ❌ | (`f12`) |
-| `File`                 | {`static`} `dirname²`, `dirname³`  | ❌ | (`f12`) |
+| `File`                 | {`static`} `dirname²`, `dirname³`, `dirname⁴` | ❌ | (`f12`) |
 | `File`                 | `replace_expr_with`, `replace_expr_with!` | ❌ | (`f12`) |
 | `Dir`                  | `normalized_paths`                 | ❌ | (`f12`) |
 | `File`, `Dir`          | `∅?`                               | ❌ | (`f04`) |
@@ -178,8 +178,8 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
 | QA        | unit          | 574      | # of tests (solely relating to core functionality)              |
 | QA        | performance   | 223      | # of tests (solely relating to performance)                     |
-| QA        | DB            | 58       | # of tests (solely relating to the database)                    |
-| CI        | audits        | 32       | # of tests (solely relating to non-functionality based audits)  |
+| QA        | DB            | 59       | # of tests (solely relating to the database)                    |
+| CI        | audits        | 33       | # of tests (solely relating to non-functionality based audits)  |
 | structure | features      | ~27      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |
@@ -188,17 +188,18 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 ---
 
 ### Gems:
-| gem               | version   | :development  | :runtime    |
-| ----------------: | :-------: | :-----------: | :---------: |
-| `tty-command`     | `0.9.0`   | ✅            | ✅          |
-| `sqlite3`         | `1.4.2`   | ✅            | ❌          |
-| `activerecord`    | `5.2.4.1` | ✅            | ❌          |
-| `bundler`         | `2.1.4`   | ✅            | ❌          |
-| `rake-compiler`   | `1.1.0`   | ✅            | ❌          |
-| `rdoc`            | `6.2.1`   | ✅            | ❌          |
-| `rake`            | `13.0.1`  | ✅            | ❌          |
-| `rspec`           | `3.9.0`   | ✅            | ❌          |
-| `rspec-benchmark` | `0.5.1`   | ✅            | ❌          |
+| gem                        | version   | :development  | :runtime  |
+| -------------------------: | :-------: | :-----------: | :-------: |
+| `tty-command`              | `0.9.0`   | ✅            | ✅       |
+| `sqlite3`                  | `1.4.2`   | ✅            | ❌       |
+| `activerecord`             | `5.2.4.1` | ✅            | ❌       |
+| `schema_plus_foreign_keys` | `0.1.8`   | ✅            | ❌       |
+| `bundler`                  | `2.1.4`   | ✅            | ❌       |
+| `rake-compiler`            | `1.1.0`   | ✅            | ❌       |
+| `rdoc`                     | `6.2.1`   | ✅            | ❌       |
+| `rake`                     | `13.0.1`  | ✅            | ❌       |
+| `rspec`                    | `3.9.0`   | ✅            | ❌       |
+| `rspec-benchmark`          | `0.5.1`   | ✅            | ❌       |
 
 ---
 

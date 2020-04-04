@@ -1,6 +1,8 @@
 
 # TODO: autoload this file, NOT require
 
+# -------------------------------------------- ⚠️ --------------------------------------------
+
 module ::Ruuuby
 
   module MetaData
@@ -38,6 +40,7 @@ module ::Ruuuby
                 'rspec-benchmark': '0.5.1',
                 'sqlite3': '1.4.2',
                 'activerecord': '5.2.4.1',
+                'schema_plus_foreign_keys': '0.1.8'
             }
           end
         end # end{Environment}
@@ -51,24 +54,11 @@ module ::Ruuuby
       URI_GIT           = "#{URI_HOME}.git".freeze
       URI_CHANGELOG     = "#{URI_HOME}/blob/master/CHANGELOG.md".freeze
       URI_DOCUMENTATION = "#{URI_HOME}/tree/master/help".freeze
-    end
-
-  end
-
-  module Routines
-
-    # TODO: to be completed in v0.0.26
-    def update_version_string_across_files
-      version_next = RuuubyRelease.get_next_version_uid
-      version_next = [1..version_next.length]
-
-      version_curr = RuuubyRelease.get_latest_version_uid
-      version_curr = [1..version_curr.length]
-
-      puts "THE CURRENT VERSION IS {#{version_curr}}"
-      puts "THE NEXT VERSION IS {#{version_curr}}"
+      URI_ATOM          = "https://rubygems.org/gems/ruuuby/versions.atom".freeze
     end
 
   end
 
 end
+
+# -------------------------------------------- ⚠️ --------------------------------------------

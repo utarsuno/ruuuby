@@ -90,12 +90,25 @@ class ::File
     File.dirname(File.dirname(File.dirname(path)))
   end
 
+  # @param [String] path
+  #
+  # @raise [WrongParamType]
+  #
+  # @return [String]
+  def self.dirname⁴(path)
+    🛑str❓(:path, path)
+    File.dirname(File.dirname(File.dirname(File.dirname(path))))
+  end
+
   # | ------------------------------------------------------------------------------------------------------------------
 
+  # original source referenced from:
+  # @see https://stackoverflow.com/questions/1274605/how-to-search-file-text-for-a-pattern-and-replace-it-with-a-given-value
+  #
   # @param [String]  the_path
   # @param [String]  expression
   # @param [String]  replacement
-  # @param [Integer] num_matches (default{1})
+  # @param [Integer] num_matches (default: 1)
   #
   # @return [Integer] -1 if an error occurred, 0 if there were no matches, otherwise n, (a positive int), for number of matches
   def self.replace_expr_with(the_path, expression, replacement, num_matches=1)
@@ -122,11 +135,16 @@ class ::File
         FileUtils.chown(stats.uid, stats.gid, temp_file.path)
         FileUtils.chmod(stats.mode, temp_file.path)
         FileUtils.mv(temp_file.path, the_path)
+      else
+        temp_file.delete
       end
     end
     return num_matched
   end
 
+  # original source referenced from:
+  # @see https://stackoverflow.com/questions/1274605/how-to-search-file-text-for-a-pattern-and-replace-it-with-a-given-value
+  #
   # @param [String]  the_path
   # @param [String]  expression
   # @param [String]  replacement
@@ -139,6 +157,8 @@ class ::File
     num_matched = ::File.replace_expr_with(the_path, expression, replacement, num_matches)
     if num_matched == 0
       🛑 RuntimeError.🆕("| c{File}-> m{replace_expr_with!} did not end up replacing any content |")
+    else
+      num_matched
     end
   end
 

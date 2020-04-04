@@ -22,13 +22,6 @@ class RuuubyFeature < ApplicationRecord
   validates :description, presence: true
   validates :id_num, presence: true
 
-  #belongs_to :ruuuby_release, class_name: 'RuuubyRelease'
-  #has_many :ruuuby_feature_deltas, class_name: 'RuuubyFeatureDelta'
-  #has_and_belongs_to_many :ruuuby_feature_deltas, class_name: 'RuuubyFeatureDelta'
-
-  #has_many :ruuuby_feature_deltas, class_name: 'RuuubyFeatureDelta', foreign_key: 'ruuuby_feature_delta_id'
-  #has_many :ruuuby_releases, through: :ruuuby_feature_deltas
-
   class FeatureAudit
     attr_reader :description, :passed
     def initialize(description, audit_func)
