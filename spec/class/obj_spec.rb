@@ -80,10 +80,10 @@ RSpec.describe 'Object' do
         context 'cases: negative' do
           context 'w/ bad normalizer' do
             it 'w/ single param' do
-              expect{🛑int❓('0', 1337, nil)}.to raise_error(RuntimeError)
+              expect{🛑int❓('0', 1337, nil)}.to raise_error(ArgumentError)
             end
             it 'w/ many params' do
-              expect{🛑int❓('0', [-1, 0, 1], nil)}.to raise_error(RuntimeError)
+              expect{🛑int❓('0', [-1, 0, 1], nil)}.to raise_error(ArgumentError)
             end
           end
           context 'w/ normalization{ℕ}' do
@@ -159,10 +159,10 @@ RSpec.describe 'Object' do
         context 'cases: negative' do
           context 'w/ bad normalizer' do
             it 'w/ single param' do
-              expect{🛑str❓('0', '', nil)}.to raise_error(RuntimeError)
+              expect{🛑str❓('0', '', nil)}.to raise_error(ArgumentError)
             end
             it 'w/ many params' do
-              expect{🛑str❓('0', ['a', '', 'bb'], nil)}.to raise_error(RuntimeError)
+              expect{🛑str❓('0', ['a', '', 'bb'], nil)}.to raise_error(ArgumentError)
             end
           end
           context 'w/ normalization{!∅}' do

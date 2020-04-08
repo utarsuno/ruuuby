@@ -39,6 +39,7 @@ dir_config(ExtconfConfigHelper::EXTENSION_NAME, ExtconfConfigHelper::Dir::DIRS_H
 
 ExtconfConfigHelper::Headers::ALL.each do |h|
   current_header = "#{h}.h"
+
   abort("Unable to find header{#{current_header.to_s}}") unless find_header(current_header)
 end
 

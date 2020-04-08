@@ -130,7 +130,13 @@ RSpec.describe 'db/seed.rb' do
 
         context 'defines f23' do
           it 'passes ORM audit' do
-            audit_feature(f23, 'f23', 'gather statistics (and/or more debugging information) on `Ruuuby`')
+            audit_feature(f23, 'f23', "gather statistics (and/or more debugging information) on `Ruuuby` {example-context: optimizing ordering of if-conditions / function-calls}")
+          end
+        end
+
+        context 'defines f24' do
+          it 'passes ORM audit' do
+            audit_feature(f24, 'f24', "add syntax parsing for following 4 categories: {`snake_case`, `camel_case`, `snake_case_upper`, `camel_case_lower`}, aliased via: {`🐫`, `🐍`, `🐫⬇`, `🐍⬆`}")
           end
         end
 

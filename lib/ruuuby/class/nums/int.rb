@@ -7,7 +7,7 @@
 # [ℤ]  the mathematical integers-numbers(+ℤ+)
 # [ℕ]  the mathematical natural-numbers(+ℕ+)
 # [ℚ]  the mathematical rational-numbers(+ℚ+) (all ints can be represented as a rational)
-# [ℂ]  the mathematical complex-numbers(+ℂ+) (all ints can be represented as complex numbers {}with imaginary component of 0})
+# [ℂ]  the mathematical complex-numbers(+ℂ+) (all ints can be represented as complex numbers {with imaginary component of 0})
 # [ℝ]  the mathematical real-numbers(+ℝ+)
 # [𝕌]  the mathematical universal-set(+𝕌+) (in this context only excludes (NaN, +∞, and -∞) which ints may not be and/or represent)
 class ::Integer

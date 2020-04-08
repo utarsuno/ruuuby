@@ -26,16 +26,17 @@ ________________________________________________________________________________
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-#define re_ye           return Qtrue;
-#define re_no           return Qfalse;
-#define re_me           return self;
-#define re_0            return ℤ0;
-#define re_nan          return cached_flt_nan;
-#define re_inf          return cached_flt_inf;
-#define re_negative_inf return cached_flt_negative_inf;
-#define re_inf_complex  return cached_flt_inf_complex;
-#define re_1            return ℤ1;
-#define re_n1           return ℤn1;
+#define re_ye            return Qtrue;
+#define re_no            return Qfalse;
+#define re_as_bool(expr) if (expr) {re_ye} else {re_no}
+#define re_me            return self;
+#define re_0             return ℤ0;
+#define re_nan           return cached_flt_nan;
+#define re_inf           return cached_flt_inf;
+#define re_negative_inf  return cached_flt_negative_inf;
+#define re_inf_complex   return cached_flt_inf_complex;
+#define re_1             return ℤ1;
+#define re_n1            return ℤn1;
 // essentially returns "self.send(func_name, arg)"
 #define re_me_func_1args(func_name, arg) return rb_funcall(self, func_name, 1, arg);
 

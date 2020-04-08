@@ -335,12 +335,12 @@ RSpec.describe 'int.rb' do
     end
 
     context 'roughly preserves original pre-extension-performance' do
-      context 'performance hit for following funcs, are under 50%' do
+      context 'performance hit for following funcs, are under 75%' do
         it 'patched bitwise_xor' do
-          expect {1^1}.to perform_slower_than {1.bitwise_xor(1)}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_50)
-          expect {0^1}.to perform_slower_than {0.bitwise_xor(1)}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_50)
-          expect {1^0}.to perform_slower_than {1.bitwise_xor(0)}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_50)
-          expect {0^0}.to perform_slower_than {0.bitwise_xor(0)}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_50)
+          expect {1^1}.to perform_slower_than {1.bitwise_xor(1)}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_75)
+          expect {0^1}.to perform_slower_than {0.bitwise_xor(1)}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_75)
+          expect {1^0}.to perform_slower_than {1.bitwise_xor(0)}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_75)
+          expect {0^0}.to perform_slower_than {0.bitwise_xor(0)}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_75)
         end
       end
 

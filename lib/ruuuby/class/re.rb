@@ -18,6 +18,12 @@ class ::Regexp
     # @type [String]
     CHAR_STAR    = '\*'.❄️
 
+    # @type [String]
+    CHAR_LOWER   = '[[:lower:]]'.❄️
+
+    # @type [String]
+    CHAR_UPPER   = '[[:upper:]]'.❄️
+
     ❄️
   end
 

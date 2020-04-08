@@ -9,8 +9,8 @@ class GitCommit < ApplicationRecord
   module Syntax
   end
 
-  include ::ApplicationRecord::ORMAttributeUID
-  include ::ApplicationRecord::ORMAttributeCache
+  #include ::ApplicationRecord::ORMAttributeUID
+  #include ::ApplicationRecord::ORMAttributeCache
 
   validates :commit_hash, presence: true
   validates :commit_author_date, presence: true

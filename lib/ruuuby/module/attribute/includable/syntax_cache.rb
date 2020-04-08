@@ -12,6 +12,11 @@ module ::Ruuuby
       # provide functionality to automatically apply the Class-attribute: `SyntaxCache`
       module SyntaxCache
 
+        # ensure the instance of `Class` that is currently including Module(`SyntaxCache`) will extend the `Extendable`: `SyntaxCache` and then perform a `cache_warmup`
+        #
+        # @param [Class] kclass
+        #
+        # @return [Class] kclass
         def self.included(kclass)
           kclass.extend(::Ruuuby::Attribute::Extendable::SyntaxCache)
           kclass.cache_warmup(kclass)

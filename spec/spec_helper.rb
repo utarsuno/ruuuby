@@ -96,6 +96,20 @@ RSpec.shared_context 'RSPEC_GLOBAL_UTILITIES' do
   let(:data_str_fake_name2){'second_fake_name'}
 end
 
+module HelpersSyntaxCache
+
+  def expect_syntax(the_class, syntax_id, syntax_before_processing)
+    expect(the_class.respond_to?(syntax_id)).to eq(true)
+    expect(the_class.send(syntax_id).class).to eq(Regexp)
+    expect(the_class.send(syntax_id).source).to eq("\\A#{syntax_before_processing}\\z")
+  end
+
+  def do_not_expect_syntax(the_class, syntax_id)
+    expect(the_class.respond_to?(syntax_id)).to eq(false)
+  end
+
+end
+
 module HelpersFeature16
 
   def expect_scenarios_power_operations(scenarios, superscripts, power_operation, to_pass=true)
@@ -190,6 +204,7 @@ RSpec.configure do |config|
 
   config.include HelpersGeneral
   config.include HelpersFeature16
+  config.include HelpersSyntaxCache
 
   config.include HelpersDB, :db
   config.include_context 'shared_context_db', :db

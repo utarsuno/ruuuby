@@ -20,5 +20,7 @@
 @f20 = RuuubyFeature.spawn(20, 'enable easier (general) syntax & pattern parsing')
 @f21 = RuuubyFeature.spawn(21, 'enable easier textual/numerical/syntax parsing')
 @f22 = RuuubyFeature.spawn(22, 'create or extend a `numeric` in order to properly support `Complex Infinity`')
-@f23 = RuuubyFeature.spawn(23, 'gather statistics (and/or more debugging information) on `Ruuuby`')
+@f23 = RuuubyFeature.spawn(23, "gather statistics (and/or more debugging information) on `Ruuuby` {example-context: optimizing ordering of if-conditions / function-calls}")
+@f24 = RuuubyFeature.spawn(24, "add syntax parsing for following 4 categories: {`snake_case`, `camel_case`, `snake_case_upper`, `camel_case_lower`}, aliased via: {`🐫`, `🐍`, `🐫⬇`, `🐍⬆`}")
+
 @f98 = RuuubyFeature.spawn(98, '`C-extensions`')

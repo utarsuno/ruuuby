@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.27'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.28'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -63,12 +63,13 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 #### Glossary (for table content & tags)
 
 > {`static`} implies following context: `Class` instance, not the actual `object`
-> <br/> `performance penalties` implies: values across designated scenario benchmarks
+> <br/>`performance penalties` implies: values across designated scenario benchmarks
 > <br/>(`fNN`) is feature tag syntax, let (`N ∈ ℕ`); (`full use-case wip`)
-> <br/> symbol(`∃`) means `there exists some ...`
-> <br/> symbol(`⊕`) is set notation for: *symmetric difference*
-> <br/> symbol(`∋`) is set notation for: *belongs to*, ex: (`a` belongs to set `b`: `b ∋ a`); bool-reversed: symbol(`∌`)
-> <br/> symbol(`∖`) is set notation for: *relative complement*
+> <br/>symbol(`∃`) means `there exists some ...`
+> <br/>symbol(`∴`) means `... therefore ...`
+> <br/>symbol(`⊕`) is set notation for: *symmetric difference*
+> <br/>symbol(`∋`) is set notation for: *belongs to*, ex: (`a` belongs to set `b`: `b ∋ a`); bool-reversed: symbol(`∌`)
+> <br/>symbol(`∖`) is set notation for: *relative complement*
 
 #### Operations Supported (patched in)
 
@@ -85,9 +86,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 
 | (`global`) func(s) added | notes | as C-extension? <br/> (java-wip) |
 | ---: | :--- | :----: |
-| `√`, `∛`, `π` | (`f17`) | ❌ |
-| `∞`, `∞ℂ`, `¿`, `φ`, `γ` | (`f17`) | ❌ |
-| `∠ᶜ`, `∠°`, `sin`, `sin°`, `cos`, `cos°`, `tan`, `tan°` | (`f17`) | ❌ |
+| `√`, `∛`, `π`<br/> `∞`, `∞ℂ`, `¿`, `φ`, `γ`<br/>`∠ᶜ`, `∠°`, `sin`, `sin°`, `cos`, `cos°`, `tan`, `tan°`| (`f17`) | ❌ |
 | `📁`, `📂`, `🗄️` | - aliases for `::File`, `::Dir` <br/> - (`f12`) | ❌ |
 
 ### Changes to Modules:
@@ -102,32 +101,33 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Kernel`  | `∃class?`         | ❌                         | true-example: `∃class?(:Array)` |
 | `Module`  | {`static`} `∃⨍_alias?`    | ❌                 | true-example: `::Array.∃⨍_alias?(:equal_contents?, :≈≈)` |
 | `Module`  | {`static`} `∃⨍?`          | ❌                 | true-example: `::Array.∃⨍?(:≈≈)` |
-| `Module`  | {`static`} `⨍_add_aliases`| ✅                 | example: (inside Class scope) `⨍_add_aliases(:infinite?, [:∞?, :♾️?])` |
+| `Module`  | {`static`} `⨍_add_aliases`| ✅                 | example: (inside Class scope)<br/>`⨍_add_aliases(:infinite?, [:∞?, :♾️?])` |
 | `Math`    | {`static`} `relative_Δ`   | ❌                 | (`f17`) |
 
 ### Changes to Classes:
 
-| class(es)              | func(s) added                      | as C-extension? <br/> (java-wip) | notes   |
-| ---------------------: | --------------------------------- | :------------------------: | ------- |
-| `File`, `Dir`          | {`static`} `∃?`                    | ❌ | (`f12`) |
+| class(es)              | func(s) added                       | as C-extension? <br/> (java-wip) | notes   |
+| ---------------------: | ----------------------------------- | :------------------------: | ------- |
+| `File`, `Dir`          | {`static`} `∃?`                     | ❌ | (`f12`) |
 | `File`                 | {`static`} `dirname²`, `dirname³`, `dirname⁴` | ❌ | (`f12`) |
 | `File`                 | `replace_expr_with`, `replace_expr_with!` | ❌ | (`f12`) |
-| `Dir`                  | `normalized_paths`                 | ❌ | (`f12`) |
-| `File`, `Dir`          | `∅?`                               | ❌ | (`f04`) |
-| `Object`               | `ary?`, [`bool?`, `🅱️?`], `hsh?`, `int?`, `flt?`, `num?`, `str?`, `stry?`, `sym?` | ✅ | (`f06`) |
-| `Object`               | `class?`, `module?`, `nucleotide?` | ❌ | (`f06`) |
-| `Array`                | `remove_empty!`                    | ✅ | (`f07`) |
-| `Set`                  | `remove_empty!`                    | ❌ | (`f07`) |
-| `String`               | `♻️until!`                         | ❌ | (`f08`) |
+| `Dir`                  | `normalized_paths`                  | ❌ | (`f12`) |
+| `File`, `Dir`          | `∅?`                                | ❌ | (`f04`) |
+| `Object`               | `ary?`, [`bool?`, `🅱️?`], `hsh?`, `int?`, `flt?`, `num?`, `str?`, `char?`, `stry?`, `sym?`<br/>`class?`, `module?`, `nucleotide?` | ✅ | (`f06`) |
+| `Array`                | `remove_empty!`                     | ✅ | (`f07`) |
+| `Set`                  | `remove_empty!`                     | ❌ | (`f07`) |
+| `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞` | ❌ | (`f08`) |
+| `String`               | `downcase?` ([`⬇️?`, `⬇?`, `🔡?`]) | ❌ | (`f08`) |
+| `String`               | `upcase?` ([`⬆️?`, `⬆?`, `🔠?`])   | ❌ | (`f08`) |
+| `String`               | `🐫?`, `🐫⬇?`, `🐍⬆?`, `🐍?`, `to_🐫`, `to_🐍` | ❌ | (`f24`) |
 | `Array`                | `η̂!`                               | ❌ | (`f08`) |
 | `Array`                | [`frequency_counts`, `📊`]         | ✅ | (`f09`) |
 | `Array`                | [`equal_contents?`, `≈≈`]          | ✅ | - regardless of order and presence of multiple types <br/> - (`f09`) |
 | `Array`                | [`disjunctive_union`, `⊕`]         | ✅ | (`f09`) |
 | `Array`                | `∖`                                | ❌ | - aliased-by(`uniq_to_me`) <br/> - (`f09`) |
-| `Module`               | `∋?`, `∌?`, `∈?`, `∉?`             | ❌ | (`f09`) |
-| `Enumerable`, `String` | `∌?`                               | ❌ | (`f09`) |
+| `Module`, `String`     | `∋?`, `∌?`, `∈?`, `∉?`             | ❌ | (`f09`) |
+| `Enumerable`           | `∌?`                               | ❌ | (`f09`) |
 | `Array`, `String`      | `>>`                               | ✅ | - prepend provided arg, reverse operation of `<<` <br/> - (`f05`) |
-| `String`               | `∈?`, `∉?`                         | ❌ | (`f09`) |
 | `String`               | `digit?`, `to_num`, `to_num?`      | ❌ | (`f21`) |
 | `Array`                | `end_with?`, `start_with?`         | ❌ | (`f08`) |
 | `String`, `Array`      | `ensure_start!`, `ensure_ending!`  | ❌ | (`f08`) |
@@ -136,8 +136,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Numeric`              | `∞?`, `𝔹?`, `𝕌?`                   | ❌ | (`f11`) |
 | `Integer`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
 | `Float`                | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
-| `BigDecimal`           | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
-| `Complex`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
+| `BigDecimal`, `Complex`| `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
 | `Rational`             | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`       | ❌ | (`f11`) |
 | `Float`                | `≈≈`, `∞ℂ?`                        | ❌ | (`f17`) |
 | `String`               | `to_radian`                        | ❌ | (`f17`) |
@@ -176,11 +175,11 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 574      | # of tests (solely relating to core functionality)              |
-| QA        | performance   | 223      | # of tests (solely relating to performance)                     |
-| QA        | DB            | 59       | # of tests (solely relating to the database)                    |
-| CI        | audits        | 33       | # of tests (solely relating to non-functionality based audits)  |
-| structure | features      | ~27      | # of distinct features (that are categorized & tracked) `wip`   |
+| QA        | unit          | 614      | # of tests (solely relating to core functionality)              |
+| QA        | performance   | 256      | # of tests (solely relating to performance)                     |
+| QA        | DB            | 75       | # of tests (solely relating to the database)                    |
+| CI        | audits        | 37       | # of tests (solely relating to non-functionality based audits)  |
+| structure | features      | ~28      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |
 | coverage  | documentation | ???      | `wip` |
@@ -234,7 +233,6 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | -------------: | ----------------------------------------------- |
 | `app`          | currently only holds `ORM` definitions           |
 | `bin`          | `executable` files                               |
-| `conditionals` | temporary design                                |
 | `db`           | database `schema`, `seed`, and `migrations`     |
 | `ext`          | `C` portion of this Gem's code <br/> (and future location for `JRuby-extensions`) |
 | `help`         | any helpful additional `documentation & notes`  |

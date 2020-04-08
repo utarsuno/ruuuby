@@ -2,7 +2,7 @@
 
 RSpec.describe 'ruuuby_release.rb' do
 
-  context 'db', :'db' do
+  context 'db', :db do
 
     context 'ApplicationRecord{RuuubyRelease}' do
 
@@ -45,21 +45,18 @@ RSpec.describe 'ruuuby_release.rb' do
 
       context 'static-functions' do
 
-        context 'adds func{parse_version_str}' do
+        context 'adds func{parse_uid_str}' do
           context 'handles needed scenarios' do
             it 'cases: positive' do
-              representation_a = 'v9.7.05'
-              representation_b = 'v9.7.5'
-              representation_c = '9.7.05'
-              representation_d = '9.7.5'
-
-              expect(RuuubyRelease.send(:parse_version_str, representation_a)).to eq([9, 7, 5])
-              expect(RuuubyRelease.send(:parse_version_str, representation_b)).to eq([9, 7, 5])
-              expect(RuuubyRelease.send(:parse_version_str, representation_c)).to eq([9, 7, 5])
-              expect(RuuubyRelease.send(:parse_version_str, representation_d)).to eq([9, 7, 5])
+              expect(RuuubyRelease.parse_uid_str('v9.7.05')).to eq([9, 7, 5])
+              expect(RuuubyRelease.parse_uid_str('v9.7.5')).to eq([9, 7, 5])
+              expect(RuuubyRelease.parse_uid_str('9.7.05')).to eq([9, 7, 5])
+              expect(RuuubyRelease.parse_uid_str('9.7.5')).to eq([9, 7, 5])
+              expect(RuuubyRelease.parse_uid_str('v9.7.5 release')).to eq([9, 7, 5])
+              expect(RuuubyRelease.parse_uid_str('v9.7.5 version')).to eq([9, 7, 5])
             end
             it 'cases: bad params' do
-              expect{RuuubyRelease.send(:parse_version_str, nil)}.to raise_error(ArgumentError)
+              expect{RuuubyRelease.parse_uid_str(nil)}.to raise_error(ArgumentError)
             end
           end
         end
@@ -76,15 +73,22 @@ RSpec.describe 'ruuuby_release.rb' do
           end
         end
 
-        context 'adds func{get_latest_version_uid}' do
+        context 'adds func{get_version_prev}' do
           it 'works' do
-            expect(RuuubyRelease.get_latest_version_uid).to eq('v0.0.26')
+            expect(RuuubyRelease.get_version_prev).to eq(v0_0_26)
           end
         end
 
-        context 'adds func{get_next_version_uid}' do
+        context 'adds func{get_version_curr}' do
           it 'works' do
-            expect(RuuubyRelease.get_next_version_uid).to eq('v0.0.27')
+            expect(RuuubyRelease.get_version_curr).to eq(v0_0_27)
+          end
+        end
+
+
+        context 'adds func{get_version_next}' do
+          it 'works' do
+            expect(RuuubyRelease.get_version_next).to eq(v0_0_28)
           end
         end
 
@@ -114,7 +118,7 @@ RSpec.describe 'ruuuby_release.rb' do
           context 'with needed constants' do
             context '::RuuubyRelease::Syntax::UID' do
               it 'exists' do
-                expect(RuuubyRelease::Syntax::UID).to eq('(v?)\d.\d.\d(\d?)')
+                expect(RuuubyRelease::Syntax::UID).to eq('(v?)\d.\d.\d(\d?)( ((version)|(release)))?')
               end
               it "can't be changed" do
                 expect{RuuubyRelease::Syntax::UID = 5}.to raise_error(FrozenError)

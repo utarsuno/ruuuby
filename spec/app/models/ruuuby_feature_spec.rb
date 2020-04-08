@@ -2,7 +2,53 @@
 
 RSpec.describe 'ruuuby_feature.rb' do
 
-  context 'ApplicationRecord{RuuubyFeature}' do
+  context 'ApplicationRecord{RuuubyFeature}', :db do
+
+    context 'ORM operations' do
+
+      it 'can be created' do
+        fake_feature = RuuubyFeature.create!(id_num: 1337, description: data_str_fake_name)
+        expect(fake_feature.id_num).to eq(1337)
+        expect(fake_feature.description).to eq(data_str_fake_name)
+
+        expect(fake_feature.uid).to eq('f1337')
+
+        fake_feature.♻️!
+      end
+
+      it 'prevents duplicate id_nums from being created' do
+        expect{
+          RuuubyFeature.spawn(1337, '1337')
+          RuuubyFeature.spawn(1337, '1337')
+        }.to raise_error(ActiveRecord::RecordNotUnique)
+
+        result = RuuubyFeature.find_by_uid(1337)
+        result.♻️!
+      end
+
+      it 'prevents negative values being used for version values' do
+        expect{ RuuubyFeature.spawn(-1, '1337') }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+
+    end # end: {ORM operations}
+
+    context 'static-functions' do
+
+      context 'adds func{parse_uid_str}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            expect(RuuubyFeature.parse_uid_str('f0')).to eq([0])
+            expect(RuuubyFeature.parse_uid_str('f00')).to eq([0])
+            expect(RuuubyFeature.parse_uid_str('f01')).to eq([1])
+            expect(RuuubyFeature.parse_uid_str('f14')).to eq([14])
+          end
+          it 'cases: bad params' do
+            expect{RuuubyFeature.parse_uid_str(nil)}.to raise_error(ArgumentError)
+          end
+        end
+      end
+
+    end
 
     context 'defines module[Syntax]' do
       it 'exists' do
@@ -29,10 +75,18 @@ RSpec.describe 'ruuuby_feature.rb' do
       context 'with needed constants' do
         context '::RuuubyFeature::Syntax::UID' do
           it 'exists' do
-            expect(RuuubyFeature::Syntax::UID).to eq('f\d\d')
+            expect(RuuubyFeature::Syntax::UID).to eq('(f?)\d\d')
           end
           it "can't be changed" do
             expect{RuuubyFeature::Syntax::UID = 5}.to raise_error(FrozenError)
+          end
+        end
+        context '::RuuubyFeature::Syntax::SQL_UID' do
+          it 'exists' do
+            expect(RuuubyFeature::Syntax::SQL_UID).to eq('id_num = ?')
+          end
+          it "can't be changed" do
+            expect{RuuubyFeature::Syntax::SQL_UID = 5}.to raise_error(FrozenError)
           end
         end
         context '::RuuubyFeature::Syntax::DOCS_FEATURE_MAPPING' do
@@ -44,26 +98,6 @@ RSpec.describe 'ruuuby_feature.rb' do
           end
         end
       end
-    end
-
-    it 'can be created' do
-      fake_feature = RuuubyFeature.create!(id_num: 1337, description: data_str_fake_name)
-      expect(fake_feature.id_num).to eq(1337)
-      expect(fake_feature.description).to eq(data_str_fake_name)
-
-      expect(fake_feature.uid).to eq('f1337')
-
-      fake_feature.♻️!
-    end
-
-    it 'prevents duplicate id_nums from being created' do
-      expect{
-        RuuubyFeature.spawn(1337, '1337')
-        RuuubyFeature.spawn(1337, '1337')
-      }.to raise_error(ActiveRecord::RecordNotUnique)
-
-      result = RuuubyFeature.by_id_num(1337)
-      result.♻️!
     end
   end
 

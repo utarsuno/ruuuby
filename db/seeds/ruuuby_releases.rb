@@ -118,7 +118,8 @@
 @v0_0_21 = RuuubyRelease.spawn(0, 0, 21)
 @v0_0_21.add_file('bin/console_db', '', 'same as `/bin/console` but also pre-loads `db/seed.rb`')
 @v0_0_21.add_file('lib/ruuuby/class/re.rb', ::Regexp, '', @f20)
-@v0_0_21.add_file('app/models/db_schema.rb', ::RuuubyDBSchema, '`temporary design`', @f15)
+#@v0_0_21.add_file('app/models/db_schema.rb', ::RuuubyDBSchema, '`temporary design`', @f15)
+@v0_0_21.add_file('app/models/db_schema.rb', '', '`temporary design`', @f15)
 #@v0_0_21.add_file('lib/ruuuby/module/attribute_extendable/static_attribute_syntax_cache', ::Ruuuby::StaticAttributeSyntaxCache)
 @v0_0_21.add_comments(
     [
@@ -265,11 +266,6 @@
 @v0_0_26.changelog.added_method_to_class(@f15, :get_next_version_uid, ::RuuubyRelease)
 @v0_0_26.changelog.added_method_to_class(@f15, :get_latest_version_uid, ::RuuubyRelease)
 
-@v0_0_25.released = true
-@v0_0_25.save!
-@v0_0_26.released = true
-@v0_0_26.save!
-
 @v0_0_27 = RuuubyRelease.spawn(0, 0, 27)
 @v0_0_27.add_gem('schema_plus_foreign_keys', '0.1.8')
 @v0_0_27.add_file('db/seeds/git_commits.rb', '', '', @f15)
@@ -287,5 +283,41 @@
 )
 @v0_0_27.changelog.added_method_to_class(@f12, :dirname⁴, ::File)
 
-@v0_0_27.released = false
-@v0_0_27.save!
+@v0_0_28 = RuuubyRelease.spawn(0, 0, 28)
+@v0_0_28.add_file('lib/ruuuby/ruuuby/ruuuby_orm.rb', ::Ruuuby::MetaData::RuuubyORM, '', @f15)
+@v0_0_28.add_file('lib/ruuuby/ruuuby/routine_cli.rb', ::Ruuuby::Routine::CommandCLI, '', @f15)
+#@v0_0_28.add_file('lib/ruuuby/ruuuby/ruuuby_orm.rb', '', '', @f15)
+#@v0_0_28.add_file('lib/ruuuby/ruuuby/routine_cli.rb', '', '', @f15)
+@v0_0_28.remove_file('app/models/db_schema.rb', 'seemed like a bad location')
+@v0_0_28.remove_file('conditionals/ide_helper.rb', 'moved to `lib/ruuuby/ide_helper.rb`, gets excluded by `ruuuby.gemspec`')
+@v0_0_28.add_comments(
+    [
+        '(`f15`): updating contents of `db/seeds/git_commits.rb` is now automated (starting point, LOTs of TODOs to guard against any edge case scenarios and future functionality requirements)',
+        '(`f06`, `f98`): move funcs `class?`, `module?`, `nucleotide?` into `C-extensions` (also add `char?`)',
+        'add `f24` as continued step in enabling textual parsing for more useful code-file automations',
+        '(`f98`): add normalizers to funcs `int?` and `str?`, allows (mainly-visual) clean-up for `Ruuuby` funcs `🛑str❓` and `🛑int❓`',
+        'add types to `Ruuuby::VirtualTypes`',
+        'rename c(`String`)\'s func{♻️until!} to {remove_until}, add alias(`♻️⟶`); also add reverse direction w/ func{`♻️⟵`}'
+    ]
+)
+@v0_0_28.changelog.added_method_to_class(@f06, :char?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f08, :upcase?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f08, :⬆️?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f08, :⬆?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f08, :🔠?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f08, :downcase?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f08, :⬇️?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f08, :⬇?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f08, :🔡?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f08, :♻️⟵, ::String)
+@v0_0_28.changelog.added_method_to_class(@f08, :♻️⟶∞, ::String)
+@v0_0_28.changelog.added_method_to_class(@f24, :🐫?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f24, :🐍?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f24, :🐫⬇️?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f24, :🐫⬇?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f24, :🐫🔡?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f24, :🐍⬆️?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f24, :🐍⬆?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f24, :🐍🔠?, ::String)
+@v0_0_28.changelog.added_method_to_class(@f24, :to_🐫, ::String)
+@v0_0_28.changelog.added_method_to_class(@f24, :to_🐍, ::String)

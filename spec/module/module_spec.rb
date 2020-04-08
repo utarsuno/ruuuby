@@ -8,7 +8,25 @@ RSpec.describe 'module' do
       RuuubyTestHelper::CONFIG_MODULE[:aliases].∀{ |base_func, aliased_func| expect(::Module.∃⨍?(aliased_func)).to eq(true) }
     end
 
+    # TODO: UNIT TESTS FOR FUNCTION{⨍_add_aliases}
+
     context 'adding needed functions' do
+
+      context 'function{⨍_add_aliases}' do
+        context 'handles needed scenarios' do
+          context 'cases: negative' do
+            it 'bad args' do
+              expect{
+                module FakeModule
+                  def fake_func;end
+                  ⨍_add_aliases(:fake_func, nil)
+                end
+              }.to raise_error(ArgumentError)
+            end
+          end
+        end
+      end
+
       context 'function{∋?} handles needed scenarios' do
         it 'cases: positive' do
           expect(StandardError.∋?(RuntimeError)).to eq(true)

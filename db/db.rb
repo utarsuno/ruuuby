@@ -1,7 +1,6 @@
 
 require 'sqlite3'
 require 'active_record'
-require_relative '../app/models/db_schema'
 require_relative '../lib/ruuuby/module/attribute/extendable/syntax_cache'
 require_relative '../app/models/application_record'
 require_relative '../app/models/ruuuby_release'

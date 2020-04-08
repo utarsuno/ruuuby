@@ -20,6 +20,32 @@
 
 ---
 
+# v0.0.28
+ * (`f15`): updating contents of `db/seeds/git_commits.rb` is now automated (starting point, LOTs of TODOs to guard against any edge case scenarios and future functionality requirements)
+ * (`f06`, `f98`): move funcs `class?`, `module?`, `nucleotide?` into `C-extensions` (also add `char?`)
+ * add `f24` as continued step in enabling textual parsing for more useful code-file automations
+ * (`f98`): add normalizers to funcs `int?` and `str?`, allows (mainly-visual) clean-up for `Ruuuby` funcs `🛑str❓` and `🛑int❓`
+ * add types to `Ruuuby::VirtualTypes`
+ * rename c(`String`)'s func{♻️until!} to {remove_until}, add alias(`♻️⟶`); also add reverse direction w/ func{`♻️⟵`}
+
+| path added | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/ruuuby/ruuuby/ruuuby_orm.rb` | ``Ruuuby::MetaData::RuuubyORM`` |  | `f15` |
+| `lib/ruuuby/ruuuby/routine_cli.rb` | ``Ruuuby::Routine::CommandCLI`` |  | `f15` |
+
+| path removed | notes |
+| ---: | --- |
+| `app/models/db_schema.rb` | seemed like a bad location |
+| `conditionals/ide_helper.rb` | moved to `lib/ruuuby/ide_helper.rb`, gets excluded by `ruuuby.gemspec` |
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `String` | `char?`,  | `f06` |
+| `String` | `♻️⟵`, `♻️⟶∞` <br/> [`upcase?`, `⬆️?`, `⬆?`, `🔠?`] <br/> [`downcase?`, `⬇️?`, `⬇?`, `🔡?`] | `f08` |
+| `String` | `🐫?`, [`🐫⬇️?`, `🐫⬇?`, `🐫🔡?`], `to_🐫` <br/> `🐍?`, [`🐍⬆️?`, `🐍⬆?`, `🐍🔠?`], `to_🐍` | `f23` |
+
+---
+
 # v0.0.27
  * contents in `db/seed.rb` split across files in newly created dir: `db/seeds/`; also add new `ORM: GitCommit`, (one `RuuubyRelease` to many `GitCommits`)
  * performing update of version number for `README.md` and `lib/ruuuby/version.rb` is now automated

@@ -7,7 +7,7 @@ class RuuubyRelease < ApplicationRecord
   module Syntax
 
     # @type [String]
-    UID     = '(v?)\d.\d.\d(\d?)'.❄️
+    UID     = '(v?)\d.\d.\d(\d?)( ((version)|(release)))?'.❄️
 
     # @type [String]
     SQL_UID = 'vmajor = ? AND vminor = ? AND vtiny = ?'.❄️
@@ -151,15 +151,6 @@ class RuuubyRelease < ApplicationRecord
     changes
   end
 
-  def self.generate_query_uid(*args)
-    🛑 ArgumentError.new("| c{Class}-> m{generate_query_uid} received no args |") if args.∅?
-    if args.length == 1 && args[0].str? && args[0].match?(RuuubyRelease.cache_fetch(RuuubyRelease::Syntax::UID))
-      return RuuubyRelease.generate_query_uid(*(self.parse_version_str(args[0])))
-    end
-    🛑ℤ❓($PRM_MANY, args)
-    RuuubyRelease.where(::RuuubyRelease::Syntax::SQL_UID, args[0].to_i, args[1].to_i, args[2].to_i)
-  end
-
   # @param [RuuubyRelease] ruuuby_release
   #
   # @raise [ArgumentError] raised if parameter provided of not of Class(`RuuubyRelease`)
@@ -192,32 +183,65 @@ class RuuubyRelease < ApplicationRecord
     "v#{latest_version.vmajor.to_s}.#{latest_version.vminor.to_s}.#{(latest_version.vtiny + 1).to_s}"
   end
 
+  # @return [RuuubyRelease]
+  def self.get_version_prev
+    RuuubyRelease.where('released = ?', true).all.to_ary[-2]
+  end
+
+  # @return [RuuubyRelease]
+  def self.get_version_curr
+    RuuubyRelease.where('released = ?', true).last
+  end
+
   # @return [String] the version UID of the latest release
-  def self.get_latest_version_uid
-    RuuubyRelease.where('released = ?', true).last.uid
+  def self.get_version_next
+    RuuubyRelease.where('released = ?', false).last
   end
 
   def spawn_git_commit(*args)
-    GitCommit.spawn(args[0], args[1], args[2], self)
+    git_commit = GitCommit.spawn(args[0], args[1], args[2], self)
+    git_commit
   end
 
-  🙈
-
-  # @param [String|Symbol] version_str the version UID of the RuuubyRelease with or without the starting 'v'
+  # @param [String] version_str the version UID of the RuuubyRelease with or without the starting 'v'
   #
   # @raise [WrongParamType]
   #
   # @return [Array] new array with 3 elements for each corresponding version identifying component
-  def self.parse_version_str(version_str)
+  def self.parse_uid_str(version_str)
     🛑str❓(:version_str, version_str)
     version_str = version_str[1..version_str.length-1] if version_str.start_with?('v')
-    args        = version_str.split('.')
+    version_str = version_str.♻️⟵(' ') if version_str.∋?(' ')
+    args = version_str.split('.')
     args.η̂!(:ℕ)
   end
 
-  # @return [String] vM.m.T (M: Major, m: minor, T: tiny)
-  def cache_calculate_uid
-    "v#{self.vmajor.to_s}.#{self.vminor.to_s}.#{self.vtiny.to_s}"
+  # @param [Boolean] released_status (default: true)
+  def released!(released_status=true)
+    self.released = released_status
+    self.save!
+  end
+
+  def self.generate_query_uid(*args)
+    🛑 ArgumentError.new("| c{Class}-> m{generate_query_uid} received no args |") if args.∅?
+    if args.length == 1 && args[0].str? && args[0].match?(RuuubyRelease.cache_fetch(RuuubyRelease::Syntax::UID))
+      return RuuubyRelease.generate_query_uid(*(self.parse_uid_str(args[0])))
+    end
+    🛑ℤ❓($PRM_MANY, args)
+    RuuubyRelease.where(::RuuubyRelease::Syntax::SQL_UID, args[0].to_i, args[1].to_i, args[2].to_i)
+  end
+
+  🙈
+
+  def cache_calculate(cache_key)
+    case(cache_key)
+    when :uid
+      return "v#{self.vmajor.to_s}.#{self.vminor.to_s}.#{self.vtiny.to_s}"
+    when :uid_components
+      return [self.vmajor, self.vminor, self.vtiny]
+    else
+      raise "c{RuuubyRelease}-> m{cache_calculate} did not recognize cache_key{#{cache_key.to_s}} of type{#{cache_key.class.to_s}}"
+    end
   end
 
 end

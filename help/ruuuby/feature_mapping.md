@@ -26,6 +26,8 @@
 | f20 | enable easier (general) syntax & pattern parsing                       |
 | f21 | enable easier textual/numerical/syntax parsing                         |
 | f22 | create or extend a `numeric` in order to properly support `Complex Infinity` |
+| f23 | gather statistics (and/or more debugging information) on `Ruuuby` {example-context: optimizing ordering of if-conditions / function-calls} |
+| f24 | add syntax parsing for following 4 categories: {`snake_case`, `camel_case`, `snake_case_upper`, `camel_case_lower`}, aliased via: {`🐫`, `🐍`, `🐫⬇`, `🐍⬆`} |
 | f96 | automate local `git` configurations                                     |
 | f97 | `JRuby-extensions`                                                     |
 | f98 | `C-extensions`                                                         |

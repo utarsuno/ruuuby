@@ -2,7 +2,7 @@
 
 | set | contents |
 | --- | --- |
-| subscripts | ₋₍₎₁₂₃₄₅₆₇₈₉ |
+| subscripts | ₋₍₎₀₁₂₃₄₅₆₇₈₉ |
 | superscripts | ⁻⁽⁾¹²³⁴⁵⁶⁷⁸⁹ |
 
 | symbol | ~direct text replacement |

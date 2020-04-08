@@ -152,36 +152,9 @@ end
 
 ```ruby
 
-#require 'open3'
-#cmd = 'wc FILE_PATH'
-#Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
-#  puts "stdout is:" + stdout.read
-#  puts "stderr is:" + stderr.read
-#end
 
 #RbConfig
 #
-
-=begin
-        path = 'PPAATTHH'
-        d = Dir.new(path)
-
-        #d.each do |e|
-        #d.each do |e|
-        d.entries.each do |e|
-          #puts "e{#{e.class.to_s}} --> {#{e.to_s}}"
-
-          ee = "#{path}#{e.to_s}"
-
-          📝 = ::File
-          #my_file = File.new(ee)
-          #exists = File.file?(ee)
-          my_file = 📝.new(ee)
-          exists = 📝.file?(ee)
-          if exists
-            puts "FILE{#{ee}} EXISTS{#{exists.to_s}}, file{#{my_file.to_s}}, abs-path-chars{#{ee.to_s.length.to_s}}"
-          end
-=end
 
   def perform_big_o_constant
     RSpec::Benchmark::Matchers::ben
@@ -208,40 +181,6 @@ end
 
   end
 =end
-
-
-module ::Ruuuby
-
-  class LocalCLI
-    module LocalGIT
-      CMD_LIST_CONFIGS                  = 'git config --list'.❄️
-      CONFIG_WINDOWS_NEWLINE_PREVENTION = 'core.autocrlf'.❄️
-    end
-
-    def initialize
-      @tty_cmd = nil
-      @out     = nil
-      @err     = nil
-    end
-
-    # @return [TTY::Command]
-    def tty_cmd
-      # printer options:
-      #  * :null     (no output)
-      #  * :pretty   (colorful output)
-      #  * :progress (minimal output with green dot for success and F for failure)
-      #  * :quiet    (only output actual command stdout and stderr)
-      @tty_cmd ||= TTY::Command.new(printer: :progress)
-    end
-
-    def run(cmd)
-      @out, @err = self.tty_cmd.run(cmd)
-      🛑 RuntimeError.new("cmd{#{cmd.to_s}} failed{#{@err}}") unless @err.∅?
-
-    end
-  end
-  
-end
 
 
 =end

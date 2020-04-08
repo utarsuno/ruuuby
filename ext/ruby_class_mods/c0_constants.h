@@ -45,4 +45,8 @@ static VALUE ℤ7  = INT2NUM(7);
 static VALUE ℤ8  = INT2NUM(8);
 static VALUE ℤ9  = INT2NUM(9);
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+#define ARG_OPTS_ONE_OPTIONAL "01"
+
 #endif

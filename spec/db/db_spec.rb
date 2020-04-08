@@ -7,9 +7,11 @@ RSpec.describe 'db/db.rb' do
     context 'defines expected schemas' do
 
       it 'has needed tables' do
-        expect(RuuubyDBSchema.get_connection_schema.tables).to eq(RuuubyDBSchema.get_connection_base.tables)
-        db_tables = RuuubyDBSchema.get_connection_base.tables
-        RuuubyDBSchema::Tables::ALL.∀ do |needed_table|
+        expect(ruuuby_orm.get_connection_schema.tables).to eq(ruuuby_orm.get_connection_base.tables)
+
+        db_tables = ruuuby_orm.get_connection_base.tables
+
+        ruuuby_orm.get_table_names.∀ do |needed_table|
           expect(db_tables.∋?(needed_table)).to eq(true)
         end
       end

@@ -1,0 +1,25 @@
+# encoding: UTF-8
+
+RSpec.describe 'f24' do
+
+  context 'audits', :audits do
+
+    context 'feature(f24) passes audits (tests not relating to observed functionality)' do
+      it 'module is defined in correct location' do
+        expect_∃module(:StringF24, ::Ruuuby::Feature::Includable)
+      end
+      context 'funcs provided are' do
+        it 'defined in correct location' do
+          expect_∃⨍(:🐫?, ::Ruuuby::Feature::Includable::StringF24)
+          expect_∃⨍(:🐫⬇?, ::Ruuuby::Feature::Includable::StringF24)
+          expect_∃⨍(:🐍⬆?, ::Ruuuby::Feature::Includable::StringF24)
+          expect_∃⨍(:🐍?, ::Ruuuby::Feature::Includable::StringF24)
+          expect_∃⨍(:to_🐍, ::Ruuuby::Feature::Includable::StringF24)
+          expect_∃⨍(:to_🐫, ::Ruuuby::Feature::Includable::StringF24)
+        end
+      end
+    end
+
+  end
+
+end

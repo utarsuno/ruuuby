@@ -99,11 +99,28 @@ static inline ID health_check_for_existing_func_name(VALUE context_self, VALUE *
     return func_id;
 }
 
+static inline VALUE new_ary(const long known_max_size) {
+    if (known_max_size == 0) {
+        return rb_ary_new_capa(0);
+    } else if (known_max_size > 0 && known_max_size <= 𝔠ARY_DEFAULT) {
+        return rb_ary_new_capa(known_max_size);
+    } else {
+        return rb_ary_new();
+    }
+}
+
 static inline void internal_only_prepare_f16() {
     cached_flt_nan          = rb_const_get_at(R_FLT, rb_intern("NAN"));
     cached_flt_inf          = rb_const_get_at(R_FLT, rb_intern("INFINITY"));
     cached_flt_negative_inf = rb_const_get_at(R_FLT, rb_intern("INFINITY_NEGATIVE"));
     cached_flt_inf_complex  = rb_const_get_at(R_FLT, rb_intern("INFINITY_COMPLEX"));
+
+    cached_sym_set_ℕ                 = rb_const_get_at(cached_module_vocab, rb_intern("MATH_SET_NATURAL_NUMBERS"));
+    🆔cached_sym_set_ℕ               = rb_obj_id(cached_sym_set_ℕ);
+    cached_sym_none                  = rb_const_get_at(cached_module_vocab, rb_intern("NO_NORMALIZER"));
+    🆔cached_sym_none                = rb_obj_id(cached_sym_none);
+    cached_sym_normalizer_no_empty   = rb_const_get_at(cached_module_vocab, rb_intern("NORMALIZER_NO_EMPTY"));
+    🆔cached_sym_normalizer_no_empty = rb_obj_id(cached_sym_normalizer_no_empty);
 
     internal_define_set_exponential_negative(0, 9)
     internal_define_set_exponential_negative(1, 8)
@@ -174,18 +191,36 @@ static inline void internal_only_protect_against_gc(void) {
     rb_global_variable(& ℤ7);
     rb_global_variable(& ℤ8);
     rb_global_variable(& ℤ9);
+    rb_global_variable(& cached_rb_intern_is_empty);
     rb_global_variable(& cached_rb_intern_is_a);
     rb_global_variable(& cached_rb_intern_raise_to_power);
     rb_global_variable(& cached_rb_intern_ints_bitwise_xor);
+    rb_global_variable(& cached_class_set);
+    rb_global_variable(& cached_class_big_decimal);
+
     rb_global_variable(& cached_global_sym_many_args);
+
     rb_global_variable(& cached_module_param_err);
+    rb_global_variable(& cached_module_vocab);
+
     rb_global_variable(& cached_module_ruuuby);
-    rb_global_variable(& cached_rb_intern_is_empty);
-    /*rb_global_variable(& cached_class_big_decimal);
+    rb_global_variable(& cached_module_ruuuby_metadata);
+    rb_global_variable(& cached_module_attribute);
+    rb_global_variable(& cached_module_attribute_includable);
+    rb_global_variable(& cached_module_attribute_extendable);
+
+    rb_global_variable(& cached_sym_set_ℕ);
+    rb_global_variable(& 🆔cached_sym_set_ℕ);
+    rb_global_variable(& cached_sym_none);
+    rb_global_variable(& 🆔cached_sym_none);
+    rb_global_variable(& cached_sym_normalizer_no_empty);
+    rb_global_variable(& 🆔cached_sym_normalizer_no_empty);
+
     rb_global_variable(& cached_flt_inf_complex);
     rb_global_variable(& cached_flt_negative_inf);
     rb_global_variable(& cached_flt_inf);
-    rb_global_variable(& cached_flt_nan);*/
+    rb_global_variable(& cached_flt_nan);
+
     // TODO: expand investigation
     //size_t rb_obj_memsize_of(VALUE);
     rb_gc_verify_internal_consistency();
@@ -207,10 +242,12 @@ static inline void internal_only_before_loading_extension(void) {
     // | --------------------------------- |
 
     cached_module_ruuuby               = ext_api_add_global_module("Ruuuby")
+    cached_module_ruuuby_metadata      = ext_api_add_module_under(cached_module_ruuuby, "MetaData")
     cached_module_attribute            = ext_api_add_module_under(cached_module_ruuuby, "Attribute")
     cached_module_attribute_includable = ext_api_add_module_under(cached_module_ruuuby, "Includable")
     cached_module_attribute_extendable = ext_api_add_module_under(cached_module_ruuuby, "Extendable")
     cached_module_param_err            = ext_api_add_module_under(cached_module_ruuuby, "ParamErr")
+    cached_module_vocab                = ext_api_add_module_under(cached_module_ruuuby_metadata, "Vocabulary")
     ext_api_add_module_under(cached_module_ruuuby, "VirtualTypes")
     ext_api_add_new_sub_class_under(cached_module_param_err, R_ERR_ARG, "WrongParamType")
 }
@@ -257,7 +294,10 @@ static inline void internal_only_load_needed_ruuuby_files(void) { // -----------
 
     ensure_loaded_ruuuby(configs)
     ensure_loaded_ruuuby(version)
-    ensure_loaded_ruuuby(ruuuby/routine)
+
+    ensure_loaded_ruuuby(ruuuby/ruuuby_metadata)
+    ensure_loaded_ruuuby(ruuuby/ruuuby_orm)
+    ensure_loaded_ruuuby(ruuuby/routine_cli)
     ensure_loaded_ruuuby(ruuuby/ruuuby_api)
 } // | -----------------------------------------------------------------------------------------------------------------
 
@@ -291,28 +331,95 @@ ________________________________________________________________________________
 _____________________________________________________________________________________________________________________ */
 
 // | function{ary?}  |
-r_func(m_obj_ary , is_ary(self))
+r_func_raw(m_obj_ary, re_as_bool(is_ary(self)))
 
 // | function{bool?} |
-r_func(m_obj_bool, is_bool(self))
+r_func_raw(m_obj_bool, re_as_bool(is_bool(self)))
 
 // | function{hash?} |
-r_func(m_obj_hash, is_hsh(self))
-
-// | function{int?}  |
-r_func(m_obj_int , is_int(self))
+r_func_raw(m_obj_hash, re_as_bool(is_hsh(self)))
 
 // | function{flt?}   |
-r_func(m_obj_flt  , is_float(self))
+r_func_raw(m_obj_flt, re_as_bool(is_float(self)))
 
 // | function{sym?}  |
-r_func(m_obj_sym , is_sym(self))
+r_func_raw(m_obj_sym, re_as_bool(is_sym(self)))
+
+// | function{int?}  |
+r_func_k_args(m_obj_int,
+    if (argc == 0) {
+        re_as_bool(is_int(self))
+    } else {
+        if (is_int(self)) {
+            VALUE them;
+            rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);
+            if (NIL_P(them)) {
+                rb_raise(R_ERR_ARG, "| c{Object}-> m{int?} with self{%"PRIsVALUE"} got in-valid normalizer{%"PRIsVALUE"} |", self, them);
+            } else {
+                if (is_sym(them)) {
+                    ID them_id = rb_obj_id(them);
+
+                    if (them_id == 🆔cached_sym_none) {
+                        re_as_bool(is_int(self))
+                    } else if (them_id == 🆔cached_sym_set_ℕ) {
+                        re_as_bool(NUM2INT(self) >= 0)
+                    } else {
+                        rb_raise(R_ERR_ARG, "| c{Object}-> m{int?} with self{%"PRIsVALUE"} got in-valid normalizer{%"PRIsVALUE"} |", self, them);
+                    }
+                } else {
+                    rb_raise(R_ERR_ARG, "| c{Object}-> m{int?} with self{%"PRIsVALUE"} got in-valid normalizer{%"PRIsVALUE"} |", self, them);
+                }
+            }
+        } else {
+            re_no
+        }
+    }
+)
+
+// | function{char?} |
+r_func_raw(m_obj_char,
+    if (is_str(self)) {
+        re_as_bool(len_str(self) == 1)
+    } else {
+        re_no
+    }
+)
 
 // | function{str?}  |
-r_func(m_obj_str , is_str(self))
+r_func_k_args(m_obj_str,
+    if (argc == 0) {
+        re_as_bool(is_str(self))
+    } else {
+        if (is_str(self)) {
+            VALUE them;
+            rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);
+            if (NIL_P(them)) {
+                rb_raise(R_ERR_ARG, "| c{Object}-> m{str?} with self{%"PRIsVALUE"} got in-valid normalizer{%"PRIsVALUE"} |", self, them);
+            } else {
+                if (is_sym(them)) {
+                    ID them_id = rb_obj_id(them);
+
+                    if (them_id == 🆔cached_sym_none) {
+                        re_as_bool(is_str(self))
+                    } else if (them_id == 🆔cached_sym_normalizer_no_empty) {
+                        if (is_str(self)) {if (is_empty_str(self)) {re_no} else {re_ye}} else {re_no}
+                    } else {
+                        rb_raise(R_ERR_ARG, "| c{Object}-> m{str?} with self{%"PRIsVALUE"} got in-valid normalizer{%"PRIsVALUE"} |", self, them);
+                    }
+                } else if (is_str(them)) {
+                    re_as_bool(rb_str_cmp(self, them) == 0)
+                } else {
+                    rb_raise(R_ERR_ARG, "| c{Object}-> m{str?} with self{%"PRIsVALUE"} got in-valid normalizer{%"PRIsVALUE"} |", self, them);
+                }
+            }
+        } else {
+            re_no
+        }
+    }
+)
 
 // | function{stry?} |
-r_func(m_obj_stry, is_str(self) || is_sym(self))
+r_func_raw(m_obj_stry, re_as_bool(is_str(self) || is_sym(self)))
 
 // | function(num?}  |
 r_func_raw(m_obj_num,
@@ -327,6 +434,15 @@ r_func_raw(m_obj_num,
             re_me_func_1args(cached_rb_intern_is_a, cached_class_big_decimal)
     }
 )
+
+// | function{class?} |
+r_func_raw(m_obj_class, re_as_bool(is_class(self)))
+
+// | function{module?} |
+r_func_raw(m_obj_module, re_as_bool(is_module(self)))
+
+// | function{m_obj_nucleotide} |
+r_func_raw(m_obj_nucleotide, re_as_bool(is_nucleotide(self)))
 
 /*___________________________________________________________________________________________________________________
        ___  ___  __   ___  __
@@ -420,16 +536,18 @@ ________________________________________________________________________________
 // | function{^} |
 r_func_self_them(m_flt_patch_for_exponentials,
 
-    // TODO: skip the 'is_sym' check?
     if (is_sym(them)) {
         const unsigned long id_to_find = NUM2ULONG(rb_obj_id(them));
         unsigned long * the_result    = bsearch_ulong(id_to_find);
         if (the_result != NULL) {
-            const double val_self = NUM2DBL(self); // RFLOAT_VALUE(self);
-            if (isnan(val_self)) {rb_raise(R_ERR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") may not be raised to an exponential power |", self);}
+
+            const double val_self = NUM2DBL(self); // RFLOAT_VALUE(self); // rb_float_value
+            if (isnan(val_self)) {
+                🛑runtime_flt_self("^", "may not be raised to an exponential power");
+            }
             const int power_to_raise_to = exponential_indexes[(((int)the_result - (int)exponential_ids) / 𝔠ULONG)];
             if (val_self == 0.0 && power_to_raise_to < 0) {
-                rb_raise(R_ERR_ZERO_DIVISION, "| c{Float}-> m{^} self(%"PRIsVALUE") may not be raised to a negative exponential power |", self);
+                🛑divide0_flt_self("^", "may not be raised to a negative power")
             }
 
             if (power_to_raise_to < 10) {
@@ -548,13 +666,37 @@ r_func_raw(m_ary_remove_empty,
     long len_me = len_ary(self);
     if (len_me == 0){re_me}
     long i;
+    int delete_node = 0;
     VALUE v;
     for (i = 0; i < len_me;) {
         v = RARRAY_PTR(self)[i];
-        if (is_nil(v) || is_non_empty_str(v) || is_non_empty_ary(v) || is_non_empty_hsh(v) || is_non_empty_generic(v)) {
+        if (is_nil(v)) {
             r_ary_del(self, i);
             --len_me;
-        } else {++i;}
+        } else {
+            delete_node = 0;
+            switch(TYPE(v)) {
+                case RUBY_T_NIL:
+                    delete_node = 1; break;
+                case RUBY_T_STRING:
+                    if (is_empty_str(v)) {delete_node = 1;} ; break;
+                case RUBY_T_ARRAY:
+                    if (is_empty_ary(v)) {delete_node = 1;} ; break;
+                case RUBY_T_HASH:
+                    if (is_empty_hsh(v)) {delete_node = 1;} ; break;
+                default:
+                    if (is_empty_generic(v)) {
+                        delete_node = 1;
+                    }
+                    break;
+            }
+            if (delete_node) {
+                r_ary_del(self, i);
+                --len_me;
+            } else {
+                ++i;
+            }
+        }
     }
     re_me
 )
@@ -571,11 +713,11 @@ r_func_self_them(m_ary_disjunctive_union,
         } else if (len_them == 0) {
             return rb_ary_dup(self);
         } else {
-            long  i;
+            long  i = 0L;
             VALUE n;
-            VALUE output = (len_me + len_them) < 𝔠ARY_DEFAULT ? rb_ary_new_capa(len_me + len_them) : rb_ary_new();
+            VALUE output = new_ary(len_me + len_them);
             if (len_me >= len_them) {
-                for (i = 0L; i < len_them; i++) {
+                for (; i < len_them; i++) {
                     n = r_ary_get(them, i) if(!r_ary_has(self, n)){r_ary_add(output, n)}
                     n = r_ary_get(self, i) if(!r_ary_has(them, n)){r_ary_add(output, n)}
                 }
@@ -583,7 +725,7 @@ r_func_self_them(m_ary_disjunctive_union,
                     n = r_ary_get(self, i) if(!r_ary_has(them, n)){r_ary_add(output, n)}
                 }
             } else {
-                for (i = 0L; i < len_me; i++) {
+                for (; i < len_me; i++) {
                     n = r_ary_get(self, i) if(!r_ary_has(them, n)){r_ary_add(output, n)}
                     n = r_ary_get(them, i) if(!r_ary_has(self, n)){r_ary_add(output, n)}
                 }
@@ -593,7 +735,7 @@ r_func_self_them(m_ary_disjunctive_union,
             }
             return output;
         }
-    } else {ext_api_raise_err_array_arg_type(disjunctive_union, them)}
+    } else {🛑ary_param_not_type_ary("disjunctive_union", "them", them)}
 )
 
 // | function(frequency_counts} |
@@ -633,12 +775,14 @@ r_func_self_them(m_ary_equal_contents,
                         rb_hash_aset(hsh, n, LONG2FIX(current_count - 1));
                     }
                 // key was not found so the arrays are not equal in contents
-                // TODO: compare against 'rb_gc_mark'
-                } else {rb_free_generic_ivar(hsh); re_no}
+                } else {
+                    rb_gc_force_recycle(hsh);
+                    re_no
+                }
             }
             // all keys were matched
-            // TODO: compare against 'rb_gc_mark'
-            rb_free_generic_ivar(hsh); re_ye
+            rb_gc_force_recycle(hsh);
+            re_ye
         }
     } else {ext_api_raise_err_array_arg_type(equal_contents?, them)}
 )
@@ -653,7 +797,7 @@ ________________________________________________________________________________
 r_func_self_a_b(m_module_add_aliases,
     if (is_ary(param_b)) {
         const long len_them = len_ary(param_b);
-        if (len_them == 0){re_me}
+        if (len_them == 0) {🛑m_param_array_is_empty("Module", "f_add_aliases", "func_aliases")}
         long i;
         VALUE v;
         ID old_id = health_check_for_existing_func_name(self, & param_a);
@@ -661,14 +805,10 @@ r_func_self_a_b(m_module_add_aliases,
             v = RARRAY_PTR(param_b)[i];
             if (is_sym(v)) {
                 rb_alias(self, rb_to_id(v), old_id);
-            } else {
-                macro_only_raise_err_bad_arg_type("| m{Module}-> m{f_add_aliases} got element in Array-arg(func_aliases) w/ type{%s}, required-type{Symbol} |", v)
-            }
+            } else {🛑m_param_array_node_type("Module", "f_add_aliases", "func_aliases", param_b, "Symbol")}
         }
         re_me
-    } else {
-        macro_only_raise_err_bad_arg_type("| m{Module}-> m{f_add_aliases} got arg(func_aliases) w/ type{%s}, required-type{Array} |", param_b)
-    }
+    } else {🛑m_param_type("Module", "f_add_aliases", "func_aliases", param_b, "Array")}
 )
 
 /*____________________________________________________________________________________________________________________
@@ -693,24 +833,28 @@ static inline void internal_only_add_ruuuby_c_extensions() {
     ext_api_add_const_under(R_FLT, "EULER_MASCHERONI_CONSTANT", DBL2NUM(M_FLT_EULER_MASCHERONI_CONSTANT))
     ext_api_add_const_under(R_FLT, "SMALLEST_RELATIVE_ERROR", DBL2NUM(M_FLT_RELATIVE_ERROR * M_FLT_MIN_NORMAL));
 
-    ext_api_add_public_method_0args_to_class(R_OBJ, "ary?" , m_obj_ary)
-    ext_api_add_public_method_0args_to_class(R_OBJ, "bool?", m_obj_bool)
-    ext_api_add_public_method_0args_to_class(R_OBJ, "int?" , m_obj_int)
-    ext_api_add_public_method_0args_to_class(R_OBJ, "flt?"  , m_obj_flt)
-    ext_api_add_public_method_0args_to_class(R_OBJ, "hsh?" , m_obj_hash)
-    ext_api_add_public_method_0args_to_class(R_OBJ, "sym?" , m_obj_sym)
-    ext_api_add_public_method_0args_to_class(R_OBJ, "str?" , m_obj_str)
-    ext_api_add_public_method_0args_to_class(R_OBJ, "stry?", m_obj_stry)
-    ext_api_add_public_method_0args_to_class(R_OBJ, "num?" , m_obj_num)
+    ext_api_add_public_method_0args_to_class(R_OBJ, "ary?"       , m_obj_ary)
+    ext_api_add_public_method_0args_to_class(R_OBJ, "bool?"      , m_obj_bool)
+    ext_api_add_public_method_kargs_to_class(R_OBJ, "int?"       , m_obj_int)
+    ext_api_add_public_method_0args_to_class(R_OBJ, "flt?"        , m_obj_flt)
+    ext_api_add_public_method_0args_to_class(R_OBJ, "hsh?"       , m_obj_hash)
+    ext_api_add_public_method_0args_to_class(R_OBJ, "sym?"       , m_obj_sym)
+    ext_api_add_public_method_kargs_to_class(R_OBJ, "str?"       , m_obj_str)
+    ext_api_add_public_method_0args_to_class(R_OBJ, "char?"      , m_obj_char)
+    ext_api_add_public_method_0args_to_class(R_OBJ, "stry?"      , m_obj_stry)
+    ext_api_add_public_method_0args_to_class(R_OBJ, "num?"       , m_obj_num)
+    ext_api_add_public_method_0args_to_class(R_OBJ, "class?"     , m_obj_class)
+    ext_api_add_public_method_0args_to_class(R_OBJ, "module?"    , m_obj_module)
+    ext_api_add_public_method_0args_to_class(R_OBJ, "nucleotide?", m_obj_nucleotide)
 
     ext_api_add_public_method_0args_to_class(R_INT, "finite?"  , m_int_is_finite)
     ext_api_add_public_method_0args_to_class(R_INT, "infinite?", m_int_is_not_finite)
 
     // | f11 | creates alias of Integer's func{^} which is originally provided for bitwise XOR
     ext_api_add_func_alias(R_INT, "bitwise_xor", "^")
-    ext_api_add_public_method_1args_to_class(R_INT, "^"       , m_int_patch_for_exponentials)
+    ext_api_add_public_method_1args_to_class(R_INT, "^", m_int_patch_for_exponentials)
 
-    ext_api_add_public_method_1args_to_class(R_FLT, "^"       , m_flt_patch_for_exponentials)
+    ext_api_add_public_method_1args_to_class(R_FLT, "^", m_flt_patch_for_exponentials)
 
     ext_api_add_public_method_0args_to_class(R_NIL, "empty?", m_nil_empty)
 

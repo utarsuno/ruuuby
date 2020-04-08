@@ -1,4 +1,10 @@
 
+# (`f14`)
+#
+#==normalization options
+# [str_ary] convert a string into an array of strings (split on newline character)
+# [!∅]      no empty contents
+# [ℕ]       positive integer representation only
 module ::Ruuuby
 
   # +ParamErr+ is used for providing utilities to catching and raising parameter errors

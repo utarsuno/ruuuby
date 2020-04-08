@@ -3,7 +3,7 @@
 module ::Ruuuby
 
   # @type [String] the version of *Ruuuby* reflected in this source code
-  VERSION = '0.0.27'.freeze
+  VERSION = '0.0.28'.freeze
 
   # @return [String]
   def self.Version ; ::Ruuuby::VERSION ; end

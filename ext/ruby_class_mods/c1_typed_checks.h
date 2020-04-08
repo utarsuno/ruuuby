@@ -47,6 +47,9 @@ ________________________________________________________________________________
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
 
+#define is_class(arg)             (TYPE(arg) == T_CLASS)
+#define is_module(arg)            (TYPE(arg) == T_MODULE)
+#define is_nucleotide(arg)        (is_class(arg) || is_module(arg))
 #define is_nil(arg)               RTEST(NIL_P(arg))
 #define is_ary(arg)               RB_TYPE_P(arg, T_ARRAY)
 #define is_non_empty_ary(arg)     (is_ary(arg) && is_empty_ary(arg))
@@ -60,7 +63,8 @@ ________________________________________________________________________________
 #define is_big_num(arg)           RB_TYPE_P(arg, T_BIGNUM)
 #define is_sym(arg)               SYMBOL_P(arg)
 #define is_bool(arg)              (RB_TYPE_P(arg, T_TRUE) || RB_TYPE_P(arg, T_FALSE))
-#define is_non_empty_generic(arg) (rb_respond_to(arg, cached_rb_intern_is_empty) && rb_funcall(arg, cached_rb_intern_is_empty, 0) == Qtrue)
+#define is_empty_generic(arg)     (rb_respond_to(arg, cached_rb_intern_is_empty) && rb_funcall(arg, cached_rb_intern_is_empty, 0) == Qtrue)
+#define is_non_empty_generic(arg) (rb_respond_to(arg, cached_rb_intern_is_empty) && rb_funcall(arg, cached_rb_intern_is_empty, 0) == Qfalse)
 
 #define len_ary(arg)      RARRAY_LEN(arg)
 #define len_str(arg)      RSTRING_LEN(arg)
