@@ -50,31 +50,4 @@ class ApplicationRecord < ActiveRecord::Base
     # ------------------------------------------------------------------------
   end
 
-  # provides abstraction to fetching & generating any needed `cache` for `ORM` performance
-  module ORMAttributeCache
-    # ------------------------------------------------------------------------
-
-    # utilized to ensure `ORMStaticAttributeQueryCache` and `ORMStaticAttributeQueryCache` automatically gets extended by whomever is using `include ORMAttributeCache`
-    def self.included(kclass)
-      kclass.extend(::Ruuuby::Attribute::Extendable::SyntaxCache)
-      kclass.extend(ORMStaticAttributeQueryCache)
-      kclass.cache_warmup(kclass)
-    end
-
-    # provides static-level abstraction to fetching & generating any needed `cache` for `ORM` performance
-    module ORMStaticAttributeQueryCache
-
-      # @overload
-      #
-      # @param [String|Symbol] cache_key
-      #
-      # @return [*]
-      #def cache_generate(cache_key)
-      #  ::Regexp.gen_closed_match(cache_key)
-      #end
-
-    end
-    # ------------------------------------------------------------------------
-  end
-
 end

@@ -9,6 +9,7 @@ module ::Ruuuby
 
     module Numerical
 
+      # @type [Array]
       PURE_NUMS = [::Integer, ::Float].❄️
 
     end

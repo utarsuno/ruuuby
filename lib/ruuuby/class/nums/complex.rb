@@ -21,4 +21,12 @@ class ::Complex
   #
   ⨍_add_aliases(:finite?, [:ℂ?, :𝕌?])
 
+  def ^(n)
+    if n.sym?
+      if n.power?
+        self ** n.pow_to_i
+      end
+    end
+  end
+
 end

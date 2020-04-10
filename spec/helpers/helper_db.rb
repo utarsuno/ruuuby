@@ -23,6 +23,9 @@ end
 
 RSpec.shared_context 'shared_context_db' do
 
+  let(:data_git_hash){'0123456789012345678901234567890123456789'}
+  let(:data_git_author_date){'Tue Dec 31 18:03:39 2019 -0600'}
+
   let(:ruuuby_orm){Ruuuby::MetaData::RuuubyORM.instance}
 
   let(:re_ruuuby_feature){RuuubyFeature::Syntax}
@@ -48,12 +51,14 @@ RSpec.shared_context 'shared_context_db' do
   let(:v0_0_26){RuuubyRelease.find_by_uid(0, 0, 26)}
   let(:v0_0_27){RuuubyRelease.find_by_uid(0, 0, 27)}
   let(:v0_0_28){RuuubyRelease.find_by_uid(0, 0, 28)}
+  let(:v0_0_29){RuuubyRelease.find_by_uid(0, 0, 29)}
 
   let(:f00){RuuubyFeature.find_by_uid(0)}
   let(:f01){RuuubyFeature.find_by_uid(1)}
   let(:f02){RuuubyFeature.find_by_uid(2)}
   let(:f03){RuuubyFeature.find_by_uid(3)}
   let(:f04){RuuubyFeature.find_by_uid(4)}
+  let(:f05){RuuubyFeature.find_by_uid(5)}
   let(:f06){RuuubyFeature.find_by_uid(6)}
   let(:f07){RuuubyFeature.find_by_uid(7)}
   let(:f08){RuuubyFeature.find_by_uid(8)}
@@ -61,6 +66,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:f10){RuuubyFeature.find_by_uid(10)}
   let(:f11){RuuubyFeature.find_by_uid(11)}
   let(:f12){RuuubyFeature.find_by_uid(12)}
+  let(:f13){RuuubyFeature.find_by_uid(13)}
   let(:f15){RuuubyFeature.find_by_uid(15)}
   let(:f16){RuuubyFeature.find_by_uid(16)}
   let(:f17){RuuubyFeature.find_by_uid(17)}

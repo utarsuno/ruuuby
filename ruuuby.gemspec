@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |gem|
   require_relative 'lib/ruuuby/version'
-  require_relative 'lib/ruuuby/ruuuby/ruuuby_metadata'
+  require_relative 'lib/ruuuby/ruuuby/metadata/ruuuby_metadata_constants'
 
   ruuuby_metadata = ::Ruuuby::MetaData
   ruuuby_urls     = ruuuby_metadata::References

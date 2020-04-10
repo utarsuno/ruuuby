@@ -28,12 +28,12 @@ RSpec.describe 'numeric.rb' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           [
-              0, 0.0, 1, 1.0, Rational(10, 10), Rational(0, 1337), Complex(0, 0), Complex(1, 0), BigDecimal('0.0'), BigDecimal('1.0')
+              0, 0.0, 1, 1.0, Rational(10, 10), Rational(0, 1337), ℂ(0, 0), ℂ(1, 0), BigDecimal('0.0'), BigDecimal('1.0')
           ].∀{|n| expect(n.𝔹?).to eq(true)}
         end
         it 'cases: negative' do
           [
-              -1337, -1, -1.0, 0.000000001, 1.0000000001, 0.99999999999999, Complex(1, 2), Rational(Complex(-1, 2), 2), data_float_nan, data_float_inf, data_float_negative_inf
+              -1337, -1, -1.0, 0.000000001, 1.0000000001, 0.99999999999999, ℂ(1, 2), Rational(ℂ(-1, 2), 2), data_float_nan, data_float_inf, data_float_negative_inf
           ].∀{|n| expect(n.𝔹?).to eq(false)}
         end
       end
@@ -45,8 +45,8 @@ RSpec.describe 'numeric.rb' do
           expect(0.0.𝕌?).to eq(true)
           expect(1.0.𝕌?).to eq(true)
           expect(-1.0.𝕌?).to eq(true)
-          expect(Complex(1, 2).𝕌?).to eq(true)
-          expect(Rational(Complex(-1, 2), 2).𝕌?).to eq(true)
+          expect(ℂ(1, 2).𝕌?).to eq(true)
+          expect(Rational(ℂ(-1, 2), 2).𝕌?).to eq(true)
         end
         it 'cases: negative' do
           data_float_error_cases.∀{|n| expect(n.𝕌?).to eq(false)}
@@ -59,7 +59,7 @@ RSpec.describe 'numeric.rb' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :'performance' do
+  context 'performance', :performance do
     context 'func[∞?]: performs very quickly' do
       it 'for cases: true' do
         expect{data_float_inf.∞?}.to perform_very_quickly

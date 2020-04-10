@@ -14,10 +14,13 @@ module Ruuuby
 
       module Syntax
         module GitCommands
-          # @type [String]
-          COMMIT_HISTORY = 'git log --pretty=format:"%H|%ad|%s"'.❄️
 
-          #CMD_LIST_CONFIGS                  = 'git config --list'.❄️
+          # @type [String]
+          COMMIT_HISTORY   = 'git log --pretty=format:"%H|%ad|%s"'.❄️
+
+          # @type [String]
+          CMD_LIST_CONFIGS = 'git config --list'.❄️
+
           #CONFIG_WINDOWS_NEWLINE_PREVENTION = 'core.autocrlf'.❄️
 
           def self.parse_commit_history(data)

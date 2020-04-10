@@ -8,23 +8,16 @@ module ::Ruuuby
 
     attr_reader :commit_history
 
-    # @return [String]
-    def path_base
-      @path_base ||= ''
-      if @path_base.∅?
-        @path_base = File.dirname⁴(__FILE__)
-      end
-      @path_base
+    def self.instance ; @@instance ||= new ; end
+
+    def initialize
+      @last_commit    = ''
+      @commit_history = ''
+      @git_configs     = ''
     end
 
-    # @return [String]
-    def path_lib ; @path_lib ||= self.path_base + '/lib' ; end
-
-    #Ruuuby::RuuubyAPI.instance.prepare_for_version_update
-
     def get_last_commit
-      @last_commit ||= nil
-      if @last_commit == nil
+      if @last_commit.∅?
         @last_commit                 = self.commit_history[0]
         @last_commit_parsed_version  = @last_commit[2].dup.♻️⟵(' ')
         @last_commit_version_as_nums = @last_commit_parsed_version.split('.').map!{|n| n.to_i}
@@ -43,10 +36,7 @@ module ::Ruuuby
 
       puts "Ruuuby's current-version{#{version_curr}}, the next version is{#{version_next}}, the last commit was {#{@last_commit_parsed_version.to_s}}"
 
-      # IF THE CURRENT VERSION HAS NO COMMIT MESSAGES, THEN SYNC!!!
-
       num_commits = RuuubyRelease.get_version_curr.git_commits
-      puts "NUM-COMMITS{#{num_commits.length.to_s}}"
 
       if num_commits.length == 0
         puts "----------------------------"
@@ -65,38 +55,20 @@ module ::Ruuuby
         puts "assuming [lib/ruuuby/version.rb] is synced"
         puts "----------------------------"
       end
-
-
-      #if last_commit[2].∋?(version_curr)
-      #  puts 'VERSION CURRENT'
-      #elsif last_commit[2].∋?(version_next)
-      #  puts 'VERSION NEXT'
-      #  the_version     = last_commit[2].♻️⟵(' ').gsub!('.', '_')
-      #  the_version_txt = "@#{the_version}.spawn_git_commit('#{last_commit[2]}', '#{last_commit[1]}', '#{last_commit[0]}')"
-      #  puts the_version_txt
-      #  self.api_routine_update_file_git_commits(the_version_txt)
-      #else
-      #  raise 'VERSION ERROR?!'
-      #end
-
-      #self.api_routine_update_version_file(version_curr, version_next)
-      #self.api_routine_update_readme_file(version_curr, version_next)
     end
 
     # ---
 
     def api_routine_update_file_git_commits(text_to_add)
-      self.api_routine_update_file(
-          self.path_base + '/db/seeds/git_commits.rb',
-          '#NEXT_VERSION_HERE',
-          "#{text_to_add}\n#NEXT_VERSION_HERE",
-          1
-      )
+      path_file = ::Ruuuby::MetaData::Paths::SpecificFiles::SEED_GIT_COMMITS
+      print "Ensuring file{#{path_file}} is ready for release..."
+      ::File.insert_line_before_expr(path_file, text_to_add, "#NEXT_VERSION_HERE")
+      puts "updated, done!"
     end
 
     def api_routine_update_version_file(version_current, version_next)
       self.api_routine_update_file(
-          self.path_lib + '/ruuuby/version.rb',
+          ::Ruuuby::MetaData::Paths::SpecificFiles::RUUUBY_VERSION,
           "VERSION = '#{version_current}'.freeze",
           "VERSION = '#{version_next}'.freeze",
           1
@@ -104,9 +76,8 @@ module ::Ruuuby
     end
 
     def api_routine_update_readme_file(version_current, version_next)
-      puts 'updating readme file'
       self.api_routine_update_file(
-          self.path_base + '/README.md',
+          ::Ruuuby::MetaData::Paths::SpecificFiles::RUUUBY_README,
           "| `gem 'ruuuby', '~> #{version_current}'`",
           "| `gem 'ruuuby', '~> #{version_next}'`",
           1
@@ -127,13 +98,21 @@ module ::Ruuuby
     # ---
 
     def commit_history
-      @commit_history ||= ''
       if @commit_history.∅?
         cmd             = Ruuuby::Routine::CommandCLI.new(Ruuuby::Routine::CommandCLI::Syntax::GitCommands::COMMIT_HISTORY)
         output          = cmd.run
         @commit_history = Ruuuby::Routine::CommandCLI::Syntax::GitCommands.parse_commit_history(output)
       end
       @commit_history
+    end
+
+    def git_configs
+      if @git_configs.∅?
+        cmd             = Ruuuby::Routine::CommandCLI.new(Ruuuby::Routine::CommandCLI::Syntax::GitCommands::CMD_LIST_CONFIGS)
+        output          = cmd.run
+        @git_configs     = output
+      end
+      @git_configs
     end
 
   end

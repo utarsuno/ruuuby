@@ -231,6 +231,7 @@ static inline void internal_only_before_loading_extension(void) {
     ensure_loaded_default(bigdecimal)
     ensure_loaded_default(tempfile)
     ensure_loaded_default(singleton)
+    ensure_loaded_default(logger)
     // | --------------------------------- |
 
     cached_class_big_decimal          = r_get_class("BigDecimal");
@@ -252,6 +253,8 @@ static inline void internal_only_before_loading_extension(void) {
     ext_api_add_new_sub_class_under(cached_module_param_err, R_ERR_ARG, "WrongParamType")
 }
 
+//
+
 static inline void internal_only_load_needed_ruuuby_files(void) { // -------------------------------------------- | f18 |
     // 3rd party gem
     ensure_loaded_default(tty-command)
@@ -261,6 +264,7 @@ static inline void internal_only_load_needed_ruuuby_files(void) { // -----------
     ensure_loaded_attribute_includable(cardinality)
     ensure_loaded_attribute_includable(notation_set_mathematics)
     ensure_loaded_attribute_includable(subscript_indexing)
+    ensure_loaded_attribute_includable(syntax_cache)
 
     ensure_loaded_class(class)
     ensure_loaded_module(enumerable)
@@ -283,7 +287,6 @@ static inline void internal_only_load_needed_ruuuby_files(void) { // -----------
     ensure_loaded_class(nil)
     ensure_loaded_enumerable(set)
 
-    ensure_loaded_attribute_includable(syntax_cache)
     ensure_loaded_attribute_extendable(syntax_cache)
 
     ensure_loaded_class(sym) // must be after{attribute_cardinality}
@@ -292,13 +295,25 @@ static inline void internal_only_load_needed_ruuuby_files(void) { // -----------
     ensure_loaded_io(file)    // must be after{attribute_syntax_cache}
     ensure_loaded_io(dir)    // must be after{attribute_syntax_cache}
 
-    ensure_loaded_ruuuby(configs)
-    ensure_loaded_ruuuby(version)
+    ensure_loaded_ruuuby(global_funcs)
 
-    ensure_loaded_ruuuby(ruuuby/ruuuby_metadata)
-    ensure_loaded_ruuuby(ruuuby/ruuuby_orm)
+    internal_only_prepare_f16();
+
+    //ensure_loaded_ruuuby(ruuuby/metadata/ruuuby_metadata_constants)
+    ensure_loaded_ruuuby(ruuuby/metadata/ruuuby_metadata)
+
+    // [⚠️] : excluding, alternative files are loading [ruuuby/ruuuby/metadata/ruuuby_metadata_constants, ruuuby/version]
+    // [⚠️] : reminder, do not load "ruuuby/ruuuby_orm" here
+
     ensure_loaded_ruuuby(ruuuby/routine_cli)
     ensure_loaded_ruuuby(ruuuby/ruuuby_api)
+
+    ensure_loaded_ruuuby(ruuuby/engine/ruuuby_logging)
+    ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine)
+
+    ensure_loaded_ruuuby(configs)
+    //ensure_loaded_ruuuby(version)
+
 } // | -----------------------------------------------------------------------------------------------------------------
 
 static inline void assign_exponential_index_position(const unsigned long object_id, const int represented_integer) {
@@ -344,6 +359,13 @@ r_func_raw(m_obj_flt, re_as_bool(is_float(self)))
 
 // | function{sym?}  |
 r_func_raw(m_obj_sym, re_as_bool(is_sym(self)))
+/*r_func_k_args(m_obj_sym,
+    if (argc == 0) {
+        re_as_bool(is_sym(self))
+    } else {
+
+    }
+)*/
 
 // | function{int?}  |
 r_func_k_args(m_obj_int,
@@ -394,6 +416,9 @@ r_func_k_args(m_obj_str,
             VALUE them;
             rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);
             if (NIL_P(them)) {
+                if (is_sym(them)) {
+                    printf("BUT THEY ARE A SYMBOL!!\n");
+                }
                 rb_raise(R_ERR_ARG, "| c{Object}-> m{str?} with self{%"PRIsVALUE"} got in-valid normalizer{%"PRIsVALUE"} |", self, them);
             } else {
                 if (is_sym(them)) {
@@ -402,7 +427,8 @@ r_func_k_args(m_obj_str,
                     if (them_id == 🆔cached_sym_none) {
                         re_as_bool(is_str(self))
                     } else if (them_id == 🆔cached_sym_normalizer_no_empty) {
-                        if (is_str(self)) {if (is_empty_str(self)) {re_no} else {re_ye}} else {re_no}
+                        if (is_empty_str(self)) {re_no} else {re_ye}
+                        //if (is_str(self)) {if (is_empty_str(self)) {re_no} else {re_ye}} else {re_no}
                     } else {
                         rb_raise(R_ERR_ARG, "| c{Object}-> m{str?} with self{%"PRIsVALUE"} got in-valid normalizer{%"PRIsVALUE"} |", self, them);
                     }
@@ -707,7 +733,7 @@ r_func_self_them(m_ary_disjunctive_union,
         const long len_me   = len_ary(self);
         const long len_them = len_ary(them);
         if (len_me == 0 && len_them == 0) {
-            return rb_ary_new_capa(0L);
+            return cached_ref_empty_ary;
         } else if (len_me == 0) {
             return rb_ary_dup(them);
         } else if (len_them == 0) {
@@ -741,7 +767,7 @@ r_func_self_them(m_ary_disjunctive_union,
 // | function(frequency_counts} |
 r_func_raw(m_ary_frequency_counts,
     const long len_me = len_ary(self);
-    if (len_me == 0) {return Qnil;}
+    if (len_me == 0) { return cached_ref_empty_ary; }
     VALUE hsh = rb_hash_new();
     long i;
     VALUE n;
@@ -821,6 +847,13 @@ ________________________________________________________________________________
     //printf("for when needed, this func will run after END {} blocks\n");
 //}
 
+static inline void internal_only_add_frozen_const_to(VALUE kclass, VALUE * internal_global, const char * const_name, VALUE val_to_freeze) {
+    RB_OBJ_FREEZE(val_to_freeze);
+    *internal_global = val_to_freeze;
+    rb_define_const(kclass, const_name, val_to_freeze);
+    rb_global_variable(internal_global);
+}
+
 static inline void internal_only_add_ruuuby_c_extensions() {
     cached_global_sym_many_args = ID2SYM(rb_intern("*args"));
     rb_define_readonly_variable("$PRM_MANY", &cached_global_sym_many_args);
@@ -829,9 +862,13 @@ static inline void internal_only_add_ruuuby_c_extensions() {
     ext_api_add_const_under(R_MATH, "RATIO_RADIANS_TO_DEGREE", DBL2NUM(180.0 / M_PIE))
     ext_api_add_const_under(R_FLT, "RELATIVE_ERROR", DBL2NUM(M_FLT_RELATIVE_ERROR))
     ext_api_add_const_under(R_FLT, "MIN_NORMAL", DBL2NUM(M_FLT_MIN_NORMAL))
-    ext_api_add_const_under(R_FLT, "GOLDEN_RATIO", DBL2NUM(M_FLT_GOLDEN_RATIO))
     ext_api_add_const_under(R_FLT, "EULER_MASCHERONI_CONSTANT", DBL2NUM(M_FLT_EULER_MASCHERONI_CONSTANT))
     ext_api_add_const_under(R_FLT, "SMALLEST_RELATIVE_ERROR", DBL2NUM(M_FLT_RELATIVE_ERROR * M_FLT_MIN_NORMAL));
+    ext_api_add_const_under(R_FLT, "GOLDEN_RATIO", DBL2NUM(M_FLT_GOLDEN_RATIO))
+
+    //ext_api_add_const_under(R_FLT, "INFINITY_COMPLEX", DBL2NUM(M_FLT_INF_COMPLEX))
+
+    internal_only_add_frozen_const_to(R_ARY, & cached_ref_empty_ary, "EMPTY_INSTANCE", rb_ary_new_capa(0L));
 
     ext_api_add_public_method_0args_to_class(R_OBJ, "ary?"       , m_obj_ary)
     ext_api_add_public_method_0args_to_class(R_OBJ, "bool?"      , m_obj_bool)
@@ -877,8 +914,6 @@ c_func(Init_ruby_class_mods,
     internal_only_add_ruuuby_c_extensions();
 
     internal_only_load_needed_ruuuby_files();
-
-    internal_only_prepare_f16();
 
     //ruby_vm_at_exit(& at_exit);
 

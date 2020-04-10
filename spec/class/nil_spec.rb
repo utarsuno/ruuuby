@@ -24,7 +24,7 @@ RSpec.describe 'nil' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :'performance' do
+  context 'performance', :performance do
 
     context 'the following perform extremely quickly' do
       it 'func{empty?}' do

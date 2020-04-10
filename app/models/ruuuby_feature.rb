@@ -15,7 +15,7 @@ class RuuubyFeature < ApplicationRecord
   end
 
   include ::ApplicationRecord::ORMAttributeUID
-  include ::ApplicationRecord::ORMAttributeCache
+  include ::Ruuuby::Attribute::Includable::SyntaxCache
 
   validates :description, presence: true
   validates :id_num, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
@@ -35,12 +35,11 @@ class RuuubyFeature < ApplicationRecord
   #
   # @raise [WrongParamType]
   #
-  # @return [Array] new array with 3 elements for each corresponding version identifying component
+  # @return [Array] new array with one element ∈ ℕ
   def self.parse_uid_str(raw_uid)
     🛑str❓(:raw_uid, raw_uid)
     raw_uid = raw_uid[1..raw_uid.length-1] if raw_uid.start_with?('f')
-    args    = [raw_uid]
-    args.η̂!(:ℕ)
+    [raw_uid].η̂!(:ℕ)
   end
 
   def self.generate_query_uid(*args)

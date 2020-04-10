@@ -17,10 +17,8 @@ module ::Ruuuby
           all_consts   = local_syntax.constants
 
           all_consts.each do |c|
-            constant_name = c.⬇
-
-            unless constant_name.start_with?('sql_')
-              kclass.define_singleton_method("syntax_#{constant_name}") do
+            unless c.start_with?('SQL_')
+              kclass.define_singleton_method("syntax_#{c.⬇}") do
                 kclass.cache_fetch(local_syntax.const_get(c))
               end
             end
@@ -48,6 +46,5 @@ module ::Ruuuby
     end
 
   end
-
 
 end

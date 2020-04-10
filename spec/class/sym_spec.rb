@@ -83,7 +83,7 @@ RSpec.describe 'class/sym.rb' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :'performance' do
+  context 'performance', :performance do
     context 'funcs extremely quickly' do
 
       context 'func{power?}' do

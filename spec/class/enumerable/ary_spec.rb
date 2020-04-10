@@ -119,7 +119,7 @@ RSpec.describe 'ary' do
     context 'by adding function{📊} (frequency counts)' do
       context 'handles needed scenarios' do
         it 'for cases: empty' do
-          expect([].📊).to eq(nil)
+          expect([].📊).to eq([])
         end
         it 'for cases: positive' do
           results = {}
@@ -372,7 +372,7 @@ RSpec.describe 'ary' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :'performance' do
+  context 'performance', :performance do
     it 'func{📊} runs fast enough' do
       expect{[1, nil, 'a', 1, [], 'b', 6, 6, 3, 1].📊}.to perform_very_quickly
     end

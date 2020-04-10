@@ -16,13 +16,13 @@ class RuuubyRelease < ApplicationRecord
   end
 
   include ::ApplicationRecord::ORMAttributeUID
-  include ::ApplicationRecord::ORMAttributeCache
+  include ::Ruuuby::Attribute::Includable::SyntaxCache
 
   validates :vmajor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :vminor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :vtiny, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  has_many :git_commits, class_name: 'GitCommit'
+  has_many :git_commits, class_name: 'GitCommit', :dependent => :delete_all
 
   module AttributeChangelog
 
@@ -198,9 +198,9 @@ class RuuubyRelease < ApplicationRecord
     RuuubyRelease.where('released = ?', false).last
   end
 
+  # @return [GitCommit]
   def spawn_git_commit(*args)
-    git_commit = GitCommit.spawn(args[0], args[1], args[2], self)
-    git_commit
+    GitCommit.spawn(args[0], args[1], args[2], self)
   end
 
   # @param [String] version_str the version UID of the RuuubyRelease with or without the starting 'v'
@@ -218,6 +218,10 @@ class RuuubyRelease < ApplicationRecord
 
   # @param [Boolean] released_status (default: true)
   def released!(released_status=true)
+    🛑🅱️❓(:released_status, released_status)
+    if released_status
+      🛑 RuntimeError.🆕("| c{RuuubyRelease}-> m{released!} w/ arg(true) requires the RuuubyRelease to have at least 1 commit message (ORM object) |") unless self.git_commits.length > 0
+    end
     self.released = released_status
     self.save!
   end

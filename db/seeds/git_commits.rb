@@ -33,4 +33,5 @@
 @v0_0_25.spawn_git_commit('v0.0.25 release', 'Wed Apr 1 23:27:00 2020 -0500', '0e0034b04aaed447b4a8597286e3f9c67f70b73e')
 @v0_0_26.spawn_git_commit('v0.0.26 release', 'Fri Apr 3 17:43:16 2020 -0500', '14f2b2803b6f70073779e69f71287a890d325bd4')
 @v0_0_27.spawn_git_commit('v0.0.27 release', 'Fri Apr 3 23:02:28 2020 -0500', '75cecff26a244a662fb8b429b5ec8a7406a30ce1')
+@v0_0_28.spawn_git_commit('v0.0.28 release', 'Tue Apr 7 19:01:45 2020 -0500', '62e3ea67403d4de4d3b4702f6800f198b3bd4130')
 #NEXT_VERSION_HERE

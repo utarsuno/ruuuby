@@ -34,7 +34,7 @@ RSpec.describe 'set' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :'performance' do
+  context 'performance', :performance do
     it 'func[remove_empty!]: performs very quickly' do
       expect{Set[1, [], 3, nil].remove_empty!}.to perform_very_quickly
     end

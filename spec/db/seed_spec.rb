@@ -1,8 +1,8 @@
-# coding: utf-8
+# encoding: UTF-8
 
 RSpec.describe 'db/seed.rb' do
 
-  context 'db', :'db' do
+  context 'db', :db do
 
     context 'has historical release data' do
 
@@ -35,6 +35,12 @@ RSpec.describe 'db/seed.rb' do
         context 'defines f04' do
           it 'passes ORM audit' do
             audit_feature(f04, 'f04', '`∅` to alias concept of `empty`')
+          end
+        end
+
+        context 'defines f05' do
+          it 'passes ORM audit' do
+            audit_feature(f05, 'f05', '`>>` to offer reverse functionality of `<<`')
           end
         end
 
@@ -77,6 +83,12 @@ RSpec.describe 'db/seed.rb' do
         context 'defines f12' do
           it 'passes ORM audit' do
             audit_feature(f12, 'f12', 'enable quick `file/directory io` and alias as file(`📂`) and dir(`🗄️`)')
+          end
+        end
+
+        context 'defines f13' do
+          it 'passes ORM audit' do
+            audit_feature(f13, 'f13', '`∃` to alias concept of `does this(arg) exist?`')
           end
         end
 

@@ -12,11 +12,38 @@
  * resolve missing coverage from `v0.0.17`
  * resolve missing coverage from `v0.0.18`
  * resolve missing coverage from `v0.0.22`
-  
+
 #### Abstract
  * start automation/abstraction of state & configs for CLI based APIs, tools, and scripts (gem `tty-command` providing core functionality)
  * start automation/abstraction of code-file (content) management
  * continuation of (`f15`) in relation to above 2 points
+
+---
+
+# v0.0.29
+ * misc cleanup for `ORM`, example: remove un-needed m(`::ApplicationRecord::ORMAttributeCache`)
+ * general cleanup for `QA`/`RSpecs`, especially w/ file loading order
+ * add initial start of `ORM` schemas `RuuubyFiles` and `RuuubyDirs`
+ * general functionality increases for `Ruuuby` `MetaData`, add global func `💎` for quicker reference
+ * add logger with output in directory{`tmp`}, file{`ruuuby.log`}
+
+| path added | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/ruuuby/ruuuby/engine/ruuuby_engine.rb` | ``Ruuuby::MetaData::RuuubyEngine`` | alias{`💎.engine`} | `f15` |
+| `lib/ruuuby/ruuuby/engine/ruuuby_logging.rb` | `Ruuuby::MetaData::RuuubyEngine.instance.logger` | alias{`💎.engine.logger`} | `f15` |
+| `lib/ruuuby/ruuuby/metadata/ruuuby_metadata_constants.rb` | ``Ruuuby::MetaData`` |  | `f15` |
+| `app/models/ruuuby_dir` | ``RuuubyDir`` | directory operations specifically for `ORM` related context/use-cases | `f15` |
+| `app/models/ruuuby_file` | ``RuuubyFile`` | file operations specifically for `ORM` related context/use-cases | `f15` |
+
+| (c)lass or (m)odule | method(s) added | feature(s) | notes |
+| --- | --- | --- | --- |
+| (c) `Array` | `∅` | `f05` | starting point of adding similar immutable references like `nil` but to for (assumable to be immutable) objects that are `∅` |
+| (c) `Object` | `🛑sym❓` | `f07` | |
+| (m) `Ruuuby::MetaData` | `orm`, `orm_meta`, `paths`, `engine` | `f10` | shortcuts to either modules or singleton-instanced objects |
+| (m) `Ruuuby::MetaData` | `info`, `debug` | `f10` | shortcuts for logging statements |
+| TOPLEVEL_BINDING | `ℂ`, `ℚ` | `f11` | alias to `Complex`<br/>alias to `Rational` |
+| (m) `Kernel` | `💎` | `f11` | alias to `::Ruuuby::MetaData` | |
+| (c) `File` | `insert_line_before_expr` | `f13` | |
 
 ---
 

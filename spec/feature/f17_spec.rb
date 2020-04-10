@@ -20,6 +20,8 @@ RSpec.describe 'f17' do
           expect_∃⨍(:γ, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
         end
         it 'for m{MathAliases}' do
+          expect_∃⨍(:ℂ, ::Ruuuby::Feature::Extendable::MainF17::MathAliases)
+          expect_∃⨍(:ℚ, ::Ruuuby::Feature::Extendable::MainF17::MathAliases)
           expect_∃⨍(:√, ::Ruuuby::Feature::Extendable::MainF17::MathAliases)
           expect_∃⨍(:∛, ::Ruuuby::Feature::Extendable::MainF17::MathAliases)
           expect_∃⨍(:π, ::Ruuuby::Feature::Extendable::MainF17::MathAliases)

@@ -1,20 +1,25 @@
 
-require 'sqlite3'
-require 'active_record'
-require_relative '../lib/ruuuby/module/attribute/extendable/syntax_cache'
-require_relative '../app/models/application_record'
-require_relative '../app/models/ruuuby_release'
-require_relative '../app/models/ruuuby_feature'
-require_relative '../app/models/ruuuby_changelog'
-require_relative '../app/models/git_commit'
+require_relative '../lib/ruuuby/ruuuby/ruuuby_orm'
 
-ActiveRecord::Base.establish_connection(
-    adapter: 'sqlite3',
-    database: ':memory:'
-)
+💎.orm.ensure_loaded_schema
+💎.orm.ensure_loaded_db_connection
 
-# ⚠️: JUST STARTING POINT, tons of TODOs here
 ActiveRecord::Schema.define do
+
+  create_table :ruuuby_dirs, force: true do |t|
+    t.string :path_full, :null => false, unique: true
+    t.string :name, :null => false
+    t.boolean :is_virtual, :default => false, :null => false
+  end
+
+  create_table :ruuuby_files, force: true do |t|
+    t.string :path_full, :null => false, unique: true
+    t.string :name, :null => false
+    t.string :extensions, :null => false
+    t.boolean :is_virtual, :default => false, :null => false
+
+    t.references :ruuuby_dir, index: true, foreign_key: { references: :ruuuby_dirs }
+  end
 
   create_table :ruuuby_releases, force: true do |t|
     t.integer :vmajor, limit: 1, :null => false
@@ -36,18 +41,25 @@ ActiveRecord::Schema.define do
   create_table :ruuuby_changelogs, force: true do |t|
     t.integer :ruuuby_version_id, :null => false
     t.integer :ruuuby_feature_id, :null => false
-    t.string :description, :null => false
+    t.string  :description, :null => false
   end
 
   create_table :git_commits, force: true do |t|
     # non-abbreviated
-    t.string :commit_hash, :null => false
+    t.string :commit_hash, unique: true, :null => false
 
     # non-relative
-    t.string :commit_author_date, :null => false
+    t.string :commit_author_date, unique: true, :null => false
 
     # commit message
     t.string :commit_subject, :null => false
+
+    #unique: false,
+
+    # ideally unique should be set to{true} as commit messages would be more meaningful w/o duplicates
+    #t.index :commit_subject, unique: false
+
+    #t.index [:commit_subject, :commit_hash], unique: true
 
     t.references :ruuuby_release, index: true, foreign_key: { references: :ruuuby_releases }
   end

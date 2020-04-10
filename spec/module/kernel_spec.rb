@@ -160,6 +160,7 @@ RSpec.describe ::Kernel do
             expect(√(25)).to eq(5.0)
             expect(√(Rational(25, 1))).to eq(5.0)
             expect(√(Complex(25))).to eq(5.0)
+            expect(√(ℂ(25))).to eq(5.0)
           end
           it 'cases: error' do
             expect{√('1.0')}.to raise_error(TypeError)
@@ -212,7 +213,7 @@ RSpec.describe ::Kernel do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :'performance' do
+  context 'performance', :performance do
 
     context 'func[∃module?] runs fast enough' do
       context 'for cases: global &' do

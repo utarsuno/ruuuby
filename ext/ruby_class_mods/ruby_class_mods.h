@@ -13,6 +13,7 @@
  |    \__/ | \| \__, .__/ .   |__/ |___ \__, |___ /~~\ |  \ /~~\  |  | \__/ | \| .__/
 _____________________________________________________________________________________________________________________ */
 
+static inline void internal_only_add_frozen_const_to(VALUE kclass, VALUE * internal_global, const char * const_name, VALUE val_to_freeze);
 static inline ID health_check_for_existing_func_name(VALUE context_self, VALUE * func_name_as_str);
 static inline VALUE new_ary(const long known_max_size);
 
@@ -63,7 +64,7 @@ ________________________________________________________________________________
 
 #define ext_api_add_func_alias(kclass, new_func_name, previous_func_name) rb_define_alias(kclass, new_func_name, previous_func_name);
 #define ext_api_add_const_under(kclass, const_name, const_value)          rb_define_const(kclass, const_name, const_value);
-
+//#define ext_api_add_frozen_const_under(kclass, const_name, const_value)
 
 
 #define macro_only_raise_err_bad_arg_type(err_msg, err_prm) rb_raise(R_ERR_ARG, err_msg, rb_obj_classname(err_prm));

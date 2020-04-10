@@ -30,8 +30,10 @@ RSpec.describe Ruuuby do
       expect(Ruuuby::VERSION.❄️?).to eq(true)
     end
 
-    it 'with valid syntax' do
-      expect(("v#{Ruuuby::VERSION}").match?(RuuubyRelease::Syntax::UID)).to eq(true)
+    context 'tests w/ DB', :db do
+      it 'with valid syntax' do
+        expect(("v#{Ruuuby::VERSION}").match?(RuuubyRelease::Syntax::UID)).to eq(true)
+      end
     end
 
     # evaluating use-case necessity
@@ -55,16 +57,6 @@ RSpec.describe Ruuuby do
         expect(∃class?(:WrongParamType, ::Ruuuby::ParamErr)).to eq(true)
       end
     end
-  end
-
-#                   __          ___     __
-#   /\     |  |    |  \    |     |     /__`
-#  /~~\    \__/    |__/    |     |     .__/
-
-  context 'audits', :'audits' do
-
-
-
   end
 
 end

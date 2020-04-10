@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.28'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.29'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -37,7 +37,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 [elements_a.≈≈(elements_b), elements_a == elements_b]
 
 # [false, true, false, true]
-[-5.ℕ?, 7.0.ℤ?, Complex(Float::NAN).ℝ?, Rational(2, 3).ℚ?]
+[-5.ℕ?, 7.0.ℤ?, Complex(Float::NAN).ℝ?, ℚ(2, 3).ℚ?]
 
 # [1, 4, 2]
 [1, 2, 3].⊕ [3, 4]
@@ -175,9 +175,9 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 614      | # of tests (solely relating to core functionality)              |
-| QA        | performance   | 256      | # of tests (solely relating to performance)                     |
-| QA        | DB            | 75       | # of tests (solely relating to the database)                    |
+| QA        | unit          | 615      | # of tests (solely relating to core functionality)              |
+| QA        | performance   | 258      | # of tests (solely relating to performance)                     |
+| QA        | DB            | 88       | # of tests (solely relating to the database)                    |
 | CI        | audits        | 37       | # of tests (solely relating to non-functionality based audits)  |
 | structure | features      | ~28      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |

@@ -89,7 +89,7 @@ RSpec.describe 'big_decimal.rb' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :'performance' do
+  context 'performance', :performance do
     context 'func{ℕ?}: performs very quickly' do
       it 'for cases: true' do
         expect{data_big_decimal_zero.ℕ?}.to perform_very_quickly

@@ -487,7 +487,7 @@ RSpec.describe 'float.rb' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :'performance' do
+  context 'performance', :performance do
     context 'func{∞ℂ?}: performs extremely quickly' do
       it 'for cases: all' do
         expect{0.0.∞ℂ?}.to perform_extremely_quickly

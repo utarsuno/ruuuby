@@ -6,7 +6,7 @@ RSpec.describe 'README.md' do
   #   /\     |  |    |  \    |     |     /__`
   #  /~~\    \__/    |__/    |     |     .__/
 
-  context 'audits', :'audits' do
+  context 'audits', :audits do
 
     context 'README.md examples' do
       it 'works as described' do
@@ -30,7 +30,9 @@ RSpec.describe 'README.md' do
         expect(elements_a.≈≈ elements_b).to eq(true)
         expect(elements_a == elements_b).to eq(false)
 
+        #ℂ
         expect([-5.ℕ?, 7.0.ℤ?, Complex(Float::NAN).ℝ?, Rational(2, 3).ℚ?]).to eq([false, true, false, true])
+        expect([-5.ℕ?, 7.0.ℤ?, ℂ(Float::NAN).ℝ?, Rational(2, 3).ℚ?]).to eq([false, true, false, true])
 
         expect([1, 2, 3].⊕ [3, 4]).to eq([1, 4, 2])
 

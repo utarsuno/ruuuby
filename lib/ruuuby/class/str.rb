@@ -20,7 +20,6 @@ module ::Ruuuby
           when 0
             return false
           else
-            #return self.🐫?
             return self.🐫? || 🐍⬆?
           end
         end
@@ -77,7 +76,7 @@ module ::Ruuuby
               if curr == stop_at
                 num_matched += 1
                 if num_matched >= num_matches
-                  return self[(position+len_pattern)...(self.length)]
+                  return self[(position+len_pattern)...self.length]
                 end
               end
               position += 1
@@ -94,7 +93,7 @@ module ::Ruuuby
         # @return [String] self, with all content (leading up to arg{stop_at}) removed, searched from reversed order and then returned back in original order
         def ♻️⟵(stop_at, num_matches=1)
           🛑str❓(:stop_at, stop_at, :'!∅')
-          self.↩.remove_until(stop_at.reverse, num_matches).↩
+          self.↩.♻️⟶(stop_at.reverse, num_matches).↩
         end
 
         # @param [String]

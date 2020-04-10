@@ -1,4 +1,4 @@
-# coding: utf-8
+# encoding: UTF-8
 
 RSpec.describe 'Object' do
   let(:data_default){Object.🆕}
@@ -187,6 +187,29 @@ RSpec.describe 'Object' do
       end
     end
 
+    context 'by adding function{🛑sym❓}' do
+      context 'handles needed input scenarios' do
+        context 'cases: positive' do
+          it 'w/ single param' do
+            expect{🛑sym❓('0', :symbol_fake)}.to_not raise_error
+          end
+          it 'w/ many params' do
+            expect{🛑sym❓($PRM_MANY, [:symbol_fake_other, :symbol_fake])}.to_not raise_error
+          end
+        end
+        context 'cases: negative' do
+          it 'w/ single param' do
+            expect{🛑sym❓('0', nil)}.to raise_error(ArgumentError)
+          end
+          it 'w/ many params' do
+            expect{🛑sym❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
+            expect{🛑sym❓($PRM_MANY, [5, 1337])}.to raise_error(ArgumentError)
+            expect{🛑sym❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+          end
+        end
+      end
+    end
+
     context 'by adding function{🛑stry❓}' do
       context 'handles needed input scenarios' do
         context 'cases: positive' do
@@ -219,7 +242,7 @@ RSpec.describe 'Object' do
               expect{🛑ℤ❓('0', 3)}.to_not raise_error
               expect{🛑ℤ❓('0', 3.0)}.to_not raise_error
               expect{🛑ℤ❓('0', Rational(3, 1))}.to_not raise_error
-              expect{🛑ℤ❓('0', Complex(3, 0))}.to_not raise_error
+              expect{🛑ℤ❓('0', ℂ(3, 0))}.to_not raise_error
               expect{🛑ℤ❓('0', BigDecimal('3.0'))}.to_not raise_error
             end
             it 'handles strings representing numericals' do
@@ -229,7 +252,7 @@ RSpec.describe 'Object' do
           end
           context 'w/ many params' do
             it 'handles numericals' do
-              expect{🛑ℤ❓($PRM_MANY, [0, 3, 3.0, Rational(3, 1), Complex(3, 0), BigDecimal('3.0')])}.to_not raise_error
+              expect{🛑ℤ❓($PRM_MANY, [0, 3, 3.0, Rational(3, 1), ℂ(3, 0), BigDecimal('3.0')])}.to_not raise_error
             end
             it 'handles strings representing numericals' do
               expect{🛑ℤ❓($PRM_MANY, [0, 1, 2, '3'])}.to_not raise_error
@@ -271,7 +294,7 @@ RSpec.describe 'Object' do
               expect{🛑𝕌❓('0', 0)}.to_not raise_error
               expect{🛑𝕌❓('0', 1.337)}.to_not raise_error
               expect{🛑𝕌❓('0', Rational(3, 5))}.to_not raise_error
-              expect{🛑𝕌❓('0', Complex(2, 3))}.to_not raise_error
+              expect{🛑𝕌❓('0', ℂ(2, 3))}.to_not raise_error
               expect{🛑𝕌❓('0', BigDecimal('1.337'))}.to_not raise_error
             end
             it 'handles strings representing numericals' do
@@ -281,7 +304,7 @@ RSpec.describe 'Object' do
           end
           context 'w/ many params' do
             it 'handles numericals' do
-              expect{🛑𝕌❓($PRM_MANY, [0, 3, 3.0, Rational(3, 1), Complex(3, 0), BigDecimal('3.0')])}.to_not raise_error
+              expect{🛑𝕌❓($PRM_MANY, [0, 3, 3.0, Rational(3, 1), ℂ(3, 0), BigDecimal('3.0')])}.to_not raise_error
             end
             it 'handles strings representing numericals' do
               expect{🛑𝕌❓($PRM_MANY, [-1, 0, 1, 2, '3'])}.to_not raise_error
@@ -486,6 +509,7 @@ RSpec.describe 'Object' do
           expect(1.0.num?).to eq(true)
           expect(Rational(1, 1).num?).to eq(true)
           expect(Complex(1, 1).num?).to eq(true)
+          expect(ℂ(1, 1).num?).to eq(true)
           expect(data_big_decimal_one.num?).to eq(true)
         end
         it 'returns correct value{false}' do
@@ -544,11 +568,10 @@ RSpec.describe 'Object' do
 
   end
 
-
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :'performance' do
+  context 'performance', :performance do
 
     context 'func{class?}: performs very quickly' do
       it 'for cases: true' do
@@ -681,8 +704,20 @@ RSpec.describe 'Object' do
       #end
     end
 
+    context 'funcs{🛑sym❓}: performs extremely quickly' do
+      context 'cases: positive' do
+        it 'w/ single param' do
+          expect{🛑sym❓('0', :symbol_fake)}.to perform_extremely_quickly
+        end
+        it 'w/ many params' do
+          expect{🛑sym❓($PRM_MANY, [:symbol_fake_other, :symbol_fake])}.to perform_extremely_quickly
+        end
+      end
+      # TODO: missing coverage for negative scenarios
+    end
+
     context 'func{🛑int❓}: performs extremely quickly' do
-      it 'cases[positive]' do
+      it 'cases: positive' do
         expect{🛑int❓('0', 5)}.to perform_extremely_quickly
       end
       # TODO: missing coverage
@@ -692,7 +727,7 @@ RSpec.describe 'Object' do
     end
 
     context 'func{🛑ℤ❓}: performs very quickly' do
-      it 'cases[positive]' do
+      it 'cases: positive' do
         expect{🛑ℤ❓('0', 5)}.to perform_extremely_quickly
       end
       # TODO: missing coverage
@@ -702,7 +737,7 @@ RSpec.describe 'Object' do
     end
 
     context 'func{🛑𝕌❓}: performs very quickly' do
-      it 'cases[positive]' do
+      it 'cases: positive' do
         expect{🛑𝕌❓('0', 5)}.to perform_extremely_quickly
       end
       # TODO: missing coverage
@@ -712,8 +747,8 @@ RSpec.describe 'Object' do
     end
 
     context 'func{🛑ary❓}: performs extremely quickly' do
-      it 'cases[positive]' do
-        expect{🛑ary❓('0', data_ary_empty)}.to perform_extremely_quickly
+      it 'cases: positive' do
+        expect{🛑ary❓('0', ::Array::EMPTY_INSTANCE)}.to perform_extremely_quickly
       end
       # TODO: missing coverage
       #it 'cases[negative]' do
@@ -722,7 +757,7 @@ RSpec.describe 'Object' do
     end
 
     context 'func{🛑str❓}: performs extremely quickly' do
-      it 'cases[positive]' do
+      it 'cases: positive' do
         expect{🛑str❓('0', '5')}.to perform_extremely_quickly
       end
       # TODO: missing coverage
@@ -732,7 +767,7 @@ RSpec.describe 'Object' do
     end
 
     context 'func{🛑stry❓}: performs extremely quickly' do
-      it 'cases[positive]' do
+      it 'cases: positive' do
         expect{🛑stry❓('0', '5')}.to perform_extremely_quickly
         expect{🛑stry❓('0', :a_symbol)}.to perform_extremely_quickly
       end
@@ -743,7 +778,7 @@ RSpec.describe 'Object' do
     end
 
     context 'func{🛑countable❓}: performs extremely quickly' do
-      it 'cases[positive]' do
+      it 'cases: positive' do
         expect{🛑countable❓('0', '5')}.to perform_extremely_quickly
         expect{🛑countable❓('0', data_ary_leet)}.to perform_extremely_quickly
         expect{🛑countable❓('0', data_set_leet)}.to perform_extremely_quickly

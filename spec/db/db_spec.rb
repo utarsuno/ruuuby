@@ -2,18 +2,31 @@
 
 RSpec.describe 'db/db.rb' do
 
-  context 'db', :'db' do
+  context 'db', :db do
 
     context 'defines expected schemas' do
 
-      it 'has needed tables' do
-        expect(ruuuby_orm.get_connection_schema.tables).to eq(ruuuby_orm.get_connection_base.tables)
+      context 'tables found are as defined' do
+        let(:db_tables){💎.orm.get_connection_base.tables}
+        let(:needed_tables){💎.orm.get_table_names}
 
-        db_tables = ruuuby_orm.get_connection_base.tables
+        it 'for needed tables' do
+          expect(💎.orm.get_connection_schema.tables).to eq(💎.orm.get_connection_base.tables)
+          expect(💎.orm.get_connection_schema.tables).to eq(💎.orm.get_connection_base.tables)
 
-        ruuuby_orm.get_table_names.∀ do |needed_table|
-          expect(db_tables.∋?(needed_table)).to eq(true)
+          needed_tables.∀ do |needed_table|
+            expect(db_tables.∋?(needed_table)).to eq(true)
+          end
         end
+
+        it 'for the additional table created by libraries (not SQLite3)' do
+          expect(db_tables.∋?('ar_internal_metadata')).to eq(true)
+        end
+
+        it 'w/o any additional (un-expected) tables' do
+          expect(db_tables.length - 1).to eq(💎.orm_meta::ALL_ORM_SCHEMAS.length)
+        end
+
       end
 
     end
@@ -23,7 +36,7 @@ RSpec.describe 'db/db.rb' do
   #                   __          ___     __
   #   /\     |  |    |  \    |     |     /__`
   #  /~~\    \__/    |__/    |     |     .__/
-  context 'audits', :'audits' do
+  context 'audits', :audits do
 
     context 'has correct db configs' do
       context 'has correct directory structure' do

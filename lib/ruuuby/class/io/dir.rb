@@ -17,12 +17,10 @@ class ::Dir
   end
 
   # @type [Array]
-  PATHS_TO_NORMALIZE = %w(. .. .DS_Store).freeze
+  PATHS_TO_NORMALIZE = %w(. .. .DS_Store).❄️
 
   # @return [Array]
-  def normalized_paths
-    self.⨍{|path| yield path if ::Dir::PATHS_TO_NORMALIZE.∌?(path)}
-  end
+  def η̂_paths ; self.⨍{|path| yield path if ::Dir::PATHS_TO_NORMALIZE.∌?(path)} ; end
 
   # | ------------------------------------------------------------------------------------------------------------------
 

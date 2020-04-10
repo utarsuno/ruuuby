@@ -28,10 +28,25 @@ module ::Ruuuby
 
         # @param [Symbol] arg_name
         # @param [*]      arg
+        #
+        # @raise [WrongParamType]
+        def 🛑sym❓(arg_name, arg)
+          unless arg_name == $PRM_MANY
+            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Symbol, arg) unless arg.sym?
+          else
+            arg.∀ₓᵢ do |x, i|
+              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Symbol, x) unless x.sym?
+            end
+          end
+        end
+
+
+        # @param [Symbol] arg_name
+        # @param [*]      arg
         # @param [Symbol] normalization_checks
         #
         # @raise [WrongParamType]
-        def 🛑str❓(arg_name, arg, normalization_checks=(:none))
+        def 🛑str❓(arg_name, arg, normalization_checks=:none)
           unless arg_name == $PRM_MANY
             🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::String, arg) unless arg.str?(normalization_checks)
           else

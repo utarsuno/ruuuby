@@ -286,8 +286,6 @@
 @v0_0_28 = RuuubyRelease.spawn(0, 0, 28)
 @v0_0_28.add_file('lib/ruuuby/ruuuby/ruuuby_orm.rb', ::Ruuuby::MetaData::RuuubyORM, '', @f15)
 @v0_0_28.add_file('lib/ruuuby/ruuuby/routine_cli.rb', ::Ruuuby::Routine::CommandCLI, '', @f15)
-#@v0_0_28.add_file('lib/ruuuby/ruuuby/ruuuby_orm.rb', '', '', @f15)
-#@v0_0_28.add_file('lib/ruuuby/ruuuby/routine_cli.rb', '', '', @f15)
 @v0_0_28.remove_file('app/models/db_schema.rb', 'seemed like a bad location')
 @v0_0_28.remove_file('conditionals/ide_helper.rb', 'moved to `lib/ruuuby/ide_helper.rb`, gets excluded by `ruuuby.gemspec`')
 @v0_0_28.add_comments(
@@ -321,3 +319,30 @@
 @v0_0_28.changelog.added_method_to_class(@f24, :🐍🔠?, ::String)
 @v0_0_28.changelog.added_method_to_class(@f24, :to_🐫, ::String)
 @v0_0_28.changelog.added_method_to_class(@f24, :to_🐍, ::String)
+
+@v0_0_29 = RuuubyRelease.spawn(0, 0, 29)
+@v0_0_29.add_file('lib/ruuuby/ruuuby/engine/ruuuby_engine.rb', ::Ruuuby::MetaData::RuuubyEngine, 'alias{`💎.engine`}', @f15)
+@v0_0_29.add_file('lib/ruuuby/ruuuby/engine/ruuuby_logging.rb', ::Ruuuby::MetaData::RuuubyEngine.instance.logger, 'alias{`💎.engine.logger`}', @f15)
+@v0_0_29.add_file('lib/ruuuby/ruuuby/metadata/ruuuby_metadata_constants.rb', ::Ruuuby::MetaData, '', @f15)
+@v0_0_29.add_file('app/models/ruuuby_dir', ::RuuubyDir, 'directory operations specifically for `ORM` related context/use-cases', @f15)
+@v0_0_29.add_file('app/models/ruuuby_file', ::RuuubyFile, 'file operations specifically for `ORM` related context/use-cases', @f15)
+@v0_0_29.add_comments(
+    [
+        'misc cleanup for `ORM`, example: remove un-needed m(`::ApplicationRecord::ORMAttributeCache`)',
+        'general cleanup for `QA`/`RSpecs`, especially w/ file loading order',
+        'add initial start of `ORM` schemas `RuuubyFiles` and `RuuubyDirs`',
+        'general functionality increases for `Ruuuby` `MetaData`, add global func `💎` for quicker reference',
+        'add logger with output in directory{`tmp`}, file{`ruuuby.log`}'
+    ]
+)
+@v0_0_29.changelog.added_method_to_class(@f04, :∅, ::Array)
+@v0_0_29.changelog.added_method_to_class(@f06, :🛑sym❓, ::Object)
+@v0_0_29.changelog.added_method_to_class(@f10, :ℂ, TOPLEVEL_BINDING)
+@v0_0_29.changelog.added_method_to_class(@f10, :ℚ, TOPLEVEL_BINDING)
+@v0_0_29.changelog.added_method_to_class(@f10, :💎, ::Kernel)
+@v0_0_29.changelog.added_method_to_class(@f10, :info, ::Ruuuby::MetaData)
+@v0_0_29.changelog.added_method_to_class(@f10, :debug, ::Ruuuby::MetaData)
+@v0_0_29.changelog.added_method_to_class(@f10, :orm, ::Ruuuby::MetaData)
+@v0_0_29.changelog.added_method_to_class(@f10, :paths, ::Ruuuby::MetaData)
+@v0_0_29.changelog.added_method_to_class(@f10, :engine, ::Ruuuby::MetaData)
+@v0_0_29.changelog.added_method_to_class(@f12, :insert_line_before_expr, ::File)

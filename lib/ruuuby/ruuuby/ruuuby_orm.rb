@@ -9,48 +9,119 @@ module Ruuuby
     class RuuubyORM
       include Singleton
 
+      def self.instance ; @@instance ||= new ; end
+
+      def initialize
+        @all_versions = nil
+        @table_names  = []
+        @connected    = false
+        @loaded       = false
+        @seeds_loaded = false
+      end
+
       module SchemaORM
+
+        # @type [String]
+        DB_ADAPTER = 'sqlite3'.❄️
+
+        # @type [String]
+        DB_DB      = ':memory:'.❄️
+
+        # ar_internal_metadata
+
         module SchemaRuuubyFeatures
         end
         module SchemaRuuubyChangelogs
         end
         module SchemaRuuubyReleases
         end
+        module SchemaGitCommits
+        end
+        module SchemaRuuubyDirs
+        end
+        module SchemaRuuubyFiles
+        end
 
         # @type [Array]
-        ALL_ORM_SCHEMAS = [SchemaRuuubyReleases, SchemaRuuubyFeatures, SchemaRuuubyChangelogs].❄️
+        ALL_ORM_SCHEMAS = [SchemaRuuubyReleases, SchemaRuuubyFeatures, SchemaRuuubyChangelogs, SchemaGitCommits, SchemaRuuubyDirs, SchemaRuuubyFiles].❄️
       end
 
       # @return [Array]
       def get_versions
-        @all_versions ||= []
         if @all_versions.∅?
-          @all_versions = RuuubyRelease.all.to_ary
+          @all_versions = ::RuuubyRelease.all.to_ary
         end
         @all_versions
       end
 
       # @return [Array]
       def get_table_names
-        @table_names ||= []
         if @table_names.∅?
-          Ruuuby::MetaData::RuuubyORM::SchemaORM::ALL_ORM_SCHEMAS.∀ do |orm_schema|
+          ::Ruuuby::MetaData::RuuubyORM::SchemaORM::ALL_ORM_SCHEMAS.∀ do |orm_schema|
             @table_names << orm_schema.to_s.♻️⟶∞('::Schema').to_🐍
           end
         end
         @table_names
       end
 
-      def get_connection_schema ; ActiveRecord::Schema.connection ; end
-
-      def get_connection_base   ; ActiveRecord::Base.connection   ; end
-
       # TODO: def docs_changelog
 
-      #class RoutineORMSyncGitCommit
-      #end
-    end
+      # ----------------------------------------------------------------------------------------------------------------
 
+      def get_connection_schema ; ::ActiveRecord::Schema.connection ; end
+
+      def get_connection_base   ; ::ActiveRecord::Base.connection   ; end
+
+      # ----------------------------------------------------------------------------------------------------------------
+
+      def ensure_loaded_db_connection
+        unless @connected
+          adapter = 💎.orm_meta::DB_ADAPTER
+          db      = 💎.orm_meta::DB_DB
+          ActiveRecord::Base.establish_connection(adapter: adapter, database: db)
+          💎.info("Connected to db of type{#{adapter.to_s}} with connection to/type{#{db.to_s}}")
+          @connected = true
+        end
+      end
+
+      def ensure_loaded_seeds
+        unless @seeds_loaded
+          require_relative '../../../db/seeds/ruuuby_features'
+          require_relative '../../../db/seeds/ruuuby_releases'
+          require_relative '../../../db/seeds/git_commits'
+          💎.info('loaded db seeds')
+          @seeds_loaded = true
+        end
+      end
+
+      def ensure_loaded_schema
+        unless @loaded
+          require 'sqlite3'
+          require 'active_record'
+          require_relative '../../../app/models/application_record'
+          require_relative '../../../app/models/ruuuby_release'
+          require_relative '../../../app/models/ruuuby_feature'
+          require_relative '../../../app/models/ruuuby_changelog'
+          require_relative '../../../app/models/git_commit'
+          require_relative '../../../app/models/ruuuby_dir'
+          require_relative '../../../app/models/ruuuby_file'
+          💎.info('loaded needed DB files')
+          @loaded = true
+        end
+      end
+
+    end # end: {RuuubyORM}
+
+  end
+
+end
+
+module ::Ruuuby
+
+  module MetaData
+
+    # @return [Ruuuby::MetaData::RuuubyORM]
+    def self.orm ; ::Ruuuby::MetaData::RuuubyORM.instance ; end
   end
 
 end

@@ -102,6 +102,14 @@ class ::File
 
   # | ------------------------------------------------------------------------------------------------------------------
 
+  # @param [String] the_path
+  # @param [String] the_line
+  # @param [String] expression
+  def self.insert_line_before_expr(the_path, the_line, expression)
+    🛑str❓($PRM_MANY, [the_path, the_line, expression], :'!∅')
+    ::File.replace_expr_with!(the_path, expression, "#{the_line}\n#{expression}", 1)
+  end
+
   # original source referenced from:
   # @see https://stackoverflow.com/questions/1274605/how-to-search-file-text-for-a-pattern-and-replace-it-with-a-given-value
   #
@@ -115,8 +123,8 @@ class ::File
     🛑str❓($PRM_MANY, [the_path, expression, replacement], :'!∅')
     🛑int❓(:num_matches, num_matches, :ℕ)
     num_matched = 0
-    Tempfile.open(".#{File.basename(the_path)}", File.dirname(the_path)) do |temp_file|
-      File.open(the_path).each do |line|
+    Tempfile.open(".#{::File.basename(the_path)}", ::File.dirname(the_path)) do |temp_file|
+      ::File.open(the_path).each do |line|
         if num_matched < num_matches
           if line.∋?(expression)
             temp_file.puts(line.gsub(expression, replacement))
@@ -142,9 +150,6 @@ class ::File
     return num_matched
   end
 
-  # original source referenced from:
-  # @see https://stackoverflow.com/questions/1274605/how-to-search-file-text-for-a-pattern-and-replace-it-with-a-given-value
-  #
   # @param [String]  the_path
   # @param [String]  expression
   # @param [String]  replacement

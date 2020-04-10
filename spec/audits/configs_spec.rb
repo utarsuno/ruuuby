@@ -11,12 +11,10 @@ RSpec.describe 'general configs' do
   #   /\     |  |    |  \    |     |     /__`
   #  /~~\    \__/    |__/    |     |     .__/
 
-  context 'audits', :'audits' do
+  context 'audits', :audits do
 
     before :all do
-      path_project_base      = File.dirname³(__FILE__)
-      @path_dir_c_extensions = "#{path_project_base.to_s}/ext"
-      @directory_ext         = Dir.🆕(@path_dir_c_extensions)
+      @directory_ext = Dir.🆕(::Ruuuby::MetaData::Paths::DIR_EXT)
     end
 
     context 'passes file structure audits' do
@@ -24,17 +22,17 @@ RSpec.describe 'general configs' do
         it 'directory{ext/} is healthy' do
 
           puts "\t\t| --- parsing directory{ext/} --- "
-          puts "\t\t| #{@path_dir_c_extensions.to_s} |"
+          puts "\t\t| #{::Ruuuby::MetaData::Paths::DIR_EXT} |"
           puts "\t\t| ------------------------------- "
 
-          @directory_ext.normalized_paths do |path|
-            path_current_extension = "#{@path_dir_c_extensions.to_s}/#{path.to_s}"
+          @directory_ext.η̂_paths do |path|
+            path_current_extension = "#{::Ruuuby::MetaData::Paths::DIR_EXT}/#{path.to_s}"
             puts "\t\t| checking if directory: {#{path_current_extension}} w/ content"
             expect(🗄️.∃?(path_current_extension)).to eq(true)
             sub_paths = 🗄️.🆕("#{path_current_extension}/")
             expect(sub_paths.∅?).to eq(false)
             puts "\t\t\t| traversing directory: {#{path_current_extension}/}"
-            sub_paths.normalized_paths do |sub_path|
+            sub_paths.η̂_paths do |sub_path|
               sub_full_path = "#{path_current_extension}/#{sub_path}"
               puts "\t\t\t| checking if file: {#{sub_full_path.to_s}}"
               expect(📁.∃?(sub_full_path)).to eq(true)

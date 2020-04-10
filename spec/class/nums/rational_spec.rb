@@ -1,10 +1,10 @@
 # coding: utf-8
 
 RSpec.describe 'rational.rb' do
-  let(:data_minus_leet2){Rational(-1337, 2)}
+  let(:data_minus_leet2){ℚ(-1337, 2)}
 
-  let(:data_with_complex_only_real_component){Rational(Complex(1, 0.0), 1.5)}
-  let(:data_with_complex){Rational(Complex(1, 1.5), 1.5)}
+  let(:data_with_complex_only_real_component){ℚ(ℂ(1, 0.0), 1.5)}
+  let(:data_with_complex){ℚ(ℂ(1, 1.5), 1.5)}
 
   context 'extends class[Rational]' do
 
@@ -35,7 +35,7 @@ RSpec.describe 'rational.rb' do
           expect(data_rational_zero.ℤ?).to eq(true)
           expect(data_rational_one.ℤ?).to eq(true)
           expect(data_rational_leet.ℤ?).to eq(true)
-          expect(Rational(Complex(3, 0), 1).ℤ?).to eq(true)
+          expect(ℚ(ℂ(3, 0), 1).ℤ?).to eq(true)
         end
         it 'cases: negative' do
           expect(data_with_complex.ℤ?).to eq(false)
@@ -274,7 +274,7 @@ RSpec.describe 'rational.rb' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :'performance' do
+  context 'performance', :performance do
     context 'func{ℕ?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{data_rational_one.ℕ?}.to perform_extremely_quickly

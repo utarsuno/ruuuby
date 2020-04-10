@@ -61,7 +61,7 @@ RSpec.describe 'lib/class/re.rb' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :'performance' do
+  context 'performance', :performance do
 
     context 'the following performs very quickly' do
       it 'static-func{gen_closed_match}' do

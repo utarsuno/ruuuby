@@ -13,21 +13,34 @@ module ::Ruuuby
       module MainF12
 
         # @return [::File]
-        def 📁; ::File; end
+        def 📁; ::File ; end
 
         # @return [::File]
-        def 📂; ::File; end
+        def 📂; ::File ; end
 
         # @return [::Dir]
-        def 🗄️; ::Dir ; end
+        def 🗄️; ::Dir  ; end
 
-      end
+      end # end: {MainF12}
 
       # defines the operations needed to support Feature(`f12`) that are applied to the `main` object
       module MainF17
 
         # defines (onto the `main` object) funcs to provide aliases for math functions
         module MathAliases
+
+          # @param [Numeric, Float, Complex] component_real
+          # @param [Numeric, Float, Complex] component_complex (default: 0)
+          #
+          # @return [Complex]
+          def ℂ(component_real, component_complex=0) ; Complex(component_real, component_complex) ; end
+
+          # @param [Numeric, Float, Complex] numerator
+          # @param [Numeric, Float, Complex] denominator
+          #
+          # @return [Rational]
+          def ℚ(numerator, denominator) ; Rational(numerator, denominator) ; end
+
           # Return the square-root of the provided argument.
           #
           # @param [Integer, Float, Numeric] n
@@ -44,10 +57,12 @@ module ::Ruuuby
 
           # @return [Float]
           def π ; ::Math::PI ; end
-        end
+
+        end # end: {MathAliases}
 
         # defines (onto the `main` object) funcs to provide aliases for float functions and constants
         module FloatAliases
+
           # @return [Float] Float::INFINITY
           def ∞ ; ::Float::INFINITY ; end
 
@@ -62,7 +77,8 @@ module ::Ruuuby
 
           # @return [Float]
           def γ ; ::Float::EULER_MASCHERONI_CONSTANT ; end
-        end
+
+        end # end: {FloatAliases}
 
         # defines (onto the `main` object) funcs to provide aliases for math functions relating to trigonometry
         module Trigonometry
@@ -126,9 +142,9 @@ module ::Ruuuby
           # @return [Float, Numeric]
           def tan°(degrees) ; ::Math.tan(∠ᶜ(degrees)) ; end
 
-        end
+        end # end: {Trigonometry}
 
-      end
+      end # end: {MainF17}
 
     end
 

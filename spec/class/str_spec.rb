@@ -504,7 +504,11 @@ RSpec.describe 'str' do
               it 'w/ multiple matches' do
                 expect('aaa'.♻️⟵('a', 2)).to eq('a')
                 expect('c c a  '.♻️⟵(' ', 3)).to eq('c c')
+                expect('bb aab'.♻️⟵('b', 2)).to eq('b')
                 expect('bb aab'.♻️⟵('a', 2)).to eq('bb ')
+                expect('bb aaab'.♻️⟵('a', 3)).to eq('bb ')
+                expect('bba aab'.♻️⟵('a', 3)).to eq('bb')
+                expect('bbaaba'.♻️⟵('a', 3)).to eq('bb')
                 expect('aabab'.♻️⟵('b', 2)).to eq('aa')
                 expect('astrbvR*QWBRUQW#* aabab'.♻️⟵('b', 3)).to eq('astr')
               end
