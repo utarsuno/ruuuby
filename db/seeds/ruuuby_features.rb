@@ -24,5 +24,7 @@
 @f22 = RuuubyFeature.spawn(22, 'create or extend a `numeric` in order to properly support `Complex Infinity`')
 @f23 = RuuubyFeature.spawn(23, "gather statistics (and/or more debugging information) on `Ruuuby` {example-context: optimizing ordering of if-conditions / function-calls}")
 @f24 = RuuubyFeature.spawn(24, "add syntax parsing for following 4 categories: {`snake_case`, `camel_case`, `snake_case_upper`, `camel_case_lower`}, aliased via: {`🐫`, `🐍`, `🐫⬇`, `🐍⬆`}")
+@f25 = RuuubyFeature.spawn(25, "bundle `Ruuuby` meta-data related functionality w/ base alias(`💎`)")
+@f26 = RuuubyFeature.spawn(26, 'add syntax parsing for `ISO8601` as well as aliases for Date(`📅`), Time(`🕒`), and DateTime(`📅🕒`)')
 
 @f98 = RuuubyFeature.spawn(98, '`C-extensions`')

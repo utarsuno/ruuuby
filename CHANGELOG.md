@@ -1,22 +1,20 @@
 ---
 #### (upcoming patches) 
 
-#### v0.2.0
+#### v0.3.0
  * `automatic differentiation`
+ 
+#### v0.2.0
+ * `dual-numbers` to be considered as intermediate before automatic differentiation
 
 #### v0.1.0
  * clear `tech debt` and all `feature abstracts`
    * adding `automatic differentiation` should involve near `0% (of time allocation)` towards `version-relating documentation & audits`
 
-#### v0.0.28-v0.0.30
+#### before v0.0.35/0.1.0
  * resolve missing coverage from `v0.0.17`
  * resolve missing coverage from `v0.0.18`
  * resolve missing coverage from `v0.0.22`
-
-#### Abstract
- * start automation/abstraction of state & configs for CLI based APIs, tools, and scripts (gem `tty-command` providing core functionality)
- * start automation/abstraction of code-file (content) management
- * continuation of (`f15`) in relation to above 2 points
 
 ---
 
@@ -37,7 +35,7 @@
 
 | (c)lass or (m)odule | method(s) added | feature(s) | notes |
 | --- | --- | --- | --- |
-| (c) `Array` | `∅` | `f05` | starting point of adding similar immutable references like `nil` but to for (assumable to be immutable) objects that are `∅` |
+| (c) `Array` | `∅` | `f05` | starting point of adding similar immutable references like `nil` but for (assumable to be immutable) objects that are `∅` |
 | (c) `Object` | `🛑sym❓` | `f07` | |
 | (m) `Ruuuby::MetaData` | `orm`, `orm_meta`, `paths`, `engine` | `f10` | shortcuts to either modules or singleton-instanced objects |
 | (m) `Ruuuby::MetaData` | `info`, `debug` | `f10` | shortcuts for logging statements |

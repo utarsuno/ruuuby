@@ -102,14 +102,15 @@ TODO formal def: `normal distrubtion`
 
 ### Properties
 
-| # | term | definition |
-| --- | --- | --- |
-| 0x0 | `commutative property` | "a `binary operation` is `commutative` if changing the order of the `operands` does not change the result. It is a fundamental property of many `binary operations`, and many `mathematrical proofs` depend on it" |
-| 0x1 | `distributive property` | "in `abstract algebra` and `formal logic`, the `distributive property` of `binary operations` generalizes the `distributive law` from `Boolean algebra` and `elementary algebra`. In `propositional logic`, `distribution` refers to two `valid rules of replacement`. The rules allow one to reformulate `conjunctions` and `disjunctions` with `logical proofs`" |
-| 0x2 | `reflexive property` | "for every real number `x`, `x = x`" |
-| 0x3 | `symmetric property` | "for all real numbers `x` and `y`, if `x = y`, then `y = x`" |
-| 0x4 | `transitive property` | "for all real numbers `x`, `y`, and `z`, if `x = y` and `y = z`, then `x = z`" |
-| 0x5 | `substitution property` | "if `x = y` and `y = z`, then `x = z` |
+| # | term | definition | extra |
+| --- | --- | --- | --- |
+| 0x0 | `commutative property` | "a `binary operation` is `commutative` if changing the order of the `operands` does not change the result. It is a fundamental property of many `binary operations`, and many `mathematrical proofs` depend on it" | `law of commutativity`: `a + b = b + a`; `ab = ba`, for all `a, b ∈ R` |
+| 0x1 | `distributive property` | "in `abstract algebra` and `formal logic`, the `distributive property` of `binary operations` generalizes the `distributive law` from `Boolean algebra` and `elementary algebra`. In `propositional logic`, `distribution` refers to two `valid rules of replacement`. The rules allow one to reformulate `conjunctions` and `disjunctions` with `logical proofs`" | |
+| 0x2 | `reflexive property` | "for every real number `x`, `x = x`" | |
+| 0x3 | `symmetric property` | "for all real numbers `x` and `y`, if `x = y`, then `y = x`" | |
+| 0x4 | `transitive property` | "for all real numbers `x`, `y`, and `z`, if `x = y` and `y = z`, then `x = z`" | |
+| 0x5 | `substitution property` | "if `x = y` and `y = z`, then `x = z` | |
+| 0x6 | `associative property` | TODO: |
 
 ### Sequences
 

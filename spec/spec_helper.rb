@@ -19,6 +19,7 @@ module HelpersSyntaxCache
     expect(the_class.respond_to?(syntax_id)).to eq(true)
     expect(the_class.send(syntax_id).class).to eq(Regexp)
     expect(the_class.send(syntax_id).source).to eq("\\A#{syntax_before_processing}\\z")
+    expect{the_class.send("#{syntax_id}=".to_sym, 5).to raise_error(FrozenError)}
   end
 
   def do_not_expect_syntax(the_class, syntax_id)
@@ -30,7 +31,6 @@ end
 module HelpersFeature16
 
   def expect_scenarios_power_operations(scenarios, superscripts, power_operation, to_pass=true)
-
     if power_operation == 0
       scenarios.∀ do |n|
         expect((n^(superscripts)) == 1).to eq(to_pass)
@@ -38,10 +38,6 @@ module HelpersFeature16
     elsif power_operation == 1
       scenarios.∀ do |n|
         expect((n^(superscripts)) == n).to eq(to_pass)
-      end
-    elsif power_operation < 0
-      scenarios.∀ do |n|
-        expect((n^(superscripts)) == (Rational(1, n ** (-power_operation)))).to eq(to_pass)
       end
     else
       scenarios.∀ do |n|
@@ -53,6 +49,10 @@ module HelpersFeature16
 end
 
 module HelpersGeneral
+
+  def expect≈≈(scenario, expected_value)
+    expect(scenario.≈≈(expected_value)).to eq(true)
+  end
 
   def expect_regular_int(val_scenario, val_expected)
     expect(val_scenario).to eq(val_expected)
@@ -130,5 +130,19 @@ RSpec.configure do |config|
   config.include PerformanceTestHelper, :performance
   config.include RSpec::Benchmark::Matchers, :performance
   config.include_context 'shared_context_performance', :performance
+
+  logging_mode = ENV['RUUUBY_LOGGING_MODE']
+
+  # TODO: temporary solution, might be better to use something like "--exclude-pattern"
+  if logging_mode.to_s == 💎::RuuubyEngine::RuuubyLogging::MODE_FILE.to_s
+    config.filter_run_excluding :logging_mode => 💎::RuuubyEngine::RuuubyLogging::MODE_STDOUT.to_s
+    config.filter_run_excluding :logging_mode => 💎::RuuubyEngine::RuuubyLogging::MODE_NONE.to_s
+  elsif logging_mode.to_s == 💎::RuuubyEngine::RuuubyLogging::MODE_STDOUT.to_s
+    config.filter_run_excluding :logging_mode => 💎::RuuubyEngine::RuuubyLogging::MODE_FILE.to_s
+    config.filter_run_excluding :logging_mode => 💎::RuuubyEngine::RuuubyLogging::MODE_NONE.to_s
+  else
+    config.filter_run_excluding :logging_mode => 💎::RuuubyEngine::RuuubyLogging::MODE_STDOUT.to_s
+    config.filter_run_excluding :logging_mode => 💎::RuuubyEngine::RuuubyLogging::MODE_FILE.to_s
+  end
 
 end

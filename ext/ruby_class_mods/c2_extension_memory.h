@@ -39,6 +39,8 @@ static VALUE cached_module_vocab;
 
 static VALUE cached_global_sym_many_args;
 
+static VALUE cached_sym_normalizer_exponential;
+static VALUE 🆔cached_sym_normalizer_exponential;
 static VALUE cached_sym_set_ℕ;
 static VALUE 🆔cached_sym_set_ℕ;
 static VALUE cached_sym_none;

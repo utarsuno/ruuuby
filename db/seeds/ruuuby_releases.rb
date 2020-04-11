@@ -346,3 +346,27 @@
 @v0_0_29.changelog.added_method_to_class(@f10, :paths, ::Ruuuby::MetaData)
 @v0_0_29.changelog.added_method_to_class(@f10, :engine, ::Ruuuby::MetaData)
 @v0_0_29.changelog.added_method_to_class(@f12, :insert_line_before_expr, ::File)
+
+@v0_0_30 = RuuubyRelease.spawn(0, 0, 30)
+@v0_0_30.add_file('app/model_attributes/extendable/uid.rb', '', '', @f15)
+@v0_0_30.add_file('app/model_attributes/includable/uid.rb', '', '', @f15)
+@v0_0_30.add_comments(
+    [
+        'add normalizers to `sym?`',
+        'continued ORM cleanups started in `v0.0.29`',
+        'add `f26` as continued step in enabling textual parsing for more useful code-file automations'
+    ]
+)
+@v0_0_30.changelog.added_method_to_class(@f06, :singleton?, ::Object)
+@v0_0_30.changelog.added_method_to_class(@f10, :🅱?, ::Object)
+@v0_0_30.changelog.added_method_to_class(@f10, :🛑🅱❓, ::Object)
+@v0_0_30.changelog.added_method_to_class(@f10, :🧬?, ::Object)
+@v0_0_30.changelog.added_method_to_class(@f10, :cli, ::Ruuuby::Routine::CommandCLI)
+@v0_0_30.changelog.added_method_to_class(@f10, :get_all_defined_modules, ::Module)
+@v0_0_30.changelog.added_method_to_class(@f10, :get_all_defined_classes, ::Module)
+@v0_0_30.changelog.added_method_to_class(@f26, :iso8601?, ::String)
+@v0_0_30.changelog.added_method_to_class(@f26, :to_iso8601, ::String)
+@v0_0_30.changelog.added_method_to_class(@f26, :as_iso8601, ::String)
+@v0_0_30.changelog.added_method_to_class(@f26, :as_iso8601, ::String)
+
+# TODO: finish coverage of func{<, >} for GitCommit

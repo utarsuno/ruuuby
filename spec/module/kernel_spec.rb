@@ -8,7 +8,19 @@ RSpec.describe ::Kernel do
 
     context 'by adding needed functions & aliases' do
 
-      # TODO: unit-tests needed for (🌽_previous_⨍)
+      context 'func{🌽_previous_⨍}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            def hello_world
+              return 🌽_previous_⨍
+            end
+            def yes
+              hello_world
+            end
+            expect(yes).to eq('yes')
+          end
+        end
+      end
 
       context 'adds math functionality (features f10 & f17)' do
 

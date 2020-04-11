@@ -1,4 +1,4 @@
-# coding: utf-8
+# encoding: UTF-8
 
 RSpec.describe 'ruuuby_release.rb' do
 
@@ -73,20 +73,20 @@ RSpec.describe 'ruuuby_release.rb' do
 
         context 'adds func{get_version_prev}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_prev).to eq(v0_0_27)
+            expect(RuuubyRelease.get_version_prev).to eq(v0_0_28)
           end
         end
 
         context 'adds func{get_version_curr}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_curr).to eq(v0_0_28)
+            expect(RuuubyRelease.get_version_curr).to eq(v0_0_29)
           end
         end
 
 
         context 'adds func{get_version_next}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_next).to eq(v0_0_29)
+            expect(RuuubyRelease.get_version_next).to eq(v0_0_30)
           end
         end
 
@@ -141,7 +141,7 @@ RSpec.describe 'ruuuby_release.rb' do
           before :all do
             @fake_release           = RuuubyRelease.spawn(1, 2, 3)
             @fake_release_w_commits = RuuubyRelease.spawn(3, 2, 1)
-            @fake_release_w_commits.spawn_git_commit('fake_str', 'Tue Dec 31 18:03:39 2019 -0600', '0123456789012345678901234567890123456789')
+            @fake_release_w_commits.spawn_git_commit('fake_str', '2019-12-31T18:03:39-0600', '0123456789012345678901234567890123456789')
           end
 
           context 'handles needed scenarios' do
@@ -160,6 +160,7 @@ RSpec.describe 'ruuuby_release.rb' do
               end
               it 'no git-commits attached, can\'t set to released' do
                 expect{@fake_release.released!}.to raise_error(RuntimeError)
+                expect{@fake_release_w_commits.released!}.to_not raise_error
               end
             end
           end

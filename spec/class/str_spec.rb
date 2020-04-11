@@ -1,4 +1,4 @@
-# coding: utf-8
+# encoding: UTF-8
 
 RSpec.describe 'str' do
   let(:data_empty){''}
@@ -8,40 +8,210 @@ RSpec.describe 'str' do
   let(:funcs_upcase?){[:upcase?, :⬆️?, :⬆?, :🔠?]}
   let(:funcs_downcase?){[:downcase?, :⬇️?, :⬇?, :🔡?]}
 
+  let(:scenarios_iso8601_full){%w(2020-04-04T00:00:00Z 2020-04-04T00:00:00-1200 1920-04-04T00:00:01-12:00
+1999-04-04T00:00:00-0500 2000-04-04T00:00:01-05:00 2020-01-04T00:01:00+0500 2020-12-04T00:01:01+05:00 2020-11-04T01:00:01+1400
+2020-04-04T01:00:01+14:00 2020-04-04T01:01:00-1400 2020-10-04T01:01:01+14:00 2020-09-04T23:12:12+0000 2020-08-04T23:12:12+00:00
+2020-07-04T23:12:12+0000 2020-06-04T23:12:12+00:00)}
+
+  let(:scenarios_iso8601_error){['', '2020-04-04T00:00:00-3500', '2020-04-04T00:00:01+26:00']}
 
   context 'extends class[String]' do
 
     context 'by adding needed static functions' do
-
       context 'syntax-functions' do
         context 'warm cache exists' do
-          it 'func{syntax_char_uppercase}' do
-            expect_syntax(::String, :syntax_char_uppercase, syntax_str::CHAR_UPPERCASE)
-          end
-          it 'func{syntax_char_lowercase}' do
-            expect_syntax(::String, :syntax_char_lowercase, syntax_str::CHAR_LOWERCASE)
-          end
-          it 'func{syntax_case_camel}' do
-            expect_syntax(::String, :syntax_case_camel, syntax_str::CASE_CAMEL)
-          end
-          it 'func{syntax_case_snake}' do
-            expect_syntax(::String, :syntax_case_snake, syntax_str::CASE_SNAKE)
-          end
-          it 'func{syntax_len_any_as_int}' do
-            expect_syntax(::String, :syntax_len_any_as_int, syntax_str::LEN_ANY_AS_INT)
-          end
-          it 'func{syntax_len_3_as_inf}' do
-            expect_syntax(::String, :syntax_len_3_as_inf, syntax_str::LEN_3_AS_INF)
-          end
-          it 'func{syntax_len_3_as_int}' do
-            expect_syntax(::String, :syntax_len_3_as_int, syntax_str::LEN_3_AS_INT)
-          end
-          it 'func{syntax_len_3_as_flt}' do
-            expect_syntax(::String, :syntax_len_3_as_flt, syntax_str::LEN_3_AS_FLT)
-          end
-          it 'func{syntax_trigonometric_angle}' do
-            expect_syntax(::String, :syntax_trigonometric_angle, syntax_str::TRIGONOMETRIC_ANGLE)
-          end
+
+          context 'time-related' do
+
+            context 'func{as_iso8601}' do
+              context 'handles needed scenarios' do
+                context 'cases: positive' do
+                  it 'year' do
+                    data = '2020'.as_iso8601
+                    expect(data.class).to eq(::DateTime)
+                    expect(data.year).to eq(2020)
+                  end
+                  it 'year & month' do
+                    data = '2000-04'.as_iso8601
+                    expect(data.class).to eq(::DateTime)
+                    expect(data.year).to eq(2000)
+                    expect(data.month).to eq(4)
+                  end
+                  it 'year & month & day' do
+                    data = '1999-11-22'.as_iso8601
+                    expect(data.class).to eq(::DateTime)
+                    expect(data.year).to eq(1999)
+                    expect(data.month).to eq(11)
+                    expect(data.day).to eq(22)
+                  end
+                  it 'year & month & day & time' do
+                    data = '2021-09-01T23:59:00'.as_iso8601
+                    expect(data.class).to eq(::DateTime)
+                    expect(data.year).to eq(2021)
+                    expect(data.month).to eq(9)
+                    expect(data.day).to eq(1)
+                    expect(data.hour).to eq(23)
+                    expect(data.minute).to eq(59)
+                    expect(data.second).to eq(0)
+                  end
+                  it 'year & month & day & time & time-zone' do
+                    data  = '2020-06-02T00:12:12+00:00'.as_iso8601
+                    data2 = '2020-06-02T01:12:12+00:00'.as_iso8601
+                    expect(data.class).to eq(::DateTime)
+                    expect(data.year).to eq(2020)
+                    expect(data.month).to eq(06)
+                    expect(data.day).to eq(02)
+                    expect(data.hour).to eq(0)
+                    expect(data.minute).to eq(12)
+                    expect(data.second).to eq(12)
+
+                    expect(data2 > data).to eq(true)
+                    expect(data2 < data).to eq(false)
+                    expect(data > data2).to eq(false)
+                    expect(data < data2).to eq(true)
+                  end
+                end
+              end
+            end
+
+            it 'func{syntax_iso8601_normalizable}' do
+              expect_syntax(::String, :syntax_iso8601_normalizable, syntax_str::ISO8601_NORMALIZABLE)
+            end
+
+            context 'func{syntax_time_year}' do
+              it 'exists' do
+                expect_syntax(::String, :syntax_time_year, syntax_str::TIME_YEAR)
+              end
+              it 'handles cases: positive' do
+                expect('2020'.match?(::String.syntax_time_year)).to eq(true)
+                expect('1900'.match?(::String.syntax_time_year)).to eq(true)
+              end
+              it 'handles cases: negative' do
+                ['0000', '3003', '', '202020'].∀{|scenario| expect(scenario.match?(::String.syntax_time_year)).to eq(false)}
+              end
+            end
+            context 'func{syntax_time_month}' do
+              it 'exists' do
+                expect_syntax(::String, :syntax_time_month, syntax_str::TIME_MONTH)
+              end
+              it 'handles cases: positive' do
+                expect('01'.match?(::String.syntax_time_month)).to eq(true)
+                expect('12'.match?(::String.syntax_time_month)).to eq(true)
+              end
+              it 'handles cases: negative' do
+                ['0', '00', '', '13'].∀{|scenario| expect(scenario.match?(::String.syntax_time_month)).to eq(false)}
+              end
+            end
+            context 'func{syntax_time_day}' do
+              it 'exists' do
+                expect_syntax(::String, :syntax_time_day, syntax_str::TIME_DAY)
+              end
+              it 'handles cases: positive' do
+                %w(01 12 30 31 29 19 10 09).∀{|scenario| expect(scenario.match?(::String.syntax_time_day)).to eq(true)}
+              end
+              it 'handles cases: negative' do
+                ['-1', '', '34', '41', '00'].∀{|scenario| expect(scenario.match?(::String.syntax_time_day)).to eq(false)}
+              end
+            end
+            context 'func{syntax_time_hour_min}' do
+              it 'exists' do
+                expect_syntax(::String, :syntax_time_hour_min, syntax_str::TIME_HOUR_MIN)
+              end
+              it 'handles cases: positive' do
+                %w(00:00 23:59 10:12 12:50).∀{|scenario| expect(scenario.match?(::String.syntax_time_hour_min)).to eq(true)}
+              end
+              it 'handles cases: negative' do
+                ['', '000:00', '234:59', '12:60', '24:01'].∀{|scenario| expect(scenario.match?(::String.syntax_time_hour_min)).to eq(false)}
+              end
+            end
+            context 'func{syntax_time_hour_min_sec}' do
+              it 'exists' do
+                expect_syntax(::String, :syntax_time_hour_min_sec, syntax_str::TIME_HOUR_MIN_SEC)
+              end
+              it 'handles cases: positive' do
+                %w(00:00:00 23:59:13 10:12:10 12:50:02).∀{|scenario| expect(scenario.match?(::String.syntax_time_hour_min_sec)).to eq(true)}
+              end
+              it 'handles cases: negative' do
+                ['', '000:00:00', '234:59:00', '12:60:00', '24:01:00', '10:10:623'].∀{|scenario| expect(scenario.match?(::String.syntax_time_hour_min_sec)).to eq(false)}
+              end
+            end
+            context 'func{syntax_utc_offsets}' do
+              it 'exists' do
+                expect_syntax(::String, :syntax_utc_offsets, syntax_str::UTC_OFFSETS)
+              end
+              it 'handles cases: positive' do
+                expect('Z'.match?(::String.syntax_utc_offsets)).to eq(true)
+                expect('+01'.match?(::String.syntax_utc_offsets)).to eq(true)
+                expect('+0100'.match?(::String.syntax_utc_offsets)).to eq(true)
+                expect('+01:00'.match?(::String.syntax_utc_offsets)).to eq(true)
+                expect('-11:59'.match?(::String.syntax_utc_offsets)).to eq(true)
+                expect('+11:59'.match?(::String.syntax_utc_offsets)).to eq(true)
+                expect('+23:59'.match?(::String.syntax_utc_offsets)).to eq(true)
+                expect('-23:59'.match?(::String.syntax_utc_offsets)).to eq(true)
+              end
+              it 'handles cases: negative' do
+                expect('ZZ'.match?(::String.syntax_utc_offsets)).to eq(false)
+                expect(''.match?(::String.syntax_utc_offsets)).to eq(false)
+                expect('+24:59'.match?(::String.syntax_utc_offsets)).to eq(false)
+                expect('-24:59'.match?(::String.syntax_utc_offsets)).to eq(false)
+                expect('+23:61'.match?(::String.syntax_utc_offsets)).to eq(false)
+                expect('-23:111'.match?(::String.syntax_utc_offsets)).to eq(false)
+              end
+            end
+            context 'func{syntax_iso8601}' do
+              it 'exists' do
+                expect_syntax(::String, :syntax_iso8601, syntax_str::ISO8601)
+              end
+              context 'handles cases: positive' do
+                it 'year' do
+                  expect('2020'.match?(::String.syntax_iso8601)).to eq(true)
+                end
+                it 'year & month' do
+                  expect('2020-04'.match?(::String.syntax_iso8601)).to eq(true)
+                end
+                it 'year & month & day' do
+                  expect('2020-04-04'.match?(::String.syntax_iso8601)).to eq(true)
+                end
+                it 'year & month & day & time' do
+                  expect('2020-04-04T23:12:12'.match?(::String.syntax_iso8601)).to eq(true)
+                end
+                it 'year & month & day & time & time-zone' do
+                  scenarios_iso8601_full.∀{|scenario| expect(scenario.match?(::String.syntax_iso8601)).to eq(true)}
+                end
+              end
+            end
+          end # end: {time-related}
+          context 'snake vs camel case' do
+            it 'func{syntax_char_uppercase}' do
+              expect_syntax(::String, :syntax_char_uppercase, syntax_str::CHAR_UPPERCASE)
+            end
+            it 'func{syntax_char_lowercase}' do
+              expect_syntax(::String, :syntax_char_lowercase, syntax_str::CHAR_LOWERCASE)
+            end
+            it 'func{syntax_case_camel}' do
+              expect_syntax(::String, :syntax_case_camel, syntax_str::CASE_CAMEL)
+            end
+            it 'func{syntax_case_snake}' do
+              expect_syntax(::String, :syntax_case_snake, syntax_str::CASE_SNAKE)
+            end
+          end # end: {snake vs camel case}
+          context 'symbolic-math' do
+            it 'func{syntax_len_any_as_int}' do
+              expect_syntax(::String, :syntax_len_any_as_int, syntax_str::LEN_ANY_AS_INT)
+            end
+            it 'func{syntax_len_3_as_inf}' do
+              expect_syntax(::String, :syntax_len_3_as_inf, syntax_str::LEN_3_AS_INF)
+            end
+            it 'func{syntax_len_3_as_int}' do
+              expect_syntax(::String, :syntax_len_3_as_int, syntax_str::LEN_3_AS_INT)
+            end
+            it 'func{syntax_len_3_as_flt}' do
+              expect_syntax(::String, :syntax_len_3_as_flt, syntax_str::LEN_3_AS_FLT)
+            end
+            it 'func{syntax_trigonometric_angle}' do
+              expect_syntax(::String, :syntax_trigonometric_angle, syntax_str::TRIGONOMETRIC_ANGLE)
+            end
+          end # end: {symbolic-math}
         end
         context 'cold cache exists' do
           it 'syntax{SQL_LEN_2_INF} is not cached' do
@@ -51,9 +221,8 @@ RSpec.describe 'str' do
             do_not_expect_syntax(::String, :syntax_sql_len_3_inf)
           end
         end
-      end
-
-    end
+      end # end: {syntax-functions}
+    end # end: {by adding needed static functions}
 
     it 'by creating needed aliases' do
       expect_added_ruby_methods(::String, cΔ_String)
@@ -61,6 +230,99 @@ RSpec.describe 'str' do
       RuuubyTestHelper::CONFIG_STRING[:c].∀{ |func| expect(::String.∃⨍?(func)).to eq(true) }
       RuuubyTestHelper::CONFIG_STRING[:aliases].∀{ |aliased_func, base_func| expect(::String.∃⨍?(aliased_func)).to eq(true) }
     end
+
+    context 'time relating functionality' do
+      context 'func{iso8601?}' do
+        context 'cases: positive' do
+          it 'year' do
+            expect('2020'.iso8601?).to eq(true)
+          end
+          it 'year & month' do
+            expect('2020-04'.iso8601?).to eq(true)
+          end
+          it 'year & month & day' do
+            expect('2020-04-04'.iso8601?).to eq(true)
+          end
+          it 'year & month & day & time' do
+            expect('2020-04-04T23:12:12'.iso8601?).to eq(true)
+          end
+          it 'year & month & day & time & time-zone' do
+            scenarios_iso8601_full.∀{|scenario| expect(scenario.iso8601?).to eq(true)}
+          end
+        end
+        context 'cases: negative' do
+          it 'year' do
+            expect('-2020'.iso8601?).to eq(false)
+          end
+          it 'year & month' do
+            expect('2020-54'.iso8601?).to eq(false)
+          end
+          it 'year & month & day' do
+            expect('2020-54-04'.iso8601?).to eq(false)
+          end
+          it 'year & month & day & time' do
+            expect('2020-04-04A23:12:123'.iso8601?).to eq(false)
+          end
+          it 'year & month & day & time & time-zone' do
+            scenarios_iso8601_error.∀{|scenario| expect(scenario.iso8601?).to eq(false)}
+          end
+        end
+      end # end: {func{iso8601?}}
+      context 'func{η̂}' do
+        context 'normalizer{:iso8601}' do
+          context 'cases: positive' do
+            it 'year' do
+              expect('2020'.η̂(:iso8601)).to eq('2020')
+            end
+            it 'year & month' do
+              expect('2020-04'.η̂(:iso8601)).to eq('2020-04')
+            end
+            it 'year & month & day' do
+              expect('2020-04-04'.η̂(:iso8601)).to eq('2020-04-04')
+            end
+            it 'year & month & day & time' do
+              expect('2020-04-04T23:12:12'.η̂(:iso8601)).to eq('2020-04-04T23:12:12')
+              expect('2020-04-04 23:12:12'.η̂(:iso8601)).to eq('2020-04-04T23:12:12')
+            end
+            it 'year & month & day & time & time-zone' do
+              expect('2020-04-04T23:12:12+11:00'.η̂(:iso8601)).to eq('2020-04-04T23:12:12+11:00')
+              expect('2020-04-04T23:12:12+1100'.η̂(:iso8601)).to eq('2020-04-04T23:12:12+11:00')
+              expect('2020-04-04 23:12:12+11:00'.η̂(:iso8601)).to eq('2020-04-04T23:12:12+11:00')
+              expect('2020-04-04 23:12:12+1100'.η̂(:iso8601)).to eq('2020-04-04T23:12:12+11:00')
+            end
+          end
+          context 'cases: negative' do
+            it 'year' do
+              expect{'-1000'.η̂(:iso8601)}.to raise_error(RuntimeError)
+              expect{'a123'.η̂(:iso8601)}.to raise_error(RuntimeError)
+              expect{''.η̂(:iso8601)}.to raise_error(RuntimeError)
+            end
+            it 'year & month' do
+              expect{'-1000'.η̂(:iso8601)}.to raise_error(RuntimeError)
+              expect{'a123'.η̂(:iso8601)}.to raise_error(RuntimeError)
+              expect{''.η̂(:iso8601)}.to raise_error(RuntimeError)
+              expect{'2020-55'.η̂(:iso8601)}.to raise_error(RuntimeError)
+            end
+            it 'year & month & day' do
+              expect{'-1000'.η̂(:iso8601)}.to raise_error(RuntimeError)
+              expect{'2020-04-54'.η̂(:iso8601)}.to raise_error(RuntimeError)
+              expect{''.η̂(:iso8601)}.to raise_error(RuntimeError)
+            end
+            it 'year & month & day & time' do
+              expect{'-1000'.η̂(:iso8601)}.to raise_error(RuntimeError)
+              expect{'2020-04-04A23:12:12'.η̂(:iso8601)}.to raise_error(RuntimeError)
+              expect{'2020-04-04T25:12:12'.η̂(:iso8601)}.to raise_error(RuntimeError)
+              expect{''.η̂(:iso8601)}.to raise_error(RuntimeError)
+            end
+            it 'year & month & day & time & time-zone' do
+              scenarios_iso8601_error.∀{|scenario| expect{scenario.η̂(:iso8601)}.to raise_error(RuntimeError)}
+            end
+          end
+        end # end: {normalizer{:iso8601}}
+      end # end: {func{η̂}}
+
+    end # end: {time relating functionality}
+
 
     context 'snake vs camel case' do
 

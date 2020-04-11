@@ -190,21 +190,43 @@ RSpec.describe 'Object' do
     context 'by adding function{🛑sym❓}' do
       context 'handles needed input scenarios' do
         context 'cases: positive' do
-          it 'w/ single param' do
-            expect{🛑sym❓('0', :symbol_fake)}.to_not raise_error
+          context 'w/ normalization{:power_superscript}' do
+            it 'w/ single param' do
+              expect{🛑sym❓('0', :⁸, :power_superscript)}.to_not raise_error
+            end
+            it 'w/ many params' do
+              expect{🛑sym❓($PRM_MANY, [:⁸, :⁻⁴])}.to_not raise_error
+            end
           end
-          it 'w/ many params' do
-            expect{🛑sym❓($PRM_MANY, [:symbol_fake_other, :symbol_fake])}.to_not raise_error
+          context 'w/o normalization' do
+            it 'w/ single param' do
+              expect{🛑sym❓('0', :symbol_fake)}.to_not raise_error
+            end
+            it 'w/ many params' do
+              expect{🛑sym❓($PRM_MANY, [:symbol_fake_other, :symbol_fake])}.to_not raise_error
+            end
           end
         end
         context 'cases: negative' do
-          it 'w/ single param' do
-            expect{🛑sym❓('0', nil)}.to raise_error(ArgumentError)
+          context 'w/ bad normalization' do
+            it 'w/ single param' do
+              expect{🛑sym❓('0', :a, :power_superscript)}.to raise_error(ArgumentError)
+            end
+            it 'w/ many params' do
+              expect{🛑sym❓($PRM_MANY, ['5', :a], :power_superscript)}.to raise_error(ArgumentError)
+              expect{🛑sym❓($PRM_MANY, [:a, 1337], :power_superscript)}.to raise_error(ArgumentError)
+              expect{🛑sym❓($PRM_MANY, [nil, :a], :power_superscript)}.to raise_error(ArgumentError)
+            end
           end
-          it 'w/ many params' do
-            expect{🛑sym❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
-            expect{🛑sym❓($PRM_MANY, [5, 1337])}.to raise_error(ArgumentError)
-            expect{🛑sym❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+          context 'w/o normalization' do
+            it 'w/ single param' do
+              expect{🛑sym❓('0', nil)}.to raise_error(ArgumentError)
+            end
+            it 'w/ many params' do
+              expect{🛑sym❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
+              expect{🛑sym❓($PRM_MANY, [5, 1337])}.to raise_error(ArgumentError)
+              expect{🛑sym❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+            end
           end
         end
       end
@@ -412,43 +434,45 @@ RSpec.describe 'Object' do
       end
     end
 
+    context 'by adding function{singleton?}' do
+      context 'handles needed scenarios' do
+        it 'cases: positive' do
+          expect(💎.api.singleton?).to eq(true)
+          expect(💎.orm.singleton?).to eq(true)
+        end
+        it 'cases: negative' do
+          expect(String.singleton?).to eq(false)
+          expect(💎.orm_meta.singleton?).to eq(false)
+          expect(1337.singleton?).to eq(false)
+        end
+      end
+    end
+
     context 'by adding function{nucleotide?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
-          expect(Ruuuby.nucleotide?).to eq(true)
-          expect(Kernel.nucleotide?).to eq(true)
-          expect(Class.nucleotide?).to eq(true)
-          expect(String.nucleotide?).to eq(true)
-          expect(NilClass.nucleotide?).to eq(true)
+          [Ruuuby, Kernel, Class, String, NilClass].∀{|scenario| expect(scenario.nucleotide? && scenario.🧬?).to eq(true)}
         end
         it 'cases: negative' do
-          expect(nil.nucleotide?).to eq(false)
-          expect(:Symbol.nucleotide?).to eq(false)
-          expect('String'.nucleotide?).to eq(false)
-          expect([].nucleotide?).to eq(false)
+          [nil, :Symbol, 'String', []].∀{|scenario| expect(scenario.nucleotide? || scenario.🧬?).to eq(false)}
         end
       end
     end
 
     context 'by adding function{bool?}' do
-      it 'without effecting TrueClass instance or FalseClass instance' do
-        expect(TrueClass.bool?).to eq(false)
-        expect(TrueClass.🅱️?).to eq(false)
-        expect(FalseClass.bool?).to eq(false)
-        expect(FalseClass.🅱️?).to eq(false)
-        class MockTrue < TrueClass; end
-        class MockFalse < TrueClass; end
-        expect(MockTrue.bool?).to eq(false)
-        expect(MockTrue.🅱️?).to eq(false)
-        expect(MockFalse.bool?).to eq(false)
-        expect(MockFalse.🅱️?).to eq(false)
-      end
-      context 'handles needed input scenarios' do
-        it 'cases[positive]' do
-          [true, false, 1 == 1, 1 != 2].∀{|n|expect(n.bool? && n.🅱️?).to eq(true)}
+      context 'handling needed scenarios' do
+        it 'cases: positive' do
+          [true, false, 1 == 1, 1 != 2].∀{|n|expect(n.bool? && n.🅱️? && n.🅱?).to eq(true)}
         end
-        it 'cases[negative]' do
-          [Class, Object, NilClass, '', 'true', 'False', -1, 1, 0, [], {}, [false], [true]].∀{|n|expect(n.bool? && n.🅱️?).to eq(false)}
+        context 'cases: negative' do
+          it 'without effecting TrueClass instance or FalseClass instance' do
+            class MockTrue < TrueClass; end
+            class MockFalse < FalseClass; end
+            [TrueClass, FalseClass, MockTrue, MockFalse].∀{|scenario| expect(scenario.bool? || scenario.🅱️? || scenario.🅱?).to eq(false)}
+          end
+          it 'normal data types checks' do
+            [Class, Object, NilClass, '', 'true', 'False', -1, 1, 0, [], {}, [false], [true]].∀{|n|expect(n.bool? || n.🅱️? || n.🅱?).to eq(false)}
+          end
         end
       end
     end
@@ -551,6 +575,13 @@ RSpec.describe 'Object' do
     end
 
     context 'by adding function{sym?}' do
+
+      it 'w/ normalizer' do
+        expect(:².sym?(:power_superscript)).to eq(true)
+        expect(:a.sym?(:power_superscript)).to eq(false)
+
+      end
+
       context 'with correct return values of' do
         it 'true' do
           another_test = :hello
@@ -588,6 +619,15 @@ RSpec.describe 'Object' do
       end
       it 'for cases: false' do
         expect{String.module?}.to perform_very_quickly
+      end
+    end
+
+    context 'func{singleton?}: performs very quickly' do
+      it 'for cases: true' do
+        expect{💎.api.singleton?}.to perform_very_quickly
+      end
+      it 'for cases: false' do
+        expect{String.singleton?}.to perform_very_quickly
       end
     end
 

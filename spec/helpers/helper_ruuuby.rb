@@ -73,6 +73,7 @@ RSpec.shared_context 'shared_context_general' do
   let(:data_range_ints_zero_to_positive){[0] + data_range_ints_positive}
   let(:data_range_ints_negative){[-1337, -10, -3, -2, -1]}
   let(:data_range_rational_positive){[Rational(1, 1), Rational(2, 1), Rational(3, 1), Rational(10, 1), Rational(1337, 1)]}
+  let(:data_range_rational_w_complex){[Rational(ℂ(1.0, 1.5), 1), Rational(2, ℂ(1.0, -1.5))]}
   let(:data_range_rational_positive_decimals){[Rational(1, 1.5), Rational(2, 1.5), Rational(10, 1.5), Rational(1337, 1.5)]}
   let(:data_range_rational_zero_to_positive){[Rational(0)] + data_range_rational_positive}
   let(:data_range_rational_negative){[Rational(-1337, 1), Rational(-10, 1), Rational(-3, 1), Rational(-2, 1), Rational(-1, 1)]}

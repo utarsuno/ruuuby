@@ -1,3 +1,4 @@
+# encoding: UTF-8
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
@@ -16,7 +17,7 @@ module Ruuuby
         module GitCommands
 
           # @type [String]
-          COMMIT_HISTORY   = 'git log --pretty=format:"%H|%ad|%s"'.❄️
+          COMMIT_HISTORY   = 'git log --pretty=format:"%H|%ad|%s" --date=iso'.❄️
 
           # @type [String]
           CMD_LIST_CONFIGS = 'git config --list'.❄️

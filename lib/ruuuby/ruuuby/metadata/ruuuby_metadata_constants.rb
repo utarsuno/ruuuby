@@ -56,6 +56,9 @@ module ::Ruuuby
     module Vocabulary
 
       # @type [Symbol]
+      POWER_SUPERSCRIPT = :power_superscript
+
+      # @type [Symbol]
       MATH_SET_NATURAL_NUMBERS = :ℕ
 
       # @type [Symbol]
@@ -155,36 +158,6 @@ module ::Ruuuby
 
     module QA
 
-      DEFAULT_RSPEC_TASK_OPTS = ['--format progress', '--color', '--require spec_helper']
-
-      # @param [Module] category_module
-      #
-      # @return [Array]
-      def self.generate_rspec_task_options(category_module)
-        singular_test_modes = [QA::DB::TAG, QA::Audits::TAG, QA::Performance::TAG]
-        the_tag             = category_module::TAG
-        case(the_tag)
-        when QA::Unit::TAG
-          additional_opts = []
-          singular_test_modes.each do |tag|
-            additional_opts << "--tag ~@#{tag.to_s}"
-          end
-          return (QA::DEFAULT_RSPEC_TASK_OPTS + additional_opts)
-        when QA::Full::TAG
-          return (QA::DEFAULT_RSPEC_TASK_OPTS + ['--warnings'])
-        when QA::Performance::TAG, QA::Audits::TAG, QA::DB::TAG
-          additional_opts = ["--tag @#{the_tag.to_s}"]
-          singular_test_modes.each do |other_tag|
-            unless the_tag == other_tag
-              additional_opts << "--tag ~@#{other_tag.to_s}"
-            end
-          end
-          return (QA::DEFAULT_RSPEC_TASK_OPTS + additional_opts)
-        else
-          raise "Unrecognized rspec tag{#{the_tag.to_s}}"
-        end
-      end
-
       module Full
         TAG  = :full
         NAME = 'full'.freeze
@@ -211,6 +184,39 @@ module ::Ruuuby
       module Unit
         TAG  = :unit
         NAME = 'unit'.freeze
+      end
+
+      # @type [Array]
+      DEFAULT_RSPEC_TASK_OPTS = ['--format progress', '--color', '--require spec_helper'].freeze
+
+      # @type [Array]
+      SINGULAR_TEST_MODES     = [QA::DB::TAG, QA::Audits::TAG, QA::Performance::TAG].freeze
+
+      # @param [Module] category_module
+      #
+      # @return [Array]
+      def self.generate_rspec_task_options(category_module)
+        the_tag = category_module::TAG
+        case(the_tag)
+        when QA::Unit::TAG
+          additional_opts = []
+          SINGULAR_TEST_MODES.each do |tag|
+            additional_opts << "--tag ~@#{tag.to_s}"
+          end
+          return (QA::DEFAULT_RSPEC_TASK_OPTS + additional_opts)
+        when QA::Full::TAG
+          return (QA::DEFAULT_RSPEC_TASK_OPTS + ['--warnings'])
+        when QA::Performance::TAG, QA::Audits::TAG, QA::DB::TAG
+          additional_opts = ["--tag @#{the_tag.to_s}"]
+          SINGULAR_TEST_MODES.each do |other_tag|
+            unless the_tag == other_tag
+              additional_opts << "--tag ~@#{other_tag.to_s}"
+            end
+          end
+          return (QA::DEFAULT_RSPEC_TASK_OPTS + additional_opts)
+        else
+          raise "Unrecognized rspec tag{#{the_tag.to_s}}"
+        end
       end
 
     end

@@ -1,4 +1,4 @@
-// encoding: utf-8
+// encoding: UTF-8
 
 /*____________________________________________________________________________________________________________________________________________________________________
          __   __        __                  __   __   __  ___  __
@@ -115,12 +115,14 @@ static inline void internal_only_prepare_f16() {
     cached_flt_negative_inf = rb_const_get_at(R_FLT, rb_intern("INFINITY_NEGATIVE"));
     cached_flt_inf_complex  = rb_const_get_at(R_FLT, rb_intern("INFINITY_COMPLEX"));
 
-    cached_sym_set_ℕ                 = rb_const_get_at(cached_module_vocab, rb_intern("MATH_SET_NATURAL_NUMBERS"));
-    🆔cached_sym_set_ℕ               = rb_obj_id(cached_sym_set_ℕ);
-    cached_sym_none                  = rb_const_get_at(cached_module_vocab, rb_intern("NO_NORMALIZER"));
-    🆔cached_sym_none                = rb_obj_id(cached_sym_none);
-    cached_sym_normalizer_no_empty   = rb_const_get_at(cached_module_vocab, rb_intern("NORMALIZER_NO_EMPTY"));
-    🆔cached_sym_normalizer_no_empty = rb_obj_id(cached_sym_normalizer_no_empty);
+    cached_sym_normalizer_exponential   = rb_const_get_at(cached_module_vocab, rb_intern("POWER_SUPERSCRIPT"));
+    🆔cached_sym_normalizer_exponential = rb_obj_id(cached_sym_normalizer_exponential);
+    cached_sym_set_ℕ                    = rb_const_get_at(cached_module_vocab, rb_intern("MATH_SET_NATURAL_NUMBERS"));
+    🆔cached_sym_set_ℕ                  = rb_obj_id(cached_sym_set_ℕ);
+    cached_sym_none                     = rb_const_get_at(cached_module_vocab, rb_intern("NO_NORMALIZER"));
+    🆔cached_sym_none                   = rb_obj_id(cached_sym_none);
+    cached_sym_normalizer_no_empty      = rb_const_get_at(cached_module_vocab, rb_intern("NORMALIZER_NO_EMPTY"));
+    🆔cached_sym_normalizer_no_empty    = rb_obj_id(cached_sym_normalizer_no_empty);
 
     internal_define_set_exponential_negative(0, 9)
     internal_define_set_exponential_negative(1, 8)
@@ -209,6 +211,8 @@ static inline void internal_only_protect_against_gc(void) {
     rb_global_variable(& cached_module_attribute_includable);
     rb_global_variable(& cached_module_attribute_extendable);
 
+    rb_global_variable(& cached_sym_normalizer_exponential);
+    rb_global_variable(& 🆔cached_sym_normalizer_exponential);
     rb_global_variable(& cached_sym_set_ℕ);
     rb_global_variable(& 🆔cached_sym_set_ℕ);
     rb_global_variable(& cached_sym_none);
@@ -232,6 +236,7 @@ static inline void internal_only_before_loading_extension(void) {
     ensure_loaded_default(tempfile)
     ensure_loaded_default(singleton)
     ensure_loaded_default(logger)
+    ensure_loaded_default(time)
     // | --------------------------------- |
 
     cached_class_big_decimal          = r_get_class("BigDecimal");
@@ -358,14 +363,43 @@ r_func_raw(m_obj_hash, re_as_bool(is_hsh(self)))
 r_func_raw(m_obj_flt, re_as_bool(is_float(self)))
 
 // | function{sym?}  |
-r_func_raw(m_obj_sym, re_as_bool(is_sym(self)))
-/*r_func_k_args(m_obj_sym,
+r_func_k_args(m_obj_sym,
     if (argc == 0) {
         re_as_bool(is_sym(self))
     } else {
+        if (is_sym(self)) {
+            VALUE them;
+            rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);
+            if (NIL_P(them)) {
+                🛑c_param_type("Object", "sym?", "normalizer", them, "Symbol")
+            } else {
+                if (is_sym(them)) {
+                    ID them_id = rb_obj_id(them);
 
+                    if (them_id == 🆔cached_sym_none) {
+                        re_as_bool(is_sym(self))
+                    } else if (them_id == 🆔cached_sym_normalizer_exponential) {
+                        const unsigned long id_to_find = NUM2ULONG(rb_obj_id(self));
+                        unsigned long * the_result    = bsearch_ulong(id_to_find)
+                        if (the_result != NULL) {
+                            re_ye
+                            //const int power_to_raise_to = exponential_indexes[(((int)the_result - (int)exponential_ids) / 𝔠ULONG)];
+                            //if ((power_to_raise_to >= -9 && power_to_raise_to <= 10) || (power_to_raise_to > 1336 && power_to_raise_to < 1400)) {
+                            //    re_ye
+                            //} else {
+                            //    re_no
+                            //}
+                        } else {re_no}
+                    } else {
+                        🛑c_param_type("Object", "sym?(w/ normalizer)", "normalizer", them, "Symbol")
+                    }
+                } else {
+                    🛑c_param_type("Object", "sym?", "normalizer", them, "Symbol")
+                }
+            }
+        } else {re_no}
     }
-)*/
+)
 
 // | function{int?}  |
 r_func_k_args(m_obj_int,
@@ -380,7 +414,6 @@ r_func_k_args(m_obj_int,
             } else {
                 if (is_sym(them)) {
                     ID them_id = rb_obj_id(them);
-
                     if (them_id == 🆔cached_sym_none) {
                         re_as_bool(is_int(self))
                     } else if (them_id == 🆔cached_sym_set_ℕ) {
@@ -392,9 +425,7 @@ r_func_k_args(m_obj_int,
                     rb_raise(R_ERR_ARG, "| c{Object}-> m{int?} with self{%"PRIsVALUE"} got in-valid normalizer{%"PRIsVALUE"} |", self, them);
                 }
             }
-        } else {
-            re_no
-        }
+        } else {re_no}
     }
 )
 
@@ -875,7 +906,7 @@ static inline void internal_only_add_ruuuby_c_extensions() {
     ext_api_add_public_method_kargs_to_class(R_OBJ, "int?"       , m_obj_int)
     ext_api_add_public_method_0args_to_class(R_OBJ, "flt?"        , m_obj_flt)
     ext_api_add_public_method_0args_to_class(R_OBJ, "hsh?"       , m_obj_hash)
-    ext_api_add_public_method_0args_to_class(R_OBJ, "sym?"       , m_obj_sym)
+    ext_api_add_public_method_kargs_to_class(R_OBJ, "sym?"       , m_obj_sym)
     ext_api_add_public_method_kargs_to_class(R_OBJ, "str?"       , m_obj_str)
     ext_api_add_public_method_0args_to_class(R_OBJ, "char?"      , m_obj_char)
     ext_api_add_public_method_0args_to_class(R_OBJ, "stry?"      , m_obj_stry)

@@ -4,14 +4,16 @@ class ::Module
 
   # ---------------------------------------------------------------------------------------------------------- | *f01* |
   alias_method :🙈, :private
-  alias_method :∃🙈func?, :private_method_defined?
   alias_method :🙈constants⟶, :private_constant
   alias_method :🙈class_func, :private_class_method
   alias_method :🙈instance_funcs, :private_instance_methods
+  # -------------------------------------------------------------------------------------------------- | *f02* | *f13* |
+  alias_method :∃🙈func?, :private_method_defined?
   # ---------------------------------------------------------------------------------------------------------- | *f02* |
   alias_method :🛡️, :protected
-  alias_method :∃🛡️func?, :protected_method_defined?
   alias_method :🛡️instance_funcs, :protected_instance_methods
+  # -------------------------------------------------------------------------------------------------- | *f02* | *f13* |
+  alias_method :∃🛡️func?, :protected_method_defined?
   # ---------------------------------------------------------------------------------------------------------- | *f09* |
 
   # @param [Class]
@@ -65,5 +67,11 @@ class ::Module
   # | ------------------------------------------------------------------------------------------------------------------
 
   alias_method :⨍_add_aliases, :f_add_aliases
+
+  # @return [Array]
+  def get_all_defined_modules ; self.constants.select{|const| self.const_get(const).module? } ; end
+
+  # @return [Array]
+  def get_all_defined_classes ; self.constants.select{|const| self.const_get(const).class? } ; end
 
 end

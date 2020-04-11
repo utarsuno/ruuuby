@@ -1,4 +1,4 @@
-# coding: utf-8
+# encoding: UTF-8
 
 # `Ruuuby` modifications to c(`String`)
 module ::Ruuuby
@@ -378,6 +378,54 @@ module ::Ruuuby
           chars
         end
       end # end: {f24}
+
+      # defines the operations needed to support Feature(`f26`) that are applied to Class(`String`)
+      module StringF26
+
+        # @return [Boolean] true, if the contents of this `String` are representative of an iso8601 formatted date and/or time
+        def iso8601? ; self.length > 3 && self.match?(::String.syntax_iso8601_normalizable) ; end
+
+        # @raise [RuntimeError] if this contents of this `String` are not representative of an iso8601 formatted date and/or time
+        #
+        # @return [String] a normalized representation of iso8601
+        def to_iso8601
+          🛑 RuntimeError.new("| c{String}-> m{to_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x0) |") unless self.iso8601?
+          data      = self.dup
+          node_date = data[0...10]
+          return self if node_date == self
+          remainder = data[11...data.length]
+          if remainder.length < 8
+            🛑 RuntimeError.new("| c{String}-> m{to_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x1) |")
+          else
+            node_time = remainder[0...8]
+            return "#{node_date}T#{node_time}" if node_time == remainder
+            remainder = remainder[8...remainder.length].strip
+            if remainder.match?(::String.syntax_utc_offsets)
+              case(remainder.length)
+              when 3
+                return "#{node_date}T#{node_time}#{remainder}:00"
+              when 5
+                return "#{node_date}T#{node_time}#{remainder[0...3]}:#{remainder[3...5]}"
+              when 6
+                return "#{node_date}T#{node_time}#{remainder}"
+              else
+                🛑 RuntimeError.new("| c{String}-> m{to_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x2) |")
+              end
+            else
+              🛑 RuntimeError.new("| c{String}-> m{to_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x3) |")
+            end
+          end
+        end
+
+        # @raise [RuntimeError]
+        #
+        # @return [DateTime]
+        def as_iso8601
+          ::DateTime.iso8601(self.to_iso8601)
+          #DateTime.strptime(self, '%FT%T%:z')
+        end
+
+      end
     end # end: {Includable}
   end # end: {Feature}
 end # end: {Ruuuby}
@@ -388,64 +436,89 @@ class ::String
   # common expressions or any sub-components needed for creating them (ex: for `Regular Expressions`)
   module Syntax
 
+    # expression referenced from: https://www.regular-expressions.info/dates.html
+    #
     # @type [String]
-    CHAR_UPPERCASE = ::Regexp::Syntax::CHAR_UPPER
+    TIME_YEAR             = '(19|20)\d\d'.❄️
+
+    # expression referenced from: https://www.regular-expressions.info/dates.html
+    #
+    # @type [String]
+    TIME_MONTH            = '(0[1-9]|1[012])'.❄️
+
+    # expression referenced from: https://www.regular-expressions.info/dates.html
+    #
+    # @type [String]
+    TIME_DAY              = '(0[1-9]|[12][0-9]|3[01])'.❄️
 
     # @type [String]
-    CHAR_LOWERCASE = ::Regexp::Syntax::CHAR_LOWER
+    TIME_HOUR_MIN         = '(([01]\d)|(2[0-3])):[0-5]\d'.❄️
+
+    # @type [String]
+    TIME_HOUR_MIN_SEC     = "#{TIME_HOUR_MIN}:[0-5]\\d".❄️
+
+    # expression referenced from: https://www.regextester.com/99856
+    #
+    # @type [String]
+    UTC_OFFSETS           = '(([+-]([01]\d|2[0-3])(:?[0-5]\d)?)|Z)'.❄️
+
+    # expression referenced from: https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
+    #
+    # @type [String]
+    ISO8601               = "(#{TIME_YEAR})(-#{TIME_MONTH}(-#{TIME_DAY}(T#{TIME_HOUR_MIN_SEC}(#{UTC_OFFSETS})?)?)?)?".❄️
+
+    # TODO: temporary-design, more flexibility could be added in
+    #
+    # @type [String]
+    ISO8601_NORMALIZABLE  = "(#{TIME_YEAR})(-#{TIME_MONTH}(-#{TIME_DAY}((T| )#{TIME_HOUR_MIN_SEC}(( )?#{UTC_OFFSETS})?)?)?)?".❄️
+
+    # @type [String]
+    CHAR_UPPERCASE        = ::Regexp::Syntax::CHAR_UPPER
+
+    # @type [String]
+    CHAR_LOWERCASE        = ::Regexp::Syntax::CHAR_LOWER
 
     # expression referenced from: https://stackoverflow.com/questions/1128305/regex-for-pascalcased-words-aka-camelcased-with-leading-uppercase-letter
     #
     # @type [String]
-    CASE_CAMEL     = '[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*'.❄️
+    CASE_CAMEL            = '[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*'.❄️
 
     # expression referenced from: https://stackoverflow.com/questions/1128305/regex-for-pascalcased-words-aka-camelcased-with-leading-uppercase-letter
     #
     # @type [String]
-    CASE_LOWER_CAMEL = '[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?'.❄️
+    CASE_LOWER_CAMEL      = '[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?'.❄️
 
     # @type [String]
-    CASE_UPPER_SNAKE = '[A-Z]([A-Z0-9]*(_[A-Z0-9]+)?)*'.❄️
+    CASE_UPPER_SNAKE      = '[A-Z]([A-Z0-9]*(_[A-Z0-9]+)?)*'.❄️
 
     # @type [String]
-    CASE_SNAKE       = '[a-z]([a-z0-9]*(_[a-z0-9]+)?)*'.❄️
-
-    # ordinals:
-    # | char | ord  |
-    # | ---- | ---- |
-    # | +    | 43   |
-    # | -    | 45   |
-    # | .    | 46   |
-    # | 0    | 48   |
-    # | 1    | 49   |
-    # | 8    | 56   |
-    # | 9    | 57   |
+    CASE_SNAKE            = '[a-z]([a-z0-9]*(_[a-z0-9]+)?)*'.❄️
 
     # @type [String]
-    LEN_3_AS_INT   = '(\d\d\d)|([+-]\d\d)'.❄️
+    LEN_3_AS_INT          = '(\d\d\d)|([+-]\d\d)'.❄️
 
     # @type [String]
-    LEN_3_AS_FLT   = '([+-]\.\d)|(\d\.\d)|(\.\d\d)|(\de\d)'.❄️
+    LEN_3_AS_FLT          = '([+-]\.\d)|(\d\.\d)|(\.\d\d)|(\de\d)'.❄️
 
     # @type [String]
-    LEN_3_AS_INF   = '[+-]♾️'.❄️
+    LEN_3_AS_INF          = '[+-]♾️'.❄️
 
     # @type [String]
-    LEN_ANY_AS_INT = '[+-]?\d+'.❄️
+    LEN_ANY_AS_INT        = '[+-]?\d+'.❄️
 
     # expression referenced from: https://mentalized.net/journal/2011/04/14/ruby-how-to-check-if-a-string-is-numeric/
     #
     # @type [String]
-    LEN_ANY        = '[+-]?\d+?((\.\d+e?\d*)|(e\d+))?'.❄️
+    LEN_ANY               = '[+-]?\d+?((\.\d+e?\d*)|(e\d+))?'.❄️
 
     # @type [String]
-    TRIGONOMETRIC_ANGLE = '(\d+)?π(/\d+)?'.❄️
+    TRIGONOMETRIC_ANGLE   = '(\d+)?π(/\d+)?'.❄️
 
     # @type [Array]
-    SQL_LEN_2_INF = %w(+∞ -∞ ♾️ ∞ℂ).❄️
+    SQL_LEN_2_INF         = %w(+∞ -∞ ♾️ ∞ℂ).❄️
 
     # @type [Array]
-    SQL_LEN_3_INF = %w(+♾️ -♾️).❄️
+    SQL_LEN_3_INF         = %w(+♾️ -♾️).❄️
 
     ❄️
   end
@@ -469,11 +542,26 @@ class ::String
   include ::Ruuuby::Feature::Includable::StringF21
   # ---------------------------------------------------------------------------------------------------------- | *f24* |
   include ::Ruuuby::Feature::Includable::StringF24
+  # ---------------------------------------------------------------------------------------------------------- | *f26* |
+  include ::Ruuuby::Feature::Includable::StringF26
   # ---------------------------------------------------------------------------------------------------------- | *f04* |
   alias_method :∅?, :empty?
   # | ------------------------------------------------------------------------------------------------------------------
 
   ⨍_add_aliases(:upcase?, [:⬆️?, :⬆?, :🔠?])
   ⨍_add_aliases(:downcase?, [:⬇️?, :⬇?, :🔡?])
+
+  # TODO: not finalized design
+  #
+  # @param [Symbol] normalizer
+  #
+  # @return [String]
+  def η̂(normalizer)
+    if normalizer == :iso8601
+      self.to_iso8601
+    else
+      🛑 RuntimeError.new("c{String}-> m{η̂} got invalid arg(normalizer){#{normalizer.to_s}} w/ type{#{normalizer.class.to_s}}")
+    end
+  end
 
 end

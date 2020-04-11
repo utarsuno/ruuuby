@@ -1,7 +1,14 @@
+# encoding: UTF-8
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
 class RuuubyFeature < ApplicationRecord
+
+  # _________________________________________________________________________________________________________________
+  #      ___ ___  __     __       ___  ___  __
+  #  /\   |   |  |__) | |__) |  |  |  |__  /__`
+  # /~~\  |   |  |  \ | |__) \__/  |  |___ .__/
+  # ________________________________________________________________________________________________________________ */
 
   # useful components for building `Regular Expressions`
   module Syntax
@@ -14,8 +21,13 @@ class RuuubyFeature < ApplicationRecord
     ❄️
   end
 
-  include ::ApplicationRecord::ORMAttributeUID
-  include ::Ruuuby::Attribute::Includable::SyntaxCache
+  include ::Ruuuby::ORMAttribute::Includable::UID
+
+  # _________________________________________________________________________________________________________________
+  #  __   __
+  # /  \ |__)  |\/|
+  # \__/ |  \  |  |
+  # ________________________________________________________________________________________________________________ */
 
   validates :description, presence: true
   validates :id_num, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
@@ -23,6 +35,12 @@ class RuuubyFeature < ApplicationRecord
   def self.spawn(id_num, description)
     RuuubyFeature.create!(id_num: id_num, description: description)
   end
+
+  # _________________________________________________________________________________________________________________
+  #   __   __   ___  __       ___  __   __   __
+  #  /  \ |__) |__  |__)  /\   |  /  \ |__) /__`
+  #  \__/ |    |___ |  \ /~~\  |  \__/ |  \ .__/
+  # ________________________________________________________________________________________________________________ */
 
   def audits ; @audits ||= [] ; end
 

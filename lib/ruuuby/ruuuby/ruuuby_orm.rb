@@ -94,10 +94,13 @@ module Ruuuby
         end
       end
 
+      # @return [Boolean] true, if the schema had not yet been loaded and did so this function-call
       def ensure_loaded_schema
         unless @loaded
           require 'sqlite3'
           require 'active_record'
+          require_relative '../../../app/model_attributes/extendable/uid'
+          require_relative '../../../app/model_attributes/includable/uid'
           require_relative '../../../app/models/application_record'
           require_relative '../../../app/models/ruuuby_release'
           require_relative '../../../app/models/ruuuby_feature'
@@ -107,7 +110,9 @@ module Ruuuby
           require_relative '../../../app/models/ruuuby_file'
           💎.info('loaded needed DB files')
           @loaded = true
+          return true
         end
+        false
       end
 
     end # end: {RuuubyORM}

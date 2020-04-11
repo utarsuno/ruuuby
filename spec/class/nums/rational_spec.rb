@@ -91,6 +91,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational_all_but_zero, :⁻⁹, -9, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁻⁹, -9, true)
           end
           it 'cases: negative' do
             expect{data_rational_zero^⁻⁹}.to raise_error(ZeroDivisionError)
@@ -102,6 +103,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational_all_but_zero, :⁻⁸, -8, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁻⁸, -8, true)
           end
           it 'cases: negative' do
             expect{data_rational_zero^⁻⁸}.to raise_error(ZeroDivisionError)
@@ -113,6 +115,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational_all_but_zero, :⁻⁷, -7, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁻⁷, -7, true)
           end
           it 'cases: negative' do
             expect{data_rational_zero^⁻⁷}.to raise_error(ZeroDivisionError)
@@ -124,6 +127,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational_all_but_zero, :⁻⁶, -6, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁻⁶, -6, true)
           end
           it 'cases: negative' do
             expect{data_rational_zero^⁻⁶}.to raise_error(ZeroDivisionError)
@@ -135,6 +139,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational_all_but_zero, :⁻⁵, -5, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁻⁵, -5, true)
           end
           it 'cases: negative' do
             expect{data_rational_zero^⁻⁵}.to raise_error(ZeroDivisionError)
@@ -146,6 +151,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational_all_but_zero, :⁻⁴, -4, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁻⁴, -4, true)
           end
           it 'cases: negative' do
             expect{data_rational_zero^⁻⁴}.to raise_error(ZeroDivisionError)
@@ -157,6 +163,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational_all_but_zero, :⁻³, -3, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁻³, -3, true)
           end
           it 'cases: negative' do
             expect{data_rational_zero^⁻³}.to raise_error(ZeroDivisionError)
@@ -168,6 +175,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational_all_but_zero, :⁻², -2, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁻², -2, true)
           end
           it 'cases: negative' do
             expect{data_rational_zero^⁻²}.to raise_error(ZeroDivisionError)
@@ -179,6 +187,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational_all_but_zero, :⁻¹, -1, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁻¹, -1, true)
           end
           it 'cases: negative' do
             expect{data_rational_zero^⁻¹}.to raise_error(ZeroDivisionError)
@@ -190,6 +199,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational_all_but_zero, :⁰, 0, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁰, 0, true)
             expect(data_rational_zero^⁰).to eq(1)
           end
         end
@@ -199,6 +209,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational, :¹, 1, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :¹, 1, true)
           end
         end
       end
@@ -207,6 +218,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational, :², 2, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :², 2, true)
           end
         end
       end
@@ -215,6 +227,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational, :³, 3, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :³, 3, true)
           end
         end
       end
@@ -223,6 +236,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational, :⁴, 4, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁴, 4, true)
           end
         end
       end
@@ -231,6 +245,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational, :⁵, 5, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁵, 5, true)
           end
         end
       end
@@ -239,6 +254,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational, :⁶, 6, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁶, 6, true)
           end
         end
       end
@@ -247,6 +263,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational, :⁷, 7, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁷, 7, true)
           end
         end
       end
@@ -255,6 +272,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational, :⁸, 8, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁸, 8, true)
           end
         end
       end
@@ -263,6 +281,7 @@ RSpec.describe 'rational.rb' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational, :⁹, 9, true)
+            expect_scenarios_power_operations(data_range_rational_w_complex, :⁹, 9, true)
           end
         end
       end

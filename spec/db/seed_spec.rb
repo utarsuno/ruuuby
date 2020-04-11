@@ -152,6 +152,18 @@ RSpec.describe 'db/seed.rb' do
           end
         end
 
+        context 'defines f25' do
+          it 'passes ORM audit' do
+            audit_feature(f25, 'f25', "bundle `Ruuuby` meta-data related functionality w/ base alias(`💎`)")
+          end
+        end
+
+        context 'defines f26' do
+          it 'passes ORM audit' do
+            audit_feature(f26, 'f26', 'add syntax parsing for `ISO8601` as well as aliases for Date(`📅`), Time(`🕒`), and DateTime(`📅🕒`)')
+          end
+        end
+
         context 'defines f98' do
           it 'passes ORM audit' do
             audit_feature(f98, 'f98', '`C-extensions`')
@@ -247,6 +259,24 @@ RSpec.describe 'db/seed.rb' do
         context 'v0.0.27' do
           it 'as expected' do
             audit_version(v0_0_27, 'v0.0.27')
+          end
+        end
+
+        context 'v0.0.28' do
+          it 'as expected' do
+            audit_version(v0_0_28, 'v0.0.28')
+          end
+        end
+
+        context 'v0.0.29' do
+          it 'as expected' do
+            audit_version(v0_0_29, 'v0.0.29')
+          end
+        end
+
+        context 'v0.0.30' do
+          it 'as expected' do
+            audit_version(v0_0_30, 'v0.0.30')
           end
         end
 

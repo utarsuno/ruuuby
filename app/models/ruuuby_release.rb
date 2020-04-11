@@ -1,7 +1,8 @@
+# encoding: UTF-8
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
-class RuuubyRelease < ApplicationRecord
+class ::RuuubyRelease < ApplicationRecord
 
   # useful components for syntax parsing
   module Syntax
@@ -15,8 +16,7 @@ class RuuubyRelease < ApplicationRecord
     ❄️
   end
 
-  include ::ApplicationRecord::ORMAttributeUID
-  include ::Ruuuby::Attribute::Includable::SyntaxCache
+  include ::Ruuuby::ORMAttribute::Includable::UID
 
   validates :vmajor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :vminor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
@@ -36,8 +36,8 @@ class RuuubyRelease < ApplicationRecord
         @changelog << RuuubyChangelog.spawn(@orm_owner, feature, description)
       end
 
-      def added_method_to_class(feature, method_name, class_name)
-        self.add_entry(feature, "+m{#{method_name.to_s}}->c{#{class_name.to_s}}")
+      def added_method_to_class(feature, method_name, nucleotide_name)
+        self.add_entry(feature, "+m{#{method_name.to_s}}->c{#{nucleotide_name.to_s}}")
       end
 
       def added_methods_to_class(feature, added_methods)
@@ -69,10 +69,10 @@ class RuuubyRelease < ApplicationRecord
 
   end
 
-  include RuuubyRelease::AttributeChangelog
+  include ::RuuubyRelease::AttributeChangelog
 
   def self.spawn(major, minor, tiny)
-    RuuubyRelease.create!(vmajor: major, vminor: minor, vtiny: tiny)
+    ::RuuubyRelease.create!(vmajor: major, vminor: minor, vtiny: tiny)
   end
 
   def gems_added ; @gems_added ||= [] ; end
@@ -157,7 +157,7 @@ class RuuubyRelease < ApplicationRecord
   #
   # @return [Boolean] true, if version of self is less than the compared(`RuuubyRelease`)
   def <(ruuuby_release)
-    🛑 ArgumentError.new("| c{RuuubyRelease}-> m{<} got arg(ruuuby_release) w/ type{#{ruuuby_release.class.to_s}} when a{RuuubyRelease} is required |") unless ruuuby_release.is_a?(RuuubyRelease)
+    🛑 ::ArgumentError.new("| c{RuuubyRelease}-> m{<} got arg(ruuuby_release) w/ type{#{ruuuby_release.class.to_s}} when a{RuuubyRelease} is required |") unless ruuuby_release.is_a?(::RuuubyRelease)
     return true if self.vmajor < ruuuby_release.vmajor
     return true if self.vminor < ruuuby_release.vminor
     return true if self.vtiny  < ruuuby_release.vtiny
@@ -170,37 +170,31 @@ class RuuubyRelease < ApplicationRecord
   #
   # @return [Boolean] true, if version of self is greater than the compared(`RuuubyRelease`)
   def >(ruuuby_release)
-    🛑 ArgumentError.new("| c{RuuubyRelease}-> m{<} got arg(ruuuby_release) w/ type{#{ruuuby_release.class.to_s}} when a{RuuubyRelease} is required |") unless ruuuby_release.is_a?(RuuubyRelease)
+    🛑 ::ArgumentError.new("| c{RuuubyRelease}-> m{<} got arg(ruuuby_release) w/ type{#{ruuuby_release.class.to_s}} when a{RuuubyRelease} is required |") unless ruuuby_release.is_a?(::RuuubyRelease)
     return true if self.vmajor > ruuuby_release.vmajor
     return true if self.vminor > ruuuby_release.vminor
     return true if self.vtiny  > ruuuby_release.vtiny
     false
   end
 
-  # @return [String] the version UID of the next future release
-  def self.get_next_version_uid
-    latest_version = RuuubyRelease.where('released = ?', true).last
-    "v#{latest_version.vmajor.to_s}.#{latest_version.vminor.to_s}.#{(latest_version.vtiny + 1).to_s}"
-  end
-
   # @return [RuuubyRelease]
   def self.get_version_prev
-    RuuubyRelease.where('released = ?', true).all.to_ary[-2]
+    ::RuuubyRelease.where('released = ?', true).all.to_ary[-2]
   end
 
   # @return [RuuubyRelease]
   def self.get_version_curr
-    RuuubyRelease.where('released = ?', true).last
+    ::RuuubyRelease.where('released = ?', true).last
   end
 
   # @return [String] the version UID of the latest release
   def self.get_version_next
-    RuuubyRelease.where('released = ?', false).last
+    ::RuuubyRelease.where('released = ?', false).last
   end
 
   # @return [GitCommit]
   def spawn_git_commit(*args)
-    GitCommit.spawn(args[0], args[1], args[2], self)
+    ::GitCommit.spawn(*args, self)
   end
 
   # @param [String] version_str the version UID of the RuuubyRelease with or without the starting 'v'
@@ -212,15 +206,14 @@ class RuuubyRelease < ApplicationRecord
     🛑str❓(:version_str, version_str)
     version_str = version_str[1..version_str.length-1] if version_str.start_with?('v')
     version_str = version_str.♻️⟵(' ') if version_str.∋?(' ')
-    args = version_str.split('.')
-    args.η̂!(:ℕ)
+    version_str.split('.').η̂!(:ℕ)
   end
 
   # @param [Boolean] released_status (default: true)
   def released!(released_status=true)
     🛑🅱️❓(:released_status, released_status)
     if released_status
-      🛑 RuntimeError.🆕("| c{RuuubyRelease}-> m{released!} w/ arg(true) requires the RuuubyRelease to have at least 1 commit message (ORM object) |") unless self.git_commits.length > 0
+      🛑 ::RuntimeError.🆕("| c{RuuubyRelease}-> m{released!} w/ arg(true) requires the RuuubyRelease to have at least 1 commit message (ORM object) |") unless self.git_commits.length > 0
     end
     self.released = released_status
     self.save!
@@ -232,11 +225,16 @@ class RuuubyRelease < ApplicationRecord
       return RuuubyRelease.generate_query_uid(*(self.parse_uid_str(args[0])))
     end
     🛑ℤ❓($PRM_MANY, args)
-    RuuubyRelease.where(::RuuubyRelease::Syntax::SQL_UID, args[0].to_i, args[1].to_i, args[2].to_i)
+    ::RuuubyRelease.where(::RuuubyRelease::Syntax::SQL_UID, args[0].to_i, args[1].to_i, args[2].to_i)
   end
 
   🙈
 
+  # @param [Symbol] cache_key
+  #
+  # @raise [RuntimeError]
+  #
+  # @return [Array]
   def cache_calculate(cache_key)
     case(cache_key)
     when :uid

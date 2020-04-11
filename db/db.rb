@@ -1,3 +1,4 @@
+# encoding: UTF-8
 
 require_relative '../lib/ruuuby/ruuuby/ruuuby_orm'
 
@@ -8,14 +9,14 @@ ActiveRecord::Schema.define do
 
   create_table :ruuuby_dirs, force: true do |t|
     t.string :path_full, :null => false, unique: true
-    t.string :name, :null => false
+    t.string :name, :null => false, unique: false
     t.boolean :is_virtual, :default => false, :null => false
   end
 
   create_table :ruuuby_files, force: true do |t|
     t.string :path_full, :null => false, unique: true
-    t.string :name, :null => false
-    t.string :extensions, :null => false
+    t.string :name, :null => false, unique: false
+    t.string :extensions, :null => false, unique: false
     t.boolean :is_virtual, :default => false, :null => false
 
     t.references :ruuuby_dir, index: true, foreign_key: { references: :ruuuby_dirs }

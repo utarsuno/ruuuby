@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.29'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.30'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -26,24 +26,27 @@
 'b'.∈? 'abc'
 'abc'.∌? 'd'
 'd'.∈? 'abc'
- 
-# [true, false]
-data = {hello: 'world', ye: 'ee'}
-[data.🔑?(:hello), data.🔑?(:non_existing_key)]
 
 # true, false
 elements_a = [1, 'a', 2, nil, [], 2]
 elements_b = [nil, 2, 2, 'a', 1, []]
 [elements_a.≈≈(elements_b), elements_a == elements_b]
 
+# true, true, true, true
+['snake_case'.🐍?, 'AHHH_CAPITALS'.🐍⬆?, 'UpperCaseCamel'.🐫?, 'lowerCaseCamel'.🐫⬇?]
+
 # [false, true, false, true]
-[-5.ℕ?, 7.0.ℤ?, Complex(Float::NAN).ℝ?, ℚ(2, 3).ℚ?]
+[-5.ℕ?, 7.0.ℤ?, ∞.ℝ?, ℚ(2, 3).ℚ?]
 
 # [1, 4, 2]
 [1, 2, 3].⊕ [3, 4]
 
 # [4]
-[2, 3, 4].∖ [1, 2, 3]
+[2, 3, 4].∖ [1, 2, 3] 
+
+# [true, false]
+data = {haaallo: 'wooorld', ye: 'ee'}
+[data.∃🔑?(:haaallo), data.∃🔑?(:👁️👅👁️)]
 
 # stdout ->
 #          'world'
@@ -82,14 +85,15 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Rational` | `3/4r^²` | ❌ | `performance penalties`: up to `700% slower` than using operator(`**`) |
 | `Complex`, `BigDecimal` | `inc` | `inc` | `inc` |
 
-### Changes for TOPLEVEL_BINDING:
+### TOPLEVEL_BINDING Modifications:
 
 | (`global`) func(s) added | notes | as C-extension? <br/> (java-wip) |
 | ---: | :--- | :----: |
-| `√`, `∛`, `π`<br/> `∞`, `∞ℂ`, `¿`, `φ`, `γ`<br/>`∠ᶜ`, `∠°`, `sin`, `sin°`, `cos`, `cos°`, `tan`, `tan°`| (`f17`) | ❌ |
-| `📁`, `📂`, `🗄️` | - aliases for `::File`, `::Dir` <br/> - (`f12`) | ❌ |
+| `√`, `∛`, `π`<br/> `∞`, `∞ℂ`, `¿`, `φ`, `γ`<br/>`∠ᶜ`, `∠°`, `sin`, `sin°`, `cos`, `cos°`, `tan`, `tan°`| (`f10`, `f17`) | ❌ |
+| `📁`, `📂`, `🗄️` | - (`f12`); aliases for:<br/>`File`, `Dir` | ❌ |
+| `📅`, `🕒`, `📅🕒` | - (`f26`); aliases for:<br/>`Date`, `Time`, `DateTime` | ❌ |
 
-### Changes to Modules:
+### Module Modifications:
 
 `instance methods for Kernel will act as 'globally-scoped functions'; meaning they can essentially can be called from anywhere with caller of the method ignored for all contextes`
 
@@ -104,23 +108,23 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `Module`  | {`static`} `⨍_add_aliases`| ✅                 | example: (inside Class scope)<br/>`⨍_add_aliases(:infinite?, [:∞?, :♾️?])` |
 | `Math`    | {`static`} `relative_Δ`   | ❌                 | (`f17`) |
 
-### Changes to Classes:
+### Class Modifications:
 
 | class(es)              | func(s) added                       | as C-extension? <br/> (java-wip) | notes   |
 | ---------------------: | ----------------------------------- | :------------------------: | ------- |
 | `File`, `Dir`          | {`static`} `∃?`                     | ❌ | (`f12`) |
-| `File`                 | {`static`} `dirname²`, `dirname³`, `dirname⁴` | ❌ | (`f12`) |
-| `File`                 | `replace_expr_with`, `replace_expr_with!` | ❌ | (`f12`) |
-| `Dir`                  | `normalized_paths`                  | ❌ | (`f12`) |
+| `File`                 | {`static`} `dirname²`, `dirname³`, `dirname⁴`<br/>`replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` | ❌ | (`f12`) |
+| `Dir`                  | `η̂_paths`                           | ❌ | (`f12`) |
 | `File`, `Dir`          | `∅?`                                | ❌ | (`f04`) |
-| `Object`               | `ary?`, [`bool?`, `🅱️?`], `hsh?`, `int?`, `flt?`, `num?`, `str?`, `char?`, `stry?`, `sym?`<br/>`class?`, `module?`, `nucleotide?` | ✅ | (`f06`) |
+| `Object`               | `ary?`, [`bool?`, `🅱️?`, `🅱?`], `hsh?`, `int?`, `flt?`, `num?`, `str?`, `char?`, `stry?`, `sym?`<br/>`class?`, `module?`, `nucleotide?` | ✅ | (`f06`) |
+| `Object`               | `singleton?`                        | ❌ | (`f06) |
 | `Array`                | `remove_empty!`                     | ✅ | (`f07`) |
 | `Set`                  | `remove_empty!`                     | ❌ | (`f07`) |
 | `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞` | ❌ | (`f08`) |
-| `String`               | `downcase?` ([`⬇️?`, `⬇?`, `🔡?`]) | ❌ | (`f08`) |
-| `String`               | `upcase?` ([`⬆️?`, `⬆?`, `🔠?`])   | ❌ | (`f08`) |
+| `String`               | `downcase?` [`⬇️?`, `⬇?`, `🔡?`] | ❌ | (`f08`) |
+| `String`               | `upcase?` [`⬆️?`, `⬆?`, `🔠?`]   | ❌ | (`f08`) |
 | `String`               | `🐫?`, `🐫⬇?`, `🐍⬆?`, `🐍?`, `to_🐫`, `to_🐍` | ❌ | (`f24`) |
-| `Array`                | `η̂!`                               | ❌ | (`f08`) |
+| `Array`, `String`      | `η̂!`                               | ❌ | (`f08`) |
 | `Array`                | [`frequency_counts`, `📊`]         | ✅ | (`f09`) |
 | `Array`                | [`equal_contents?`, `≈≈`]          | ✅ | - regardless of order and presence of multiple types <br/> - (`f09`) |
 | `Array`                | [`disjunctive_union`, `⊕`]         | ✅ | (`f09`) |
@@ -134,13 +138,10 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 | `NilClass`             | `empty?`                           | ✅ | - ⚠️: philosophically debatable <br/> - (`f04`) |
 | `Integer`              | `finite?`, `infinite?`               | ✅ | (`f11`) |
 | `Numeric`              | `∞?`, `𝔹?`, `𝕌?`                   | ❌ | (`f11`) |
-| `Integer`              | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
-| `Float`                | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
-| `BigDecimal`, `Complex`| `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
-| `Rational`             | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`       | ❌ | (`f11`) |
+| `BigDecimal`, `Complex`, `Integer`, `Float`, `Rational` | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
 | `Float`                | `≈≈`, `∞ℂ?`                        | ❌ | (`f17`) |
 | `String`               | `to_radian`                        | ❌ | (`f17`) |
-| `Object`               | [`🛑bool❓`, `🛑🅱️❓`], `🛑int❓`, `🛑ℤ❓`, `🛑𝕌❓`, `🛑ary❓`, `🛑str❓`, `🛑stry❓`, `🛑countable❓` | ❌ | (`f04`) |
+| `Object`               | [`🛑bool❓`, `🛑🅱️❓`, `🛑🅱❓`], `🛑int❓`, `🛑ℤ❓`, `🛑𝕌❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓` `🛑stry❓`, `🛑countable❓` | ❌ | (`f06`) |
 
 #### Created Aliases (for Ruby Classes):
 | for                    | base method(s) reference(s)               | alias(es)                  | notes     |
@@ -175,11 +176,11 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 615      | # of tests (solely relating to core functionality)              |
-| QA        | performance   | 258      | # of tests (solely relating to performance)                     |
-| QA        | DB            | 88       | # of tests (solely relating to the database)                    |
-| CI        | audits        | 37       | # of tests (solely relating to non-functionality based audits)  |
-| structure | features      | ~28      | # of distinct features (that are categorized & tracked) `wip`   |
+| QA        | unit          | 682      | # of tests (solely relating to core functionality)              |
+| QA        | performance   | 262      | # of tests (solely relating to performance)                     |
+| QA        | DB            | 98       | # of tests (solely relating to the database)                    |
+| CI        | audits        | 42       | # of tests (solely relating to non-functionality based audits)  |
+| structure | features      | ~30      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |
 | coverage  | documentation | ???      | `wip` |
@@ -206,20 +207,20 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 
 #### General Tasks:
 |  preface           | cmd                 | description                                          |
-| -----------------: | ------------------- | ---------------------------------------------------- |
+| -----------------: | :-----------------: | ---------------------------------------------------: |
 | `bundle exec rake` | `rdoc`              | generate documentation coverage report               |
 | `bundle exec rake` | `install`           | install gem onto local machine                       |
 | `bundle exec rake` | `compile`           | compile any native C-extensions with code changes    |
 | `bundle exec rake` | `release`           | push git version tags and publish gem to Rubygems    |
 | `bin/`             | `audit`             | general all-around build & health check              |
-| `bin/`             | `audit_quick`       | similar to above but only run regular unit-tests     |
+| `bin/`             | `audit_db`<br/>`audit_quick`<br/>`audit_quickest`<br/>`audit_all_but_performance` | similar to above but for targeted portions           |
 | `bin/`             | `setup`             | install dependencies                                 |
 | `bin/`             | `console`           | interactive console for easier experimenting         |
 | `gem`              | `server`            | host interactive web-page at `http://0.0.0.0:8808` to see documentation for currently installed gems |
 
 #### Testing Tasks:
 | preface            | cmd                 | w/ warnings? | description |
-| -----------------: | ------------------- | :----------: | ----------- |
+| -----------------: | :-----------------: | :----------: | ----------: |
 | `bundle exec rake` | `rspec_unit`        | ❌           | run all unit-tests except tags: {audit, performance, db} |
 | `bundle exec rake` | `rspec_db`          | ❌           | run only db based unit-tests |
 | `bundle exec rake` | `rspec_audit`       | ❌           | run only audit based unit-tests  |
@@ -230,12 +231,12 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 
 ### Project Layout:
 |  directory     | description of contents                         |
-| -------------: | ----------------------------------------------- |
+| -------------: | :---------------------------------------------: |
 | `app`          | currently only holds `ORM` definitions           |
 | `bin`          | `executable` files                               |
 | `db`           | database `schema`, `seed`, and `migrations`     |
 | `ext`          | `C` portion of this Gem's code <br/> (and future location for `JRuby-extensions`) |
-| `help`         | any helpful additional `documentation & notes`  |
+| `help`         | any helpful `documentation & notes`  |
 | `lib`          | `Ruuuby` portion of this `Gem's code`           |
 | `spec`         | `RSpecs` (unit tests + other `QA` and `Audits`) |
 

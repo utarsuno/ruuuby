@@ -7,9 +7,10 @@ require_relative 'db'
 @v0_0_26.released!
 @v0_0_27.released!
 @v0_0_28.released!
-@v0_0_29.released!(false)
+@v0_0_29.released!
+@v0_0_30.released!(false)
 
-# TODO: FOR v0.0.29? (), ADD OBJECT/FUNC TO GATHER ALL RELEASES AND THEN PRINT OUT CHANGELOG
+# TODO: FOR v0.0.30? (), ADD OBJECT/FUNC TO GATHER ALL RELEASES AND THEN PRINT OUT CHANGELOG
 # (to remove code below)
 
 =begin

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 
 module HelpersDB
   require_relative '../../db/seed'
@@ -24,9 +25,10 @@ end
 RSpec.shared_context 'shared_context_db' do
 
   let(:data_git_hash){'0123456789012345678901234567890123456789'}
-  let(:data_git_author_date){'Tue Dec 31 18:03:39 2019 -0600'}
-
-  let(:ruuuby_orm){Ruuuby::MetaData::RuuubyORM.instance}
+  let(:data_git_author_date){'2019-12-31T18:03:39-06:00'}
+  let(:data_git_author_date_older){'2019-12-31T18:03:39-06:00'}
+  let(:data_git_author_date_newer){'2020-11-31T18:03:39-06:00'}
+  let(:data_git_author_date_wo_normalization){'2019-12-31 18:03:39 -0600'}
 
   let(:re_ruuuby_feature){RuuubyFeature::Syntax}
   let(:re_ruuuby_release){RuuubyRelease::Syntax}
@@ -36,10 +38,10 @@ RSpec.shared_context 'shared_context_db' do
 
   let(:re_ruuuby_release_version){RuuubyRelease.cache_fetch(re_ruuuby_release::UID)}
 
-  let(:v0_0_0){RuuubyRelease.all[0]}
-  let(:v0_0_1){RuuubyRelease.all[1]}
-  let(:v0_0_2){RuuubyRelease.all[2]}
-  let(:v0_0_3){RuuubyRelease.all[3]}
+  let(:v0_0_0){RuuubyRelease.find_by_uid(0, 0, 0)}
+  let(:v0_0_1){RuuubyRelease.find_by_uid(0, 0, 1)}
+  let(:v0_0_2){RuuubyRelease.find_by_uid(0, 0, 2)}
+  let(:v0_0_3){RuuubyRelease.find_by_uid(0, 0, 3)}
   let(:v0_0_18){RuuubyRelease.find_by_uid(0, 0, 18)}
   let(:v0_0_19){RuuubyRelease.find_by_uid(0, 0, 19)}
   let(:v0_0_20){RuuubyRelease.find_by_uid(0, 0, 20)}
@@ -52,6 +54,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:v0_0_27){RuuubyRelease.find_by_uid(0, 0, 27)}
   let(:v0_0_28){RuuubyRelease.find_by_uid(0, 0, 28)}
   let(:v0_0_29){RuuubyRelease.find_by_uid(0, 0, 29)}
+  let(:v0_0_30){RuuubyRelease.find_by_uid(0, 0, 30)}
 
   let(:f00){RuuubyFeature.find_by_uid(0)}
   let(:f01){RuuubyFeature.find_by_uid(1)}
@@ -77,6 +80,8 @@ RSpec.shared_context 'shared_context_db' do
   let(:f22){RuuubyFeature.find_by_uid(22)}
   let(:f23){RuuubyFeature.find_by_uid(23)}
   let(:f24){RuuubyFeature.find_by_uid(24)}
+  let(:f25){RuuubyFeature.find_by_uid(25)}
+  let(:f26){RuuubyFeature.find_by_uid(26)}
   let(:f98){RuuubyFeature.find_by_uid(98)}
 
 end

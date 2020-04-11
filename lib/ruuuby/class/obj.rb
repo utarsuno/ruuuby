@@ -12,6 +12,9 @@ module ::Ruuuby
       # defines the operations needed to support Feature(`f06`) that are applied to Class(`Object`)
       module ObjectF06
 
+        # @return [Boolean] true, if this object includes the m(`Singleton`)
+        def singleton? ; self.class.ancestors.∋?(Singleton) ; end
+
         # @param [Symbol] arg_name
         # @param [*]      arg
         #
@@ -28,22 +31,22 @@ module ::Ruuuby
 
         # @param [Symbol] arg_name
         # @param [*]      arg
+        # @param [Symbol] normalization_checks (default{:none})
         #
         # @raise [WrongParamType]
-        def 🛑sym❓(arg_name, arg)
+        def 🛑sym❓(arg_name, arg, normalization_checks=:none)
           unless arg_name == $PRM_MANY
-            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Symbol, arg) unless arg.sym?
+            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Symbol, arg) unless arg.sym?(normalization_checks)
           else
             arg.∀ₓᵢ do |x, i|
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Symbol, x) unless x.sym?
+              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Symbol, x) unless x.sym?(normalization_checks)
             end
           end
         end
 
-
         # @param [Symbol] arg_name
         # @param [*]      arg
-        # @param [Symbol] normalization_checks
+        # @param [Symbol] normalization_checks (default{:none})
         #
         # @raise [WrongParamType]
         def 🛑str❓(arg_name, arg, normalization_checks=:none)
@@ -280,8 +283,9 @@ class ::Object
   # ---------------------------------------------------------------------------------------------------------- | *f02* |
   alias_method :🛡️funcs, :protected_methods
   # ---------------------------------------------------------------------------------------------------------- | *f06* |
-  alias_method :🅱️?, :bool?
-  alias_method :🛑🅱️❓, :🛑bool❓
+  ⨍_add_aliases(:bool?, [:🅱️?, :🅱?])
+  ⨍_add_aliases(:🛑bool❓, [:🛑🅱️❓, :🛑🅱❓])
+  alias_method :🧬?, :nucleotide?
   # ---------------------------------------------------------------------------------------------------------- | *f10* |
   alias_method :🆔, :object_id
   ⨍_add_aliases(:freeze, [:❄️, :❄])

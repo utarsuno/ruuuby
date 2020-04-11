@@ -146,10 +146,19 @@ module ::Ruuuby
 
       end # end: {MainF17}
 
-    end
+      # defines the operations needed to support Feature(`f26`) that are applied to the `main` object
+      module MainF26
+        # @return [::Date]
+        def 📅; ::Date ; end
 
-  end
+        # @return [::Time]
+        def 🕒; ::Time ; end
 
-end
+        # @return [::DateTime]
+        def 📅🕒; ::DateTime  ; end
+      end # end: {MainF26}
+    end # end: {Extendable}
+  end # end: {Feature}
+end # end: {Ruuuby}
 
 # ---------------------------------------------------------------------------------------------------------- | *f12* |
