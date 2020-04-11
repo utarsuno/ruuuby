@@ -367,6 +367,5 @@
 @v0_0_30.changelog.added_method_to_class(@f26, :iso8601?, ::String)
 @v0_0_30.changelog.added_method_to_class(@f26, :to_iso8601, ::String)
 @v0_0_30.changelog.added_method_to_class(@f26, :as_iso8601, ::String)
-@v0_0_30.changelog.added_method_to_class(@f26, :as_iso8601, ::String)
 
 # TODO: finish coverage of func{<, >} for GitCommit

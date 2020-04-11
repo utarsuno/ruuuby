@@ -18,6 +18,25 @@
 
 ---
 
+# v0.0.30
+ * add normalizers to `sym?`
+ * continued ORM cleanups started in `v0.0.29`
+ * add `f26` as continued step in enabling textual parsing for more useful code-file automations
+
+| path added | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `app/model_attributes/extendable/uid.rb` | | | `f15` |
+| `app/model_attributes/includable/uid.rb` | | | `f15` |
+
+| (c)lass or (m)odule | method(s) added | feature(s) | notes |
+| --- | --- | --- | --- |
+| (c) `Object` | `singleton?` | `f06` | |
+| (c) `Object` | `🅱?`, `🛑🅱❓`, `🧬?` | `f10` | |
+| (m) `Module` | `get_all_defined_modules`, `get_all_defined_classes` | `f10` | |
+| (c) `String` | `iso8601?`, `to_iso8601`, `as_iso8601` | `f26` | |
+
+---
+
 # v0.0.29
  * misc cleanup for `ORM`, example: remove un-needed m(`::ApplicationRecord::ORMAttributeCache`)
  * general cleanup for `QA`/`RSpecs`, especially w/ file loading order
