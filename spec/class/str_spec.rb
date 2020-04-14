@@ -23,29 +23,29 @@ RSpec.describe 'str' do
 
           context 'time-related' do
 
-            context 'func{as_iso8601}' do
+            context 'func{to_iso8601}' do
               context 'handles needed scenarios' do
                 context 'cases: positive' do
                   it 'year' do
-                    data = '2020'.as_iso8601
+                    data = '2020'.to_iso8601
                     expect(data.class).to eq(::DateTime)
                     expect(data.year).to eq(2020)
                   end
                   it 'year & month' do
-                    data = '2000-04'.as_iso8601
+                    data = '2000-04'.to_iso8601
                     expect(data.class).to eq(::DateTime)
                     expect(data.year).to eq(2000)
                     expect(data.month).to eq(4)
                   end
                   it 'year & month & day' do
-                    data = '1999-11-22'.as_iso8601
+                    data = '1999-11-22'.to_iso8601
                     expect(data.class).to eq(::DateTime)
                     expect(data.year).to eq(1999)
                     expect(data.month).to eq(11)
                     expect(data.day).to eq(22)
                   end
                   it 'year & month & day & time' do
-                    data = '2021-09-01T23:59:00'.as_iso8601
+                    data = '2021-09-01T23:59:00'.to_iso8601
                     expect(data.class).to eq(::DateTime)
                     expect(data.year).to eq(2021)
                     expect(data.month).to eq(9)
@@ -55,8 +55,8 @@ RSpec.describe 'str' do
                     expect(data.second).to eq(0)
                   end
                   it 'year & month & day & time & time-zone' do
-                    data  = '2020-06-02T00:12:12+00:00'.as_iso8601
-                    data2 = '2020-06-02T01:12:12+00:00'.as_iso8601
+                    data  = '2020-06-02T00:12:12+00:00'.to_iso8601
+                    data2 = '2020-06-02T01:12:12+00:00'.to_iso8601
                     expect(data.class).to eq(::DateTime)
                     expect(data.year).to eq(2020)
                     expect(data.month).to eq(06)
@@ -224,13 +224,6 @@ RSpec.describe 'str' do
       end # end: {syntax-functions}
     end # end: {by adding needed static functions}
 
-    it 'by creating needed aliases' do
-      expect_added_ruby_methods(::String, cΔ_String)
-
-      RuuubyTestHelper::CONFIG_STRING[:c].∀{ |func| expect(::String.∃⨍?(func)).to eq(true) }
-      RuuubyTestHelper::CONFIG_STRING[:aliases].∀{ |aliased_func, base_func| expect(::String.∃⨍?(aliased_func)).to eq(true) }
-    end
-
     context 'time relating functionality' do
       context 'func{iso8601?}' do
         context 'cases: positive' do
@@ -268,27 +261,38 @@ RSpec.describe 'str' do
           end
         end
       end # end: {func{iso8601?}}
-      context 'func{η̂}' do
+      context 'func{η̂} && func{as_iso8601}' do
         context 'normalizer{:iso8601}' do
           context 'cases: positive' do
             it 'year' do
               expect('2020'.η̂(:iso8601)).to eq('2020')
+              expect('2020'.as_iso8601).to eq('2020')
             end
             it 'year & month' do
               expect('2020-04'.η̂(:iso8601)).to eq('2020-04')
+              expect('2020-04'.as_iso8601).to eq('2020-04')
             end
             it 'year & month & day' do
               expect('2020-04-04'.η̂(:iso8601)).to eq('2020-04-04')
+              expect('2020-04-04'.as_iso8601).to eq('2020-04-04')
             end
             it 'year & month & day & time' do
               expect('2020-04-04T23:12:12'.η̂(:iso8601)).to eq('2020-04-04T23:12:12')
               expect('2020-04-04 23:12:12'.η̂(:iso8601)).to eq('2020-04-04T23:12:12')
+
+              expect('2020-04-04T23:12:12'.as_iso8601).to eq('2020-04-04T23:12:12')
+              expect('2020-04-04T23:12:12'.as_iso8601).to eq('2020-04-04T23:12:12')
             end
             it 'year & month & day & time & time-zone' do
               expect('2020-04-04T23:12:12+11:00'.η̂(:iso8601)).to eq('2020-04-04T23:12:12+11:00')
               expect('2020-04-04T23:12:12+1100'.η̂(:iso8601)).to eq('2020-04-04T23:12:12+11:00')
               expect('2020-04-04 23:12:12+11:00'.η̂(:iso8601)).to eq('2020-04-04T23:12:12+11:00')
               expect('2020-04-04 23:12:12+1100'.η̂(:iso8601)).to eq('2020-04-04T23:12:12+11:00')
+
+              expect('2020-04-04T23:12:12+11:00'.as_iso8601).to eq('2020-04-04T23:12:12+11:00')
+              expect('2020-04-04T23:12:12+1100'.as_iso8601).to eq('2020-04-04T23:12:12+11:00')
+              expect('2020-04-04 23:12:12+11:00'.as_iso8601).to eq('2020-04-04T23:12:12+11:00')
+              expect('2020-04-04 23:12:12+1100'.as_iso8601).to eq('2020-04-04T23:12:12+11:00')
             end
           end
           context 'cases: negative' do
@@ -296,31 +300,49 @@ RSpec.describe 'str' do
               expect{'-1000'.η̂(:iso8601)}.to raise_error(RuntimeError)
               expect{'a123'.η̂(:iso8601)}.to raise_error(RuntimeError)
               expect{''.η̂(:iso8601)}.to raise_error(RuntimeError)
+
+              expect{'-1000'.as_iso8601}.to raise_error(RuntimeError)
+              expect{'a123'.as_iso8601}.to raise_error(RuntimeError)
+              expect{''.as_iso8601}.to raise_error(RuntimeError)
             end
             it 'year & month' do
               expect{'-1000'.η̂(:iso8601)}.to raise_error(RuntimeError)
               expect{'a123'.η̂(:iso8601)}.to raise_error(RuntimeError)
               expect{''.η̂(:iso8601)}.to raise_error(RuntimeError)
               expect{'2020-55'.η̂(:iso8601)}.to raise_error(RuntimeError)
+
+              expect{'-1000'.as_iso8601}.to raise_error(RuntimeError)
+              expect{'a123'.as_iso8601}.to raise_error(RuntimeError)
+              expect{''.as_iso8601}.to raise_error(RuntimeError)
+              expect{'2020-55'.as_iso8601}.to raise_error(RuntimeError)
             end
             it 'year & month & day' do
               expect{'-1000'.η̂(:iso8601)}.to raise_error(RuntimeError)
               expect{'2020-04-54'.η̂(:iso8601)}.to raise_error(RuntimeError)
               expect{''.η̂(:iso8601)}.to raise_error(RuntimeError)
+
+              expect{'-1000'.as_iso8601}.to raise_error(RuntimeError)
+              expect{'2020-04-54'.as_iso8601}.to raise_error(RuntimeError)
+              expect{''.as_iso8601}.to raise_error(RuntimeError)
             end
             it 'year & month & day & time' do
               expect{'-1000'.η̂(:iso8601)}.to raise_error(RuntimeError)
               expect{'2020-04-04A23:12:12'.η̂(:iso8601)}.to raise_error(RuntimeError)
               expect{'2020-04-04T25:12:12'.η̂(:iso8601)}.to raise_error(RuntimeError)
               expect{''.η̂(:iso8601)}.to raise_error(RuntimeError)
+
+              expect{'-1000'.as_iso8601}.to raise_error(RuntimeError)
+              expect{'2020-04-04A23:12:12'.as_iso8601}.to raise_error(RuntimeError)
+              expect{'2020-04-04T25:12:12'.as_iso8601}.to raise_error(RuntimeError)
+              expect{''.as_iso8601}.to raise_error(RuntimeError)
             end
             it 'year & month & day & time & time-zone' do
               scenarios_iso8601_error.∀{|scenario| expect{scenario.η̂(:iso8601)}.to raise_error(RuntimeError)}
+              scenarios_iso8601_error.∀{|scenario| expect{scenario.as_iso8601}.to raise_error(RuntimeError)}
             end
           end
         end # end: {normalizer{:iso8601}}
       end # end: {func{η̂}}
-
     end # end: {time relating functionality}
 
 

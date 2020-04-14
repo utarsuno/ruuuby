@@ -11,6 +11,8 @@ RSpec.shared_context 'shared_context_performance' do
   let(:pΔ_95){1.95}
   let(:pΔ_105){2.05}
   let(:pΔ_400){5.00}
+  let(:pΔ_475){5.75}
+  let(:pΔ_500){6.00}
   let(:pΔ_600){7.00}
   let(:pΔ_700){8.00}
 end

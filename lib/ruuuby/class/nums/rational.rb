@@ -26,14 +26,23 @@ class ::Rational
   #
   # @param [Symbol]
   #
-  # @raise [RuntimeError]
+  # @raise [ArgumentError]
   #
-  # @return [Numeric, Symbol]
+  # @return [Numeric, Symbol, Float, Complex, Rational]
   def ^(n)
-    if n.sym?
-      if n.power?
-        self ** n.pow_to_i
-      elsif n == :∞
+    evaluated = n.sym?(:∈superscripts)
+    if evaluated.int?
+      if self != 0
+        return self ** evaluated
+      else
+        if evaluated == 0
+          return ::Float::NAN
+        else
+          return self ** evaluated
+        end
+      end
+    elsif evaluated.flt?
+      if evaluated == ::Float::INFINITY
         if self == 1 || self == -1
           return ::Float::NAN
         elsif self == 0 || (self < 1 && self > 0) || (self > -1 && self < 0)
@@ -43,7 +52,7 @@ class ::Rational
         else
           return ::Float::INFINITY
         end
-      elsif n == :'-∞'
+      else
         if self == 1 || self == -1
           return ::Float::NAN
         elsif self == 0 || (self > -1 && self < 0)
@@ -53,19 +62,17 @@ class ::Rational
         else
           return self ** Float::INFINITY_NEGATIVE
         end
-      elsif n == :∞ℂ
-        if self > 0
-          return ::Float::NAN
-        elsif self == 0
-          return 0
-        else
-          return ::Float::NAN
-        end
+      end
+    elsif evaluated == :∞ℂ
+      if self > 0
+        return ::Float::NAN
+      elsif self == 0
+        return 0
       else
-        🛑 RuntimeError.🆕("| c{Rational}-> m{^} self(#{self.to_s}) received invalid exponential argument(#{n.to_s}) |")
+        return ::Float::NAN
       end
     else
-      🛑 RuntimeError.🆕("| c{Rational}-> m{^} self(#{self.to_s}) received invalid exponential argument(#{n.to_s}) |")
+      🛑 ArgumentError.🆕("| c{Rational}-> m{^} self(#{self.to_s}) received invalid exponential argument(#{n.to_s}) |")
     end
   end
 

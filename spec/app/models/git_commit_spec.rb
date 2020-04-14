@@ -9,6 +9,10 @@ RSpec.describe 'git_commit.rb' do
       before :all do
         @fake_release_older = RuuubyRelease.spawn(0, 0, 99)
         @fake_release_newer = RuuubyRelease.spawn(99, 0, 0)
+        expect(@fake_release_newer > @fake_release_older).to eq(true)
+        expect(@fake_release_older < @fake_release_newer).to eq(true)
+        expect(@fake_release_older > @fake_release_newer).to eq(false)
+        expect(@fake_release_newer < @fake_release_older).to eq(false)
       end
 
       after :all do
@@ -52,11 +56,15 @@ RSpec.describe 'git_commit.rb' do
           context 'handles needed scenarios' do
             context 'cases: positive' do
               it 'within the same release' do
-                fake_git_commit_older = GitCommit.spawn('fake_str_a', data_git_author_date_older, data_git_hash, @fake_release_newer)
-                fake_git_commit_newer = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, @fake_release_newer)
+                fake_git_commit_oldest = GitCommit.spawn('fake_str_a', data_git_author_date_oldest, data_git_hash, @fake_release_older)
+                fake_git_commit_older  = GitCommit.spawn('fake_str_a', data_git_author_date_older, data_git_hash, @fake_release_newer)
+                fake_git_commit_newer  = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, @fake_release_newer)
                 expect(fake_git_commit_older < fake_git_commit_newer).to eq(true)
+                expect(fake_git_commit_oldest < fake_git_commit_newer).to eq(true)
+                expect(fake_git_commit_oldest < fake_git_commit_older).to eq(true)
                 fake_git_commit_newer.♻️!
                 fake_git_commit_older.♻️!
+                fake_git_commit_oldest.♻️!
               end
             end
             context 'cases: negative' do
@@ -73,18 +81,26 @@ RSpec.describe 'git_commit.rb' do
         context 'func{>}' do
           context 'handles needed scenarios' do
             it 'cases: positive' do
-              fake_git_commit_older = GitCommit.spawn('fake_str_a', data_git_author_date_older, data_git_hash, @fake_release_newer)
-              fake_git_commit_newer = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, @fake_release_newer)
+              fake_git_commit_oldest = GitCommit.spawn('fake_str_a', data_git_author_date_oldest, data_git_hash, @fake_release_older)
+              fake_git_commit_older  = GitCommit.spawn('fake_str_a', data_git_author_date_older, data_git_hash, @fake_release_newer)
+              fake_git_commit_newer  = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, @fake_release_newer)
               expect(fake_git_commit_newer > fake_git_commit_older).to eq(true)
+              expect(fake_git_commit_newer > fake_git_commit_oldest).to eq(true)
+              expect(fake_git_commit_older > fake_git_commit_oldest).to eq(true)
               fake_git_commit_newer.♻️!
               fake_git_commit_older.♻️!
+              fake_git_commit_oldest.♻️!
             end
             it 'cases: negative' do
-              fake_git_commit_older = GitCommit.spawn('fake_str_a', data_git_author_date_older, data_git_hash, @fake_release_newer)
-              fake_git_commit_newer = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, @fake_release_newer)
+              fake_git_commit_oldest = GitCommit.spawn('fake_str_a', data_git_author_date_oldest, data_git_hash, @fake_release_older)
+              fake_git_commit_older  = GitCommit.spawn('fake_str_a', data_git_author_date_older, data_git_hash, @fake_release_newer)
+              fake_git_commit_newer  = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, @fake_release_newer)
               expect(fake_git_commit_older > fake_git_commit_newer).to eq(false)
+              expect(fake_git_commit_oldest > fake_git_commit_newer).to eq(false)
+              expect(fake_git_commit_oldest > fake_git_commit_older).to eq(false)
               fake_git_commit_newer.♻️!
               fake_git_commit_older.♻️!
+              fake_git_commit_oldest.♻️!
             end
           end
         end # end: {func{>}}

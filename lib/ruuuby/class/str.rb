@@ -388,14 +388,14 @@ module ::Ruuuby
         # @raise [RuntimeError] if this contents of this `String` are not representative of an iso8601 formatted date and/or time
         #
         # @return [String] a normalized representation of iso8601
-        def to_iso8601
-          🛑 RuntimeError.new("| c{String}-> m{to_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x0) |") unless self.iso8601?
+        def as_iso8601
+          🛑 RuntimeError.new("| c{String}-> m{as_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x0) |") unless self.iso8601?
           data      = self.dup
           node_date = data[0...10]
           return self if node_date == self
           remainder = data[11...data.length]
           if remainder.length < 8
-            🛑 RuntimeError.new("| c{String}-> m{to_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x1) |")
+            🛑 RuntimeError.new("| c{String}-> m{as_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x1) |")
           else
             node_time = remainder[0...8]
             return "#{node_date}T#{node_time}" if node_time == remainder
@@ -409,10 +409,10 @@ module ::Ruuuby
               when 6
                 return "#{node_date}T#{node_time}#{remainder}"
               else
-                🛑 RuntimeError.new("| c{String}-> m{to_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x2) |")
+                🛑 RuntimeError.new("| c{String}-> m{as_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x2) |")
               end
             else
-              🛑 RuntimeError.new("| c{String}-> m{to_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x3) |")
+              🛑 RuntimeError.new("| c{String}-> m{as_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x3) |")
             end
           end
         end
@@ -420,8 +420,8 @@ module ::Ruuuby
         # @raise [RuntimeError]
         #
         # @return [DateTime]
-        def as_iso8601
-          ::DateTime.iso8601(self.to_iso8601)
+        def to_iso8601
+          ::DateTime.iso8601(self.as_iso8601)
           #DateTime.strptime(self, '%FT%T%:z')
         end
 
@@ -520,6 +520,9 @@ class ::String
     # @type [Array]
     SQL_LEN_3_INF         = %w(+♾️ -♾️).❄️
 
+    # @type [String]
+    SQL_ENCODING_UTF_8    = 'UTF-8'.❄️
+
     ❄️
   end
 
@@ -558,10 +561,13 @@ class ::String
   # @return [String]
   def η̂(normalizer)
     if normalizer == :iso8601
-      self.to_iso8601
+      self.as_iso8601
     else
       🛑 RuntimeError.new("c{String}-> m{η̂} got invalid arg(normalizer){#{normalizer.to_s}} w/ type{#{normalizer.class.to_s}}")
     end
   end
+
+  # @return [String] self with modified +encoding+ if not already +UTF-8+
+  def as_utf8 ; self.force_encoding(::String::Syntax::SQL_ENCODING_UTF_8) ; end
 
 end

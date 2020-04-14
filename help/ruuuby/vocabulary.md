@@ -3,9 +3,11 @@
 | set | contents |
 | --- | --- |
 | subscripts | ₋₍₎₀₁₂₃₄₅₆₇₈₉ |
-| superscripts | ⁻⁽⁾¹²³⁴⁵⁶⁷⁸⁹ |
+| superscripts | ⁻⁽⁾⁰¹²³⁴⁵⁶⁷⁸⁹ |
 
 | symbol | ~direct text replacement |
 | --- | --- |
 | ∴ | therefore |
 
+±
+∞

@@ -21,6 +21,9 @@ ________________________________________________________________________________
 
 static VALUE cached_ref_empty_ary;
 
+static VALUE cached_flt_one_fourth;
+static VALUE cached_flt_one_half;
+static VALUE cached_flt_three_fourths;
 static VALUE cached_flt_nan;
 static VALUE cached_flt_inf;
 static VALUE cached_flt_negative_inf;
@@ -34,7 +37,8 @@ static VALUE cached_module_attribute_includable;
 static VALUE cached_module_attribute_extendable;
 
 static VALUE cached_module_param_err;
-static VALUE cached_module_vocab;
+static VALUE cached_module_virtual_types;
+static VALUE cached_module_normalizers;
 // | --- |
 
 static VALUE cached_global_sym_many_args;
@@ -61,8 +65,7 @@ static VALUE cached_rb_intern_is_empty;
 \__, /~~\ \__, |  | |___ .   \__,
 _____________________________________________________________________________________________________________________ */
 
-static unsigned long exponential_ids[𝔠EXPONENTS];
-// make these const ints?
-static int           exponential_indexes[𝔠EXPONENTS];
+static long long exponential_ids[𝔠EXPONENTS];
+static int       exponential_indexes[𝔠EXPONENTS];
 
 #endif

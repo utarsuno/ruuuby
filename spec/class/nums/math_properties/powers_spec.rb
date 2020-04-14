@@ -54,9 +54,9 @@ RSpec.describe 'math-operations: raise to subscript powers' do
 
       context 'handles bad args' do
         it 'invalid symbols' do
-          expect{2^(:∞∞∞)}.to raise_error(RuntimeError)
-          expect{0^(9.9)}.to raise_error(RuntimeError)
-          expect{0^(nil)}.to raise_error(RuntimeError)
+          expect{2^(:∞∞∞)}.to raise_error(ArgumentError)
+          expect{0^(9.9)}.to raise_error(ArgumentError)
+          expect{0^(nil)}.to raise_error(ArgumentError)
         end
         it 'un-supported dynamic evaluation' do
           expect{0^⁻⁹⁹}.to raise_error(NameError)
@@ -105,9 +105,9 @@ RSpec.describe 'math-operations: raise to subscript powers' do
 
       context 'handles bad args' do
         it 'invalid symbols' do
-          expect{2.0^(:∞∞∞)}.to raise_error(RuntimeError)
-          expect{0.0^(9.9)}.to raise_error(RuntimeError)
-          expect{0.0^(nil)}.to raise_error(RuntimeError)
+          expect{2.0^(:∞∞∞)}.to raise_error(ArgumentError)
+          expect{0.0^(9.9)}.to raise_error(ArgumentError)
+          expect{0.0^(nil)}.to raise_error(ArgumentError)
         end
         it 'un-supported dynamic evaluation' do
           expect{0.0^⁻⁹⁹}.to raise_error(NameError)
@@ -156,9 +156,9 @@ RSpec.describe 'math-operations: raise to subscript powers' do
 
       context 'handles bad args' do
         it 'invalid symbols' do
-          expect{data_rational_negative_3^(:∞∞∞)}.to raise_error(RuntimeError)
-          expect{data_rational_zero^(9.9)}.to raise_error(RuntimeError)
-          expect{data_rational_zero^(nil)}.to raise_error(RuntimeError)
+          expect{data_rational_negative_3^(:∞∞∞)}.to raise_error(ArgumentError)
+          expect{data_rational_zero^(9.9)}.to raise_error(ArgumentError)
+          expect{data_rational_zero^(nil)}.to raise_error(ArgumentError)
         end
         it 'un-supported dynamic evaluation' do
           expect{data_rational_zero^⁻⁹⁹}.to raise_error(NameError)

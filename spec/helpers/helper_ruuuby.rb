@@ -12,7 +12,6 @@ RSpec.shared_context 'shared_context_language_deltas' do
   let(:cΔ_Module){RuuubyTestHelper::CONFIG_MODULE}
   let(:cΔ_Object){RuuubyTestHelper::CONFIG_OBJECT}
   let(:cΔ_Symbol){RuuubyTestHelper::CONFIG_SYMBOL}
-  let(:cΔ_String){RuuubyTestHelper::CONFIG_STRING}
 
   def expect_added_ruby_methods(the_class, the_configs)
     the_configs[:ruby].∀{|c| expect(the_class.∃⨍?(c)).to eq(true)}
@@ -49,6 +48,7 @@ RSpec.shared_context 'shared_context_general' do
   let(:data_complex_error_cases){[data_complex_nan, data_complex_nan_w_complex, data_complex_inf, data_complex_negative_inf]}
   let(:data_complex_zero){ℂ(0)}
   let(:data_complex_one){ℂ(1)}
+  let(:data_complex_3i){ℂ(0, 3)}
   let(:data_complex_leet){ℂ(1337)}
   let(:data_int_leet){1337}
   let(:data_int_negative_one){-1}
@@ -79,6 +79,11 @@ RSpec.shared_context 'shared_context_general' do
   let(:data_range_rational_negative){[Rational(-1337, 1), Rational(-10, 1), Rational(-3, 1), Rational(-2, 1), Rational(-1, 1)]}
   let(:data_range_rational_all_but_zero){data_range_rational_negative + data_range_rational_positive}
   let(:data_range_rational){data_range_rational_negative + data_range_rational_zero_to_positive}
+  let(:data_range_complex_one_to_positive){[ℂ(0, 1), ℂ(0, 3), ℂ(0, 1337), ℂ(1, 1), ℂ(1, 3), ℂ(1, 1337)]}
+  let(:data_range_complex_one_from_zero_to_positive){[data_complex_zero] + data_range_complex_one_to_positive}
+  let(:data_range_complex_negative_one){[ℂ(-1, 1), ℂ(-1, 3), ℂ(-1, 1337), ℂ(-1, 1), ℂ(-1, 3), ℂ(-1, 1337)]}
+  let(:data_range_complex_one_w_negative_complex){[ℂ(1, -1), ℂ(1, -3), ℂ(1, -1337), ℂ(1, -1), ℂ(1, -3), ℂ(1, -1337)]}
+  let(:data_range_complex_just_infs){[ℂ(data_float_inf, 0), ℂ(data_float_negative_inf, 0)]}
   let(:data_rational_default){Rational(2, 3)}
   let(:data_rational_zero){Rational(0)}
   let(:data_rational_zero_w_complex_denominator){Rational(0, ℂ(0, 1.5))}
@@ -184,27 +189,6 @@ module RuuubyTestHelper
   CONFIG_METHOD = {
       aliases: {
           source_location: :🏠
-      }
-  }
-
-  CONFIG_STRING = {
-      ruby: [:∋?, :∌?, :∉?, :∈?, :ensure_start!, :ensure_ending!],
-      c: [:>>],
-      aliases: {
-          ∅?: :empty?,
-          𝔠: :length,
-          ⬇️: :downcase,
-          ⬇️!: :downcase!,
-          ⬇: :downcase,
-          ⬇!: :downcase!,
-          🔡: :downcase,
-          🔡!: :downcase!,
-          ⬆️: :upcase,
-          ⬆️: :upcase!,
-          ⬆: :upcase,
-          ⬆: :upcase!,
-          🔠: :upcase!,
-          🔠!: :upcase!,
       }
   }
 

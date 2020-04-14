@@ -73,20 +73,22 @@ RSpec.describe 'ruuuby_release.rb' do
 
         context 'adds func{get_version_prev}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_prev).to eq(v0_0_28)
+            expect(RuuubyRelease.get_version_prev).to eq(v0_0_29)
           end
         end
 
         context 'adds func{get_version_curr}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_curr).to eq(v0_0_29)
+            expect(RuuubyRelease.get_version_curr).to eq(v0_0_30)
+          end
+          it 'matches `GitCommit`\'s func{get_latest} return value' do
+            expect(RuuubyRelease.get_version_curr.git_commits.last).to eq(GitCommit.get_latest)
           end
         end
 
-
         context 'adds func{get_version_next}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_next).to eq(v0_0_30)
+            expect(RuuubyRelease.get_version_next).to eq(v0_0_31)
           end
         end
 
@@ -141,7 +143,9 @@ RSpec.describe 'ruuuby_release.rb' do
           before :all do
             @fake_release           = RuuubyRelease.spawn(1, 2, 3)
             @fake_release_w_commits = RuuubyRelease.spawn(3, 2, 1)
+            expect(@fake_release_w_commits.num_commits).to eq(0)
             @fake_release_w_commits.spawn_git_commit('fake_str', '2019-12-31T18:03:39-0600', '0123456789012345678901234567890123456789')
+            expect(@fake_release_w_commits.num_commits).to eq(1)
           end
 
           context 'handles needed scenarios' do
@@ -172,6 +176,18 @@ RSpec.describe 'ruuuby_release.rb' do
         end
         context 'adds func{<}' do
           context 'handles needed cases' do
+            it 'RuuubyRelease ORM objects index order is sorted' do
+              previous_release = nil
+              RuuubyRelease.all.each do |ruuuby_release|
+                if previous_release == nil
+                  previous_release = ruuuby_release
+                else
+                  expect(ruuuby_release > previous_release).to eq(true)
+                  expect(previous_release < ruuuby_release).to eq(true)
+                  previous_release = ruuuby_release
+                end
+              end
+            end
             it 'cases: positive' do
               expect(v0_0_24.<(v0_0_25)).to eq(true)
             end

@@ -21,11 +21,22 @@ class ::Complex
   #
   ⨍_add_aliases(:finite?, [:ℂ?, :𝕌?])
 
+  # `Ruuuby` implementation before switching to `C-extensions`: (`f98`)
+  #
+  # @param [Symbol]
+  #
+  # @raise [ArgumentError]
+  # @raise [NotImplementedError] when raising a `Complex` to symbolic inf
+  #
+  # @return [Numeric, Float, Complex, Rational]
   def ^(n)
-    if n.sym?
-      if n.power?
-        self ** n.pow_to_i
-      end
+    evaluated = n.sym?(:∈superscripts)
+    if evaluated.int?
+      self ** evaluated
+    elsif evaluated.flt?
+      🛑 NotImplementedError.🆕("| c{Rational}-> m{^} self(#{self.to_s}) received invalid exponential argument(#{n.to_s}) |")
+    else
+      🛑 ArgumentError.🆕("| c{Rational}-> m{^} self(#{self.to_s}) received invalid exponential argument(#{n.to_s}) |")
     end
   end
 

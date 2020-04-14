@@ -17,13 +17,14 @@ static inline void internal_only_add_frozen_const_to(VALUE kclass, VALUE * inter
 static inline ID health_check_for_existing_func_name(VALUE context_self, VALUE * func_name_as_str);
 static inline VALUE new_ary(const long known_max_size);
 
-static inline void internal_only_before_loading_extension(void);
-static inline void internal_only_add_ruuuby_c_extensions(void);
-static inline void internal_only_load_needed_ruuuby_files(void);
-static inline void internal_only_protect_against_gc(void);
+static inline void startup_step0_load_needed_default_ruby_libs(void);
+static inline void startup_step1_before_loading_extension(void);
+static inline void startup_step2_add_ruuuby_c_extensions(void);
+static inline void startup_step3_load_3rd_party_gems(void);
+static inline void startup_step4_load_needed_ruuuby_files(void);
+static inline void startup_step5_protect_against_gc(void);
 static inline void internal_only_prepare_f16(void);
 
-static inline void assign_exponential_index_position(unsigned long object_id, const int represented_integer);
 static int internal_only_compare_func_4_object_id(const void * l , const void * r);
 
 /*
@@ -76,9 +77,9 @@ ________________________________________________________________________________
 
 #define ext_api_raise_err_string_arg_type(func_name, them)  macro_only_raise_err_bad_arg_type("| c{String}-> m{" #func_name "} got arg(them) w/ type{%s}, required-type{String} |", them)
 
-#define ext_api_raise_err_int_bad_power                     rb_raise(R_ERR_RUNTIME, "| c{Integer}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
-#define ext_api_raise_err_flt_bad_power                      rb_raise(R_ERR_RUNTIME, "| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
-#define ext_api_raise_err_rational_bad_power                rb_raise(R_ERR_RUNTIME, "| c{Rational}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
+#define ext_api_raise_err_int_bad_power                     rb_raise(R_ERR_ARG, "| c{Integer}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
+#define ext_api_raise_err_flt_bad_power                      rb_raise(R_ERR_ARG, "| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
+#define ext_api_raise_err_rational_bad_power                rb_raise(R_ERR_ARG, "| c{Rational}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them);
 
 #define ext_api_raise_err_generic(the_class, the_func, the_arg, the_type, required_type) rb_raise(R_ERR_RUNTIME, "| c{" #the_class "}-> m{" #the_func "} got arg(" #the_arg ") w/ type{%s}, required-type{" #required_type "}")
 #define ext_api_raise_err_module_f_add_aliases                  rb_raise(R_ERR_RUNTIME, "||")

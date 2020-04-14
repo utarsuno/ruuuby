@@ -24,7 +24,7 @@ RSpec.describe 'db/db.rb' do
         end
 
         it 'w/o any additional (un-expected) tables' do
-          expect(db_tables.length - 1).to eq(💎.orm_meta::ALL_ORM_SCHEMAS.length)
+          expect(db_tables.length - 1).to eq(💎.meta_orm::ALL_ORM_SCHEMAS.length)
         end
 
       end

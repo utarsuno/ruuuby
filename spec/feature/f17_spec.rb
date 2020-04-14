@@ -2,6 +2,14 @@
 
 RSpec.describe 'f17' do
 
+  context 'functionality' do
+    it 'funcs{¼} equal 0.25, 0.50, and 0.75 respectively' do
+      expect(¼).to eq(0.25)
+      expect(½).to eq(0.50)
+      expect(¾).to eq(0.75)
+    end
+  end
+
   context 'audits', :audits do
 
     context 'feature(f17) passes audits (tests not relating to observed functionality)' do
@@ -18,6 +26,10 @@ RSpec.describe 'f17' do
           expect_∃⨍(:∞ℂ, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
           expect_∃⨍(:φ, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
           expect_∃⨍(:γ, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
+
+          expect_∃⨍(:¼, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
+          expect_∃⨍(:½, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
+          expect_∃⨍(:¾, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
         end
         it 'for m{MathAliases}' do
           expect_∃⨍(:ℂ, ::Ruuuby::Feature::Extendable::MainF17::MathAliases)

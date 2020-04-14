@@ -3,6 +3,12 @@
 RSpec.describe 'Object' do
   let(:data_default){Object.🆕}
 
+  before :all do
+    class MockString < String; end
+    class MockTrue < TrueClass; end
+    class MockFalse < FalseClass; end
+  end
+
   context 'creates Ruuuby aliases' do
     it '🆔 --> object_id' do
       expect(::Object.respond_to?(:🆔)).to eq(true)
@@ -60,12 +66,12 @@ RSpec.describe 'Object' do
     context 'by adding function{🛑int❓}' do
       context 'handles needed input scenarios' do
         context 'cases: positive' do
-          context 'w/ normalization{ℕ}' do
+          context 'w/ normalization{∈ℕ}' do
             it 'w/ single param' do
-              expect{🛑int❓('0', 5, :ℕ)}.to_not raise_error
+              expect{🛑int❓('0', 5, :∈ℕ)}.to_not raise_error
             end
             it 'w/ many params' do
-              expect{🛑int❓($PRM_MANY, [0, 1, 3, 1337], :ℕ)}.to_not raise_error
+              expect{🛑int❓($PRM_MANY, [0, 1, 3, 1337], :∈ℕ)}.to_not raise_error
             end
           end
           context 'w/o extra normalization' do
@@ -88,10 +94,10 @@ RSpec.describe 'Object' do
           end
           context 'w/ normalization{ℕ}' do
             it 'w/ single param' do
-              expect{🛑int❓('0', -1337, :ℕ)}.to raise_error(ArgumentError)
+              expect{🛑int❓('0', -1337, :∈ℕ)}.to raise_error(ArgumentError)
             end
             it 'w/ many params' do
-              expect{🛑int❓($PRM_MANY, [-1, 0, 1], :ℕ)}.to raise_error(ArgumentError)
+              expect{🛑int❓($PRM_MANY, [-1, 0, 1], :∈ℕ)}.to raise_error(ArgumentError)
             end
           end
           context 'w/o extra normalization' do
@@ -190,12 +196,12 @@ RSpec.describe 'Object' do
     context 'by adding function{🛑sym❓}' do
       context 'handles needed input scenarios' do
         context 'cases: positive' do
-          context 'w/ normalization{:power_superscript}' do
+          context 'w/ normalization{:∈superscripts}' do
             it 'w/ single param' do
-              expect{🛑sym❓('0', :⁸, :power_superscript)}.to_not raise_error
+              expect{🛑sym❓('0', :⁸, :∈superscripts)}.to_not raise_error
             end
             it 'w/ many params' do
-              expect{🛑sym❓($PRM_MANY, [:⁸, :⁻⁴])}.to_not raise_error
+              expect{🛑sym❓($PRM_MANY, [:⁸, :⁻⁴], :∈superscripts)}.to_not raise_error
             end
           end
           context 'w/o normalization' do
@@ -210,12 +216,12 @@ RSpec.describe 'Object' do
         context 'cases: negative' do
           context 'w/ bad normalization' do
             it 'w/ single param' do
-              expect{🛑sym❓('0', :a, :power_superscript)}.to raise_error(ArgumentError)
+              expect{🛑sym❓('0', :a, :∈superscripts)}.to raise_error(ArgumentError)
             end
             it 'w/ many params' do
-              expect{🛑sym❓($PRM_MANY, ['5', :a], :power_superscript)}.to raise_error(ArgumentError)
-              expect{🛑sym❓($PRM_MANY, [:a, 1337], :power_superscript)}.to raise_error(ArgumentError)
-              expect{🛑sym❓($PRM_MANY, [nil, :a], :power_superscript)}.to raise_error(ArgumentError)
+              expect{🛑sym❓($PRM_MANY, ['5', :a], :∈superscripts)}.to raise_error(ArgumentError)
+              expect{🛑sym❓($PRM_MANY, [:a, 1337], :∈superscripts)}.to raise_error(ArgumentError)
+              expect{🛑sym❓($PRM_MANY, [nil, :a], :∈superscripts)}.to raise_error(ArgumentError)
             end
           end
           context 'w/o normalization' do
@@ -408,12 +414,7 @@ RSpec.describe 'Object' do
           expect(Kernel.module?).to eq(true)
         end
         it 'cases: negative' do
-          expect(Class.module?).to eq(false)
-          expect(String.module?).to eq(false)
-          expect(NilClass.module?).to eq(false)
-          expect(nil.module?).to eq(false)
-          expect(:Symbol.module?).to eq(false)
-          expect('String'.module?).to eq(false)
+          [Class, String, NilClass, nil, :Symbol, 'String', 1337].∀{|scenario|expect(scenario.module?).to eq(false)}
         end
       end
     end
@@ -442,7 +443,7 @@ RSpec.describe 'Object' do
         end
         it 'cases: negative' do
           expect(String.singleton?).to eq(false)
-          expect(💎.orm_meta.singleton?).to eq(false)
+          expect(💎.meta_orm.singleton?).to eq(false)
           expect(1337.singleton?).to eq(false)
         end
       end
@@ -466,8 +467,6 @@ RSpec.describe 'Object' do
         end
         context 'cases: negative' do
           it 'without effecting TrueClass instance or FalseClass instance' do
-            class MockTrue < TrueClass; end
-            class MockFalse < FalseClass; end
             [TrueClass, FalseClass, MockTrue, MockFalse].∀{|scenario| expect(scenario.bool? || scenario.🅱️? || scenario.🅱?).to eq(false)}
           end
           it 'normal data types checks' do
@@ -551,9 +550,7 @@ RSpec.describe 'Object' do
           [String, nil, 0, 1, {}, [], ['str'], :str].∀{|s|expect(s.str?).to eq(false)}
         end
         it 'a newly created object inheriting String (does not match)' do
-          class MockString < String; end
-          mock_str = MockString.🆕('my_str')
-          expect(mock_str.str?).to eq(false)
+          expect(MockString.🆕('my_str').str?).to eq(false)
         end
       end
     end
@@ -567,36 +564,51 @@ RSpec.describe 'Object' do
           [String, nil, 0, 1, {}, [], ['str']].∀{|s|expect(s.stry?).to eq(false)}
         end
         it 'a newly created object inheriting String (does not match)' do
-          class MockString < String; end
-          mock_str = MockString.🆕('my_str')
-          expect(mock_str.stry?).to eq(false)
+          expect(MockString.🆕('my_str').stry?).to eq(false)
         end
       end
     end
 
     context 'by adding function{sym?}' do
-
-      it 'w/ normalizer' do
-        expect(:².sym?(:power_superscript)).to eq(true)
-        expect(:a.sym?(:power_superscript)).to eq(false)
-
-      end
-
-      context 'with correct return values of' do
-        it 'true' do
-          another_test = :hello
-          [:test, another_test].∀{|n|expect(n.sym?).to eq(true)}
+      context 'w/ normalizer(:∈superscripts)' do
+        context 'handles needed scenarios' do
+          context 'cases: positive' do
+            it 'regular exponents' do
+              expect(:⁴.sym?(:∈superscripts)).to eq(4)
+              expect(:².sym?(:∈superscripts)).to eq(2)
+              expect(:⁰.sym?(:∈superscripts)).to eq(0)
+              expect(:⁻².sym?(:∈superscripts)).to eq(-2)
+              expect(:⁻⁴.sym?(:∈superscripts)).to eq(-4)
+            end
+            it '± inf' do
+              expect(:∞.sym?(:∈superscripts)).to eq(::Float::INFINITY)
+              expect(:'-∞'.sym?(:∈superscripts)).to eq(::Float::INFINITY_NEGATIVE)
+            end
+            it 'complex inf' do
+              expect(:∞ℂ.sym?(:∈superscripts)).to eq(::Float::INFINITY_COMPLEX)
+            end
+          end
+          context 'cases: negative' do
+            it 'invalid exponent' do
+              expect(:²²².sym?(:∈superscripts)).to eq(false)
+              expect(:₂.sym?(:∈superscripts)).to eq(false)
+              expect(:a.sym?(:∈superscripts)).to eq(false)
+            end
+          end
         end
-        it 'false' do
-          test = :test
-          [nil, 1337, 'test', ':test', test.to_s].∀{|n|expect(n.sym?).to eq(false)}
-        end
-      end
-      it 'without effecting Symbol instance' do
-        expect(Symbol.sym?).to eq(false)
-      end
-    end
+      end # end: {w/ normalizer(:∈superscripts)}
 
+      context 'w/o any normalizer' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            [:test, :hello, :²²², :₂].∀{|n|expect(n.sym?).to eq(true)}
+          end
+          it 'cases: negative' do
+            [Symbol, nil, 1337, 'test', ':test', :test.to_s].∀{|n|expect(n.sym?).to eq(false)}
+          end
+        end
+      end # end: {w/o any normalizer}
+    end # end: {by adding function{sym?}}
   end
 
   #  __   ___  __   ___  __   __                   __   ___

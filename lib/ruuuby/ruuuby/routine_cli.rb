@@ -4,6 +4,8 @@
 
 module Ruuuby
 
+  # TODO: move into meta-data
+
   class Routine
 
     class CommandCLI
@@ -32,20 +34,6 @@ module Ruuuby
             parsed_data
           end
         end
-      end
-
-      module Normalize
-        # @type [Symbol]
-        TO_LINES     = :str_ary
-
-        # @type [Symbol]
-        NO_EMPTY     = :'!∅'
-
-        # @type [Symbol]
-        NODES_TO_ARY = :∀_to_ary
-
-        # @type [Array]
-        MODE_DEFAULT = [TO_LINES, NO_EMPTY]
       end
 
       def initialize(the_cmd=nil)

@@ -16,12 +16,19 @@ ________________________________________________________________________________
 //#define M_FLT_EULER_MASCHERONI_CONSTANT 0.57721566490153286060651209008240243104215933593992
 #define M_FLT_MIN_NORMAL                1.17549435E-38
 #define M_FLT_RELATIVE_ERROR            0.00001
-//#define M_FLT_INF_COMPLEX               (-10.0e-30f * 10.0e-30f)
-//#define M_FLT_INF_COMPLEX -0.0
+//#define M_FLT_INF_COMPLEX             (-10.0e-30f * 10.0e-30f)
+//#define M_FLT_INF_COMPLEX             -0.0
+#define M_FLT_ONE_FOURTH                0.25
+#define M_FLT_ONE_HALF                  0.50
+#define M_FLT_THREE_FOURTHS             0.75
 
-// superscripts: -9 to +9 (and 3 spots for infs)
-#define 𝔠EXPONENTS 22
-#define 𝔠ULONG sizeof(unsigned long)
+#define CACHE_INDEX_INF                 1337
+#define CACHE_INDEX_INF_NEGATIVE        1338
+#define CACHE_INDEX_INF_COMPLEX         1339
+
+// superscripts: -9 to +9
+#define 𝔠EXPONENTS 22 // 19 vs 22
+#define 𝔠LONGLONG sizeof(long long)
 // rb_ary_new: uses a default size of 16
 #define 𝔠ARY_DEFAULT 16L
 

@@ -7,13 +7,8 @@ RSpec.describe 'f16' do
     context 'feature(16) passes audits (tests not relating to observed functionality)' do
       it 'module is defined in correct location' do
         expect_∃module(:ObjectF16, ::Ruuuby::Feature::Includable)
-        expect_∃module(:SymbolF16, ::Ruuuby::Feature::Includable)
       end
       context 'funcs provided are defined in correct location' do
-        it 'for m{SymbolF16}' do
-          expect_∃⨍(:power?, ::Ruuuby::Feature::Includable::SymbolF16)
-          expect_∃⨍(:pow_to_i, ::Ruuuby::Feature::Includable::SymbolF16)
-        end
         it 'for m{ObjectF16}' do
           expect_∃⨍(:⁻⁹, ::Ruuuby::Feature::Includable::ObjectF16)
           expect_∃⨍(:⁻⁸, ::Ruuuby::Feature::Includable::ObjectF16)

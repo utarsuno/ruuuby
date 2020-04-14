@@ -3,6 +3,7 @@
 
 module ::Ruuuby
 
+  # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
 
     module Paths
@@ -51,22 +52,6 @@ module ::Ruuuby
         # @type [String]
         HELPER_PERFORMANCE = "#{DIR_SPEC_HELPERS}/helper_performance.rb".freeze
       end
-    end
-
-    module Vocabulary
-
-      # @type [Symbol]
-      POWER_SUPERSCRIPT = :power_superscript
-
-      # @type [Symbol]
-      MATH_SET_NATURAL_NUMBERS = :ℕ
-
-      # @type [Symbol]
-      NO_NORMALIZER = :none
-
-      # @type [Symbol]
-      NORMALIZER_NO_EMPTY = :'!∅'
-
     end
 
     module BuiltWith

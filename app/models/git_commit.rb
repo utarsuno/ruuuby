@@ -45,7 +45,7 @@ class GitCommit < ApplicationRecord
     🛑str❓($PRM_MANY, [commit_msg, release_timestamp, commit_hash])
     🛑 ArgumentError.new("c{GitCommit}-> m{spawn} got arg(commit_hash){#{commit_hash.to_s}} of type{#{commit_hash.class.to_s}} which is not valid type or format for a commit hash") unless commit_hash.match?(::GitCommit.syntax_commit_hash)
     🛑 ArgumentError.new("c{GitCommit}-> m{spawn} got arg(release_timestamp){#{release_timestamp.to_s}} of type{#{release_timestamp.class.to_s}} which is not valid type or format for a commit timestamp") unless release_timestamp.match?(::String.syntax_iso8601_normalizable)
-    git_commit = GitCommit.create!(commit_subject: commit_msg, commit_author_date: release_timestamp.to_iso8601, commit_hash: commit_hash)
+    git_commit = GitCommit.create!(commit_subject: commit_msg, commit_author_date: release_timestamp.as_iso8601, commit_hash: commit_hash)
     git_commit.save!
     ruuuby_release.git_commits << git_commit
     ruuuby_release.save!
@@ -57,6 +57,14 @@ class GitCommit < ApplicationRecord
   #  /  \ |__) |__  |__)  /\   |  /  \ |__) /__`
   #  \__/ |    |___ |  \ /~~\  |  \__/ |  \ .__/
   # ________________________________________________________________________________________________________________ */
+
+  def self.get_latest
+    ::GitCommit.where('commit_author_date = ?', ::GitCommit.maximum('commit_author_date')).first
+  end
+
+  def self.query_get_newest_within_version(ruuuby_release)
+    ::GitCommit.where('ruuuby_release_id = ?', ruuuby_release.id).sort{|a, b| a.commit_author_date <=> b.commit_author_date }
+  end
 
   # @param [GitCommit] git_commit
   #

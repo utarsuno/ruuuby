@@ -17,8 +17,10 @@ module HelpersSyntaxCache
 
   def expect_syntax(the_class, syntax_id, syntax_before_processing)
     expect(the_class.respond_to?(syntax_id)).to eq(true)
-    expect(the_class.send(syntax_id).class).to eq(Regexp)
-    expect(the_class.send(syntax_id).source).to eq("\\A#{syntax_before_processing}\\z")
+    result = the_class.send(syntax_id)
+    expect(result.class).to eq(Regexp)
+    expect(result.source).to eq("\\A#{syntax_before_processing}\\z")
+    expect(the_class.send(syntax_id).🆔).to eq(result.🆔)
     expect{the_class.send("#{syntax_id}=".to_sym, 5).to raise_error(FrozenError)}
   end
 
@@ -68,6 +70,14 @@ module HelpersGeneral
     expect(owner.∃⨍?(the_func)).to eq(expected_result)
   end
 
+  def expect_∃static⨍(the_func, owner, expected_result=true)
+    if owner == ::Kernel
+      expect(owner.instance_methods(false).∋?(the_func)).to eq(expected_result)
+    else
+      expect(owner.singleton_class.instance_methods(false).∋?(the_func)).to eq(expected_result)
+    end
+  end
+
   def expect_∃class(the_class, owner=nil, expected_result=true)
     if owner != nil
       expect(∃class?(the_class.to_sym, owner)).to eq(expected_result)
@@ -112,6 +122,7 @@ RSpec.configure do |config|
 
   config.profile_examples = 6
 
+  config.include ::Ruuuby::Feature::Extendable::MainF10
   config.include ::Ruuuby::Feature::Extendable::MainF12
   config.include ::Ruuuby::Feature::Extendable::MainF17::MathAliases
   config.include ::Ruuuby::Feature::Extendable::MainF17::FloatAliases

@@ -4,6 +4,7 @@
 
 module Ruuuby
 
+  # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
 
     class RuuubyORM
@@ -76,8 +77,8 @@ module Ruuuby
 
       def ensure_loaded_db_connection
         unless @connected
-          adapter = 💎.orm_meta::DB_ADAPTER
-          db      = 💎.orm_meta::DB_DB
+          adapter = 💎.meta_orm::DB_ADAPTER
+          db      = 💎.meta_orm::DB_DB
           ActiveRecord::Base.establish_connection(adapter: adapter, database: db)
           💎.info("Connected to db of type{#{adapter.to_s}} with connection to/type{#{db.to_s}}")
           @connected = true
@@ -87,7 +88,7 @@ module Ruuuby
       def ensure_loaded_seeds
         unless @seeds_loaded
           require_relative '../../../db/seeds/ruuuby_features'
-          require_relative '../../../db/seeds/ruuuby_releases'
+          require_relative '../../../db/seeds/ruuuby_releases/ruuuby_releases'
           require_relative '../../../db/seeds/git_commits'
           💎.info('loaded db seeds')
           @seeds_loaded = true
@@ -123,6 +124,7 @@ end
 
 module ::Ruuuby
 
+  # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
 
     # @return [Ruuuby::MetaData::RuuubyORM]

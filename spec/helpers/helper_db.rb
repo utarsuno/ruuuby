@@ -27,6 +27,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:data_git_hash){'0123456789012345678901234567890123456789'}
   let(:data_git_author_date){'2019-12-31T18:03:39-06:00'}
   let(:data_git_author_date_older){'2019-12-31T18:03:39-06:00'}
+  let(:data_git_author_date_oldest){'2018-12-13T18:03:49-06:00'}
   let(:data_git_author_date_newer){'2020-11-31T18:03:39-06:00'}
   let(:data_git_author_date_wo_normalization){'2019-12-31 18:03:39 -0600'}
 
@@ -55,6 +56,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:v0_0_28){RuuubyRelease.find_by_uid(0, 0, 28)}
   let(:v0_0_29){RuuubyRelease.find_by_uid(0, 0, 29)}
   let(:v0_0_30){RuuubyRelease.find_by_uid(0, 0, 30)}
+  let(:v0_0_31){RuuubyRelease.find_by_uid(0, 0, 31)}
 
   let(:f00){RuuubyFeature.find_by_uid(0)}
   let(:f01){RuuubyFeature.find_by_uid(1)}

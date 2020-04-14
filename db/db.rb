@@ -23,6 +23,10 @@ ActiveRecord::Schema.define do
   end
 
   create_table :ruuuby_releases, force: true do |t|
+
+    t.integer :flag_release_status, limit: 1, :null => true
+    t.integer :num_commits, limit: 1, :null => false, :default => 0
+
     t.integer :vmajor, limit: 1, :null => false
     t.integer :vminor, limit: 1, :null => false
     t.integer :vtiny, limit: 1, :null => false
@@ -50,7 +54,8 @@ ActiveRecord::Schema.define do
     t.string :commit_hash, unique: true, :null => false
 
     # non-relative
-    t.string :commit_author_date, unique: true, :null => false
+    t.datetime :commit_author_date, unique: true, :null => false
+    #t.string :commit_author_date, unique: true, :null => false
 
     # commit message
     t.string :commit_subject, :null => false

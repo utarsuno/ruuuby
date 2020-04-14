@@ -86,7 +86,6 @@ RSpec.describe 'rational.rb' do
     end
 
     context 'supports feature(`f16`)' do
-
       context 'by supporting operation {^⁻⁹}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -98,7 +97,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁻⁸}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -110,7 +108,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁻⁷}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -122,7 +119,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁻⁶}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -134,7 +130,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁻⁵}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -146,7 +141,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁻⁴}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -158,7 +152,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁻³}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -170,7 +163,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁻²}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -182,7 +174,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁻¹}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -194,17 +185,17 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁰}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_rational_all_but_zero, :⁰, 0, true)
             expect_scenarios_power_operations(data_range_rational_w_complex, :⁰, 0, true)
-            expect(data_rational_zero^⁰).to eq(1)
+          end
+          it 'cases: negative' do
+            expect((data_rational_zero^⁰).nan?).to eq(true)
           end
         end
       end
-
       context 'by supporting operation {^¹}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -213,7 +204,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^²}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -222,7 +212,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^³}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -231,7 +220,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁴}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -240,7 +228,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁵}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -249,7 +236,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁶}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -258,7 +244,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁷}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -267,7 +252,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁸}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -276,7 +260,6 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
       context 'by supporting operation {^⁹}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -285,8 +268,7 @@ RSpec.describe 'rational.rb' do
           end
         end
       end
-
-    end
+    end # end: {supports feature(`f16`)}
 
   end
 
@@ -346,82 +328,82 @@ RSpec.describe 'rational.rb' do
 
     context 'roughly preserves original pre-extension-performance' do
 
-      context 'performance hit for following funcs, are under 700%' do
-
+      context 'performance hit for following funcs, are under 105%' do
         it '`^⁻⁹` (compared to `** -9`)' do
-          expect {data_rational_3^⁻⁹}.to perform_slower_than {data_rational_3 ** -9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁻⁹}.to perform_slower_than {data_rational_3 ** -9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
+          expect {data_rational_3 ** -9}.to perform_faster_than {data_rational_3^⁻⁹}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁻⁸` (compared to `** -8`)' do
-          expect {data_rational_3^⁻⁸}.to perform_slower_than {data_rational_3 ** -8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁻⁸}.to perform_slower_than {data_rational_3 ** -8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁻⁷` (compared to `** -7`)' do
-          expect {data_rational_3^⁻⁷}.to perform_slower_than {data_rational_3 ** -7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁻⁷}.to perform_slower_than {data_rational_3 ** -7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁻⁶` (compared to `** -6`)' do
-          expect {data_rational_3^⁻⁶}.to perform_slower_than {data_rational_3 ** -6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁻⁶}.to perform_slower_than {data_rational_3 ** -6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁻⁵` (compared to `** -5`)' do
-          expect {data_rational_3^⁻⁵}.to perform_slower_than {data_rational_3 ** -5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁻⁵}.to perform_slower_than {data_rational_3 ** -5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁻⁴` (compared to `** -4`)' do
-          expect {data_rational_3^⁻⁴}.to perform_slower_than {data_rational_3 ** -4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁻⁴}.to perform_slower_than {data_rational_3 ** -4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁻³` (compared to `** -3`)' do
-          expect {data_rational_3^⁻³}.to perform_slower_than {data_rational_3 ** -3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁻³}.to perform_slower_than {data_rational_3 ** -3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁻²` (compared to `** -2`)' do
-          expect {data_rational_3^⁻²}.to perform_slower_than {data_rational_3 ** -2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁻²}.to perform_slower_than {data_rational_3 ** -2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁻¹` (compared to `** -1`)' do
-          expect {data_rational_3^⁻¹}.to perform_slower_than {data_rational_3 ** -1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁻¹}.to perform_slower_than {data_rational_3 ** -1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁰` (compared to `** 0`)' do
-          expect {data_rational_3^⁰}.to perform_slower_than {data_rational_3 ** 0}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁰}.to perform_slower_than {data_rational_3 ** 0}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^¹` (compared to `** 1`)' do
-          expect {data_rational_3^¹}.to perform_slower_than {data_rational_3 ** 1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^¹}.to perform_slower_than {data_rational_3 ** 1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^²` (compared to `** 2`)' do
-          expect {data_rational_3^²}.to perform_slower_than {data_rational_3 ** 2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^²}.to perform_slower_than {data_rational_3 ** 2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^³` (compared to `** 3`)' do
-          expect {data_rational_3^³}.to perform_slower_than {data_rational_3 ** 3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^³}.to perform_slower_than {data_rational_3 ** 3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁴` (compared to `** 4`)' do
-          expect {data_rational_3^⁴}.to perform_slower_than {data_rational_3 ** 4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁴}.to perform_slower_than {data_rational_3 ** 4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁵` (compared to `** 5`)' do
-          expect {data_rational_3^⁵}.to perform_slower_than {data_rational_3 ** 5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁵}.to perform_slower_than {data_rational_3 ** 5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
-        it '`^¹` (compared to `** 6`)' do
-          expect {data_rational_3^⁶}.to perform_slower_than {data_rational_3 ** 6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+        it '`^⁶` (compared to `** 6`)' do
+          expect {data_rational_3^⁶}.to perform_slower_than {data_rational_3 ** 6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁷` (compared to `** 7`)' do
-          expect {data_rational_3^⁷}.to perform_slower_than {data_rational_3 ** 7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁷}.to perform_slower_than {data_rational_3 ** 7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁸` (compared to `** 8`)' do
-          expect {data_rational_3^⁸}.to perform_slower_than {data_rational_3 ** 8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁸}.to perform_slower_than {data_rational_3 ** 8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
 
         it '`^⁹` (compared to `** 9`)' do
-          expect {data_rational_3^⁹}.to perform_slower_than {data_rational_3 ** 9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_700)
+          expect {data_rational_3^⁹}.to perform_slower_than {data_rational_3 ** 9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_105)
         end
       end
 

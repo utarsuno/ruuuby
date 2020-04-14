@@ -16,13 +16,37 @@ class ::RuuubyRelease < ApplicationRecord
     ❄️
   end
 
+  # possible values that the column `flag_release_status` may hold
+  module Flags
+
+    # @type [Integer]
+    RELEASED_IN_PAST  = -1
+
+    # @type [Integer]
+    RELEASED_PREVIOUS = 0
+
+    # @type [Integer]
+    RELEASE_CURRENT   = 1
+
+    # @type [Integer]
+    RELEASE_NEXT      = 2
+
+    # @type [Integer]
+    RELEASE_IN_FUTURE = 3
+
+    ❄️
+  end
+
   include ::Ruuuby::ORMAttribute::Includable::UID
 
   validates :vmajor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :vminor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :vtiny, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :num_commits, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   has_many :git_commits, class_name: 'GitCommit', :dependent => :delete_all
+
+  before_save :on_before_save
 
   module AttributeChangelog
 
@@ -158,10 +182,19 @@ class ::RuuubyRelease < ApplicationRecord
   # @return [Boolean] true, if version of self is less than the compared(`RuuubyRelease`)
   def <(ruuuby_release)
     🛑 ::ArgumentError.new("| c{RuuubyRelease}-> m{<} got arg(ruuuby_release) w/ type{#{ruuuby_release.class.to_s}} when a{RuuubyRelease} is required |") unless ruuuby_release.is_a?(::RuuubyRelease)
-    return true if self.vmajor < ruuuby_release.vmajor
-    return true if self.vminor < ruuuby_release.vminor
-    return true if self.vtiny  < ruuuby_release.vtiny
-    false
+    if self.vmajor < ruuuby_release.vmajor
+      return true
+    elsif self.vmajor > ruuuby_release.vmajor
+      return false
+    else
+      if self.vminor < ruuuby_release.vminor
+        return true
+      elsif self.vminor > ruuuby_release.vminor
+        return false
+      else
+        return self.vtiny < ruuuby_release.vtiny
+      end
+    end
   end
 
   # @param [RuuubyRelease] ruuuby_release
@@ -171,10 +204,19 @@ class ::RuuubyRelease < ApplicationRecord
   # @return [Boolean] true, if version of self is greater than the compared(`RuuubyRelease`)
   def >(ruuuby_release)
     🛑 ::ArgumentError.new("| c{RuuubyRelease}-> m{<} got arg(ruuuby_release) w/ type{#{ruuuby_release.class.to_s}} when a{RuuubyRelease} is required |") unless ruuuby_release.is_a?(::RuuubyRelease)
-    return true if self.vmajor > ruuuby_release.vmajor
-    return true if self.vminor > ruuuby_release.vminor
-    return true if self.vtiny  > ruuuby_release.vtiny
-    false
+    if self.vmajor > ruuuby_release.vmajor
+      return true
+    elsif self.vmajor < ruuuby_release.vmajor
+      return false
+    else
+      if self.vminor > ruuuby_release.vminor
+        return true
+      elsif self.vminor < ruuuby_release.vminor
+        return false
+      else
+        return self.vtiny > ruuuby_release.vtiny
+      end
+    end
   end
 
   # @return [RuuubyRelease]
@@ -229,6 +271,10 @@ class ::RuuubyRelease < ApplicationRecord
   end
 
   🙈
+
+  def on_before_save
+    self.num_commits = self.git_commits.length
+  end
 
   # @param [Symbol] cache_key
   #

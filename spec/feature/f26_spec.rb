@@ -11,7 +11,7 @@ RSpec.describe 'f26' do
         context 'defined in correct location' do
           it 'for module{StringF26}' do
             expect_∃⨍(:iso8601?, ::Ruuuby::Feature::Includable::StringF26)
-            expect_∃⨍(:to_iso8601, ::Ruuuby::Feature::Includable::StringF26)
+            expect_∃⨍(:as_iso8601, ::Ruuuby::Feature::Includable::StringF26)
           end
           it 'for module{MainF26}' do
             expect_∃⨍(:📅, ::Ruuuby::Feature::Extendable::MainF26)

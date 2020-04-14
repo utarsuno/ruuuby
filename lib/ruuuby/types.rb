@@ -1,5 +1,5 @@
 
-# *Ruuuby's* Module()+VirtualTypes+) offers conceptual types that can be enforced (helpful for type checking scenarios)
+# *Ruuuby's* Module(+VirtualTypes+) offers conceptual types that can be enforced (helpful for type checking scenarios)
 module ::Ruuuby
 
   # ---------------------------------------------------------------------------------------------------------- | *f06* |
@@ -7,11 +7,32 @@ module ::Ruuuby
   # conceptual types that can be enforced
   module VirtualTypes
 
+    module Normalizers
+
+      # @type [Symbol]
+      BELONGS_TO_M_EXPONENTIALS    = :∈superscripts
+
+      # @type [Symbol]
+      BELONGS_TO_M_NATURAL_NUMBERS = :∈ℕ
+
+      # @type [Symbol]
+      NONE                         = :none
+
+      # @type [Symbol]
+      NO_EMPTY                     = :'!∅'
+
+      ❄️
+    end
+
     module Numerical
 
       # @type [Array]
       PURE_NUMS = [::Integer, ::Float].❄️
 
+      # @type [Array]
+      NO_LIMIT  = [-1, ::Float::INFINITY].❄️
+
+      ❄️
     end
 
     # textual data types
@@ -67,6 +88,10 @@ module ::Ruuuby
 
     # @type [Array]
     COUNTABLES  = [::String, ::Set, ::Array].❄️
+
+    # TODO: need a way to specific that the array only contains elements of type Symbol
+    # @type [Array]
+    NORMALIZERS = [::Symbol, ::Array].❄️
 
     # @type [Array]
     NUCLEOTIDES = [::Module, ::Class].❄️

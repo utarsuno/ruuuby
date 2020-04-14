@@ -54,9 +54,6 @@ ________________________________________________________________________________
  |\/|  /\  /  ` |__) /  \ /__` .   |__) |__) |__  __ |__) |__) /  \ /  ` |__  /__` /__` | |\ | / _`
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
-
-#define raise_err_if_power_does_not_match_1337_or_1338_or_1339(err_to_raise) if(power_to_raise_to != 1337 && power_to_raise_to != 1338 && power_to_raise_to != 1339){err_to_raise}
-
 #define ensure_not_frozen(arg_to_check) rb_check_frozen(arg_to_check);
 
 #define r_str_prepend(str, elem) rb_str_update(str, 0L, 0L, elem);
@@ -76,13 +73,8 @@ ________________________________________________________________________________
 #define r_add_global_const_str(const_name, const_value) r_add_global_const("" #const_name, cstr_to_rstr("" #const_value))
 #define r_get_class(r_class) rb_const_get(rb_cObject, rb_intern(r_class));
 
-#define get_numerical_const(the_num) NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern(the_num))))
-#define get_float_const(the_num) NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cFloat, rb_intern(the_num))))
-
-#define internal_define_set_exponential_negative(num_position, num_val) exponential_ids[num_position] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_n" #num_val))));
-#define internal_define_set_exponential(num_position, num_val)          exponential_ids[num_position] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_" #num_val))));
-
-#define bsearch_ulong(val_to_find) (unsigned long *) bsearch (&val_to_find, exponential_ids, 𝔠EXPONENTS, 𝔠ULONG, internal_only_compare_func_4_object_id);
+#define bsearch_power(val_to_find) (long long *) bsearch (&val_to_find, exponential_ids, 𝔠EXPONENTS, 𝔠LONGLONG, internal_only_compare_func_4_object_id);
+#define bsearch_power_position(arg_index) ((int)(((int)arg_index - (int)exponential_ids) / 𝔠LONGLONG))
 
 /*____________________________________________________________________________________________________________________
    __            ___  ___  __                          ___       __   ___  __   __
@@ -109,71 +101,118 @@ static inline VALUE new_ary(const long known_max_size) {
     }
 }
 
-static inline void internal_only_prepare_f16() {
+static inline void internal_only_prepare_f16(void) {
     cached_flt_nan          = rb_const_get_at(R_FLT, rb_intern("NAN"));
     cached_flt_inf          = rb_const_get_at(R_FLT, rb_intern("INFINITY"));
     cached_flt_negative_inf = rb_const_get_at(R_FLT, rb_intern("INFINITY_NEGATIVE"));
     cached_flt_inf_complex  = rb_const_get_at(R_FLT, rb_intern("INFINITY_COMPLEX"));
 
-    cached_sym_normalizer_exponential   = rb_const_get_at(cached_module_vocab, rb_intern("POWER_SUPERSCRIPT"));
-    🆔cached_sym_normalizer_exponential = rb_obj_id(cached_sym_normalizer_exponential);
-    cached_sym_set_ℕ                    = rb_const_get_at(cached_module_vocab, rb_intern("MATH_SET_NATURAL_NUMBERS"));
-    🆔cached_sym_set_ℕ                  = rb_obj_id(cached_sym_set_ℕ);
-    cached_sym_none                     = rb_const_get_at(cached_module_vocab, rb_intern("NO_NORMALIZER"));
-    🆔cached_sym_none                   = rb_obj_id(cached_sym_none);
-    cached_sym_normalizer_no_empty      = rb_const_get_at(cached_module_vocab, rb_intern("NORMALIZER_NO_EMPTY"));
+    cached_sym_normalizer_no_empty      = rb_const_get_at(cached_module_normalizers, rb_intern("NO_EMPTY"));
     🆔cached_sym_normalizer_no_empty    = rb_obj_id(cached_sym_normalizer_no_empty);
+    cached_sym_none                     = rb_const_get_at(cached_module_normalizers, rb_intern("NONE"));
+    🆔cached_sym_none                   = rb_obj_id(cached_sym_none);
+    cached_sym_set_ℕ                    = rb_const_get_at(cached_module_normalizers, rb_intern("BELONGS_TO_M_NATURAL_NUMBERS"));
+    🆔cached_sym_set_ℕ                  = rb_obj_id(cached_sym_set_ℕ);
+    cached_sym_normalizer_exponential   = rb_const_get_at(cached_module_normalizers, rb_intern("BELONGS_TO_M_EXPONENTIALS"));
+    🆔cached_sym_normalizer_exponential = rb_obj_id(cached_sym_normalizer_exponential);
 
-    internal_define_set_exponential_negative(0, 9)
-    internal_define_set_exponential_negative(1, 8)
-    internal_define_set_exponential_negative(2, 7)
-    internal_define_set_exponential_negative(3, 6)
-    internal_define_set_exponential_negative(4, 5)
-    internal_define_set_exponential_negative(5, 4)
-    internal_define_set_exponential_negative(6, 3)
-    internal_define_set_exponential_negative(7, 2)
-    internal_define_set_exponential_negative(8, 1)
-    internal_define_set_exponential(9, 0)
-    internal_define_set_exponential(10, 1)
-    internal_define_set_exponential(11, 2)
-    internal_define_set_exponential(12, 3)
-    internal_define_set_exponential(13, 4)
-    internal_define_set_exponential(14, 5)
-    internal_define_set_exponential(15, 6)
-    internal_define_set_exponential(16, 7)
-    internal_define_set_exponential(17, 8)
-    internal_define_set_exponential(18, 9)
-    exponential_ids[19] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_INF"))));
-    exponential_ids[20] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_NEGATIVE_INF"))));
-    exponential_ids[21] = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cFloat, rb_intern("INFINITY_COMPLEX"))));
+    long long obj_id_n9           = NUM2LL(rb_obj_id(rb_eval_string("(8315.chr + 8313.chr).to_sym")));
+    long long obj_id_n8           = NUM2LL(rb_obj_id(rb_eval_string("(8315.chr + 8312.chr).to_sym")));
+    long long obj_id_n7           = NUM2LL(rb_obj_id(rb_eval_string("(8315.chr + 8311.chr).to_sym")));
+    long long obj_id_n6           = NUM2LL(rb_obj_id(rb_eval_string("(8315.chr + 8310.chr).to_sym")));
+    long long obj_id_n5           = NUM2LL(rb_obj_id(rb_eval_string("(8315.chr + 8309.chr).to_sym")));
+    long long obj_id_n4           = NUM2LL(rb_obj_id(rb_eval_string("(8315.chr + 8308.chr).to_sym")));
+    long long obj_id_n3           = NUM2LL(rb_obj_id(rb_eval_string("(8315.chr + \"\\xC2\\xB3\".as_utf8).to_sym")));
+    long long obj_id_n2           = NUM2LL(rb_obj_id(rb_eval_string("(8315.chr + \"\\xC2\\xB2\".as_utf8).to_sym")));
+    long long obj_id_n1           = NUM2LL(rb_obj_id(rb_eval_string("(8315.chr + \"\\xC2\\xB9\".as_utf8).to_sym")));
+    long long obj_id_0            = NUM2LL(rb_obj_id(rb_eval_string("8304.chr.to_sym")));
+    long long obj_id_9            = NUM2LL(rb_obj_id(rb_eval_string("8313.chr.to_sym")));
+    long long obj_id_8            = NUM2LL(rb_obj_id(rb_eval_string("8312.chr.to_sym")));
+    long long obj_id_7            = NUM2LL(rb_obj_id(rb_eval_string("8311.chr.to_sym")));
+    long long obj_id_6            = NUM2LL(rb_obj_id(rb_eval_string("8310.chr.to_sym")));
+    long long obj_id_5            = NUM2LL(rb_obj_id(rb_eval_string("8309.chr.to_sym")));
+    long long obj_id_4            = NUM2LL(rb_obj_id(rb_eval_string("8308.chr.to_sym")));
+    long long obj_id_3            = NUM2LL(rb_obj_id(rb_eval_string("\"\\xC2\\xB3\".as_utf8.to_sym")));
+    long long obj_id_2            = NUM2LL(rb_obj_id(rb_eval_string("\"\\xC2\\xB2\".as_utf8.to_sym")));
+    long long obj_id_1            = NUM2LL(rb_obj_id(rb_eval_string("\"\\xC2\\xB9\".as_utf8.to_sym")));
+    long long obj_id_inf          = NUM2LL(rb_obj_id(rb_eval_string("8734.chr.to_sym")));
+    long long obj_id_inf_negative = NUM2LL(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_NEGATIVE_INF"))));
+    long long obj_id_inf_complex  = NUM2LL(rb_obj_id(rb_eval_string("(8734.chr + 8450.chr).to_sym")));
 
-    qsort(exponential_ids, 𝔠EXPONENTS, 𝔠ULONG, internal_only_compare_func_4_object_id);
+    exponential_ids[0]  = obj_id_n9;
+    exponential_ids[1]  = obj_id_n8;
+    exponential_ids[2]  = obj_id_n7;
+    exponential_ids[3]  = obj_id_n6;
+    exponential_ids[4]  = obj_id_n5;
+    exponential_ids[5]  = obj_id_n4;
+    exponential_ids[6]  = obj_id_n3;
+    exponential_ids[7]  = obj_id_n2;
+    exponential_ids[8]  = obj_id_n1;
+    exponential_ids[9]  = obj_id_0;
+    exponential_ids[10] = obj_id_1;
+    exponential_ids[11] = obj_id_2;
+    exponential_ids[12] = obj_id_3;
+    exponential_ids[13] = obj_id_4;
+    exponential_ids[14] = obj_id_5;
+    exponential_ids[15] = obj_id_6;
+    exponential_ids[16] = obj_id_7;
+    exponential_ids[17] = obj_id_8;
+    exponential_ids[18] = obj_id_9;
+    exponential_ids[19] = obj_id_inf;
+    exponential_ids[20] = obj_id_inf_negative;
+    exponential_ids[21] = obj_id_inf_complex;
 
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n9"), -9);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n8"), -8);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n7"), -7);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n6"), -6);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n5"), -5);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n4"), -4);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n3"), -3);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n2"), -2);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_n1"), -1);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_0"), 0);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_1"), 1);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_2"), 2);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_3"), 3);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_4"), 4);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_5"), 5);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_6"), 6);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_7"), 7);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_8"), 8);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_9"), 9);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_INF"), 1337);
-    assign_exponential_index_position(get_numerical_const("EXPONENTIAL_NEGATIVE_INF"), 1338);
-    assign_exponential_index_position(get_float_const("INFINITY_COMPLEX"), 1339);
+    //qsort(exponential_ids, 𝔠EXPONENTS, 𝔠ULONG, internal_only_compare_func_4_object_id);
+    qsort(exponential_ids, 𝔠EXPONENTS, 𝔠LONGLONG, internal_only_compare_func_4_object_id);
+
+    long long * the_index = bsearch_power(obj_id_n9)
+    //exponential_indexes[(int)(((int)the_index - (int)exponential_ids) / 𝔠ULONG)] = -9;
+    exponential_indexes[bsearch_power_position(the_index)] = -9;
+    the_index             = bsearch_power(obj_id_n8)
+    exponential_indexes[bsearch_power_position(the_index)] = -8;
+    the_index             = bsearch_power(obj_id_n7)
+    exponential_indexes[bsearch_power_position(the_index)] = -7;
+    the_index             = bsearch_power(obj_id_n6)
+    exponential_indexes[bsearch_power_position(the_index)] = -6;
+    the_index             = bsearch_power(obj_id_n5)
+    exponential_indexes[bsearch_power_position(the_index)] = -5;
+    the_index             = bsearch_power(obj_id_n4)
+    exponential_indexes[bsearch_power_position(the_index)] = -4;
+    the_index             = bsearch_power(obj_id_n3)
+    exponential_indexes[bsearch_power_position(the_index)] = -3;
+    the_index             = bsearch_power(obj_id_n2)
+    exponential_indexes[bsearch_power_position(the_index)] = -2;
+    the_index             = bsearch_power(obj_id_n1)
+    exponential_indexes[bsearch_power_position(the_index)] = -1;
+    the_index             = bsearch_power(obj_id_0)
+    exponential_indexes[bsearch_power_position(the_index)] = 0;
+    the_index             = bsearch_power(obj_id_9)
+    exponential_indexes[bsearch_power_position(the_index)] = 9;
+    the_index             = bsearch_power(obj_id_8)
+    exponential_indexes[bsearch_power_position(the_index)] = 8;
+    the_index             = bsearch_power(obj_id_7)
+    exponential_indexes[bsearch_power_position(the_index)] = 7;
+    the_index             = bsearch_power(obj_id_6)
+    exponential_indexes[bsearch_power_position(the_index)] = 6;
+    the_index             = bsearch_power(obj_id_5)
+    exponential_indexes[bsearch_power_position(the_index)] = 5;
+    the_index             = bsearch_power(obj_id_4)
+    exponential_indexes[bsearch_power_position(the_index)] = 4;
+    the_index             = bsearch_power(obj_id_3)
+    exponential_indexes[bsearch_power_position(the_index)] = 3;
+    the_index             = bsearch_power(obj_id_2)
+    exponential_indexes[bsearch_power_position(the_index)] = 2;
+    the_index             = bsearch_power(obj_id_1)
+    exponential_indexes[bsearch_power_position(the_index)] = 1;
+    the_index             = bsearch_power(obj_id_inf)
+    exponential_indexes[bsearch_power_position(the_index)] = CACHE_INDEX_INF;
+    the_index             = bsearch_power(obj_id_inf_negative)
+    exponential_indexes[bsearch_power_position(the_index)] = CACHE_INDEX_INF_NEGATIVE;
+    the_index             = bsearch_power(obj_id_inf_complex)
+    exponential_indexes[bsearch_power_position(the_index)] = CACHE_INDEX_INF_COMPLEX;
 }
 
-static inline void internal_only_protect_against_gc(void) {
+static inline void startup_step5_protect_against_gc(void) {
     rb_global_variable(& ℤn9);
     rb_global_variable(& ℤn8);
     rb_global_variable(& ℤn7);
@@ -203,7 +242,8 @@ static inline void internal_only_protect_against_gc(void) {
     rb_global_variable(& cached_global_sym_many_args);
 
     rb_global_variable(& cached_module_param_err);
-    rb_global_variable(& cached_module_vocab);
+    rb_global_variable(& cached_module_virtual_types);
+    rb_global_variable(& cached_module_normalizers);
 
     rb_global_variable(& cached_module_ruuuby);
     rb_global_variable(& cached_module_ruuuby_metadata);
@@ -230,22 +270,22 @@ static inline void internal_only_protect_against_gc(void) {
     rb_gc_verify_internal_consistency();
 }
 
-static inline void internal_only_before_loading_extension(void) {
-    // | f18 | load various Ruby internals |
+// | f18 | load various Ruby internals |
+static inline void startup_step0_load_needed_default_ruby_libs(void) {
     ensure_loaded_default(bigdecimal)
     ensure_loaded_default(tempfile)
     ensure_loaded_default(singleton)
     ensure_loaded_default(logger)
     ensure_loaded_default(time)
-    // | --------------------------------- |
+}
 
+static inline void startup_step1_before_loading_extension(void) {
     cached_class_big_decimal          = r_get_class("BigDecimal");
     cached_class_set                  = r_get_class("Set");
     cached_rb_intern_is_a             = rb_intern("is_a?");
     cached_rb_intern_ints_bitwise_xor = rb_intern("bitwise_xor");
     cached_rb_intern_raise_to_power   = rb_intern("**");
     cached_rb_intern_is_empty         = rb_intern("empty?");
-    // | --------------------------------- |
 
     cached_module_ruuuby               = ext_api_add_global_module("Ruuuby")
     cached_module_ruuuby_metadata      = ext_api_add_module_under(cached_module_ruuuby, "MetaData")
@@ -253,19 +293,18 @@ static inline void internal_only_before_loading_extension(void) {
     cached_module_attribute_includable = ext_api_add_module_under(cached_module_ruuuby, "Includable")
     cached_module_attribute_extendable = ext_api_add_module_under(cached_module_ruuuby, "Extendable")
     cached_module_param_err            = ext_api_add_module_under(cached_module_ruuuby, "ParamErr")
-    cached_module_vocab                = ext_api_add_module_under(cached_module_ruuuby_metadata, "Vocabulary")
-    ext_api_add_module_under(cached_module_ruuuby, "VirtualTypes")
+    cached_module_virtual_types        = ext_api_add_module_under(cached_module_ruuuby, "VirtualTypes")
+    cached_module_normalizers          = ext_api_add_module_under(cached_module_virtual_types, "Normalizers")
     ext_api_add_new_sub_class_under(cached_module_param_err, R_ERR_ARG, "WrongParamType")
 }
 
 //
 
-static inline void internal_only_load_needed_ruuuby_files(void) { // -------------------------------------------- | f18 |
-    // 3rd party gem
+static inline void startup_step3_load_3rd_party_gems(void) { // ------------------------------------------------ | f18 |
     ensure_loaded_default(tty-command)
+}
 
-    // ruuuuby
-
+static inline void startup_step4_load_needed_ruuuby_files(void) { // -------------------------------------------- | f18 |
     ensure_loaded_attribute_includable(cardinality)
     ensure_loaded_attribute_includable(notation_set_mathematics)
     ensure_loaded_attribute_includable(subscript_indexing)
@@ -302,13 +341,16 @@ static inline void internal_only_load_needed_ruuuby_files(void) { // -----------
 
     ensure_loaded_ruuuby(global_funcs)
 
-    internal_only_prepare_f16();
+    internal_only_prepare_f16(); // must be after{ruuuby/types, ruuuby/class/str}
 
-    //ensure_loaded_ruuuby(ruuuby/metadata/ruuuby_metadata_constants)
     ensure_loaded_ruuuby(ruuuby/metadata/ruuuby_metadata)
 
     // [⚠️] : excluding, alternative files are loading [ruuuby/ruuuby/metadata/ruuuby_metadata_constants, ruuuby/version]
+    //          * ensure_loaded_ruuuby(ruuuby/metadata/ruuuby_metadata_constants)
+    //          * ensure_loaded_ruuuby(version)
     // [⚠️] : reminder, do not load "ruuuby/ruuuby_orm" here
+
+    ensure_loaded_ruuuby(virtual/env)
 
     ensure_loaded_ruuuby(ruuuby/routine_cli)
     ensure_loaded_ruuuby(ruuuby/ruuuby_api)
@@ -317,24 +359,12 @@ static inline void internal_only_load_needed_ruuuby_files(void) { // -----------
     ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine)
 
     ensure_loaded_ruuuby(configs)
-    //ensure_loaded_ruuuby(version)
-
 } // | -----------------------------------------------------------------------------------------------------------------
-
-static inline void assign_exponential_index_position(const unsigned long object_id, const int represented_integer) {
-    unsigned long * the_index = bsearch_ulong(object_id)
-    if (the_index != NULL) {
-        exponential_indexes[(int)(((int)the_index - (int)exponential_ids) / 𝔠ULONG)] = represented_integer;
-    } else {
-        printf("C-Extension-Error! {func{assign_exponential_index_position}->{%lu} could not be found for int{%d}}\n", * the_index, represented_integer);
-        rb_raise(rb_eRuntimeError, "Error-code{%d}", CUSTOM_ERROR_CODE);
-    }
-}
 
 // original source modified from: https://stackoverflow.com/questions/36681906/c-qsort-doesnt-seem-to-work-with-unsigned-long
 static int internal_only_compare_func_4_object_id(const void * l, const void * r) {
-    const unsigned long ai = *(const unsigned long *)(l);
-    const unsigned long bi = *(const unsigned long *)(r);
+    const long long ai = *(const long long *)(l);
+    const long long bi = *(const long long *)(r);
     if (ai < bi) {return -1;} else if(ai > bi) {return 1;} else {return 0;}
 }
 
@@ -379,16 +409,23 @@ r_func_k_args(m_obj_sym,
                     if (them_id == 🆔cached_sym_none) {
                         re_as_bool(is_sym(self))
                     } else if (them_id == 🆔cached_sym_normalizer_exponential) {
-                        const unsigned long id_to_find = NUM2ULONG(rb_obj_id(self));
-                        unsigned long * the_result    = bsearch_ulong(id_to_find)
+                        const long long id_to_find = NUM2LL(rb_obj_id(self));
+                        long long * the_result    = bsearch_power(id_to_find)
                         if (the_result != NULL) {
-                            re_ye
-                            //const int power_to_raise_to = exponential_indexes[(((int)the_result - (int)exponential_ids) / 𝔠ULONG)];
-                            //if ((power_to_raise_to >= -9 && power_to_raise_to <= 10) || (power_to_raise_to > 1336 && power_to_raise_to < 1400)) {
-                            //    re_ye
-                            //} else {
-                            //    re_no
-                            //}
+                            const int power_to_raise_to = exponential_indexes[bsearch_power_position(the_result)];
+                            if (power_to_raise_to < 10) {
+                                return INT2NUM(power_to_raise_to);
+                            } else if (power_to_raise_to > 1336 && power_to_raise_to < 1400) {
+                                if (power_to_raise_to == CACHE_INDEX_INF) {
+                                    return cached_flt_inf;
+                                } else if (power_to_raise_to == CACHE_INDEX_INF_NEGATIVE) {
+                                    return cached_flt_negative_inf;
+                                } else {
+                                    return cached_flt_inf_complex;
+                                }
+                            } else {
+                                re_no
+                            }
                         } else {re_no}
                     } else {
                         🛑c_param_type("Object", "sym?(w/ normalizer)", "normalizer", them, "Symbol")
@@ -447,9 +484,6 @@ r_func_k_args(m_obj_str,
             VALUE them;
             rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);
             if (NIL_P(them)) {
-                if (is_sym(them)) {
-                    printf("BUT THEY ARE A SYMBOL!!\n");
-                }
                 rb_raise(R_ERR_ARG, "| c{Object}-> m{str?} with self{%"PRIsVALUE"} got in-valid normalizer{%"PRIsVALUE"} |", self, them);
             } else {
                 if (is_sym(them)) {
@@ -518,11 +552,10 @@ r_func_self_them(m_int_patch_for_exponentials,
     if (is_int(them)) {
         re_me_func_1args(cached_rb_intern_ints_bitwise_xor, them)
     } else {
-        const unsigned long id_to_find = NUM2ULONG(rb_obj_id(them));
-        unsigned long * the_result    = bsearch_ulong(id_to_find)
+        const long long id_to_find = NUM2LL(rb_obj_id(them));
+        long long * the_result    = bsearch_power(id_to_find)
         if (the_result != NULL) {
-
-            const int power_to_raise_to = exponential_indexes[(((int)the_result - (int)exponential_ids) / 𝔠ULONG)];
+            const int power_to_raise_to = exponential_indexes[bsearch_power_position(the_result)];
 
             if (power_to_raise_to < 2) {
                 switch(power_to_raise_to) {
@@ -551,11 +584,9 @@ r_func_self_them(m_int_patch_for_exponentials,
                 default: return rb_int_positive_pow(val_self, 9UL);
                 }
             } else {
-                raise_err_if_power_does_not_match_1337_or_1338_or_1339(ext_api_raise_err_int_bad_power)
-
                 const int val_self = NUM2INT(self);
 
-                if (power_to_raise_to == 1339) {
+                if (power_to_raise_to == CACHE_INDEX_INF_COMPLEX) {
                     if (val_self == 0) {
                         re_0
                     } else {
@@ -566,12 +597,12 @@ r_func_self_them(m_int_patch_for_exponentials,
                 if (val_self == 1 || val_self == -1) {
                     re_nan
                 } else if (val_self == 0) {
-                    if (power_to_raise_to == 1337) {
+                    if (power_to_raise_to == CACHE_INDEX_INF) {
                         re_0
                     } else {
                         re_inf_complex
                     }
-                } else if (power_to_raise_to == 1338) {
+                } else if (power_to_raise_to == CACHE_INDEX_INF_NEGATIVE) {
                     re_0
                 } else if (val_self > 1) {
                     re_inf
@@ -579,8 +610,9 @@ r_func_self_them(m_int_patch_for_exponentials,
                     re_negative_inf
                 }
             }
-        } else { ext_api_raise_err_int_bad_power }
-        //} else { re_me_func_1args(cached_rb_intern_ints_bitwise_xor, them) }
+        } else {
+            ext_api_raise_err_int_bad_power
+        }
     }
 )
 
@@ -594,15 +626,15 @@ ________________________________________________________________________________
 r_func_self_them(m_flt_patch_for_exponentials,
 
     if (is_sym(them)) {
-        const unsigned long id_to_find = NUM2ULONG(rb_obj_id(them));
-        unsigned long * the_result    = bsearch_ulong(id_to_find);
+        const long long id_to_find = NUM2LL(rb_obj_id(them));
+        long long * the_result    = bsearch_power(id_to_find);
         if (the_result != NULL) {
 
             const double val_self = NUM2DBL(self); // RFLOAT_VALUE(self); // rb_float_value
             if (isnan(val_self)) {
                 🛑runtime_flt_self("^", "may not be raised to an exponential power");
             }
-            const int power_to_raise_to = exponential_indexes[(((int)the_result - (int)exponential_ids) / 𝔠ULONG)];
+            const int power_to_raise_to = exponential_indexes[bsearch_power_position(the_result)];
             if (val_self == 0.0 && power_to_raise_to < 0) {
                 🛑divide0_flt_self("^", "may not be raised to a negative power")
             }
@@ -631,11 +663,9 @@ r_func_self_them(m_flt_patch_for_exponentials,
                 default: ext_api_raise_err_flt_bad_power
                 }
             } else {
-                raise_err_if_power_does_not_match_1337_or_1338_or_1339(ext_api_raise_err_flt_bad_power)
-
                 if (val_self == 1.0 || val_self == -1.0) {
                     re_nan
-                } else if (power_to_raise_to == 1337) {
+                } else if (power_to_raise_to == CACHE_INDEX_INF) {
                     if (isinf(val_self)) {
                         re_inf_complex
                     } else if (val_self >= 0.0 && val_self < 1.0) {
@@ -647,7 +677,7 @@ r_func_self_them(m_flt_patch_for_exponentials,
                     } else {
                         re_negative_inf
                     }
-                } else if (power_to_raise_to == 1338) {
+                } else if (power_to_raise_to == CACHE_INDEX_INF_NEGATIVE) {
                     if (val_self == 0.0) {
                         re_inf_complex
                     } else if (val_self > 0.0 && val_self < 1.0) {
@@ -668,7 +698,9 @@ r_func_self_them(m_flt_patch_for_exponentials,
                 }
             }
         } else { ext_api_raise_err_flt_bad_power }
-    } else { ext_api_raise_err_flt_bad_power }
+    } else {
+        ext_api_raise_err_flt_bad_power
+    }
 )
 
 /*___________________________________________________________________________________________________________________
@@ -885,7 +917,7 @@ static inline void internal_only_add_frozen_const_to(VALUE kclass, VALUE * inter
     rb_global_variable(internal_global);
 }
 
-static inline void internal_only_add_ruuuby_c_extensions() {
+static inline void startup_step2_add_ruuuby_c_extensions(void) {
     cached_global_sym_many_args = ID2SYM(rb_intern("*args"));
     rb_define_readonly_variable("$PRM_MANY", &cached_global_sym_many_args);
 
@@ -899,7 +931,10 @@ static inline void internal_only_add_ruuuby_c_extensions() {
 
     //ext_api_add_const_under(R_FLT, "INFINITY_COMPLEX", DBL2NUM(M_FLT_INF_COMPLEX))
 
-    internal_only_add_frozen_const_to(R_ARY, & cached_ref_empty_ary, "EMPTY_INSTANCE", rb_ary_new_capa(0L));
+    internal_only_add_frozen_const_to(R_ARY, & cached_ref_empty_ary   , "EMPTY_INSTANCE", rb_ary_new_capa(0L));
+    internal_only_add_frozen_const_to(R_FLT, & cached_flt_one_fourth   , "ONE_FOURTH"    , DBL2NUM(M_FLT_ONE_FOURTH));
+    internal_only_add_frozen_const_to(R_FLT, & cached_flt_one_half     , "ONE_HALF"      , DBL2NUM(M_FLT_ONE_HALF));
+    internal_only_add_frozen_const_to(R_FLT, & cached_flt_three_fourths, "THREE_FOURTHS" , DBL2NUM(M_FLT_THREE_FOURTHS));
 
     ext_api_add_public_method_0args_to_class(R_OBJ, "ary?"       , m_obj_ary)
     ext_api_add_public_method_0args_to_class(R_OBJ, "bool?"      , m_obj_bool)
@@ -939,14 +974,13 @@ static inline void internal_only_add_ruuuby_c_extensions() {
 }
 
 c_func(Init_ruby_class_mods,
-
-    internal_only_before_loading_extension();
-
-    internal_only_add_ruuuby_c_extensions();
-
-    internal_only_load_needed_ruuuby_files();
+    startup_step0_load_needed_default_ruby_libs();
+    startup_step1_before_loading_extension();
+    startup_step2_add_ruuuby_c_extensions();
+    startup_step3_load_3rd_party_gems();
+    startup_step4_load_needed_ruuuby_files();
 
     //ruby_vm_at_exit(& at_exit);
 
-    internal_only_protect_against_gc();
+    startup_step5_protect_against_gc();
 )
