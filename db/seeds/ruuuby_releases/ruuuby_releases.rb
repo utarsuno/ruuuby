@@ -409,4 +409,4 @@
         '`v0.0.33` to utilize `golden-angle` as well as dramatically alter angle-trig related functions'
     ]
 )
-@v0_0_31.changelog.added_method_to_class(@f10, :∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎, ::Enumerable)
+@v0_0_32.changelog.added_method_to_class(@f10, :∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎, ::Enumerable)

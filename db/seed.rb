@@ -17,7 +17,7 @@ require_relative 'db'
 
 =begin
 puts "PRINTING DOCS"
-@v0_0_31.docs_changelog.each do |line|
+@v0_0_32.docs_changelog.each do |line|
   puts line
 end
 =end
