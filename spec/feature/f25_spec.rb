@@ -7,6 +7,25 @@ RSpec.describe 'f25' do
       expect(💎).to eq(::Ruuuby::MetaData)
     end
     context 'aliases within{::Ruuuby::MetaData}' do
+
+      it 'singletons preserve their object_id' do
+        the_id_a = 💎.api.🆔
+        the_id_b = 💎.orm.🆔
+        the_id_c = 💎.engine.🆔
+
+        expect(💎.api.🆔).to eq(the_id_a)
+        expect(the_id_a).to eq(💎.api.🆔)
+        expect(💎.api.🆔).to eq(the_id_a)
+
+        expect(💎.orm.🆔).to eq(the_id_b)
+        expect(the_id_b).to eq(💎.orm.🆔)
+        expect(💎.orm.🆔).to eq(the_id_b)
+
+        expect(💎.engine.🆔).to eq(the_id_c)
+        expect(the_id_c).to eq(💎.engine.🆔)
+        expect(💎.engine.🆔).to eq(the_id_c)
+      end
+
       it 'func{💎.api}' do
         expect(💎.api).to eq(::Ruuuby::MetaData::RuuubyAPI.instance)
       end

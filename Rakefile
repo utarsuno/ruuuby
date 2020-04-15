@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# coding: UTF-8
 
 require_relative 'lib/ruuuby/ruuuby/metadata/ruuuby_metadata_constants'
 

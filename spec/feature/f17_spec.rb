@@ -24,7 +24,6 @@ RSpec.describe 'f17' do
           expect_∃⨍(:∞, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
           expect_∃⨍(:¿, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
           expect_∃⨍(:∞ℂ, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
-          expect_∃⨍(:φ, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
           expect_∃⨍(:γ, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
 
           expect_∃⨍(:¼, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)

@@ -262,8 +262,8 @@ class ::RuuubyRelease < ApplicationRecord
   end
 
   def self.generate_query_uid(*args)
-    🛑 ArgumentError.new("| c{Class}-> m{generate_query_uid} received no args |") if args.∅?
-    if args.length == 1 && args[0].str? && args[0].match?(RuuubyRelease.cache_fetch(RuuubyRelease::Syntax::UID))
+    🛑 ArgumentError.new("| c{RuuubyRelease}-> m{generate_query_uid} received no args |") if args.∅?
+    if args.length == 1 && args[0].str? && args[0].match?(::RuuubyRelease.syntax_uid)
       return RuuubyRelease.generate_query_uid(*(self.parse_uid_str(args[0])))
     end
     🛑ℤ❓($PRM_MANY, args)

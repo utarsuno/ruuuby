@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# coding: UTF-8
 
 # `Ruuuby` modifications to c(`String`)
 module ::Ruuuby
@@ -238,10 +238,12 @@ module ::Ruuuby
           when 1
             return self.to_i if self.digit?
             case(self)
-            when '∞' ; return ::Float::INFINITY
-            when 'π' ; return ::Math::PI
-            when 'φ' ; return ::Float::GOLDEN_RATIO
-            else     ; self.🛑⨍_to_num
+            when '∞'; return ::Float::INFINITY
+            when 'π'; return ::Math::PI
+            when '𝚽'; return ::Float::GOLDEN_RATIO
+            when 'Ⴔ'; return ::Float::GOLDEN_ANGLE
+            when 'γ'; return ::Float::EULER_MASCHERONI_CONSTANT
+            else    ; self.🛑⨍_to_num
             end
           when 2
             if self.∞?
@@ -256,7 +258,9 @@ module ::Ruuuby
             when '+', '-'
               if self.₁.digit?   ; return Integer(self)
               elsif self.₁?('π') ; return (self.₀?('-')) ? (-::Math::PI) : (::Math::PI)
-              elsif self.₁?('φ') ; return (self.₀?('-')) ? (-::Float::GOLDEN_RATIO) : (::Float::GOLDEN_RATIO)
+              elsif self.₁?('𝚽') ; return (self.₀?('-')) ? (-::Float::GOLDEN_RATIO) : (::Float::GOLDEN_RATIO)
+              elsif self.₁?('Ⴔ') ; return (self.₀?('-')) ? (-::Float::GOLDEN_ANGLE) : (::Float::GOLDEN_ANGLE)
+              elsif self.₁?('γ') ; return (self.₀?('-')) ? (-::Float::EULER_MASCHERONI_CONSTANT) : (::Float::EULER_MASCHERONI_CONSTANT)
               else               ; self.🛑⨍_to_num
               end
             else

@@ -54,26 +54,21 @@ ________________________________________________________________________________
  |\/|  /\  /  ` |__) /  \ /__` .   |__) |__) |__  __ |__) |__) /  \ /  ` |__  /__` /__` | |\ | / _`
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
-#define ensure_not_frozen(arg_to_check) rb_check_frozen(arg_to_check);
-
-#define r_str_prepend(str, elem) rb_str_update(str, 0L, 0L, elem);
-#define r_ary_prepend(ary, elem) rb_ary_unshift(ary, elem);
+//#define ensure_not_frozen(arg_to_check) rb_check_frozen(arg_to_check);
 
 #define r_str_new_frozen_literal(arg) rb_str_new_frozen(rb_str_new_cstr(arg))
-#define r_str_pre_modify(str)         rb_str_modify(str);
 #define cstr_to_rstr(arg)             rb_str_new_cstr(arg)
 
 #define r_hsh_increment_keys_val(hsh, key) rb_hash_aset(hsh, key, LONG2FIX(RB_FIX2LONG(rb_hash_aref(hsh, key)) + 1));
 #define r_hsh_set_val_to_one(hsh, key) rb_hash_aset(hsh, key, ℤ1);
 
 #define r_hsh_has_key(hsh, key) (rb_hash_has_key(hsh, key) == Qtrue)
-#define r_ary_has(ary, elem) rb_ary_includes(ary, elem)
 
 #define r_add_global_const(const_name, const_value) rb_define_global_const(const_name, const_value);
 #define r_add_global_const_str(const_name, const_value) r_add_global_const("" #const_name, cstr_to_rstr("" #const_value))
 #define r_get_class(r_class) rb_const_get(rb_cObject, rb_intern(r_class));
 
-#define bsearch_power(val_to_find) (long long *) bsearch (&val_to_find, exponential_ids, 𝔠EXPONENTS, 𝔠LONGLONG, internal_only_compare_func_4_object_id);
+#define bsearch_power(val_to_find)         (long long *) bsearch (&val_to_find, exponential_ids, 𝔠EXPONENTS, 𝔠LONGLONG, internal_only_compare_func_4_object_id);
 #define bsearch_power_position(arg_index) ((int)(((int)arg_index - (int)exponential_ids) / 𝔠LONGLONG))
 
 /*____________________________________________________________________________________________________________________
@@ -162,11 +157,9 @@ static inline void internal_only_prepare_f16(void) {
     exponential_ids[20] = obj_id_inf_negative;
     exponential_ids[21] = obj_id_inf_complex;
 
-    //qsort(exponential_ids, 𝔠EXPONENTS, 𝔠ULONG, internal_only_compare_func_4_object_id);
     qsort(exponential_ids, 𝔠EXPONENTS, 𝔠LONGLONG, internal_only_compare_func_4_object_id);
 
     long long * the_index = bsearch_power(obj_id_n9)
-    //exponential_indexes[(int)(((int)the_index - (int)exponential_ids) / 𝔠ULONG)] = -9;
     exponential_indexes[bsearch_power_position(the_index)] = -9;
     the_index             = bsearch_power(obj_id_n8)
     exponential_indexes[bsearch_power_position(the_index)] = -8;
@@ -310,6 +303,8 @@ static inline void startup_step4_load_needed_ruuuby_files(void) { // -----------
     ensure_loaded_attribute_includable(subscript_indexing)
     ensure_loaded_attribute_includable(syntax_cache)
 
+    ensure_loaded_class(proc)
+
     ensure_loaded_class(class)
     ensure_loaded_module(enumerable)
     ensure_loaded_module(module)
@@ -332,6 +327,9 @@ static inline void startup_step4_load_needed_ruuuby_files(void) { // -----------
     ensure_loaded_enumerable(set)
 
     ensure_loaded_attribute_extendable(syntax_cache)
+
+    ensure_loaded_attribute_extendable(singleton)
+    ensure_loaded_attribute_includable(singleton)
 
     ensure_loaded_class(sym) // must be after{attribute_cardinality}
 
@@ -744,21 +742,21 @@ ________________________________________________________________________________
 
 // | function{>>} |
 r_func_self_them(m_ary_prepend,
-    ensure_not_frozen(self)
+    r_ary_pre_modify(self)
     r_ary_prepend(self, them)
     re_me
 )
 
 // | function{remove_empty!} |
 r_func_raw(m_ary_remove_empty,
-    ensure_not_frozen(self)
+    r_ary_pre_modify(self)
     long len_me = len_ary(self);
     if (len_me == 0){re_me}
     long i;
     int delete_node = 0;
     VALUE v;
     for (i = 0; i < len_me;) {
-        v = RARRAY_PTR(self)[i];
+        v = r_ary_get(self, i)
         if (is_nil(v)) {
             r_ary_del(self, i);
             --len_me;
@@ -891,7 +889,7 @@ r_func_self_a_b(m_module_add_aliases,
         VALUE v;
         ID old_id = health_check_for_existing_func_name(self, & param_a);
         for (i = 0; i < len_them; i++) {
-            v = RARRAY_PTR(param_b)[i];
+            v = r_ary_get(param_b, i)
             if (is_sym(v)) {
                 rb_alias(self, rb_to_id(v), old_id);
             } else {🛑m_param_array_node_type("Module", "f_add_aliases", "func_aliases", param_b, "Symbol")}
@@ -928,6 +926,8 @@ static inline void startup_step2_add_ruuuby_c_extensions(void) {
     ext_api_add_const_under(R_FLT, "EULER_MASCHERONI_CONSTANT", DBL2NUM(M_FLT_EULER_MASCHERONI_CONSTANT))
     ext_api_add_const_under(R_FLT, "SMALLEST_RELATIVE_ERROR", DBL2NUM(M_FLT_RELATIVE_ERROR * M_FLT_MIN_NORMAL));
     ext_api_add_const_under(R_FLT, "GOLDEN_RATIO", DBL2NUM(M_FLT_GOLDEN_RATIO))
+    ext_api_add_const_under(R_FLT, "GOLDEN_ANGLE", DBL2NUM(M_FLT_GOLDEN_ANGLE_AS_DEGREES))
+    ext_api_add_const_under(R_FLT, "GOLDEN_ANGLE_AS_RADIANS", DBL2NUM(M_FLT_GOLDEN_ANGLE_AS_RADIANS))
 
     //ext_api_add_const_under(R_FLT, "INFINITY_COMPLEX", DBL2NUM(M_FLT_INF_COMPLEX))
 

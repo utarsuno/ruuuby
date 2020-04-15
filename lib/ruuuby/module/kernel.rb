@@ -59,6 +59,11 @@ module ::Kernel
   # | ------------------------------------------------------------------------------------------------------------------
 
   # @return [::Ruuuby::MetaData]
-  def 💎; ::Ruuuby::MetaData ; end
+  def 💎; ::Ruuuby::MetaData; end
 
+  # @type [Float]
+  𝚽 = ::Float::GOLDEN_RATIO
+
+  # @type [Float]
+  Ⴔ = ::Float::GOLDEN_ANGLE
 end

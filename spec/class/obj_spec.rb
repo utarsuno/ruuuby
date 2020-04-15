@@ -440,8 +440,10 @@ RSpec.describe 'Object' do
         it 'cases: positive' do
           expect(💎.api.singleton?).to eq(true)
           expect(💎.orm.singleton?).to eq(true)
+          expect(💎.engine.singleton?).to eq(true)
         end
         it 'cases: negative' do
+          expect(💎.meta_orm.singleton?).to eq(false)
           expect(String.singleton?).to eq(false)
           expect(💎.meta_orm.singleton?).to eq(false)
           expect(1337.singleton?).to eq(false)
@@ -520,11 +522,7 @@ RSpec.describe 'Object' do
 
     context 'by adding function{num?}' do
       it 'without effecting Class-instance{Integer, Float, Rational, Complex, BigDecimal}' do
-        expect(::Integer.num?).to eq(false)
-        expect(::Float.num?).to eq(false)
-        expect(::Rational.num?).to eq(false)
-        expect(::Complex.num?).to eq(false)
-        expect(::BigDecimal.num?).to eq(false)
+        ::Ruuuby::VirtualTypes::NUMS.∀{|num_class| expect(num_class.num?).to eq(false)}
       end
       context 'handles needed input scenarios' do
         it 'returns correct value{true}' do

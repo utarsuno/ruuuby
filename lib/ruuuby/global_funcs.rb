@@ -90,15 +90,13 @@ module ::Ruuuby
           def ∞ℂ; :∞ℂ; end
 
           # @return [Float]
-          def φ; ::Float::GOLDEN_RATIO; end
-
-          # @return [Float]
           def γ; ::Float::EULER_MASCHERONI_CONSTANT; end
 
         end # end: {FloatAliases}
 
         # defines (onto the `main` object) funcs to provide aliases for math functions relating to trigonometry
         module Trigonometry
+
           # @param [Float, Integer] n angle (in degrees)
           #
           # @return [Float] angle in radians

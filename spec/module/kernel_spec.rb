@@ -1,5 +1,9 @@
 # coding: utf-8
 
+# TODO: test for the following constants
+#           #expect_∃⨍(:𝚽, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
+#           #expect_∃⨍(:Ⴔ, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
+
 RSpec.describe ::Kernel do
   let(:wrong_param_type){Ruuuby::ParamErr::WrongParamType}
   let(:empty_object){Object.🆕}
@@ -50,16 +54,27 @@ RSpec.describe ::Kernel do
               expect(¿.nan?).to eq(true)
             end
           end
-          context 'adds function{φ}' do
+          context 'adds function{𝚽}' do
             it 'equals: (1 + √(5)) / 2.0' do
-              expect(φ).to eq((1 + √(5)) / 2.0)
+              expect(𝚽).to eq((1 + √(5)) / 2.0)
             end
-            it 'equals: φ = 1 + 1/φ' do
-              expect(φ).to eq(1 + Rational(1, φ))
-              expect(φ).to eq(1 + (φ^⁻¹))
+            it 'equals: 𝚽 = 1 + 1/𝚽' do
+              # for v0.0.33
+              expect(𝚽).to eq(::Float::GOLDEN_RATIO)
+              #expect(φ^²).to eq(1 + (𝚽^⁻¹))
+              expect(𝚽).to eq(1 + Rational(1, 𝚽))
+              expect(𝚽).to eq(1 + (𝚽^⁻¹))
             end
-            it '(ALMOST) equals: 2 * sin(54)' do
-              expect(φ.≈≈(2.0 * Math.sin(∠ᶜ(54.0)))).to eq(true)
+            it '~equals: 2 * sin(54)' do
+              expect(𝚽.≈≈(2.0 * Math.sin(∠ᶜ(54.0)))).to eq(true)
+            end
+          end
+          context 'adds function{𝚽}' do
+            it 'equals: π * (3 - √(5))' do
+              # for v0.0.33
+              #expect(𝚽).to eq(::Float::GOLDEN_ANGLE)
+              #expect(::Float::GOLDEN_ANGLE_AS_RADIANS).to eq(π * (3 - √(5)))
+              #expect(∠ᶜ(π * (3 - √(5)))).to eq(::Float::GOLDEN_ANGLE)
             end
           end
           context 'adds function{γ}' do
@@ -227,7 +242,7 @@ RSpec.describe ::Kernel do
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :performance do
 
-    context 'func[∃module?] runs fast enough' do
+    context 'func{∃module?} runs fast enough' do
       context 'for cases: global &' do
         it 'true-positive' do
           expect{∃module?(:Ruuuby)}.to perform_very_quickly
@@ -250,7 +265,7 @@ RSpec.describe ::Kernel do
       end
     end
 
-    context 'func[∃class?] runs fast enough' do
+    context 'func{∃class?} runs fast enough' do
       context 'for cases: global &' do
         it 'true-positive' do
           expect{∃class?(:QAClass)}.to perform_very_quickly
@@ -273,7 +288,7 @@ RSpec.describe ::Kernel do
       end
     end
 
-    context 'func[∃class?] runs fast enough' do
+    context 'func{∃class?} runs fast enough' do
       context 'for needed scenarios:' do
         it 'cases: positive' do
           expect{𝔠({a: 'a'})}.to perform_very_quickly

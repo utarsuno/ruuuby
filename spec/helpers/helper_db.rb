@@ -6,8 +6,8 @@ module HelpersDB
   def audit_feature(the_feature, feature_str, description)
     expect(the_feature.class).to eq(RuuubyFeature)
     expect(the_feature.uid).to eq(feature_str)
-    expect(feature_str.match?(re_ruuuby_feature_id)).to eq(true)
-    expect(description.match?(re_ruuuby_feature_docs_feature_mapping)).to eq(true)
+    expect(feature_str.match?(::RuuubyFeature.syntax_uid)).to eq(true)
+    expect(description.match?(::RuuubyFeature.syntax_docs_feature_mapping)).to eq(true)
     expect(the_feature.id.class).to eq(Integer)
     expect(the_feature.description).to eq(description)
     expect(the_feature.description.class).to eq(String)
@@ -16,7 +16,7 @@ module HelpersDB
   def audit_version(the_version, version_str)
     expect(the_version.class).to eq(RuuubyRelease)
     expect(the_version.uid).to eq(version_str)
-    expect(version_str.match?(re_ruuuby_release_version)).to eq(true)
+    expect(version_str.match?(::RuuubyRelease.syntax_uid)).to eq(true)
     expect(the_version.id.class).to eq(Integer)
   end
 
@@ -33,11 +33,6 @@ RSpec.shared_context 'shared_context_db' do
 
   let(:re_ruuuby_feature){RuuubyFeature::Syntax}
   let(:re_ruuuby_release){RuuubyRelease::Syntax}
-
-  let(:re_ruuuby_feature_id){RuuubyFeature.cache_fetch(re_ruuuby_feature::UID)}
-  let(:re_ruuuby_feature_docs_feature_mapping){RuuubyFeature.cache_fetch(re_ruuuby_feature::DOCS_FEATURE_MAPPING)}
-
-  let(:re_ruuuby_release_version){RuuubyRelease.cache_fetch(re_ruuuby_release::UID)}
 
   let(:v0_0_0){RuuubyRelease.find_by_uid(0, 0, 0)}
   let(:v0_0_1){RuuubyRelease.find_by_uid(0, 0, 1)}
@@ -57,6 +52,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:v0_0_29){RuuubyRelease.find_by_uid(0, 0, 29)}
   let(:v0_0_30){RuuubyRelease.find_by_uid(0, 0, 30)}
   let(:v0_0_31){RuuubyRelease.find_by_uid(0, 0, 31)}
+  let(:v0_0_32){RuuubyRelease.find_by_uid(0, 0, 32)}
 
   let(:f00){RuuubyFeature.find_by_uid(0)}
   let(:f01){RuuubyFeature.find_by_uid(1)}

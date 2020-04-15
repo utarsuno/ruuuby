@@ -1,3 +1,4 @@
+# coding: UTF-8
 
 # TODO: create all missing version instances
 
@@ -37,4 +38,5 @@
 @v0_0_29.spawn_git_commit('v0.0.29 release', '2020-04-09T20:24:55-0500', '526c81320447210d3624ffb745c74ec0d4ee3783')
 @v0_0_30.spawn_git_commit('v0.0.30 release', '2020-04-11T02:03:05-05:00', 'fb24ced22463c4368de08b6d87e81b2662d1cba4')
 @v0_0_30.spawn_git_commit('v0.0.30 release', '2020-04-11T02:19:12-05:00', '1d6884cd5d3d7bacefe3434116149d3fadb339e5')
+@v0_0_31.spawn_git_commit('v0.0.31 release', '2020-04-13T22:19:53-05:00', '700f349985edcb1512250612bd2dcc3311ae68cc')
 #NEXT_VERSION_HERE

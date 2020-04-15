@@ -1,4 +1,4 @@
-# coding: utf-8
+# coding: UTF-8
 
 RSpec.describe 'general configs' do
   let(:ruuuby_metadata){::Ruuuby::MetaData}
@@ -79,7 +79,7 @@ RSpec.describe 'general configs' do
     end
 =end
 
-    context 'running with correct Ruby configs' do
+    context 'running with correct/expected Ruby configs' do
       it 'ruby major version is correct' do
         expect(RUBY_VERSION).to eq(ruuuby_metadata::BuiltWith::RUBY_VERSION)
       end
@@ -89,6 +89,12 @@ RSpec.describe 'general configs' do
       end
       it 'current platform is compatible' do
         expect(RUBY_PLATFORM).to eq(ruuuby_metadata::BuiltWith::RUBY_PLATFORM)
+      end
+      it 'set file encoding' do
+        expect(__ENCODING__).to eq(ruuuby_metadata::BuiltWith::RUBY_ENCODING)
+        expect(__ENCODING__).to eq(::Encoding::UTF_8)
+
+        #TODO: ruby -e "p Encoding.default_external"
       end
     end
 

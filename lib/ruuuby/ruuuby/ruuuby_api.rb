@@ -1,3 +1,4 @@
+# coding: UTF-8
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
@@ -7,11 +8,9 @@ module ::Ruuuby
   module MetaData
 
     class RuuubyAPI
-      include Singleton
+      include ::Ruuuby::Attribute::Includable::RuuubySingleton
 
       attr_reader :commit_history
-
-      def self.instance ; @@instance ||= new ; end
 
       def initialize
         @commit_history   = ''
@@ -19,6 +18,8 @@ module ::Ruuuby
         @git_configs       = ''
       end
 
+      # 💎.api.sync_git_commit_history
+      #
       def sync_git_commit_history
         all_commits       = self.commit_history
         last_verified_hash = GitCommit.get_latest.commit_hash
@@ -45,6 +46,8 @@ module ::Ruuuby
             puts "Ensuring file{#{path_file}} is ready for release..."
             ::File.insert_lines_before_expr(path_file, file_lines, "#NEXT_VERSION_HERE")
             puts "updated, done!"
+
+            # TODO: DYNAMICALLY UPDATE THE ORM STATE HERE!!!
           end
           💎.debug('----------------------------')
         else

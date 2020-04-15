@@ -55,6 +55,7 @@ ________________________________________________________________________________
 #define is_non_empty_ary(arg)     (is_ary(arg) && is_empty_ary(arg))
 #define is_hsh(arg)               RB_TYPE_P(arg, T_HASH)
 #define is_non_empty_hsh(arg)     (is_hsh(arg) && is_empty_hsh(arg))
+// SafeStringValue(value)
 #define is_str(arg)               (CLASS_OF(arg) == R_STR)
 #define is_non_empty_str(arg)     (is_str(arg) && is_empty_str(arg))
 #define is_int(arg)               RB_INTEGER_TYPE_P(arg)
@@ -73,8 +74,15 @@ ________________________________________________________________________________
 #define is_empty_str(arg) len_str(arg) == 0
 #define is_empty_ary(arg) len_ary(arg) == 0
 
-#define r_ary_get(ary, index) rb_ary_entry(ary, index);
-#define r_ary_del(ary, index) rb_ary_delete_at(ary, index);
-#define r_ary_add(ary, elem)  rb_ary_push(ary, elem);
+#define r_ary_get(ary, index)    rb_ary_entry(ary, index);
+#define r_ary_del(ary, index)    rb_ary_delete_at(ary, index);
+#define r_ary_add(ary, elem)     rb_ary_push(ary, elem);
+#define r_ary_has(ary, elem)     rb_ary_includes(ary, elem)
+
+#define r_ary_prepend(arg, elem) rb_ary_unshift(arg, elem);
+#define r_str_prepend(arg, elem) rb_str_update(arg, 0L, 0L, elem);
+
+#define r_ary_pre_modify(arg) rb_ary_modify(arg);
+#define r_str_pre_modify(arg) rb_str_modify(arg);
 
 #endif

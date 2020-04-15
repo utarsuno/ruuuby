@@ -1,3 +1,4 @@
+# coding: UTF-8
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
@@ -67,6 +68,9 @@ module ::Ruuuby
 
       # @type [String]
       RUBY_PLATFORM         = 'x86_64-darwin18'.freeze
+
+      # @type [Encoding] expected encoding is `::Encoding::UTF_8`
+      RUBY_ENCODING         = __ENCODING__
 
       module GemDependencies
 

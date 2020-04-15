@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# coding: UTF-8
 
 require_relative '../lib/ruuuby/ruuuby/ruuuby_orm'
 
@@ -6,6 +6,22 @@ require_relative '../lib/ruuuby/ruuuby/ruuuby_orm'
 💎.orm.ensure_loaded_db_connection
 
 ActiveRecord::Schema.define do
+
+  # --------------------------------------------------------------------------------------------------------------------
+  #  ___                  __
+  # |__  |\ | |  |  |\/| /__`
+  # |___ | \| \__/  |  | .__/
+  # --------------------------------------------------------------------------------------------------------------------
+
+  #create_table :file_encoding, force: true do |t|
+  #end
+
+  # --------------------------------------------------------------------------------------------------------------------
+  #  __  ___            __        __   __     ___       __        ___  __
+  # /__`  |   /\  |\ | |  \  /\  |__) |  \     |   /\  |__) |    |__  /__`
+  # .__/  |  /~~\ | \| |__/ /~~\ |  \ |__/     |  /~~\ |__) |___ |___ .__/
+  #
+  # --------------------------------------------------------------------------------------------------------------------
 
   create_table :ruuuby_dirs, force: true do |t|
     t.string :path_full, :null => false, unique: true
@@ -15,9 +31,11 @@ ActiveRecord::Schema.define do
 
   create_table :ruuuby_files, force: true do |t|
     t.string :path_full, :null => false, unique: true
-    t.string :name, :null => false, unique: false
-    t.string :extensions, :null => false, unique: false
+    t.string :name, :null => true, unique: false
+    t.string :extensions, :null => true, unique: false
     t.boolean :is_virtual, :default => false, :null => false
+
+    t.integer :expected_encoding?, limit: 1, :null => false
 
     t.references :ruuuby_dir, index: true, foreign_key: { references: :ruuuby_dirs }
   end

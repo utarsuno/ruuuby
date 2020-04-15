@@ -382,7 +382,6 @@
         'flipped functionality of String\'s funcs `to_iso8601` and `as_iso8601` to closer match function language of default `Ruby`',
     ]
 )
-
 @v0_0_31.changelog.added_method_to_class(@f08, :as_utf8, ::String)
 @v0_0_31.changelog.added_method_to_class(@f10, :¼, TOPLEVEL_BINDING)
 @v0_0_31.changelog.added_method_to_class(@f10, :½, TOPLEVEL_BINDING)
@@ -397,3 +396,17 @@
 #| (c)lass or (m)odule | methods/aliases removed |
 #| ------------------- | --------------------- |
 #| (c) `Symbol`   | `power?`, `pow_to_i` |
+
+@v0_0_32 = RuuubyRelease.spawn(0, 0, 32)
+@v0_0_32.add_file('lib/ruuuby/module/attribute/includable/singleton.rb', ::Ruuuby::Attribute::Includable::RuuubySingleton, '', @f10)
+@v0_0_32.add_file('lib/ruuuby/module/attribute/extendable/singleton.rb', ::Ruuuby::Attribute::Includable::RuuubySingleton, '', @f10)
+@v0_0_32.add_file('lib/ruuuby/class/proc.rb', ::Proc, '', @f10)
+@v0_0_32.add_comments(
+    [
+        '(`f98`) add flags to the compilation and linker steps (`wip`); replace locations in `C-extensions` that were previously accessing pointers not intended to be used beyond its internal scope (internal to `Ruby`)',
+        'global-func(`φ`) removed, reference replaced with(`𝚽`), a `Kernel` constant; also add the golden-angle constant(`Ⴔ`)',
+        'start utilizing more generic math notation where possible, ex-func(`∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎`), very useful as this automatically applies (for example) to both regular objects like `Array` and also `ORM` objects like `RuuubyRelease` while still applicable to both',
+        '`v0.0.33` to utilize `golden-angle` as well as dramatically alter angle-trig related functions'
+    ]
+)
+@v0_0_31.changelog.added_method_to_class(@f10, :∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎, ::Enumerable)

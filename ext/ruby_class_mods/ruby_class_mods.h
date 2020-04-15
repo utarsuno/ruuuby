@@ -7,6 +7,14 @@
 #ifndef CRUUUBY_H
 #define CRUUUBY_H "defined(CRUUUBY_H)"
 
+////
+
+typedef struct FloatAngles {
+    double value_degrees;
+    double value_radians;
+    double value_gons;
+} FloatAngle;
+
 /*____________________________________________________________________________________________________________________
   ___            __   __       __   ___  __             __       ___    __        __
  |__  |  | |\ | /  ` /__` .   |  \ |__  /  ` |     /\  |__)  /\   |  | /  \ |\ | /__`
@@ -26,14 +34,6 @@ static inline void startup_step5_protect_against_gc(void);
 static inline void internal_only_prepare_f16(void);
 
 static int internal_only_compare_func_4_object_id(const void * l , const void * r);
-
-/*
-//unsigned long id_7 = NUM2ULONG(rb_obj_id(rb_const_get_at(rb_cNumeric, rb_intern("EXPONENTIAL_ID_7"))));
-
-// static VALUE cached_module_virtual_types; // = ext_api_add_module_under(module_ruuuby, "VirtualTypes")
-//static VALUE cached_class_wrong_param_type; // = ext_api_add_new_sub_class_under(cached_module_param_err, R_ERR_ARG, "WrongParamType")
-*/
-
 
 /*____________________________________________________________________________________________________________________________________________________________________
             __   __   __   __       __   __   ___     __   __   __   __   ___  __   __          __

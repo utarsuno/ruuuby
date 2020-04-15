@@ -136,6 +136,9 @@ class ::File
     🛑str❓($PRM_MANY, [the_path, expression, replacement], :'!∅')
     🛑int❓(:num_matches, num_matches, :∈ℕ)
     num_matched = 0
+
+    # TODO: NEED TO OPEN THE FILES WITH ENCODING SPECIFIED
+
     Tempfile.open(".#{::File.basename(the_path)}", ::File.dirname(the_path)) do |temp_file|
       ::File.open(the_path).each do |line|
         if num_matched < num_matches

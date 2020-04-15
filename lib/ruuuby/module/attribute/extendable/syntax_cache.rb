@@ -28,8 +28,11 @@ module ::Ruuuby
         # provide a default implementation
         #
         # @return [*]
-        def cache_generate(cache_key) ; ::Regexp.gen_closed_match(cache_key) ; end
+        def cache_generate(cache_key); ::Regexp.gen_closed_match(cache_key); end
 
+        # @param [String, Symbol] cache_key
+        #
+        # @return [*]
         def cache_fetch(cache_key)
           unless self.cached_syntax.∃🔑?(cache_key)
             #🛑 RuntimeError.🆕("c{#{self.to_s}} has not defined sf{#{self.to_s}.cache_generate}") unless self.respond_to?(:cache_generate)

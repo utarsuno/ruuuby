@@ -5,6 +5,20 @@ require 'mkmf'
 $VERBOSE = true
 $DEBUG = true
 $CFLAGS << ' -v'
+$CFLAGS << ' -O3'
+$CFLAGS << ' -Werror'
+$CFLAGS << ' -Wshadow'
+$CFLAGS << ' -Wdouble-promotion'
+$CFLAGS << ' -Wundef'
+$CFLAGS << ' -fno-common'
+$CFLAGS << ' -g3'
+
+# "The compiler failed to generate an executable file. (RuntimeError) You have to install development tools first."
+#$CFLAGS << ' -Wformat-overflow'
+#$CFLAGS << ' -Wformat-truncation'
+
+# "The compiler failed to generate an executable file. (RuntimeError) You have to install development tools first."
+#$LDFLAGS << ' --gc-sections'
 
 module ExtconfConfigHelper
 

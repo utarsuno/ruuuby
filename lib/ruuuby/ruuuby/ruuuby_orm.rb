@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# coding: UTF-8
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
@@ -8,9 +8,7 @@ module Ruuuby
   module MetaData
 
     class RuuubyORM
-      include Singleton
-
-      def self.instance ; @@instance ||= new ; end
+      include ::Ruuuby::Attribute::Includable::RuuubySingleton
 
       def initialize
         @all_versions = nil
@@ -75,6 +73,7 @@ module Ruuuby
 
       # ----------------------------------------------------------------------------------------------------------------
 
+      # @return [Boolean] true, if the db-connection had not yet been loaded and did so this function-call
       def ensure_loaded_db_connection
         unless @connected
           adapter = 💎.meta_orm::DB_ADAPTER
@@ -82,9 +81,12 @@ module Ruuuby
           ActiveRecord::Base.establish_connection(adapter: adapter, database: db)
           💎.info("Connected to db of type{#{adapter.to_s}} with connection to/type{#{db.to_s}}")
           @connected = true
+          return true
         end
+        false
       end
 
+      # @return [Boolean] true, if the seeds had not yet been loaded and did so this function-call
       def ensure_loaded_seeds
         unless @seeds_loaded
           require_relative '../../../db/seeds/ruuuby_features'
@@ -92,7 +94,9 @@ module Ruuuby
           require_relative '../../../db/seeds/git_commits'
           💎.info('loaded db seeds')
           @seeds_loaded = true
+          return true
         end
+        false
       end
 
       # @return [Boolean] true, if the schema had not yet been loaded and did so this function-call

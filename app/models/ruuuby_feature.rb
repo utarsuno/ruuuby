@@ -62,7 +62,7 @@ class RuuubyFeature < ApplicationRecord
 
   def self.generate_query_uid(*args)
     🛑 ArgumentError.new("| c{Class}-> m{generate_query_uid} received no args |") if args.∅?
-    if args.length == 1 && args[0].str? && args[0].match?(::RuuubyFeature.cache_fetch(::RuuubyFeature::Syntax::UID))
+    if args.length == 1 && args[0].str? && args[0].match?(::RuuubyFeature.syntax_uid)
       return RuuubyFeature.generate_query_uid(*(self.parse_uid_str(args[0])))
     end
     🛑ℤ❓($PRM_MANY, args)

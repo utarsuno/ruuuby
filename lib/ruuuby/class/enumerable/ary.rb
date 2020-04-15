@@ -1,4 +1,4 @@
-# encoding: utf-8
+# coding: UTF-8
 
 # `Ruuuby` modifications to c(`Array`)
 module ::Ruuuby
@@ -11,6 +11,7 @@ module ::Ruuuby
 
       # defines the operations needed to support Feature(`f08`) that are applied to Class(`Array`)
       module ArrayF08
+
         # @param [*]
         #
         # @return [Boolean] true, if this array ends with the provided elements
@@ -94,7 +95,7 @@ module ::Ruuuby
           end
           self
         end
-      end # end: f08
+      end # end: {ArrayF08}
 
       # defines the operations needed to support Feature(`f09`) that are applied to Class(`Array`)
       module ArrayF09
@@ -108,13 +109,10 @@ module ::Ruuuby
         # @return [Array] a new Array instance containing the relative complement between this array and the one provided
         def ∖(them) ; 🛑ary❓(:them, them) ; self - them ; end
 
-      end # end: f09
-
-    end
-
-  end
-
-end
+      end # end: {ArrayF09}
+    end # end: {Includable}
+  end # end: {Feature}
+end # end: {Ruuuby}
 
 # add various aliases & functions to existing Class(+Array+)
 class ::Array
@@ -175,6 +173,6 @@ class ::Array
   # | ------------------------------------------------------------------------------------------------------------------
 
   # @return [Array]
-  def self.∅ ; ::Array::EMPTY_INSTANCE ; end
+  def self.∅; ::Array::EMPTY_INSTANCE; end
 
 end

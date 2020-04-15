@@ -11,11 +11,16 @@
  * clear `tech debt` and all `feature abstracts`
    * adding `automatic differentiation` should involve near `0% (of time allocation)` towards `version-relating documentation & audits`
 
+#### v0.0.33
+ * formalize angles, both notation and implementation; (`degree`, `radian` `gon`)
+ * add unit tests to `RuuubyFile` path syntax
+
 #### before v0.0.35/0.1.0
  * resolve missing coverage from `v0.0.17`
  * resolve missing coverage from `v0.0.18`
  * resolve missing coverage from `v0.0.22`
  * resolve missing coverage from `v0.0.31`
+ * resolve missing coverage from `v0.0.32`
 
 ---
 

@@ -1,4 +1,10 @@
 
+### extension code guidelines
+
+| guideline |
+| --- |
+| if including `include/ruby/ruby.h`, don't use the `..._PTR` macros (ex: `RARRAY_PTR`, instead use function `rb_ary_aref`) |
+
 | resources |
 | --- |
 | https://docs.ruby-lang.org/en/2.7.0/extension_rdoc.html#label-Ruby+Language+Core |

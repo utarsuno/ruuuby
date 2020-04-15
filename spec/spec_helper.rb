@@ -24,6 +24,13 @@ module HelpersSyntaxCache
     expect{the_class.send("#{syntax_id}=".to_sym, 5).to raise_error(FrozenError)}
   end
 
+  def expect_syntax_wo_cache(the_class, syntax_id, syntax_before_processing)
+    expect(the_class.respond_to?(syntax_id)).to eq(false)
+    expect(the_class::Syntax.constants.∋?(syntax_id)).to eq(true)
+    expect(the_class::Syntax.const_get(syntax_id)).to eq(syntax_before_processing)
+    expect{the_class.send("#{syntax_id}=".to_sym, 5).to raise_error(FrozenError)}
+  end
+
   def do_not_expect_syntax(the_class, syntax_id)
     expect(the_class.respond_to?(syntax_id)).to eq(false)
   end

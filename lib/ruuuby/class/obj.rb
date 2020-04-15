@@ -1,4 +1,4 @@
-# coding: utf-8
+# coding: UTF-8
 
 # `Ruuuby` modifications to c(`Object`)
 module ::Ruuuby

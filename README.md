@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.31'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.32'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -90,9 +90,10 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 | (`global`) func(s) added | notes | as C-extension? <br/> (java-wip) |
 | ---: | :--- | :----: |
-| `√`, `∛`, `π`<br/>`¼`, `½`, `¾`, `∞`, `∞ℂ`, `¿`, `φ`, `γ`<br/>`∠ᶜ`, `∠°`, `sin`, `sin°`, `cos`, `cos°`, `tan`, `tan°`| (`f10`, `f17`) | ❌ |
-| `📁`, `📂`, `🗄️` | - (`f12`); aliases for:<br/>`File`, `Dir` | ❌ |
-| `📅`, `🕒`, `📅🕒` | - (`f26`); aliases for:<br/>`Date`, `Time`, `DateTime` | ❌ |
+| `√`, `∛`, `π`<br/>`¼`, `½`, `¾`, `∞`, `∞ℂ`, `¿`, `γ`<br/>`∠ᶜ`, `∠°`, `sin`, `sin°`, `cos`, `cos°`, `tan`, `tan°`| (`f10`, `f17`) | ❌ |
+| `📁`, `📂`, `🗄️` | - (`f12`) aliases to:<br/>`File`, `Dir` | ❌ |
+| `📅`, `🕒`, `📅🕒` | - (`f26`) aliases to:<br/>`Date`, `Time`, `DateTime` | ❌ |
+| `🌽` | (`f10`): aliases `Kernel` | ❌ |
 
 ### Module Modifications:
 
@@ -102,18 +103,15 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | --------: | :---------------: | :------------------------: | ----- |
 | `Kernel`  | `𝔠`               | ❌                         | - gets the `cardinality` (length/size) of arg <br/> - (`f03`) |
 | `Kernel`  | `🌽_previous_⨍`   | ❌                        | (`f10`) |
-| `Kernel`  | `∃module?`        | ❌                         | true-example: `∃module?(:Ruuuby)` |
-| `Kernel`  | `∃class?`         | ❌                         | true-example: `∃class?(:Array)` |
-| `Module`  | {`static`} `∃⨍_alias?`    | ❌                 | true-example: `::Array.∃⨍_alias?(:equal_contents?, :≈≈)` |
-| `Module`  | {`static`} `∃⨍?`          | ❌                 | true-example: `::Array.∃⨍?(:≈≈)` |
-| `Module`  | {`static`} `⨍_add_aliases`| ✅                 | example: (inside Class scope)<br/>`⨍_add_aliases(:infinite?, [:∞?, :♾️?])` |
-| `Math`    | {`static`} `relative_Δ`   | ❌                 | (`f17`) |
+| `Kernel`  | `∃module?`, `∃class?`<br/>{`static`}`∃⨍_alias?`, `∃⨍?` | ❌ | |
+| `Module`  | {`static`}`⨍_add_aliases`| ✅                 |  |
+| `Math`    | {`static`}`relative_Δ`   | ❌                 | (`f17`) |
 
 ### Class Modifications:
 
 | class(es)              | func(s) added                       | as C-extension? <br/> (java-wip) | notes   |
 | ---------------------: | ----------------------------------- | :------------------------: | ------- |
-| `File`, `Dir`          | {`static`} `∃?`                     | ❌ | (`f12`) |
+| `File`, `Dir`          | {`static`}`∃?`                     | ❌ | (`f12`) |
 | `File`                 | {`static`} `dirname²`, `dirname³`, `dirname⁴`<br/>`replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` | ❌ | (`f12`) |
 | `Dir`                  | `η̂_paths`                           | ❌ | (`f12`) |
 | `File`, `Dir`, `ENV`   | `∅?`                                | ❌ | (`f04`) |
@@ -128,7 +126,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Array`                | [`frequency_counts`, `📊`]<br/>[`equal_contents?`, `≈≈`]<br/>[`disjunctive_union`, `⊕`] | ✅ | (`f09`) |
 | `Array`                | `∖`                                | ❌ | - aliased-by(`uniq_to_me`) <br/> - (`f09`) |
 | `Module`, `String`     | `∋?`, `∌?`, `∈?`, `∉?`             | ❌ | (`f09`) |
-| `Enumerable`           | `∌?`                               | ❌ | (`f09`) |
+| `Enumerable`           | `∌?`, `∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎`              | ❌ | (`f09`, `f10`) |
 | `Array`, `String`      | `>>`                               | ✅ | - prepend provided arg, reverse operation of `<<` <br/> - (`f05`) |
 | `String`               | `digit?`, `to_num`, `to_num?`      | ❌ | (`f21`) |
 | `Array`                | `end_with?`, `start_with?`         | ❌ | (`f08`) |
@@ -159,12 +157,11 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Array`, `Hash`, `Set` | `each`                                    | `∀`                        | (`f10`) |
 | `Array`, `String`      | `reverse`, `reverse!`                     | [`↩️`, `↩`], [`↩️!`, `↩!`] | (`f10`) |
 | `Array`                | `reverse_each`                            | `↩️∀`, `∀↩`                | (`f10`) |
-| `Enumerable`           | `map`                                     | `⨍`                        | (`f10`) |
-| `Enumerable`           | `include?`                                | `∋?`                       | (`f10`) |
-| `Enumerable`           | `each_with_index`                         | `∀ₓᵢ`                      | (`f10`) |
+| `Enumerable`           | `map`, `each_with_index`                  | `⨍`, `∀ₓᵢ`                 | (`f10`) |
 | `Hash`                 | `key?`                                    | [`🔑?`, `🗝?`], [`∃🔑?`, `∃🗝?`] |  |
 | `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                       | (`f04`) |
-| `String`, `Array`, `Set`, `Hash`             | `length`            | `𝔠`                        | (`f03`) |
+| `String`, `Array`, `Set`, `Hash` | `length`                        | `𝔠`                        | (`f03`) |
+| `Proc`                 | `arity`                                   | `𝔠`                        | (`f03`) |
 | `Float`                | `nan?`                                    | `¿?`                       | (`f17`) |
 | `Integer`              | `finite?`                                  | `∞ℂ?`, `¿?`, `∞ℂ?`         | (`f17`) |
 
@@ -173,10 +170,10 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 715      | # of tests (solely relating to core functionality)              |
+| QA        | unit          | 722      | # of tests (solely relating to core functionality)              |
 | QA        | performance   | 278      | # of tests (solely relating to performance)                     |
-| QA        | DB            | 101      | # of tests (solely relating to the database)                    |
-| CI        | audits        | 44       | # of tests (solely relating to non-functionality based audits)  |
+| QA        | DB            | 103      | # of tests (solely relating to the database)                    |
+| CI        | audits        | 47       | # of tests (solely relating to non-functionality based audits)  |
 | structure | features      | ~30      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |

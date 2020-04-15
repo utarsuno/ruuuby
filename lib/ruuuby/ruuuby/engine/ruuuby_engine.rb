@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# coding: UTF-8
 
 module ::Ruuuby
 
@@ -6,11 +6,9 @@ module ::Ruuuby
   module MetaData
 
     class RuuubyEngine
-      include ::Singleton
+      include ::Ruuuby::Attribute::Includable::RuuubySingleton
 
       attr_reader :logger
-
-      def self.instance ; @@instance ||= new ; end
 
       def initialize
         @warmed_up      = nil

@@ -69,9 +69,9 @@ class ::Module
   alias_method :⨍_add_aliases, :f_add_aliases
 
   # @return [Array]
-  def get_all_defined_modules ; self.constants.select{|const| self.const_get(const).module? } ; end
+  def get_all_defined_modules; self.constants.select{|const| self.const_get(const).module?}; end
 
   # @return [Array]
-  def get_all_defined_classes ; self.constants.select{|const| self.const_get(const).class? } ; end
+  def get_all_defined_classes; self.constants.select{|const| self.const_get(const).class?}; end
 
 end
