@@ -1,8 +1,4 @@
-# coding: utf-8
-
-# TODO: test for the following constants
-#           #expect_∃⨍(:𝚽, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
-#           #expect_∃⨍(:Ⴔ, ::Ruuuby::Feature::Extendable::MainF17::FloatAliases)
+# coding: UTF-8
 
 RSpec.describe ::Kernel do
   let(:wrong_param_type){Ruuuby::ParamErr::WrongParamType}
@@ -52,29 +48,6 @@ RSpec.describe ::Kernel do
           context 'adds function{¿}' do
             it 'aliases{Float::NAN}' do
               expect(¿.nan?).to eq(true)
-            end
-          end
-          context 'adds function{𝚽}' do
-            it 'equals: (1 + √(5)) / 2.0' do
-              expect(𝚽).to eq((1 + √(5)) / 2.0)
-            end
-            it 'equals: 𝚽 = 1 + 1/𝚽' do
-              # for v0.0.33
-              expect(𝚽).to eq(::Float::GOLDEN_RATIO)
-              #expect(φ^²).to eq(1 + (𝚽^⁻¹))
-              expect(𝚽).to eq(1 + Rational(1, 𝚽))
-              expect(𝚽).to eq(1 + (𝚽^⁻¹))
-            end
-            it '~equals: 2 * sin(54)' do
-              expect(𝚽.≈≈(2.0 * Math.sin(∠ᶜ(54.0)))).to eq(true)
-            end
-          end
-          context 'adds function{𝚽}' do
-            it 'equals: π * (3 - √(5))' do
-              # for v0.0.33
-              #expect(𝚽).to eq(::Float::GOLDEN_ANGLE)
-              #expect(::Float::GOLDEN_ANGLE_AS_RADIANS).to eq(π * (3 - √(5)))
-              #expect(∠ᶜ(π * (3 - √(5)))).to eq(::Float::GOLDEN_ANGLE)
             end
           end
           context 'adds function{γ}' do
@@ -303,7 +276,7 @@ RSpec.describe ::Kernel do
       end
     end
 
-    # TODO: Add performance tests for (𝔠, ∠ᶜ, sin°, etc)
+    # TODO: Add performance tests
 
   end
 

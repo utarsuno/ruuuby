@@ -230,7 +230,7 @@ module ::Ruuuby
 
         # @raise [WrongParamType]
         #
-        # @return [Numeric, Symbol]
+        # @return [Numeric, Symbol, ThetaAngle]
         def to_num
           case(self.length)
           when 0
@@ -241,8 +241,26 @@ module ::Ruuuby
             when '∞'; return ::Float::INFINITY
             when 'π'; return ::Math::PI
             when '𝚽'; return ::Float::GOLDEN_RATIO
-            when 'Ⴔ'; return ::Float::GOLDEN_ANGLE
+            when 'Ⴔ'; return ::Math::GOLDEN_ANGLE
             when 'γ'; return ::Float::EULER_MASCHERONI_CONSTANT
+            when '℮'; return ::Math::E
+            when '½'; return ::Float::ONE_HALF
+            when '⅓'; return ::Float::ONE_THIRD
+            when '⅔'; return ::Float::TWO_THIRDS
+            when '¼'; return ::Float::ONE_FOURTH
+            when '¾'; return ::Float::THREE_FOURTHS
+            when '⅕'; return ::Float::ONE_FIFTH
+            when '⅖'; return ::Float::TWO_FIFTHS
+            when '⅗'; return ::Float::THREE_FIFTHS
+            when '⅘'; return ::Float::FOUR_FIFTHS
+            when '⅙'; return ::Float::ONE_SIXTH
+            when '⅐'; return ::Float::ONE_SEVENTH
+            when '⅛'; return ::Float::ONE_EIGHTH
+            when '⅜'; return ::Float::THREE_EIGHTHS
+            when '⅝'; return ::Float::FIVE_EIGHTHS
+            when '⅞'; return ::Float::SEVEN_EIGHTHS
+            when '⅑'; return ::Float::ONE_NINTH
+            when '⅒'; return ::Float::ONE_TENTH
             else    ; self.🛑⨍_to_num
             end
           when 2
@@ -258,8 +276,6 @@ module ::Ruuuby
             when '+', '-'
               if self.₁.digit?   ; return Integer(self)
               elsif self.₁?('π') ; return (self.₀?('-')) ? (-::Math::PI) : (::Math::PI)
-              elsif self.₁?('𝚽') ; return (self.₀?('-')) ? (-::Float::GOLDEN_RATIO) : (::Float::GOLDEN_RATIO)
-              elsif self.₁?('Ⴔ') ; return (self.₀?('-')) ? (-::Float::GOLDEN_ANGLE) : (::Float::GOLDEN_ANGLE)
               elsif self.₁?('γ') ; return (self.₀?('-')) ? (-::Float::EULER_MASCHERONI_CONSTANT) : (::Float::EULER_MASCHERONI_CONSTANT)
               else               ; self.🛑⨍_to_num
               end

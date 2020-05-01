@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# coding: UTF-8
 
 RSpec.describe 'ruuuby_release.rb' do
 
@@ -72,13 +72,13 @@ RSpec.describe 'ruuuby_release.rb' do
 
         context 'adds func{get_version_prev}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_prev).to eq(v0_0_30)
+            expect(RuuubyRelease.get_version_prev).to eq(v0_0_31)
           end
         end
 
         context 'adds func{get_version_curr}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_curr).to eq(v0_0_31)
+            expect(RuuubyRelease.get_version_curr).to eq(v0_0_32)
           end
           it 'matches `GitCommit`\'s func{get_latest} return value' do
             expect(RuuubyRelease.get_version_curr.git_commits.last).to eq(GitCommit.get_latest)
@@ -87,7 +87,7 @@ RSpec.describe 'ruuuby_release.rb' do
 
         context 'adds func{get_version_next}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_next).to eq(v0_0_32)
+            expect(RuuubyRelease.get_version_next).to eq(v0_0_33)
           end
         end
 

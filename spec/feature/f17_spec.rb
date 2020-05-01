@@ -38,8 +38,6 @@ RSpec.describe 'f17' do
           expect_∃⨍(:π, ::Ruuuby::Feature::Extendable::MainF17::MathAliases)
         end
         it 'for m{Trigonometry}' do
-          expect_∃⨍(:∠ᶜ, ::Ruuuby::Feature::Extendable::MainF17::Trigonometry)
-          expect_∃⨍(:∠°, ::Ruuuby::Feature::Extendable::MainF17::Trigonometry)
           expect_∃⨍(:sin, ::Ruuuby::Feature::Extendable::MainF17::Trigonometry)
           expect_∃⨍(:sin°, ::Ruuuby::Feature::Extendable::MainF17::Trigonometry)
           expect_∃⨍(:cos, ::Ruuuby::Feature::Extendable::MainF17::Trigonometry)

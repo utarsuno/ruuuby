@@ -10,6 +10,11 @@ RSpec.describe 'f06' do
       end
       context 'funcs provided are defined in correct location' do
         it 'for m{ObjectF06}' do
+          expect_∃⨍(:enumerable?, ::Ruuuby::Feature::Includable::ObjectF06)
+          expect_∃⨍(:θ?, ::Ruuuby::Feature::Includable::ObjectF06)
+
+          expect_∃⨍(:🛑enumerable❓, ::Ruuuby::Feature::Includable::ObjectF06)
+          expect_∃⨍(:🛑θ❓, ::Ruuuby::Feature::Includable::ObjectF06)
           expect_∃⨍(:🛑bool❓, ::Ruuuby::Feature::Includable::ObjectF06)
           expect_∃⨍(:🛑int❓, ::Ruuuby::Feature::Includable::ObjectF06)
           expect_∃⨍(:🛑ℤ❓, ::Ruuuby::Feature::Includable::ObjectF06)

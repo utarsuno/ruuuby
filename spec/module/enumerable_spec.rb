@@ -11,41 +11,44 @@ RSpec.describe ::Enumerable do
 
   context 'extends module[Enumerable]' do
 
-    it 'by creating needed aliases' do
-      expect_added_ruby_methods(::Enumerable, cΔ_Enumerable)
-      RuuubyTestHelper::CONFIG_ENUMERABLE[:aliases].∀ do |base_func, aliases|
-        expect(::Enumerable.∃⨍?(aliases)).to eq(true)
-      end
-    end
-
     context 'by adding needed functions & aliases' do
 
       context 'function{∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎}' do
         context 'handles needed scenarios' do
           context 'for type: array' do
-            it 'cases: positive' do
-              count = 0
-              data  = [1, 10, 2, 100, -1, 5, 1337, 1337, 1337]
-              data.∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev, curr| count += 1 if curr > prev}
-              expect(count).to eq(4)
+            context 'cases: positive' do
+              it 'default format' do
+                count = 0
+                data  = [1, 10, 2, 100, -1, 5, 1337, 1337, 1337]
+                data.∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev, curr| count += 1 if curr > prev}
+                expect(count).to eq(4)
 
-              count = 0
-              [1, 10, 2].∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev, curr| count += 1 if curr > prev}
-              expect(count).to eq(1)
+                count = 0
+                [1, 10, 2].∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev, curr| count += 1 if curr > prev}
+                expect(count).to eq(1)
 
-              count = 0
-              [1, 10, 2].∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev, curr|}
-              expect(count).to eq(0)
+                count = 0
+                [1, 10, 2].∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev, curr|}
+                expect(count).to eq(0)
 
-              count = 0
-              [1337, 1337, 1337, 1337, 1337, 1337].∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev, curr| count += 1}
-              expect(count).to eq(5)
+                count = 0
+                [1337, 1337, 1337, 1337, 1337, 1337].∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev, curr| count += 1}
+                expect(count).to eq(5)
+              end
+              it 'alternative format' do
+                count = 0
+                data  = [1, 10, 2, 100, -1, 5, 1337, 1337, 1337]
+                data.∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎ do |prev, curr|
+                  count += 1 if curr > prev
+                end
+                expect(count).to eq(4)
+              end
             end
             context 'cases: negative' do
               it 'wrong number of args' do
                 count = 0
-                expect{([1, 2, 3, 4].∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev| count += 1 if prev > 1})}.to raise_error(ArgumentError)
-                expect{([1, 2, 3, 4].∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev, curr, future| count += 1 if prev > 1})}.to raise_error(ArgumentError)
+                expect{([1, 2, 3].∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev| count += 1 if prev > 1})}.to raise_error(ArgumentError)
+                expect{([1, 2, 3].∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev, curr, future| count += 1 if prev > 1})}.to raise_error(ArgumentError)
               end
               it 'array length is too small' do
                 count = 0

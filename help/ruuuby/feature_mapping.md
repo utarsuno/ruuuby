@@ -30,6 +30,7 @@
 | f24 | add syntax parsing for following 4 categories: {`snake_case`, `camel_case`, `snake_case_upper`, `camel_case_lower`}, aliased via: {`🐫`, `🐍`, `🐫⬇`, `🐍⬆`} |
 | f25 | bundle `Ruuuby` meta-data related functionality w/ base alias(`💎`)    |
 | f26 | add syntax parsing for `ISO8601` as well as aliases for Date(`📅`), Time(`🕒`), and DateTime(`📅🕒`) |
+| f27 | add new class (`ThetaAngle`) for easier operations involving angles    |
 | f96 | automate local `git` configurations                                     |
 | f97 | `JRuby-extensions`                                                     |
 | f98 | `C-extensions`                                                         |

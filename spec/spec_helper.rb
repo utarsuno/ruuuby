@@ -77,6 +77,15 @@ module HelpersGeneral
     expect(owner.∃⨍?(the_func)).to eq(expected_result)
   end
 
+  def expect_∃const_w_type(the_const, const_type, owner, expected_result=true)
+    expect(owner.const_defined?(the_const)).to eq(expected_result)
+    expect(owner.const_get(the_const).class).to eq(const_type)
+  end
+
+  def expect_∃const(the_const, owner, expected_result=true)
+    expect(owner.const_defined?(the_const)).to eq(expected_result)
+  end
+
   def expect_∃static⨍(the_func, owner, expected_result=true)
     if owner == ::Kernel
       expect(owner.instance_methods(false).∋?(the_func)).to eq(expected_result)
@@ -131,6 +140,8 @@ RSpec.configure do |config|
 
   config.include ::Ruuuby::Feature::Extendable::MainF10
   config.include ::Ruuuby::Feature::Extendable::MainF12
+  config.include ::Ruuuby::Feature::Extendable::MainF26
+  config.include ::Ruuuby::Feature::Extendable::MainF27
   config.include ::Ruuuby::Feature::Extendable::MainF17::MathAliases
   config.include ::Ruuuby::Feature::Extendable::MainF17::FloatAliases
   config.include ::Ruuuby::Feature::Extendable::MainF17::Trigonometry

@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# coding: UTF-8
 
 RSpec.describe 'Object' do
   let(:data_default){Object.🆕}
@@ -58,6 +58,52 @@ RSpec.describe 'Object' do
             expect{🛑bool❓($PRM_MANY, [true, nil])}.to raise_error(ArgumentError)
             expect{🛑🅱️❓($PRM_MANY, [nil, false])}.to raise_error(ArgumentError)
             expect{🛑🅱️❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+          end
+        end
+      end
+    end
+
+    context 'by adding function{enumerable?}' do
+      context 'handling needed scenarios' do
+        it 'cases: positive' do
+          [[], {}, Set[1, 2, 3]].∀{|n|expect(n.enumerable?).to eq(true)}
+        end
+        it 'cases: negative' do
+          [Array, Hash, String, Set, nil, '', 1337, 1337.0].∀{|n|expect(n.enumerable?).to eq(false)}
+        end
+      end
+    end
+
+    context 'by adding function{🛑enumerable❓}' do
+      context 'handles needed input scenarios' do
+        context 'cases: positive' do
+          it 'w/ single param' do
+            expect{🛑enumerable❓(:enumerable, [])}.to_not raise_error
+            expect{🛑enumerable❓(:enumerable, Set[])}.to_not raise_error
+          end
+        end
+        context 'cases: negative' do
+          it 'w/ single param' do
+            expect{🛑enumerable❓(:not_enumerable, nil)}.to raise_error(ArgumentError)
+            expect{🛑enumerable❓(:not_enumerable, Array)}.to raise_error(ArgumentError)
+            expect{🛑enumerable❓(:not_enumerable, '')}.to raise_error(ArgumentError)
+          end
+        end
+      end
+    end
+
+    context 'by adding function{🛑θ❓}' do
+      context 'handles needed input scenarios' do
+        context 'cases: positive' do
+          it 'w/ single param' do
+            expect{🛑θ❓(:θ, θ°(360.0))}.to_not raise_error
+            expect{🛑θ❓(:θ, θ°(360.0))}.to_not raise_error
+          end
+        end
+        context 'cases: negative' do
+          it 'w/ single param' do
+            expect{🛑θ❓(:θ, nil)}.to raise_error(ArgumentError)
+            expect{🛑θ❓(:θ, 360.0)}.to raise_error(ArgumentError)
           end
         end
       end
@@ -478,6 +524,61 @@ RSpec.describe 'Object' do
       end
     end
 
+    context 'by adding function{enumerable?}' do
+      context 'handling needed scenarios' do
+        it 'cases: positive' do
+          [[], {}, Set[]].∀{|n|expect(n.enumerable?).to eq(true)}
+        end
+        it 'cases: negative' do
+          [Array, Hash, String, Set, nil, '', 1337, 1337.0].∀{|n|expect(n.enumerable?).to eq(false)}
+        end
+      end
+    end
+
+    context 'function{θ?}' do
+      context 'handles needed scenarios' do
+        context 'cases: positive' do
+          it 'w/ single param' do
+            expect(θ°(0).θ?).to eq(true)
+            expect(θᵍ(0).θ?).to eq(true)
+            expect(θʳ(0).θ?).to eq(true)
+            expect(θ𝞽(0).θ?).to eq(true)
+          end
+        end
+        context 'cases: negative' do
+          it 'w/ single param' do
+            expect(0.θ?).to eq(false)
+            expect(360.0.θ?).to eq(false)
+            expect(Rational(::Math::PI, 2).θ?).to eq(false)
+            expect(nil.θ?).to eq(false)
+            expect(''.θ?).to eq(false)
+          end
+        end
+      end
+    end
+
+    context 'function{θ?}' do
+      context 'handles needed scenarios' do
+        context 'cases: positive' do
+          it 'w/ single param' do
+            expect(θ°(0).θ?).to eq(true)
+            expect(θᵍ(0).θ?).to eq(true)
+            expect(θʳ(0).θ?).to eq(true)
+            expect(θ𝞽(0).θ?).to eq(true)
+          end
+        end
+        context 'cases: negative' do
+          it 'w/ single param' do
+            expect(0.θ?).to eq(false)
+            expect(360.0.θ?).to eq(false)
+            expect(Rational(::Math::PI, 2).θ?).to eq(false)
+            expect(nil.θ?).to eq(false)
+            expect(''.θ?).to eq(false)
+          end
+        end
+      end
+    end
+
     context 'by adding function{hsh?}' do
       it 'without effecting Integer instance' do
         expect(Hash.hsh?).to eq(false)
@@ -837,6 +938,39 @@ RSpec.describe 'Object' do
       #it 'cases[negative]' do
       #  expect{🛑countable❓('0', 5)}.to perform_extremely_quickly
       #end
+    end
+
+
+    context 'func{stry?}: performs extremely quickly' do
+      it 'for cases: true' do
+        expect{'a'.stry?}.to perform_extremely_quickly
+        expect{:a.stry?}.to perform_extremely_quickly
+      end
+      it 'for cases: false' do
+        expect{5.stry?}.to perform_extremely_quickly
+      end
+    end
+
+    context 'function{🛑θ❓}: performs extremely quickly' do
+      context 'for needed scenarios' do
+        context 'cases: positive' do
+          it 'w/ single param' do
+            the_enumerable = []
+            expect{🛑enumerable❓(:enumerable, the_enumerable)}.to perform_extremely_quickly
+          end
+        end
+      end
+    end
+
+    context 'function{🛑θ❓}: performs extremely quickly' do
+      context 'for needed scenarios' do
+        context 'cases: positive' do
+          it 'w/ single param' do
+            the_angle = θ°(360.0)
+            expect{🛑θ❓(:θ, the_angle)}.to perform_extremely_quickly
+          end
+        end
+      end
     end
 
   end

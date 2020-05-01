@@ -21,9 +21,25 @@ ________________________________________________________________________________
 
 static VALUE cached_ref_empty_ary;
 
-static VALUE cached_flt_one_fourth;
 static VALUE cached_flt_one_half;
+static VALUE cached_flt_two_thirds;
+static VALUE cached_flt_one_third;
+static VALUE cached_flt_one_fourth;
 static VALUE cached_flt_three_fourths;
+static VALUE cached_flt_one_fifth;
+static VALUE cached_flt_two_fifths;
+static VALUE cached_flt_three_fifths;
+static VALUE cached_flt_four_fifths;
+static VALUE cached_flt_one_sixth;
+static VALUE cached_flt_five_sixth;
+static VALUE cached_flt_one_seventh;
+static VALUE cached_flt_one_eighth;
+static VALUE cached_flt_three_eighths;
+static VALUE cached_flt_five_eighths;
+static VALUE cached_flt_seven_eighths;
+static VALUE cached_flt_one_ninth;
+static VALUE cached_flt_one_tenth;
+
 static VALUE cached_flt_nan;
 static VALUE cached_flt_inf;
 static VALUE cached_flt_negative_inf;
@@ -52,12 +68,39 @@ static VALUE 🆔cached_sym_none;
 static VALUE cached_sym_normalizer_no_empty;
 static VALUE 🆔cached_sym_normalizer_no_empty;
 
+static VALUE cached_sym_as_radian;
+static VALUE cached_sym_as_degree;
+static VALUE cached_sym_as_turn;
+static VALUE cached_sym_as_gon;
+
 static VALUE cached_class_big_decimal;
 static VALUE cached_class_set;
+static VALUE cached_class_theta_angle;
+
+static VALUE cached_const_golden_angle;
+
 static VALUE cached_rb_intern_ints_bitwise_xor;
 static VALUE cached_rb_intern_raise_to_power;
 static VALUE cached_rb_intern_is_a;
 static VALUE cached_rb_intern_is_empty;
+static VALUE cached_rb_intern_new;
+
+// ID rb_intern(const char*);
+
+static ID cached_rb_intern_as_degree;
+static ID cached_rb_intern_as_radian;
+static ID cached_rb_intern_as_gon;
+static ID cached_rb_intern_as_turn;
+
+static ID cached_rb_intern_zero_angle;
+static ID cached_rb_intern_acute_angle;
+static ID cached_rb_intern_right_angle;
+static ID cached_rb_intern_sextant_angle;
+static ID cached_rb_intern_obtuse_angle;
+static ID cached_rb_intern_straight_angle;
+static ID cached_rb_intern_reflex_angle;
+static ID cached_rb_intern_perigon_angle;
+static ID cached_rb_intern_oblique_angle;
 
 /*____________________________________________________________________________________________________________________
  __        __        ___      __

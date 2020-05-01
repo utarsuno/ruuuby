@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# coding: UTF-8
 
 # modify the Ruby-'singleton' `ENV`
 class << ENV

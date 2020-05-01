@@ -1,4 +1,4 @@
-# encoding: utf-8
+# coding: utf-8
 
 # add various aliases & functions to existing Class(+Float+)
 #
@@ -40,7 +40,7 @@ class ::Float
   end
 
   # @return [Boolean] false, `complex-infinity` is currently represented through a `Symbol`
-  def ∞ℂ? ; false ; end
+  def ∞ℂ?; false; end
 
   alias_method :¿?, :nan?
 
@@ -53,18 +53,31 @@ class ::Float
   ⨍_add_aliases(:finite?, [:ℂ?, :ℝ?, :𝕌?])
 
   # @return [Boolean] true, if there is no imaginary component and the real component is a natural-number(+ℕ+)
-  def ℕ? ; (!(∞? || negative?)) && (self == 0 || ((self % 1) == 0)) ; end
+  def ℕ?; (!(∞? || negative?)) && (self == 0 || ((self % 1) == 0)); end
 
   # @return [Boolean] true, if this number's contents are equivalent to any number in the set of math-integers(+ℤ+)
-  def ℤ? ; self.ℝ? && (self == 0 || ((self % 1) == 0)) ; end
+  def ℤ?; self.ℝ? && (self == 0 || ((self % 1) == 0)); end
+
+  # @return [Boolean] true, if this +Float+ instance is π
+  def π?; self.🆔 == ::Math::PI.🆔; end
 
   # ⚠️, coverage missing beyond ℤ
   #
-  # @return [Boolean|NilClass]
+  # @return [Boolean, NilClass]
   def ℚ?
-    return false unless self.ℝ?
-    return true if self.ℤ?
-    nil
+    if self.ℝ?
+      if self.ℤ?
+        true
+      else
+        if self.π?
+          true
+        else
+          nil
+        end
+      end
+    else
+      false
+    end
   end
 
 end

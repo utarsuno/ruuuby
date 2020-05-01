@@ -410,3 +410,36 @@
     ]
 )
 @v0_0_32.changelog.added_method_to_class(@f10, :∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎, ::Enumerable)
+
+@v0_0_33 = RuuubyRelease.spawn(0, 0, 33)
+@v0_0_33.add_file('lib/ruuuby/class/nums/theta_angle.rb', ::ThetaAngle, '', @f27)
+@v0_0_33.add_comments(
+    [
+        '(`98`): create new Class(`ThetaAngle`) which is essentially a wrapper over a `C-struct`',
+        'modify global-funcs `sin`, `cos`, `tan`, etc to utilize the `ThetaAngle` class',
+        'added empty code file(`lib/ruuuby/class/method/math_function.rb`) for future versions',
+    ]
+)
+@v0_0_33.changelog.added_method_to_class(@f06, :θ?, ::Object)
+@v0_0_33.changelog.added_method_to_class(@f06, :🛑θ❓, ::Object)
+@v0_0_33.changelog.added_method_to_class(@f06, :enumerable?, ::Object)
+@v0_0_33.changelog.added_method_to_class(@f06, :🛑enumerable❓, ::Object)
+@v0_0_33.changelog.added_method_to_class(@f10, :℮, TOPLEVEL_BINDING)
+@v0_0_33.changelog.added_method_to_class(@f10, :logₑ, TOPLEVEL_BINDING)
+@v0_0_33.changelog.added_method_to_class(@f10, :log₂, TOPLEVEL_BINDING)
+@v0_0_33.changelog.added_method_to_class(@f10, :log₁₀, TOPLEVEL_BINDING)
+@v0_0_33.changelog.added_method_to_class(@f17, :pythagoras_τ³?, ::Math)
+@v0_0_20.changelog.added_method_to_class(@f17, :arcsin, TOPLEVEL_BINDING)
+@v0_0_20.changelog.added_method_to_class(@f17, :arccos, TOPLEVEL_BINDING)
+@v0_0_20.changelog.added_method_to_class(@f17, :arctan, TOPLEVEL_BINDING)
+@v0_0_33.changelog.added_method_to_class(@f27, :θ°, TOPLEVEL_BINDING)
+@v0_0_33.changelog.added_method_to_class(@f27, :θʳ, TOPLEVEL_BINDING)
+@v0_0_33.changelog.added_method_to_class(@f27, :θᵍ, TOPLEVEL_BINDING)
+@v0_0_33.changelog.added_method_to_class(@f27, :θ𝞽, TOPLEVEL_BINDING)
+
+#
+#* remove the following methods/aliases:
+#| from       | methods/aliases removed |
+#| ---------- | ----------------------- |
+#| `Kernel`   | `∠ᶜ`, `∠°` |
+#

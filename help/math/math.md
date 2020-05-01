@@ -89,6 +89,10 @@
 | 0x29 | `measure zero` | | "a set of points capable of being enclosed in intervals whose total length is arbitrarily small" | |
 | 0x30 | `first-order logic` | `predicate logic`, `quantificational logic`, `first-order predicate calculus` | "a collection of `formal systems` used in mathematics, philosophy, linguistics, and computer science" | |
 | 0x31 | `even & odd functions` | | "functions which satisfy particular `symmetry` relations, with respect to taking `additive inverses`" | |
+| 0x32 | `domain` | | "what can go into a function" | |
+| 0x33 | `codomain` | | "what may possibly come out of a function" | |
+| 0x34 | `range` | | "what actually comes out of a function" | |
+| 0x35 | `principal value` | | "the `principal value` of a `multivalued function` are the values along one chosen `branch` of that function, so that it is `single-valued`" | ex: 4 has two roots (±2); the positive root(2) is the `principal root` and denoted as `√4` |
 
 | # | more | example |
 | --- | --- | --- |
@@ -129,7 +133,8 @@ TODO formal def: `normal distrubtion`
 | 0x3 | `even functions` | "Let `f` be a real-valued function of a real variable. Then `f` is `even` if the following equation holds for all `x such that x` and `-x` in the domain of `f`: <br/> `f(x) = f(-x)` <br/> or equivalently if the following equation holds for all such `x`: `f(x) - f(-x) = 0`" |
 | 0x4 | `hyperbolic tangent function` | TODO: ADD DESCRIPTION!!! |
 | 0x5 | `error function erf` | TODO: !!!!!!!!!!!!!!!!!!!!!!! |
-
+| 0x6 | `multivalued function` | "similar to a function, but may associate several values to each input" ; "from a `domain X` to a `codomain Y` associates each `x` in `X` to one or more values `y` in `Y`" |
+| 0x7 | `principal branch` | "a function which selects one `branch` (`'slice'`) of a `multi-valued function`" |
 
 ### Properties of Exponents
 
@@ -228,6 +233,7 @@ Even-odd Decomposition:
 * https://www.quora.com/What-is-the-value-of-one-to-the-power-infinity
 
 ```
+phi-constant-digits: https://www2.cs.arizona.edu/icon/oddsends/phi.htm
 
 | 0x10 | `method of least squares` | | `TODO:` add notes with respect to `α` and `β` for minimizing `S` (`partial derivatives` to be zero) |
 

@@ -20,7 +20,7 @@ class ::Integer
   # ∀ x ∈ Rℤ --> x ∈ ℤ
   #
   # ∴ ⨍(`infinite?`) will always return `false`
-  ⨍_add_aliases(:infinite?, [:∞?, :♾️?, :∞ℂ?, :nan?, :¿?])
+  ⨍_add_aliases(:infinite?, [:∞?, :♾️?, :∞ℂ?, :nan?, :¿?, :π?])
 
   # ∀ x ∈ Rℤ --> x ∈ ℤ, x ∈ ℚ, x ∈ ℂ, x ∈ ℝ, x ∈ 𝕌
   #

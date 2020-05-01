@@ -9,12 +9,10 @@ class RuuubyFile < ApplicationRecord
   # useful components for any expression parsing
   module Syntax
 
-    # TODO: UNIT TESTS ON THIS
-
     # expression from: https://stackoverflow.com/questions/6416065/c-sharp-regex-for-file-paths-e-g-c-test-test-exe/42036026#42036026
     #
     # @type [String]
-    UNIX_PATH = '\/$|(^(?=\/)|^\.|^\.\.)(\/(?=[^/\0])[^/\0]+)*\/?'.❄️
+    UNIX_PATH = '\/$|(^(?=\/)|^\.|^\.\.|^\~|^\~(?=\/))(\/(?=[^/\0])[^/\0]+)*\/?'.❄️
 
     # @type [String]
     UID       = UNIX_PATH

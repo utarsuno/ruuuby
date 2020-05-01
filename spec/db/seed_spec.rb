@@ -164,6 +164,18 @@ RSpec.describe 'db/seed.rb' do
           end
         end
 
+        context 'defines f27' do
+          it 'passes ORM audit' do
+            audit_feature(f27, 'f27', 'add new class (`ThetaAngle`) for easier operations involving angles')
+          end
+        end
+
+        context 'defines f28' do
+          it 'passes ORM audit' do
+            audit_feature(f28, 'f28', 'formally support math constants & equations relating to golden-ratio, aliased via(`𝚽`)')
+          end
+        end
+
         context 'defines f98' do
           it 'passes ORM audit' do
             audit_feature(f98, 'f98', '`C-extensions`')
@@ -289,6 +301,12 @@ RSpec.describe 'db/seed.rb' do
         context 'v0.0.32' do
           it 'as expected' do
             audit_version(v0_0_32, 'v0.0.32')
+          end
+        end
+
+        context 'v0.0.33' do
+          it 'as expected' do
+            audit_version(v0_0_33, 'v0.0.33')
           end
         end
 

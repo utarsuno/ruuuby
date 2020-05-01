@@ -1,4 +1,4 @@
-# coding: utf-8
+# coding: UTF-8
 
 RSpec.describe 'complex.rb' do
   let(:data_nan_with_complex){ℂ(Float::NAN, 1.5)}

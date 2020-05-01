@@ -1,3 +1,4 @@
+# coding: UTF-8
 
 # add various aliases & functions to existing Class(+Rational+)
 class ::Rational
@@ -8,9 +9,9 @@ class ::Rational
   # @return [Boolean] true, if finite and numerator and denominator pass
   def ℤ? ; self.finite? && (self.fdiv(1) % 1 == 0) ; end
 
-  # ⚠️, coverage missing beyond ℤ
+  # ⚠️, coverage missing, results not reliable either (yet)
   #
-  # @return [Boolean|NilClass] true, if finite and numerator and denominator pass
+  # @return [Boolean, NilClass] true, if finite and numerator and denominator pass
   def ℚ?
     return true if self.numerator.ℤ? && self.denominator.ℤ?
     nil

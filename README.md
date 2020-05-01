@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.32'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.33'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -18,9 +18,14 @@
 √(1787569)      == 1337
 √(√(-1337.0^⁴)) == 1337
 
-# true, true
+# true, true, true
 𝚽 == 1 + (𝚽^⁻¹)
 𝚽.≈≈ 2 * sin°(54)
+𝚽 == (θ𝞽(1) - Ⴔ) / Ⴔ
+
+# true, true
+θ°(180) == θ𝞽(0.5)
+θᵍ(200) == θʳ(π)
 
 # true, true, false
 'b'.∈? 'abc'
@@ -80,20 +85,22 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 | class(es)  | example | (at least partially) utilizing C-extension?<br/>(java-wip) | notes |
 | ----------:| ------- | :---: |----- |
-| `Integer`  | `1337^²` | ✅ | - coexists with `Integer`'s default existing `bitwise XOR` functionality <br/> - `performance penalties`: up to `80%` `slower` than using operator(`**`) |
+| `Integer`  | `1337^²` | ✅ | -coexists with `Integer`'s pre-existing `bitwise XOR` functionality<br/>-`performance penalties`: up to `80%` `slower` than using operator(`**`) |
 | `Float`    | `1337.1337^²` | ✅ | `performance penalties`: up to `90%` `slower` than using operator(`**`) |
 | `Rational` | `3/4r^²` | ✅ | `performance penalties`: up to `105% slower` than using operator(`**`) |
 | `Complex`  | `1337i` | ✅ | `performance penalties`: up to `85% slower` than using operator(`**`) |
 | `BigDecimal` | `inc` | `inc` | `inc` |
+| `ThetaAngle` | `inc` | `inc` | outputs to unit: `steradian` (depending on input) |
 
 ### TOPLEVEL_BINDING Modifications:
 
 | (`global`) func(s) added | notes | as C-extension? <br/> (java-wip) |
 | ---: | :--- | :----: |
-| `√`, `∛`, `π`<br/>`¼`, `½`, `¾`, `∞`, `∞ℂ`, `¿`, `γ`<br/>`∠ᶜ`, `∠°`, `sin`, `sin°`, `cos`, `cos°`, `tan`, `tan°`| (`f10`, `f17`) | ❌ |
+| `℮`, `logₑ`, `log₂`, `log₁₀`<br/>`√`, `∛`, `π`, `Ⴔ`<br/>`¼`, `½`, `¾`, `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒`<br/>`∞`, `∞ℂ`, `¿`, `γ`<br/>`sin`, `sin°`, `cos`, `cos°`, `tan`, `tan°`, `arcsin`, `arccos`, `arctan`, `cot`, `csc`, `sec`, `sin²`, `cos²` | (`f10`, `f17`) | ❌ |
+| `🌽` | (`f10`): aliases `Kernel` | ❌ |
 | `📁`, `📂`, `🗄️` | - (`f12`) aliases to:<br/>`File`, `Dir` | ❌ |
 | `📅`, `🕒`, `📅🕒` | - (`f26`) aliases to:<br/>`Date`, `Time`, `DateTime` | ❌ |
-| `🌽` | (`f10`): aliases `Kernel` | ❌ |
+| `θ°`, `θʳ`, `θᵍ`, `θ𝞽` | `f27` | ✅ |
 
 ### Module Modifications:
 
@@ -105,7 +112,8 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Kernel`  | `🌽_previous_⨍`   | ❌                        | (`f10`) |
 | `Kernel`  | `∃module?`, `∃class?`<br/>{`static`}`∃⨍_alias?`, `∃⨍?` | ❌ | |
 | `Module`  | {`static`}`⨍_add_aliases`| ✅                 |  |
-| `Math`    | {`static`}`relative_Δ`   | ❌                 | (`f17`) |
+| `Math`    | {`static`}`relative_Δ`, `pythagoras_τ³?`   | ❌   | (`f17`) |
+| `Math`    | {`static`}<br/>`cot`, `csc`, `sec`, `sin²`, `cos²`   | ❌  | (`f17`) |
 
 ### Class Modifications:
 
@@ -115,19 +123,17 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `File`                 | {`static`} `dirname²`, `dirname³`, `dirname⁴`<br/>`replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` | ❌ | (`f12`) |
 | `Dir`                  | `η̂_paths`                           | ❌ | (`f12`) |
 | `File`, `Dir`, `ENV`   | `∅?`                                | ❌ | (`f04`) |
-| `Object`               | `ary?`, [`bool?`, `🅱️?`, `🅱?`], `hsh?`, `int?`, `flt?`, `num?`, `str?`, `char?`, `stry?`, `sym?`<br/>`class?`, `module?`, `nucleotide?` | ✅ | (`f06`) |
-| `Object`               | `singleton?`<br/>[`🛑bool❓`, `🛑🅱️❓`, `🛑🅱❓`], `🛑int❓`, `🛑ℤ❓`, `🛑𝕌❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓` `🛑stry❓`, `🛑countable❓` | ❌ | (`f06`) |
-| `Array`                | `remove_empty!`                     | ✅ | (`f07`) |
-| `Set`                  | `remove_empty!`                     | ❌ | (`f07`) |
+| `Object`               | `ary?`, [`bool?`, `🅱️?`, `🅱?`], `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `stry?`, `sym?`, `θ?`, `enumerable?`<br/>`class?`, `module?`, `nucleotide?` | ✅ | (`f06`) |
+| `Object`               | `singleton?`<br/>[`🛑bool❓`, `🛑🅱️❓`, `🛑🅱❓`], `🛑int❓`, `🛑ℤ❓`, `🛑𝕌❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓` `🛑stry❓`, `🛑countable❓`, `🛑enumerable❓`, `🛑θ❓` | ❌ | (`f06`) |
+| `Array`, `Set`         | `remove_empty!`                     | ❌/✅ | (`f07`) |
 | `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞`<br/>`downcase?` [`⬇️?`, `⬇?`, `🔡?`]<br/>`upcase?` [`⬆️?`, `⬆?`, `🔠?`] | ❌ | (`f08`) |
 | `String`               | `🐫?`, `🐫⬇?`, `to_🐫`<br/>`🐍⬆?`, `🐍?`, `to_🐍` | ❌ | (`f24`) |
 | `String`               | `as_utf8`, `iso8601?`, `to_iso8601`, `as_iso8601` | ❌ | |
 | `Array`, `String`      | `η̂!`                               | ❌ | (`f08`) |
-| `Array`                | [`frequency_counts`, `📊`]<br/>[`equal_contents?`, `≈≈`]<br/>[`disjunctive_union`, `⊕`] | ✅ | (`f09`) |
-| `Array`                | `∖`                                | ❌ | - aliased-by(`uniq_to_me`) <br/> - (`f09`) |
+| `Array`                | [`frequency_counts`, `📊`]<br/>[`equal_contents?`, `≈≈`]<br/>[`disjunctive_union`, `⊕`]<br/>`∖` | ✅ | (`f09`) |
 | `Module`, `String`     | `∋?`, `∌?`, `∈?`, `∉?`             | ❌ | (`f09`) |
 | `Enumerable`           | `∌?`, `∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎`              | ❌ | (`f09`, `f10`) |
-| `Array`, `String`      | `>>`                               | ✅ | - prepend provided arg, reverse operation of `<<` <br/> - (`f05`) |
+| `Array`, `String`      | `>>`                               | ✅ | (`f05`) |
 | `String`               | `digit?`, `to_num`, `to_num?`      | ❌ | (`f21`) |
 | `Array`                | `end_with?`, `start_with?`         | ❌ | (`f08`) |
 | `String`, `Array`      | `ensure_start!`, `ensure_ending!`  | ❌ | (`f08`) |
@@ -136,7 +142,6 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Numeric`              | `∞?`, `𝔹?`, `𝕌?`                   | ❌ | (`f11`) |
 | `BigDecimal`, `Complex`, `Integer`, `Float`, `Rational` | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `𝕌?` | ❌ | (`f11`) |
 | `Float`                | `≈≈`, `∞ℂ?`                        | ❌ | (`f17`) |
-| `String`               | `to_radian`                        | ❌ | (`f17`) |
 
 #### Aliases:
 | for                    | base method(s) reference(s)               | alias(es)                  | notes     |
@@ -170,11 +175,11 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 722      | # of tests (solely relating to core functionality)              |
-| QA        | performance   | 278      | # of tests (solely relating to performance)                     |
-| QA        | DB            | 103      | # of tests (solely relating to the database)                    |
-| CI        | audits        | 47       | # of tests (solely relating to non-functionality based audits)  |
-| structure | features      | ~30      | # of distinct features (that are categorized & tracked) `wip`   |
+| QA        | unit          | 883      | # of tests (solely relating to core functionality)              |
+| QA        | performance   | 282      | # of tests (solely relating to performance)                     |
+| QA        | DB            | 110      | # of tests (solely relating to the database)                    |
+| CI        | audits        | 52       | # of tests (solely relating to non-functionality based audits)  |
+| structure | features      | ~32      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |
 | coverage  | documentation | ???      | `wip` |

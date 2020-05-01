@@ -1,17 +1,23 @@
-# encoding: UTF-8
+# coding: UTF-8
 
 require 'mkmf'
 
 $VERBOSE = true
 $DEBUG = true
-$CFLAGS << ' -v'
-$CFLAGS << ' -O3'
-$CFLAGS << ' -Werror'
-$CFLAGS << ' -Wshadow'
-$CFLAGS << ' -Wdouble-promotion'
-$CFLAGS << ' -Wundef'
-$CFLAGS << ' -fno-common'
-$CFLAGS << ' -g3'
+
+c_flags                = {}
+c_flags[:optimization] = %w(O3)
+c_flags[:etc]          = %w()
+c_flags[:warnings]     = %w(v Werror Wshadow Wdouble-promotion Wfloat-conversion Wundef fno-common g3)
+all_c_flags            = c_flags[:optimization] + c_flags[:warnings] + c_flags[:etc]
+all_c_flags.each do |flag|
+  $CFLAGS << " -#{flag}"
+end
+
+# faggressive-loop-optimizations
+# fira-loop-pressure
+# fearly-inlining
+# fvariable-expansion-in-unroller
 
 # "The compiler failed to generate an executable file. (RuntimeError) You have to install development tools first."
 #$CFLAGS << ' -Wformat-overflow'
@@ -42,7 +48,7 @@ module ExtconfConfigHelper
   module Headers
     FOR_RUBY = %w(ruby ruby/assert ruby/debug ruby/defines ruby/encoding ruby/intern ruby/version ruby/missing)
     #FOR_C    = %w(stdio unistd sys/types sys/stat sys/param sys/mount fcntl string stdlib)
-    FOR_C    = %w(sys/types string stdlib)
+    FOR_C    = %w(sys/types string stdlib math)
     ALL      = FOR_RUBY + FOR_C + %w(c0_constants c1_typed_checks c2_extension_memory c3_macro_utilities ruby_class_mods)
       #ALL = FOR_RUBY
   end

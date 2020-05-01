@@ -10,17 +10,47 @@
 #### v0.1.0
  * clear `tech debt` and all `feature abstracts`
    * adding `automatic differentiation` should involve near `0% (of time allocation)` towards `version-relating documentation & audits`
+ * clear targeted missing coverage
 
-#### v0.0.33
- * formalize angles, both notation and implementation; (`degree`, `radian` `gon`)
- * add unit tests to `RuuubyFile` path syntax
+#### v0.0.33-34
+ * formalize angles, both notation and implementation
+   * (`steradians`, `degree`, `radian`, `gon`, `turns`)
+   * `arcminute`, `arcsecond`
+ * resolve unit tests for `RuuubyFile` path syntax
+ * add textual parsing for ThetaAngles (ex: `3°7'30''` == `3 + 7/60 + 30/3600` == `3.125°`)
 
 #### before v0.0.35/0.1.0
- * resolve missing coverage from `v0.0.17`
- * resolve missing coverage from `v0.0.18`
+ * resolve missing coverage from `v0.0.17-18`
  * resolve missing coverage from `v0.0.22`
- * resolve missing coverage from `v0.0.31`
- * resolve missing coverage from `v0.0.32`
+ * resolve missing coverage from `v0.0.31-33`
+
+---
+
+# v0.0.33
+ * (`98`): create new Class(`ThetaAngle`) which is essentially a wrapper over a `C-struct`
+ * modify global-funcs `sin`, `cos`, `tan`, etc to utilize the `ThetaAngle` class
+ * add empty code file(`lib/ruuuby/class/method/math_function.rb`) for future versions
+ * apply lots of misc clean-ups and/or adjustments
+ * `v0.0.34` to resolve missing parts from `ThetaAngle` and clean-up relating funcs from `String`
+
+| path added | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/ruuuby/class/nums/theta_angle.rb` | ``ThetaAngle`` |  | `f27` |
+
+| class / module | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Object` | `θ?`, `🛑θ❓`, `enumerable?`, `🛑enumerable❓` | `f06` |
+| `Math` | `pythagoras_τ³?`, `cot`, `csc`, `sec`, `sin²`, `cos²` | `f17` |
+| `TOPLEVEL_BINDING` | `℮`, `logₑ`, `log₂`, `log₁₀`, `arcsin`, `arccos`, `arctan`, `cot`, `csc`, `sec`, `sin²`, `cos²` | `f17` |
+| `TOPLEVEL_BINDING` | `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒` | `f17` |
+| `TOPLEVEL_BINDING` | `θ°`, `θʳ`, `θᵍ`, `θ𝞽` | `f27` |
+| `ThetaAngle` | `real`, `repr`, `as_radian`, `as_degree`, `as_gon`, `as_turn`, `radians?`, `degrees?`, `gons?`, `turns?`, `-@`, `+@`, `coerce`, `~`, `!`, `+`, `-`, `*`, `%`,`==`, `/`, `<=>`, `angle?`, `normal?`, `normalize!`, `golden_with?`, `explementary_with?`, `supplementary_with?`, `complementary_with?`, | `f27` |
+
+* remove the following methods/aliases:
+
+| from       | methods/aliases removed |
+| ---------- | ----------------------- |
+| `Kernel`   | `∠ᶜ`, `∠°` |
 
 ---
 
@@ -33,7 +63,7 @@
 | path added | reference | notes | feature(s) |
 | ---: | --- | --- | --- |
 | `lib/ruuuby/module/attribute/includable/singleton.rb` | ``Ruuuby::Attribute::Includable::RuuubySingleton`` |  | `f10` |
-| `lib/ruuuby/module/attribute/extendable/singleton.rb` | ``Ruuuby::Attribute::Includable::RuuubySingleton`` |  | `f10` |
+| `lib/ruuuby/module/attribute/extendable/singleton.rb` | ``Ruuuby::Attribute::Extendable::RuuubySingleton`` |  | `f10` |
 | `lib/ruuuby/class/proc.rb` | ``Proc`` |  | `f10` |
 
 | class | method(s) added | feature(s) |

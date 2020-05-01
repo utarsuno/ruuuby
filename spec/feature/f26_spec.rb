@@ -1,6 +1,15 @@
-# encoding: UTF-8
+# coding: UTF-8
 
 RSpec.describe 'f26' do
+
+  context 'functionality' do
+    it 'main adds funcs{📅, 🕒, 📅🕒}' do
+      expect(📅).to eq(::Date)
+      expect(🕒).to eq(::Time)
+      expect(📅🕒).to eq(::DateTime)
+    end
+  end # end: {functionality}
+
   context 'audits', :audits do
     context 'feature(f26) passes audits (tests not relating to observed functionality)' do
       it 'module is defined in correct location' do

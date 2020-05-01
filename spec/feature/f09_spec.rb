@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# coding: UTF-8
 
 RSpec.describe 'f09' do
 

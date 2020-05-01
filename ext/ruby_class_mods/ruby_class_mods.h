@@ -7,13 +7,132 @@
 #ifndef CRUUUBY_H
 #define CRUUUBY_H "defined(CRUUUBY_H)"
 
-////
+// @see original bitwise structs from: https://www.chiefdelphi.com/t/extracting-individual-bits-in-c/48028/8
 
-typedef struct FloatAngles {
-    double value_degrees;
-    double value_radians;
-    double value_gons;
-} FloatAngle;
+typedef union {
+    struct {
+        unsigned b0:1;
+        unsigned b1:1;
+        unsigned b2:1;
+        unsigned b3:1;
+        unsigned b4:1;
+        unsigned b5:1;
+        unsigned b6:1;
+        unsigned b7:1;
+    };
+    unsigned char byte;
+} byte;
+
+typedef struct bits {
+	unsigned char b0:1;
+	unsigned char b1:1;
+	unsigned char b2:1;
+	unsigned char b3:1;
+	unsigned char b4:1;
+	unsigned char b5:1;
+	unsigned char b6:1;
+	unsigned char b7:1;
+} BITS;
+
+typedef union bit_char {
+	unsigned char byte;
+	BITS b;
+} BIT_CHAR;
+
+#define θFLAG_IS_ZERO 0
+#define θFLAG_SIGN 1
+#define θFLAG_IS_NORMAL 2
+#define θFLAG_IS_CONSTANT 3
+#define θFLAG_IS_COERCE 4
+#define θFLAG_IS_CACHE_SYNCED 5
+
+typedef struct ThetaAngles {
+    double        angle_value;
+    unsigned char angle_mode;
+    BIT_CHAR      flags_meta_data;
+} ThetaAngle;
+
+typedef struct ThetaAngles * 👉θ;
+
+static inline void 👉θ_flag_set_coerce(const 👉θ data);
+static inline void 👉θ_flag_clr_coerce(const 👉θ data);
+static inline int 👉θ_flag_is_coerce(const 👉θ data);
+
+static inline void 👉θ_flag_set_constant(const 👉θ data);
+static inline void 👉θ_flag_clr_constant(const 👉θ data);
+static inline int 👉θ_flag_is_constant(const 👉θ data);
+
+static inline void 👉θ_flag_set_cache_synced(const 👉θ data);
+static inline void 👉θ_flag_clr_cache_synced(const 👉θ data);
+static inline int 👉θ_flag_is_cache_synced(const 👉θ data);
+
+static void θ_free(void * data);
+static size_t θ_size(const void * data);
+static VALUE θ_alloc(VALUE self);
+static VALUE θ_m_initialize(VALUE self, VALUE angle, VALUE angle_mode);
+
+PUREFUNC(static inline VALUE cθ_get_representation(const unsigned char angle_mode););
+static unsigned char θSYM2MODE(const VALUE mode_as_sym);
+
+PUREFUNC(static VALUE θ_m_get_real(const VALUE self));
+PUREFUNC(static VALUE θ_m_get_repr(const VALUE self));
+PUREFUNC(static VALUE θ_m_set_real(const VALUE self, const VALUE num));
+PUREFUNC(static VALUE θ_get_as_radian(const VALUE self));
+PUREFUNC(static VALUE θ_get_as_degree(const VALUE self));
+PUREFUNC(static VALUE θ_get_as_gon(const VALUE self));
+PUREFUNC(static VALUE θ_get_as_turn(const VALUE self));
+PUREFUNC(static VALUE θ_get_is_radians(const VALUE self));
+PUREFUNC(static VALUE θ_get_is_degrees(const VALUE self));
+PUREFUNC(static VALUE θ_get_is_gons(const VALUE self));
+PUREFUNC(static VALUE θ_get_is_turns(const VALUE self));
+
+static VALUE θ_m_addition(const VALUE self, const VALUE value);
+static VALUE θ_m_addition_eq(const VALUE self, const VALUE value);
+static VALUE θ_m_subtraction(const VALUE self, const VALUE value);
+static VALUE θ_m_subtraction_eq(const VALUE self, const VALUE value);
+static VALUE θ_m_unary_subtraction(const VALUE self);
+static VALUE θ_m_unary_addition(const VALUE self);
+static VALUE θ_m_unary_complement(const VALUE self);
+static VALUE θ_m_unary_not(const VALUE self);
+static VALUE θ_m_multiplication(const VALUE self, const VALUE value);
+static VALUE θ_m_multiplication_eq(const VALUE self, const VALUE value);
+static VALUE θ_m_division(const VALUE self, const VALUE value);
+static VALUE θ_m_division_eq(const VALUE self, const VALUE value);
+static VALUE θ_m_comparable(const VALUE self, const VALUE them);
+static VALUE θ_m_abs(const VALUE self);
+static VALUE θ_m_abs_self(const VALUE self);
+
+static VALUE θ_m_equals(const VALUE self, const VALUE them);
+static VALUE θ_m_is_normal(const VALUE self);
+static double θ_get_normalized_value(const double value, const unsigned char angle_mode);
+static void 👉θ_normalize(👉θ data);
+static VALUE θ_m_normalize_self(VALUE self);
+
+static VALUE θ_new(const double angle, const VALUE sym_mode);
+static VALUE θ_new_constant(const double angle, const VALUE sym_mode);
+
+PUREFUNC(static VALUE θ_m_matches_vocab_term(VALUE self, VALUE angle_type));
+
+//#define 💎get_θ_as_the_var_data(arg) 👉θ data; TypedData_Get_Struct(arg, ThetaAngle, & θ_type, data);
+#define 💎self_to_👉θ_data 👉θ data; TypedData_Get_Struct(self, ThetaAngle, & θ_type, data);
+
+static inline void θ_set_data(const 👉θ data, const VALUE mode, const VALUE angle);
+
+static inline double θ_get_compatible_value_from_θ_with_mode(const unsigned char angle_mode, 👉θ them);
+static inline double θ_get_compatible_value_from_θ(const 👉θ self, const 👉θ them);
+static inline double θ_get_compatible_value_from_value(const 👉θ self, const VALUE value);
+
+static inline void θ_addition_w_double(const 👉θ data, const double value);
+static inline void θ_subtraction_w_double(const 👉θ data, const double value);
+static inline void θ_multiplication_w_double(const 👉θ data, const double value);
+static inline void θ_division_w_double(const 👉θ data, const double value);
+
+static VALUE θ_m_bitwise_shift_right(int argc, VALUE * argv, VALUE self);
+static VALUE θ_m_bitwise_shift_left(int argc, VALUE * argv, VALUE self);
+
+static inline double 👉θ_get_const_unit(const 👉θ data);
+static inline double 👉θ_get_const_quadrant(const 👉θ data);
+static inline double 👉θ_get_const_straight(const 👉θ data);
 
 /*____________________________________________________________________________________________________________________
   ___            __   __       __   ___  __             __       ___    __        __
@@ -41,12 +160,15 @@ static int internal_only_compare_func_4_object_id(const void * l , const void * 
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
 
-#define ext_api_add_public_method_kargs_to_class(r_class, func_name, the_func)  rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), -1);
-#define ext_api_add_public_method_0args_to_class(r_class, func_name, the_func)  rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 0);
-#define ext_api_add_public_method_1args_to_class(r_class, func_name, the_func)  rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 1);
-#define ext_api_add_public_method_2args_to_class(r_class, func_name, the_func)  rb_define_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 2);
-#define ext_api_add_private_method_0args_to_class(r_class, func_name, the_func) rb_define_private_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 0);
-#define ext_api_add_private_method_1args_to_class(r_class, func_name, the_func) rb_define_private_method(r_class, func_name, RUBY_METHOD_FUNC(the_func), 1);
+#define 💎add_private_func_0args_to_class(kclass, func_name, the_func) rb_define_private_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 0);
+#define 💎add_private_func_1args_to_class(kclass, func_name, the_func) rb_define_private_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
+#define 💎add_public_func_kargs_to_class(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), -1);
+#define 💎add_public_func_0args_to_class(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 0);
+#define 💎add_public_func_1args_to_class(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
+#define 💎add_public_func_2args_to_class(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 2);
+
+#define 💎add_singleton_func_1args_to(kclass, func_name, the_func)  rb_define_singleton_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
+//rb_define_singleton_method
 
 #define declare_func(func_name, expr, return_type, single_param) return_type func_name(single_param);return_type func_name(single_param){expr}
 #define declare_static_func(func_name, expr, return_type, single_param) static return_type func_name(single_param);static return_type func_name(single_param){expr}
@@ -63,10 +185,9 @@ ________________________________________________________________________________
 #define ext_api_add_module_under(under_me, str)                    rb_define_module_under(under_me, str);
 #define ext_api_add_new_sub_class_under(under_me, base_class, str) rb_define_class_under(under_me, str, base_class);
 
-#define ext_api_add_func_alias(kclass, new_func_name, previous_func_name) rb_define_alias(kclass, new_func_name, previous_func_name);
-#define ext_api_add_const_under(kclass, const_name, const_value)          rb_define_const(kclass, const_name, const_value);
+#define 💎add_func_alias(kclass, name_alias, name_original) rb_define_alias(kclass, name_alias, name_original);
+#define 💎add_const_under(kclass, const_name, const_value)  rb_define_const(kclass, const_name, const_value);
 //#define ext_api_add_frozen_const_under(kclass, const_name, const_value)
-
 
 #define macro_only_raise_err_bad_arg_type(err_msg, err_prm) rb_raise(R_ERR_ARG, err_msg, rb_obj_classname(err_prm));
 
@@ -110,6 +231,11 @@ ________________________________________________________________________________
 #define 🛑m_param_array_node_type(the_class, the_func, arg_name, the_arg, required_type)           🛑param_array_node_type("m", the_class, the_func, arg_name, the_arg, required_type)
 #define 🛑c_param_array_node_type(the_class, the_func, arg_name, the_arg, required_type)           🛑param_array_node_type("c", the_class, the_func, arg_name, the_arg, required_type)
 
+
+#define 🛑err_bad_num(the_class, the_func, arg_name, the_arg) 🛑m_param_type(the_class, the_func, arg_name, the_arg, "Numeric")
+
+#define 🛑is_num(the_class, the_func, arg_name, the_arg) if (!(is_num(the_arg))) {🛑m_param_type(the_class, the_func, arg_name, the_arg, "Numeric")}
+#define 🛑is_sym(the_class, the_func, arg_name, the_arg) if (!(is_sym(the_arg))) {🛑m_param_type(the_class, the_func, arg_name, the_arg, "Symbol")}
 
 
 #endif

@@ -4,7 +4,6 @@ RSpec.shared_context 'shared_context_language_deltas' do
   let(:cΔ_Integer){RuuubyTestHelper::Nums::CONFIG_INTEGER}
   let(:cΔ_Float){RuuubyTestHelper::Nums::CONFIG_FLOAT}
   let(:cΔ_NilClass){RuuubyTestHelper::CONFIG_NIL}
-  let(:cΔ_Enumerable){RuuubyTestHelper::CONFIG_ENUMERABLE}
   let(:cΔ_Set){RuuubyTestHelper::CONFIG_SET}
   let(:cΔ_Array){RuuubyTestHelper::CONFIG_ARRAY}
   let(:cΔ_Hash){RuuubyTestHelper::CONFIG_HASH}
@@ -226,14 +225,6 @@ module RuuubyTestHelper
       aliases: {
           infinite?: :∞?,
           finite?: :𝕌?
-      }
-  }
-
-  CONFIG_ENUMERABLE = {
-      ruby: [:∌?],
-      aliases: {
-          map: :⨍,
-          each_with_index: :∀ₓᵢ,
       }
   }
 

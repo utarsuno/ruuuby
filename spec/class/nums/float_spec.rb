@@ -39,6 +39,7 @@ RSpec.describe 'float.rb' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           expect(1.0.ℚ?).to eq(true)
+          expect(π.ℚ?).to eq(true)
         end
         it 'cases: negative' do
           data_float_error_cases.∀{|n| expect(n.ℚ?).to eq(false)}

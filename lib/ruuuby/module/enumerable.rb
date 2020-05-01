@@ -14,27 +14,22 @@ module ::Enumerable
 
   # @param [Proc] &block
   #
-  # @raise [RuntimeError]
-  # @raise [ArgumentError]
+  # @raise [RuntimeError, ArgumentError]
   def ∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎(&block)
-    if block
-      if block.𝔠 == 2
-        if self.length > 1
-          enumerator = self.each
-          previous   = enumerator.next
-          loop do
-            node     = enumerator.next
-            block.call(previous, node)
-            previous = node
-          end
-        else
-          🛑 RuntimeError.new("| m{Enumerable}-> m{∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎} received valid block but length of self is{#{self.length.to_s}} |")
+    if block && block.𝔠 == 2
+      if self.length > 1
+        enumerator = self.each
+        previous   = enumerator.next
+        loop do
+          node     = enumerator.next
+          block.call(previous, node)
+          previous = node
         end
       else
-        🛑 ArgumentError.new("| m{Enumerable}-> m{∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎} did not receive a block w/ 2 args but{#{block.arity.to_s}} |")
+        🛑 RuntimeError.new("| m{Enumerable}-> m{∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎} received valid block but length of self is{#{self.length.to_s}} |")
       end
     else
-      🛑 ArgumentError.new("| m{Enumerable}-> m{∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎} did not receive a block |")
+      🛑 ArgumentError.new("| m{Enumerable}-> m{∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎} must receive a block #{block ? 'with{2} args, not the received{' + block.𝔠.to_s + '}' : ''} |")
     end
   end
 

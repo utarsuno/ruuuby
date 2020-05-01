@@ -630,13 +630,9 @@ RSpec.describe 'str' do
             end
             it 'golden-ratio(𝚽)' do
               expect('𝚽'.to_num).to eq(𝚽)
-              expect('+𝚽'.to_num).to eq(𝚽)
-              expect('-𝚽'.to_num).to eq(-𝚽)
             end
             it 'golden-angle(𝚽)' do
               expect('Ⴔ'.to_num).to eq(Ⴔ)
-              expect('+Ⴔ'.to_num).to eq(Ⴔ)
-              expect('-Ⴔ'.to_num).to eq(-Ⴔ)
             end
             it 'euler-mascheroni-constant(γ)' do
               expect('γ'.to_num).to eq(γ)
@@ -645,7 +641,7 @@ RSpec.describe 'str' do
             end
             context 'for func{to_num?}' do
               it 'same-cases' do
-                %w(∞ +∞ -∞ ♾️ +♾️ -♾️ ∞ℂ π +π -π Ⴔ +Ⴔ -Ⴔ 𝚽 +𝚽 -𝚽 γ +γ -γ).∀{|scenario| expect(scenario.to_num?).to eq(true)}
+                %w(∞ +∞ -∞ ♾️ +♾️ -♾️ ∞ℂ π +π -π Ⴔ 𝚽 γ +γ -γ).∀{|scenario| expect(scenario.to_num?).to eq(true)}
               end
             end
           end

@@ -1,4 +1,4 @@
-#encoding: UTF-8
+# coding: UTF-8
 
 # add various aliases/functions to existing class +Class+
 class ::Class

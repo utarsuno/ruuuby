@@ -13,7 +13,13 @@ module ::Ruuuby
       module ObjectF06
 
         # @return [Boolean] true, if this object includes the m(`Singleton`)
-        def singleton? ; self.class.ancestors.∋?(Singleton) ; end
+        def singleton?; self.class.ancestors.∋?(Singleton); end
+
+        # @return [Boolean] true, if this object is an instance of `ThetaAngle`
+        def θ?; self.is_a?(::ThetaAngle); end
+
+        # @return [Boolean] true, if this object has the `Enumerable` pattern
+        def enumerable?; self.is_a?(Enumerable); end
 
         # @param [Symbol] arg_name
         # @param [*]      arg
@@ -27,6 +33,14 @@ module ::Ruuuby
               🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Ruuuby::VirtualTypes::🅱️, x) unless x.bool?
             end
           end
+        end
+
+        # @param [Symbol] arg_name
+        # @param [*]      arg
+        #
+        # @raise [WrongParamType]
+        def 🛑enumerable❓(arg_name, arg)
+          🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Enumerable, arg) unless arg.enumerable?
         end
 
         # @param [Symbol] arg_name
@@ -138,6 +152,20 @@ module ::Ruuuby
         # @param [*]      arg
         #
         # @raise [WrongParamType]
+        def 🛑θ❓(arg_name, arg)
+          unless arg_name == $PRM_MANY
+            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::ThetaAngle, arg) unless arg.θ?
+          else
+            arg.∀ₓᵢ do |x, i|
+              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::ThetaAngle, x) unless x.θ?
+            end
+          end
+        end
+
+        # @param [Symbol] arg_name
+        # @param [*]      arg
+        #
+        # @raise [WrongParamType]
         def 🛑flt❓(arg_name, arg)
           unless arg_name == $PRM_MANY
             🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Float, arg) unless arg.flt?
@@ -146,7 +174,6 @@ module ::Ruuuby
               🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Float, x) unless x.flt?
             end
           end
-
         end
 
         # @param [Symbol] arg_name

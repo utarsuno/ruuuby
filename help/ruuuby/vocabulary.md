@@ -3,7 +3,7 @@
 | set | contents |
 | --- | --- |
 | subscripts | ₋₍₎₀₁₂₃₄₅₆₇₈₉ |
-| superscripts | ⁻⁽⁾⁰¹²³⁴⁵⁶⁷⁸⁹ |
+| superscripts | ⁻⁽⁾⁰¹²³⁴⁵⁶⁷⁸⁹ⁿ |
 
 | symbol | ~direct text replacement |
 | --- | --- |

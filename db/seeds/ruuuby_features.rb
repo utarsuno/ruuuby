@@ -26,5 +26,7 @@
 @f24 = RuuubyFeature.spawn(24, "add syntax parsing for following 4 categories: {`snake_case`, `camel_case`, `snake_case_upper`, `camel_case_lower`}, aliased via: {`🐫`, `🐍`, `🐫⬇`, `🐍⬆`}")
 @f25 = RuuubyFeature.spawn(25, "bundle `Ruuuby` meta-data related functionality w/ base alias(`💎`)")
 @f26 = RuuubyFeature.spawn(26, 'add syntax parsing for `ISO8601` as well as aliases for Date(`📅`), Time(`🕒`), and DateTime(`📅🕒`)')
+@f27 = RuuubyFeature.spawn(27, 'add new class (`ThetaAngle`) for easier operations involving angles')
+@f28 = RuuubyFeature.spawn(28, 'formally support math constants & equations relating to golden-ratio, aliased via(`𝚽`)')
 
 @f98 = RuuubyFeature.spawn(98, '`C-extensions`')
