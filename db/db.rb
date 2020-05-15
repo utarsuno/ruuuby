@@ -61,6 +61,13 @@ ActiveRecord::Schema.define do
     t.index :id_num, unique: true
   end
 
+  create_table :ruuuby_feature_behaviors, force: true do |t|
+    t.integer :id_num, :null => false
+    t.string :description, :null => false
+
+    t.references :ruuuby_feature, index: true, foreign_key: { references: :ruuuby_features}
+  end
+
   create_table :ruuuby_changelogs, force: true do |t|
     t.integer :ruuuby_version_id, :null => false
     t.integer :ruuuby_feature_id, :null => false

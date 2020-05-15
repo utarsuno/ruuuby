@@ -1,11 +1,7 @@
-# coding: utf-8
+# coding: UTF-8
 
 RSpec.describe 'class/io/dir.rb' do
   context 'extends class[Dir]' do
-
-    it 'has needed aliases' do
-      RuuubyTestHelper::IO::CONFIG_DIR[:ruby].∀{|f| expect(::Dir.respond_to?(f)).to eq(true)}
-    end
 
     context 'by adding "static" function{∃?}' do
       context 'handles needed scenarios' do

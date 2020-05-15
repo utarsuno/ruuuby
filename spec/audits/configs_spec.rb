@@ -98,6 +98,18 @@ RSpec.describe 'general configs' do
       end
     end
 
+    context 'has expected configurations for{Float}' do
+      it 'MANT_DIG' do
+        expect(::Float::MANT_DIG).to eq(53)
+      end
+      it 'DIG' do
+        expect(::Float::DIG).to eq(15)
+      end
+      it 'supports denormalized numbers' do
+        expect((::Float::MIN.next_float) > ::Float::MIN).to eq(true)
+      end
+    end
+
     context 'has correct gem versions' do
       context 'bundler is healthy' do
         it 'by having correct configs' do

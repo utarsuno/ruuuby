@@ -411,11 +411,12 @@
 )
 @v0_0_32.changelog.added_method_to_class(@f10, :∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎, ::Enumerable)
 
+# TODO: heavily out of sync with README.md (but start automating this)
 @v0_0_33 = RuuubyRelease.spawn(0, 0, 33)
 @v0_0_33.add_file('lib/ruuuby/class/nums/theta_angle.rb', ::ThetaAngle, '', @f27)
 @v0_0_33.add_comments(
     [
-        '(`98`): create new Class(`ThetaAngle`) which is essentially a wrapper over a `C-struct`',
+        '(`f98`): create new Class(`ThetaAngle`) which is essentially a wrapper over a `C-struct`',
         'modify global-funcs `sin`, `cos`, `tan`, etc to utilize the `ThetaAngle` class',
         'added empty code file(`lib/ruuuby/class/method/math_function.rb`) for future versions',
     ]
@@ -429,9 +430,9 @@
 @v0_0_33.changelog.added_method_to_class(@f10, :log₂, TOPLEVEL_BINDING)
 @v0_0_33.changelog.added_method_to_class(@f10, :log₁₀, TOPLEVEL_BINDING)
 @v0_0_33.changelog.added_method_to_class(@f17, :pythagoras_τ³?, ::Math)
-@v0_0_20.changelog.added_method_to_class(@f17, :arcsin, TOPLEVEL_BINDING)
-@v0_0_20.changelog.added_method_to_class(@f17, :arccos, TOPLEVEL_BINDING)
-@v0_0_20.changelog.added_method_to_class(@f17, :arctan, TOPLEVEL_BINDING)
+@v0_0_33.changelog.added_method_to_class(@f17, :arcsin, TOPLEVEL_BINDING)
+@v0_0_33.changelog.added_method_to_class(@f17, :arccos, TOPLEVEL_BINDING)
+@v0_0_33.changelog.added_method_to_class(@f17, :arctan, TOPLEVEL_BINDING)
 @v0_0_33.changelog.added_method_to_class(@f27, :θ°, TOPLEVEL_BINDING)
 @v0_0_33.changelog.added_method_to_class(@f27, :θʳ, TOPLEVEL_BINDING)
 @v0_0_33.changelog.added_method_to_class(@f27, :θᵍ, TOPLEVEL_BINDING)
@@ -442,4 +443,51 @@
 #| from       | methods/aliases removed |
 #| ---------- | ----------------------- |
 #| `Kernel`   | `∠ᶜ`, `∠°` |
+#
+
+@v0_0_34 = RuuubyRelease.spawn(0, 0, 34)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/closure.rb', ::Math::SetTheory::Closure, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/number_set.rb', ::Math::SetTheory::NumberSet, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/algebraic_numbers.rb', ::Math::SetTheory::AlgebraicNumbers, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/boolean_numbers.rb', ::Math::SetTheory::BooleanNumbers, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/complex_numbers.rb', ::Math::SetTheory::ComplexNumbers, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/empty_set.rb', ::Math::SetTheory::EmptySet, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/imaginary_numbers.rb', ::Math::SetTheory::ImaginaryNumbers, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/integer_numbers.rb', ::Math::SetTheory::IntegerNumbers, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/irrational_numbers.rb', ::Math::SetTheory::IrrationalNumbers, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/natural_numbers.rb', ::Math::SetTheory::NaturalNumbers, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/null_set.rb', ::Math::SetTheory::NullSet, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/rational_numbers.rb', ::Math::SetTheory::RationalNumbers, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/real_algebraic_numbers.rb', ::Math::SetTheory::RealAlgebraicNumbers, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/real_numbers.rb', ::Math::SetTheory::RealNumbers, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/universal_set.rb', ::Math::SetTheory::UniversalSet, '', @f11)
+@v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/whole_numbers.rb', ::Math::SetTheory::WholeNumbers, '', @f11)
+@v0_0_34.add_file('app/models/ruuuby_feature_behavior.rb', '', '', @f15)
+@v0_0_34.add_file('ext/ruby_class_mods/c4_theta_angle.h', '', 'for organization', @f27)
+@v0_0_34.add_comments(
+    [
+        'increase precision of various funcs (ex: `sin²` and `cos²`), by performing calculations in `long double` instead of `double` ',
+        'add `τ` as a \'global-const\' which is a ThetaAngle representing a single complete turn',
+        'adjust parameter style of class-functions for `Math` to use named params',
+        'remove global-alias-funcs{`ℂ`, `ℚ`}; these now correspond to a specific singleton instance of the newly created class(`::Math::SetTheory::NumberSet`)',
+        '(`f28`): add `super golden ratio` as `Ψ`, `silver ratio` as `δ`, `plastic ratio` as `ρ`, `omega constant` as `Ω`',
+        'remove various out-dated testing helper functions, meta-data generation/processing will eventually replace this',
+        'remove `::Array::EMPTY_INSTANCE`, `∅` by itself now aliases a singleton of type{`NumberSet`}',
+        '(`f15`): create `ORM`{`RuuubyFeatureBehavior`} which is many to one{`RuuubyFeature`}',
+        'remove number-set membership check funcs from `Numerics` and create `singleton` instances of `NumberSet` which covers the previous functionality (just more scalable)',
+        'remove as much deprecated code as possible, file structure adjustments started',
+        '(`f98`): move `Float`\'s method{`≈≈`} into `C-extensions`',
+        'remove funcs (and related ones): `🛑ℤ❓` and `🛑𝕌❓`, these checks are now covered by existing functions w/ new types of normalizers added for existing normalizer feature',
+    ]
+)
+@v0_0_34.changelog.added_method_to_class(@f06, :set?, ::Object)
+@v0_0_34.changelog.added_method_to_class(@f06, :🛑set❓, ::Object)
+@v0_0_34.changelog.added_method_to_class(@f17, :get_prime_factors, ::Integer)
+@v0_0_34.changelog.added_method_to_class(@f28, :windings, ::ThetaAngle)
+@v0_0_34.changelog.added_method_to_class(@f28, :normalize, ::ThetaAngle)
+#
+#* remove the following methods/aliases:
+#| from       | methods/aliases removed |
+#| ---------- | ----------------------- |
+#| `TOPLEVEL_BINDING`   | `sin°`, `cos°`, `tan°`, etc... |
 #

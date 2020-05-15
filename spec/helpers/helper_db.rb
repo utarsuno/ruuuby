@@ -20,6 +20,13 @@ module HelpersDB
     expect(the_version.id.class).to eq(Integer)
   end
 
+  def audit_feature_behavior(the_feature, the_feature_behavior, uid, description)
+    expect(the_feature_behavior.class).to eq(::RuuubyFeatureBehavior)
+    expect(the_feature_behavior.uid).to eq(uid)
+    expect(the_feature_behavior.description).to eq(description)
+    expect(the_feature_behavior.ruuuby_feature).to eq(the_feature)
+  end
+
 end
 
 RSpec.shared_context 'shared_context_db' do
@@ -54,6 +61,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:v0_0_31){RuuubyRelease.find_by_uid(0, 0, 31)}
   let(:v0_0_32){RuuubyRelease.find_by_uid(0, 0, 32)}
   let(:v0_0_33){RuuubyRelease.find_by_uid(0, 0, 33)}
+  let(:v0_0_34){RuuubyRelease.find_by_uid(0, 0, 34)}
 
   let(:f00){RuuubyFeature.find_by_uid(0)}
   let(:f01){RuuubyFeature.find_by_uid(1)}
@@ -66,7 +74,12 @@ RSpec.shared_context 'shared_context_db' do
   let(:f08){RuuubyFeature.find_by_uid(8)}
   let(:f09){RuuubyFeature.find_by_uid(9)}
   let(:f10){RuuubyFeature.find_by_uid(10)}
+
   let(:f11){RuuubyFeature.find_by_uid(11)}
+  let(:f11_b00){f11.ruuuby_feature_behaviors[0]}
+  let(:f11_b01){f11.ruuuby_feature_behaviors[1]}
+  let(:f11_b02){f11.ruuuby_feature_behaviors[2]}
+
   let(:f12){RuuubyFeature.find_by_uid(12)}
   let(:f13){RuuubyFeature.find_by_uid(13)}
   let(:f15){RuuubyFeature.find_by_uid(15)}
@@ -82,7 +95,19 @@ RSpec.shared_context 'shared_context_db' do
   let(:f25){RuuubyFeature.find_by_uid(25)}
   let(:f26){RuuubyFeature.find_by_uid(26)}
   let(:f27){RuuubyFeature.find_by_uid(27)}
+
   let(:f28){RuuubyFeature.find_by_uid(28)}
+  let(:f28_b00){f28.ruuuby_feature_behaviors[0]}
+  let(:f28_b01){f28.ruuuby_feature_behaviors[1]}
+  let(:f28_b02){f28.ruuuby_feature_behaviors[2]}
+  let(:f28_b03){f28.ruuuby_feature_behaviors[3]}
+  let(:f28_b04){f28.ruuuby_feature_behaviors[4]}
+  let(:f28_b05){f28.ruuuby_feature_behaviors[5]}
+  let(:f28_b06){f28.ruuuby_feature_behaviors[6]}
+  let(:f28_b07){f28.ruuuby_feature_behaviors[7]}
+  let(:f28_b08){f28.ruuuby_feature_behaviors[8]}
+
+  let(:f29){RuuubyFeature.find_by_uid(29)}
   let(:f98){RuuubyFeature.find_by_uid(98)}
 
 end

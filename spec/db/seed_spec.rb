@@ -74,12 +74,6 @@ RSpec.describe 'db/seed.rb' do
           end
         end
 
-        context 'defines f11' do
-          it 'passes ORM audit' do
-            audit_feature(f11, 'f11', 'add math `number sets` (ex: `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `∞?`, `♾️?`)')
-          end
-        end
-
         context 'defines f12' do
           it 'passes ORM audit' do
             audit_feature(f12, 'f12', 'enable quick `file/directory io` and alias as file(`📂`) and dir(`🗄️`)')
@@ -161,18 +155,6 @@ RSpec.describe 'db/seed.rb' do
         context 'defines f26' do
           it 'passes ORM audit' do
             audit_feature(f26, 'f26', 'add syntax parsing for `ISO8601` as well as aliases for Date(`📅`), Time(`🕒`), and DateTime(`📅🕒`)')
-          end
-        end
-
-        context 'defines f27' do
-          it 'passes ORM audit' do
-            audit_feature(f27, 'f27', 'add new class (`ThetaAngle`) for easier operations involving angles')
-          end
-        end
-
-        context 'defines f28' do
-          it 'passes ORM audit' do
-            audit_feature(f28, 'f28', 'formally support math constants & equations relating to golden-ratio, aliased via(`𝚽`)')
           end
         end
 
@@ -307,6 +289,12 @@ RSpec.describe 'db/seed.rb' do
         context 'v0.0.33' do
           it 'as expected' do
             audit_version(v0_0_33, 'v0.0.33')
+          end
+        end
+
+        context 'v0.0.34' do
+          it 'as expected' do
+            audit_version(v0_0_34, 'v0.0.34')
           end
         end
 

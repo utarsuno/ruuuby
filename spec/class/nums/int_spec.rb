@@ -8,58 +8,17 @@ RSpec.describe 'int.rb' do
   context 'extends class[Integer]' do
 
     context 'by adding needed functions' do
-      it 'exists' do
-        expect_added_ruby_methods(::Integer, cΔ_Integer)
-      end
-    end
-
-    context 'by adding function{ℕ?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_ints_zero_to_positive.∀{|n| expect(n.ℕ?).to eq(true)}
-        end
-        it 'cases: negative' do
-          data_range_ints_negative.∀{|n| expect(n.ℕ?).to eq(false)}
-        end
-      end
-    end
-
-    context 'by adding function{ℤ?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_ints.∀{|n| expect(n.ℤ?).to eq(true)}
-        end
-      end
-    end
-
-    context 'by adding function{ℂ?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_ints.∀{|n| expect(n.ℂ?).to eq(true)}
-        end
-      end
-    end
-
-    context 'by adding function{ℚ?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_ints.∀{|n| expect(n.ℚ?).to eq(true)}
-        end
-      end
-    end
-
-    context 'by adding function{ℝ?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_ints.∀{|n| expect(n.ℝ?).to eq(true)}
-        end
-      end
-    end
-
-    context 'by adding function{𝕌?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_ints.∀{|n| expect(n.𝕌?).to eq(true)}
+      context 'func{get_prime_factors}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            expect(100.get_prime_factors).to eq([[2, 2], [5, 2]])
+            expect(76.get_prime_factors).to eq([[2, 2], [19, 1]])
+            expect(50.get_prime_factors).to eq([[2, 1], [5, 2]])
+            expect(48.get_prime_factors).to eq([[2, 4], [3, 1]])
+            expect(36.get_prime_factors).to eq([[2, 2], [3, 2]])
+            expect(20.get_prime_factors).to eq([[2, 2], [5, 1]])
+            expect(10.get_prime_factors).to eq([[2, 1], [5, 1]])
+          end
         end
       end
     end
@@ -292,45 +251,6 @@ RSpec.describe 'int.rb' do
           expect{data_int_leet.nan?}.to perform_extremely_quickly
           expect{data_int_leet.¿?}.to perform_extremely_quickly
         end
-      end
-
-      context 'func{ℤ?}' do
-        it 'for cases: true' do
-          expect{data_int_negative_one.ℤ?}.to perform_extremely_quickly
-        end
-      end
-
-      context 'func{ℂ?}' do
-        it 'for cases: true' do
-          expect{1.ℂ?}.to perform_extremely_quickly
-        end
-      end
-
-      context 'func{ℚ?}' do
-        it 'for cases: true' do
-          expect{data_int_leet.ℚ?}.to perform_extremely_quickly
-        end
-      end
-
-      context 'func{ℝ?}' do
-        it 'for cases: true' do
-          expect{data_int_leet.ℝ?}.to perform_extremely_quickly
-        end
-      end
-
-      context 'func{𝕌?}' do
-        it 'for cases: true' do
-          expect{data_int_leet.𝕌?}.to perform_extremely_quickly
-        end
-      end
-    end
-
-    context 'func{ℕ?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{0.ℕ?}.to perform_extremely_quickly
-      end
-      it 'for cases: false' do
-        expect{-1.ℕ?}.to perform_extremely_quickly
       end
     end
 

@@ -1,21 +1,8 @@
-# coding: utf-8
+# coding: UTF-8
 
 RSpec.describe 'ary' do
 
-  context 'extends class[Object]' do
-
-    it 'by creating needed aliases' do
-      expect_added_ruby_methods(::Array, cΔ_Array)
-
-      RuuubyTestHelper::CONFIG_ARRAY[:c].∀{|func| expect(::Array.∃⨍?(func)).to eq(true)}
-      RuuubyTestHelper::CONFIG_ARRAY[:aliases].∀ do |base_func, aliases|
-        if aliases.ary?
-          aliases.∀{|a| expect(::Array.∃⨍?(a)).to eq(true)}
-        else
-          expect(::Array.∃⨍?(aliases)).to eq(true)
-        end
-      end
-    end
+  context 'extends class{Array}' do
 
     context 'by adding function{η̂!}' do
       context 'handles needed scenarios' do
@@ -23,33 +10,31 @@ RSpec.describe 'ary' do
           it 'empty data' do
             the_ary    = []
             the_ary_id = the_ary.🆔
-            the_ary.η̂!(:ℕ)
+            the_ary.η̂!(:∈ℕ)
             expect(the_ary).to eq([])
             expect(the_ary.🆔).to eq(the_ary_id)
           end
           it 'with numeric data' do
-            the_ary    = [0, 1, 2, 3, 1337]
+            the_ary    = [1, 2, 3, 1337]
             the_ary_id = the_ary.🆔
-            the_ary.η̂!(:ℕ)
-            expect(the_ary).to eq([0, 1, 2, 3, 1337])
+            the_ary.η̂!(:∈ℕ)
+            expect(the_ary).to eq([1, 2, 3, 1337])
             expect(the_ary.🆔).to eq(the_ary_id)
           end
           it 'with string (numeric-like) data' do
-            the_ary    = [0, 1, 2, 3, 1337, '0', '1', '2', '3', '1337']
+            the_ary    = [1, 2, 3, 1337, '1', '2', '3', '1337']
             the_ary_id = the_ary.🆔
-            the_ary.η̂!(:ℕ)
-            expect(the_ary).to eq([0, 1, 2, 3, 1337, 0, 1, 2, 3, 1337])
+            the_ary.η̂!(:∈ℕ𝕊)
+            expect(the_ary).to eq([1, 2, 3, 1337, 1, 2, 3, 1337])
             expect(the_ary.🆔).to eq(the_ary_id)
           end
         end
         context 'cases: error' do
           it 'with numeric data (outside of ℕ)' do
-            the_ary    = [-1337, -1, 0, 1, 1337]
-            expect{the_ary.η̂!(:ℕ)}.to raise_error(RuntimeError)
+            expect{[-1337, -1, 0, 1, 1337].η̂!(:∈ℕ)}.to raise_error(RuntimeError)
           end
           it 'with string data (outside of ℕ)' do
-            the_ary    = ['-1337', 1337]
-            expect{the_ary.η̂!(:ℕ)}.to raise_error(RuntimeError)
+            expect{['-1337', 1337].η̂!(:∈ℕ)}.to raise_error(ArgumentError)
           end
         end
       end
@@ -111,8 +96,8 @@ RSpec.describe 'ary' do
         end
       end
       it 'detects bad param' do
-        expect{%w().≈≈ nil}.to raise_exception(ArgumentError, "| c{Array}-> m{equal_contents?} got arg(them) w/ type{NilClass}, required-type{Array} |")
-        expect{[1, nil, 'abc'].≈≈({})}.to raise_exception(ArgumentError, "| c{Array}-> m{equal_contents?} got arg(them) w/ type{Hash}, required-type{Array} |")
+        expect{%w().≈≈ nil}.to raise_exception(ArgumentError, "| c{Array}-> m{equal_contents?} got arg w/ type{NilClass}, required-type{Array} |")
+        expect{[1, nil, 'abc'].≈≈({})}.to raise_exception(ArgumentError, "| c{Array}-> m{equal_contents?} got arg w/ type{Hash}, required-type{Array} |")
       end
     end
 

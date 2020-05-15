@@ -7,23 +7,6 @@ module ::Ruuuby
   # conceptual types that can be enforced
   module VirtualTypes
 
-    module Normalizers
-
-      # @type [Symbol]
-      BELONGS_TO_M_EXPONENTIALS    = :∈superscripts
-
-      # @type [Symbol]
-      BELONGS_TO_M_NATURAL_NUMBERS = :∈ℕ
-
-      # @type [Symbol]
-      NONE                         = :none
-
-      # @type [Symbol]
-      NO_EMPTY                     = :'!∅'
-
-      ❄️
-    end
-
     module Numerical
 
       # @type [Array]

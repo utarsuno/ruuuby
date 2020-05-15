@@ -4,11 +4,6 @@ RSpec.describe 'nil' do
 
   context 'extends class[NilClass]' do
 
-    it 'by creating needed aliases' do
-      expect_added_c_methods(::NilClass, cΔ_NilClass)
-      expect_added_method_aliases(::NilClass, cΔ_NilClass)
-    end
-
     context 'by adding function{empty?}' do
       it 'and returns correct value{true}' do
         expect(nil.empty?).to eq(true)

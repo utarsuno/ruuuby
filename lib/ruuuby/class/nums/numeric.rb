@@ -1,4 +1,4 @@
-# encoding: utf-8
+# coding: UTF-8
 
 # add various aliases & functions to existing Class(+Numeric+)
 class ::Numeric
@@ -7,13 +7,8 @@ class ::Numeric
 
   # @return [Boolean] true, if this number is neither NaN or ±∞
   def ∞? ; self.infinite? != nil ; end
+
   alias_method :♾️?, :∞?
-
-  # @return [Boolean] true, if this number is equivalent to 0 or 1 {all numbers in the boolean-domain(+𝔹+)}
-  def 𝔹? ; self == 0 || self == 1 ; end
-
-  # @return [Boolean] true, the universal-set(+𝕌+) in this context only excludes (NaN, +∞, and -∞)
-  alias_method :𝕌?, :finite?
 
   # ---------------------------------------------------------------------------------------------------------- | *f16* |
 
@@ -24,5 +19,21 @@ class ::Numeric
   EXPONENTIAL_NEGATIVE_INF = :'-∞'
 
   # | ------------------------------------------------------------------------------------------------------------------
+
+  # @note: for any 2 transcendentals `a` & `b`, at least one of `a+b` and `a*b` must be transcendental
+  #
+  # @example:
+  #  * (π)           is transcendental
+  #  * (1 - π)       is transcendental
+  #  * (π + (1 - π)) is not transcendental
+  #
+  # @return [Boolean]
+  def self.known_transcendental?(n); ::Math::SetTheory::RealNumbers::KNOWN_TRANSCENDENTALS.∋?(n.🆔); end
+
+  # @return [Boolean]
+  def self.known_real_algebraic?(n); ::Math::SetTheory::RealAlgebraicNumbers::KNOWN_REAL_ALGEBRAIC.∋?(n.🆔); end
+
+  # @return [Boolean]
+  def self.known_irrational?(n); ::Math::SetTheory::IrrationalNumbers::KNOWN_IRRATIONALS.∋?(n.🆔); end
 
 end

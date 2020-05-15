@@ -1,27 +1,13 @@
 # coding: UTF-8
 
-# add various aliases & functions to existing Class(+Rational+)
+# `Ruuuby` modifications to existing class{+Rational+}
 class ::Rational
 
-  # @return [Boolean] true, if finite and numerator and denominator pass
-  def ℕ? ; self.numerator.ℕ? && self.denominator.ℕ? ; end
+  # @return [Boolean]
+  def one?; self == 1; end
 
-  # @return [Boolean] true, if finite and numerator and denominator pass
-  def ℤ? ; self.finite? && (self.fdiv(1) % 1 == 0) ; end
-
-  # ⚠️, coverage missing, results not reliable either (yet)
-  #
-  # @return [Boolean, NilClass] true, if finite and numerator and denominator pass
-  def ℚ?
-    return true if self.numerator.ℤ? && self.denominator.ℤ?
-    nil
-  end
-
-  # @return [Boolean] true, if finite and numerator and denominator pass
-  def ℂ? ; self.numerator.ℂ? && self.denominator.ℂ? ; end
-
-  # @return [Boolean] true, if finite and numerator and denominator pass
-  def ℝ? ; self.numerator.ℚ? && self.denominator.ℚ? ; end
+  # @return [Boolean]
+  def smells_like_int?; self.finite? && (self.fdiv(1) % 1 == 0); end
 
   # `Ruuuby` implementation before switching to `C-extensions`: (`f98`)
   #

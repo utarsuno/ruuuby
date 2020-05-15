@@ -1,10 +1,8 @@
-# coding: utf-8
+# coding: UTF-8
 
-# add various functions to existing class +NilClass+
+# add various aliases & functions to existing Class(+NilClass+)
 class ::NilClass
-
   # ---------------------------------------------------------------------------------------------------------- | *f04* |
   alias_method :∅?, :empty?
   # | ------------------------------------------------------------------------------------------------------------------
-
 end

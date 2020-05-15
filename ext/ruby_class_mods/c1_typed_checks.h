@@ -47,6 +47,11 @@ ________________________________________________________________________________
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
 
+#define LDBL_IS_ZERO(arg)         ((arg + 0.0L) == 0.0L)
+#define LDBL_POW2(arg)            (powl(arg, 2.0L))
+#define LDBL_CBRT(arg)            cbrtl(arg)
+#define LDBL_SQRT(arg)            sqrtl(arg)
+
 #define is_class(arg)             (TYPE(arg) == T_CLASS)
 #define is_module(arg)            (TYPE(arg) == T_MODULE)
 #define is_nucleotide(arg)        (is_class(arg) || is_module(arg))

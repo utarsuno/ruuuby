@@ -8,9 +8,10 @@ RSpec.describe 'ruuuby_feature.rb' do
 
       it 'can be created' do
         fake_feature = RuuubyFeature.create!(id_num: 1337, description: data_str_fake_name)
+
         expect(fake_feature.id_num).to eq(1337)
         expect(fake_feature.description).to eq(data_str_fake_name)
-
+        expect(fake_feature.ruuuby_feature_behaviors.length).to eq(0)
         expect(fake_feature.uid).to eq('f1337')
 
         fake_feature.♻️!
@@ -23,6 +24,7 @@ RSpec.describe 'ruuuby_feature.rb' do
         }.to raise_error(ActiveRecord::RecordNotUnique)
 
         result = RuuubyFeature.find_by_uid(1337)
+        expect(result.is_a?(::RuuubyFeature)).to eq(true)
         result.♻️!
       end
 

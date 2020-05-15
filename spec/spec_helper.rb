@@ -7,6 +7,7 @@ require_relative 'helpers/helper_performance'
 require_relative 'helpers/helper_ruuuby'
 require_relative 'helpers/static_test_data'
 require_relative 'helpers/helper_db'
+require_relative 'helpers/helper_math'
 
 require 'rdoc'
 require 'rake'
@@ -152,6 +153,7 @@ RSpec.configure do |config|
   config.include HelpersGeneral
   config.include HelpersFeature16
   config.include HelpersSyntaxCache
+  config.include HelpersMath
 
   config.include HelpersDB, :db
   config.include_context 'shared_context_db', :db

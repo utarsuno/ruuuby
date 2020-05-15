@@ -15,12 +15,11 @@ RSpec.describe 'README.md' do
         expect(√(√(-1337.0^⁴))).to eq(1337)
 
         expect(𝚽).to eq(1 + (𝚽^⁻¹))
-        expect(𝚽.≈≈(2 * sin°(54))).to eq(true)
+        expect(𝚽).to eq(2 * sin(θ°(54)))
         expect(𝚽).to eq((θ𝞽(1) - Ⴔ) / Ⴔ)
 
         expect(θ°(180)).to eq(θ𝞽(0.5))
         expect(θᵍ(200)).to eq(θʳ(π))
-        expect(Ⴔ).to eq(θ°(137.507764050037854))
 
         expect('b'.∈? 'abc').to eq(true)
         expect('abc'.∌? 'd').to eq(true)
@@ -36,7 +35,7 @@ RSpec.describe 'README.md' do
         expect(elements_a.≈≈ elements_b).to eq(true)
         expect(elements_a == elements_b).to eq(false)
 
-        expect([-5.ℕ?, 7.0.ℤ?, ∞.ℝ?, ℚ(2, 3).ℚ?]).to eq([false, true, false, true])
+        expect([ℕ.∋?(-5), ℤ.∋?(7.0), ℝ.∋?(∞), ℚ.∋?(Rational(2, 3))]).to eq([false, true, false, true])
 
         expect([1, 2, 3].⊕ [3, 4]).to eq([1, 4, 2])
 
@@ -44,7 +43,7 @@ RSpec.describe 'README.md' do
       end
 
       it 'alternative version works too' do
-        expect(𝚽.≈≈(2 * sin(θ°(54.0)))).to eq(true)
+        expect(Ⴔ).to eq(θ°(137.507764050037854))
         expect(𝚽).to eq(1 + Rational(1, 𝚽))
 
         result_a = [1, 2, 3].⊕ [3, 4]

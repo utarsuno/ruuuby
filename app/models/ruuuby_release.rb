@@ -235,9 +235,7 @@ class ::RuuubyRelease < ApplicationRecord
   end
 
   # @return [GitCommit]
-  def spawn_git_commit(*args)
-    ::GitCommit.spawn(*args, self)
-  end
+  def spawn_git_commit(*args); ::GitCommit.spawn(*args, self); end
 
   # @param [String] version_str the version UID of the RuuubyRelease with or without the starting 'v'
   #
@@ -248,7 +246,7 @@ class ::RuuubyRelease < ApplicationRecord
     🛑str❓(:version_str, version_str)
     version_str = version_str[1..version_str.length-1] if version_str.start_with?('v')
     version_str = version_str.♻️⟵(' ') if version_str.∋?(' ')
-    version_str.split('.').η̂!(:ℕ)
+    version_str.split('.').η̂!(:∈𝕎𝕊)
   end
 
   # @param [Boolean] released_status (default: true)
@@ -266,7 +264,7 @@ class ::RuuubyRelease < ApplicationRecord
     if args.length == 1 && args[0].str? && args[0].match?(::RuuubyRelease.syntax_uid)
       return RuuubyRelease.generate_query_uid(*(self.parse_uid_str(args[0])))
     end
-    🛑ℤ❓($PRM_MANY, args)
+    🛑num❓($PRM_MANY, args, :∈𝕎𝕊)
     ::RuuubyRelease.where(::RuuubyRelease::Syntax::SQL_UID, args[0].to_i, args[1].to_i, args[2].to_i)
   end
 

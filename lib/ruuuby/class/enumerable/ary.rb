@@ -78,16 +78,14 @@ module ::Ruuuby
         #
         # @return [Array] self, modified if any normalization needed to occur
         def η̂!(normalization_opts)
-          if normalization_opts == :ℕ
+          if [:∈ℕ, :∈𝕎, :∈ℤ, :∈ℕ𝕊, :∈𝕎𝕊, :∈ℤ𝕊].include?(normalization_opts)
             self.∀ₓᵢ do |element, i|
-              if element.num?
-                🛑 RuntimeError.🆕("c{Array}-> m{η̂}-> arg(normalization_opts){#{normalization_opts.to_s}}, internal_element[#{i.to_s}]{#{element.to_s}} is not within(ℕ)") if (!element.ℕ?)
-              elsif element.str?
-                as_num = element.to_num
-                🛑 RuntimeError.🆕("c{Array}-> m{η̂}-> arg(normalization_opts){#{normalization_opts.to_s}}, internal_element[#{i.to_s}]{#{element.to_s}} is not within(ℕ)") if (!as_num.ℕ?)
-                self[i] = as_num
+              if element.num?(normalization_opts)
+                if element.str?
+                  self[i] = element.to_num
+                end
               else
-                🛑 RuntimeError.🆕("c{Array}-> m{η̂}-> arg(normalization_opts){#{normalization_opts.to_s}}, internal_element[#{i.to_s}]{#{element.to_s}} is not within(ℕ)")
+                🛑 RuntimeError.🆕("c{Array}-> m{η̂}-> arg(normalization_opts){#{normalization_opts.to_s}}, internal_element[#{i.to_s}]{#{element.to_s}} is not within(#{normalization_opts.to_s})")
               end
             end
           else
@@ -107,7 +105,7 @@ module ::Ruuuby
         # @raise [WrongParamType]
         #
         # @return [Array] a new Array instance containing the relative complement between this array and the one provided
-        def ∖(them) ; 🛑ary❓(:them, them) ; self - them ; end
+        def ∖(them); 🛑ary❓(:them, them); self - them; end
 
       end # end: {ArrayF09}
     end # end: {Includable}
@@ -171,8 +169,5 @@ class ::Array
   ⨍_add_aliases(:reverse_each, [:↩️∀, :↩∀])
 
   # | ------------------------------------------------------------------------------------------------------------------
-
-  # @return [Array]
-  def self.∅; ::Array::EMPTY_INSTANCE; end
 
 end

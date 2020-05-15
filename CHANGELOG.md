@@ -1,33 +1,81 @@
 ---
 #### (upcoming patches) 
 
-#### v0.3.0
+#### v?.?.0
  * `automatic differentiation`
  
-#### v0.2.0
+#### v?.?.0
  * `dual-numbers` to be considered as intermediate before automatic differentiation
 
-#### v0.1.0
+#### v0.2.0
  * clear `tech debt` and all `feature abstracts`
    * adding `automatic differentiation` should involve near `0% (of time allocation)` towards `version-relating documentation & audits`
  * clear targeted missing coverage
 
-#### v0.0.33-34
+#### v0.1.0
+ * `Quaternions`
+
+#### v0.0.33-40
  * formalize angles, both notation and implementation
    * (`steradians`, `degree`, `radian`, `gon`, `turns`)
+   * `rectangular-form`/`polar-form`
+   * `complex-number-plane`/`complex-angles`
+   * angular rotation vs angular velocity
+   * dimension vs units
    * `arcminute`, `arcsecond`
+   * add textual parsing for ThetaAngles (ex: `3°7'30''` == `3 + 7/60 + 30/3600` == `3.125°`)
  * resolve unit tests for `RuuubyFile` path syntax
- * add textual parsing for ThetaAngles (ex: `3°7'30''` == `3 + 7/60 + 30/3600` == `3.125°`)
+ * enormous section of missing `ORM` tests
 
-#### before v0.0.35/0.1.0
- * resolve missing coverage from `v0.0.17-18`
- * resolve missing coverage from `v0.0.22`
- * resolve missing coverage from `v0.0.31-33`
+---
+
+### ⚠️: atm documentation & tests synchronization % is too low
+
+# v0.0.34
+ * increase precision of various funcs (ex: `sin²` and `cos²`), by performing calculations in `long double` instead of `double`
+ * add `τ` as a 'global-const' which is a ThetaAngle representing a single complete turn
+ * adjust parameter style of class-functions for `Math` to use named params
+ * remove global-alias-funcs{`ℂ`, `ℚ`}; these now correspond to a specific singleton instance of the newly created class(`::Math::SetTheory::NumberSet`)
+ * (`f28`): add `super golden ratio` as `Ψ`, `silver ratio` as `δ`, `plastic ratio` as `ρ`, `omega constant` as `Ω`
+ * remove various out-dated testing helper functions, meta-data generation/processing will eventually replace this
+ * remove `::Array::EMPTY_INSTANCE`, `∅` by itself now aliases a singleton of type{`NumberSet`}
+ * (`f15`): create `ORM`{`RuuubyFeatureBehavior`} which is many to one{`RuuubyFeature`}
+ * remove number-set membership check funcs from `Numerics` and create `singleton` instances of `NumberSet` which covers the previous functionality (just more scalable)
+ * remove as much deprecated code as possible, file structure adjustments started
+ * (`f98`): move `Float`'s method{`≈≈`} into `C-extensions`
+ * remove funcs (and related ones): `🛑ℤ❓` and `🛑𝕌❓`, these checks are now covered by existing functions w/ new types of normalizers added for existing normalizer feature
+
+| path added | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/ruuuby/math/set_theory/closure.rb` | ``Math::SetTheory::Closure`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/number_set.rb` | ``Math::SetTheory::NumberSet`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/algebraic_numbers.rb` | ``Math::SetTheory::AlgebraicNumbers`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/boolean_numbers.rb` | ``Math::SetTheory::BooleanNumbers`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/complex_numbers.rb` | ``Math::SetTheory::ComplexNumbers`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/empty_set.rb` | ``Math::SetTheory::EmptySet`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/imaginary_numbers.rb` | ``Math::SetTheory::ImaginaryNumbers`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/integer_numbers.rb` | ``Math::SetTheory::IntegerNumbers`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/irrational_numbers.rb` | ``Math::SetTheory::IrrationalNumbers`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/natural_numbers.rb` | ``Math::SetTheory::NaturalNumbers`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/null_set.rb` | ``Math::SetTheory::NullSet`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/rational_numbers.rb` | ``Math::SetTheory::RationalNumbers`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/real_algebraic_numbers.rb` | ``Math::SetTheory::RealAlgebraicNumbers`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/real_numbers.rb` | ``Math::SetTheory::RealNumbers`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/universal_set.rb` | ``Math::SetTheory::UniversalSet`` |  | `f11` |
+| `lib/ruuuby/math/set_theory/discrete/whole_numbers.rb` | ``Math::SetTheory::WholeNumbers`` |  | `f11` |
+| `app/models/ruuuby_feature_behavior.rb` |  |  | `f15` |
+| `ext/ruby_class_mods/c4_theta_angle.h` |  | for organization | `f27` |
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Object` | `set?`, `🛑set❓` | `f06` |
+| `Integer` | `get_prime_factors` | `f17` |
+| `ThetaAngle` | `normalize`, `windings` | `f28` |
 
 ---
 
 # v0.0.33
- * (`98`): create new Class(`ThetaAngle`) which is essentially a wrapper over a `C-struct`
+ * (`f98`): create new Class(`ThetaAngle`) which is essentially a wrapper over a `C-struct`
  * modify global-funcs `sin`, `cos`, `tan`, etc to utilize the `ThetaAngle` class
  * add empty code file(`lib/ruuuby/class/method/math_function.rb`) for future versions
  * apply lots of misc clean-ups and/or adjustments

@@ -34,40 +34,11 @@ module ::Ruuuby
       # defines the operations needed to support Feature(`f12`) that are applied to the `main` object
       module MainF17
 
-        #module NumberFields
-          # @return [Object] placeholder
-        #  def ℝⁿ; ::Math::VECTOR_SPACE_ALL_N_TUPLES; end
-
-          # @return [Object] placeholder
-        #  def ℝ¹; ::Math::VECTOR_SPACE_1D; end
-
-          # @return [Object] placeholder
-        #  def ℝ²; ::Math::VECTOR_SPACE_2D; end
-
-          # @return [Object] placeholder
-        #  def ℝ³; ::Math::VECTOR_SPACE_3D; end
-
-          # @return [Object] placeholder
-        #  def ℝ⁴; ::Math::VECTOR_SPACE_4D; end
-        #end
-
         # defines (onto the `main` object) funcs to provide aliases for math functions
         module MathAliases
 
-          # @param [Numeric, Float, Complex] component_real
-          # @param [Numeric, Float, Complex] component_complex (default: 0)
-          #
-          # @return [Complex]
-          def ℂ(component_real, component_complex=0); Complex(component_real, component_complex); end
-
-          # @param [Numeric, Float, Complex] numerator
-          # @param [Numeric, Float, Complex] denominator
-          #
-          # @return [Rational]
-          def ℚ(numerator, denominator); Rational(numerator, denominator); end
-
           # @return [Float] the base ℮ logarithm of +n+
-          def logₑ(n); ::Math.log(n); end
+          def logₑ(n); ::Math.log_e(n); end
 
           # @param [Numeric, Float, Complex] n
           #
@@ -90,17 +61,31 @@ module ::Ruuuby
 
           # Return the square-root of the provided argument.
           #
-          # @param [Integer, Float, Numeric] n
+          # @param [Integer, Float, Numeric, String] n
           #
           # @return [Float, Numeric]
-          def √(n); ::Math.sqrt(n); end
+          def √(n)
+            if n.str? && n.to_num?
+              ::Math.square_root(n.to_num.to_f)
+            else
+              🛑num❓(:n, n)
+              ::Math.square_root(n.to_f)
+            end
+          end
 
           # Return the cube-root of the provided argument.
           #
           # @param [Integer, Float, Numeric] n
           #
           # @return [Float, Numeric]
-          def ∛(n); ::Math.cbrt(n); end
+          def ∛(n)
+            if n.str? && n.to_num?
+              ::Math.cubic_root(n.to_num.to_f)
+            else
+              🛑num❓(:n, n)
+              ::Math.cubic_root(n.to_f)
+            end
+          end
 
           # @return [Float]
           def π; ::Math::PI; end
@@ -178,12 +163,12 @@ module ::Ruuuby
         # defines (onto the `main` object) funcs to provide aliases for math functions relating to trigonometry
         module Trigonometry
 
-          def cot(θ); 🛑θ❓(:θ, θ); ::Math.cot(θ); end
+          def cot(θ); 🛑θ❓(:θ, θ); ::Math.cott(θ); end
 
-          def csc(θ); 🛑θ❓(:θ, θ); ::Math.csc(θ); end
+          def csc(θ); 🛑θ❓(:θ, θ); ::Math.cscc(θ); end
 
           # @param [ThetaAngle] θ
-          def sec(θ); 🛑θ❓(:θ, θ); ::Math.sec(θ); end
+          def sec(θ); 🛑θ❓(:θ, θ); ::Math.secc(θ); end
 
           # return the sin of the provided angle
           #
@@ -192,12 +177,8 @@ module ::Ruuuby
           #
           # @param [ThetaAngle] θ
           #
-          # @return [Float, Numeric]
-          def sin(θ); 🛑θ❓(:θ, θ); ::Math.sin(θ.ʳ); end
-
-          def sin²(θ); 🛑θ❓(:θ, θ); ::Math.sin_squared(θ); end
-
-          def cos²(θ); 🛑θ❓(:θ, θ); ::Math.cos_squared(θ); end
+          # @return [Float, Integer, Numeric]
+          def sin(θ); 🛑θ❓(:θ, θ); ::Math.sinn(θ); end
 
           # return the Arcsine (inverse function) of the provided angle
           #
@@ -209,6 +190,18 @@ module ::Ruuuby
           # @return [Float, Numeric]
           def arcsin(θ); 🛑θ❓(:θ, θ); ::Math.asin(θ.ʳ); end
 
+          def csc²(θ); 🛑θ❓(:θ, θ); ::Math.csc_squared(θ); end
+
+          def sin²(θ); 🛑θ❓(:θ, θ); ::Math.sin_squared(θ); end
+
+          def cos²(θ); 🛑θ❓(:θ, θ); ::Math.cos_squared(θ); end
+
+          def cot²(θ); 🛑θ❓(:θ, θ); ::Math.cot_squared(θ); end
+
+          def sec²(θ); 🛑θ❓(:θ, θ); ::Math.sec_squared(θ); end
+
+          def tan²(θ); 🛑θ❓(:θ, θ); ::Math.tan_squared(θ); end
+
           # return the cos of the provided angle
           #
           # | domain    | (-1, 1) |
@@ -217,7 +210,8 @@ module ::Ruuuby
           # @param [ThetaAngle] θ
           #
           # @return [Float, Numeric]
-          def cos(θ); 🛑θ❓(:θ, θ); ::Math.cos(θ.ʳ); end
+          def cos(θ); 🛑θ❓(:θ, θ); ::Math.coss(θ); end
+          #def cos(θ); 🛑θ❓(:θ, θ); ::Math.cos(θ.ʳ); end
 
           # return the Arccosine (inverse function) of the provided angle
           #
@@ -237,7 +231,7 @@ module ::Ruuuby
           # @param [ThetaAngle] θ
           #
           # @return [Float, Numeric]
-          def tan(θ); 🛑θ❓(:θ, θ); ::Math.tan(θ.ʳ); end
+          def tan(θ); 🛑θ❓(:θ, θ); ::Math.tann(θ); end
 
           # return the arc-sin (inverse function) of the provided angle
           #
@@ -248,48 +242,6 @@ module ::Ruuuby
           #
           # @return [Float, Numeric]
           def arctan(θ); 🛑θ❓(:θ, θ); ::Math.atan(θ.ʳ); end
-
-          # utility function
-          #
-          # @param [Integer, Float, Numeric] degrees
-          #
-          # @return [Float, Numeric]
-          def sin°(degrees); sin(θ°(degrees)); end
-
-          # utility function
-          #
-          # @param [Integer, Float, Numeric] degrees
-          #
-          # @return [Float, Numeric]
-          def cos°(degrees); cos(θ°(degrees)); end
-
-          # utility function
-          #
-          # @param [Integer, Float, Numeric] degrees
-          #
-          # @return [Float, Numeric]
-          def tan°(degrees); tan(θ°(degrees)); end
-
-          # utility function
-          #
-          # @param [Integer, Float, Numeric] degrees
-          #
-          # @return [Float, Numeric]
-          def cot°(degrees); ::Math.cot(θ°(degrees)); end
-
-          # utility function
-          #
-          # @param [Integer, Float, Numeric] degrees
-          #
-          # @return [Float, Numeric]
-          def csc°(degrees); ::Math.csc(θ°(degrees)); end
-
-          # utility function
-          #
-          # @param [Integer, Float, Numeric] degrees
-          #
-          # @return [Float, Numeric]
-          def sec°(degrees); ::Math.sec(θ°(degrees)); end
 
         end # end: {Trigonometry}
       end # end: {MainF17}
@@ -308,25 +260,51 @@ module ::Ruuuby
 
       # defines the operations needed to support Feature(`f27`) that are applied to the `main` object
       module MainF27
-        # @param [Float, Int] arg
-        #
-        # @return [ThetaAngle]
-        def θ°(arg); ::ThetaAngle.new_degree(arg); end
 
-        # @param [Float, Int] arg
+        # @param [Float, Int, ThetaAngle] arg
         #
         # @return [ThetaAngle]
-        def θʳ(arg); ::ThetaAngle.new_radian(arg); end
+        def θ°(arg)
+          if arg.θ?
+            ::ThetaAngle.new_degree(arg.𝞽)
+          else
+            ::ThetaAngle.new_degree(arg)
+          end
+        end
 
-        # @param [Float, Int] arg
+        # @param [Float, Int, ThetaAngle] arg
         #
         # @return [ThetaAngle]
-        def θᵍ(arg); ::ThetaAngle.new_gon(arg); end
+        def θʳ(arg)
+          if arg.θ?
+            ::ThetaAngle.new_radian(arg.𝞽)
+          else
+            ::ThetaAngle.new_radian(arg)
+          end
+        end
 
-        # @param [Float, Int] arg
+        # @param [Float, Int, ThetaAngle] arg
         #
         # @return [ThetaAngle]
-        def θ𝞽(arg); ::ThetaAngle.new_turn(arg); end
+        def θᵍ(arg)
+          if arg.θ?
+            ::ThetaAngle.new_gon(arg.𝞽)
+          else
+            ::ThetaAngle.new_gon(arg)
+          end
+        end
+
+        # @param [Float, Int, ThetaAngle] arg
+        #
+        # @return [ThetaAngle]
+        def θ𝞽(arg)
+          if arg.θ?
+            ::ThetaAngle.new_turn(arg.𝞽)
+          else
+            ::ThetaAngle.new_turn(arg)
+          end
+        end
+
       end # end: {MainF27}
     end # end: {Extendable}
   end # end: {Feature}

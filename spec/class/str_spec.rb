@@ -631,17 +631,34 @@ RSpec.describe 'str' do
             it 'golden-ratio(𝚽)' do
               expect('𝚽'.to_num).to eq(𝚽)
             end
-            it 'golden-angle(𝚽)' do
+            it 'super-golden-ratio(ψ)' do
+              expect('Ψ'.to_num).to eq(Ψ)
+            end
+            it 'plastic-ratio{ρ}' do
+              expect('ρ'.to_num).to eq(ρ)
+            end
+            it 'golden-angle(Ⴔ)' do
               expect('Ⴔ'.to_num).to eq(Ⴔ)
+            end
+            it 'tau-angle(τ)' do
+              expect('τ'.to_num).to eq(τ)
+            end
+            it 'omega-constant{Ω}' do
+              expect('Ω'.to_num).to eq(Ω)
             end
             it 'euler-mascheroni-constant(γ)' do
               expect('γ'.to_num).to eq(γ)
               expect('+γ'.to_num).to eq(γ)
               expect('-γ'.to_num).to eq(-γ)
             end
+            it 'NaN' do
+              expect('nan'.to_num.¿?).to eq(true)
+              expect('NaN'.to_num.¿?).to eq(true)
+              expect('NAN'.to_num.¿?).to eq(true)
+            end
             context 'for func{to_num?}' do
               it 'same-cases' do
-                %w(∞ +∞ -∞ ♾️ +♾️ -♾️ ∞ℂ π +π -π Ⴔ 𝚽 γ +γ -γ).∀{|scenario| expect(scenario.to_num?).to eq(true)}
+                %w(∞ +∞ -∞ ♾️ +♾️ -♾️ ∞ℂ π +π -π Ⴔ Ω Ψ ρ τ 𝚽 γ +γ -γ).∀{|scenario| expect(scenario.to_num?).to eq(true)}
               end
             end
           end
@@ -1041,10 +1058,10 @@ RSpec.describe 'str' do
         context 'error' do
           it 'catches wrong parameter type provided' do
             [nil, 1337, {}].∀{|a|expect{'' >> a}.to raise_exception(ArgumentError)}
-            expect{'' >> [1] }.to throw_wrong_param_type(String, '>>', 'them', Array, String)
-            expect{'' >> nil }.to throw_wrong_param_type(String, '>>', 'them', NilClass, String)
-            expect{'' >> 1337 }.to throw_wrong_param_type(String, '>>', 'them', Integer, String)
-            expect{'' >> {'apple' => 'aa'} }.to throw_wrong_param_type(String, '>>', 'them', Hash, String)
+            expect{'' >> [1] }.to raise_error(ArgumentError)
+            expect{'' >> nil }.to raise_error(ArgumentError)
+            expect{'' >> 1337 }.to raise_error(ArgumentError)
+            expect{'' >> {'apple' => 'aa'} }.to raise_error(ArgumentError)
           end
           it 'catches frozen strings' do
             a = 'my_frozen_string'.❄️

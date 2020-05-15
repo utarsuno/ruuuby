@@ -1,84 +1,32 @@
-# coding: utf-8
+# coding: UTF-8
 
 RSpec.describe 'float.rb' do
-  context 'extends class[Float]' do
 
-    context 'by adding needed functions' do
-      it 'exists' do
-        expect_added_ruby_methods(::Float, cΔ_Float)
-      end
+  context 'verify func{next_float}' do
+    it 'works as expected' do
+      expect(0.0.next_float + 1.0).to eq(1.0)
     end
+  end
 
-    context 'by adding function{ℕ?}' do
+  context 'extends class{Float}' do
+
+    context 'by adding function{has_decimals?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
-          expect(0.0.ℕ?).to eq(true)
-          expect(1.0.ℕ?).to eq(true)
-          expect(1337.0.ℕ?).to eq(true)
+          expect(-1337.1.has_decimals?).to eq(true)
+          expect(-1.2.has_decimals?).to eq(true)
+          expect(-0.3.has_decimals?).to eq(true)
+          expect(1.4.has_decimals?).to eq(true)
+          expect(1.5.has_decimals?).to eq(true)
+          expect(1337.6.has_decimals?).to eq(true)
         end
         it 'cases: negative' do
-          data_float_error_cases.∀{|n| expect(n.ℕ?).to eq(false)}
-          expect((-1.0).ℕ?).to eq(false)
-          expect(1337.1337.ℕ?).to eq(false)
-        end
-      end
-    end
-
-    context 'by adding function{ℤ?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          data_range_floats.∀{|n| expect(n.ℤ?).to eq(true)}
-        end
-        it 'cases: negative' do
-          data_float_error_cases.∀{|n| expect(n.ℤ?).to eq(false)}
-        end
-      end
-    end
-
-    context 'by adding function{ℚ?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          expect(1.0.ℚ?).to eq(true)
-          expect(π.ℚ?).to eq(true)
-        end
-        it 'cases: negative' do
-          data_float_error_cases.∀{|n| expect(n.ℚ?).to eq(false)}
-        end
-        it 'cases: un-covered scope' do
-          expect(1.1337.ℚ?).to eq(nil)
-        end
-      end
-    end
-
-    context 'by adding function{ℂ?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          expect(1.337.ℂ?).to eq(true)
-        end
-        it 'cases: negative' do
-          data_float_error_cases.∀{|n| expect(n.ℂ?).to eq(false)}
-        end
-      end
-    end
-
-    context 'by adding function{ℝ?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          expect(0.0.ℝ?).to eq(true)
-        end
-        it 'cases: negative' do
-          data_float_error_cases.∀{|n| expect(n.ℝ?).to eq(false)}
-        end
-      end
-    end
-
-    context 'by adding function{𝕌?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          expect(0.0.𝕌?).to eq(true)
-        end
-        it 'cases: negative' do
-          data_float_error_cases.∀{|n| expect(n.𝕌?).to eq(false)}
+          expect(-1337.0.has_decimals?).to eq(false)
+          expect(-1.0.has_decimals?).to eq(false)
+          expect(-0.0.has_decimals?).to eq(false)
+          expect(1.0.has_decimals?).to eq(false)
+          expect(1.0.has_decimals?).to eq(false)
+          expect(1337.0.has_decimals?).to eq(false)
         end
       end
     end
@@ -95,15 +43,15 @@ RSpec.describe 'float.rb' do
             expect(data_float_negative_inf.≈≈(data_float_negative_inf)).to eq(true)
           end
 
-          it 'with zero' do
+          it 'w/ zero' do
             expect(0.0.≈≈(0.0)).to eq(true)
             expect(0.0.≈≈(-0.0)).to eq(true)
             expect(-0.0.≈≈(-0.0)).to eq(true)
 
-            #expect(0.0.≈≈(1e-40, 0.01)).to eq(true)
-            #expect(1e-40.≈≈(0.0, 0.01)).to eq(true)
-            #expect(0.0.≈≈(-1e-40, 0.1)).to eq(true)
-            #expect(-1e-40.≈≈(0.0, 0.1)).to eq(true)
+            expect(1e-400.≈≈(0.0)).to eq(true)
+            expect(0.0.≈≈(1e-400)).to eq(true)
+            expect(-1e-400.≈≈(0.0)).to eq(true)
+            expect(0.0.≈≈(-1e-400)).to eq(true)
           end
 
           it 'nearly zero' do
@@ -117,59 +65,62 @@ RSpec.describe 'float.rb' do
             expect(-1.0.≈≈(-1.0)).to eq(true)
             expect(1.0.≈≈(1.0)).to eq(true)
 
-            expect(0.9999999999999.≈≈(1.0)).to eq(true)
-            expect(1.0000000000001.≈≈(1.0)).to eq(true)
-
-            expect(1.0000001.≈≈(1.0000002)).to eq(true)
-            expect(1.0000002.≈≈(1.0000001)).to eq(true)
+            expect(0.999999999999999999.≈≈(1.0)).to eq(true)
+            expect(1.000000000000000001.≈≈(1.0)).to eq(true)
+            expect(1.000000000000000001.≈≈(1.00000000000000002)).to eq(true)
+            expect(1.00000000000000002.≈≈(1.000000000000000001)).to eq(true)
           end
 
           it 'nearly negative one' do
-            expect(-1.0000000001.≈≈(-1.0000000002)).to eq(true)
-            expect(-1.0000000002.≈≈(-1.0000000001)).to eq(true)
+            expect(-1.000000000000000001.≈≈(-1.00000000000000002)).to eq(true)
+            expect(-1.00000000000000002.≈≈(-1.000000000000000001)).to eq(true)
           end
 
           it 'large-magnitude values' do
-            expect(1337000.0.≈≈(1337001.0)).to eq(true)
-            expect(1337001.0.≈≈(1337000.0)).to eq(true)
-            expect(-1337000.0.≈≈(-1337001.0)).to eq(true)
-            expect(-1337001.0.≈≈(-1337000.0)).to eq(true)
+            num_a = 133700000000000000.0
+            num_b = 133700000000000001.0
+            expect(num_a.≈≈(num_b)).to eq(true)
+            expect(num_b.≈≈(num_a)).to eq(true)
+            expect((-num_a).≈≈(-num_b)).to eq(true)
+            expect((-num_b).≈≈(-num_a)).to eq(true)
           end
 
           it 'small-magnitude values' do
-            expect(0.000000001000001.≈≈(0.000000001000002)).to eq(true)
-            expect(0.000000001000002.≈≈(0.000000001000001)).to eq(true)
-            expect(-0.000000001000001.≈≈(-0.000000001000002)).to eq(true)
-            expect(-0.000000001000002.≈≈(-0.000000001000001)).to eq(true)
-            expect(0.3.≈≈(0.30000003)).to eq(true)
-            expect(-0.3.≈≈(-0.30000003)).to eq(true)
+            num_a = 0.000000001000000000000000001
+            num_b = 0.000000001000000000000000002
+            expect(num_a.≈≈(num_b)).to eq(true)
+            expect(num_b.≈≈(num_a)).to eq(true)
+            expect((-num_a).≈≈(-num_b)).to eq(true)
+            expect((-num_b).≈≈(-num_a)).to eq(true)
+            expect(0.3.≈≈(0.300000000000000003)).to eq(true)
+            expect((-0.3).≈≈(-0.300000000000000003)).to eq(true)
             expect(Float::MIN.≈≈(-Float::MIN)).to eq(true)
             expect((-Float::MIN).≈≈(Float::MIN)).to eq(true)
           end
 
           it 'regular cases' do
-            expect(359.99999.≈≈(360)).to eq(true)
+            expect(359.9999999999999999.≈≈(360)).to eq(true)
           end
-        end
+        end # end: {cases: positive}
         context 'cases: negative' do
           it 'medium-magnitude values' do
             expect(13370.0.≈≈(13371.0)).to eq(false)
             expect(13371.0.≈≈(13370.0)).to eq(false)
-            expect(-13370.0.≈≈(-13371.0)).to eq(false)
-            expect(-13371.0.≈≈(-13370.0)).to eq(false)
+            expect((-13370.0).≈≈(-13371.0)).to eq(false)
+            expect((-13371.0).≈≈(-13370.0)).to eq(false)
           end
 
           it 'small-magnitude values' do
             expect(0.000000000001002.≈≈(0.000000000001001)).to eq(false)
             expect(0.000000000001001.≈≈(0.000000000001002)).to eq(false)
-            expect(-0.000000000001002.≈≈(-0.000000000001001)).to eq(false)
-            expect(-0.000000000001001.≈≈(-0.000000000001002)).to eq(false)
+            expect((-0.000000000001002).≈≈(-0.000000000001001)).to eq(false)
+            expect((-0.000000000001001).≈≈(-0.000000000001002)).to eq(false)
           end
 
           it 'with zero' do
             expect(0.00000001.≈≈(0.0)).to eq(false)
             expect(0.0.≈≈(0.00000001)).to eq(false)
-            expect(-0.00000001.≈≈(0.0)).to eq(false)
+            expect((-0.00000001).≈≈(0.0)).to eq(false)
             expect(0.0.≈≈(-0.00000001)).to eq(false)
 
             expect(0.0.≈≈(1.0)).to eq(false)
@@ -190,10 +141,10 @@ RSpec.describe 'float.rb' do
           it 'around magnitude-one' do
             expect(1.0002.≈≈(1.0001)).to eq(false)
             expect(1.0001.≈≈(1.0002)).to eq(false)
-            expect(-1.0002.≈≈(-1.0001)).to eq(false)
-            expect(-1.0001.≈≈(-1.0002)).to eq(false)
+            expect((-1.0002).≈≈(-1.0001)).to eq(false)
+            expect((-1.0001).≈≈(-1.0002)).to eq(false)
 
-            expect(-1.0.≈≈(1.0)).to eq(false)
+            expect((-1.0).≈≈(1.0)).to eq(false)
           end
 
           it 'edge cases' do
@@ -233,8 +184,8 @@ RSpec.describe 'float.rb' do
           end
         end
         it 'cases: bad-args' do
-          expect{0.0.≈≈(nil)}.to raise_error(ArgumentError)
-          expect{0.0.≈≈([])}.to raise_error(ArgumentError)
+          expect(0.0.≈≈(nil)).to eq(false)
+          expect(0.0.≈≈([])).to eq(false)
         end
       end
     end
@@ -244,8 +195,7 @@ RSpec.describe 'float.rb' do
       context 'by supporting operation {^⁻⁹}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
-            #expect_scenarios_power_operations(data_range_floats_all_but_zero, :⁻⁹, -9, true)
-            data_range_floats_all_but_zero.∀{|n| expect((n^⁻⁹).≈≈(Rational(1, n ** 9))).to eq(true)}
+            expect_scenarios_power_operations(data_range_floats_all_but_zero, :⁻⁹, -9, true)
           end
           it 'cases: negative' do
             expect{0.0^⁻⁹}.to raise_error(ZeroDivisionError)
@@ -259,8 +209,7 @@ RSpec.describe 'float.rb' do
       context 'by supporting operation {^⁻⁸}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
-            #expect_scenarios_power_operations(data_range_floats_all_but_zero, :⁻⁸, -8, true)
-            data_range_floats_all_but_zero.∀{|n| expect((n^⁻⁸).≈≈(Rational(1, n ** 8))).to eq(true)}
+            expect_scenarios_power_operations(data_range_floats_all_but_zero, :⁻⁸, -8, true)
           end
           it 'cases: negative' do
             expect{0.0^⁻⁸}.to raise_error(ZeroDivisionError)
@@ -288,8 +237,7 @@ RSpec.describe 'float.rb' do
       context 'by supporting operation {^⁻⁶}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
-            #expect_scenarios_power_operations(data_range_floats_all_but_zero, :⁻⁶, 6, true)
-            data_range_floats_all_but_zero.∀{|n| expect((n^⁻⁶).≈≈(Rational(1, n ** 6))).to eq(true)}
+            expect_scenarios_power_operations(data_range_floats_all_but_zero, :⁻⁶, -6, true)
           end
           it 'cases: negative' do
             expect{0.0^⁻⁶}.to raise_error(ZeroDivisionError)
@@ -492,59 +440,6 @@ RSpec.describe 'float.rb' do
     context 'func{∞ℂ?}: performs extremely quickly' do
       it 'for cases: all' do
         expect{0.0.∞ℂ?}.to perform_extremely_quickly
-      end
-    end
-    context 'func{ℕ?}: performs very quickly' do
-      it 'for cases: true' do
-        expect{0.0.ℕ?}.to perform_very_quickly
-      end
-      it 'cases: negative' do
-        expect{data_float_nan.ℕ?}.to perform_very_quickly
-      end
-    end
-
-    context 'func{ℤ?}: performs very quickly' do
-      it 'for cases: true' do
-        expect{-1337.0.ℤ?}.to perform_very_quickly
-      end
-      it 'cases: negative' do
-        expect{data_float_nan.ℤ?}.to perform_very_quickly
-      end
-    end
-
-    context 'func{ℂ?}: performs very quickly' do
-      it 'for cases: true' do
-        expect{1.337.ℂ?}.to perform_very_quickly
-      end
-      it 'cases: negative' do
-        expect{data_float_nan.ℂ?}.to perform_very_quickly
-      end
-    end
-
-    context 'func{ℚ?}: performs very quickly' do
-      it 'for cases: true' do
-        expect{1.0.ℚ?}.to perform_very_quickly
-      end
-      it 'cases: negative' do
-        expect{data_float_nan.ℚ?}.to perform_very_quickly
-      end
-    end
-
-    context 'func{ℝ?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{0.0.ℝ?}.to perform_extremely_quickly
-      end
-      it 'cases: negative' do
-        expect{data_float_nan.ℝ?}.to perform_extremely_quickly
-      end
-    end
-
-    context 'func{𝕌?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{0.0.𝕌?}.to perform_extremely_quickly
-      end
-      it 'cases: negative' do
-        expect{data_float_nan.𝕌?}.to perform_extremely_quickly
       end
     end
 

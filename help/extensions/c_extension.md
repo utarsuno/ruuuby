@@ -38,6 +38,10 @@ rb_warn
 rb_warning (only print warning if $VERBOSE is true)
 ```
 
+### GCC flags
+
+https://gcc.gnu.org/onlinedocs/gcc/Invoking-GCC.html#Invoking-GCC
+
 ### MacOS C Support
 ```
 

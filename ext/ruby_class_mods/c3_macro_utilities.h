@@ -18,6 +18,8 @@ ________________________________________________________________________________
 #define ensure_loaded_io(path)                   ensure_file_loaded("ruuuby/class/io/" #path)
 #define ensure_loaded_enumerable(path)           ensure_file_loaded("ruuuby/class/enumerable/" #path)
 #define ensure_loaded_module(path)               ensure_file_loaded("ruuuby/module/" #path)
+#define ensure_loaded_math(path)                 ensure_file_loaded("ruuuby/math/" #path)
+#define ensure_loaded_set_theory(path)           ensure_file_loaded("ruuuby/math/set_theory/" #path)
 #define ensure_loaded_attribute_includable(path) ensure_file_loaded("ruuuby/module/attribute/includable/" #path)
 #define ensure_loaded_attribute_extendable(path) ensure_file_loaded("ruuuby/module/attribute/extendable/" #path)
 #define ensure_loaded_class(path)                ensure_file_loaded("ruuuby/class/" #path)

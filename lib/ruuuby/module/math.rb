@@ -7,40 +7,52 @@ module ::Math
   # @param [Integer, Float, Numeric] value_b
   #
   # @return [Float] relative difference of the provided args, order does not matter
-  def self.relative_Δ(value_a, value_b)
-    🛑𝕌❓($PRM_MANY, [value_a, value_b])
-    return 0 if value_a == 0 && value_b == 0
-    numerator   = (value_a - value_b).abs
-    denominator = (value_a + value_b) / 2.0
-    100.0 * (numerator / denominator)
+  def self.relative_Δ(a: ::Float::INFINITY, b: ::Float::INFINITY)
+    🛑num❓($PRM_MANY, [a, b], :∈𝕌)
+    if a == 0 && b == 0
+      return 0
+    else
+      return (100.0 * (((a - b).abs) / ((a + b) / 2.0)))
+    end
   end
 
-  # TODO: add unit tests
+  # @note:
+  #  * if `a² + b² = c²`, then the triangle is `right`
+  #  * if `a² + b² > c²`, then the triangle is `acute`
+  #  * if `a² + b² < c²`, then the triangle is `obtuse`
   #
-  # @param [Integer, Float, Numeric] num_a
-  # @param [Integer, Float, Numeric] num_b
-  # @param [Integer, Float, Numeric] num_c
+  # @param [Integer, Float, Numeric] a
+  # @param [Integer, Float, Numeric] b
+  # @param [Integer, Float, Numeric] c
   #
   # @return [Boolean] true, if: a² + b² == c²
-  def self.pythagoras_τ³?(num_a, num_b, num_c)
-    🛑𝕌❓($PRM_MANY, [num_a, num_b, num_c])
-    return (((num_a ** 2) + (num_b ** 2)) == (num_c ** 2))
+  def self.τ³_is_pythagorean?(a: ::Float::INFINITY, b: ::Float::INFINITY, c: ::Float::INFINITY)
+    if a.θ? && b.θ? && c.θ?
+      return ((a + b + c).° == 180.0)
+    else
+      🛑num❓($PRM_MANY, [a, b, c], :∈𝕌)
+      return (((a ** 2) + (b ** 2)) == (c ** 2))
+    end
   end
 
-  # @type [Object] placeholder
-  VECTOR_SPACE_ALL_N_TUPLES = Object.🆕
+  # @param [Integer, Float, Numeric] a (must be larger than b)
+  # @param [Integer, Float, Numeric] b
+  #
+  # @return [Boolean] true, if: a² + b² == c²
+  def self.τ²_in_golden_ratio?(a: ::Float::INFINITY, b: ::Float::INFINITY)
+    🛑num❓($PRM_MANY, [a, b], :∈𝕌) unless a.θ? && b.θ?
+    return (a / b) == ::Float::GOLDEN_RATIO
+  end
 
-  # @type [Object] placeholder
-  VECTOR_SPACE_1D           = Object.🆕
+  # @param [Integer, Float, Numeric] a (must be larger than b)
+  # @param [Integer, Float, Numeric] b
+  #
+  # @return [Boolean] true, if: a² + b² == c²
+  def self.τ²_in_super_golden_ratio?(a: ::Float::INFINITY, b: ::Float::INFINITY)
+    🛑num❓($PRM_MANY, [a, b], :∈𝕌) unless a.θ? && b.θ?
+    return (a % b) == Ψ
+  end
 
-  # @type [Object] placeholder
-  VECTOR_SPACE_2D           = Object.🆕
-
-  # @type [Object] placeholder
-  VECTOR_SPACE_3D           = Object.🆕
-
-  # @type [Object] placeholder
-  VECTOR_SPACE_4D           = Object.🆕
 end
 
 =begin

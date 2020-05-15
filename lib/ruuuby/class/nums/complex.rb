@@ -1,26 +1,16 @@
 # coding: UTF-8
 
-# add various functions to existing class +Complex+
+# `Ruuuby` modifications to existing class{+Complex+}
 class ::Complex
 
-  # @return [Boolean] true, if there is no imaginary-component and the real-component is a natural-number(+ℕ+)
-  def ℕ?; self.imaginary == 0 && self.real.ℕ?; end
+  # @return [Boolean]
+  def one?; self == 1; end
 
-  # @return [Boolean] true, if there is no imaginary-component and the real-component is a mathematical-integer(+ℤ+)
-  def ℤ?; self.imaginary == 0 && self.real.ℤ?; end
+  # @return [Boolean]
+  def smells_like_int?; self.imaginary.zero? && self.real.smells_like_int?; end
 
-  # @return [Boolean] true, if there is no imaginary-component and the real-component can be represented as a rational-number(+ℚ+)
-  def ℚ?; self.imaginary == 0 && self.real.ℚ?; end
-
-  # @return [Boolean] false, (+ℝ+) is notation for real-numbers (true if real component is real-number and imaginary-component is zero)
-  def ℝ?; self.imaginary == 0 && self.real.ℝ?; end
-
-  # all complex-numbers can be represented as:
-  #
-  #   - complex-numbers(+ℂ+)   (unless non-finite)
-  #   - universal-numbers(+𝕌+) (unless non-finite)
-  #
-  ⨍_add_aliases(:finite?, [:ℂ?, :𝕌?])
+  # @return [Boolean]
+  def gaussian_integer?; ℤ.∋?(self.imaginary) && ℤ.∋?(self.real); end
 
   # `Ruuuby` implementation before switching to `C-extensions`: (`f98`)
   #

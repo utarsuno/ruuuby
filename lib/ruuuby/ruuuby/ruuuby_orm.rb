@@ -30,6 +30,8 @@ module Ruuuby
 
         module SchemaRuuubyFeatures
         end
+        module SchemaRuuubyFeatureBehaviors
+        end
         module SchemaRuuubyChangelogs
         end
         module SchemaRuuubyReleases
@@ -42,7 +44,7 @@ module Ruuuby
         end
 
         # @type [Array]
-        ALL_ORM_SCHEMAS = [SchemaRuuubyReleases, SchemaRuuubyFeatures, SchemaRuuubyChangelogs, SchemaGitCommits, SchemaRuuubyDirs, SchemaRuuubyFiles].❄️
+        ALL_ORM_SCHEMAS = [SchemaRuuubyReleases, SchemaRuuubyFeatures, SchemaRuuubyFeatureBehaviors, SchemaRuuubyChangelogs, SchemaGitCommits, SchemaRuuubyDirs, SchemaRuuubyFiles].❄️
       end
 
       # @return [Array]
@@ -90,6 +92,7 @@ module Ruuuby
       def ensure_loaded_seeds
         unless @seeds_loaded
           require_relative '../../../db/seeds/ruuuby_features'
+          require_relative '../../../db/seeds/ruuuby_feature_behaviors'
           require_relative '../../../db/seeds/ruuuby_releases/ruuuby_releases'
           require_relative '../../../db/seeds/git_commits'
           💎.info('loaded db seeds')
@@ -109,6 +112,7 @@ module Ruuuby
           require_relative '../../../app/models/application_record'
           require_relative '../../../app/models/ruuuby_release'
           require_relative '../../../app/models/ruuuby_feature'
+          require_relative '../../../app/models/ruuuby_feature_behavior'
           require_relative '../../../app/models/ruuuby_changelog'
           require_relative '../../../app/models/git_commit'
           require_relative '../../../app/models/ruuuby_dir'

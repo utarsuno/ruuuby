@@ -1,6 +1,6 @@
-# encoding: utf-8
+# coding: UTF-8
 
-# add various functions to existing class +Set+
+# add various aliases & functions to existing Class(+Set+)
 class ::Set
 
   # ---------------------------------------------------------------------------------------------------------- | *f03* |
@@ -21,4 +21,24 @@ class ::Set
   end
 
   alias_method :♻️∅!, :remove_empty!
+  alias_method :⊂?, :subset?
+  alias_method :⊆?, :proper_superset?
+
+  def ⊄?(them); !(self.⊂(them)); end
+
+  def ⊇?(them)
+    🛑set❓(:them, them)
+    them.⊆?(self)
+  end
+
+  def ⊃?(them)
+    🛑set❓(:them, them)
+    them.⊂?(self)
+  end
+
+  def ⊅?(them)
+    🛑set❓(:them, them)
+    them.⊄?(self)
+  end
+
 end

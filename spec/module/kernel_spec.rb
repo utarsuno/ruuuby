@@ -154,17 +154,22 @@ RSpec.describe ::Kernel do
 
       context 'adds function[√]' do
         context 'handles needed scenarios' do
-          it 'cases: positive' do
-            expect(√(1)).to eq(1.0)
-            expect(√(1.0)).to eq(1.0)
-            expect(√(25)).to eq(5.0)
-            expect(√(Rational(25, 1))).to eq(5.0)
-            expect(√(Complex(25))).to eq(5.0)
-            expect(√(ℂ(25))).to eq(5.0)
+          context 'cases: positive' do
+            it 'w/ regular numerics' do
+              expect(√(1)).to eq(1.0)
+              expect(√(1.0)).to eq(1.0)
+              expect(√(25)).to eq(5.0)
+              expect(√(Rational(25, 1))).to eq(5.0)
+              expect(√(Complex(25))).to eq(5.0)
+            end
+            it 'w/ with numerics represented by strings' do
+              expect(√('2.0')).to eq(√(2.0))
+              expect(√('𝚽')).to eq(√(𝚽))
+              expect(√('1337')).to eq(√(1337))
+            end
           end
           it 'cases: error' do
-            expect{√('1.0')}.to raise_error(TypeError)
-            expect{√(nil)}.to raise_error(TypeError)
+            expect{√(nil)}.to raise_error(ArgumentError)
           end
         end
       end
@@ -179,14 +184,7 @@ RSpec.describe ::Kernel do
             expect(𝔠([1, 2, 3, nil, nil, []])).to eq(6)
           end
           it 'cases: string' do
-            expect(𝔠('')).to eq(0)
-            expect(𝔠(' ')).to eq(1)
-            expect(𝔠("\n")).to eq(1)
-            expect(𝔠('a')).to eq(1)
-            expect(𝔠('ab')).to eq(2)
-            expect(𝔠('ab ')).to eq(3)
-            expect(𝔠(' ab')).to eq(3)
-            expect(𝔠(' ab ')).to eq(4)
+            ['', ' ', "\n", 'a', 'ab', 'ab ', ' ab', ' ab ', '  '].∀ {|scenario| expect(𝔠(scenario)).to eq(scenario.length)}
           end
           it 'cases: set' do
             expect(𝔠(Set[])).to eq(0)

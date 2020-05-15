@@ -40,12 +40,24 @@ static VALUE cached_flt_seven_eighths;
 static VALUE cached_flt_one_ninth;
 static VALUE cached_flt_one_tenth;
 
+static VALUE 🆔n_no_empty;
+static VALUE 🆔normalizer_none;
+static VALUE 🆔n_in_set_superscripts;
+static VALUE 🆔n_in_set_naturals;
+static VALUE 🆔n_in_set_wholes;
+static VALUE 🆔n_in_set_integers;
+static VALUE 🆔n_in_set_universal;
+static VALUE 🆔n_in_set_universal_w_str_allowed;
+static VALUE 🆔n_in_set_naturals_w_str_allowed;
+static VALUE 🆔n_in_set_wholes_w_str_allowed;
+static VALUE 🆔n_in_set_integers_w_str_allowed;
+
 static VALUE cached_flt_nan;
 static VALUE cached_flt_inf;
 static VALUE cached_flt_negative_inf;
 static VALUE cached_flt_inf_complex;
+static VALUE cached_flt_e;
 
-// | 0x0 |
 static VALUE cached_module_ruuuby;
 static VALUE cached_module_ruuuby_metadata;
 static VALUE cached_module_attribute;
@@ -54,19 +66,8 @@ static VALUE cached_module_attribute_extendable;
 
 static VALUE cached_module_param_err;
 static VALUE cached_module_virtual_types;
-static VALUE cached_module_normalizers;
-// | --- |
 
 static VALUE cached_global_sym_many_args;
-
-static VALUE cached_sym_normalizer_exponential;
-static VALUE 🆔cached_sym_normalizer_exponential;
-static VALUE cached_sym_set_ℕ;
-static VALUE 🆔cached_sym_set_ℕ;
-static VALUE cached_sym_none;
-static VALUE 🆔cached_sym_none;
-static VALUE cached_sym_normalizer_no_empty;
-static VALUE 🆔cached_sym_normalizer_no_empty;
 
 static VALUE cached_sym_as_radian;
 static VALUE cached_sym_as_degree;
@@ -77,11 +78,14 @@ static VALUE cached_class_big_decimal;
 static VALUE cached_class_set;
 static VALUE cached_class_theta_angle;
 
-static VALUE cached_const_golden_angle;
+static VALUE cached_const_angle_golden;
+static VALUE cached_const_angle_tau;
 
+static VALUE cached_rb_intern_smells_like_int;
 static VALUE cached_rb_intern_ints_bitwise_xor;
 static VALUE cached_rb_intern_raise_to_power;
 static VALUE cached_rb_intern_is_a;
+static VALUE cached_rb_intern_is_finite;
 static VALUE cached_rb_intern_is_empty;
 static VALUE cached_rb_intern_new;
 

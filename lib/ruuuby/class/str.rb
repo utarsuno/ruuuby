@@ -241,9 +241,13 @@ module ::Ruuuby
             when '∞'; return ::Float::INFINITY
             when 'π'; return ::Math::PI
             when '𝚽'; return ::Float::GOLDEN_RATIO
-            when 'Ⴔ'; return ::Math::GOLDEN_ANGLE
+            when 'Ψ'; return ::Float::SUPER_GOLDEN_RATIO
+            when 'ρ'; return ::Float::PLASTIC_RATIO
+            when 'Ⴔ'; return ::Math::ANGLE_GOLDEN
+            when 'τ'; return ::Math::ANGLE_TAU
             when 'γ'; return ::Float::EULER_MASCHERONI_CONSTANT
             when '℮'; return ::Math::E
+            when 'Ω'; return ::Float::OMEGA_CONSTANT
             when '½'; return ::Float::ONE_HALF
             when '⅓'; return ::Float::ONE_THIRD
             when '⅔'; return ::Float::TWO_THIRDS
@@ -288,6 +292,7 @@ module ::Ruuuby
             if self.match?(String.syntax_len_3_as_flt)     ; return Float(self)
             elsif self.match?(String.syntax_len_3_as_int) ; return Integer(self)
             elsif self.match?(String.syntax_len_3_as_inf) ; return self.₀?('-') ? -Float::INFINITY : Float::INFINITY
+            elsif self.⬇ == 'nan'                        ; return Float::NAN
             else                                          ; self.🛑⨍_to_num
             end
           else

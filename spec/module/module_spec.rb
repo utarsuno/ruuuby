@@ -3,10 +3,6 @@
 RSpec.describe 'module' do
 
   context 'extends class[Module]' do
-    it 'by creating needed aliases' do
-      expect_added_ruby_methods(::Module, cΔ_Module)
-      RuuubyTestHelper::CONFIG_MODULE[:aliases].∀{ |base_func, aliased_func| expect(::Module.∃⨍?(aliased_func)).to eq(true) }
-    end
 
     context 'adding needed functions' do
 

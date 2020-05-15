@@ -4,6 +4,8 @@
 
 class RuuubyFeature < ApplicationRecord
 
+  has_many :ruuuby_feature_behaviors, class_name: 'RuuubyFeatureBehavior'
+
   # _________________________________________________________________________________________________________________
   #      ___ ___  __     __       ___  ___  __
   #  /\   |   |  |__) | |__) |  |  |  |__  /__`
@@ -36,6 +38,9 @@ class RuuubyFeature < ApplicationRecord
     RuuubyFeature.create!(id_num: id_num, description: description)
   end
 
+  # @return [RuuubyFeatureBehavior]
+  def spawn_behavior(*args); ::RuuubyFeatureBehavior.spawn(*args, self); end
+
   # _________________________________________________________________________________________________________________
   #   __   __   ___  __       ___  __   __   __
   #  /  \ |__) |__  |__)  /\   |  /  \ |__) /__`
@@ -57,15 +62,15 @@ class RuuubyFeature < ApplicationRecord
   def self.parse_uid_str(raw_uid)
     🛑str❓(:raw_uid, raw_uid)
     raw_uid = raw_uid[1..raw_uid.length-1] if raw_uid.start_with?('f')
-    [raw_uid].η̂!(:ℕ)
+    [raw_uid].η̂!(:∈𝕎𝕊)
   end
 
   def self.generate_query_uid(*args)
-    🛑 ArgumentError.new("| c{Class}-> m{generate_query_uid} received no args |") if args.∅?
+    🛑 ArgumentError.new("| c{RuuubyFeature}-> m{generate_query_uid} received no args |") if args.∅?
     if args.length == 1 && args[0].str? && args[0].match?(::RuuubyFeature.syntax_uid)
       return RuuubyFeature.generate_query_uid(*(self.parse_uid_str(args[0])))
     end
-    🛑ℤ❓($PRM_MANY, args)
+    🛑num❓($PRM_MANY, args, :∈𝕎𝕊)
     RuuubyFeature.where(::RuuubyFeature::Syntax::SQL_UID, args[0].to_i)
   end
 

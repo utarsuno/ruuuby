@@ -1,5 +1,12 @@
 # coding: UTF-8
 
+# terminology:
+#  * radius       | a measurement in distance     |
+#  * arc-length   | a measurement in distance     |
+#  * angle-of-arc | arc-length / radius           | [notice that the output no units]
+#
+# vocabulary:
+#  * ephemeral    | lasting for a very short time |
 class ThetaAngle
   include ::Comparable
 
@@ -35,13 +42,10 @@ class ThetaAngle
   # .__/  |  /~~\ | \| |__/ /~~\ |  \ |__/    \__/ |__) \__/    |    \__/ | \| \__, .__/
   # ____________________________________________________________________________________________________________________
 
-  # @return [Array]
-  def to_a; [self.real, self.repr]; end
-
   # @return [String]
   def to_s
     value = self.real
-    if value.ℤ?
+    if ℤ.∋?(value)
       value = value.to_i.to_s
     else
       value = value.to_s
@@ -55,19 +59,22 @@ class ThetaAngle
   # /~~\ |___ | /~~\ .__/ |___ .__/
   # ____________________________________________________________________________________________________________________
 
-  alias_method :to_f, :real
-
   alias_method :ʳ, :as_radian
-  alias_method :°, :as_degree
-  alias_method :ᵍ, :as_gon
-  alias_method :𝞽, :as_turn
   alias_method :ʳ?, :radians?
+
+  alias_method :°, :as_degree
   alias_method :°?, :degrees?
+
+  alias_method :ᵍ, :as_gon
   alias_method :ᵍ?, :gons?
+
+  alias_method :𝞽, :as_turn
   alias_method :𝞽?, :turns?
+
   alias_method :∠?, :angle?
 
   alias_method :η̂?, :normal?
+  alias_method :η̂, :normalize
   alias_method :η̂!, :normalize!
 
   alias_method :➖, :self_subtraction
@@ -80,26 +87,6 @@ class ThetaAngle
   # /__`  |   /\   |  | /  `    |__  |  | |\ | /  `  |  | /  \ |\ | /__`
   # .__/  |  /~~\  |  | \__,    |    \__/ | \| \__,  |  | \__/ | \| .__/
   # ____________________________________________________________________________________________________________________
-
-  # @param [Integer, Float] angle_in_radians
-  #
-  # @return [ThetaAngle]
-  def self.new_radian(angle_in_radians); ::ThetaAngle.new(angle_in_radians, :as_radian); end
-
-  # @param [Integer, Float] angle_in_radians
-  #
-  # @return [ThetaAngle]
-  def self.new_degree(angle_in_degrees); ::ThetaAngle.new(angle_in_degrees, :as_degree); end
-
-  # @param [Integer, Float] angle_in_gons
-  #
-  # @return [ThetaAngle]
-  def self.new_gon(angle_in_gons); ::ThetaAngle.new(angle_in_gons, :as_gon); end
-
-  # @param [Integer, Float] angle_in_turns
-  #
-  # @return [ThetaAngle]
-  def self.new_turn(angle_in_turns); ::ThetaAngle.new(angle_in_turns, :as_turn); end
 
 end
 

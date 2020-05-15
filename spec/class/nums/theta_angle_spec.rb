@@ -52,6 +52,9 @@ RSpec.describe 'theta_angle' do
               end
               it 'θ°' do
                 expect(θ°(300)).to eq(θ°(300))
+                expect(θ°(300)).to eq(300)
+                expect(θ°(300)).to eq(300.0)
+                expect(θ°(300.0)).to eq(300)
               end
               it 'θʳ' do
                 expect(θ°(360)).to eq(θʳ(2.0 * π))
@@ -66,6 +69,7 @@ RSpec.describe 'theta_angle' do
             context 'θʳ to' do
               it 'θʳ' do
                 expect(θʳ(2.0 * π)).to eq(θʳ(2.0 * π))
+                expect(θʳ(2.0 * π)).to eq(2.0 * π)
               end
               it 'θ°' do
                 expect(θʳ(2.0 * π)).to eq(θ°(360))
@@ -80,6 +84,9 @@ RSpec.describe 'theta_angle' do
             context 'θᵍ to' do
               it 'θᵍ' do
                 expect(θᵍ(400)).to eq(θᵍ(400))
+                expect(θᵍ(400)).to eq(400)
+                expect(θᵍ(400)).to eq(400.0)
+                expect(θᵍ(400.0)).to eq(400.0)
               end
               it 'θʳ' do
                 expect(θᵍ(400)).to eq(θʳ(2.0 * π))
@@ -94,6 +101,8 @@ RSpec.describe 'theta_angle' do
             context 'θ𝞽 to' do
               it 'θ𝞽' do
                 expect(θ𝞽(1)).to eq(θ𝞽(1))
+                expect(θ𝞽(1)).to eq(1.0)
+                expect(θ𝞽(1.0)).to eq(1)
               end
               it 'θᵍ' do
                 expect(θ𝞽(1)).to eq(θᵍ(400))
@@ -114,6 +123,8 @@ RSpec.describe 'theta_angle' do
             expect(-θ°(0)).to eq(θ°(0))
             expect(-θ°(-45)).to eq(θ°(315))
 
+            expect(-θ°(-405)).to eq(θ°(315))
+
             expect(-θᵍ(0)).to eq(θᵍ(0))
             expect((-θᵍ(-50)).real).to eq(θᵍ(350).real)
             expect((-θᵍ(350)).real).to eq(θᵍ(-50).real)
@@ -133,6 +144,10 @@ RSpec.describe 'theta_angle' do
               expect(+θ°(0)+θ°(45)).to eq(+θ°(45))
               expect(+θ°(0)++θ°(0)).to eq(+θ°(0))
               expect(θ°(0)++θ°(0)).to eq(+θ°(0))
+
+              expect(θ°(-0)+θ°(0)).to eq(+θ°(0))
+              expect(θ°(0)+θ°(-0)).to eq(+θ°(0))
+              expect(θ°(-0)+θ°(-0)).to eq(+θ°(0))
             end
             it 'w/ regular data' do
               expect(+θ°(0)).to eq(θ°(0))
@@ -180,6 +195,8 @@ RSpec.describe 'theta_angle' do
                 expect((~θ𝞽(0.25)).to_f).to eq(0.75)
                 expect((~θʳ(::Math::PI)).to_f).to eq(2.0 * ::Math::PI)
                 expect((~θᵍ(110.0)).to_f).to eq(310.0)
+                expect((~θ°(405)).to_f).to eq(225.0)
+                expect((~θ°(225)).to_f).to eq(45.0)
               end
               it 'w/ repeated invocations' do
                 angle    = θ𝞽(0.9)
@@ -207,6 +224,7 @@ RSpec.describe 'theta_angle' do
                 result    = angle.abs
                 expect(angle.🆔).to eq(angle_id)
                 expect(result.🆔).to_not eq(angle_id)
+                expect(result.class).to eq(::ThetaAngle)
               end
               it 'positive data' do
                 expect(θ°(45).abs.to_f).to eq(45.0)
@@ -222,19 +240,31 @@ RSpec.describe 'theta_angle' do
         context 'func{abs!}' do
           context 'handles needed scenarios' do
             context 'cases:' do
-              it 'value provided is new ThetaAngle instance' do
+              it 'value provided is the same ThetaAngle instance' do
                 angle     = θ°(45)
                 angle_id  = angle.🆔
-                result    = angle.abs!
+                angle.abs!
+                expect(angle.🆔).to eq(angle_id)
+                expect(angle.class).to eq(::ThetaAngle)
+                expect(angle.real).to eq(45.0)
+                result = angle.abs!
                 expect(angle.🆔).to eq(angle_id)
                 expect(result.🆔).to eq(angle_id)
+                expect(result.real).to eq(45.0)
+                expect(result.class).to eq(::ThetaAngle)
+                expect(angle).to eq(result)
               end
               it 'positive data' do
-                expect(θ°(45).abs!.to_f).to eq(45.0)
-                expect(θ°(0).abs!.to_f).to eq(0.0)
+                expect(θ°(370).abs!.to_f).to eq(370.0)
+                expect(θʳ(π).abs!.to_f).to eq(π)
+                expect(θ𝞽(0.75).abs!.to_f).to eq(0.75)
+                expect(θᵍ(400).abs!.to_f).to eq(400.0)
               end
               it 'negative data' do
-                expect(θ°(-45).abs!.to_f).to eq(45.0)
+                expect(θ°(-370).abs!.to_f).to eq(370.0)
+                expect(θʳ(-π).abs!.to_f).to eq(π)
+                expect(θ𝞽(-0.75).abs!.to_f).to eq(0.75)
+                expect(θᵍ(-400).abs!.to_f).to eq(400.0)
                 expect(θ°(-0.1).abs!.to_f).to eq(0.1)
               end
             end
@@ -245,24 +275,30 @@ RSpec.describe 'theta_angle' do
 
             context 'math properties' do
               it 'tan(A) = cot(B)' do
-                expect((tan(θ°(80))).≈≈(Math.cot(θ°(10)))).to eq(true)
-                expect((tan(θ°(45))).≈≈(Math.cot(θ°(45)))).to eq(true)
-                expect((tan(θ°(10))).≈≈(Math.cot(θ°(80)))).to eq(true)
+                expect(tan(θ°(80))).to eq(cot(θ°(10)))
+                expect(tan(θ°(45))).to eq(cot(θ°(45)))
+                expect(tan(θ°(10))).to eq(cot(θ°(80)))
               end
               it 'sec(A) = csc(B)' do
-                expect((sec(θ°(80))).≈≈(Math.csc(θ°(10)))).to eq(true)
-                expect((sec(θ°(45))).≈≈(Math.csc(θ°(45)))).to eq(true)
-                expect((sec(θ°(10))).≈≈(Math.csc(θ°(80)))).to eq(true)
+                expect(sec(θ°(80))).to eq(csc(θ°(10)))
+                expect(sec(θ°(45))).to eq(csc(θ°(45)))
+                expect(sec(θ°(10))).to eq(csc(θ°(80)))
               end
               it 'cos²(A) + cos²(B) = 1' do
-                expect(((cos²(θ°(80))) + (cos²(θ°(10)))).≈≈(1)).to eq(true)
-                expect(((cos²(θ°(45))) + (cos²(θ°(45)))).≈≈(1)).to eq(true)
-                expect(((cos²(θ°(10))) + (cos²(θ°(80)))).≈≈(1)).to eq(true)
+                expect(cos²(θ°(80)) + cos²(θ°(10))).to eq(1)
+                expect(cos²(θ°(45)) + cos²(θ°(45))).to eq(1)
+                expect(cos²(θ°(10)) + cos²(θ°(80))).to eq(1)
               end
               it 'sin²(A) + sin²(B) = 1' do
-                expect(((sin²(θ°(80))) + (sin²(θ°(10)))).≈≈(1)).to eq(true)
-                expect(((sin²(θ°(45))) + (sin²(θ°(45)))).≈≈(1)).to eq(true)
-                expect(((sin²(θ°(10))) + (sin²(θ°(80)))).≈≈(1)).to eq(true)
+                expect(sin²(θ°(80)) + sin²(θ°(10))).to eq(1)
+                expect(sin²(θ°(45)) + sin²(θ°(45))).to eq(1)
+                expect(sin²(θ°(10)) + sin²(θ°(80))).to eq(1)
+              end
+              it 'cot²(45°) + 1 = csc²(45°)' do
+                expect(cot²(θ°(45)) + 1).to eq(csc²(θ°(45)))
+              end
+              it 'tan²(45°) + 1 = sec²(45°)' do
+                expect(cot²(θ°(45)) + 1).to eq(csc²(θ°(45)))
               end
             end
 
@@ -315,8 +351,53 @@ RSpec.describe 'theta_angle' do
             end
           end # end: {func{explementary_with?}}
         end # end: {vocab based funcs}
+        context 'func{windings}' do
+          context 'handles needed scenarios' do
+            it 'cases: positive direction' do
+              expect(θ°(0).windings).to eq(0)
+              expect(θ°(1).windings).to eq(0)
+              expect(θ°(359).windings).to eq(0)
+              expect(θ°(360).windings).to eq(1)
+              expect(θ°(361).windings).to eq(1)
+              expect(θ°(719).windings).to eq(1)
+              expect(θ°(720).windings).to eq(2)
+              expect(θ°(721).windings).to eq(2)
+              expect(θ𝞽(2.25).windings).to eq(2)
+              expect(θᵍ(1337).windings).to eq(3)
+              expect(θʳ(π * 3).windings).to eq(1)
+              expect(θ°(0.0).windings).to eq(0)
+              expect(θ°(90).windings).to eq(0)
+              expect(θ°((360 * 5) + 90).windings).to eq(5)
+              expect(θʳ(π * 5).windings).to eq(2)
+              expect(θᵍ(900).windings).to eq(2)
+              expect(θ𝞽(4.6).windings).to eq(4)
+            end
+            it 'cases: negative direction' do
+              expect(θ°(0).windings).to eq(0)
+              expect(θ°(-1).windings).to eq(0)
+              expect(θ°(-359).windings).to eq(0)
+              expect(θ°(-360).windings).to eq(-1)
+              expect(θ°(-361).windings).to eq(-1)
+              expect(θ°(-719).windings).to eq(-1)
+              expect(θ°(-720).windings).to eq(-2)
+              expect(θ°(-721).windings).to eq(-2)
+              expect(θ𝞽(-2.25).windings).to eq(-2)
+              expect(θᵍ(-1337).windings).to eq(-3)
+              expect(θʳ(π * -3).windings).to eq(-1)
+              expect(θ°(-2).windings).to eq(0)
+              expect(θ°(-90).windings).to eq(0)
+              expect(θ°((-360 * 5) - 90).windings).to eq(-5)
+              expect(θʳ(π * -5).windings).to eq(-2)
+              expect(θᵍ(-900).windings).to eq(-2)
+              expect(θ𝞽(-4.6).windings).to eq(-4)
+            end
+          end
+        end # end: {func{windings}}
         context 'normalization' do
           context 'func{normal?}' do
+            it 'has alias{η̂?}' do
+              expect(::ThetaAngle.∃⨍_alias?(:normal?, :η̂?)).to eq(true)
+            end
             context 'handles needed scenarios' do
               it 'cases: positive' do
                 [-360, -359, -100, -1, 0, 1, 100, 359, 360.0].∀{|scenario| expect(θ°(scenario).normal?).to eq(true)}
@@ -332,7 +413,29 @@ RSpec.describe 'theta_angle' do
               end
             end
           end # end: {normal?}
+          context 'func{normalize}' do
+            it 'has alias{η̂}' do
+              expect(::ThetaAngle.∃⨍_alias?(:normalize, :η̂)).to eq(true)
+            end
+            context 'handles needed scenarios' do
+              it 'generates new object (with new object_id)' do
+                angle    = θ°(370)
+                angle_id = angle.🆔
+                angle2   = angle.normalize
+                expect(angle.real).to eq(370.0)
+                expect(angle2.real).to eq(10)
+                expect(angle.repr).to eq(:as_degree)
+                expect(angle_id).to eq(angle.🆔)
+                expect(angle_id).to_not eq(angle2.🆔)
+                expect(angle.class).to eq(::ThetaAngle)
+                expect(angle2.class).to eq(::ThetaAngle)
+              end
+            end
+          end # end: {func{normalize!}}
           context 'func{normalize!}' do
+            it 'has alias{η̂!}' do
+              expect(::ThetaAngle.∃⨍_alias?(:normalize!, :η̂!)).to eq(true)
+            end
             context 'cases: positive' do
               it 'keeps object_id' do
                 angle    = θ°(370)
@@ -342,6 +445,8 @@ RSpec.describe 'theta_angle' do
                 expect(angle.repr).to eq(:as_degree)
                 expect(angle_id).to eq(angle.🆔)
                 expect(angle_id).to eq(angle2.🆔)
+                expect(angle.class).to eq(::ThetaAngle)
+                expect(angle2.class).to eq(::ThetaAngle)
               end
               it 'θ°' do
                 expect(θ°(0).normalize!.to_f).to eq(0)
@@ -410,6 +515,7 @@ RSpec.describe 'theta_angle' do
                 expect(θ°(359) < θ𝞽(1)).to eq(true)
               end
               it 'cases: negative' do
+                expect(θ°(0) < θ°(0)).to eq(false)
                 expect(θ°(1) < θ°(0)).to eq(false)
                 expect(θ°(10) < θ°(1)).to eq(false)
                 expect(θ°(359) < θ°(0)).to eq(false)
@@ -418,6 +524,7 @@ RSpec.describe 'theta_angle' do
                 expect(θ𝞽(1) < θ°(359)).to eq(false)
               end
               it 'cases: error' do
+                expect{θ°(1) < 10}.to raise_error(ArgumentError)
                 expect{θ°(1) < nil}.to raise_error(ArgumentError)
               end
             end
@@ -587,13 +694,14 @@ RSpec.describe 'theta_angle' do
         context 'func{oblique_angle?}' do
           context 'handles needed scenarios' do
             it 'cases: positive' do
-              [181, 200, 300, 359].∀ {|scenario| expect((θ°(scenario).∠?(:oblique))).to eq(true)}
+              [181, 200, 300, 359, 361].∀ {|scenario| expect((θ°(scenario).∠?(:oblique))).to eq(true)}
               [π + ¼, 2.0 * π - ¼].∀ {|scenario| expect((θʳ(scenario).∠?(:oblique))).to eq(true)}
               [201, 299, 399, 401].∀ {|scenario| expect(θᵍ(scenario).∠?(:oblique)).to eq(true)}
-              [0.51, 0.76, 0.99].∀ {|scenario| expect(θ𝞽(scenario).∠?(:oblique)).to eq(true)}
+              [0.51, 0.76, 0.99, 1.01].∀ {|scenario| expect(θ𝞽(scenario).∠?(:oblique)).to eq(true)}
             end
             it 'cases: negative' do
               expect(θ°(90).∠?(:oblique)).to eq(false)
+              expect(θ°((360 * 5) + 90).∠?(:oblique)).to eq(false)
               expect(θʳ(π * ½).∠?(:oblique)).to eq(false)
               expect(θᵍ(100).∠?(:oblique)).to eq(false)
               expect(θ𝞽(¼).∠?(:oblique)).to eq(false)
@@ -1099,6 +1207,16 @@ RSpec.describe 'theta_angle' do
           end # end: {handles needed scenarios}
         end # end: {modulo}
       end # end: {math operations}
+      context 'func{to_a}' do
+        context 'handles needed scenarios' do
+          it 'cases: all' do
+            expect(θ°(1337.1337).to_a).to eq([1337.1337, :as_degree])
+            expect(θʳ(1337.1337).to_a).to eq([1337.1337, :as_radian])
+            expect(θᵍ(1337.1337).to_a).to eq([1337.1337, :as_gon])
+            expect(θ𝞽(1337.1337).to_a).to eq([1337.1337, :as_turn])
+          end
+        end # end: {handles needed scenarios}
+      end # end: {func{to_a}}
       context 'func{to_s}' do
         context 'handles needed scenarios' do
           it 'cases: all' do

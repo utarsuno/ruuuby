@@ -1,5 +1,6 @@
+# coding: UTF-8
 
-# add various functions to existing class +Hash+
+# add various aliases & functions to existing Class(+Hash+)
 class ::Hash
 
   # ---------------------------------------------------------------------------------------------------------- | *f03* |

@@ -28,5 +28,6 @@
 @f26 = RuuubyFeature.spawn(26, 'add syntax parsing for `ISO8601` as well as aliases for Date(`📅`), Time(`🕒`), and DateTime(`📅🕒`)')
 @f27 = RuuubyFeature.spawn(27, 'add new class (`ThetaAngle`) for easier operations involving angles')
 @f28 = RuuubyFeature.spawn(28, 'formally support math constants & equations relating to golden-ratio, aliased via(`𝚽`)')
+@f29 = RuuubyFeature.spawn(29, 'add new class (`Quaternion`) for easier operations involving `quaternions`')
 
 @f98 = RuuubyFeature.spawn(98, '`C-extensions`')
