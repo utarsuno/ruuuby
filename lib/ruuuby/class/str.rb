@@ -42,13 +42,13 @@ module ::Ruuuby
         #
         # @return [Class] `String`
         def self.included(kclass)
-          kclass.⨍_add_aliases(:downcase, [:⬇️, :⬇, :🔡])
-          kclass.⨍_add_aliases(:downcase!, [:⬇️!, :⬇!, :🔡!])
-          kclass.⨍_add_aliases(:upcase, [:⬆️, :⬆, :🔠])
-          kclass.⨍_add_aliases(:upcase!, [:⬆️!, :⬆!, :🔠!])
+          kclass.⨍_add_aliases(:downcase, [:⬇])
+          kclass.⨍_add_aliases(:downcase!, [:⬇!])
+          kclass.⨍_add_aliases(:upcase, [:⬆])
+          kclass.⨍_add_aliases(:upcase!, [:⬆!])
 
-          kclass.⨍_add_aliases(:reverse, [:↩️, :↩])
-          kclass.⨍_add_aliases(:reverse!, [:↩️!, :↩!])
+          kclass.⨍_add_aliases(:reverse, [:↩])
+          kclass.⨍_add_aliases(:reverse!, [:↩!])
         end
 
         # @param [String]         stop_at
@@ -150,28 +150,34 @@ module ::Ruuuby
         # @raise [WrongParamType]
         #
         # @return [Boolean] true, if this string instance contains the provided str
-        def ∋?(them) ; 🛑str❓(:them, them) ; self.include?(them) ; end
+        def ∋?(them); 🛑str❓(:them, them) ; self.include?(them); end
 
         # @param [String] them
         #
         # @raise [WrongParamType]
         #
         # @return [Boolean] true, if this string instance contains the provided str
-        def ∌?(them) ; 🛑str❓(:them, them) ; not self.include?(them) ; end
+        def ∌?(them); 🛑str❓(:them, them) ; not self.include?(them); end
 
         # @param [String|Array|Set] them
         #
         # @raise [WrongParamType]
         #
         # @return [Boolean] true, if this string instance is not contained in the provided str (or array/set)
-        def ∉?(them) ; 🛑countable❓(:them, them) ; them.∌?(self) ; end
+        def ∉?(them)
+          🛑 ArgumentError.new("| c{String}-> m{∉?} will only accept args of type{String, Array, Set}, not the provided type{#{them.class.to_s}} from arg{#{them.to_s}} |") unless (them.str? || them.ary? || them.is_a?(Set))
+          them.∌?(self)
+        end
 
         # @param [String|Array|Set] them
         #
         # @raise [WrongParamType]
         #
         # @return [Boolean] true, if this string instance is contained in the provided str (or array/set)
-        def ∈?(them) ; 🛑countable❓(:them, them) ; them.∋?(self) ; end
+        def ∈?(them)
+          🛑 ArgumentError.new("| c{String}-> m{∈?} will only accept args of type{String, Array, Set}, not the provided type{#{them.class.to_s}} from arg{#{them.to_s}} |") unless (them.str? || them.ary? || them.is_a?(Set))
+          them.∋?(self)
+        end
       end
 
       # defines the operations needed to support Feature(`f21`) that are applied to Class(`String`)
@@ -210,6 +216,8 @@ module ::Ruuuby
           end
         end
 
+        # TODO: REMOVE THIS?
+        #
         # @return [Boolean] true, if this `String` equals exactly some representation of infinity
         def ∞?
           case(self.length)
@@ -310,25 +318,37 @@ module ::Ruuuby
       # defines the operations needed to support Feature(`f24`) that are applied to Class(`String`)
       module StringF24
         # @return [Boolean] true, if this String's content's syntax match camel-case
-        def 🐫? ; self.match?(::String.syntax_case_camel) ; end
+        def 🐫?; self.match?(::String.syntax_case_camel); end
 
         # @return [Boolean] true, if this String's content's syntax match camel-case-lower
-        def 🐫⬇? ; self.match?(::String.syntax_case_lower_camel) ; end
+        def 🐫⬇?; self.match?(::String.syntax_case_lower_camel); end
 
         # @return [Boolean] true, if this String's content's syntax match snake-case-upper
-        def 🐍⬆? ; self.match?(::String.syntax_case_upper_snake) ; end
+        def 🐍⬆?; self.match?(::String.syntax_case_upper_snake); end
 
         # @return [Boolean] true, if this String's content's syntax match snake-case
-        def 🐍? ; self.match?(::String.syntax_case_snake) ; end
+        def 🐍?; self.match?(::String.syntax_case_snake); end
 
-        # @raise [RuntimeError]
+        # @raise [Ruuuby::DescriptiveStandardError]
+        #
+        # @return [String]
+        def to_🐫⬇; as_camel = self.to_🐫; as_camel[0].⬇ + as_camel[1...as_camel.length]; end
+
+        # @raise [Ruuuby::DescriptiveStandardError]
+        #
+        # @return [String]
+        def to_🐍⬆; self.to_🐍.⬆; end
+
+        # @raise [Ruuuby::DescriptiveStandardError]
         #
         # @return [String]
         def to_🐍
-          if self.🐫? || self.🐫⬇?
+          if self.🐍⬆?
+            self.⬇
+          elsif self.🐫? || self.🐫⬇?
             chars = ''
             self.each_char do |c|
-              if c.⬆️?
+              if c.⬆?
                 if chars.∅?
                   chars << "#{c.⬇}"
                 else
@@ -339,43 +359,18 @@ module ::Ruuuby
               end
             end
             chars
-          else
-            🛑 RuntimeError.🆕("| c{String}-> m{to_🐍} got self(#{self}) which is not in syntax-format{🐫} or{🐫⬇} |")
-          end
+          elsif self.🐍?
+            self
+          else; 🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "which is not in one of the formats: [🐫, 🐫⬇, 🐍⬆, 🐍]"); end
         end
 
-        # @raise [RuntimeError]
+        # @raise [Ruuuby::DescriptiveStandardError]
         #
         # @return [String]
         def to_🐫
-          if self.🐍⬆?
-            self._to_🐫(:🐍⬆?)
-          elsif self.🐍?
-            self._to_🐫(:🐍?)
-          else
-            🛑 RuntimeError.🆕("| c{String}-> m{to_🐫} got self(#{self}) which is not in syntax-format{🐍} or {🐍⬆} |")
-          end
-        end
-
-        # auto-define additional aliases for Class(`String`)
-        #
-        # @param [Class] kclass
-        #
-        # @return [Class] `String`
-        def self.included(kclass)
-          kclass.⨍_add_aliases(:🐍⬆?, [:🐍⬆️?, :🐍🔠?])
-          kclass.⨍_add_aliases(:🐫⬇?, [:🐫⬇️?, :🐫🔡?])
-        end
-
-        🙈
-
-        # @param [Symbol] mode
-        #
-        # @return [String]
-        def _to_🐫(mode)
           chars = ''
           mark  = true
-          if mode == :🐍⬆?
+          if self.🐍⬆?
             self.each_char do |c|
               if c == '_'
                 mark = true
@@ -386,7 +381,8 @@ module ::Ruuuby
                 chars << c.⬇
               end
             end
-          elsif mode == :🐍?
+            chars
+          elsif self.🐍?
             self.each_char do |c|
               if c == '_'
                 mark = true
@@ -397,11 +393,14 @@ module ::Ruuuby
                 chars << c
               end
             end
-          else
-            raise "INVALID MODE PROVIDED{#{mode.to_s}}"
-          end
-          chars
+            chars
+          elsif self.🐫?
+            self
+          elsif self.🐫⬇?
+            self[0].⬆ + self[1...self.𝔠]
+          else; 🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "which is not in one of the formats: [🐫, 🐫⬇, 🐍⬆, 🐍]"); end
         end
+
       end # end: {f24}
 
       # defines the operations needed to support Feature(`f26`) that are applied to Class(`String`)
@@ -576,8 +575,8 @@ class ::String
   alias_method :∅?, :empty?
   # | ------------------------------------------------------------------------------------------------------------------
 
-  ⨍_add_aliases(:upcase?, [:⬆️?, :⬆?, :🔠?])
-  ⨍_add_aliases(:downcase?, [:⬇️?, :⬇?, :🔡?])
+  alias_method :⬆?, :upcase?
+  alias_method :⬇?, :downcase?
 
   # TODO: not finalized design
   #
@@ -593,6 +592,6 @@ class ::String
   end
 
   # @return [String] self with modified +encoding+ if not already +UTF-8+
-  def as_utf8 ; self.force_encoding(::String::Syntax::SQL_ENCODING_UTF_8) ; end
+  def as_utf8; self.force_encoding(::String::Syntax::SQL_ENCODING_UTF_8); end
 
 end

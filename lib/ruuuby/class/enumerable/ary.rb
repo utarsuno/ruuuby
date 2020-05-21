@@ -44,9 +44,9 @@ module ::Ruuuby
             delta          += 1
           end
           if last_matched == nil
-            start.↩️∀{|element| self >> element}
+            start.↩∀{|element| self >> element}
           else
-            start[0..start.𝔠₋(last_matched.𝔠)].↩️∀{|element| self >> element}
+            start[0..start.𝔠₋(last_matched.𝔠)].↩∀{|element| self >> element}
           end
           self
         end
@@ -164,9 +164,9 @@ class ::Array
   alias_method :♻️∅!, :remove_empty!
   # ---------------------------------------------------------------------------------------------------------- | *f10* |
 
-  ⨍_add_aliases(:reverse, [:↩️, :↩])
-  ⨍_add_aliases(:reverse!, [:↩️!, :↩!])
-  ⨍_add_aliases(:reverse_each, [:↩️∀, :↩∀])
+  alias_method :↩, :reverse
+  alias_method :↩!, :reverse!
+  alias_method :↩∀, :reverse_each
 
   # | ------------------------------------------------------------------------------------------------------------------
 

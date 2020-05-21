@@ -15,9 +15,9 @@ class RuuubyFeatureBehavior < ApplicationRecord
   # useful components for building `Regular Expressions`
   module Syntax
     # @type [String]
-    UID                  = '(b?)\d\d'.❄️
+    UID     = '(b?)\d\d'.❄️
     # @type [String]
-    SQL_UID              = 'id_num = ?'.❄️
+    SQL_UID = 'id_num = ?'.❄️
     ❄️
   end
 

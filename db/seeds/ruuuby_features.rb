@@ -1,5 +1,5 @@
 
-@f00 = RuuubyFeature.spawn(0, "`η̂` to alias concept of `normalization` (any be offered in any applicable context)")
+@f00 = RuuubyFeature.spawn(0, "`η̂` to alias concept of `normalization` (offered in any applicable context)")
 @f01 = RuuubyFeature.spawn(1, "`🙈` to alias `private`")
 @f02 = RuuubyFeature.spawn(2, "`🛡️` to alias `protected`")
 @f03 = RuuubyFeature.spawn(3, "`𝔠` to alias concept of `cardinality` (offered in both styles of `OOP` & `'functional'`)")
@@ -23,11 +23,13 @@
 @f21 = RuuubyFeature.spawn(21, 'enable easier textual/numerical/syntax parsing')
 @f22 = RuuubyFeature.spawn(22, 'create or extend a `numeric` in order to properly support `Complex Infinity`')
 @f23 = RuuubyFeature.spawn(23, "gather statistics (and/or more debugging information) on `Ruuuby` {example-context: optimizing ordering of if-conditions / function-calls}")
-@f24 = RuuubyFeature.spawn(24, "add syntax parsing for following 4 categories: {`snake_case`, `camel_case`, `snake_case_upper`, `camel_case_lower`}, aliased via: {`🐫`, `🐍`, `🐫⬇`, `🐍⬆`}")
+@f24 = RuuubyFeature.spawn(24, "Class(String): add syntax parsing for snake-case and camel-case")
 @f25 = RuuubyFeature.spawn(25, "bundle `Ruuuby` meta-data related functionality w/ base alias(`💎`)")
 @f26 = RuuubyFeature.spawn(26, 'add syntax parsing for `ISO8601` as well as aliases for Date(`📅`), Time(`🕒`), and DateTime(`📅🕒`)')
 @f27 = RuuubyFeature.spawn(27, 'add new class (`ThetaAngle`) for easier operations involving angles')
 @f28 = RuuubyFeature.spawn(28, 'formally support math constants & equations relating to golden-ratio, aliased via(`𝚽`)')
 @f29 = RuuubyFeature.spawn(29, 'add new class (`Quaternion`) for easier operations involving `quaternions`')
+@f30 = RuuubyFeature.spawn(30, 'mimic `SetTheory` by creating data-type groupings for Ruby data')
 
+@f97 = RuuubyFeature.spawn(97, 'offer custom builds of `Ruuuby` to support only the needed/wanted unicode/symbols/emojis etc')
 @f98 = RuuubyFeature.spawn(98, '`C-extensions`')

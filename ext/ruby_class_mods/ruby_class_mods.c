@@ -46,11 +46,6 @@ ________________________________________________________________________________
 #define r_str_new_frozen_literal(arg) rb_str_new_frozen(rb_str_new_cstr(arg))
 #define cstr_to_rstr(arg)             rb_str_new_cstr(arg)
 
-#define r_hsh_increment_keys_val(hsh, key) rb_hash_aset(hsh, key, LONG2FIX(RB_FIX2LONG(rb_hash_aref(hsh, key)) + 1));
-#define r_hsh_set_val_to_one(hsh, key) rb_hash_aset(hsh, key, ℤ1);
-
-#define r_hsh_has_key(hsh, key) (rb_hash_has_key(hsh, key) == Qtrue)
-
 #define r_add_global_const(const_name, const_value) rb_define_global_const(const_name, const_value);
 #define r_add_global_const_str(const_name, const_value) r_add_global_const("" #const_name, cstr_to_rstr("" #const_value))
 #define r_get_class(r_class) rb_const_get(rb_cObject, rb_intern(r_class));
@@ -246,25 +241,6 @@ static inline void internal_only_prepare_f16(void) {
 }
 
 static inline void startup_step5_protect_against_gc(void) {
-    rb_global_variable(& ℤn9);
-    rb_global_variable(& ℤn8);
-    rb_global_variable(& ℤn7);
-    rb_global_variable(& ℤn6);
-    rb_global_variable(& ℤn5);
-    rb_global_variable(& ℤn4);
-    rb_global_variable(& ℤn3);
-    rb_global_variable(& ℤn2);
-    rb_global_variable(& ℤn1);
-    rb_global_variable(& ℤ0);
-    rb_global_variable(& ℤ1);
-    rb_global_variable(& ℤ2);
-    rb_global_variable(& ℤ3);
-    rb_global_variable(& ℤ4);
-    rb_global_variable(& ℤ5);
-    rb_global_variable(& ℤ6);
-    rb_global_variable(& ℤ7);
-    rb_global_variable(& ℤ8);
-    rb_global_variable(& ℤ9);
     rb_global_variable(& cached_rb_intern_as_degree);
     rb_global_variable(& cached_rb_intern_as_radian);
     rb_global_variable(& cached_rb_intern_as_gon);
@@ -282,7 +258,6 @@ static inline void startup_step5_protect_against_gc(void) {
     rb_global_variable(& cached_global_sym_many_args);
 
     rb_global_variable(& cached_module_param_err);
-    rb_global_variable(& cached_module_virtual_types);
 
     rb_global_variable(& cached_module_ruuuby);
     rb_global_variable(& cached_module_ruuuby_metadata);
@@ -292,11 +267,12 @@ static inline void startup_step5_protect_against_gc(void) {
 
     // TODO: expand investigation
     //size_t rb_obj_memsize_of(VALUE);
+
     rb_gc_verify_internal_consistency();
 }
 
 // | f18 | load various Ruby internals |
-static inline void startup_step0_load_needed_default_ruby_libs(void) {
+static void startup_step0_load_needed_default_ruby_libs(void) {
     ensure_loaded_default(bigdecimal)
     ensure_loaded_default(tempfile)
     ensure_loaded_default(singleton)
@@ -342,12 +318,12 @@ static inline void startup_step1_before_loading_extension(void) {
     cached_module_attribute_includable = ext_api_add_module_under(cached_module_ruuuby, "Includable")
     cached_module_attribute_extendable = ext_api_add_module_under(cached_module_ruuuby, "Extendable")
     cached_module_param_err            = ext_api_add_module_under(cached_module_ruuuby, "ParamErr")
-    cached_module_virtual_types        = ext_api_add_module_under(cached_module_ruuuby, "VirtualTypes")
     ext_api_add_new_sub_class_under(cached_module_param_err, R_ERR_ARG, "WrongParamType")
 }
 
 static inline void startup_step3_load_3rd_party_gems(void) { // ------------------------------------------------ | f18 |
     ensure_loaded_default(tty-command)
+    ensure_loaded_default(rugged)
 }
 
 static inline void startup_step4_load_needed_ruuuby_files(void) { // -------------------------------------------- | f18 |
@@ -367,7 +343,6 @@ static inline void startup_step4_load_needed_ruuuby_files(void) { // -----------
 
     ensure_loaded_class(obj)
     ensure_loaded_class(re)
-    ensure_loaded_ruuuby(types)
     ensure_loaded_class(method/method)
     // ensure_loaded_class(method/math_function)
     ensure_loaded_ruuuby(arg_err)
@@ -419,6 +394,12 @@ static inline void startup_step4_load_needed_ruuuby_files(void) { // -----------
 
     ensure_loaded_ruuuby(ruuuby/metadata/ruuuby_metadata)
 
+    ensure_loaded_math(space/space)
+    ensure_loaded_math(space/types_space)
+    ensure_loaded_math(space/discrete/boolean-like_space)
+    ensure_loaded_math(space/discrete/nucleotide-like_space)
+    ensure_loaded_math(space/discrete/number-like_space)
+
     // [⚠️] : excluding: alternative files are loading these already:
     //          * ensure_loaded_ruuuby(ruuuby/metadata/ruuuby_metadata_constants)
     //          * ensure_loaded_ruuuby(version)
@@ -455,19 +436,19 @@ ________________________________________________________________________________
 _____________________________________________________________________________________________________________________ */
 
 // | function{ary?}  |
-r_func_raw(m_obj_ary, re_as_bool(is_ary(self)))
+ⓡ𝑓_def(m_obj_ary, re_as_bool(is_ary(self)))
 
 // | function{bool?} |
-r_func_raw(m_obj_bool, re_as_bool(is_bool(self)))
+ⓡ𝑓_def(m_obj_bool, re_as_bool(is_bool(self)))
 
 // | function{hash?} |
-r_func_raw(m_obj_hash, re_as_bool(is_hsh(self)))
+ⓡ𝑓_def(m_obj_hash, re_as_bool(is_hsh(self)))
 
 // | function{flt?}   |
-r_func_raw(m_obj_flt, re_as_bool(is_float(self)))
+ⓡ𝑓_def(m_obj_flt, re_as_bool(is_float(self)))
 
 // | function{sym?}  |
-r_func_k_args(m_obj_sym,
+ⓡ𝑓_kargs(m_obj_sym,
     if (argc == 0) {
         re_as_bool(is_sym(self))
     } else if (argc == 1) {
@@ -505,7 +486,7 @@ r_func_k_args(m_obj_sym,
 )
 
 // | function{int?}  |
-r_func_k_args(m_obj_int,
+ⓡ𝑓_kargs(m_obj_int,
     if (argc == 0) {
         re_as_bool(is_int(self))
     } else if (argc == 1) {
@@ -536,7 +517,7 @@ r_func_k_args(m_obj_int,
 )
 
 // | function{chr?} |
-r_func_raw(m_obj_chr,
+ⓡ𝑓_def(m_obj_chr,
     if (is_str(self)) {
         re_as_bool(len_str(self) == 1)
     } else {
@@ -545,10 +526,10 @@ r_func_raw(m_obj_chr,
 )
 
 // | function{set?} |
-r_func_raw(m_obj_set, re_me_func_1args(cached_rb_intern_is_a, cached_class_set))
+ⓡ𝑓_def(m_obj_set, re_me_func_1args(cached_rb_intern_is_a, cached_class_set))
 
 // | function{str?}  |
-r_func_k_args(m_obj_str,
+ⓡ𝑓_kargs(m_obj_str,
     if (argc == 0) {
         re_as_bool(is_str(self))
     } else if (argc == 1) {
@@ -576,11 +557,8 @@ r_func_k_args(m_obj_str,
     }
 )
 
-// | function{stry?} |
-r_func_raw(m_obj_stry, re_as_bool(is_str(self) || is_sym(self)))
-
 // | function(num?}  |
-r_func_k_args(m_obj_num,
+ⓡ𝑓_kargs(m_obj_num,
     if (argc == 0) {
         re_as_bool(is_num(self))
     } else if (argc == 1) {
@@ -638,13 +616,13 @@ r_func_k_args(m_obj_num,
 )
 
 // | function{class?} |
-r_func_raw(m_obj_class, re_as_bool(is_class(self)))
+ⓡ𝑓_def(m_obj_class, re_as_bool(is_class(self)))
 
 // | function{module?} |
-r_func_raw(m_obj_module, re_as_bool(is_module(self)))
+ⓡ𝑓_def(m_obj_module, re_as_bool(is_module(self)))
 
 // | function{m_obj_nucleotide} |
-r_func_raw(m_obj_nucleotide, re_as_bool(is_nucleotide(self)))
+ⓡ𝑓_def(m_obj_nucleotide, re_as_bool(is_nucleotide(self)))
 
 /*___________________________________________________________________________________________________________________
        ___  ___  __   ___  __
@@ -653,13 +631,13 @@ r_func_raw(m_obj_nucleotide, re_as_bool(is_nucleotide(self)))
 _____________________________________________________________________________________________________________________ */
 
 // | function{finite?}   |
-r_func_raw(m_int_is_finite, re_ye)
+ⓡ𝑓_def(m_int_is_finite, re_ye)
 
 // | function{infinite?} |
-r_func_raw(m_int_is_not_finite, re_no)
+ⓡ𝑓_def(m_int_is_not_finite, re_no)
 
 // | function{^}        |
-r_func_self_them(m_int_patch_for_exponentials,
+ⓡ𝑓_self_them(m_int_patch_for_exponentials,
     if (is_int(them)) {
         re_me_func_1args(cached_rb_intern_ints_bitwise_xor, them)
     } else {
@@ -734,7 +712,7 @@ r_func_self_them(m_int_patch_for_exponentials,
 _____________________________________________________________________________________________________________________ */
 
 // | function{has_decimals?} |
-r_func_raw(m_flt_has_decimals,
+ⓡ𝑓_def(m_flt_has_decimals,
     double val_self = NUM2DBL(self);
     if (isnan(val_self)) {
         re_no
@@ -747,7 +725,7 @@ r_func_raw(m_flt_has_decimals,
 // @see https://floating-point-gui.de/errors/NearlyEqualsTest.java
 //
 // | function{≈≈} |
-r_func_self_them(m_flt_basically_equal,
+ⓡ𝑓_self_them(m_flt_basically_equal,
     const double val_self = NUM2DBL(self);
     if (isnan(val_self) || ((!(is_float(them))) && (!(is_int(them))))) {
         re_no
@@ -775,7 +753,7 @@ r_func_self_them(m_flt_basically_equal,
 )
 
 // | function{^} |
-r_func_self_them(m_flt_patch_for_exponentials,
+ⓡ𝑓_self_them(m_flt_patch_for_exponentials,
     if (is_sym(them)) {
         const long long id_to_find = NUM2LL(rb_obj_id(them));
         long long * the_result    = bsearch_power(id_to_find);
@@ -783,7 +761,6 @@ r_func_self_them(m_flt_patch_for_exponentials,
             const double val_self = NUM2DBL(self);
             if (isnan(val_self)) {
                 raise_err_runtime("c{Float}-> m{^} self{%"PRIsVALUE"} may not be raised to an exponential power |", self)
-
             }
             const int power_to_raise_to = exponential_indexes[bsearch_power_position(the_result)];
             if (val_self == 0.0 && power_to_raise_to < 0) {
@@ -869,8 +846,19 @@ r_func_self_them(m_flt_patch_for_exponentials,
 | \| | |___
 _____________________________________________________________________________________________________________________ */
 
-// | function{empty?} |
-r_func_raw(m_nil_empty, re_ye)
+ⓡ𝑓_def(m_nil_empty, re_ye) // func{empty?}
+
+/*___________________________________________________________________________________________________________________
+ __   __   __           __             __   __   ___  __
+|__) /  \ /  \ |       /  ` |     /\  /__` /__` |__  /__`
+|__) \__/ \__/ |___    \__, |___ /~~\ .__/ .__/ |___ .__/
+_____________________________________________________________________________________________________________________ */
+
+ⓡ𝑓(m_bool_to_b, re_me) // func{to_b}
+
+ⓡ𝑓(m_true_to_i, re_1)  // func{to_i}
+
+ⓡ𝑓(m_false_to_i, re_0) // func{to_i}
 
 /*____________________________________________________________________________________________________________________
  __     ___     __                   __
@@ -879,7 +867,7 @@ r_func_raw(m_nil_empty, re_ye)
 _____________________________________________________________________________________________________________________ */
 
 // | function{>>} |
-r_func_self_them(m_str_prepend,
+ⓡ𝑓_self_them(m_str_prepend,
     if (is_str(them)) {
         if (is_empty_str(them)) {
             re_me
@@ -894,7 +882,7 @@ r_func_self_them(m_str_prepend,
 )
 
 // | function{err_to_num} |
-r_func_raw(m_str_err_to_num,
+ⓡ𝑓_def(m_str_err_to_num,
      rb_raise(R_ERR_RUNTIME, "| c{String}-> m{to_num} may not convert self(%"PRIsVALUE") into a valid numeric |", self);
 )
 
@@ -905,14 +893,14 @@ r_func_raw(m_str_err_to_num,
 _____________________________________________________________________________________________________________________ */
 
 // | function{>>} |
-r_func_self_them(m_ary_prepend,
+ⓡ𝑓_self_them(m_ary_prepend,
     r_ary_pre_modify(self)
     r_ary_prepend(self, them)
     re_me
 )
 
 // | function{remove_empty!} |
-r_func_raw(m_ary_remove_empty,
+ⓡ𝑓_def(m_ary_remove_empty,
     r_ary_pre_modify(self)
     long len_me = len_ary(self);
     if (len_me == 0){re_me}
@@ -953,7 +941,7 @@ r_func_raw(m_ary_remove_empty,
 )
 
 // | function{disjunctive_union} |
-r_func_self_them(m_ary_disjunctive_union,
+ⓡ𝑓_self_them(m_ary_disjunctive_union,
     if (is_ary(them)) {
         const long len_me   = len_ary(self);
         const long len_them = len_ary(them);
@@ -990,7 +978,7 @@ r_func_self_them(m_ary_disjunctive_union,
 )
 
 // | function(frequency_counts} |
-r_func_raw(m_ary_frequency_counts,
+ⓡ𝑓_def(m_ary_frequency_counts,
     const long len_me = len_ary(self);
     if (len_me == 0) { return cached_ref_empty_ary; }
     VALUE hsh = rb_hash_new();
@@ -1004,12 +992,11 @@ r_func_raw(m_ary_frequency_counts,
 )
 
 // | function(equal_contents?} |
-r_func_self_them(m_ary_equal_contents,
+ⓡ𝑓_self_them(m_ary_equal_contents,
     if (is_ary(them)) {
         const long len_me = len_ary(self);
         if ((len_me - len_ary(them)) != 0) {re_no} else if (len_me == 0) {re_ye} else {
             VALUE hsh = rb_hash_new();
-            //VALUE hsh = rb_hash_new2((len_me + 1) / 2);
             long i;
             VALUE n;
             for (i = 0; i < len_me; i++) {
@@ -1019,7 +1006,7 @@ r_func_self_them(m_ary_equal_contents,
             for (i = 0; i < len_me; i++) {
                 n = RARRAY_AREF(them, i);
                 if (r_hsh_has_key(hsh, n)) {
-                    long current_count = NUM2LONG(rb_hash_aref(hsh, n));
+                    const long current_count = NUM2LONG(rb_hash_aref(hsh, n));
                     if (current_count == 1) {
                         rb_hash_delete(hsh, n);
                     } else {
@@ -1035,9 +1022,7 @@ r_func_self_them(m_ary_equal_contents,
             rb_gc_force_recycle(hsh);
             re_ye
         }
-    } else {
-        🛑c_self_got_non_ary_param("equal_contents?", them)
-    }
+    } else {🛑c_self_got_non_ary_param("equal_contents?", them)}
 )
 
 /*___________________________________________________________________________________________________________________
@@ -1047,7 +1032,7 @@ r_func_self_them(m_ary_equal_contents,
 _____________________________________________________________________________________________________________________ */
 
 // | function(⨍_add_aliases} |
-r_func_self_a_b(m_module_add_aliases,
+ⓡ𝑓_self_a_b(m_module_add_aliases,
     if (is_ary(param_b)) {
         const long len_them = len_ary(param_b);
         if (len_them == 0) {raise_err_arg("| module-function{f_add_aliases} for self{%"PRIsVALUE"} of type{%s} received an empty array |", self, rb_obj_classname(self))}
@@ -1107,10 +1092,8 @@ static VALUE θ_alloc(VALUE self) {
 
 static VALUE θ_new(const double angle, const VALUE sym_mode) {
     👉θ data;
-    VALUE argv[2];
-    VALUE obj = TypedData_Make_Struct(cached_class_theta_angle, ThetaAngle, & θ_type, data);
-    argv[0]   = DBL2NUM(angle);
-    argv[1]   = sym_mode;
+    VALUE argv[2] = {DBL2NUM(angle), sym_mode};
+    VALUE obj     = TypedData_Make_Struct(cached_class_theta_angle, ThetaAngle, & θ_type, data);
     rb_obj_call_init(obj, 2, argv);
     return obj;
 }
@@ -1212,16 +1195,16 @@ static inline double θ_get_compatible_value_from_θ_with_mode(const unsigned ch
     }
 }
 
-static inline double θ_get_compatible_value_from_θ(const 👉θ self, const 👉θ them) {
+static inline double 👉θ_get_compatible_value_from_θ(const 👉θ self, const 👉θ them) {
     return θ_get_compatible_value_from_θ_with_mode(self->angle_mode, them);
 }
 
-static inline double θ_get_compatible_value_from_value(const 👉θ self, const VALUE value) {
+static inline double 👉θ_get_compatible_value_from_value(const 👉θ self, const VALUE value) {
     if (is_int(value) || is_float(value)) {
         return NUM2DBL(value);
     } else if (is_theta_angle(value)) {
         👉θ data_them; TypedData_Get_Struct(value, ThetaAngle, & θ_type, data_them);
-        return θ_get_compatible_value_from_θ(self, data_them);
+        return 👉θ_get_compatible_value_from_θ(self, data_them);
     } else {
         rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> got arg{%"PRIsVALUE"} that should be an int, float, or ThetaAngle |", value);
     }
@@ -1237,15 +1220,6 @@ static inline VALUE 👉θ_get_representation_as_sym(const 👉θ data) {
         return ID2SYM(cached_rb_intern_as_turn);
     default:
         return ID2SYM(cached_rb_intern_as_gon);
-    }
-}
-
-static inline double 👉θ_get_const_unit(const 👉θ data) {
-    switch(data->angle_mode) {
-    case θ_MODE_ID_RAD: return θ_RAD_UNIT;
-    case θ_MODE_ID_DGR: return θ_DGR_UNIT;
-    case θ_MODE_ID_TRN: return θ_TRN_UNIT;
-    default:            return θ_GON_UNIT;
     }
 }
 
@@ -1285,19 +1259,19 @@ static inline double 👉θ_get_const_perigon_minus_quadrant(const 👉θ data) 
     }
 }
 
-static inline void θ_addition_w_double      (const 👉θ data, const double value) {θ_set_value(data, data->angle_value + value);}
-static inline void θ_subtraction_w_double   (const 👉θ data, const double value) {θ_set_value(data, data->angle_value - value);}
-static inline void θ_multiplication_w_double(const 👉θ data, const double value) {θ_set_value(data, data->angle_value * value);}
-static inline void θ_division_w_double      (const 👉θ data, const double value) {θ_set_value(data, data->angle_value / value);}
+static inline void 👉θ_addition_w_double       (const 👉θ data, const double value) {θ_set_value(data, data->angle_value + value);}
+static inline void 👉θ_subtraction_w_double    (const 👉θ data, const double value) {θ_set_value(data, data->angle_value - value);}
+static inline void 👉θ_multiplication_w_double (const 👉θ data, const double value) {θ_set_value(data, data->angle_value * value);}
+static inline void 👉θ_division_w_double       (const 👉θ data, const double value) {θ_set_value(data, data->angle_value / value);}
 
 static VALUE θ_m_modulo(const VALUE self, const VALUE value) {
     💎self_to_👉θ_data
     if (is_int(value) || is_float(value)) {
-        const long double val_them = (long double) θ_get_compatible_value_from_value(data, value);
+        const long double val_them = (long double) 👉θ_get_compatible_value_from_value(data, value);
         const long double val_self = (long double) data->angle_value;
         return θ_new(fmodl(val_self, val_them), cθ_get_representation(data->angle_mode));
     } else if (is_theta_angle(value)) {
-        const long double val_them = (long double) θ_get_compatible_value_from_value(data, value);
+        const long double val_them = (long double) 👉θ_get_compatible_value_from_value(data, value);
         const long double val_self = (long double) data->angle_value;
         if (👉θ_flag_is_coerce(data)) {
             👉θ_flag_clr_coerce(data);
@@ -1319,7 +1293,7 @@ static VALUE θ_m_modulo_eq(const VALUE self, const VALUE value) {
     }
     //if (is_int(value) || is_float(value)) {
     //}
-    const long double val_them = (long double) θ_get_compatible_value_from_value(data, value);
+    const long double val_them = (long double) 👉θ_get_compatible_value_from_value(data, value);
     const long double val_self = (long double) data->angle_value;
     θ_set_value(data, fmodl(val_self, val_them));
     re_me
@@ -1345,7 +1319,7 @@ static VALUE θ_m_coerce(const VALUE self, const VALUE them) {
 
 static VALUE θ_m_multiplication(const VALUE self, const VALUE value) {
     💎self_to_👉θ_data
-    return θ_new(data->angle_value * θ_get_compatible_value_from_value(data, value), cθ_get_representation(data->angle_mode));
+    return θ_new(data->angle_value * 👉θ_get_compatible_value_from_value(data, value), cθ_get_representation(data->angle_mode));
 }
 
 static VALUE θ_m_multiplication_eq(const VALUE self, const VALUE value) {
@@ -1355,22 +1329,22 @@ static VALUE θ_m_multiplication_eq(const VALUE self, const VALUE value) {
     } else if (👉θ_flag_is_constant(data)) {
         rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{*} may not be called on a constant ThetaAngle |");
     }
-    θ_multiplication_w_double(data, θ_get_compatible_value_from_value(data, value));
+    👉θ_multiplication_w_double(data, 👉θ_get_compatible_value_from_value(data, value));
     re_me
 }
 
 static VALUE θ_m_division(const VALUE self, const VALUE them) {
     💎self_to_👉θ_data
     if (is_int(them)) {
-        return θ_new(data->angle_value / θ_get_compatible_value_from_value(data, them), cθ_get_representation(data->angle_mode));
+        return θ_new(data->angle_value / 👉θ_get_compatible_value_from_value(data, them), cθ_get_representation(data->angle_mode));
     } else if (is_float(them)) {
-        return θ_new(data->angle_value / θ_get_compatible_value_from_value(data, them), cθ_get_representation(data->angle_mode));
+        return θ_new(data->angle_value / 👉θ_get_compatible_value_from_value(data, them), cθ_get_representation(data->angle_mode));
     } else if (is_theta_angle(them)) {
         if (👉θ_flag_is_coerce(data)) {
             👉θ_flag_clr_coerce(data);
-            return θ_new(data->angle_value / θ_get_compatible_value_from_value(data, them), cθ_get_representation(data->angle_mode));
+            return θ_new(data->angle_value / 👉θ_get_compatible_value_from_value(data, them), cθ_get_representation(data->angle_mode));
         } else {
-            return DBL2NUM(data->angle_value / θ_get_compatible_value_from_value(data, them));
+            return DBL2NUM(data->angle_value / 👉θ_get_compatible_value_from_value(data, them));
         }
     } else {
         rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{/} requires arg of type{Numeric} or {ThetaAngle}, not{%"PRIsVALUE"} |", them);
@@ -1384,7 +1358,7 @@ static VALUE θ_m_division_eq(const VALUE self, const VALUE value) {
     } else if (👉θ_flag_is_constant(data)) {
         rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{/} may not be called on a constant ThetaAngle |");
     }
-    θ_division_w_double(data, θ_get_compatible_value_from_value(data, value));
+    👉θ_division_w_double(data, 👉θ_get_compatible_value_from_value(data, value));
     re_me
 }
 
@@ -1395,13 +1369,13 @@ static VALUE θ_m_addition_eq(const VALUE self, const VALUE value) {
     } else if (👉θ_flag_is_constant(data)) {
         rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{+} may not be called on a constant ThetaAngle |");
     }
-    θ_addition_w_double(data, θ_get_compatible_value_from_value(data, value));
+    👉θ_addition_w_double(data, 👉θ_get_compatible_value_from_value(data, value));
     re_me
 }
 
 static VALUE θ_m_addition(const VALUE self, const VALUE value) {
     💎self_to_👉θ_data
-    return θ_new(data->angle_value + θ_get_compatible_value_from_value(data, value), cθ_get_representation(data->angle_mode));
+    return θ_new(data->angle_value + 👉θ_get_compatible_value_from_value(data, value), cθ_get_representation(data->angle_mode));
 }
 
 static VALUE θ_m_subtraction_eq(const VALUE self, const VALUE value) {
@@ -1411,18 +1385,18 @@ static VALUE θ_m_subtraction_eq(const VALUE self, const VALUE value) {
     } else if (👉θ_flag_is_constant(data)) {
         rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{-} may not be called on a constant ThetaAngle |");
     }
-    θ_subtraction_w_double(data, θ_get_compatible_value_from_value(data, value));
+    👉θ_subtraction_w_double(data, 👉θ_get_compatible_value_from_value(data, value));
     re_me
 }
 
 static VALUE θ_m_subtraction(const VALUE self, const VALUE value) {
     💎self_to_👉θ_data
-    return θ_new(data->angle_value - θ_get_compatible_value_from_value(data, value), cθ_get_representation(data->angle_mode));
+    return θ_new(data->angle_value - 👉θ_get_compatible_value_from_value(data, value), cθ_get_representation(data->angle_mode));
 }
 
 static VALUE θ_m_unary_not(const VALUE self) {
     💎self_to_👉θ_data
-    θ_multiplication_w_double(data, -1.0);
+    👉θ_multiplication_w_double(data, -1.0);
     re_me
 }
 
@@ -1515,7 +1489,7 @@ static VALUE θ_m_abs(const VALUE self) {
 static VALUE θ_m_abs_self(const VALUE self) {
     💎self_to_👉θ_data
     if (data->angle_value < 0.0) {
-        θ_multiplication_w_double(data, -1.0);
+        👉θ_multiplication_w_double(data, -1.0);
     }
     re_me
 }
@@ -1523,7 +1497,7 @@ static VALUE θ_m_abs_self(const VALUE self) {
 static VALUE θ_m_comparable(const VALUE self, const VALUE them) {
     if (is_theta_angle(them)) {
         💎self_to_👉θ_data
-        double val_them = θ_get_compatible_value_from_value(data, them);
+        double val_them = 👉θ_get_compatible_value_from_value(data, them);
         if (data->angle_value > val_them) {
             re_1
         } else if (data->angle_value == val_them) {
@@ -1538,7 +1512,7 @@ static VALUE θ_m_is_complementary_with(const VALUE self, const VALUE them) {
     💎self_to_👉θ_data
     if (is_theta_angle(them)) {
         👉θ data_them; TypedData_Get_Struct(them, ThetaAngle, & θ_type, data_them);
-        re_as_bool((data->angle_value + θ_get_compatible_value_from_θ(data, data_them)) == 👉θ_get_const_quadrant(data))
+        re_as_bool((data->angle_value + 👉θ_get_compatible_value_from_θ(data, data_them)) == 👉θ_get_const_quadrant(data))
     } else {
         rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{complementary_with?} requires arg(angle_mode){%"PRIsVALUE"} of type theta_angle |", them);
     }
@@ -1548,7 +1522,7 @@ static VALUE θ_m_is_golden_with(const VALUE self, const VALUE them) {
     💎self_to_👉θ_data
     if (is_theta_angle(them)) {
         👉θ data_them; TypedData_Get_Struct(them, ThetaAngle, & θ_type, data_them);
-        const double val_them = θ_get_compatible_value_from_θ(data, data_them);
+        const double val_them = 👉θ_get_compatible_value_from_θ(data, data_them);
         const double val_self = data->angle_value;
         if (val_self > val_them) {
             re_as_bool(((val_self + val_them) / val_self) == 𝚽)
@@ -1560,51 +1534,11 @@ static VALUE θ_m_is_golden_with(const VALUE self, const VALUE them) {
     }
 }
 
-static VALUE θ_m_bitwise_shift_left(int argc, VALUE * argv, VALUE self) {
-    if (argc == 0) {
-        💎self_to_👉θ_data
-        θ_addition_w_double(data, 👉θ_get_const_unit(data));
-        re_me
-    } else if (argc == 1) {
-        💎self_to_👉θ_data
-        VALUE them;
-        rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);
-        if (is_int(them)) {
-            θ_addition_w_double(data, 👉θ_get_const_unit(data) * NUM2DBL(them));
-            re_me
-        } else {
-            rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{<<} requires arg of type{Integer}, not{%"PRIsVALUE"} |", them);
-        }
-    } else {
-        rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{<<} requires 0 or 1 args, not{%"PRIsVALUE"} |", INT2NUM(argc));
-    }
-}
-
-static VALUE θ_m_bitwise_shift_right(int argc, VALUE * argv, VALUE self) {
-    if (argc == 0) {
-        💎self_to_👉θ_data
-        θ_addition_w_double(data, -1.0 * 👉θ_get_const_unit(data));
-        re_me
-    } else if (argc == 1) {
-        💎self_to_👉θ_data
-        VALUE them;
-        rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);
-        if (is_int(them)) {
-            θ_addition_w_double(data, -1.0 * 👉θ_get_const_unit(data) * NUM2DBL(them));
-            re_me
-        } else {
-            rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{>>} requires arg of type{Integer}, not{%"PRIsVALUE"} |", them);
-        }
-    } else {
-        rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{>>} requires 0 or 1 args, not{%"PRIsVALUE"} |", INT2NUM(argc));
-    }
-}
-
 static VALUE θ_m_is_supplementary_with(const VALUE self, const VALUE them) {
     💎self_to_👉θ_data
     if (is_theta_angle(them)) {
         👉θ data_them; TypedData_Get_Struct(them, ThetaAngle, & θ_type, data_them);
-        re_as_bool((data->angle_value + θ_get_compatible_value_from_θ(data, data_them)) == 👉θ_get_const_straight(data))
+        re_as_bool((data->angle_value + 👉θ_get_compatible_value_from_θ(data, data_them)) == 👉θ_get_const_straight(data))
     } else {
         rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{supplementary_with?} requires arg(angle_mode){%"PRIsVALUE"} of type theta_angle |", them);
     }
@@ -1614,7 +1548,7 @@ static VALUE θ_m_is_explementary_with(const VALUE self, const VALUE them) {
     💎self_to_👉θ_data
     if (is_theta_angle(them)) {
         👉θ data_them; TypedData_Get_Struct(them, ThetaAngle, & θ_type, data_them);
-        re_as_bool((data->angle_value + θ_get_compatible_value_from_θ(data, data_them)) == 👉θ_get_const_perigon(data))
+        re_as_bool((data->angle_value + 👉θ_get_compatible_value_from_θ(data, data_them)) == 👉θ_get_const_perigon(data))
     } else {
         rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{explementary_with?} requires arg(angle_mode){%"PRIsVALUE"} of type theta_angle |", them);
     }
@@ -1683,7 +1617,7 @@ static VALUE θ_m_equals(const VALUE self, const VALUE them) {
     👉θ data_self; TypedData_Get_Struct(self, ThetaAngle, & θ_type, data_self);
     if (is_theta_angle(them)) {
         👉θ data_them; TypedData_Get_Struct(them, ThetaAngle, & θ_type, data_them);
-        re_as_bool(data_self->angle_value == θ_get_compatible_value_from_θ(data_self, data_them));
+        re_as_bool(data_self->angle_value == 👉θ_get_compatible_value_from_θ(data_self, data_them));
     } else if (is_num(them)) {
         re_as_bool(data_self->angle_value == NUM2DBL(them))
     } else {
@@ -2030,75 +1964,49 @@ static inline void startup_step2_add_ruuuby_c_extensions(void) {
     cached_global_sym_many_args = ID2SYM(rb_intern("*args"));
     rb_define_readonly_variable("$PRM_MANY", &cached_global_sym_many_args);
 
+    💎add_public_func_0args_to(R_OBJ, "ary?"       , m_obj_ary)
+    💎add_public_func_0args_to(R_OBJ, "bool?"      , m_obj_bool)
+    💎add_public_func_kargs_to(R_OBJ, "int?"       , m_obj_int)
+    💎add_public_func_0args_to(R_OBJ, "flt?"        , m_obj_flt)
+    💎add_public_func_0args_to(R_OBJ, "hsh?"       , m_obj_hash)
+    💎add_public_func_kargs_to(R_OBJ, "sym?"       , m_obj_sym)
+    💎add_public_func_kargs_to(R_OBJ, "str?"       , m_obj_str)
+    💎add_public_func_0args_to(R_OBJ, "chr?"       , m_obj_chr)
+    💎add_public_func_0args_to(R_OBJ, "set?"       , m_obj_set)
+    💎add_public_func_kargs_to(R_OBJ, "num?"       , m_obj_num)
+    💎add_public_func_0args_to(R_OBJ, "class?"     , m_obj_class)
+    💎add_public_func_0args_to(R_OBJ, "module?"    , m_obj_module)
+    💎add_public_func_0args_to(R_OBJ, "nucleotide?", m_obj_nucleotide)
 
-    💎add_const_flt("EULER_MASCHERONI_CONSTANT", γ)
-    💎add_const_flt("GOLDEN_RATIO",              𝚽)
-    💎add_const_flt("PYTHAGORAS_CONSTANT",       PYTHAGORAS_CONSTANT)
-    💎add_const_flt("SUPER_GOLDEN_RATIO",        Ψ)
-    💎add_const_flt("OMEGA_CONSTANT",            Ω)
-    💎add_const_flt("PLASTIC_RATIO",             ρ)
-    💎add_const_flt("SILVER_RATIO",              δ)
-
-    internal_only_add_frozen_const_to(R_ARY, & cached_ref_empty_ary   , "EMPTY_INSTANCE", rb_ary_new_capa(0L));
-
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_one_half     , "ONE_HALF"      , DBL2NUM(½));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_one_third    , "ONE_THIRD"     , DBL2NUM(⅓));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_two_thirds   , "TWO_THIRDS"    , DBL2NUM(⅔));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_one_fourth   , "ONE_FOURTH"    , DBL2NUM(¼));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_three_fourths, "THREE_FOURTHS" , DBL2NUM(¾));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_one_fifth     , "ONE_FIFTH"     , DBL2NUM(⅕));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_two_fifths    , "TWO_FIFTHS"    , DBL2NUM(⅖));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_three_fifths  , "THREE_FIFTHS"  , DBL2NUM(⅗));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_four_fifths   , "FOUR_FIFTHS"   , DBL2NUM(⅘));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_one_sixth    , "ONE_SIXTH"     , DBL2NUM(⅙));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_five_sixth    , "FIVE_SIXTH"    , DBL2NUM(⅚));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_one_seventh  , "ONE_SEVENTH"   , DBL2NUM(⅐));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_one_eighth   , "ONE_EIGHTH"    , DBL2NUM(⅛));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_three_eighths, "THREE_EIGHTHS" , DBL2NUM(⅜));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_five_eighths  , "FIVE_EIGHTHS"  , DBL2NUM(⅝));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_seven_eighths, "SEVEN_EIGHTHS" , DBL2NUM(⅞));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_one_ninth    , "ONE_NINTH"     , DBL2NUM(⅑));
-    internal_only_add_frozen_const_to(R_FLT, & cached_flt_one_tenth    , "ONE_TENTH"     , DBL2NUM(⅒));
-
-    💎add_public_func_0args_to_class(R_OBJ, "ary?"       , m_obj_ary)
-    💎add_public_func_0args_to_class(R_OBJ, "bool?"      , m_obj_bool)
-    💎add_public_func_kargs_to_class(R_OBJ, "int?"       , m_obj_int)
-    💎add_public_func_0args_to_class(R_OBJ, "flt?"        , m_obj_flt)
-    💎add_public_func_0args_to_class(R_OBJ, "hsh?"       , m_obj_hash)
-    💎add_public_func_kargs_to_class(R_OBJ, "sym?"       , m_obj_sym)
-    💎add_public_func_kargs_to_class(R_OBJ, "str?"       , m_obj_str)
-    💎add_public_func_0args_to_class(R_OBJ, "chr?"       , m_obj_chr)
-    💎add_public_func_0args_to_class(R_OBJ, "set?"       , m_obj_set)
-    💎add_public_func_0args_to_class(R_OBJ, "stry?"      , m_obj_stry)
-    💎add_public_func_kargs_to_class(R_OBJ, "num?"       , m_obj_num)
-    //💎add_public_func_0args_to_class(R_OBJ, "num?"       , m_obj_num)
-    💎add_public_func_0args_to_class(R_OBJ, "class?"     , m_obj_class)
-    💎add_public_func_0args_to_class(R_OBJ, "module?"    , m_obj_module)
-    💎add_public_func_0args_to_class(R_OBJ, "nucleotide?", m_obj_nucleotide)
-
-    💎add_public_func_0args_to_class(R_INT, "finite?"  , m_int_is_finite)
-    💎add_public_func_0args_to_class(R_INT, "infinite?", m_int_is_not_finite)
+    💎add_public_func_0args_to(R_INT, "finite?"  , m_int_is_finite)
+    💎add_public_func_0args_to(R_INT, "infinite?", m_int_is_not_finite)
 
     // | f11 | creates alias of Integer's func{^} which is originally provided for bitwise XOR
     💎add_func_alias(R_INT, "bitwise_xor", "^")
-    💎add_public_func_1args_to_class(R_INT, "^", m_int_patch_for_exponentials)
+    💎add_public_func_1args_to(R_INT, "^", m_int_patch_for_exponentials)
 
-    💎add_public_func_0args_to_class(R_FLT, "has_decimals?", m_flt_has_decimals)
-    💎add_public_func_1args_to_class(R_FLT, "basically_equal?", m_flt_basically_equal)
-    💎add_public_func_1args_to_class(R_FLT, "^", m_flt_patch_for_exponentials)
+    💎add_public_func_0args_to(R_FLT, "has_decimals?", m_flt_has_decimals)
+    💎add_public_func_1args_to(R_FLT, "basically_equal?", m_flt_basically_equal)
+    💎add_public_func_1args_to(R_FLT, "^", m_flt_patch_for_exponentials)
 
-    💎add_public_func_0args_to_class(R_NIL, "empty?", m_nil_empty)
+    💎add_public_func_0args_to(R_NIL, "empty?", m_nil_empty)
 
-    💎add_public_func_1args_to_class(R_STR, ">>", m_str_prepend)
-    💎add_public_func_0args_to_class(R_STR, "err_to_num", m_str_err_to_num)
+    💎add_public_func_0args_to(R_FALSE, "to_b?", m_bool_to_b)
+    💎add_public_func_0args_to(R_FALSE, "to_i", m_false_to_i)
 
-    💎add_public_func_0args_to_class(R_ARY, "remove_empty!"    , m_ary_remove_empty)
-    💎add_public_func_0args_to_class(R_ARY, "frequency_counts" , m_ary_frequency_counts)
-    💎add_public_func_1args_to_class(R_ARY, "disjunctive_union", m_ary_disjunctive_union)
-    💎add_public_func_1args_to_class(R_ARY, "equal_contents?"  , m_ary_equal_contents)
-    💎add_public_func_1args_to_class(R_ARY, ">>"               , m_ary_prepend)
+    💎add_public_func_0args_to(R_TRUE, "to_b?",  m_bool_to_b)
+    💎add_public_func_0args_to(R_TRUE, "to_i", m_true_to_i)
 
-    💎add_public_func_2args_to_class(R_MODULE, "f_add_aliases", m_module_add_aliases)
+    💎add_public_func_1args_to(R_STR, ">>", m_str_prepend)
+    💎add_public_func_0args_to(R_STR, "err_to_num", m_str_err_to_num)
+
+    💎add_public_func_0args_to(R_ARY, "remove_empty!"    , m_ary_remove_empty)
+    💎add_public_func_0args_to(R_ARY, "frequency_counts" , m_ary_frequency_counts)
+    💎add_public_func_1args_to(R_ARY, "disjunctive_union", m_ary_disjunctive_union)
+    💎add_public_func_1args_to(R_ARY, "equal_contents?"  , m_ary_equal_contents)
+    💎add_public_func_1args_to(R_ARY, ">>"               , m_ary_prepend)
+
+    💎add_public_func_2args_to(R_MODULE, "f_add_aliases", m_module_add_aliases)
 
     cached_class_theta_angle = rb_define_class("ThetaAngle", rb_cData);
     rb_define_alloc_func(cached_class_theta_angle, θ_alloc);
@@ -2107,63 +2015,85 @@ static inline void startup_step2_add_ruuuby_c_extensions(void) {
     rb_define_attr(cached_class_theta_angle, "real", 0, 0);
     rb_define_attr(cached_class_theta_angle, "repr", 0, 0);
 
-    💎add_public_func_kargs_to_class(cached_class_theta_angle, "<<", θ_m_bitwise_shift_left)
-    💎add_public_func_kargs_to_class(cached_class_theta_angle, ">>", θ_m_bitwise_shift_right)
+    💎add_public_func_0args_to(cached_class_theta_angle, "real",               θ_m_get_real)
+    💎add_public_func_0args_to(cached_class_theta_angle, "repr",               θ_m_get_repr)
+    💎add_public_func_0args_to(cached_class_theta_angle, "windings",           θ_m_get_windings)
+    💎add_public_func_0args_to(cached_class_theta_angle, "to_a",               θ_m_to_array)
+    💎add_public_func_0args_to(cached_class_theta_angle, "as_radian",          θ_get_as_radian)
+    💎add_public_func_0args_to(cached_class_theta_angle, "as_degree",          θ_get_as_degree)
+    💎add_public_func_0args_to(cached_class_theta_angle, "as_gon",             θ_get_as_gon)
+    💎add_public_func_0args_to(cached_class_theta_angle, "as_turn",            θ_get_as_turn)
+    💎add_public_func_0args_to(cached_class_theta_angle, "radians?",           θ_get_is_radians)
+    💎add_public_func_0args_to(cached_class_theta_angle, "degrees?",           θ_get_is_degrees)
+    💎add_public_func_0args_to(cached_class_theta_angle, "gons?",              θ_get_is_gons)
+    💎add_public_func_0args_to(cached_class_theta_angle, "turns?",             θ_get_is_turns)
+    💎add_public_func_0args_to(cached_class_theta_angle, "normal?",            θ_m_is_normal)
+    💎add_public_func_0args_to(cached_class_theta_angle, "normalize",          θ_m_normalize)
+    💎add_public_func_0args_to(cached_class_theta_angle, "normalize!",         θ_m_normalize_self)
+    💎add_public_func_0args_to(cached_class_theta_angle, "-@",                 θ_m_unary_subtraction)
+    💎add_public_func_0args_to(cached_class_theta_angle, "+@",                 θ_m_unary_addition)
+    💎add_public_func_0args_to(cached_class_theta_angle, "~",                  θ_m_unary_complement)
+    💎add_public_func_0args_to(cached_class_theta_angle, "!",                  θ_m_unary_not)
+    💎add_public_func_0args_to(cached_class_theta_angle, "abs",                θ_m_abs)
+    💎add_public_func_0args_to(cached_class_theta_angle, "abs!",               θ_m_abs_self)
+    💎add_public_func_0args_to(cached_class_theta_angle, "positive?",          θ_m_is_positive)
+    💎add_public_func_0args_to(cached_class_theta_angle, "negative?",          θ_m_is_negative)
+    💎add_public_func_0args_to(cached_class_theta_angle, "zero?",              θ_m_is_zero)
 
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "real",               θ_m_get_real)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "repr",               θ_m_get_repr)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "windings",           θ_m_get_windings)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "to_a",               θ_m_to_array)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "as_radian",          θ_get_as_radian)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "as_degree",          θ_get_as_degree)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "as_gon",             θ_get_as_gon)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "as_turn",            θ_get_as_turn)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "radians?",           θ_get_is_radians)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "degrees?",           θ_get_is_degrees)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "gons?",              θ_get_is_gons)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "turns?",             θ_get_is_turns)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "normal?",            θ_m_is_normal)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "normalize",          θ_m_normalize)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "normalize!",         θ_m_normalize_self)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "-@",                 θ_m_unary_subtraction)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "+@",                 θ_m_unary_addition)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "~",                  θ_m_unary_complement)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "!",                  θ_m_unary_not)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "abs",                θ_m_abs)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "abs!",               θ_m_abs_self)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "positive?",          θ_m_is_positive)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "negative?",          θ_m_is_negative)
-    💎add_public_func_0args_to_class(cached_class_theta_angle, "zero?",              θ_m_is_zero)
-
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "coerce"             , θ_m_coerce)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "%"                  , θ_m_modulo)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "modulo!"            , θ_m_modulo_eq)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "real="              , θ_m_set_real)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "+"                  , θ_m_addition)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "self_addition"      , θ_m_addition_eq)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "-"                  , θ_m_subtraction)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "self_subtraction"   , θ_m_subtraction_eq)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "*"                  , θ_m_multiplication)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "self_multiplication", θ_m_multiplication_eq)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "/"                  , θ_m_division)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "self_division"      , θ_m_division_eq)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "=="                 , θ_m_equals)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "<=>"                , θ_m_comparable)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "angle?"             , θ_m_matches_vocab_term)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "complementary_with?", θ_m_is_complementary_with)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "supplementary_with?", θ_m_is_supplementary_with)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "explementary_with?" , θ_m_is_explementary_with)
-    💎add_public_func_1args_to_class(cached_class_theta_angle, "golden_with?"       , θ_m_is_golden_with)
+    💎add_public_func_1args_to(cached_class_theta_angle, "coerce"             , θ_m_coerce)
+    💎add_public_func_1args_to(cached_class_theta_angle, "%"                  , θ_m_modulo)
+    💎add_public_func_1args_to(cached_class_theta_angle, "modulo!"            , θ_m_modulo_eq)
+    💎add_public_func_1args_to(cached_class_theta_angle, "real="              , θ_m_set_real)
+    💎add_public_func_1args_to(cached_class_theta_angle, "+"                  , θ_m_addition)
+    💎add_public_func_1args_to(cached_class_theta_angle, "self_addition"      , θ_m_addition_eq)
+    💎add_public_func_1args_to(cached_class_theta_angle, "-"                  , θ_m_subtraction)
+    💎add_public_func_1args_to(cached_class_theta_angle, "self_subtraction"   , θ_m_subtraction_eq)
+    💎add_public_func_1args_to(cached_class_theta_angle, "*"                  , θ_m_multiplication)
+    💎add_public_func_1args_to(cached_class_theta_angle, "self_multiplication", θ_m_multiplication_eq)
+    💎add_public_func_1args_to(cached_class_theta_angle, "/"                  , θ_m_division)
+    💎add_public_func_1args_to(cached_class_theta_angle, "self_division"      , θ_m_division_eq)
+    💎add_public_func_1args_to(cached_class_theta_angle, "=="                 , θ_m_equals)
+    💎add_public_func_1args_to(cached_class_theta_angle, "<=>"                , θ_m_comparable)
+    💎add_public_func_1args_to(cached_class_theta_angle, "angle?"             , θ_m_matches_vocab_term)
+    💎add_public_func_1args_to(cached_class_theta_angle, "complementary_with?", θ_m_is_complementary_with)
+    💎add_public_func_1args_to(cached_class_theta_angle, "supplementary_with?", θ_m_is_supplementary_with)
+    💎add_public_func_1args_to(cached_class_theta_angle, "explementary_with?" , θ_m_is_explementary_with)
+    💎add_public_func_1args_to(cached_class_theta_angle, "golden_with?"       , θ_m_is_golden_with)
 
     💎add_func_alias(cached_class_theta_angle, "to_f", "real")
 
-    cached_const_angle_golden = θ_new_constant(Ⴔ_AS_DGR, cached_sym_as_degree);
-    rb_define_const(R_MATH, "ANGLE_GOLDEN", cached_const_angle_golden);
-    rb_global_variable(& cached_const_angle_golden);
+    //°
+    💎add_const_theta_angle("ANGLE_GOLDEN", Ⴔ_AS_DGR, cached_sym_as_degree, cached_const_angle_golden)
+    💎add_const_theta_angle("ANGLE_TAU",    τ, cached_sym_as_radian, cached_const_angle_tau)
+    💎add_const_flt("EULER_MASCHERONI_CONSTANT", γ)
+    💎add_const_flt("GOLDEN_RATIO",              𝚽)
+    💎add_const_flt("PYTHAGORAS_CONSTANT",       PYTHAGORAS_CONSTANT)
+    💎add_const_flt("SUPER_GOLDEN_RATIO",        Ψ)
+    💎add_const_flt("OMEGA_CONSTANT",            Ω)
+    💎add_const_flt("PLASTIC_RATIO",             ρ)
+    💎add_const_flt("SILVER_RATIO",              δ)
 
-    cached_const_angle_tau = θ_new_constant(τ, cached_sym_as_radian);
-    rb_define_const(R_MATH, "ANGLE_TAU", cached_const_angle_tau);
-    rb_global_variable(& cached_const_angle_tau);
+    internal_only_add_frozen_const_to(R_ARY, & cached_ref_empty_ary, "EMPTY_INSTANCE", rb_ary_new_capa(0L));
+
+    VALUE ref;
+    💎add_const_flt_wo_ref("ONE_HALF"      , ½, & ref);
+    💎add_const_flt_wo_ref("ONE_THIRD"     , ⅓, & ref);
+    💎add_const_flt_wo_ref("TWO_THIRDS"    , ⅔, & ref);
+    💎add_const_flt_wo_ref("ONE_FOURTH"    , ¼, & ref);
+    💎add_const_flt_wo_ref("THREE_FOURTHS" , ¾, & ref);
+    💎add_const_flt_wo_ref("ONE_FIFTH"     , ⅕, & ref);
+    💎add_const_flt_wo_ref("TWO_FIFTHS"    , ⅖, & ref);
+    💎add_const_flt_wo_ref("THREE_FIFTHS"  , ⅗, & ref);
+    💎add_const_flt_wo_ref("FOUR_FIFTHS"   , ⅘, & ref);
+    💎add_const_flt_wo_ref("ONE_SIXTH"     , ⅙, & ref);
+    💎add_const_flt_wo_ref("FIVE_SIXTH"    , ⅚, & ref);
+    💎add_const_flt_wo_ref("ONE_SEVENTH"   , ⅐, & ref);
+    💎add_const_flt_wo_ref("ONE_EIGHTH"    , ⅛, & ref);
+    💎add_const_flt_wo_ref("THREE_EIGHTHS" , ⅜, & ref);
+    💎add_const_flt_wo_ref("FIVE_EIGHTHS"  , ⅝, & ref);
+    💎add_const_flt_wo_ref("SEVEN_EIGHTHS" , ⅞, & ref);
+    💎add_const_flt_wo_ref("ONE_NINTH"     , ⅑, & ref);
+    💎add_const_flt_wo_ref("ONE_TENTH"     , ⅒, & ref);
 
     💎add_singleton_func_1args_to(cached_class_theta_angle, "new_radian", θ_m_initialize_as_radian)
     💎add_singleton_func_1args_to(cached_class_theta_angle, "new_degree", θ_m_initialize_as_degree)
@@ -2189,7 +2119,7 @@ static inline void startup_step2_add_ruuuby_c_extensions(void) {
     💎add_singleton_func_1args_to(R_MATH, "sec_squared", m_sec2)
 }
 
-c_func(Init_ruby_class_mods,
+void Init_ruby_class_mods(void) {
     startup_step0_load_needed_default_ruby_libs();
     startup_step1_before_loading_extension();
     startup_step2_add_ruuuby_c_extensions();
@@ -2198,5 +2128,7 @@ c_func(Init_ruby_class_mods,
 
     //ruby_vm_at_exit(& at_exit);
 
+    //💎set_program_name("ruuuby:v.0.0.34"); //ruuuby:v.0.0.34
+
     startup_step5_protect_against_gc();
-)
+}

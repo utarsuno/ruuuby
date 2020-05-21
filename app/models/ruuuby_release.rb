@@ -249,9 +249,12 @@ class ::RuuubyRelease < ApplicationRecord
     version_str.split('.').η̂!(:∈𝕎𝕊)
   end
 
+  # @return [Boolean]
+  def is_released?;self.released? != 0; end
+
   # @param [Boolean] released_status (default: true)
   def released!(released_status=true)
-    🛑🅱️❓(:released_status, released_status)
+    🛑bool❓(:released_status, released_status)
     if released_status
       🛑 ::RuntimeError.🆕("| c{RuuubyRelease}-> m{released!} w/ arg(true) requires the RuuubyRelease to have at least 1 commit message (ORM object) |") unless self.git_commits.length > 0
     end

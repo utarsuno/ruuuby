@@ -102,6 +102,9 @@ module ::Ruuuby
         GEM_ACTIVERECORD    = :activerecord
 
         # @type [Symbol]
+        GEM_RUGGED          = :rugged
+
+        # @type [Symbol]
         GEM_RUUUBY          = :ruuuby
 
         module Environment
@@ -120,7 +123,8 @@ module ::Ruuuby
                 'rspec-benchmark': '0.5.1',
                 'sqlite3': '1.4.2',
                 'activerecord': '5.2.4.1',
-                'schema_plus_foreign_keys': '0.1.8'
+                'schema_plus_foreign_keys': '0.1.8',
+                'rugged': '1.0.0'
             }
           end
         end # end{Environment}

@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.34'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.35'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -61,7 +61,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 # stdout ->
 #          'hello'
 #          'world'
-['world', 1337, 'hello', 'abc'.❄️].↩️∀{|x| puts x if x.str? && !x.❄️?}
+['world', 1337, 'hello', 'abc'.❄️].↩∀{|x| puts x if x.str? && !x.❄️?}
 ```
 
 ---
@@ -72,17 +72,6 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 ## Language Changes:
 
-#### Glossary (for table content & tags)
-
-> {`static`} implies following context: `Class` instance, not the actual `object`
-> <br/>`performance penalties` implies: values across designated scenario benchmarks
-> <br/>(`fNN`) is feature tag syntax, let (`N ∈ ℕ`); (`full use-case wip`)
-> <br/>symbol(`∃`) means `there exists some ...`
-> <br/>symbol(`∴`) means `... therefore ...`
-> <br/>symbol(`⊕`) is set notation for: *symmetric difference*
-> <br/>symbol(`∋`) is set notation for: *belongs to*, ex: (`a` belongs to set `b`: `b ∋ a`); bool-reversed: symbol(`∌`)
-> <br/>symbol(`∖`) is set notation for: *relative complement*
-
 #### Operations Supported (patched in)
 
 > (⚠️ full-coverage wip): raising to powers(via-superscripts: `⁻⁹...⁻¹, ⁰, ¹...⁹`) with operator(`^`)
@@ -92,7 +81,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Integer`  | `1337^²` | ✅ | -coexists with `Integer`'s pre-existing `bitwise XOR` functionality<br/>-`performance penalties`: up to `80%` `slower` than using operator(`**`) |
 | `Float`    | `1337.1337^²` | ✅ | `performance penalties`: up to `90%` `slower` than using operator(`**`) |
 | `Rational` | `3/4r^²` | ✅ | `performance penalties`: up to `105% slower` than using operator(`**`) |
-| `Complex`  | `1337i` | ✅ | `performance penalties`: up to `85% slower` than using operator(`**`) |
+| `Complex`  | `1337i^²` | ✅ | `performance penalties`: up to `85% slower` than using operator(`**`) |
 | `BigDecimal` | `inc` | `inc` | `inc` |
 | `ThetaAngle` | `inc` | `inc` | outputs to unit: `steradian` (depending on input) |
 | `Quaternion` | `inc` | `inc` | |
@@ -114,7 +103,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 | module(s) | func(s) added     | as C-extension? <br/> (java-wip) | notes |
 | --------: | :---------------: | :------------------------: | ----- |
-| `Kernel`  | `𝔠`               | ❌                         | - gets the `cardinality` (length/size) of arg <br/> - (`f03`) |
+| `Kernel`  | `𝔠`               | ❌                         | (`f03`) |
 | `Kernel`  | `🌽_previous_⨍`   | ❌                        | (`f10`) |
 | `Kernel`  | `∃module?`, `∃class?`<br/>{`static`}`∃⨍_alias?`, `∃⨍?` | ❌ | |
 | `Module`  | {`static`}`⨍_add_aliases`| ✅                 |  |
@@ -129,10 +118,10 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `File`                 | {`static`} `dirname²`, `dirname³`, `dirname⁴`<br/>`replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` | ❌ | (`f12`) |
 | `Dir`                  | `η̂_paths`                           | ❌ | (`f12`) |
 | `File`, `Dir`, `ENV`   | `∅?`                                | ❌ | (`f04`) |
-| `Object`               | `ary?`, [`bool?`, `🅱️?`, `🅱?`], `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `stry?`, `sym?`, `θ?`, `enumerable?`<br/>`class?`, `module?`, `nucleotide?` | ✅ | (`f06`) |
-| `Object`               | `singleton?`<br/>[`🛑bool❓`, `🛑🅱️❓`, `🛑🅱❓`], `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓` `🛑stry❓`, `🛑countable❓`, `🛑enumerable❓`, `🛑θ❓` | ❌ | (`f06`) |
+| `Object`               | `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?`, `enumerable?`<br/>`class?`, `module?`, `nucleotide?` | ✅ | (`f06`) |
+| `Object`               | `singleton?`<br/>`🛑bool❓`, `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑enumerable❓`, `🛑θ❓` | ❌ | (`f06`) |
 | `Array`, `Set`         | `remove_empty!`                     | ❌/✅ | (`f07`) |
-| `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞`<br/>`downcase?` [`⬇️?`, `⬇?`, `🔡?`]<br/>`upcase?` [`⬆️?`, `⬆?`, `🔠?`] | ❌ | (`f08`) |
+| `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞`<br/>`downcase?`{`⬇?`}<br/>`upcase?`{`⬆?`} | ❌ | (`f08`) |
 | `String`               | `🐫?`, `🐫⬇?`, `to_🐫`<br/>`🐍⬆?`, `🐍?`, `to_🐍` | ❌ | (`f24`) |
 | `String`               | `as_utf8`, `iso8601?`, `to_iso8601`, `as_iso8601` | ❌ | |
 | `Array`, `String`      | `η̂!`                               | ❌ | (`f08`) |
@@ -156,17 +145,17 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Class`                | `new`                                     | `🆕`                       | (`f10`)   |
 | `Array`, `Set`         | `remove_empty!`                           | `♻️∅!`                     | (`f10`)   |      
 | `Object`               | `freeze`, `frozen?`                       | [`❄️`, `❄`], [`❄️?`, `❄?`] | (`f10`)   |
-| `String`, `Symbol`     | `upcase`, `downcase`                      | `⬆️`, `⬆`, `🔠`</br>`⬇️`, `⬇`, `🔡` | (`f10`) |
-| `String`               | `upcase!`, `downcase!`                    | [`⬆️!`, `⬆!`, `🔠!`], [`⬇️!`, `⬇!`, `🔡!`] | (`f10`) |
+| `String`, `Symbol`     | `upcase`, `downcase`                      | `⬆`, `⬇` | (`f10`) |
+| `String`               | `upcase!`, `downcase!`                    | `⬆!`, `⬇!` | (`f10`) |
 | `Object`               | `protected_instance_methods`, `private_methods` | `🛡️funcs`, `🙈funcs` | (`f01`,`f02`) |
 | `Array`                | `frequency_counts`, `disjunctive_union`, `equal_contents?` | `📊`, `⊕`, `≈≈` |  |
 | `Module`               | `const_defined?`, `private_method_defined?` | `∃const?`, `∃🙈func?`      |           |
 | `Module`               | `private`, `private_constant`<br/>`protected`, `protected_method_defined?` | `🙈`, `🙈constants⟶`<br/>`🛡️`, `∃🛡️func?` | (`f01`)<br/>(`f02`) |
 | `Array`, `Hash`, `Set` | `each`                                    | `∀`                        | (`f10`) |
-| `Array`, `String`      | `reverse`, `reverse!`                     | [`↩️`, `↩`], [`↩️!`, `↩!`] | (`f10`) |
-| `Array`                | `reverse_each`                            | `↩️∀`, `∀↩`                | (`f10`) |
+| `Array`, `String`      | `reverse`, `reverse!`                     | `↩`, `↩!`                  | (`f10`) |
+| `Array`                | `reverse_each`                            | `↩∀`                       | (`f10`) |
 | `Enumerable`           | `map`, `each_with_index`                  | `⨍`, `∀ₓᵢ`                 | (`f10`) |
-| `Hash`                 | `key?`                                    | [`🔑?`, `🗝?`], [`∃🔑?`, `∃🗝?`] |  |
+| `Hash`                 | `key?`                                    | `∃🔑?`                     | (`f10`) |
 | `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                       | (`f04`) |
 | `String`, `Array`, `Set`, `Hash` | `length`                        | `𝔠`                        | (`f03`) |
 | `Proc`                 | `arity`                                   | `𝔠`                        | (`f03`) |
@@ -176,11 +165,11 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 946      | # of tests (solely relating to core functionality)              |
-| QA        | performance   | 233      | # of tests (solely relating to performance)                     |
-| QA        | DB            | 126      | # of tests (solely relating to the database)                    |
-| CI        | audits        | 131      | # of tests (solely relating to non-functionality based audits)  |
-| structure | features      | ~33      | # of distinct features (that are categorized & tracked) `wip`   |
+| QA        | unit          | 977      | # of tests (solely relating to core functionality)              |
+| QA        | performance   | 234      | # of tests (solely relating to performance)                     |
+| QA        | DB            | 146      | # of tests (solely relating to the database)                    |
+| CI        | audits        | 132      | # of tests (solely relating to non-functionality based audits)  |
+| structure | features      | ~35      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |
 | coverage  | documentation | ???      | `wip` |
@@ -191,6 +180,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | gem                        | version   | :development  | :runtime  |
 | -------------------------: | :-------: | :-----------: | :-------: |
 | `tty-command`              | `0.9.0`   | ✅            | ✅       |
+| `rugged`                   | `1.0.0`   | ✅            | ❌       |
 | `sqlite3`                  | `1.4.2`   | ✅            | ❌       |
 | `activerecord`             | `5.2.4.1` | ✅            | ❌       |
 | `schema_plus_foreign_keys` | `0.1.8`   | ✅            | ❌       |

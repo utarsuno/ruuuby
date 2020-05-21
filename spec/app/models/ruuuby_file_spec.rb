@@ -6,7 +6,7 @@ RSpec.describe 'ruuuby_file.rb' do
 
     context 'defines module[Syntax]' do
       it 'exists' do
-        expect_∃module(:Syntax, ::RuuubyFile)
+        expect(🧬.∃ᵐ?(:Syntax, ::RuuubyFile)).to eq(true)
       end
       context 'dynamically adds needed fetch functions' do
         context 'func{syntax_unix_path}' do

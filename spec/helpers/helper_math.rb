@@ -46,9 +46,9 @@ module HelpersMath
   end
 
   def expect_number_set(obj, symbol, kclass, name)
-    expect(obj).to eq(kclass.instance)
+    expect(obj).to eq(kclass.ℹ)
     expect(obj.class).to eq(kclass)
-    expect(obj.🆔).to eq(kclass.instance.🆔)
+    expect(obj.🆔).to eq(kclass.ℹ.🆔)
     expect(obj.name).to eq(name)
     expect(obj.symbol).to eq(symbol)
     _compared_to_empty_set(obj)

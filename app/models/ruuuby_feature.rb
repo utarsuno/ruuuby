@@ -41,6 +41,13 @@ class RuuubyFeature < ApplicationRecord
   # @return [RuuubyFeatureBehavior]
   def spawn_behavior(*args); ::RuuubyFeatureBehavior.spawn(*args, self); end
 
+  def ∋?(behavior)
+    unless behavior.is_a?(::RuuubyFeatureBehavior)
+      raise "provided behavior{#{behavior.to_s}} is not a feature-behavior"
+    end
+    self.ruuuby_feature_behaviors.where('id = ?', behavior.id).first == behavior
+  end
+
   # _________________________________________________________________________________________________________________
   #   __   __   ___  __       ___  __   __   __
   #  /  \ |__) |__  |__)  /\   |  /  \ |__) /__`

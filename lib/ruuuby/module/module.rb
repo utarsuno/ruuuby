@@ -19,36 +19,36 @@ class ::Module
   # @param [Class]
   #
   # @return [Boolean] true, if this particular `Class-instance` is a parent-class of the provided arg
-  def ∋?(sub_class) ; (sub_class < self) && true ? true : false ; end
+  def ∋?(sub_class); (sub_class < self) && true ? true : false; end
 
   # @param [Class]
   #
   # @return [Boolean] true, if this particular `Class-instance` is not a parent-class of the provided arg
-  def ∌?(sub_class) ; !self.∋?(sub_class) ; end
+  def ∌?(sub_class); !self.∋?(sub_class); end
 
   # @param [Class]
   #
   # @return [Boolean] true, if this particular `Class-instance` is a sub-class of the provided arg
-  def ∈?(parent_class) ; (self < parent_class) && true ? true : false ; end
+  def ∈?(parent_class); (self < parent_class) && true ? true : false; end
 
   # @param [Class]
   #
   # @return [Boolean] true, if this particular `Class-instance` is not a sub-class of the provided arg
-  def ∉?(parent_class) ; !self.∈?(parent_class) ; end
+  def ∉?(parent_class); !self.∈?(parent_class); end
 
   # ---------------------------------------------------------------------------------------------------------- | *f13* |
 
   alias_method :∃const?, :const_defined?
 
-  # @param [Symbol|String] func_name
-  # @param [Symbol|String] alias_name
+  # @param [Symbol] func_name
+  # @param [Symbol] alias_name
   #
   # @raise [WrongParamType]
   #
   # @return [Boolean] true, if this instance of Module has a function with provided name and alias
   def ∃⨍_alias?(func_name, alias_name)
-    🛑stry❓(:func_name, func_name)
-    🛑stry❓(:alias_name, alias_name)
+    🛑sym❓(:func_name, func_name)
+    🛑sym❓(:alias_name, alias_name)
     return false unless (self.instance_methods.include?(func_name) && self.instance_methods.include?(alias_name))
     self.instance_method(func_name) == self.instance_method(alias_name)
   end
@@ -59,7 +59,7 @@ class ::Module
   #
   # @return [Boolean] true, if this object's Class has either a public or private method with matching func_name
   def ∃⨍?(func_name)
-    🛑stry❓(:func_name, func_name)
+    🛑sym❓(:func_name, func_name)
     return true if self.method_defined?(func_name)
     self.∃🙈func?(func_name)
   end

@@ -4,6 +4,27 @@ RSpec.describe 'rational.rb' do
 
   context 'extends class[Rational]' do
 
+    context 'func{μ?}' do
+      context 'handles needed scenarios' do
+        context 'cases: positive' do
+          it 'w/ ints' do
+            [1, 2, 3, 4, 5, 1337].∀{|scenario| expect(Rational(1, scenario).μ?).to eq(true)}
+          end
+          it 'w/ floats' do
+            [1.0, 2.0, 3.0, 4.0, 5.0, 1337.0].∀{|scenario| expect(Rational(1.0, scenario).μ?).to eq(true)}
+          end
+        end
+        context 'cases: negative' do
+          it 'w/ ints' do
+            [-1, -2, -3, -4, -5, -1337].∀{|scenario| expect(Rational(1, scenario).μ?).to eq(false)}
+          end
+          it 'w/ floats' do
+            [1.6, 2.5, 3.4, 4.3, 5.2, 1337.1, -1.0, -2.0, -3.0, -4.0, -5.0, -1337.0].∀{|scenario| expect(Rational(1.0, scenario).μ?).to eq(false)}
+          end
+        end
+      end
+    end
+
     context 'func{one?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
@@ -229,6 +250,30 @@ RSpec.describe 'rational.rb' do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :performance do
+
+    context 'needed funcs perform fast enough' do
+      context 'func{μ?}' do
+        context 'handles needed scenarios' do
+          context 'cases: positive' do
+            it 'w/ ints' do
+              expect{Rational(1, 1337).μ?}.to perform_very_quickly
+            end
+            it 'w/ floats' do
+              expect{Rational(1, 1337.0).μ?}.to perform_very_quickly
+            end
+          end
+          context 'cases: negative' do
+            it 'w/ ints' do
+              expect{Rational(1, -1337).μ?}.to perform_very_quickly
+            end
+            it 'w/ floats' do
+              expect{Rational(1, 1337.1).μ?}.to perform_very_quickly
+              expect{Rational(1, -1337.0).μ?}.to perform_very_quickly
+            end
+          end
+        end
+      end # end: {func{μ?}}
+    end # end: {performance}
 
     context 'roughly preserves original pre-extension-performance' do
 

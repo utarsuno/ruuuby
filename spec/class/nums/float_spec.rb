@@ -5,6 +5,7 @@ RSpec.describe 'float.rb' do
   context 'verify func{next_float}' do
     it 'works as expected' do
       expect(0.0.next_float + 1.0).to eq(1.0)
+      expect(1.0.next_float + 0.0).to_not eq(1.0)
     end
   end
 
@@ -13,20 +14,10 @@ RSpec.describe 'float.rb' do
     context 'by adding function{has_decimals?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
-          expect(-1337.1.has_decimals?).to eq(true)
-          expect(-1.2.has_decimals?).to eq(true)
-          expect(-0.3.has_decimals?).to eq(true)
-          expect(1.4.has_decimals?).to eq(true)
-          expect(1.5.has_decimals?).to eq(true)
-          expect(1337.6.has_decimals?).to eq(true)
+          [-1337.1, -1.2, -0.3, 0.999999999999, 1.4, 1.5, 1337.6].∀{|scenario| expect(scenario.has_decimals?).to eq(true)}
         end
         it 'cases: negative' do
-          expect(-1337.0.has_decimals?).to eq(false)
-          expect(-1.0.has_decimals?).to eq(false)
-          expect(-0.0.has_decimals?).to eq(false)
-          expect(1.0.has_decimals?).to eq(false)
-          expect(1.0.has_decimals?).to eq(false)
-          expect(1337.0.has_decimals?).to eq(false)
+          [-1337.0, -1.0, -0.0, 0.0, 1.0, 1337.0].∀{|scenario| expect(scenario.has_decimals?).to eq(false)}
         end
       end
     end
@@ -125,10 +116,10 @@ RSpec.describe 'float.rb' do
 
             expect(0.0.≈≈(1.0)).to eq(false)
 
-            #expect(1e-40.≈≈(0.0, 0.000001)).to eq(false)
-            #expect(0.0.≈≈(1e-40, 0.000001)).to eq(false)
-            #expect(-1e-40.≈≈(0.0, 0.00000001)).to eq(false)
-            #expect(0.0.≈≈(-1e-40, 0.00000001)).to eq(false)
+            #expect(1e-40.≈≈(0.0)).to eq(false)
+            #expect(0.0.≈≈(1e-40)).to eq(false)
+            #expect(-1e-40.≈≈(0.0)).to eq(false)
+            #expect(0.0.≈≈(-1e-40)).to eq(false)
           end
 
           it 'nearly zero' do
@@ -310,6 +301,7 @@ RSpec.describe 'float.rb' do
             expect_scenarios_power_operations(data_range_floats_all_but_zero, :⁻¹, -1, true)
           end
           it 'cases: negative' do
+            # TODO: change this to return complex infinity
             expect{0.0^⁻¹}.to raise_error(ZeroDivisionError)
             expect{data_float_nan^⁻¹}.to raise_error(RuntimeError)
             expect(data_float_inf^⁻¹).to eq(0)

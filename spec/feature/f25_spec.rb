@@ -27,10 +27,10 @@ RSpec.describe 'f25' do
       end
 
       it 'func{💎.api}' do
-        expect(💎.api).to eq(::Ruuuby::MetaData::RuuubyAPI.instance)
+        expect(💎.api).to eq(::Ruuuby::MetaData::RuuubyAPI.ℹ)
       end
       it 'func{💎.orm}' do
-        expect(💎.orm).to eq(::Ruuuby::MetaData::RuuubyORM.instance)
+        expect(💎.orm).to eq(::Ruuuby::MetaData::RuuubyORM.ℹ)
       end
       it 'func{💎.meta_orm}' do
         expect(💎.meta_orm).to eq(::Ruuuby::MetaData::RuuubyORM::SchemaORM)
@@ -39,7 +39,7 @@ RSpec.describe 'f25' do
         expect(💎.paths).to eq(::Ruuuby::MetaData::Paths)
       end
       it 'func{💎.engine}' do
-        expect(💎.engine).to eq(::Ruuuby::MetaData::RuuubyEngine.instance)
+        expect(💎.engine).to eq(::Ruuuby::MetaData::RuuubyEngine.ℹ)
       end
       it 'func{💎.cli}' do
         expect(💎.cli).to eq(::Ruuuby::Routine::CommandCLI)

@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-RSpec.describe 'f29' do
+RSpec.describe 'f29_db' do
 
   context 'db', :db do
 

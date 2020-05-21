@@ -21,25 +21,6 @@ ________________________________________________________________________________
 
 static VALUE cached_ref_empty_ary;
 
-static VALUE cached_flt_one_half;
-static VALUE cached_flt_two_thirds;
-static VALUE cached_flt_one_third;
-static VALUE cached_flt_one_fourth;
-static VALUE cached_flt_three_fourths;
-static VALUE cached_flt_one_fifth;
-static VALUE cached_flt_two_fifths;
-static VALUE cached_flt_three_fifths;
-static VALUE cached_flt_four_fifths;
-static VALUE cached_flt_one_sixth;
-static VALUE cached_flt_five_sixth;
-static VALUE cached_flt_one_seventh;
-static VALUE cached_flt_one_eighth;
-static VALUE cached_flt_three_eighths;
-static VALUE cached_flt_five_eighths;
-static VALUE cached_flt_seven_eighths;
-static VALUE cached_flt_one_ninth;
-static VALUE cached_flt_one_tenth;
-
 static VALUE 🆔n_no_empty;
 static VALUE 🆔normalizer_none;
 static VALUE 🆔n_in_set_superscripts;
@@ -65,7 +46,6 @@ static VALUE cached_module_attribute_includable;
 static VALUE cached_module_attribute_extendable;
 
 static VALUE cached_module_param_err;
-static VALUE cached_module_virtual_types;
 
 static VALUE cached_global_sym_many_args;
 

@@ -54,8 +54,8 @@ RSpec.describe 'f27' do
   context 'audits', :audits do
     context 'feature(f27) passes audits (tests not relating to observed functionality)' do
       it 'module is defined in correct location' do
-        expect(∃class?(:ThetaAngle)).to eq(true)
-        expect_∃module(:MainF27, ::Ruuuby::Feature::Extendable)
+        expect(🧬.∃ᶜ?(:ThetaAngle)).to eq(true)
+        expect(🧬.∃ᵐ?(:MainF27, ::Ruuuby::Feature::Extendable)).to eq(true)
       end
 
       context 'funcs provided are' do

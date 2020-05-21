@@ -9,7 +9,7 @@ module ::Ruuuby
       # provide functionality to automatically apply the Class-attribute: `SyntaxCache`
       module RuuubySingleton
 
-        def instance ; @instance ||= new ; end
+        def ℹ; @instance ||= new; end
 
       end # end: {SyntaxCache}
     end # end: {Extendable}

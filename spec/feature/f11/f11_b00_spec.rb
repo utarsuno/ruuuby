@@ -6,12 +6,12 @@ RSpec.describe 'f11_b00' do
 
     context 'feature-behavior(f11_b00) is defined correctly' do
       it 'creates module{SetTheory} under module{Math}' do
-        expect_∃module(:SetTheory, ::Math)
+        expect(🧬.∃ᵐ?(:SetTheory, ::Math)).to eq(true)
       end
 
       context 'creates inner-module{AlephNumbers}' do
         it 'as expected' do
-          expect_∃module(:AlephNumbers, ::Math::SetTheory::NumberSet)
+          expect(🧬.∃ᵐ?(:AlephNumbers, ::Math::SetTheory::NumberSet)).to eq(true)
         end
         it 'w/ needed constants' do
           expect_∃const_w_type(:ZERO, Symbol, ::Math::SetTheory::NumberSet::AlephNumbers)

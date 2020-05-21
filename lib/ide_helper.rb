@@ -49,7 +49,6 @@ class ::Object
   alias_method :num?, :num?
   alias_method :sym?, :sym?
   alias_method :str?, :str?
-  alias_method :stry?, :stry?
   # | ------------------------------------------------------------------------------------------------------------------
 end
 

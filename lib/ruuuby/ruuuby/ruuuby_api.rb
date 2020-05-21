@@ -135,7 +135,7 @@ end
 module ::Ruuuby
   # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
-    def self.api; ::Ruuuby::MetaData::RuuubyAPI.instance; end
+    def self.api; ::Ruuuby::MetaData::RuuubyAPI.ℹ; end
   end
 end
 

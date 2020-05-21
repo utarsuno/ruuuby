@@ -24,7 +24,7 @@ RSpec.describe 'f12' do
 
     context 'feature(f12) passes audits (tests not relating to observed functionality)' do
       it 'module is defined in correct location' do
-        expect_∃module(:MainF12, ::Ruuuby::Feature::Extendable)
+        expect(🧬.∃ᵐ?(:MainF12, ::Ruuuby::Feature::Extendable)).to eq(true)
       end
       context 'funcs provided are defined in correct location' do
         it 'for m{MainF12}' do

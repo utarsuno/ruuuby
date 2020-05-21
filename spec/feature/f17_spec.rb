@@ -59,7 +59,7 @@ RSpec.describe 'f17' do
       end # end: {math functions}
     end # end: {trigonometry}
 
-    it 'funcs aliased immutable fractions, example{¼}' do
+    it 'funcs alias immutable fractions, example{¼}' do
       expect(½).to eq(0.50)
       expect(⅓).to eq(1.0 / 3)
       expect(⅔).to eq(2.0 / 3)
@@ -75,7 +75,7 @@ RSpec.describe 'f17' do
       expect(⅜).to eq(3.0 / 8)
       expect(⅝).to eq(5.0 / 8)
       expect(⅞).to eq(7.0 / 8)
-      expect(⅑).to eq(1.0 /9)
+      expect(⅑).to eq(1.0 / 9)
       expect(⅒).to eq(0.10)
     end # end: {funcs aliased immutable fractions, example{¼}}
   end # end: {functionality}
@@ -84,10 +84,10 @@ RSpec.describe 'f17' do
 
     context 'feature(f17) passes audits (tests not relating to observed functionality)' do
       it 'module is defined in correct location' do
-        expect_∃module(:MainF17, ::Ruuuby::Feature::Extendable)
-        expect_∃module(:MathAliases, ::Ruuuby::Feature::Extendable::MainF17)
-        expect_∃module(:FloatAliases, ::Ruuuby::Feature::Extendable::MainF17)
-        expect_∃module(:Trigonometry, ::Ruuuby::Feature::Extendable::MainF17)
+        expect(🧬.∃ᵐ?(:MainF17, ::Ruuuby::Feature::Extendable)).to eq(true)
+        expect(🧬.∃ᵐ?(:MathAliases, ::Ruuuby::Feature::Extendable::MainF17)).to eq(true)
+        expect(🧬.∃ᵐ?(:FloatAliases, ::Ruuuby::Feature::Extendable::MainF17)).to eq(true)
+        expect(🧬.∃ᵐ?(:Trigonometry, ::Ruuuby::Feature::Extendable::MainF17)).to eq(true)
       end
       context 'funcs provided are defined in correct location' do
         it 'for m{FloatAliases}' do

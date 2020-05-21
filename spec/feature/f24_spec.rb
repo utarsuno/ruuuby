@@ -6,7 +6,7 @@ RSpec.describe 'f24' do
 
     context 'feature(f24) passes audits (tests not relating to observed functionality)' do
       it 'module is defined in correct location' do
-        expect_∃module(:StringF24, ::Ruuuby::Feature::Includable)
+        expect(🧬.∃ᵐ?(:StringF24, ::Ruuuby::Feature::Includable)).to eq(true)
       end
       context 'funcs provided are' do
         it 'defined in correct location' do

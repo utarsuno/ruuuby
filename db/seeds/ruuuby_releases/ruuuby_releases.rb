@@ -1,33 +1,47 @@
 
-@v0_0_0 = RuuubyRelease.spawn(0, 0, 0)
-@v0_0_0.add_comments('initial project creation')
+@v0_0_00 = RuuubyRelease.spawn(0, 0, 0)
+@v0_0_00.add_comments('initial project creation')
 
-@v0_0_1 = RuuubyRelease.spawn(0, 0, 1)
-@v0_0_1.add_file('CHANGELOG.md')
-@v0_0_1.add_file('lib/ruuuby/class/nil.rb', ::NilClass, '', @f04)
-@v0_0_1.add_file('lib/ruuuby/enum/emoji.rb', '', 'Ruuuby::Enum::Emoji')
-@v0_0_1.add_file('bin/audit', '', 'for running rdoc, rspecs, and coverage reports')
-@v0_0_1.changelog.added_method_to_class(@f04, :empty?, ::NilClass)
+@v0_0_01 = RuuubyRelease.spawn(0, 0, 1)
+@v0_0_01.add_file('CHANGELOG.md')
+@v0_0_01.add_file('lib/ruuuby/class/nil.rb', ::NilClass, '', @f04)
+@v0_0_01.add_file('lib/ruuuby/enum/emoji.rb', '', 'Ruuuby::Enum::Emoji')
+@v0_0_01.add_file('bin/audit', '', 'for running rdoc, rspecs, and coverage reports')
+@v0_0_01.changelog.added_method_to_class(@f04, :empty?, ::NilClass)
 
-@v0_0_2 = RuuubyRelease.spawn(0, 0, 2)
-@v0_0_2.changelog.added_method_to_class(@f06, :bool?, ::Object)
+@v0_0_02 = RuuubyRelease.spawn(0, 0, 2)
+@v0_0_02.changelog.added_method_to_class(@f06, :bool?, ::Object)
 
-@v0_0_3 = RuuubyRelease.spawn(0, 0, 3)
-@v0_0_3.add_comments(
+@v0_0_03 = RuuubyRelease.spawn(0, 0, 3)
+@v0_0_03.add_comments(
     [
         'modify `Ruuuby::Enum::Emoji` from `Strings` to `Symbols`',
         'fix gemspec to reflect correct git URLs'
     ]
 )
-@v0_0_3.add_file('lib/class/ary.rb', ::Array, '', [@f07, @f06])
-@v0_0_3.add_file('lib/class/int.rb', ::Integer, '', @f06)
-@v0_0_3.changelog.added_method_to_class(@f06, :int?, ::Object)
-@v0_0_3.changelog.added_method_to_class(@f06, :ary?, ::Object)
-@v0_0_3.changelog.added_method_to_class(@f07, :remove_empty!, ::Array)
+@v0_0_03.add_file('lib/class/ary.rb', ::Array, '', [@f07, @f06])
+@v0_0_03.add_file('lib/class/int.rb', ::Integer, '', @f06)
+@v0_0_03.changelog.added_method_to_class(@f06, :int?, ::Object)
+@v0_0_03.changelog.added_method_to_class(@f06, :ary?, ::Object)
+@v0_0_03.changelog.added_method_to_class(@f07, :remove_empty!, ::Array)
 
-#v0_0_4 = RuuubyRelease.spawn(0, 0, 4)
-#v0_0_4.add_gem('rspec-benchmark', '0.5.1')
-#v0_0_4.add_comments('update `ruuuby.gemspec` to require ruby `2.7.0`')
+@v0_0_04 = RuuubyRelease.spawn(0, 0, 4)
+#v0_0_04.add_gem('rspec-benchmark', '0.5.1')
+#v0_0_04.add_comments('update `ruuuby.gemspec` to require ruby `2.7.0`')
+
+@v0_0_05 = RuuubyRelease.spawn(0, 0, 5)
+@v0_0_06 = RuuubyRelease.spawn(0, 0, 6)
+@v0_0_07 = RuuubyRelease.spawn(0, 0, 7)
+@v0_0_08 = RuuubyRelease.spawn(0, 0, 8)
+@v0_0_09 = RuuubyRelease.spawn(0, 0, 9)
+@v0_0_10 = RuuubyRelease.spawn(0, 0, 10)
+@v0_0_11 = RuuubyRelease.spawn(0, 0, 11)
+@v0_0_12 = RuuubyRelease.spawn(0, 0, 12)
+@v0_0_13 = RuuubyRelease.spawn(0, 0, 13)
+@v0_0_14 = RuuubyRelease.spawn(0, 0, 14)
+@v0_0_15 = RuuubyRelease.spawn(0, 0, 15)
+@v0_0_16 = RuuubyRelease.spawn(0, 0, 16)
+@v0_0_17 = RuuubyRelease.spawn(0, 0, 17)
 
 @v0_0_18 = RuuubyRelease.spawn(0, 0, 18)
 @v0_0_18.add_comments(
@@ -38,7 +52,7 @@
 )
 @v0_0_18.add_file('lib/ruuuby/class/io/file.rb', ::File, '', @f12)
 @v0_0_18.add_file('lib/ruuuby/class/io/dir.rb', ::Dir, '', @f12)
-@v0_0_18.add_file('lib/ruuuby/types.rb', ::Ruuuby::VirtualTypes, 'adds (module-scoped) constants `🅱️`, `STRY`, `NUMS`, `COUNTABLES` ', @f06)
+#@v0_0_18.add_file('lib/ruuuby/types.rb', ::Ruuuby::VirtualTypes, 'adds (module-scoped) constants `🅱️`, `STRY`, `NUMS`, `COUNTABLES` ', @f06)
 @v0_0_18.add_file('app/models/application_record.rb', ::ApplicationRecord, '', @f15)
 @v0_0_18.add_file('app/models/ruuuby_changelog.rb', ::RuuubyChangelog, '', @f15)
 @v0_0_18.add_file('app/models/ruuuby_feature.rb', ::RuuubyFeature, '', @f15)
@@ -491,3 +505,34 @@
 #| ---------- | ----------------------- |
 #| `TOPLEVEL_BINDING`   | `sin°`, `cos°`, `tan°`, etc... |
 #
+
+@v0_0_35 = RuuubyRelease.spawn(0, 0, 35)
+@v0_0_35.add_gem('rugged', '1.0.0')
+@v0_0_35.add_file('lib/math/expression/expression.rb', '', 'not currently in use', @f10)
+@v0_0_35.add_file('lib/math/expression/formula.rb', '', 'not currently in use', @f10)
+@v0_0_35.add_file('lib/math/space/tuple_space.rb', '', '', @f30)
+@v0_0_35.add_file('lib/math/space/types_space.rb', '', '', @f30)
+@v0_0_35.add_file('lib/math/space/discrete/boolean-like_space.rb', ::Math::Space::BooleanLikeSpace, '', @f30)
+@v0_0_35.add_file('lib/math/space/discrete/number-like_space.rb', ::Math::Space::NumberLikeSpace, '', @f30)
+@v0_0_35.add_file('lib/math/space/discrete/nucleotide-like_space.rb', ::Math::Space::NucleotideLikeSpace, '', @f30)
+@v0_0_35.add_comments(
+    [
+        'apply general clean-ups, next few versions to have similar target',
+        '(`f98`): remove many function calls and variables that didn\'t need to be executed or exist; start adding extra checks via{`mkmf`} which will halt/fail even before the compilations step',
+        'remove alias `🧬?`, `🧬` is now a \'global-alias\' for the singleton{`NucleotideLikeSpace`}',
+        'remove alias `🅱️?`, `🛑🅱️❓`, etc; just `🅱` is now a \'global-alias\' for the single{`BooleanLikeSpace`}',
+        'remove funcs{`stry?`, `countable?`} and{`🛑stry❓`, `🛑countable❓`}',
+        'remove `::Ruuuby::VirtualTypes` and it\'s file',
+        'remove funcs{`∃class?`, `∃module?`} from `Kernel`, functionality is now covered by singleton{`NucleotideLikeSpace`} which is aliased via{`🧬`}',
+        'remove various redundant emoji aliases as the added feature{`f97`}, will enable selected character sets without the clutter of unwanted characters and aliases',
+        'add more detail to various `ORM` features/funcs, documentation and TDD still intentionally not fully present for these',
+        'add class `DescriptiveStandardError`',
+    ]
+)
+@v0_0_35.changelog.added_method_to_class(@f06, :to_i, ::TrueClass)
+@v0_0_35.changelog.added_method_to_class(@f06, :to_i, ::FalseClass)
+@v0_0_35.changelog.added_method_to_class(@f06, :to_b, ::TrueClass)
+@v0_0_35.changelog.added_method_to_class(@f06, :to_b, ::FalseClass)
+@v0_0_35.changelog.added_method_to_class(@f10, :μ?, ::Rational)
+@v0_0_35.changelog.added_method_to_class(@f24, :to_🐫⬇, ::String)
+@v0_0_35.changelog.added_method_to_class(@f24, :to_🐍⬆, ::String)

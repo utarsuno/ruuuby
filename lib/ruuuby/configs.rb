@@ -24,6 +24,12 @@ BEGIN {
   # TODO: create better solution than loading it here
   module ::Kernel
 
+    const_set(:🅱, ::Math::Space::BooleanLikeSpace.ℹ)
+
+    def 🧬; ::Math::Space::NucleotideLikeSpace.ℹ; end
+
+    def 🔢; ::Math::Space::NumberLikeSpace.ℹ; end
+
     # a∶b = (a+b)∶a
     # a∶b = (1+b/a)∶1
     #
@@ -69,33 +75,33 @@ BEGIN {
 
     # TODO: CREATE DIVIDER / ORGANIZATION HERE!
 
-    def ∅; ::Math::SetTheory::EmptySet.instance; end
+    def ∅; ::Math::SetTheory::EmptySet.ℹ; end
 
-    def 𝕚; ::Math::SetTheory::ImaginaryNumbers.instance; end
+    def 𝕚; ::Math::SetTheory::ImaginaryNumbers.ℹ; end
 
-    ℕ𝕌𝕃𝕃 = ::Math::SetTheory::NullSet.instance
+    ℕ𝕌𝕃𝕃 = ::Math::SetTheory::NullSet.ℹ
 
-    𝔹 = ::Math::SetTheory::BooleanNumbers.instance
+    𝔹 = ::Math::SetTheory::BooleanNumbers.ℹ
 
-    ℕ = ::Math::SetTheory::NaturalNumbers.instance
+    ℕ = ::Math::SetTheory::NaturalNumbers.ℹ
 
-    𝕎 = ::Math::SetTheory::WholeNumbers.instance
+    𝕎 = ::Math::SetTheory::WholeNumbers.ℹ
 
-    ℤ = ::Math::SetTheory::IntegerNumbers.instance
+    ℤ = ::Math::SetTheory::IntegerNumbers.ℹ
 
-    ℚ = ::Math::SetTheory::RationalNumbers.instance
+    ℚ = ::Math::SetTheory::RationalNumbers.ℹ
 
-    𝔸ᵣ = ::Math::SetTheory::RealAlgebraicNumbers.instance
+    𝔸ᵣ = ::Math::SetTheory::RealAlgebraicNumbers.ℹ
 
-    𝔸 = ::Math::SetTheory::AlgebraicNumbers.instance
+    𝔸 = ::Math::SetTheory::AlgebraicNumbers.ℹ
 
-    ℂ = ::Math::SetTheory::ComplexNumbers.instance
+    ℂ = ::Math::SetTheory::ComplexNumbers.ℹ
 
-    𝕀 = ::Math::SetTheory::IrrationalNumbers.instance
+    𝕀 = ::Math::SetTheory::IrrationalNumbers.ℹ
 
-    ℝ = ::Math::SetTheory::RealNumbers.instance
+    ℝ = ::Math::SetTheory::RealNumbers.ℹ
 
-    𝕌 = ::Math::SetTheory::UniversalSet.instance
+    𝕌 = ::Math::SetTheory::UniversalSet.ℹ
   end
   # | --------------------------------------------------------------------------------------------------------------------
 

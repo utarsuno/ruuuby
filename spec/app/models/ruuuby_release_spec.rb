@@ -72,13 +72,13 @@ RSpec.describe 'ruuuby_release.rb' do
 
         context 'adds func{get_version_prev}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_prev).to eq(v0_0_32)
+            expect(RuuubyRelease.get_version_prev).to eq(v0_0_33)
           end
         end
 
         context 'adds func{get_version_curr}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_curr).to eq(v0_0_33)
+            expect(RuuubyRelease.get_version_curr).to eq(v0_0_34)
           end
           it 'matches `GitCommit`\'s func{get_latest} return value' do
             expect(RuuubyRelease.get_version_curr.git_commits.last).to eq(GitCommit.get_latest)
@@ -87,13 +87,13 @@ RSpec.describe 'ruuuby_release.rb' do
 
         context 'adds func{get_version_next}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_next).to eq(v0_0_34)
+            expect(RuuubyRelease.get_version_next).to eq(v0_0_35)
           end
         end
 
         context 'defines module[Syntax]' do
           it 'exists' do
-            expect_∃module(:Syntax, ::RuuubyRelease)
+            expect(🧬.∃ᵐ?(:Syntax, ::RuuubyRelease)).to eq(true)
           end
           context 'dynamically adds needed fetch functions' do
             context 'func{syntax_uid}' do

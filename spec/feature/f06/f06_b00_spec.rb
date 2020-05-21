@@ -1,100 +1,121 @@
 # encoding: UTF-8
 
-RSpec.describe 'f06' do
+RSpec.describe 'f06_b00' do
 
   context 'functionality' do
+
     context 'type checks for{Numerics}' do
       context 'func{num?}' do
         it 'added w/o effecting Class-instance{Integer, Float, Rational, Complex, BigDecimal}' do
-          ::Ruuuby::VirtualTypes::NUMS.∀{|num_class| expect(num_class.num?).to eq(false)}
+          ::Math::Space::NumberLikeSpace::ALL_NUMS.∀{|num_class| expect(num_class.num?).to eq(false)}
         end
         context 'handles needed scenarios' do
           context 'cases: positive' do
+
             context '𝕌' do
               it 'w/ normalization{∈𝕌}' do
-                [0, 0.0, -1, -1.0, 1, 1.0, Rational(3, 5), Complex(2, 3), BigDecimal('1.337')].∀ do |scenario|
-                  expect(scenario.num?(:∈𝕌)).to eq(true)
-                end
+                data_∈𝕌_true.∀{|scenario| expect(scenario.num?(:∈𝕌)).to eq(true)}
               end
               it 'w/ normalization{∈𝕌𝕊}' do
-                ['0', 0, '0.0', 0.0, '-1', -1, '-1.0', -1.0, '1', 1, '1.0', BigDecimal('1.337'), '1.337'].∀ do |scenario|
-                  expect(scenario.num?(:∈𝕌𝕊)).to eq(true)
-                end
+                (data_∈𝕌_true + %w(0 0.0 -1 -1.0 1 1.0 1.337)).∀{|scenario| expect(scenario.num?(:∈𝕌𝕊)).to eq(true)}
                 %w(0 0.0 -1 -1.0 1 1.0).∀{|scenario| expect(scenario.num?(:∈𝕌𝕊)).to eq(true)}
               end
             end # end: {𝕌}
+
             context 'ℕ' do
               it 'w/ normalization{∈ℕ}' do
-                [1, 1.0, 1337, 1337.0, Rational(1337), Complex(1337), BigDecimal('1337.0')].∀ do |scenario|
-                  expect(scenario.num?(:∈ℕ)).to eq(true)
-                end
+                data_∈ℕ_true.∀{|scenario| expect(scenario.num?(:∈ℕ)).to eq(true)}
               end
               it 'w/ normalization{∈ℕ𝕊}' do
-                ['1', 1, '1.0', 1.0, '1337', 1337, '1337.0', 1337.0, Rational(1337), Complex(1337), BigDecimal('1337.0')].∀ do |scenario|
-                  expect(scenario.num?(:∈ℕ𝕊)).to eq(true)
-                end
+                (data_∈ℕ_true + %w(1 1.0 1337 1337.0)).∀{|scenario| expect(scenario.num?(:∈ℕ𝕊)).to eq(true)}
               end
             end # end: {ℕ}
+
             context '𝕎' do
               it 'w/ normalization{∈𝕎}' do
-                [0, 0.0, 1, 1.0, Rational(1337), Complex(1337), BigDecimal('1337.0')].∀ do |scenario|
-                  expect(scenario.num?(:∈𝕎)).to eq(true)
-                end
+                data_∈𝕎_true.∀{|scenario| expect(scenario.num?(:∈𝕎)).to eq(true)}
               end
               it 'w/ normalization{∈𝕎𝕊}' do
-                ['0', 0, '0.0', 0.0, '1', 1, '1.0', 1.0, Rational(1337), Complex(1337), BigDecimal('1337.0')].∀ do |scenario|
-                  expect(scenario.num?(:∈𝕎𝕊)).to eq(true)
-                end
+                (data_∈𝕎_true + %w(0 0.0 1 1.0)).∀{|scenario| expect(scenario.num?(:∈𝕎𝕊)).to eq(true)}
               end
             end # end: {𝕎}
+
             context 'ℤ' do
               it 'w/ normalization{∈ℤ}' do
-                [0, 0.0, -1, -1.0, 1, 1.0, Rational(1337), Complex(1337), BigDecimal('1337.0')].∀ do |scenario|
-                  expect(scenario.num?(:∈ℤ)).to eq(true)
-                end
+                data_∈ℤ_true.∀{|scenario| expect(scenario.num?(:∈ℤ)).to eq(true)}
               end
               it 'w/ normalization{∈ℤ𝕊}' do
-                ['0', 0, '0.0', 0.0, '-1', -1, '-1.0', -1.0, '1', 1, '1.0', 1.0, Rational(1337), Complex(1337), BigDecimal('1337.0')].∀ do |scenario|
-                  expect(scenario.num?(:∈ℤ𝕊)).to eq(true)
-                end
+                (data_∈ℤ_true + %w(0 0.0 -1 -1.0 1 1.0)).∀{|scenario| expect(scenario.num?(:∈ℤ𝕊)).to eq(true)}
               end
             end # end: {ℤ}
+
             it 'w/o normalization' do
-              [0, 0.0, -1, -1.0, 1, 1.0, Rational(3, 5), Complex(2, 3), BigDecimal('1.337')].∀ do |scenario|
-                expect(scenario.num?).to eq(true)
-              end
+              #[0, 0.0, -1, -1.0, 1, 1.0, Rational(3, 5), Complex(2, 3), BigDecimal('1.337')].∀{|scenario| expect(scenario.num?).to eq(true)}
+              data_∈ℤ_true.∀{|scenario| expect(scenario.num?).to eq(true)}
             end
+
           end # end: {cases: positive}
+
           context 'cases: negative' do
-            context 'w/ normalization{∈𝕌}' do
-              it 'for numerics' do
-                expect(::Float::INFINITY.num?(:∈𝕌)).to eq(false)
-                expect(::Float::INFINITY_NEGATIVE.num?(:∈𝕌)).to eq(false)
-                expect(::Float::NAN.num?(:∈𝕌)).to eq(false)
+
+            context 'relating to number of args passed' do
+              it 'empty length passed' do
+                expect{0.num?([])}.to raise_error(ArgumentError)
               end
-              context 'w/ many normalizers' do
-                it 'empty length passed' do
-                  expect{0.num?([])}.to raise_error(ArgumentError)
-                end
-                it 'too many normalizers passed' do
-                  expect{0.num?([:∈𝕌, :∈𝕎, :∈𝕎])}.to raise_error(ArgumentError)
-                end
-                it 'in-valid normalizer passed' do
-                  expect{0.num?([:fake_normalizer])}.to raise_error(ArgumentError)
-                end
-                it 'in-valid (type) normalizer passed' do
-                  expect{0.num?([1337])}.to raise_error(ArgumentError)
-                end
-                it ':∈𝕌𝕊' do
-                  expect('∞'.num?(:∈𝕌𝕊)).to eq(false)
-                end
+              it 'too many normalizers passed' do
+                expect{0.num?([:∈𝕌, :∈𝕎, :∈𝕎])}.to raise_error(ArgumentError)
               end
-            end # end: {w/ normalization{∈𝕌}}
-            context 'w/o normalizers' do
-              it 'for numerics' do
-                [Integer, nil, '', '1337', {}, []].∀{|n| expect(n.num?).to eq(false)}
+              it 'in-valid normalizer passed' do
+                expect{0.num?([:fake_normalizer])}.to raise_error(ArgumentError)
+              end
+              it 'in-valid (type) normalizer passed' do
+                expect{0.num?([1337])}.to raise_error(ArgumentError)
               end
             end
+
+            context '𝕌' do
+              it 'w/ normalization{∈𝕌}' do
+                data_∈𝕌_false.∀{|scenario| expect(scenario.num?(:∈𝕌)).to eq(false)}
+                expect{::Float::INFINITY_COMPLEX.num?(:∈𝕌)}.to raise_error(ArgumentError)
+              end
+              it 'w/ normalization{∈𝕌𝕊}' do
+                (data_∈𝕌_false + %w(∞ -∞)).∀{|scenario| expect(scenario.num?(:∈𝕌𝕊)).to eq(false)}
+                expect{:∞ℂ.num?(:∈𝕌𝕊)}.to raise_error(ArgumentError)
+                expect{::Float::INFINITY_COMPLEX.num?(:∈𝕌𝕊)}.to raise_error(ArgumentError)
+              end
+            end # end: {𝕌}
+
+            context 'ℕ' do
+              it 'w/ normalization{∈ℕ}' do
+                data_∈ℕ_false.∀{|scenario| expect(scenario.num?(:∈ℕ)).to eq(false)}
+              end
+              it 'w/ normalization{∈ℕ𝕊}' do
+                (data_∈ℕ_false + %w(-0.0 0 0.0)).∀{|scenario| expect(scenario.num?(:∈ℕ𝕊)).to eq(false)}
+              end
+            end # end: {ℕ}
+
+            context '𝕎' do
+              it 'w/ normalization{∈𝕎}' do
+                data_∈𝕎_false.∀{|scenario| expect(scenario.num?(:∈𝕎)).to eq(false)}
+              end
+              it 'w/ normalization{∈𝕎𝕊}' do
+                (data_∈𝕎_false + %w(0.1337 -0.1337 1337.1337)).∀{|scenario| expect(scenario.num?(:∈𝕎𝕊)).to eq(false)}
+              end
+            end # end: {𝕎}
+
+            context 'ℤ' do
+              it 'w/ normalization{∈ℤ}' do
+                data_∈ℤ_false.∀{|scenario| expect(scenario.num?(:∈ℤ)).to eq(false)}
+              end
+              it 'w/ normalization{∈ℤ𝕊}' do
+                (data_∈ℤ_false + %w(-1.1 -1.1 0.1337, -0.45, 1.1)).∀{|scenario| expect(scenario.num?(:∈ℤ𝕊)).to eq(false)}
+              end
+            end # end: {ℤ}
+
+            it 'w/o normalizers' do
+              [Integer, nil, '', '1337', {}, []].∀{|n| expect(n.num?).to eq(false)}
+            end # end: {w/o: normalizers}
+
           end # end: {cases: negative}
           it 'exists in scope of new generic object' do
             expect(data_new_obj.respond_to?(:num?)).to eq(true)
@@ -162,7 +183,7 @@ RSpec.describe 'f06' do
   context 'audits', :audits do
     context 'feature{f06}:behavior{b00} passes audits' do
       it 'module is defined in correct location' do
-        expect_∃module(:ObjectF06, ::Ruuuby::Feature::Includable)
+        expect(🧬.∃ᵐ?(:ObjectF06, ::Ruuuby::Feature::Includable)).to eq(true)
       end
       context 'funcs provided are defined in correct location' do
         it 'for m{ObjectF06}' do

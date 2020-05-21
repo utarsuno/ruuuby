@@ -8,12 +8,6 @@ RSpec.describe 'db/seed.rb' do
 
       context 'defines features' do
 
-        context 'defines f00' do
-          it 'passes ORM audit' do
-            audit_feature(f00, 'f00', "`η̂` to alias concept of `normalization` (any be offered in any applicable context)")
-          end
-        end
-
         context 'defines f01' do
           it 'passes ORM audit' do
             audit_feature(f01, 'f01', "`🙈` to alias `private`")
@@ -140,12 +134,6 @@ RSpec.describe 'db/seed.rb' do
           end
         end
 
-        context 'defines f24' do
-          it 'passes ORM audit' do
-            audit_feature(f24, 'f24', "add syntax parsing for following 4 categories: {`snake_case`, `camel_case`, `snake_case_upper`, `camel_case_lower`}, aliased via: {`🐫`, `🐍`, `🐫⬇`, `🐍⬆`}")
-          end
-        end
-
         context 'defines f25' do
           it 'passes ORM audit' do
             audit_feature(f25, 'f25', "bundle `Ruuuby` meta-data related functionality w/ base alias(`💎`)")
@@ -155,12 +143,6 @@ RSpec.describe 'db/seed.rb' do
         context 'defines f26' do
           it 'passes ORM audit' do
             audit_feature(f26, 'f26', 'add syntax parsing for `ISO8601` as well as aliases for Date(`📅`), Time(`🕒`), and DateTime(`📅🕒`)')
-          end
-        end
-
-        context 'defines f98' do
-          it 'passes ORM audit' do
-            audit_feature(f98, 'f98', '`C-extensions`')
           end
         end
 

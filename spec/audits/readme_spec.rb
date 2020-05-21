@@ -54,12 +54,6 @@ RSpec.describe 'README.md' do
       end
 
       it 'deprecated examples still work' do
-        data = {hello: 'world', ye: 'ee'}
-        expect([data.🔑?(:hello), data.🔑?(:non_existing_key)]).to eq([true, false])
-        expect([data.∃🔑?(:hello), data.∃🔑?(:non_existing_key)]).to eq([true, false])
-        expect([data.🗝?(:hello), data.🗝?(:non_existing_key)]).to eq([true, false])
-        expect([data.∃🗝?(:hello), data.∃🗝?(:non_existing_key)]).to eq([true, false])
-
         expect(√(25) == 5).to eq(true)
         expect(5^²).to eq(5 * 5)
         expect(-5^⁴).to eq(-5 * -5 * -5 * -5)

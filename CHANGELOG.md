@@ -31,6 +31,37 @@
 
 ### ⚠️: atm documentation & tests synchronization % is too low
 
+---
+
+# v0.0.35
+ * add `gem 'rugged', '~> 1.0.0'`
+ * apply general clean-ups, next few versions to have similar target
+ * (`f98`): remove many function calls and variables that didn't need to be executed or exist; start adding extra checks via{`mkmf`} which will halt/fail even before the compilations step
+ * remove alias `🧬?`, `🧬` is now a 'global-alias' for the singleton{`NucleotideLikeSpace`}
+ * remove alias `🅱️?`, `🛑🅱️❓`, etc; just `🅱` is now a 'global-alias' for the single{`BooleanLikeSpace`}
+ * remove funcs{`stry?`, `countable?`} and{`🛑stry❓`, `🛑countable❓`}
+ * remove `::Ruuuby::VirtualTypes` and it's file
+ * remove funcs{`∃class?`, `∃module?`} from `Kernel`, functionality is now covered by singleton{`NucleotideLikeSpace`} which is aliased via{`🧬`}
+ * remove various redundant emoji aliases as the added feature{`f97`}, will enable selected character sets without the clutter of unwanted characters and aliases
+ * add more detail to various `ORM` features/funcs, documentation and TDD still intentionally not fully present for these
+ * add class `DescriptiveStandardError`
+
+| path added | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/math/expression/expression.rb` |  | not currently in use | `f10` |
+| `lib/math/expression/formula.rb` |  | not currently in use | `f10` |
+| `lib/math/space/tuple_space.rb` |  |  | `f30` |
+| `lib/math/space/types_space.rb` |  |  | `f30` |
+| `lib/math/space/discrete/boolean-like_space.rb` | ``Math::Space::BooleanLikeSpace`` |  | `f30` |
+| `lib/math/space/discrete/number-like_space.rb` | ``Math::Space::NumberLikeSpace`` |  | `f30` |
+| `lib/math/space/discrete/nucleotide-like_space.rb` | ``Math::Space::NucleotideLikeSpace`` |  | `f30` |
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `TrueClass`, `FalseClass` | `to_i`, `to_b` | `f06` |
+| `Rational` | `μ?` | `f10` |
+| `String` | `to_🐫⬇`, `to_🐍⬆` | `f24` |
+
 # v0.0.34
  * increase precision of various funcs (ex: `sin²` and `cos²`), by performing calculations in `long double` instead of `double`
  * add `τ` as a 'global-const' which is a ThetaAngle representing a single complete turn

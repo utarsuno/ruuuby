@@ -12,8 +12,7 @@ class << ENV
   def ∀🔑(*args); self.each_key(*args); end
   alias_method :∀🗝, :∀🔑
 
-  def 🔑?(name); self.has_key?(name); end
-  ⨍_add_aliases(:🔑?, [:🗝?, :∃🔑?, :∃🗝?])
+  def ∃🔑?(name); self.has_key?(name); end
 
   # @param [*] env_key_then_opts
   #

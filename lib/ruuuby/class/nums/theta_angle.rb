@@ -3,7 +3,7 @@
 # terminology:
 #  * radius       | a measurement in distance     |
 #  * arc-length   | a measurement in distance     |
-#  * angle-of-arc | arc-length / radius           | [notice that the output no units]
+#  * angle-of-arc | arc-length / radius           | [notice that the output has no units]
 #
 # vocabulary:
 #  * ephemeral    | lasting for a very short time |

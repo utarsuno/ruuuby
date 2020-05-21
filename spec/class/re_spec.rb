@@ -6,7 +6,7 @@ RSpec.describe 'lib/class/re.rb' do
 
     context 'by adding module[Syntax]' do
       it 'exists' do
-        expect_∃module(:Syntax, ::Regexp)
+        expect(🧬.∃ᵐ?(:Syntax, ::Regexp)).to eq(true)
       end
       context 'with needed constants' do
         context '::Regexp::Syntax::MARKER_START' do

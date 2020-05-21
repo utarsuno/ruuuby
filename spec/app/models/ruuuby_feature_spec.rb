@@ -54,7 +54,7 @@ RSpec.describe 'ruuuby_feature.rb' do
 
     context 'defines module[Syntax]' do
       it 'exists' do
-        expect_∃module(:Syntax, ::RuuubyFeature)
+        expect(🧬.∃ᵐ?(:Syntax, ::RuuubyFeature)).to eq(true)
       end
 
       context 'dynamically adds needed fetch functions' do

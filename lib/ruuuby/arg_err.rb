@@ -7,15 +7,24 @@
 # [ℕ]       positive integer representation only
 module ::Ruuuby
 
+  class DescriptiveStandardError < StandardError
+
+    # @param [*]      the_self
+    # @param [String] the_error_message
+    def initialize(the_self, the_error_message)
+      super("| c{#{the_self.class}}-> m{#{caller_locations(2, 1).first.base_label.to_s}} w/ self{#{the_self.to_s}} #{the_error_message} |")
+    end
+  end
+
   # +ParamErr+ is used for providing utilities to catching and raising parameter errors
   module ParamErr
 
     # utility function to generate exception(WrongParamType)
     #
-    # @param [Symbol|String] name_class
-    # @param [Symbol|String] the_method
-    # @param [Symbol|String] name_arg
-    # @param [Class|Array]   arg_types_needed
+    # @param [Symbol, String] name_class
+    # @param [Symbol, String] the_method
+    # @param [Symbol, String] name_arg
+    # @param [Class, Array]   arg_types_needed
     # @param [*]             arg_received
     #
     # @return [String]
@@ -25,11 +34,11 @@ module ::Ruuuby
 
     # utility function to generate error message for the exception(WrongParamType)
     #
-    # @param [Symbol|String] name_class
-    # @param [Symbol|String] the_method
-    # @param [Symbol|String] arg_name
+    # @param [Symbol, String] name_class
+    # @param [Symbol, String] the_method
+    # @param [Symbol, String] arg_name
     # @param [Class]         received_type
-    # @param [Class|Array]   required_types
+    # @param [Class, Array]   required_types
     #
     # @return [String]
     def self.generate_error_text(the_class, the_method, arg_name, received_type, required_types)

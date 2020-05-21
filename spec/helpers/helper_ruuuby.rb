@@ -11,6 +11,20 @@ RSpec.shared_context 'shared_context_language_deltas' do
 
 end
 
+RSpec.shared_context 'shared_context_f24' do
+  let(:data_syntax_case_camel){%w(HelloWorld NotSnakeCase AnExcellentTestCase)}
+  let(:data_syntax_case_camel_nums){%w(HelloToday1337 Hello1337World)}
+
+  let(:data_syntax_case_camel_lower){%w(lower lowerCamel lowerCamelCase lowerCamelCaseButWithManyMoreWords)}
+  let(:data_syntax_case_camel_lower_nums){%w(helloWorld1337 helloWorldWith1337Numbers)}
+
+  let(:data_syntax_case_snake){%w(hello_world much_longer_version_of_hello_world)}
+  let(:data_syntax_case_snake_nums){%w(hello_world1337 hello1337 hello_1337_world)}
+
+  let(:data_syntax_case_snake_capital){%w(AA HELLO HELLO_WORLD UPPER_SNAKE_CASE)}
+  let(:data_syntax_case_snake_capital_nums){%w(AA1337 UPPER_SNAKE_CASE1337 AA_1337)}
+end
+
 RSpec.shared_context 'shared_context_general' do
   let(:data_big_decimal_nan){BigDecimal('NaN')}
   let(:data_big_decimal_inf){BigDecimal('Infinity')}
@@ -98,4 +112,13 @@ RSpec.shared_context 'shared_context_general' do
   let(:data_nan_with_complex){Complex(Float::NAN, 1.5)}
   let(:data_infinity_with_complex){Complex(1.0/0.0, 1.5)}
   let(:data_negative_infinity_with_complex){Complex(1.0/0.0, 1.5)}
+
+  let(:data_∈𝕌_true){[0, 0.0, -1, -1.0, 1, 1.0, Rational(3, 5), Complex(2, 3), BigDecimal('1.337')]}
+  let(:data_∈𝕌_false){[::Float::INFINITY, ::Float::INFINITY_NEGATIVE, ::Float::NAN]}
+  let(:data_∈ℕ_true){[1, 1.0, 1337, 1337.0, Rational(1337), Complex(1337), BigDecimal('1337.0')]}
+  let(:data_∈ℕ_false){[-0.0, 0, 0.0, Complex(0.0), BigDecimal('0.0')]}
+  let(:data_∈𝕎_true){[0, 0.0, 1, 1.0, Rational(1337), Complex(1337), BigDecimal('1337.0')]}
+  let(:data_∈𝕎_false){[-1, -1.0, Rational(-1337), Complex(-1337), BigDecimal('-1337.0')]}
+  let(:data_∈ℤ_true){[0, 0.0, -1, -1.0, 1, 1.0, Rational(1337), Complex(1337), BigDecimal('1337.0')]}
+  let(:data_∈ℤ_false){[-1.1, 0.5, 0.1337, 1.1337, Rational(1337.1), Complex(1337.1), 1i, BigDecimal('1337.1')]}
 end

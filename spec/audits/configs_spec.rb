@@ -160,6 +160,12 @@ RSpec.describe 'general configs' do
         end
       end
 
+      context 'rugged is healthy' do
+        it 'by having correct configs' do
+          expect(Rugged::VERSION).to eq(configs_dev[ruuuby_gems::GEM_RUGGED])
+        end
+      end
+
       context 'schema_plus_foreign_keys is healthy' do
         # TODO: version audits?
       end

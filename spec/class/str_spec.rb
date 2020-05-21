@@ -5,9 +5,6 @@ RSpec.describe 'str' do
   let(:wrong_param_type){Ruuuby::ParamErr::WrongParamType}
   let(:syntax_str){::String::Syntax}
 
-  let(:funcs_upcase?){[:upcase?, :⬆️?, :⬆?, :🔠?]}
-  let(:funcs_downcase?){[:downcase?, :⬇️?, :⬇?, :🔡?]}
-
   let(:scenarios_iso8601_full){%w(2020-04-04T00:00:00Z 2020-04-04T00:00:00-1200 1920-04-04T00:00:01-12:00
 1999-04-04T00:00:00-0500 2000-04-04T00:00:01-05:00 2020-01-04T00:01:00+0500 2020-12-04T00:01:01+05:00 2020-11-04T01:00:01+1400
 2020-04-04T01:00:01+14:00 2020-04-04T01:01:00-1400 2020-10-04T01:01:01+14:00 2020-09-04T23:12:12+0000 2020-08-04T23:12:12+00:00
@@ -345,174 +342,24 @@ RSpec.describe 'str' do
       end # end: {func{η̂}}
     end # end: {time relating functionality}
 
-
-    context 'snake vs camel case' do
-
-      context 'func{to_🐍}' do
-        context 'handles needed scenarios' do
-          context 'cases: positive' do
-            it 'from syntax{🐫}' do
-              expect('HelloWorld'.to_🐍).to eq('hello_world')
-            end
-            it 'from syntax{🐫⬇}' do
-              expect('helloWorld'.to_🐍).to eq('hello_world')
-            end
-          end
-          it 'cases: error' do
-            expect{''.to_🐍}.to raise_error(RuntimeError)
-            expect{'_'.to_🐍}.to raise_error(RuntimeError)
-            expect{'hello_world'.to_🐍}.to raise_error(RuntimeError)
-          end
-        end
-      end
-
-      context 'func{to_🐫}' do
-        context 'handles needed scenarios' do
-          context 'cases: positive' do
-            it 'from syntax{🐍}' do
-              expect('hello_world'.to_🐫).to eq('HelloWorld')
-            end
-            it 'from syntax{🐍⬆}' do
-              expect('HELLO_WORLD'.to_🐫).to eq('HelloWorld')
-            end
-          end
-          it 'cases: error' do
-            expect{''.to_🐫}.to raise_error(RuntimeError)
-            expect{'_'.to_🐫}.to raise_error(RuntimeError)
-            expect{'HelloWorld'.to_🐫}.to raise_error(RuntimeError)
-          end
-        end
-      end  # end: {func{to_🐫}}
-
-      context 'func{🐫?}' do
-        context 'handles needed scenarios' do
-          context 'cases: positive' do
-            it 'camel case strings' do
-              %w(HelloWorld NotSnakeCase AMuchLongerVersion AnExcellentTestCaseForAMuchLongerVersion).∀{|scenario| expect(scenario.🐫?).to eq(true)}
-            end
-            it 'camel case strings w/ numbers too' do
-              expect('HelloWorld1337'.🐫?).to eq(true)
-              expect('NotSnake1337Case'.🐫?).to eq(true)
-            end
-          end
-          context 'cases: negative' do
-            it 'not camel case strings' do
-              (%w(_ snake_case helloWorld Hello_World) + ['']).∀{|scenario| expect(scenario.🐫?).to eq(false)}
-            end
-            it 'not camel case strings w numbers too' do
-              %w(A A1337 1337 1337snake_case 1337AMuchLongerVersion).∀{|scenario| expect(scenario.🐫?).to eq(false)}
-            end
-          end
-        end
-      end # end: {func{🐫?}}
-
-      context 'func{🐍?}' do
-        context 'handles needed scenarios' do
-          context 'cases: positive' do
-            it 'camel case strings' do
-              %w(a hello_world a_much_longer_version_of_hello_world).∀ {|scenario| expect(scenario.🐍?).to eq(true)}
-            end
-            it 'came case strings w/ numbers too' do
-              %w(hello_world1337 hello1337 hello_1337_world).∀ {|scenario| expect(scenario.🐍?).to eq(true)}
-            end
-          end
-          context 'cases: negative' do
-            it 'not camel case strings' do
-              ['', '_', 'a_', '_a', '__a', 'a__', '_a_', '_a_b'].∀ {|scenario| expect(scenario.🐍?).to eq(false)}
-            end
-            it 'not camel case strings w numbers too' do
-              ['_1337', '1337', '1337a', '1337_a', '1337a_', '1_3_3_7_a_', 'a_ 1_3_3_7_a_'].∀ {|scenario| expect(scenario.🐍?).to eq(false)}
-            end
-          end
-        end
-      end  # end: {func{🐍}}
-
-      context 'func{🐫⬇?}' do
-        context 'handles needed scenarios' do
-          context 'cases: positive' do
-            it 'w/ text only' do
-              expect('lowerCamelCase'.🐫⬇?).to eq(true)
-            end
-            it 'w/ text & numbers' do
-              expect('lowerCamelCase1337'.🐫⬇?).to eq(true)
-            end
-          end
-          context 'cases: negative' do
-            it 'w/ text only' do
-              expect(''.🐫⬇?).to eq(false)
-              expect('SNAKE'.🐫⬇?).to eq(false)
-              expect('LowerCamelCase'.🐫⬇?).to eq(false)
-            end
-            it 'w/ text & numbers' do
-              expect('1337'.🐫⬇?).to eq(false)
-              expect('SNAKE1337'.🐫⬇?).to eq(false)
-              expect('LowerCamelCase1337'.🐫⬇?).to eq(false)
-              expect('1337lowerCamelCase'.🐫⬇?).to eq(false)
-              expect('lowerCamelCase_1337'.🐫⬇?).to eq(false)
-            end
-          end
-        end
-      end # end: {func{🐫⬇?}}
-
-      context 'func{🐍⬆?}' do
-        context 'handles needed scenarios' do
-          context 'cases: positive' do
-            it 'w/ text only' do
-              expect('UPPER_SNAKE_CASE'.🐍⬆?).to eq(true)
-              expect('AA'.🐍⬆?).to eq(true)
-              expect('ZZ'.🐍⬆?).to eq(true)
-            end
-            it 'w/ text & numbers' do
-              expect('UPPER_SNAKE_CASE1337'.🐍⬆?).to eq(true)
-              expect('AA1337'.🐍⬆?).to eq(true)
-              expect('ZZ1337'.🐍⬆?).to eq(true)
-              expect('UPPER_SNAKE_CASE_1337'.🐍⬆?).to eq(true)
-              expect('AA_1337'.🐍⬆?).to eq(true)
-              expect('ZZ_1337'.🐍⬆?).to eq(true)
-            end
-          end
-          context 'cases: negative' do
-            it 'w/ text only' do
-              expect(''.🐍⬆?).to eq(false)
-              expect('snake'.🐍⬆?).to eq(false)
-              expect('upper_snake_case'.🐍⬆?).to eq(false)
-              expect('AaA'.🐍⬆?).to eq(false)
-            end
-            it 'w/ text & numbers' do
-              expect('1337'.🐍⬆?).to eq(false)
-              expect('upper_snake_case1337'.🐍⬆?).to eq(false)
-            end
-          end
-        end
-      end # end: {func{🐍⬆?}}
-    end
-
     context 'functions for single character operations' do
 
       context 'func{upcase?}' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
             it 'w/ char' do
-              %w(A Z).∀ do |scenario|
-                funcs_upcase?.∀{|func| expect(scenario.send(func)).to eq(true)}
-              end
+              %w(A Z).∀{|scenario| expect(scenario.⬆?).to eq(true)}
             end
             it 'w/ many chars' do
-              %w(IsThisUppercase AA ZZ IS_THIS_UPPER_SNAKE_CASE).∀ do |scenario|
-                funcs_upcase?.∀{|func| expect(scenario.send(func)).to eq(true)}
-              end
+              %w(IsThisUppercase AA ZZ IS_THIS_UPPER_SNAKE_CASE).∀{|scenario| expect(scenario.⬆?).to eq(true)}
             end
           end
           context 'cases: negative' do
             it 'not upper case' do
-              %w(a z).∀ do |scenario|
-                funcs_upcase?.∀{|func| expect(scenario.send(func)).to eq(false)}
-              end
+              %w(a z).∀{|scenario| expect(scenario.⬆?).to eq(false)}
             end
             it 'not single char' do
-              ['Aa'].∀ do |scenario|
-                funcs_upcase?.∀{|func| expect(scenario.send(func)).to eq(false)}
-              end
+              %w(Aa).∀{|scenario| expect(scenario.⬆?).to eq(false)}
             end
           end
         end
@@ -522,26 +369,18 @@ RSpec.describe 'str' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
             it 'w/ char' do
-              %w(a z).∀ do |scenario|
-                funcs_downcase?.∀{|func| expect(scenario.send(func)).to eq(true)}
-              end
+              %w(a z).∀{|scenario| expect(scenario.⬇?).to eq(true)}
             end
             it 'w/ many chars' do
-              %w(aa zz is_this_downcase).∀ do |scenario|
-                funcs_downcase?.∀{|func| expect(scenario.send(func)).to eq(true)}
-              end
+              %w(aa zz is_this_downcase).∀{|scenario| expect(scenario.⬇?).to eq(true)}
             end
           end
           context 'cases: negative' do
             it 'not lower case' do
-              %w(A Z).∀ do |scenario|
-                funcs_downcase?.∀{|func| expect(scenario.send(func)).to eq(false)}
-              end
+              %w(A Z).∀{|scenario| expect(scenario.⬇?).to eq(false)}
             end
             it 'not single char' do
-              %w(aA zZ).∀ do |scenario|
-                funcs_downcase?.∀{|func| expect(scenario.send(func)).to eq(false)}
-              end
+              %w(aA zZ).∀{|scenario| expect(scenario.⬇?).to eq(false)}
             end
           end
         end
@@ -1157,110 +996,21 @@ RSpec.describe 'str' do
       end
     end
 
-    context 'snake vs camel case' do
-      context 'func{🐫?}' do
-        context 'runs fast enough for needed scenarios' do
-          context 'cases: positive' do
-            it 'camel case strings' do
-              expect{'AMuchLongerVersion'.🐫?}.to perform_very_quickly
-            end
-            it 'camel case strings w/ numbers too' do
-              expect{'HelloWorld1337'.🐫?}.to perform_very_quickly
-            end
-          end
-          context 'cases: negative' do
-            it 'camel case strings' do
-              expect{'_'.🐫?}.to perform_very_quickly
-            end
-            it 'camel case strings w/ numbers too' do
-              expect{'1337AMuchLongerVersion'.🐫?}.to perform_very_quickly
-            end
-          end
-        end
-      end
-      context 'func{🐫⬇?}' do
-        context 'runs fast enough for needed scenarios' do
-          context 'cases: positive' do
-            it 'w/ text only' do
-              expect{'lowerCamelCase'.🐫⬇?}.to perform_very_quickly
-            end
-            it 'w/ text & numbers' do
-              expect{'lowerCamelCase1337'.🐫⬇?}.to perform_very_quickly
-            end
-          end
-          context 'cases: negative' do
-            it 'w/ text only' do
-              expect{'SNAKE'.🐫⬇?}.to perform_very_quickly
-            end
-            it 'w/ text & numbers' do
-              expect{'LowerCamelCase1337'.🐫⬇?}.to perform_very_quickly
-            end
-          end
-        end
-      end
-      context 'func{🐍?}' do
-        context 'runs fast enough for needed scenarios' do
-          context 'cases: positive' do
-            it 'camel case strings' do
-              expect{'longer_version_of_hello_world'.🐍?}.to perform_very_quickly
-            end
-            it 'came case strings w/ numbers too' do
-              expect{'hello_world1337'.🐍?}.to perform_very_quickly
-            end
-          end
-          context 'cases: negative' do
-            it 'not camel case strings' do
-              expect{'a_'.🐍?}.to perform_very_quickly
-            end
-            it 'not camel case strings w numbers too' do
-              expect{'1337_a'.🐍?}.to perform_very_quickly
-            end
-          end
-        end
-      end
-      context 'func{🐍⬆?}' do
-        context 'runs fast enough for needed scenarios' do
-          context 'cases: positive' do
-            it 'camel case strings' do
-              expect{'UPPER_SNAKE_CASE'.🐍⬆?}.to perform_very_quickly
-            end
-            it 'came case strings w/ numbers too' do
-              expect{'UPPER_SNAKE_CASE_1337'.🐍⬆?}.to perform_very_quickly
-            end
-          end
-          context 'cases: negative' do
-            it 'not camel case strings' do
-              expect{'upper_snake_case'.🐍⬆?}.to perform_very_quickly
-            end
-            it 'not camel case strings w numbers too' do
-              expect{'upper_snake_case1337'.🐍⬆?}.to perform_very_quickly
-            end
-          end
-        end
-      end
-    end # end: {snake vs camel case}
-
     context 'character functions' do
       context 'func{upcase?} runs fast enough' do
         context 'for needed scenarios' do
           it 'cases: positive' do
             expect{'A'.upcase?}.to perform_very_quickly
-            expect{'A'.⬆️?}.to perform_very_quickly
             expect{'A'.⬆?}.to perform_very_quickly
-            expect{'A'.🔠?}.to perform_very_quickly
           end
           context 'cases: negative' do
             it 'not lower case' do
               expect{'a'.downcase?}.to perform_very_quickly
-              expect{'a'.⬆️?}.to perform_very_quickly
               expect{'a'.⬆?}.to perform_very_quickly
-              expect{'a'.🔠?}.to perform_very_quickly
             end
             it 'not single char' do
               expect{'AA'.downcase?}.to perform_very_quickly
-              expect{'AA'.⬆️?}.to perform_very_quickly
               expect{'AA'.⬆?}.to perform_very_quickly
-              expect{'AA'.🔠?}.to perform_very_quickly
             end
           end
         end
@@ -1269,22 +1019,16 @@ RSpec.describe 'str' do
         context 'for needed scenarios' do
           it 'cases: positive' do
             expect{'a'.downcase?}.to perform_very_quickly
-            expect{'a'.⬇️?}.to perform_very_quickly
             expect{'a'.⬇?}.to perform_very_quickly
-            expect{'a'.🔡?}.to perform_very_quickly
           end
           context 'cases: negative' do
             it 'not lower case' do
               expect{'A'.downcase?}.to perform_very_quickly
-              expect{'A'.⬇️?}.to perform_very_quickly
               expect{'A'.⬇?}.to perform_very_quickly
-              expect{'A'.🔡?}.to perform_very_quickly
             end
             it 'not single char' do
               expect{'aa'.downcase?}.to perform_very_quickly
-              expect{'aa'.⬇️?}.to perform_very_quickly
               expect{'aa'.⬇?}.to perform_very_quickly
-              expect{'aa'.🔡?}.to perform_very_quickly
             end
           end
         end

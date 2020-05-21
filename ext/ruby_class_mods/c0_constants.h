@@ -142,25 +142,27 @@ ________________________________________________________________________________
 #define 𝔠ARY_DEFAULT 16L
 
 // ---------------------------------------------------------------------------------------------------------------------
-static VALUE ℤn9 = INT2FIX(-9);
-static VALUE ℤn8 = INT2FIX(-8);
-static VALUE ℤn7 = INT2FIX(-7);
-static VALUE ℤn6 = INT2FIX(-6);
-static VALUE ℤn5 = INT2FIX(-5);
-static VALUE ℤn4 = INT2FIX(-4);
-static VALUE ℤn3 = INT2FIX(-3);
-static VALUE ℤn2 = INT2FIX(-2);
-static VALUE ℤn1 = INT2FIX(-1);
-static VALUE ℤ0  = INT2FIX(0);
-static VALUE ℤ1  = INT2FIX(1);
-static VALUE ℤ2  = INT2FIX(2);
-static VALUE ℤ3  = INT2FIX(3);
-static VALUE ℤ4  = INT2FIX(4);
-static VALUE ℤ5  = INT2FIX(5);
-static VALUE ℤ6  = INT2FIX(6);
-static VALUE ℤ7  = INT2FIX(7);
-static VALUE ℤ8  = INT2FIX(8);
-static VALUE ℤ9  = INT2FIX(9);
+
+// the object ID for a FIXNUM will always be the same (during Runtime)
+static const VALUE ℤn9 = INT2FIX(-9);
+static const VALUE ℤn8 = INT2FIX(-8);
+static const VALUE ℤn7 = INT2FIX(-7);
+static const VALUE ℤn6 = INT2FIX(-6);
+static const VALUE ℤn5 = INT2FIX(-5);
+static const VALUE ℤn4 = INT2FIX(-4);
+static const VALUE ℤn3 = INT2FIX(-3);
+static const VALUE ℤn2 = INT2FIX(-2);
+static const VALUE ℤn1 = INT2FIX(-1);
+static const VALUE ℤ0  = INT2FIX(0);
+static const VALUE ℤ1  = INT2FIX(1);
+static const VALUE ℤ2  = INT2FIX(2);
+static const VALUE ℤ3  = INT2FIX(3);
+static const VALUE ℤ4  = INT2FIX(4);
+static const VALUE ℤ5  = INT2FIX(5);
+static const VALUE ℤ6  = INT2FIX(6);
+static const VALUE ℤ7  = INT2FIX(7);
+static const VALUE ℤ8  = INT2FIX(8);
+static const VALUE ℤ9  = INT2FIX(9);
 
 // ---------------------------------------------------------------------------------------------------------------------
 

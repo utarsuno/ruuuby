@@ -17,10 +17,10 @@ module ::Ruuuby
     def self.paths; ::Ruuuby::MetaData::Paths; end
 
     # @return [::Ruuuby::MetaData::RuuubyEngine]
-    def self.engine; ::Ruuuby::MetaData::RuuubyEngine.instance; end
+    def self.engine; ::Ruuuby::MetaData::RuuubyEngine.ℹ; end
 
     # @return [::Ruuuby::MetaData::RuuubyORM]
-    def self.orm; ::Ruuuby::MetaData::RuuubyORM.instance; end
+    def self.orm; ::Ruuuby::MetaData::RuuubyORM.ℹ; end
 
     # @return [::Ruuuby::Routine::CommandCLI]
     def self.cli; ::Ruuuby::Routine::CommandCLI; end

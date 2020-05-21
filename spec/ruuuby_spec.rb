@@ -1,12 +1,12 @@
-# coding: utf-8
+# coding: UTF-8
 
 RSpec.describe Ruuuby do
 
   context 'defines needed Feature modules' do
     it 'with needed sub-modules' do
-      expect_∃module(:Feature, ::Ruuuby)
-      expect_∃module(:Extendable, ::Ruuuby::Feature)
-      expect_∃module(:Includable, ::Ruuuby::Feature)
+      expect(🧬.∃ᵐ?(:Feature, ::Ruuuby)).to eq(true)
+      expect(🧬.∃ᵐ?(:Extendable, ::Ruuuby::Feature)).to eq(true)
+      expect(🧬.∃ᵐ?(:Includable, ::Ruuuby::Feature)).to eq(true)
     end
   end
 
@@ -44,17 +44,14 @@ RSpec.describe Ruuuby do
 
   context 'Ruuuby added as module' do
     it 'exists' do
-      expect(∃module?(:Ruuuby)).to eq(true)
+      expect(🧬.∃ᵐ?(:Ruuuby)).to eq(true)
     end
     context 'and adds needed sub-modules & classes' do
       it 'module(ParamErr) under module(::Ruuuby)' do
-        expect(∃module?(:ParamErr, ::Ruuuby)).to eq(true)
-      end
-      it 'module(VirtualTypes) under module(::Ruuuby)' do
-        expect(∃module?(:VirtualTypes, ::Ruuuby)).to eq(true)
+        expect(🧬.∃ᵐ?(:ParamErr, ::Ruuuby)).to eq(true)
       end
       it 'class(WrongParamType) under module(::Ruuuby::ParamErr)' do
-        expect(∃class?(:WrongParamType, ::Ruuuby::ParamErr)).to eq(true)
+        expect(🧬.∃ᶜ?(:WrongParamType, ::Ruuuby::ParamErr)).to eq(true)
       end
     end
   end

@@ -31,6 +31,8 @@ ________________________________________________________________________________
 #define R_FLT      rb_cFloat
 #define R_MATH     rb_mMath
 #define R_NIL      rb_cNilClass
+#define R_TRUE     rb_cTrueClass
+#define R_FALSE    rb_cFalseClass
 #define R_NUM      rb_cNumeric
 #define R_COMPLEX  rb_cComplex
 #define R_RATIONAL rb_cRational
@@ -78,6 +80,10 @@ ________________________________________________________________________________
 #define is_empty_hsh(arg) RHASH_EMPTY_P(arg)
 #define is_empty_str(arg) len_str(arg) == 0
 #define is_empty_ary(arg) len_ary(arg) == 0
+
+#define r_hsh_has_key(hsh, key)            (rb_hash_has_key(hsh, key) == Qtrue)
+#define r_hsh_increment_keys_val(hsh, key) rb_hash_aset(hsh, key, LONG2FIX(RB_FIX2LONG(rb_hash_aref(hsh, key)) + 1));
+#define r_hsh_set_val_to_one(hsh, key)     rb_hash_aset(hsh, key, ℤ1);
 
 #define r_ary_get(ary, index)    rb_ary_entry(ary, index);
 #define r_ary_del(ary, index)    rb_ary_delete_at(ary, index);

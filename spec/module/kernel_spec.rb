@@ -2,7 +2,6 @@
 
 RSpec.describe ::Kernel do
   let(:wrong_param_type){Ruuuby::ParamErr::WrongParamType}
-  let(:empty_object){Object.🆕}
 
   context 'extends module[Kernel]' do
 
@@ -61,97 +60,6 @@ RSpec.describe ::Kernel do
         end
       end
 
-      context 'adds function: ∃module?' do
-        context 'handling needed scenarios' do
-          context 'for cases: global &' do
-            it 'positive' do
-              expect_∃module(:Ruuuby)
-              expect_∃module(:QAModule)
-            end
-            it 'negative' do
-              do_not_expect_∃module(:BigDecimal)
-              do_not_expect_∃module(:RuuubyFake)
-            end
-          end
-          context 'for cases: sub_module &' do
-            it 'positive' do
-              expect_∃module(:ParamErr, Ruuuby)
-              expect_∃module(:InnerModuleDepth1, QAClass)
-              expect_∃module(:InnerModuleDepth1, QAModule)
-            end
-            it 'negative' do
-              do_not_expect_∃module(:VERSIONFAKE, Ruuuby)
-              do_not_expect_∃module(:InnerModuleDepth1, Ruuuby)
-              do_not_expect_∃module(:InnerModuleDepth1, Ruuuby)
-              do_not_expect_∃module(:InnerModuleDepthFake, QAClass)
-              do_not_expect_∃module(:InnerModuleDepthFake, QAModule)
-              do_not_expect_∃module(:InnerClassDepth1, QAClass)
-              do_not_expect_∃module(:InnerClassDepth1, QAModule)
-            end
-          end
-          context 'for cases: sub_sub_module &' do
-            it 'positive' do
-              expect_∃module(:InnerModuleDepth2, QAClass::InnerModuleDepth1)
-              expect_∃module(:InnerModuleDepth2, QAModule::InnerModuleDepth1)
-            end
-            it 'negative' do
-              do_not_expect_∃module(:InnerModuleDepthFake, QAClass::InnerModuleDepth1)
-              do_not_expect_∃module(:InnerModuleDepthFake, QAModule::InnerModuleDepth1)
-            end
-          end
-          context 'for cases: bad args' do
-            it 'first arg: module_name' do
-              expect{∃module?(nil) }.to raise_error(ArgumentError)
-              expect{∃module?(5) }.to raise_error(ArgumentError)
-            end
-            it 'second arg: module_owner' do
-              expect{∃module?(:VERSION, nil) }.to raise_error(ArgumentError)
-              expect{∃module?(:VERSION, 5) }.to raise_error(ArgumentError)
-            end
-          end
-        end
-      end
-
-      context 'adds function: ∃class?' do
-        context 'handling needed scenarios' do
-          context 'for cases: global &' do
-            it 'positive' do
-              expect_∃class(:QAClass)
-            end
-            it 'negative' do
-              do_not_expect_∃class(:QAClassFake)
-              do_not_expect_∃class(:Ruuuby)
-            end
-          end
-          context 'for cases: sub_classes &' do
-            it 'positive' do
-              expect_∃class(:InnerClassDepth1, QAClass)
-              expect_∃class(:InnerClassDepth1, QAModule)
-
-              expect_∃class(:WrongParamType, ::Ruuuby::ParamErr)
-            end
-            it 'negative' do
-              do_not_expect_∃class(:InnerClassDepth1, Ruuuby)
-              do_not_expect_∃class(:InnerClassDepth1, Ruuuby)
-              do_not_expect_∃class(:InnerModuleDepth1, QAClass)
-              do_not_expect_∃class(:InnerModuleDepth1, QAModule)
-              do_not_expect_∃class(:InnerClassDepthFake, QAClass)
-              do_not_expect_∃class(:InnerClassDepthFake, QAModule)
-            end
-          end
-          context 'for cases: bad args' do
-            it 'first arg: module_name' do
-              expect{∃class?(nil)}.to raise_error(ArgumentError)
-              expect{∃class?(5)}.to raise_error(ArgumentError)
-            end
-            it 'second arg: module_owner' do
-              expect{∃class?(:VERSION, 5)}.to raise_error(ArgumentError)
-              expect{∃class?(:VERSION, {})}.to raise_error(ArgumentError)
-            end
-          end
-        end
-      end
-
       context 'adds function[√]' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
@@ -199,7 +107,7 @@ RSpec.describe ::Kernel do
             expect(𝔠({a: 'a', b: {}, c: nil})).to eq(3)
           end
           it 'cases: -1' do
-            expect(𝔠(empty_object)).to eq(-1)
+            expect(𝔠(data_new_obj)).to eq(-1)
             expect(𝔠(nil)).to eq(-1)
           end
         end
@@ -212,69 +120,6 @@ RSpec.describe ::Kernel do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :performance do
-
-    context 'func{∃module?} runs fast enough' do
-      context 'for cases: global &' do
-        it 'true-positive' do
-          expect{∃module?(:Ruuuby)}.to perform_very_quickly
-          expect{∃module?('Ruuuby')}.to perform_very_quickly
-        end
-        it 'true-negative' do
-          expect{∃module?(:RuuubyFake)}.to perform_very_quickly
-          expect{∃module?('RuuubyFake')}.to perform_very_quickly
-        end
-      end
-      context 'for cases: sub_module &' do
-        it 'true-positive' do
-          expect{∃module?(:Version, Ruuuby)}.to perform_very_quickly
-          expect{∃module?('Version', Ruuuby)}.to perform_very_quickly
-        end
-        it 'true-negative' do
-          expect{∃module?(:VERSIONFAKE, Ruuuby)}.to perform_very_quickly
-          expect{∃module?('VERSIONFAKE', Ruuuby)}.to perform_very_quickly
-        end
-      end
-    end
-
-    context 'func{∃class?} runs fast enough' do
-      context 'for cases: global &' do
-        it 'true-positive' do
-          expect{∃class?(:QAClass)}.to perform_very_quickly
-          expect{∃class?('QAClass')}.to perform_very_quickly
-        end
-        it 'true-negative' do
-          expect{∃class?(:Ruuuby)}.to perform_very_quickly
-          expect{∃class?('Ruuuby')}.to perform_very_quickly
-        end
-      end
-      context 'for cases: sub_class &' do
-        it 'true-positive' do
-          expect{∃class?(:InnerClassDepth1, QAClass)}.to perform_very_quickly
-          expect{∃class?('InnerClassDepth1', QAClass)}.to perform_very_quickly
-        end
-        it 'true-negative' do
-          expect{∃class?(:InnerModuleDepth1, QAClass)}.to perform_very_quickly
-          expect{∃class?('InnerModuleDepth1', QAClass)}.to perform_very_quickly
-        end
-      end
-    end
-
-    context 'func{∃class?} runs fast enough' do
-      context 'for needed scenarios:' do
-        it 'cases: positive' do
-          expect{𝔠({a: 'a'})}.to perform_very_quickly
-          expect{𝔠(Set[nil])}.to perform_very_quickly
-          expect{𝔠('aaa bb c')}.to perform_very_quickly
-          expect{𝔠([1])}.to perform_very_quickly
-        end
-        it 'cases: negative' do
-          expect{𝔠(empty_object)}.to perform_very_quickly
-          expect{𝔠(nil)}.to perform_very_quickly
-        end
-      end
-    end
-
-    # TODO: Add performance tests
 
   end
 

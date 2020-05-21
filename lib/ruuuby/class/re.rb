@@ -31,7 +31,7 @@ class ::Regexp
   #
   # @return [Regexp] a new instance-of(+Regexp+) with a strict match of the expression provided
   def self.gen_closed_match(expression)
-    🛑stry❓(:expression, expression)
+    🛑str❓(:expression, expression)
     Regexp.🆕(expression.to_s.dup.ensure_start!(::Regexp::Syntax::MARKER_START).ensure_ending!(::Regexp::Syntax::MARKER_END))
   end
 

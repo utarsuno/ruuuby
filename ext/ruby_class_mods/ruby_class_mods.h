@@ -17,10 +17,10 @@ static inline void internal_only_add_frozen_const_to(VALUE kclass, VALUE * inter
 static inline ID health_check_for_existing_func_name(VALUE context_self, VALUE * func_name_as_str);
 static inline VALUE new_ary(const long known_max_size);
 
-static inline void startup_step0_load_needed_default_ruby_libs(void);
+static void startup_step0_load_needed_default_ruby_libs(void);
 static inline void startup_step1_before_loading_extension(void);
 static inline void startup_step2_add_ruuuby_c_extensions(void);
-static inline void startup_step3_load_3rd_party_gems(void);
+static void startup_step3_load_3rd_party_gems(void);
 static inline void startup_step4_load_needed_ruuuby_files(void);
 static inline void startup_step5_protect_against_gc(void);
 static inline void internal_only_prepare_f16(void);
@@ -33,26 +33,36 @@ static int internal_only_compare_func_4_object_id(const void * l , const void * 
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
 
+// str is of type [char *], for VALUE use func{ruby_set_script_name}
+//
+// @return [void]
+#define 💎set_program_name(str) ruby_script(str)
+
 #define 💎set_field(var_name, var_var) rb_iv_set(self, var_name, var_var);
 #define 💎get_field(var_name)          rb_iv_get(self, var_name);
 
-#define 💎add_private_func_0args_to_class(kclass, func_name, the_func) rb_define_private_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 0);
-#define 💎add_private_func_1args_to_class(kclass, func_name, the_func) rb_define_private_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
-#define 💎add_public_func_kargs_to_class(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), -1);
-#define 💎add_public_func_0args_to_class(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 0);
-#define 💎add_public_func_1args_to_class(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
-#define 💎add_public_func_2args_to_class(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 2);
+#define 💎add_private_func_0args_to(kclass, func_name, the_func) rb_define_private_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 0);
+#define 💎add_private_func_1args_to(kclass, func_name, the_func) rb_define_private_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
+#define 💎add_public_func_kargs_to(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), -1);
+#define 💎add_public_func_0args_to(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 0);
+#define 💎add_public_func_1args_to(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
+#define 💎add_public_func_2args_to(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 2);
 
 #define 💎add_singleton_func_1args_to(kclass, func_name, the_func)  rb_define_singleton_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
 
 #define declare_func(func_name, expr, return_type, single_param) return_type func_name(single_param);return_type func_name(single_param){expr}
 #define declare_static_func(func_name, expr, return_type, single_param) static return_type func_name(single_param);static return_type func_name(single_param){expr}
-#define r_func_raw(func_name, expr) declare_static_func(func_name, expr, VALUE, VALUE self)
-#define r_func_raw2(func_name, param_0, param_1, expr) VALUE func_name(VALUE param_0, VALUE param_1);VALUE func_name(VALUE param_0, VALUE param_1){expr}
-#define r_func_raw3(func_name, param_0, param_1, param_2, expr) VALUE func_name(VALUE param_0, VALUE param_1, VALUE param_2);VALUE func_name(VALUE param_0, VALUE param_1, VALUE param_2){expr}
-#define r_func_k_args(func_name, expr) static VALUE func_name(int argc, VALUE * argv, VALUE self);static VALUE func_name(int argc, VALUE * argv, VALUE self){expr}
-#define r_func_self_them(func_name, expr) r_func_raw2(func_name, self, them, expr)
-#define r_func_self_a_b(func_name, expr) r_func_raw3(func_name, self, param_a, param_b, expr)
+
+//#define r_func_pure(func_name, expr)                            PUREFUNC(static VALUE func_name(const VALUE self) {expr})
+#define ⓡ𝑓(func_name, expr)                        PUREFUNC(static VALUE func_name(const VALUE self) {expr})
+#define ⓡ𝑓_def(func_name, expr)                    declare_static_func(func_name, expr, VALUE, VALUE self)
+#define ⓡ𝑓_def2(func_name, param_0, param_1, expr) VALUE func_name(const VALUE param_0, const VALUE param_1);VALUE func_name(const VALUE param_0, const VALUE param_1){expr}
+#define ⓡ𝑓_def3(func_name, param_0, param_1, param_2, expr) VALUE func_name(VALUE param_0, VALUE param_1, VALUE param_2);VALUE func_name(VALUE param_0, VALUE param_1, VALUE param_2){expr}
+
+#define ⓡ𝑓_kargs(func_name, expr)     static VALUE func_name(int argc, VALUE * argv, VALUE self);static VALUE func_name(int argc, VALUE * argv, VALUE self){expr}
+#define ⓡ𝑓_self_them(func_name, expr) ⓡ𝑓_def2(func_name, self, them, expr)
+#define ⓡ𝑓_self_a_b(func_name, expr)  ⓡ𝑓_def3(func_name, self, param_a, param_b, expr)
+
 #define c_func(func_name, expr) declare_func(func_name, expr, void, void)
 
 #define ext_api_add_global_const_str(const_name, const_value)      rb_define_global_const(const_name, r_str_new_frozen_literal(const_value));
@@ -60,9 +70,22 @@ ________________________________________________________________________________
 #define ext_api_add_module_under(under_me, str)                    rb_define_module_under(under_me, str);
 #define ext_api_add_new_sub_class_under(under_me, base_class, str) rb_define_class_under(under_me, str, base_class);
 
-#define 💎add_func_alias(kclass, name_alias, name_original) rb_define_alias(kclass, name_alias, name_original);
-#define 💎add_const_under(kclass, const_name, const_value)  rb_define_const(kclass, const_name, const_value);
-#define 💎add_const_flt(const_name, const_as_c_double)       💎add_const_under(R_FLT, const_name, DBL2NUM(const_as_c_double))
+#define 💎add_func_alias(kclass, name_alias, name_original)    rb_define_alias(kclass, name_alias, name_original);
+#define 💎add_const_under(kclass, const_name, const_value)     rb_define_const(kclass, const_name, const_value);
+#define 💎add_const_flt(const_name, const_as_c_double)          💎add_const_under(R_FLT, const_name, DBL2NUM(const_as_c_double))
+#define 💎add_const_theta_angle(const_name, dbl_angle, mode_angle, ref) {\
+    ref = θ_new_constant(dbl_angle, mode_angle);\
+    rb_define_const(R_MATH, const_name, ref);\
+    rb_global_variable(& ref);\
+}
+
+#define 💎add_const_flt_wo_ref(const_name, dbl_val, ref) {\
+    * ref = DBL2NUM(dbl_val);\
+    RB_OBJ_FREEZE(* ref);\
+    rb_define_const(R_FLT, const_name, * ref);\
+}
+
+#define 💎add_c_dbl_as_frozen_const_to(kclass, const_name, const_value, ref)
 //#define ext_api_add_frozen_const_under(kclass, const_name, const_value)
 
 // -----------------------------
@@ -81,8 +104,6 @@ ________________________________________________________________________________
 
 #define 🛑m_param_type(kclass, the_func, arg_name, the_arg, required_type) 🛑param_type("m", kclass, the_func, arg_name, the_arg, required_type)
 #define 🛑c_param_type(kclass, the_func, arg_name, the_arg, required_type) 🛑param_type("c", kclass, the_func, arg_name, the_arg, required_type)
-
-
 
 #define _internal_self_throw_arg_err_1opts(kclass, func_name, err_msg) raise_err_arg("| %s{%s}-> m{%s} %s |", kclass, rb_obj_classname(self), func_name, err_msg);
 #define _internal_self_throw_arg_err_2opts(kclass, func_name, err_msg_start, opt_a_format, err_msg_end, opt_a) raise_err_arg("| %s{%s}-> m{%s} %s" #opt_a_format " %s |", kclass, rb_obj_classname(self), func_name, err_msg_start, opt_a, err_msg_end);
@@ -115,7 +136,12 @@ ________________________________________________________________________________
     rb_global_variable(& the_var);\
 }
 
+static inline __attribute__ ((__always_inline__)) VALUE is_finite_num(const VALUE arg);
+static inline __attribute__ ((__always_inline__)) VALUE has_smell_of_int(const VALUE arg);
+
 static inline VALUE is_finite_num(const VALUE arg) {return rb_funcall(arg, cached_rb_intern_is_finite, 0);}
 static inline VALUE has_smell_of_int(const VALUE arg){return rb_funcall(arg, cached_rb_intern_smells_like_int, 0);}
+
+void Init_ruby_class_mods(void);
 
 #endif

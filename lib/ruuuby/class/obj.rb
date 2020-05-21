@@ -27,10 +27,10 @@ module ::Ruuuby
         # @raise [WrongParamType]
         def 🛑bool❓(arg_name, arg)
           unless arg_name == $PRM_MANY
-            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Ruuuby::VirtualTypes::🅱️, arg) unless arg.bool?
+            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, [::FalseClass, ::TrueClass], arg) unless arg.bool?
           else
             arg.∀ₓᵢ do |x, i|
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Ruuuby::VirtualTypes::🅱️, x) unless x.bool?
+              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", [::FalseClass, ::TrueClass], x) unless x.bool?
             end
           end
         end
@@ -181,18 +181,18 @@ module ::Ruuuby
         def 🛑num❓(arg_name, arg, normalization_checks=:none)
           unless arg_name == $PRM_MANY
             if normalization_checks != :none
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Ruuuby::VirtualTypes::NUMS, arg) unless arg.num?(normalization_checks)
+              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Math::Space::NumberLikeSpace::ALL_NUMS, arg) unless arg.num?(normalization_checks)
             else
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Ruuuby::VirtualTypes::NUMS, arg) unless arg.num?
+              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Math::Space::NumberLikeSpace::ALL_NUMS, arg) unless arg.num?
             end
           else
             if normalization_checks != :none
               arg.∀ₓᵢ do |x, i|
-                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Ruuuby::VirtualTypes::NUMS, x) unless x.num?(normalization_checks)
+                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Math::Space::NumberLikeSpace::ALL_NUMS, x) unless x.num?(normalization_checks)
               end
             else
               arg.∀ₓᵢ do |x, i|
-                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Ruuuby::VirtualTypes::NUMS, x) unless x.num?
+                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Math::Space::NumberLikeSpace::ALL_NUMS, x) unless x.num?
               end
             end
           end
@@ -213,33 +213,6 @@ module ::Ruuuby
           end
         end
 
-        # @param [Symbol] arg_name
-        # @param [*]      arg
-        #
-        # @raise [WrongParamType]
-        def 🛑stry❓(arg_name, arg)
-          unless arg_name == $PRM_MANY
-            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Ruuuby::VirtualTypes::STRY, arg) unless arg.stry?
-          else
-            arg.∀ₓᵢ do |x, i|
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Ruuuby::VirtualTypes::STRY, x) unless x.stry?
-            end
-          end
-        end
-
-        # @param [Symbol] arg_name
-        # @param [*]      arg
-        #
-        # @raise [WrongParamType]
-        def 🛑countable❓(arg_name, arg)
-          unless arg_name == $PRM_MANY
-            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Ruuuby::VirtualTypes::COUNTABLES, arg) unless (arg.str? || arg.ary? || arg.is_a?(Set))
-          else
-            arg.∀ₓᵢ do |x, i|
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Ruuuby::VirtualTypes::COUNTABLES, x) unless (x.str? || x.ary? || x.is_a?(Set))
-            end
-          end
-        end
       end # end: f06
 
       # defines the operations needed to support Feature(`f16`) that are applied to Class(`Object`)
@@ -317,10 +290,6 @@ class ::Object
   alias_method :🙈funcs, :private_methods
   # ---------------------------------------------------------------------------------------------------------- | *f02* |
   alias_method :🛡️funcs, :protected_methods
-  # ---------------------------------------------------------------------------------------------------------- | *f06* |
-  ⨍_add_aliases(:bool?, [:🅱️?, :🅱?])
-  ⨍_add_aliases(:🛑bool❓, [:🛑🅱️❓, :🛑🅱❓])
-  alias_method :🧬?, :nucleotide?
   # ---------------------------------------------------------------------------------------------------------- | *f10* |
   alias_method :🆔, :object_id
   ⨍_add_aliases(:freeze, [:❄️, :❄])

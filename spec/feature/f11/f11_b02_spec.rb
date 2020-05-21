@@ -6,14 +6,14 @@ RSpec.describe 'f11_b02' do
 
     context 'feature-behavior(f11_b02) is defined correctly' do
       it 'creates class{NumberSet} under module{Math::SetTheory}' do
-        expect_∃class(:NumberSet, ::Math::SetTheory)
+        expect(🧬.∃ᶜ?(:NumberSet, ::Math::SetTheory)).to eq(true)
       end
 
       context 'discrete implementations exist' do
 
         context '∅' do
           it 'in correct location' do
-            expect_∃class(:EmptySet, ::Math::SetTheory)
+            expect(🧬.∃ᶜ?(:EmptySet, ::Math::SetTheory)).to eq(true)
           end
           it 'defined correctly' do
             expect_number_set(∅, :∅, ::Math::SetTheory::EmptySet, 'empty set')
@@ -27,7 +27,7 @@ RSpec.describe 'f11_b02' do
 
         context 'ℕ𝕌𝕃𝕃' do
           it 'in correct location' do
-            expect_∃class(:NullSet, ::Math::SetTheory)
+            expect(🧬.∃ᶜ?(:NullSet, ::Math::SetTheory)).to eq(true)
           end
           it 'defined correctly' do
             expect_number_set(ℕ𝕌𝕃𝕃, :ℕ𝕌𝕃𝕃, ::Math::SetTheory::NullSet, 'null set')
@@ -36,7 +36,7 @@ RSpec.describe 'f11_b02' do
 
         context '𝔹' do
           it 'in correct location' do
-            expect_∃class(:BooleanNumbers, ::Math::SetTheory)
+            expect(🧬.∃ᶜ?(:BooleanNumbers, ::Math::SetTheory)).to eq(true)
           end
           it 'defined correctly' do
             expect_number_set(𝔹, :𝔹, ::Math::SetTheory::BooleanNumbers, 'boolean numbers')
@@ -55,7 +55,7 @@ RSpec.describe 'f11_b02' do
 
         context 'ℕ' do
           it 'in correct location' do
-            expect_∃class(:NaturalNumbers, ::Math::SetTheory)
+            expect(🧬.∃ᶜ?(:NaturalNumbers, ::Math::SetTheory)).to eq(true)
           end
           it 'defined correctly' do
             expect_number_set(ℕ, :ℕ, ::Math::SetTheory::NaturalNumbers, 'natural numbers')
@@ -74,7 +74,7 @@ RSpec.describe 'f11_b02' do
 
         context '𝕎' do
           it 'in correct location' do
-            expect_∃class(:WholeNumbers, ::Math::SetTheory)
+            expect(🧬.∃ᶜ?(:WholeNumbers, ::Math::SetTheory)).to eq(true)
           end
           it 'defined correctly' do
             expect_number_set(𝕎, :𝕎, ::Math::SetTheory::WholeNumbers, 'whole numbers')
@@ -96,7 +96,7 @@ RSpec.describe 'f11_b02' do
 
         context 'ℤ' do
           it 'in correct location' do
-            expect_∃class(:IntegerNumbers, ::Math::SetTheory)
+            expect(🧬.∃ᶜ?(:IntegerNumbers, ::Math::SetTheory)).to eq(true)
           end
           it 'defined correctly' do
             expect_number_set(ℤ, :ℤ, ::Math::SetTheory::IntegerNumbers, 'integer numbers')
@@ -118,7 +118,7 @@ RSpec.describe 'f11_b02' do
 
         context 'ℚ' do
           it 'in correct location' do
-            expect_∃class(:RationalNumbers, ::Math::SetTheory)
+            expect(🧬.∃ᶜ?(:RationalNumbers, ::Math::SetTheory)).to eq(true)
           end
           it 'defined correctly' do
             expect_number_set(ℚ, :ℚ, ::Math::SetTheory::RationalNumbers, 'rational numbers')
@@ -140,7 +140,7 @@ RSpec.describe 'f11_b02' do
 
         context '𝔸ᵣ' do
           it 'in correct location' do
-            expect_∃class(:RealAlgebraicNumbers, ::Math::SetTheory)
+            expect(🧬.∃ᶜ?(:RealAlgebraicNumbers, ::Math::SetTheory)).to eq(true)
           end
           it 'defined correctly' do
             expect_number_set(𝔸ᵣ, :𝔸ᵣ, ::Math::SetTheory::RealAlgebraicNumbers, 'real algebraic numbers')
@@ -162,7 +162,7 @@ RSpec.describe 'f11_b02' do
 
         context '𝔸' do
           it 'in correct location' do
-            expect_∃class(:AlgebraicNumbers, ::Math::SetTheory)
+            expect(🧬.∃ᶜ?(:AlgebraicNumbers, ::Math::SetTheory)).to eq(true)
           end
           it 'defined correctly' do
             expect_number_set(𝔸, :𝔸, ::Math::SetTheory::AlgebraicNumbers, 'algebraic numbers')
@@ -184,7 +184,7 @@ RSpec.describe 'f11_b02' do
 
         context '𝕀' do
           it 'in correct location' do
-            expect_∃class(:IrrationalNumbers, ::Math::SetTheory)
+            expect(🧬.∃ᶜ?(:IrrationalNumbers, ::Math::SetTheory)).to eq(true)
           end
           it 'defined correctly' do
             expect_number_set(𝕀, :𝕀, ::Math::SetTheory::IrrationalNumbers, 'irrational numbers')
@@ -201,7 +201,7 @@ RSpec.describe 'f11_b02' do
 
         context 'ℝ' do
           it 'in correct location' do
-            expect_∃class(:RealNumbers, ::Math::SetTheory)
+            expect(🧬.∃ᶜ?(:RealNumbers, ::Math::SetTheory)).to eq(true)
           end
           it 'defined correctly' do
             expect_number_set(ℝ, :ℝ, ::Math::SetTheory::RealNumbers, 'real numbers')
@@ -223,7 +223,7 @@ RSpec.describe 'f11_b02' do
 
         context 'ℂ' do
           it 'in correct location' do
-            expect_∃class(:ComplexNumbers, ::Math::SetTheory)
+            expect(🧬.∃ᶜ?(:ComplexNumbers, ::Math::SetTheory)).to eq(true)
           end
           it 'defined correctly' do
             expect_number_set(ℂ, :ℂ, ::Math::SetTheory::ComplexNumbers, 'complex numbers')
@@ -245,7 +245,7 @@ RSpec.describe 'f11_b02' do
 
         context '𝕌' do
           it 'in correct location' do
-            expect_∃class(:UniversalSet, ::Math::SetTheory)
+            expect(🧬.∃ᶜ?(:UniversalSet, ::Math::SetTheory)).to eq(true)
           end
           it 'defined correctly' do
             expect_number_set(𝕌, :𝕌, ::Math::SetTheory::UniversalSet, 'universal set')

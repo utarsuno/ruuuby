@@ -5,6 +5,7 @@ RSpec.describe 'f11' do
   context 'functionality' do
     let(:num_sets_aleph_one){[𝕌, 𝕀, ℂ]}
     let(:num_sets_aleph_zero){[ℕ, 𝕎, ℤ, ℚ, 𝔸, 𝔸ᵣ]}
+    # TODO: add the ℕ𝕌𝕃𝕃 set here
     let(:num_sets_finite){[∅, 𝔹]}
 
     context 'global aliases for all instances of `NumberSet`' do

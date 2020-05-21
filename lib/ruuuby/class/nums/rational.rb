@@ -6,6 +6,14 @@ class ::Rational
   # @return [Boolean]
   def one?; self == 1; end
 
+  # @see https://en.wikipedia.org/wiki/Unit_fraction
+  #
+  # @note [Q: a set of all the unit-rationals would be considered 'closed_under_subtraction'?]
+  # @note (1.0 / x) * (1.0 / y) == (1.0 / (x * y))
+  #
+  # @return [Boolean]
+  def μ?; self.numerator.one? && ℕ.∋?(self.denominator); end
+
   # @return [Boolean]
   def smells_like_int?; self.finite? && (self.fdiv(1) % 1 == 0); end
 

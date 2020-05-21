@@ -81,7 +81,7 @@ RSpec.describe 'f06' do
   context 'audits', :audits do
     context 'feature(f06) passes audits (tests not relating to observed functionality)' do
       it 'module is defined in correct location' do
-        expect_∃module(:ObjectF06, ::Ruuuby::Feature::Includable)
+        expect(🧬.∃ᵐ?(:ObjectF06, ::Ruuuby::Feature::Includable)).to eq(true)
       end
       context 'funcs provided are defined in correct location' do
         context 'for' do
@@ -97,8 +97,6 @@ RSpec.describe 'f06' do
             expect_∃⨍(:🛑ary❓, ::Ruuuby::Feature::Includable::ObjectF06)
             expect_∃⨍(:🛑str❓, ::Ruuuby::Feature::Includable::ObjectF06)
             expect_∃⨍(:🛑sym❓, ::Ruuuby::Feature::Includable::ObjectF06)
-            expect_∃⨍(:🛑stry❓, ::Ruuuby::Feature::Includable::ObjectF06)
-            expect_∃⨍(:🛑countable❓, ::Ruuuby::Feature::Includable::ObjectF06)
           end
           it 'f06-b00' do
             expect_∃⨍(:🛑num❓, ::Ruuuby::Feature::Includable::ObjectF06)

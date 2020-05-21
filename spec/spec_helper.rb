@@ -95,34 +95,6 @@ module HelpersGeneral
     end
   end
 
-  def expect_∃class(the_class, owner=nil, expected_result=true)
-    if owner != nil
-      expect(∃class?(the_class.to_sym, owner)).to eq(expected_result)
-      expect(∃class?(the_class.to_s, owner)).to eq(expected_result)
-    else
-      expect(∃class?(the_class.to_sym)).to eq(expected_result)
-      expect(∃class?(the_class.to_s)).to eq(expected_result)
-    end
-  end
-
-  def do_not_expect_∃class(the_class, owner=nil)
-    expect_∃class(the_class, owner, false)
-  end
-
-  def expect_∃module(the_module, owner=nil, expected_result=true)
-    if owner != nil
-      expect(∃module?(the_module.to_sym, owner)).to eq(expected_result)
-      expect(∃module?(the_module.to_s, owner)).to eq(expected_result)
-    else
-      expect(∃module?(the_module.to_sym)).to eq(expected_result)
-      expect(∃module?(the_module.to_s)).to eq(expected_result)
-    end
-  end
-
-  def do_not_expect_∃module(the_module, owner=nil)
-    expect_∃module(the_module, owner, false)
-  end
-
 end
 
 RSpec.configure do |config|
@@ -149,6 +121,7 @@ RSpec.configure do |config|
 
   config.include_context 'shared_context_language_deltas'
   config.include_context 'shared_context_general'
+  config.include_context 'shared_context_f24'
 
   config.include HelpersGeneral
   config.include HelpersFeature16

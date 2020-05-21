@@ -136,7 +136,7 @@ module ::Ruuuby
   module MetaData
 
     # @return [Ruuuby::MetaData::RuuubyORM]
-    def self.orm ; ::Ruuuby::MetaData::RuuubyORM.instance ; end
+    def self.orm; ::Ruuuby::MetaData::RuuubyORM.ℹ; end
   end
 
 end

@@ -36,22 +36,19 @@ RSpec.describe 'Object' do
         context 'cases: positive' do
           it 'w/ single param' do
             expect{🛑bool❓('0', false)}.to_not raise_error
-            expect{🛑🅱️❓('0', true)}.to_not raise_error
           end
           it 'w/ many params' do
             expect{🛑bool❓($PRM_MANY, [true, false])}.to_not raise_error
-            expect{🛑🅱️❓($PRM_MANY, [true, false])}.to_not raise_error
           end
         end
         context 'cases: negative' do
           it 'w/ single param' do
             expect{🛑bool❓('0', nil)}.to raise_error(ArgumentError)
-            expect{🛑🅱️❓('0', nil)}.to raise_error(ArgumentError)
           end
           it 'w/ many params' do
             expect{🛑bool❓($PRM_MANY, [true, nil])}.to raise_error(ArgumentError)
-            expect{🛑🅱️❓($PRM_MANY, [nil, false])}.to raise_error(ArgumentError)
-            expect{🛑🅱️❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+            expect{🛑bool❓($PRM_MANY, [nil, false])}.to raise_error(ArgumentError)
+            expect{🛑bool❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
           end
         end
       end
@@ -226,55 +223,6 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function{🛑stry❓}' do
-      context 'handles needed input scenarios' do
-        context 'cases: positive' do
-          it 'w/ single param' do
-            expect{🛑stry❓('0', '5')}.to_not raise_error
-            expect{🛑stry❓('0', :symbol_fake)}.to_not raise_error
-          end
-          it 'w/ many params' do
-            expect{🛑stry❓($PRM_MANY, ['symbol_fake', :symbol_fake])}.to_not raise_error
-          end
-        end
-        context 'cases: negative' do
-          it 'w/ single param' do
-            expect{🛑stry❓('0', nil)}.to raise_error(ArgumentError)
-          end
-          it 'w/ many params' do
-            expect{🛑stry❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
-            expect{🛑stry❓($PRM_MANY, [5, :symbol_fake])}.to raise_error(ArgumentError)
-            expect{🛑stry❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
-          end
-        end
-      end
-    end
-
-    context 'by adding function{🛑countable❓}' do
-      context 'handles needed input scenarios' do
-        context 'cases: positive' do
-          it 'w/ single param' do
-            expect{🛑countable❓('0', '5')}.to_not raise_error
-            expect{🛑countable❓('0', data_ary_leet)}.to_not raise_error
-            expect{🛑countable❓('0', data_set_leet)}.to_not raise_error
-          end
-          it 'w/ many params' do
-            expect{🛑countable❓($PRM_MANY, ['symbol_fake', data_ary_leet, data_set_leet])}.to_not raise_error
-          end
-        end
-        context 'cases: negative' do
-          it 'w/ single param' do
-            expect{🛑countable❓('0', nil)}.to raise_error(ArgumentError)
-          end
-          it 'w/ many params' do
-            expect{🛑countable❓($PRM_MANY, ['1337', nil])}.to raise_error(ArgumentError)
-            expect{🛑countable❓($PRM_MANY, [1337, data_ary_leet])}.to raise_error(ArgumentError)
-            expect{🛑countable❓($PRM_MANY, [data_set_leet, nil])}.to raise_error(ArgumentError)
-          end
-        end
-      end
-    end
-
     context 'by adding function{ary?}' do
       it 'without effecting Array instance' do
         expect(Array.ary?).to eq(false)
@@ -336,10 +284,10 @@ RSpec.describe 'Object' do
     context 'by adding function{nucleotide?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
-          [Ruuuby, Kernel, Class, String, NilClass].∀{|scenario| expect(scenario.nucleotide? && scenario.🧬?).to eq(true)}
+          [Ruuuby, Kernel, Class, String, NilClass].∀{|scenario| expect(scenario.nucleotide?).to eq(true)}
         end
         it 'cases: negative' do
-          [nil, :Symbol, 'String', []].∀{|scenario| expect(scenario.nucleotide? || scenario.🧬?).to eq(false)}
+          [nil, :Symbol, 'String', []].∀{|scenario| expect(scenario.nucleotide?).to eq(false)}
         end
       end
     end
@@ -347,14 +295,14 @@ RSpec.describe 'Object' do
     context 'by adding function{bool?}' do
       context 'handling needed scenarios' do
         it 'cases: positive' do
-          [true, false, 1 == 1, 1 != 2].∀{|n|expect(n.bool? && n.🅱️? && n.🅱?).to eq(true)}
+          [true, false, 1 == 1, 1 != 2].∀{|n|expect(n.bool?).to eq(true)}
         end
         context 'cases: negative' do
           it 'without effecting TrueClass instance or FalseClass instance' do
-            [TrueClass, FalseClass, MockTrue, MockFalse].∀{|scenario| expect(scenario.bool? || scenario.🅱️? || scenario.🅱?).to eq(false)}
+            [TrueClass, FalseClass, MockTrue, MockFalse].∀{|scenario| expect(scenario.bool?).to eq(false)}
           end
           it 'normal data types checks' do
-            [Class, Object, NilClass, '', 'true', 'False', -1, 1, 0, [], {}, [false], [true]].∀{|n|expect(n.bool? || n.🅱️? || n.🅱?).to eq(false)}
+            [Class, Object, NilClass, '', 'true', 'False', -1, 1, 0, [], {}, [false], [true]].∀{|n|expect(n.bool?).to eq(false)}
           end
         end
       end
@@ -453,20 +401,6 @@ RSpec.describe 'Object' do
         end
         it 'a newly created object inheriting String (does not match)' do
           expect(MockString.🆕('my_str').str?).to eq(false)
-        end
-      end
-    end
-
-    context 'by adding function{stry?}' do
-      context 'with correct return values of' do
-        it 'true' do
-          ['hello_world', '_2', 'nil', 2.to_s].∀{|s|expect(s.stry? && s.to_sym.stry?).to eq(true)}
-        end
-        it 'false' do
-          [String, nil, 0, 1, {}, [], ['str']].∀{|s|expect(s.stry?).to eq(false)}
-        end
-        it 'a newly created object inheriting String (does not match)' do
-          expect(MockString.🆕('my_str').stry?).to eq(false)
         end
       end
     end
@@ -582,13 +516,10 @@ RSpec.describe 'Object' do
     context 'func{bool?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{true.bool?}.to perform_extremely_quickly
-        expect{true.🅱️?}.to perform_extremely_quickly
         expect{false.bool?}.to perform_extremely_quickly
-        expect{false.🅱️?}.to perform_extremely_quickly
       end
       it 'for cases: false' do
         expect{0.bool?}.to perform_extremely_quickly
-        expect{0.🅱️?}.to perform_extremely_quickly
       end
     end
 
@@ -628,25 +559,10 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'func{stry?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{'a'.stry?}.to perform_extremely_quickly
-        expect{:a.stry?}.to perform_extremely_quickly
-      end
-      it 'for cases: false' do
-        expect{5.stry?}.to perform_extremely_quickly
-      end
-    end
-
     context 'func{🛑bool❓}: performs extremely quickly' do
       it 'cases[positive]' do
         expect{🛑bool❓('0', false)}.to perform_extremely_quickly
-        expect{🛑🅱️❓('0', true)}.to perform_extremely_quickly
       end
-      # TODO: missing coverage
-      #it 'cases[negative]' do
-      #  expect{🛑bool❓('0', nil)}.to perform_extremely_quickly
-      #end
     end
 
     context 'funcs{🛑sym❓}: performs extremely quickly' do
@@ -674,32 +590,6 @@ RSpec.describe 'Object' do
     context 'func{🛑str❓}: performs extremely quickly' do
       it 'cases: positive' do
         expect{🛑str❓('0', '5')}.to perform_extremely_quickly
-      end
-    end
-
-    context 'func{🛑stry❓}: performs extremely quickly' do
-      it 'cases: positive' do
-        expect{🛑stry❓('0', '5')}.to perform_extremely_quickly
-        expect{🛑stry❓('0', :a_symbol)}.to perform_extremely_quickly
-      end
-    end
-
-    context 'func{🛑countable❓}: performs extremely quickly' do
-      it 'cases: positive' do
-        expect{🛑countable❓('0', '5')}.to perform_extremely_quickly
-        expect{🛑countable❓('0', data_ary_leet)}.to perform_extremely_quickly
-        expect{🛑countable❓('0', data_set_leet)}.to perform_extremely_quickly
-      end
-    end
-
-
-    context 'func{stry?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{'a'.stry?}.to perform_extremely_quickly
-        expect{:a.stry?}.to perform_extremely_quickly
-      end
-      it 'for cases: false' do
-        expect{5.stry?}.to perform_extremely_quickly
       end
     end
 
