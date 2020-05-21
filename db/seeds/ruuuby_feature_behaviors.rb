@@ -28,4 +28,8 @@
 @f30.spawn_behavior(2, 'create create singleton-Class{NucleotideLikeSpace}, instanced aliased by{🧬}')
 @f30.spawn_behavior(3, 'create create singleton-Class{NumberLikeSpace}, instanced aliased by{🔢}')
 
+@f31.spawn_behavior(0, 'offers an abstraction over the `Rugged` gem')
+@f31.spawn_behavior(1, 'offers health checks for current local dev state')
+
+
 @f98.spawn_behavior(0, 'can set the $PROGRAM_NAME')

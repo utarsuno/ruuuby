@@ -536,3 +536,22 @@
 @v0_0_35.changelog.added_method_to_class(@f10, :μ?, ::Rational)
 @v0_0_35.changelog.added_method_to_class(@f24, :to_🐫⬇, ::String)
 @v0_0_35.changelog.added_method_to_class(@f24, :to_🐍⬆, ::String)
+
+@v0_0_36 = RuuubyRelease.spawn(0, 0, 36)
+@v0_0_36.add_file('lib/math/expression/equation.rb', '', 'not currently in use', @f10)
+@v0_0_36.add_file('lib/math/expression/sequence.rb', '', 'not currently in use', @f10)
+@v0_0_36.add_file('lib/math/group_theory/circle_group.rb', '', 'not active yet, preparation for future versions', @f30)
+@v0_0_36.add_file('lib/ruuuby/ruuuby/git_api.rb', '', '', @f31)
+@v0_0_36.add_file('lib/math/number_theory/number_theory.rb', '', '', @f32)
+@v0_0_36.add_comments(
+    [
+        'remove func{`get_prime_factors`} from `Integer`, newly created module{`Math::NumberTheory`} now offers that functionality',
+        'local git-config settings are now enforced with newly created `💎.api_git`, version-automation refactorings started',
+    ]
+)
+@v0_0_36.changelog.added_method_to_class(@f10, :get_prime_factors, ::Math::NumberTheory)
+@v0_0_36.changelog.added_method_to_class(@f10, :get_divisors, ::Math::NumberTheory)
+@v0_0_36.changelog.added_method_to_class(@f10, :get_proper_divisors, ::Math::NumberTheory)
+@v0_0_36.changelog.added_method_to_class(@f10, :perfect_number?, ::Math::NumberTheory)
+@v0_0_36.changelog.added_method_to_class(@f10, :gcd, ::Math::NumberTheory)
+@v0_0_36.changelog.added_method_to_class(@f10, :coprime?, ::Math::NumberTheory)

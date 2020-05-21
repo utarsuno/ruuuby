@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.35'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.36'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -66,7 +66,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 ---
 
-# ⚠️: documentation not fully synchronized atm
+# ⚠️: documentation & test-coverage #not fully synchronized atm
 
 ---
 
@@ -74,7 +74,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 #### Operations Supported (patched in)
 
-> (⚠️ full-coverage wip): raising to powers(via-superscripts: `⁻⁹...⁻¹, ⁰, ¹...⁹`) with operator(`^`)
+> (⚠️ wip): raising to powers(via-superscripts: `⁻⁹...⁻¹, ⁰, ¹...⁹`) with operator(`^`)
 
 | class(es)/obj  | example | (at least partially) utilizing C-extension?<br/>(java-wip) | notes |
 | ----------:| ------- | :---: |----- |
@@ -118,8 +118,8 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `File`                 | {`static`} `dirname²`, `dirname³`, `dirname⁴`<br/>`replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` | ❌ | (`f12`) |
 | `Dir`                  | `η̂_paths`                           | ❌ | (`f12`) |
 | `File`, `Dir`, `ENV`   | `∅?`                                | ❌ | (`f04`) |
-| `Object`               | `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?`, `enumerable?`<br/>`class?`, `module?`, `nucleotide?` | ✅ | (`f06`) |
-| `Object`               | `singleton?`<br/>`🛑bool❓`, `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑enumerable❓`, `🛑θ❓` | ❌ | (`f06`) |
+| `Object`               | `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?`<br/>`class?`, `module?`, `nucleotide?` | ✅ | (`f06`) |
+| `Object`               | `singleton?`<br/>`🛑bool❓`, `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑θ❓` | ❌ | (`f06`) |
 | `Array`, `Set`         | `remove_empty!`                     | ❌/✅ | (`f07`) |
 | `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞`<br/>`downcase?`{`⬇?`}<br/>`upcase?`{`⬆?`} | ❌ | (`f08`) |
 | `String`               | `🐫?`, `🐫⬇?`, `to_🐫`<br/>`🐍⬆?`, `🐍?`, `to_🐍` | ❌ | (`f24`) |
@@ -138,15 +138,15 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Float`                | `≈≈`, `∞ℂ?`                        | ❌ | (`f17`) |
 
 #### Aliases:
+
 | for                    | base method(s) reference(s)               | alias(es)                  | notes     |
 | ---------------------: | ----------------------------------------- | -------------------------- | --------- |
 | `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲`                 | (`f10`)   |
-| `Object`               | `object_id`, `define_singleton_function`   | `🆔`, `define_singleton_⨍`  | (`f10`)   |
+| `Object`               | `object_id`, `freeze`, `frozen?`, `define_singleton_function` | `🆔`, [`❄️`, `❄`], [`❄️?`, `❄?`], `define_singleton_⨍` | (`f10`)   |
 | `Class`                | `new`                                     | `🆕`                       | (`f10`)   |
 | `Array`, `Set`         | `remove_empty!`                           | `♻️∅!`                     | (`f10`)   |      
-| `Object`               | `freeze`, `frozen?`                       | [`❄️`, `❄`], [`❄️?`, `❄?`] | (`f10`)   |
-| `String`, `Symbol`     | `upcase`, `downcase`                      | `⬆`, `⬇` | (`f10`) |
-| `String`               | `upcase!`, `downcase!`                    | `⬆!`, `⬇!` | (`f10`) |
+| `String`, `Symbol`     | `upcase`, `downcase`                      | `⬆`, `⬇`                  | (`f10`) |
+| `String`               | `upcase!`, `downcase!`                    | `⬆!`, `⬇!`                | (`f10`) |
 | `Object`               | `protected_instance_methods`, `private_methods` | `🛡️funcs`, `🙈funcs` | (`f01`,`f02`) |
 | `Array`                | `frequency_counts`, `disjunctive_union`, `equal_contents?` | `📊`, `⊕`, `≈≈` |  |
 | `Module`               | `const_defined?`, `private_method_defined?` | `∃const?`, `∃🙈func?`      |           |
@@ -165,10 +165,10 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 977      | # of tests (solely relating to core functionality)              |
-| QA        | performance   | 234      | # of tests (solely relating to performance)                     |
-| QA        | DB            | 146      | # of tests (solely relating to the database)                    |
-| CI        | audits        | 132      | # of tests (solely relating to non-functionality based audits)  |
+| QA        | unit          | 985      | # of tests (solely relating to core functionality)              |
+| QA        | performance   | 233      | # of tests (solely relating to performance)                     |
+| QA        | DB            | 153      | # of tests (solely relating to the database)                    |
+| CI        | audits        | 140      | # of tests (solely relating to non-functionality based audits)  |
 | structure | features      | ~35      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |

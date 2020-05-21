@@ -15,8 +15,18 @@ module ::Ruuuby
       def initialize
         @commit_history   = ''
         @unparsed_commits = []
-        @git_configs       = ''
       end
+
+      # upcoming version
+      #def sync_git_commit_history
+      #  last_version               = RuuubyRelease.get_version_prev
+      #  commits_since_last_version = 💎.api_git.fetch_commits_until(last_version.git_commits[0].commit_hash)
+      #  if commits_since_last_version.length == 0
+      #    🛑 RuntimeError.new("current RuuubyRelease has no git commits")
+      #  elsif commits_since_last_version.length == 1
+      #  else
+      #  end
+      #end
 
       # 💎.api.sync_git_commit_history
       #
@@ -116,15 +126,6 @@ module ::Ruuuby
           @commit_history = Ruuuby::Routine::CommandCLI::Syntax::GitCommands.parse_commit_history(output)
         end
         @commit_history
-      end
-
-      def git_configs
-        if @git_configs.∅?
-          cmd         = 💎.cli.new(💎.cli::Syntax::GitCommands::CMD_LIST_CONFIGS)
-          output      = cmd.run
-          @git_configs = output
-        end
-        @git_configs
       end
 
     end

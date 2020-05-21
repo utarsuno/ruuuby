@@ -21,11 +21,6 @@ module Ruuuby
           # @type [String]
           COMMIT_HISTORY   = 'git log --pretty=format:"%H|%ad|%s" --date=iso'.❄️
 
-          # @type [String]
-          CMD_LIST_CONFIGS = 'git config --list'.❄️
-
-          #CONFIG_WINDOWS_NEWLINE_PREVENTION = 'core.autocrlf'.❄️
-
           def self.parse_commit_history(data)
             parsed_data = []
             data.split("\n").∀ do |line|

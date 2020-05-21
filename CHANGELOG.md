@@ -33,6 +33,25 @@
 
 ---
 
+# v0.0.36
+ * remove func{`get_prime_factors`} from `Integer`, newly created module{`Math::NumberTheory`} now offers that functionality
+ * local git-config settings are now enforced with newly created `💎.api_git`, version-automation refactorings started
+
+| path added | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/math/expression/equation.rb` | Math::Expression::Equation | not currently in use | `f10` |
+| `lib/math/expression/sequence.rb` | Math::Expression::Sequence | not currently in use | `f10` |
+| `lib/math/group_theory/circle_group.rb` | Math::GroupTheory::CircleGroup | not currently in use, aliased via(`𝕋`) | `f30` |
+| `lib/ruuuby/ruuuby/git_api.rb` | Ruuuby::MetaData::GitAPI | `💎.api_git` (to fully replace existing `git` functionality found in `💎.api` and elsewhere) | `f31` |
+| `lib/math/number_theory/number_theory.rb` | Math::Ruuuby::NumberTheory |  | `f32` |
+
+| module | class-method(s) added | feature(s) |
+| --- | --- | --- |
+| `Math::NumberTheory::ℕ¹` | `get_prime_factors`, `get_divisors`, `get_proper_divisors`, `perfect_number?` | `f32` |
+| `Math::NumberTheory::ℕ²` | `gcd`, `coprime?` | `f32` |
+
+---
+
 # v0.0.35
  * add `gem 'rugged', '~> 1.0.0'`
  * apply general clean-ups, next few versions to have similar target

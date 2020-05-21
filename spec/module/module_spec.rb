@@ -47,7 +47,7 @@ RSpec.describe 'module' do
         end
         context 'function{get_all_defined_classes} handles needed scenarios' do
           it 'cases: positive' do
-            expect≈≈(💎.get_all_defined_classes, [:RuuubyORM, :RuuubyAPI, :RuuubyEngine])
+            expect≈≈(💎.get_all_defined_classes, [:RuuubyORM, :RuuubyAPI, :RuuubyEngine, :GitAPI])
           end
         end
       end

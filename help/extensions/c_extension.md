@@ -8,6 +8,7 @@
 | resources |
 | --- |
 | https://docs.ruby-lang.org/en/2.7.0/extension_rdoc.html#label-Ruby+Language+Core |
+| https://www.ruby-forum.com/t/rb-gc-register-address-or-rb-gc-mark/219828/13 |
 
 ## Ruby Methods
 

@@ -34,7 +34,8 @@ class RuuubyFeature < ApplicationRecord
   validates :description, presence: true
   validates :id_num, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  def self.spawn(id_num, description)
+  def self.spawn(id_num, description, feature_tags=[])
+    # TODO: {feature_tags} is a future feature to make, ignoring it for now
     RuuubyFeature.create!(id_num: id_num, description: description)
   end
 

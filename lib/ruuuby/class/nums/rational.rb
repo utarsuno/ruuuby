@@ -72,3 +72,5 @@ class ::Rational
   end
 
 end
+
+# TODO: https://en.wikipedia.org/wiki/Irreducible_fraction

@@ -7,22 +7,6 @@ RSpec.describe 'int.rb' do
 
   context 'extends class[Integer]' do
 
-    context 'by adding needed functions' do
-      context 'func{get_prime_factors}' do
-        context 'handles needed scenarios' do
-          it 'cases: positive' do
-            expect(100.get_prime_factors).to eq([[2, 2], [5, 2]])
-            expect(76.get_prime_factors).to eq([[2, 2], [19, 1]])
-            expect(50.get_prime_factors).to eq([[2, 1], [5, 2]])
-            expect(48.get_prime_factors).to eq([[2, 4], [3, 1]])
-            expect(36.get_prime_factors).to eq([[2, 2], [3, 2]])
-            expect(20.get_prime_factors).to eq([[2, 2], [5, 1]])
-            expect(10.get_prime_factors).to eq([[2, 1], [5, 1]])
-          end
-        end
-      end
-    end
-
     context 'by adding function{finite?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do

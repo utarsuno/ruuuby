@@ -18,9 +18,6 @@ module ::Ruuuby
         # @return [Boolean] true, if this object is an instance of `ThetaAngle`
         def θ?; self.is_a?(::ThetaAngle); end
 
-        # @return [Boolean] true, if this object has the `Enumerable` pattern
-        def enumerable?; self.is_a?(Enumerable); end
-
         # @param [Symbol] arg_name
         # @param [*]      arg
         #
@@ -33,14 +30,6 @@ module ::Ruuuby
               🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", [::FalseClass, ::TrueClass], x) unless x.bool?
             end
           end
-        end
-
-        # @param [Symbol] arg_name
-        # @param [*]      arg
-        #
-        # @raise [WrongParamType]
-        def 🛑enumerable❓(arg_name, arg)
-          🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Enumerable, arg) unless arg.enumerable?
         end
 
         # @param [Symbol] arg_name

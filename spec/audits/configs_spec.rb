@@ -177,12 +177,6 @@ RSpec.describe 'general configs' do
       end
     end
 
-    context 'running with correct GIT configs' do
-      it 'has .gitignore file' do
-        expect(📁.∃?('.gitignore')).to eq(true)
-      end
-    end
-
   end
 
 end

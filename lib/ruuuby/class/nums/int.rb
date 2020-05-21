@@ -18,12 +18,4 @@ class ::Integer
 
   # | ------------------------------------------------------------------------------------------------------------------
 
-  # @example
-  #   prime factors of 76 are: 2² x 19¹
-  #   a = 76.get_prime_factors
-  #   a == [[2, 2], [19, 1]]
-  #
-  # @return [Array]
-  def get_prime_factors; Prime.prime_division(self); end
-
 end

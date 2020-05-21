@@ -10,7 +10,6 @@ class << ENV
   def ∅?; self.empty?; end
 
   def ∀🔑(*args); self.each_key(*args); end
-  alias_method :∀🗝, :∀🔑
 
   def ∃🔑?(name); self.has_key?(name); end
 

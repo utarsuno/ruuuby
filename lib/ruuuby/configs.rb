@@ -97,6 +97,8 @@ BEGIN {
 
     ℂ = ::Math::SetTheory::ComplexNumbers.ℹ
 
+    𝕋 = ::Math::GroupTheory::CircleGroup.ℹ
+
     𝕀 = ::Math::SetTheory::IrrationalNumbers.ℹ
 
     ℝ = ::Math::SetTheory::RealNumbers.ℹ

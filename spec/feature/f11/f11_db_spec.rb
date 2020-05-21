@@ -7,7 +7,7 @@ RSpec.describe 'f11' do
     context 'defines f11' do
 
       it 'passes ORM audit' do
-        audit_feature(f11, 'f11', 'add math `number sets` (ex: `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?`, `∞?`, `♾️?`)')
+        audit_feature(f11, 'f11', 'abstract `SetTheory` and offer discrete singleton objs which reference various groups of numbers')
       end
 
       context 'defines behaviors' do

@@ -3,6 +3,7 @@
 module ::Math
   module SetTheory
 
+    # "the `complex-numbers` are the `algebraic completion` of the `real-numbers`"
     class ComplexNumbers < ::Math::SetTheory::NumberSet
       include ::Ruuuby::Attribute::Includable::RuuubySingleton
 

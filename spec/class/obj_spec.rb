@@ -54,35 +54,6 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function{enumerable?}' do
-      context 'handling needed scenarios' do
-        it 'cases: positive' do
-          [[], {}, Set[1, 2, 3]].∀{|n|expect(n.enumerable?).to eq(true)}
-        end
-        it 'cases: negative' do
-          [Array, Hash, String, Set, nil, '', 1337, 1337.0].∀{|n|expect(n.enumerable?).to eq(false)}
-        end
-      end
-    end
-
-    context 'by adding function{🛑enumerable❓}' do
-      context 'handles needed input scenarios' do
-        context 'cases: positive' do
-          it 'w/ single param' do
-            expect{🛑enumerable❓(:enumerable, [])}.to_not raise_error
-            expect{🛑enumerable❓(:enumerable, Set[])}.to_not raise_error
-          end
-        end
-        context 'cases: negative' do
-          it 'w/ single param' do
-            expect{🛑enumerable❓(:not_enumerable, nil)}.to raise_error(ArgumentError)
-            expect{🛑enumerable❓(:not_enumerable, Array)}.to raise_error(ArgumentError)
-            expect{🛑enumerable❓(:not_enumerable, '')}.to raise_error(ArgumentError)
-          end
-        end
-      end
-    end
-
     context 'by adding function{🛑θ❓}' do
       context 'handles needed input scenarios' do
         context 'cases: positive' do
@@ -304,17 +275,6 @@ RSpec.describe 'Object' do
           it 'normal data types checks' do
             [Class, Object, NilClass, '', 'true', 'False', -1, 1, 0, [], {}, [false], [true]].∀{|n|expect(n.bool?).to eq(false)}
           end
-        end
-      end
-    end
-
-    context 'by adding function{enumerable?}' do
-      context 'handling needed scenarios' do
-        it 'cases: positive' do
-          [[], {}, Set[]].∀{|n|expect(n.enumerable?).to eq(true)}
-        end
-        it 'cases: negative' do
-          [Array, Hash, String, Set, nil, '', 1337, 1337.0].∀{|n|expect(n.enumerable?).to eq(false)}
         end
       end
     end
@@ -590,17 +550,6 @@ RSpec.describe 'Object' do
     context 'func{🛑str❓}: performs extremely quickly' do
       it 'cases: positive' do
         expect{🛑str❓('0', '5')}.to perform_extremely_quickly
-      end
-    end
-
-    context 'function{🛑θ❓}: performs extremely quickly' do
-      context 'for needed scenarios' do
-        context 'cases: positive' do
-          it 'w/ single param' do
-            the_enumerable = []
-            expect{🛑enumerable❓(:enumerable, the_enumerable)}.to perform_extremely_quickly
-          end
-        end
       end
     end
 

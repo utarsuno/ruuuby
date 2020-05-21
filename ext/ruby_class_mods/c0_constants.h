@@ -144,6 +144,7 @@ ________________________________________________________________________________
 // ---------------------------------------------------------------------------------------------------------------------
 
 // the object ID for a FIXNUM will always be the same (during Runtime)
+// the VALUE for FIXNUMs will actually contain the numerical value encoded directly (as opposed to VALUE traditionally storing pointer information)
 static const VALUE ℤn9 = INT2FIX(-9);
 static const VALUE ℤn8 = INT2FIX(-8);
 static const VALUE ℤn7 = INT2FIX(-7);

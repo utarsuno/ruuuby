@@ -30,3 +30,5 @@ module ::Math
   end
 
 end
+
+# TODO: https://en.wikipedia.org/wiki/Affine_space#Affine_coordinates

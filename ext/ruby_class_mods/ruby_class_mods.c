@@ -343,7 +343,7 @@ static inline void startup_step4_load_needed_ruuuby_files(void) { // -----------
 
     ensure_loaded_class(obj)
     ensure_loaded_class(re)
-    ensure_loaded_class(method/method)
+    ensure_loaded_class(method)
     // ensure_loaded_class(method/math_function)
     ensure_loaded_ruuuby(arg_err)
     ensure_loaded_enumerable(ary)
@@ -382,6 +382,8 @@ static inline void startup_step4_load_needed_ruuuby_files(void) { // -----------
     ensure_loaded_set_theory(discrete/universal_set)
     ensure_loaded_set_theory(discrete/whole_numbers)
 
+    ensure_loaded_group_theory(circle_group)
+
     ensure_loaded_class(sym) // must be after{attribute_cardinality}
 
     ensure_loaded_class(str) // must be after{attribute_syntax_cache, attribute_cardinality}
@@ -400,6 +402,8 @@ static inline void startup_step4_load_needed_ruuuby_files(void) { // -----------
     ensure_loaded_math(space/discrete/nucleotide-like_space)
     ensure_loaded_math(space/discrete/number-like_space)
 
+    ensure_loaded_math(number_theory/number_theory)
+
     // [⚠️] : excluding: alternative files are loading these already:
     //          * ensure_loaded_ruuuby(ruuuby/metadata/ruuuby_metadata_constants)
     //          * ensure_loaded_ruuuby(version)
@@ -409,6 +413,7 @@ static inline void startup_step4_load_needed_ruuuby_files(void) { // -----------
 
     ensure_loaded_ruuuby(ruuuby/routine_cli)
     ensure_loaded_ruuuby(ruuuby/ruuuby_api)
+    ensure_loaded_ruuuby(ruuuby/git_api)
 
     ensure_loaded_ruuuby(ruuuby/engine/ruuuby_logging)
     ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine)

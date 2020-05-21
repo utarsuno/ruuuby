@@ -116,13 +116,6 @@ TODO formal def: `normal distrubtion`
 | 0x5 | `substitution property` | "if `x = y` and `y = z`, then `x = z` | |
 | 0x6 | `associative property` | TODO: |
 
-### Sequences
-
-| # | term | definition |
-| --- | --- | --- |
-| 0x0 | `arithmetic sequence` | "the difference between one term and the next is a constant` |
-| 0x1 | `geometric sequence` | "each term is found by multiplying the previous term by a constant" |
-
 ### Functions
 
 | # | term | definition |

@@ -1,5 +1,24 @@
 # coding: UTF-8
 
+module ::Math
+
+  module Expression
+    # - a statement on some 'mathematical object(s)'
+    # - a mapping of some input to some output
+    #
+    # also refer to as `Formula`
+    class MathFunc
+
+      def initialize(*args)
+        @all_args = args
+        @context  = nil
+      end
+
+    end
+  end
+
+end
+
 # to be extended upon in future versions
 
 # -------------------------------------------- ⚠️ --------------------------------------------
@@ -33,8 +52,8 @@ class ::MathFunction < ::Method
   def odd?
 
 end
-
-#⨍
 =end
 
 # -------------------------------------------- ⚠️ --------------------------------------------
+
+# TODO: https://mathworld.wolfram.com/DirichletFunction.html

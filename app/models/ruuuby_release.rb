@@ -16,24 +16,20 @@ class ::RuuubyRelease < ApplicationRecord
     ❄️
   end
 
+  # TODO: delete?
+  #
   # possible values that the column `flag_release_status` may hold
   module Flags
-
     # @type [Integer]
     RELEASED_IN_PAST  = -1
-
     # @type [Integer]
     RELEASED_PREVIOUS = 0
-
     # @type [Integer]
     RELEASE_CURRENT   = 1
-
     # @type [Integer]
     RELEASE_NEXT      = 2
-
     # @type [Integer]
     RELEASE_IN_FUTURE = 3
-
     ❄️
   end
 
@@ -48,6 +44,7 @@ class ::RuuubyRelease < ApplicationRecord
 
   before_save :on_before_save
 
+  # TODO: delete (actually use the created ORM obj)
   module AttributeChangelog
 
     class InternalRuuubyChangelog
