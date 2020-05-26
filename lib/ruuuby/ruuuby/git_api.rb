@@ -58,6 +58,20 @@ module ::Ruuuby
         (!@repo.bare?) && (!@repo.empty?) && (!@repo.head_unborn?) && (!@repo.head_detached?)
       end
 
+      # @param [String] sha | the SHA to search for
+      #
+      # @raise [ArgumentError] if sha is not a +String+
+      #
+      # @return [Boolean] true, if the SHA was found as an existing GIT Commit
+      def ∃commit?(sha)
+        🛑str❓(:sha, sha)
+        begin
+        @repo.lookup(sha).class == ::Rugged::Commit
+        rescue ::Rugged::OdbError
+            return false
+        end
+      end
+
       # TODO: NEEDS TDD!!!
       #
       # @param [String] stop_sha
@@ -66,9 +80,7 @@ module ::Ruuuby
       #
       # @return [Array]
       def fetch_commits_until(stop_sha)
-        🛑str❓(:stop_sha, stop_sha)
-        the_commit  = @repo.lookup(stop_sha)
-        if the_commit.class == ::Rugged::Commit
+        if self.∃commit?(stop_sha)
           all_commits = []
           curr_commit = @repo.last_commit
           if curr_commit.oid == stop_sha
@@ -76,7 +88,11 @@ module ::Ruuuby
           end
           while curr_commit.oid != stop_sha
             all_commits << [curr_commit.oid, curr_commit.to_s, curr_commit.message]
-            curr_commit = curr_commit.parents[0]
+            if curr_commit.parents.length != 1
+              🛑 RuntimeError.new("{fetch_commits_until} missing coverage, please see SHA{#{stop_sha}}")
+            else
+              curr_commit = curr_commit.parents[0]
+            end
           end
           all_commits
         else
@@ -88,7 +104,6 @@ module ::Ruuuby
   end
 end
 
-
 module ::Ruuuby
   # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
@@ -97,5 +112,3 @@ module ::Ruuuby
 end
 
 # -------------------------------------------- ⚠️ --------------------------------------------
-
-# TODO: more for {directed asyclic graph}

@@ -55,7 +55,7 @@ class RuuubyFeatureBehavior < ApplicationRecord
   def self.parse_uid_str(raw_uid)
     🛑str❓(:raw_uid, raw_uid)
     raw_uid = raw_uid[1..raw_uid.length-1] if raw_uid.start_with?('b')
-    [raw_uid].η̂!(:∈𝕎)
+    [raw_uid].η̂!(:∈𝕎𝕊)
   end
 
   def self.generate_query_uid(*args)

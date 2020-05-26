@@ -29,12 +29,12 @@ RSpec.describe 'math-operations: raise to subscript powers' do
       it 'handles vals > 1' do
         expect(2^(:∞)).to eq(∞)
         expect(2^(:'-∞')).to eq(0)
-        expect((2^(:∞ℂ)).¿?).to eq(true)
+        expect((2^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val 1' do
-        expect((1^(:∞)).¿?).to eq(true)
-        expect((1^(:'-∞')).¿?).to eq(true)
-        expect((1^(:∞ℂ)).¿?).to eq(true)
+        expect((1^(:∞)).nan?).to eq(true)
+        expect((1^(:'-∞')).nan?).to eq(true)
+        expect((1^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val 0' do
         expect(0^(:∞)).to eq(0)
@@ -42,14 +42,14 @@ RSpec.describe 'math-operations: raise to subscript powers' do
         expect(0^(:∞ℂ)).to eq(0)
       end
       it 'handles val -1' do
-        expect((-1^(:∞)).¿?).to eq(true)
-        expect((-1^(:'-∞')).¿?).to eq(true)
-        expect((-1^(:∞ℂ)).¿?).to eq(true)
+        expect((-1^(:∞)).nan?).to eq(true)
+        expect((-1^(:'-∞')).nan?).to eq(true)
+        expect((-1^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val < 1' do
         expect(-2^(:∞)).to eq(data_float_negative_inf)
         expect(-2^(:'-∞')).to eq(0)
-        expect((-2^(:∞ℂ)).¿?).to eq(true)
+        expect((-2^(:∞ℂ)).nan?).to eq(true)
       end
 
       context 'handles bad args' do
@@ -70,17 +70,17 @@ RSpec.describe 'math-operations: raise to subscript powers' do
       it 'handles vals > 1' do
         expect(2.0^(:∞)).to eq(∞)
         expect(2.0^(:'-∞')).to eq(0)
-        expect((2.0^(:∞ℂ)).¿?).to eq(true)
+        expect((2.0^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val 1' do
-        expect((1.0^(:∞)).¿?).to eq(true)
-        expect((1.0^(:'-∞')).¿?).to eq(true)
-        expect((1.0^(:∞ℂ)).¿?).to eq(true)
+        expect((1.0^(:∞)).nan?).to eq(true)
+        expect((1.0^(:'-∞')).nan?).to eq(true)
+        expect((1.0^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val < 1 && val > 0' do
         expect((0.5)^(:∞)).to eq(0.0)
         expect((0.5)^(:'-∞')).to eq(∞)
-        expect((0.5^(:∞ℂ)).¿?).to eq(true)
+        expect((0.5^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val 0' do
         expect(0.0^(:∞)).to eq(0)
@@ -90,17 +90,17 @@ RSpec.describe 'math-operations: raise to subscript powers' do
       it 'handles val < 0 && val > -1' do
         expect((-0.5)^(:∞)).to eq(0.0)
         expect((-0.5)^(:'-∞')).to eq(data_float_negative_inf)
-        expect((-0.5^(:∞ℂ)).¿?).to eq(true)
+        expect((-0.5^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val -1' do
-        expect((-1.0^(:∞)).¿?).to eq(true)
-        expect((-1.0^(:'-∞')).¿?).to eq(true)
-        expect((-1.0^(:∞ℂ)).¿?).to eq(true)
+        expect((-1.0^(:∞)).nan?).to eq(true)
+        expect((-1.0^(:'-∞')).nan?).to eq(true)
+        expect((-1.0^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val < 1' do
         expect(-2.0^(:∞)).to eq(data_float_negative_inf)
         expect(-2.0^(:'-∞')).to eq(0.0)
-        expect((-2.0^(:∞ℂ)).¿?).to eq(true)
+        expect((-2.0^(:∞ℂ)).nan?).to eq(true)
       end
 
       context 'handles bad args' do
@@ -121,17 +121,17 @@ RSpec.describe 'math-operations: raise to subscript powers' do
       it 'handles vals > 1' do
         expect(data_rational_3^(:∞)).to eq(∞)
         expect(data_rational_3^(:'-∞')).to eq(0)
-        expect((data_rational_3^(:∞ℂ)).¿?).to eq(true)
+        expect((data_rational_3^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val 1' do
-        expect((data_rational_one^(:∞)).¿?).to eq(true)
-        expect((data_rational_one^(:'-∞')).¿?).to eq(true)
-        expect((data_rational_one^(:∞ℂ)).¿?).to eq(true)
+        expect((data_rational_one^(:∞)).nan?).to eq(true)
+        expect((data_rational_one^(:'-∞')).nan?).to eq(true)
+        expect((data_rational_one^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val < 1 && val > 0' do
         expect((Rational(1, 2))^(:∞)).to eq(0.0)
         expect((Rational(1, 2))^(:'-∞')).to eq(∞)
-        expect((Rational(1, 2)^(:∞ℂ)).¿?).to eq(true)
+        expect((Rational(1, 2)^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val 0' do
         expect(data_rational_zero^(:∞)).to eq(0)
@@ -141,17 +141,17 @@ RSpec.describe 'math-operations: raise to subscript powers' do
       it 'handles val < 0 && val > -1' do
         expect((Rational(-1, 2))^(:∞)).to eq(0.0)
         expect((Rational(-1, 2))^(:'-∞')).to eq(::Float::INFINITY_COMPLEX)
-        expect((Rational(-1, 2)^(:∞ℂ)).¿?).to eq(true)
+        expect((Rational(-1, 2)^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val -1' do
-        expect((data_rational_negative_one^(:∞)).¿?).to eq(true)
-        expect((data_rational_negative_one^(:'-∞')).¿?).to eq(true)
-        expect((data_rational_negative_one^(:∞ℂ)).¿?).to eq(true)
+        expect((data_rational_negative_one^(:∞)).nan?).to eq(true)
+        expect((data_rational_negative_one^(:'-∞')).nan?).to eq(true)
+        expect((data_rational_negative_one^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val < 1' do
         expect(data_rational_negative_3^(:∞)).to eq(::Float::INFINITY_COMPLEX)
         expect(data_rational_negative_3^(:'-∞')).to eq(0.0)
-        expect((data_rational_negative_3^(:∞ℂ)).¿?).to eq(true)
+        expect((data_rational_negative_3^(:∞ℂ)).nan?).to eq(true)
       end
 
       context 'handles bad args' do

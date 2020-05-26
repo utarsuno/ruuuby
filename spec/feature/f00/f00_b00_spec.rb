@@ -31,7 +31,7 @@ RSpec.describe 'f00_b00' do
         end
         context 'cases: error' do
           it 'with numeric data (outside of ℕ)' do
-            expect{[-1337, -1, 0, 1, 1337].η̂!(:∈ℕ)}.to raise_error(RuntimeError)
+            expect{[-1337, -1, 0, 1, 1337].η̂!(:∈ℕ)}.to raise_error(ArgumentError)
           end
           it 'with string data (outside of ℕ)' do
             expect{['-1337', 1337].η̂!(:∈ℕ)}.to raise_error(ArgumentError)

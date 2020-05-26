@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.36'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.37'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -66,7 +66,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 ---
 
-# ⚠️: documentation & test-coverage #not fully synchronized atm
+# ⚠️: documentation & test-coverage not fully synced atm
 
 ---
 
@@ -89,9 +89,9 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 ### TOPLEVEL_BINDING Modifications:
 
-| (`global`) func(s) added | notes | as C-extension? <br/> (java-wip) |
+| (`global`) func(s) added | notes | as C-extension?<br/>(java-wip) |
 | ---: | :--- | :----: |
-| `℮`, `logₑ`, `log₂`, `log₁₀`<br/>`√`, `∛`, `π`, `Ⴔ`<br/>`¼`, `½`, `¾`, `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒`<br/>`∞`, `∞ℂ`, `¿`, `γ`<br/>`sin`, `cos`, `tan`, `arcsin`, `arccos`, `arctan`, `cot`, `csc`, `sec`, `sin²`, `cos²` | (`f10`, `f17`) | ❌/✅ |
+| `℮`, `logₑ`, `log₂`, `log₁₀`<br/>`√`, `∛`, `π`, `Ⴔ`<br/>`¼`, `½`, `¾`, `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒`<br/>`∞`, `∞ℂ`, `γ`<br/>`sin`, `cos`, `tan`, `arcsin`, `arccos`, `arctan`, `cot`, `csc`, `sec`, `sin²`, `cos²` | (`f10`, `f17`) | ❌/✅ |
 | `🌽` | (`f10`): aliases `Kernel` | ❌ |
 | `📁`, `📂`, `🗄️` | - (`f12`) aliases to:<br/>`File`, `Dir` | ❌ |
 | `📅`, `🕒`, `📅🕒` | - (`f26`) aliases to:<br/>`Date`, `Time`, `DateTime` | ❌ |
@@ -119,7 +119,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Dir`                  | `η̂_paths`                           | ❌ | (`f12`) |
 | `File`, `Dir`, `ENV`   | `∅?`                                | ❌ | (`f04`) |
 | `Object`               | `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?`<br/>`class?`, `module?`, `nucleotide?` | ✅ | (`f06`) |
-| `Object`               | `singleton?`<br/>`🛑bool❓`, `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑θ❓` | ❌ | (`f06`) |
+| `Object`               | `singleton?`, `Ⓣ`<br/>`🛑bool❓`, `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑θ❓` | ❌ | (`f06`) |
 | `Array`, `Set`         | `remove_empty!`                     | ❌/✅ | (`f07`) |
 | `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞`<br/>`downcase?`{`⬇?`}<br/>`upcase?`{`⬆?`} | ❌ | (`f08`) |
 | `String`               | `🐫?`, `🐫⬇?`, `to_🐫`<br/>`🐍⬆?`, `🐍?`, `to_🐍` | ❌ | (`f24`) |
@@ -142,18 +142,17 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | for                    | base method(s) reference(s)               | alias(es)                  | notes     |
 | ---------------------: | ----------------------------------------- | -------------------------- | --------- |
 | `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲`                 | (`f10`)   |
-| `Object`               | `object_id`, `freeze`, `frozen?`, `define_singleton_function` | `🆔`, [`❄️`, `❄`], [`❄️?`, `❄?`], `define_singleton_⨍` | (`f10`)   |
+| `Object`               | `object_id`, `ⓣ`, `freeze`, `frozen?`, `define_singleton_function` | `🆔`, `class`, [`❄️`, `❄`], [`❄️?`, `❄?`], `define_singleton_⨍` | (`f10`)   |
 | `Class`                | `new`                                     | `🆕`                       | (`f10`)   |
 | `Array`, `Set`         | `remove_empty!`                           | `♻️∅!`                     | (`f10`)   |      
 | `String`, `Symbol`     | `upcase`, `downcase`                      | `⬆`, `⬇`                  | (`f10`) |
 | `String`               | `upcase!`, `downcase!`                    | `⬆!`, `⬇!`                | (`f10`) |
 | `Object`               | `protected_instance_methods`, `private_methods` | `🛡️funcs`, `🙈funcs` | (`f01`,`f02`) |
-| `Array`                | `frequency_counts`, `disjunctive_union`, `equal_contents?` | `📊`, `⊕`, `≈≈` |  |
+| `Array`                | `frequency_counts`, `disjunctive_union`, `equal_contents?`<br/>`↩∀` | `📊`, `⊕`, `≈≈`<br/>`reverse_each` | (`f10`) |
 | `Module`               | `const_defined?`, `private_method_defined?` | `∃const?`, `∃🙈func?`      |           |
 | `Module`               | `private`, `private_constant`<br/>`protected`, `protected_method_defined?` | `🙈`, `🙈constants⟶`<br/>`🛡️`, `∃🛡️func?` | (`f01`)<br/>(`f02`) |
 | `Array`, `Hash`, `Set` | `each`                                    | `∀`                        | (`f10`) |
 | `Array`, `String`      | `reverse`, `reverse!`                     | `↩`, `↩!`                  | (`f10`) |
-| `Array`                | `reverse_each`                            | `↩∀`                       | (`f10`) |
 | `Enumerable`           | `map`, `each_with_index`                  | `⨍`, `∀ₓᵢ`                 | (`f10`) |
 | `Hash`                 | `key?`                                    | `∃🔑?`                     | (`f10`) |
 | `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                       | (`f04`) |
@@ -165,10 +164,11 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 985      | # of tests (solely relating to core functionality)              |
+| QA        | unit          | 1009     | # of tests (solely relating to core functionality)              |
 | QA        | performance   | 233      | # of tests (solely relating to performance)                     |
-| QA        | DB            | 153      | # of tests (solely relating to the database)                    |
-| CI        | audits        | 140      | # of tests (solely relating to non-functionality based audits)  |
+| QA        | DB            | 176      | # of tests (solely relating to the database)                    |
+| CI        | audits        | 114      | # of tests (solely relating to non-functionality based audits)  |
+| CI        | locale        | 28       | # of tests (solely relating to local-dev-setup)                 |
 | structure | features      | ~35      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |
@@ -177,23 +177,24 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ---
 
 ### Gems:
-| gem                        | version   | :development  | :runtime  |
-| -------------------------: | :-------: | :-----------: | :-------: |
-| `tty-command`              | `0.9.0`   | ✅            | ✅       |
-| `rugged`                   | `1.0.0`   | ✅            | ❌       |
-| `sqlite3`                  | `1.4.2`   | ✅            | ❌       |
-| `activerecord`             | `5.2.4.1` | ✅            | ❌       |
-| `schema_plus_foreign_keys` | `0.1.8`   | ✅            | ❌       |
-| `bundler`                  | `2.1.4`   | ✅            | ❌       |
-| `rake-compiler`            | `1.1.0`   | ✅            | ❌       |
-| `rdoc`                     | `6.2.1`   | ✅            | ❌       |
-| `rake`                     | `13.0.1`  | ✅            | ❌       |
-| `rspec`                    | `3.9.0`   | ✅            | ❌       |
-| `rspec-benchmark`          | `0.5.1`   | ✅            | ❌       |
+
+| gem | version | :development, :runtime | category |
+| ---: | :--- | :---: | ---: |
+| `tty-command` | [`0.9.0`](https://rubygems.org/gems/tty-command) | ✅, ✅ | `CLI` |
+| `rugged` | [`1.0.0`](https://rubygems.org/gems/rugged) | ✅, ❌ | `GIT` |
+| `rdoc` | [`6.2.1`](https://rubygems.org/gems/rdoc) | ✅, ❌ | `DOC` |
+| `bundler` | [`2.1.4`](https://rubygems.org/gems/bundler) | ✅, ❌ | `CI` |
+| `rspec` | [`3.9.0`](https://rubygems.org/gems/rspec) | ✅, ❌ | `QA` |
+| `rspec-benchmark` | [`0.5.1`](https://rubygems.org/gems/rspec-benchmark) | ✅, ❌ | `QA` |
+| `rake` | [`13.0.1`](https://rubygems.org/gems/rake) | ✅, ❌ | `EXT` |
+| `rake-compiler` | [`1.1.0`](https://rubygems.org/gems/rake-compiler) | ✅, ❌ | `EXT` |
+| `sqlite3` | [`1.4.2`](https://rubygems.org/gems/sqlite3) | ✅, ❌ | `DB` |
+| `activerecord` | [`5.2.4.1`](https://rubygems.org/gems/activerecord) | ✅, ❌ | `DB` |
+| `schema_plus_foreign_keys` | [`0.1.8`](https://rubygems.org/gems/schema_plus_foreign_keys) | ✅, ❌ | `DB` |
 
 ---
 
-## Commands
+### Commands
 
 #### General Tasks:
 |  preface           | cmd                 | description                                          |
@@ -203,7 +204,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `bundle exec rake` | `compile`           | compile any native C-extensions with code changes    |
 | `bundle exec rake` | `release`           | push git version tags and publish gem to Rubygems    |
 | `bin/`             | `audit`             | general all-around build & health check              |
-| `bin/`             | `audit_db`<br/>`audit_quick`<br/>`audit_quickest`<br/>`audit_all_but_performance` | similar to above but for targeted portions           |
+| `bin/`             | `audit_db`<br/>`audit_quick`<br/>`audit_quickest`<br/>`audit_all_but_performance` | similar to above but for targeted portions |
 | `bin/`             | `setup`             | install dependencies                                 |
 | `bin/`             | `console`           | interactive console for easier experimenting         |
 | `gem`              | `server`            | host interactive web-page at `http://0.0.0.0:8808` to see documentation for currently installed gems |
@@ -221,7 +222,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 ### Project Layout:
 |  directory     | description of contents                         |
-| -------------: | :---------------------------------------------: |
+| -------------: | :---------------------------------------------- |
 | `app`          | currently only holds `ORM` definitions           |
 | `bin`          | `executable` files                               |
 | `db`           | database `schema`, `seed`, and `migrations`     |

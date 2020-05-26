@@ -120,12 +120,10 @@ RSpec.describe 'theta_angle' do
       context 'unary operators' do
         context 'func{-@}' do
           it 'handles needed scenarios' do
-            expect(-θ°(0)).to eq(θ°(0))
             expect(-θ°(-45)).to eq(θ°(315))
 
             expect(-θ°(-405)).to eq(θ°(315))
 
-            expect(-θᵍ(0)).to eq(θᵍ(0))
             expect((-θᵍ(-50)).real).to eq(θᵍ(350).real)
             expect((-θᵍ(350)).real).to eq(θᵍ(-50).real)
 
@@ -139,18 +137,7 @@ RSpec.describe 'theta_angle' do
         end
         context 'func{+@}' do
           context 'handles needed scenarios' do
-            it 'for additive identity' do
-              expect(+θ°(45)+θ°(0)).to eq(+θ°(45))
-              expect(+θ°(0)+θ°(45)).to eq(+θ°(45))
-              expect(+θ°(0)++θ°(0)).to eq(+θ°(0))
-              expect(θ°(0)++θ°(0)).to eq(+θ°(0))
-
-              expect(θ°(-0)+θ°(0)).to eq(+θ°(0))
-              expect(θ°(0)+θ°(-0)).to eq(+θ°(0))
-              expect(θ°(-0)+θ°(-0)).to eq(+θ°(0))
-            end
             it 'w/ regular data' do
-              expect(+θ°(0)).to eq(θ°(0))
               expect(+θᵍ(-50)).to eq(θ°(-45))
               expect(+θ𝞽(1.0 / 8.0)).to eq(θ°(45))
               expect(+θ°(45)).to eq(+θ°(45))
@@ -449,39 +436,23 @@ RSpec.describe 'theta_angle' do
                 expect(angle2.class).to eq(::ThetaAngle)
               end
               it 'θ°' do
-                expect(θ°(0).normalize!.to_f).to eq(0)
-                expect(θ°(-1.1).normalize!.to_f).to eq(-1.1)
-                expect(θ°(1.1).normalize!.to_f).to eq(1.1)
-                expect(θ°(-359).normalize!.to_f).to eq(-359)
-                expect(θ°(359).normalize!.to_f).to eq(359)
-                expect(θ°(-360).normalize!.to_f).to eq(-360)
-                expect(θ°(360).normalize!.to_f).to eq(360)
+                [0, -1.1, 1.1, -359, 359, -360, 360].∀{|scenario| expect(θ°(scenario).normalize!).to eq(scenario)}
 
-                expect(θ°(390).normalize!.to_f).to eq(30)
-                expect(θ°(2560).normalize!.to_f).to eq(40)
-                expect(θ°(-30).normalize!.to_f).to eq(-30)
-                expect(θ°(-400).normalize!.to_f).to eq(-40)
+                expect(θ°(390).normalize!).to eq(30)
+                expect(θ°(2560).normalize!).to eq(40)
+                expect(θ°(-30).normalize!).to eq(-30)
+                expect(θ°(-400).normalize!).to eq(-40)
               end
               it 'θᵍ' do
-                expect(θᵍ(0).normalize!.to_f).to eq(0)
-                expect(θᵍ(-1.1).normalize!.to_f).to eq(-1.1)
-                expect(θᵍ(1.1).normalize!.to_f).to eq(1.1)
-                expect(θᵍ(-399).normalize!.to_f).to eq(-399)
-                expect(θᵍ(399).normalize!.to_f).to eq(399)
-                expect(θᵍ(-400).normalize!.to_f).to eq(-400)
-                expect(θᵍ(400).normalize!.to_f).to eq(400)
+                [0, -1.1, 1.1, -399, 399, -400, 400].∀{|scenario| expect(θᵍ(scenario).normalize!).to eq(scenario)}
 
-                expect(θᵍ(444).normalize!.to_f).to eq(44)
-                expect(θᵍ(15337).normalize!.to_f).to eq(137)
-                expect(θᵍ(-401).normalize!.to_f).to eq(-1)
-                expect(θᵍ(-900).normalize!.to_f).to eq(-100)
+                expect(θᵍ(444).normalize!).to eq(44)
+                expect(θᵍ(15337).normalize!).to eq(137)
+                expect(θᵍ(-401).normalize!).to eq(-1)
+                expect(θᵍ(-900).normalize!).to eq(-100)
               end
               it 'θ𝞽' do
-                expect(θ𝞽(0).normalize!.to_f).to eq(0)
-                expect(θ𝞽(-0.1).normalize!.to_f).to eq(-0.1)
-                expect(θ𝞽(0.1).normalize!.to_f).to eq(0.1)
-                expect(θ𝞽(-1.0).normalize!.to_f).to eq(-1.0)
-                expect(θ𝞽(0.1).normalize!.to_f).to eq(0.1)
+                [0, -0.1, 0.1, -1.0, 0.1].∀{|scenario| expect(θ𝞽(scenario).normalize!).to eq(scenario)}
 
                 expect(θ𝞽(-2.0).normalize!.to_f).to eq(-0.0)
                 expect(θ𝞽(-9.5).normalize!.to_f).to eq(-0.5)
@@ -489,16 +460,12 @@ RSpec.describe 'theta_angle' do
                 expect(θ𝞽(9.5).normalize!.to_f).to eq(0.5)
               end
               it 'θʳ' do
-                expect(θʳ(0).normalize!.to_f).to eq(0)
-                expect(θʳ(-0.1).normalize!.to_f).to eq(-0.1)
-                expect(θʳ(0.1).normalize!.to_f).to eq(0.1)
-                expect(θʳ(-2.0 * π).normalize!.to_f).to eq(-2.0 * π)
-                expect(θʳ(2.0 * π).normalize!.to_f).to eq(2.0 * π)
+                [0, -0.1, 0.1, -2.0 * π, 2.0 * π].∀{|scenario| expect(θʳ(scenario).normalize!).to eq(scenario)}
 
-                expect(θʳ(-2.0 * π).normalize!.to_f).to eq(-2.0 * π)
-                expect(θʳ(2.0 * π).normalize!.to_f).to eq(2.0 * π)
-                expect(θʳ(-3.0 * π).normalize!.to_f).to eq(-1.0 * π)
-                expect(θʳ(5.0 * π).normalize!.to_f).to eq(1.0 * π)
+                expect(θʳ(-2.0 * π).normalize!).to eq(-2.0 * π)
+                expect(θʳ(2.0 * π).normalize!).to eq(2.0 * π)
+                expect(θʳ(-3.0 * π).normalize!).to eq(-1.0 * π)
+                expect(θʳ(5.0 * π).normalize!).to eq(1.0 * π)
               end
             end
           end # end: {func{normalize!}}

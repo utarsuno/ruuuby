@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-RSpec.describe 'f28' do
+RSpec.describe 'f28_b00' do
   context 'functionality' do
     context 'golden ratio' do
       context 'has correct value' do

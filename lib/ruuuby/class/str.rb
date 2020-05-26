@@ -184,7 +184,7 @@ module ::Ruuuby
       module StringF21
 
         # @return [Boolean] true, if this `String` is length 1 with a it's character being a digit (ascii value between 48 and 57)
-        def digit? ; self.𝔠₁? && self.ord < 58 && self.ord > 47 ; end
+        def digit?; self.𝔠₁? && self.ord < 58 && self.ord > 47; end
 
         # TODO: temporary design
         #
@@ -216,18 +216,6 @@ module ::Ruuuby
           end
         end
 
-        # TODO: REMOVE THIS?
-        #
-        # @return [Boolean] true, if this `String` equals exactly some representation of infinity
-        def ∞?
-          case(self.length)
-          when 1 ; self == '∞'
-          when 2 ; ::String::Syntax::SQL_LEN_2_INF.∋?(self)
-          when 3 ; ::String::Syntax::SQL_LEN_3_INF.∋?(self)
-          else   ; false
-          end
-        end
-
         # @return [Boolean] true, if this `String` can be converted into a number w/o raising any exception
         def to_num?
           self.to_num
@@ -240,46 +228,20 @@ module ::Ruuuby
         #
         # @return [Numeric, Symbol, ThetaAngle]
         def to_num
+          if 𝕊.∋?(self)
+            return 𝕊.parse(self)
+          end
+
           case(self.length)
           when 0
             self.🛑⨍_to_num
           when 1
-            return self.to_i if self.digit?
-            case(self)
-            when '∞'; return ::Float::INFINITY
-            when 'π'; return ::Math::PI
-            when '𝚽'; return ::Float::GOLDEN_RATIO
-            when 'Ψ'; return ::Float::SUPER_GOLDEN_RATIO
-            when 'ρ'; return ::Float::PLASTIC_RATIO
-            when 'Ⴔ'; return ::Math::ANGLE_GOLDEN
-            when 'τ'; return ::Math::ANGLE_TAU
-            when 'γ'; return ::Float::EULER_MASCHERONI_CONSTANT
-            when '℮'; return ::Math::E
-            when 'Ω'; return ::Float::OMEGA_CONSTANT
-            when '½'; return ::Float::ONE_HALF
-            when '⅓'; return ::Float::ONE_THIRD
-            when '⅔'; return ::Float::TWO_THIRDS
-            when '¼'; return ::Float::ONE_FOURTH
-            when '¾'; return ::Float::THREE_FOURTHS
-            when '⅕'; return ::Float::ONE_FIFTH
-            when '⅖'; return ::Float::TWO_FIFTHS
-            when '⅗'; return ::Float::THREE_FIFTHS
-            when '⅘'; return ::Float::FOUR_FIFTHS
-            when '⅙'; return ::Float::ONE_SIXTH
-            when '⅐'; return ::Float::ONE_SEVENTH
-            when '⅛'; return ::Float::ONE_EIGHTH
-            when '⅜'; return ::Float::THREE_EIGHTHS
-            when '⅝'; return ::Float::FIVE_EIGHTHS
-            when '⅞'; return ::Float::SEVEN_EIGHTHS
-            when '⅑'; return ::Float::ONE_NINTH
-            when '⅒'; return ::Float::ONE_TENTH
-            else    ; self.🛑⨍_to_num
+            if self.digit?
+              return self.to_i
+            else
+              self.🛑⨍_to_num
             end
           when 2
-            if self.∞?
-              return ::Float::INFINITY_COMPLEX if self == '∞ℂ'
-              return self.₀?('-') ? -Float::INFINITY : Float::INFINITY
-            end
             case(self.₀)
             when '.'
               if self.₁.digit? ; return Float(self)
@@ -299,7 +261,6 @@ module ::Ruuuby
           when 3
             if self.match?(String.syntax_len_3_as_flt)     ; return Float(self)
             elsif self.match?(String.syntax_len_3_as_int) ; return Integer(self)
-            elsif self.match?(String.syntax_len_3_as_inf) ; return self.₀?('-') ? -Float::INFINITY : Float::INFINITY
             elsif self.⬇ == 'nan'                        ; return Float::NAN
             else                                          ; self.🛑⨍_to_num
             end
@@ -309,8 +270,6 @@ module ::Ruuuby
             else                                         ; self.🛑⨍_to_num
             end
           end
-          # negative-scenario length
-          self.🛑⨍_to_num
         end
 
       end
@@ -525,9 +484,6 @@ class ::String
     LEN_3_AS_FLT          = '([+-]\.\d)|(\d\.\d)|(\.\d\d)|(\de\d)'.❄️
 
     # @type [String]
-    LEN_3_AS_INF          = '[+-]♾️'.❄️
-
-    # @type [String]
     LEN_ANY_AS_INT        = '[+-]?\d+'.❄️
 
     # expression referenced from: https://mentalized.net/journal/2011/04/14/ruby-how-to-check-if-a-string-is-numeric/
@@ -537,12 +493,6 @@ class ::String
 
     # @type [String]
     TRIGONOMETRIC_ANGLE   = '(\d+)?π(/\d+)?'.❄️
-
-    # @type [Array]
-    SQL_LEN_2_INF         = %w(+∞ -∞ ♾️ ∞ℂ).❄️
-
-    # @type [Array]
-    SQL_LEN_3_INF         = %w(+♾️ -♾️).❄️
 
     # @type [String]
     SQL_ENCODING_UTF_8    = 'UTF-8'.❄️

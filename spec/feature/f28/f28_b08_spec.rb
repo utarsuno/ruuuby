@@ -1,28 +1,19 @@
 # coding: UTF-8
 
-RSpec.describe 'f28' do
+RSpec.describe 'f28_b08' do
   context 'functionality' do
-    context 'golden angle' do
+    context 'angle tau' do
       context 'has correct value' do
-        it 'Ⴔ == π * (3 - √(5))' do
-          expect(Ⴔ).to eq(θʳ(π * (3 - √(5))).°)
-          expect(Ⴔ.ʳ).to eq(θʳ(π * (3 - √(5))))
-        end
-        it '360 / 𝚽 == 360 - Ⴔ' do
-          expect(360.0 / 𝚽).to eq(360.0 - Ⴔ)
-        end
-        it 'Ⴔ == 360 / 𝚽^²' do
-          expect(Ⴔ).to eq(360.0 / (𝚽^²))
-        end
-        it 'Ⴔ == 360 * (2 - 𝚽)' do
-          expect(Ⴔ).to eq(τ * (2.0 - 𝚽))
-        end
-        it 'Ⴔ == 360 * (1 - (1 / 𝚽))' do
-          # 𝚽 - 1 == 1 / 𝚽
-          # for above equation, LHS is slightly more precise than the RHS
-          expect(Ⴔ).to eq(360 * (1.0 - (𝚽 - 1)))
+        it 'γ == Float::EULER_MASCHERONI_CONSTANT' do
+          expect(γ).to eq(::Float::EULER_MASCHERONI_CONSTANT)
+          expect(γ.ⓣ).to eq(::Float)
+
+          as_string = γ.to_s
+          first_50   = '0.57721566490153286060651209008240243104215933593992'
+          expect(γ).to eq(0.5772156649015329)
+          expect(as_string[0..as_string.length-2]).to eq(first_50[0..16])
         end
       end
-    end # end: {golden angle}
+    end
   end
 end

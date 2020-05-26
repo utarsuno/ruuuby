@@ -8,8 +8,6 @@ class ::Numeric
   # @return [Boolean] true, if this number is neither NaN or ±∞
   def ∞? ; self.infinite? != nil ; end
 
-  alias_method :♾️?, :∞?
-
   # ---------------------------------------------------------------------------------------------------------- | *f16* |
 
   # @type [Symbol]

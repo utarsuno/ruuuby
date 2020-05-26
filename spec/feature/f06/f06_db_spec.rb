@@ -19,7 +19,7 @@ RSpec.describe 'f06_db' do
       end
 
       it 'defines{b01}' do
-        audit_feature_behavior(f06, f06_b01, 'b01', 'offer func{str?} with param-check-func{🛑num❓} offering the normalizers{!∅}')
+        audit_feature_behavior(f06, f06_b01, 'b01', 'offer func{str?} with param-check-func{🛑str❓} offering the normalizers{!∅}')
       end
     end # end: {defines behaviors}
 

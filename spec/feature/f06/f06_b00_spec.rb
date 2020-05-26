@@ -88,6 +88,7 @@ RSpec.describe 'f06_b00' do
             context 'ℕ' do
               it 'w/ normalization{∈ℕ}' do
                 data_∈ℕ_false.∀{|scenario| expect(scenario.num?(:∈ℕ)).to eq(false)}
+                expect(∞.num?(:∈ℕ)).to eq(false)
               end
               it 'w/ normalization{∈ℕ𝕊}' do
                 (data_∈ℕ_false + %w(-0.0 0 0.0)).∀{|scenario| expect(scenario.num?(:∈ℕ𝕊)).to eq(false)}
@@ -127,6 +128,25 @@ RSpec.describe 'f06_b00' do
           context 'handles needed input scenarios' do
             context 'cases: positive' do
               context 'w/ single param' do
+
+                context 'ℕ' do
+                  it 'w/ normalization{∈ℕ}' do
+                    data_∈ℕ_true.∀{|scenario| expect{🛑num❓('0', scenario, :∈ℕ)}.to_not raise_error}
+                  end
+                  it 'w/ normalization{∈ℕ𝕊}' do
+                    (data_∈ℕ_false + %w(-0.0 0 0.0)).∀{|scenario| expect{scenario.num?(:∈ℕ𝕊)}.to_not raise_error}
+                  end
+                end # end: {ℕ}
+
+                context 'ℤ' do
+                  it 'w/ normalization{∈ℤ}' do
+                    data_∈ℤ_true.∀{|scenario| expect{🛑num❓('0', scenario, :∈ℤ)}.to_not raise_error}
+                  end
+                  it 'w/ normalization{∈ℤ𝕊}' do
+                    (data_∈ℤ_true + %w(0 0.0 -1 -1.0 1 1.0)).∀{|scenario| expect{🛑num❓('0', scenario, :∈ℤ𝕊)}.to_not raise_error}
+                  end
+                end # end: {ℤ}
+
                 it 'handles numericals' do
                   expect{🛑num❓('0', 0)}.to_not raise_error
                   expect{🛑num❓('0', 1.337)}.to_not raise_error
@@ -150,6 +170,25 @@ RSpec.describe 'f06_b00' do
             end
             context 'cases: negative' do
               context 'w/ single param' do
+
+                context 'ℕ' do
+                  it 'w/ normalization{∈ℕ}' do
+                    [[∞] + data_∈ℕ_false].∀{|scenario| expect{🛑num❓('0', scenario, :∈ℕ)}.to raise_error(ArgumentError)}
+                  end
+                  it 'w/ normalization{∈ℕ𝕊}' do
+                    ([∞, '∞'] + data_∈ℕ_false + %w(0 0.0)).∀{|scenario| expect{🛑num❓('0', scenario, :∈ℕ𝕊)}.to raise_error(ArgumentError)}
+                  end
+                end # end: {ℕ}
+
+                context 'ℤ' do
+                  it 'w/ normalization{∈ℤ}' do
+                    data_∈ℤ_false.∀{|scenario| expect{🛑num❓('0', scenario, :∈ℤ)}.to raise_error(ArgumentError)}
+                  end
+                  it 'w/ normalization{∈ℤ𝕊}' do
+                    (data_∈ℤ_false + %w(-1.1 -1.1 0.1337, -0.45, 1.1)).∀{|scenario| expect{🛑num❓('0', scenario, :∈ℤ𝕊)}.to raise_error(ArgumentError)}
+                  end
+                end # end: {ℤ}
+
                 it 'handles numericals not falling within 𝕌' do
                   expect{🛑num❓('0', data_float_nan, :∈𝕌)}.to raise_error(ArgumentError)
                   expect{🛑num❓('0', data_float_inf, :∈𝕌)}.to raise_error(ArgumentError)

@@ -73,7 +73,7 @@ module ::Math
         n == ::Math::NumberTheory::ℕ¹.get_proper_divisors(n).sum
       end
 
-    end
+    end # end: {ℕ¹}
 
     # equations within +NumberTheory+ that involve 2-inputs
     module ℕ²
@@ -110,9 +110,21 @@ module ::Math
       # @return [Boolean] true, if `a` and `b` have a `greatest common divisor` of 1
       def self.coprime?(a, b); ::Math::NumberTheory::ℕ².gcd(a, b) == 1; end
 
+    end # end: {ℕ²}
+
+    # Liouville's Constant
+
+    module Symbolic
+
+      # TODO: Liouville's Constant (OEIS A012245)
+      # https://mathworld.wolfram.com/LiouvillesConstant.html
+      # https://en.wikipedia.org/wiki/Liouville_number
+      #  ^ (relevant as no Liouville number can be `rational`)
+      #  ^ (all Liouville numbers are `transcendental`)
+
     end
 
-  end
+  end # end: {NumberTheory}
 
 end
 

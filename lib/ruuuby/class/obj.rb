@@ -12,6 +12,12 @@ module ::Ruuuby
       # defines the operations needed to support Feature(`f06`) that are applied to Class(`Object`)
       module ObjectF06
 
+        # @return [Class]
+        def ⓣ; self.class; end
+
+        # @return [String]
+        def Ⓣ; self.class.to_s; end
+
         # @return [Boolean] true, if this object includes the m(`Singleton`)
         def singleton?; self.class.ancestors.∋?(Singleton); end
 

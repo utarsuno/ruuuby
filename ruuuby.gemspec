@@ -1,30 +1,25 @@
-# encoding: UTF-8
+# coding: UTF-8
 
 Gem::Specification.new do |gem|
   require_relative 'lib/ruuuby/version'
   require_relative 'lib/ruuuby/ruuuby/metadata/ruuuby_metadata_constants'
 
-  ruuuby_metadata = ::Ruuuby::MetaData
-  ruuuby_urls     = ruuuby_metadata::References
-
-  gem_version     = ::Ruuuby::VERSION
-
   gem.name                  = 'ruuuby'
-  gem.version               = gem_version
+  gem.version               = ::Ruuuby::VERSION
   gem.summary               = 'wip: increase quality of Ruby coding life'
   gem.description           = '{wip: flavored modifications & extensions for increased quality of Ruby coding life}'
   gem.authors               = ["Uladzislau Tarsunou"]
-  gem.homepage              = ruuuby_urls::URI_HOME
+  gem.homepage              = 'https://github.com/utarsuno/ruuuby'
   gem.license               = 'MIT'
-  gem.required_ruby_version = Gem::Requirement.new(">= #{ruuuby_metadata::BuiltWith::RUBY_VERSION}")
+  gem.required_ruby_version = Gem::Requirement.new(">= #{RUBY_VERSION}")
   gem.platform              = Gem::Platform.local
-  gem.post_install_message  = "Gem{ruuuby, v#{gem_version.to_s}} has just been installed, cheers!"
+  gem.post_install_message  = "Gem{ruuuby, v#{::Ruuuby::VERSION.to_s}} has just been installed, cheers!"
   gem_metadata              = gem.metadata
 
-  gem_metadata['homepage_uri']      = ruuuby_urls::URI_HOME
-  gem_metadata['source_code_uri']   = ruuuby_urls::URI_GIT
-  gem_metadata['changelog_uri']     = ruuuby_urls::URI_CHANGELOG
-  gem_metadata['documentation_uri'] = ruuuby_urls::URI_DOCUMENTATION
+  gem_metadata['homepage_uri']      = gem.homepage
+  gem_metadata['source_code_uri']   = "#{gem.homepage}.git"
+  gem_metadata['changelog_uri']     = "#{gem.homepage}/blob/master/CHANGELOG.md"
+  gem_metadata['documentation_uri'] = "#{gem.homepage}/tree/master/help"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -43,13 +38,18 @@ Gem::Specification.new do |gem|
   gem.files -= Dir.glob('lib/ide_helper.rb')
   gem.extensions << 'ext/ruby_class_mods/extconf.rb'
 
-  ruuuby_metadata::BuiltWith::GemDependencies::Environment::Development::ALL_GEMS.each do |gem_name, gem_version|
-    gem.add_development_dependency(gem_name, "~> #{gem_version}")
-  end
-
-  ruuuby_metadata::BuiltWith::GemDependencies::Environment::Runtime::ALL_GEMS.each do |gem_name, gem_version|
-    gem.add_development_dependency(gem_name, "~> #{gem_version}")
-    gem.add_runtime_dependency(gem_name, "~> #{gem_version}")
-  end
+  # ===================================================================
+  gem.add_development_dependency(:bundler, '~> 2.1.4')
+  gem.add_development_dependency(:rake, '~> 13.0.1')
+  gem.add_development_dependency(:rspec, '~> 3.9.0')
+  gem.add_development_dependency(:'rspec-benchmark', '~> 0.5.1')
+  gem.add_development_dependency(:'rake-compiler', '~> 1.1.0')
+  gem.add_development_dependency(:'tty-command', '~> 0.9.0')
+  gem.add_runtime_dependency(:'tty-command', '~> 0.9.0')
+  gem.add_development_dependency(:sqlite3, '~> 1.4.2')
+  gem.add_development_dependency(:activerecord, '~> 5.2.4.1')
+  gem.add_development_dependency(:schema_plus_foreign_keys, '~> 0.1.8')
+  gem.add_development_dependency(:rugged, '~> 1.0.0')
+  # ====================================================================
 
 end

@@ -34,29 +34,6 @@ RSpec.describe ::Kernel do
               expect(∛(25)).to eq(Math.cbrt(25))
             end
           end
-          context 'adds function{π}' do
-            it 'aliases{Math::PI}' do
-              expect(π).to eq(::Math::PI)
-            end
-          end
-          context 'adds function{∞}' do
-            it 'aliases{Float::INFINITY}' do
-              expect(∞).to eq(::Float::INFINITY)
-            end
-          end
-          context 'adds function{¿}' do
-            it 'aliases{Float::NAN}' do
-              expect(¿.nan?).to eq(true)
-            end
-          end
-          context 'adds function{γ}' do
-            it 'defines up to first 50 digits' do
-              as_string = γ.to_s
-              first_50   = '0.57721566490153286060651209008240243104215933593992'
-              expect(γ).to eq(0.5772156649015329)
-              expect(as_string[0..as_string.length-2]).to eq(first_50[0..16])
-            end
-          end
         end
       end
 

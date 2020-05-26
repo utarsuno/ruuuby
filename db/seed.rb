@@ -14,7 +14,8 @@ require_relative 'db'
 @v0_0_33.released!
 @v0_0_34.released!
 @v0_0_35.released!
-@v0_0_36.released!(false)
+@v0_0_36.released!
+@v0_0_37.released!(false)
 
 # TODO: FOR v0.0.??? (), ADD OBJECT/FUNC TO GATHER ALL RELEASES AND THEN PRINT OUT CHANGELOG
 # (to remove code below)

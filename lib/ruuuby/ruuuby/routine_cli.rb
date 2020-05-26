@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# coding: UTF-8
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
@@ -14,22 +14,6 @@ module Ruuuby
 
       TIMEOUT_DEFAULT  = 6
       TIMEOUT_EXTENDED = 60
-
-      module Syntax
-        module GitCommands
-
-          # @type [String]
-          COMMIT_HISTORY   = 'git log --pretty=format:"%H|%ad|%s" --date=iso'.❄️
-
-          def self.parse_commit_history(data)
-            parsed_data = []
-            data.split("\n").∀ do |line|
-              parsed_data << line.split('|').remove_empty!
-            end
-            parsed_data
-          end
-        end
-      end
 
       def initialize(the_cmd=nil)
         @cmd          = nil

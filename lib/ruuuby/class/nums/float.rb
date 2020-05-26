@@ -14,8 +14,6 @@ class ::Float
   # @return [Boolean] false, `complex-infinity` is currently represented through a `Symbol`
   def ∞ℂ?; false; end
 
-  alias_method :¿?, :nan?
-
   # @return [Boolean]
   def one?; self == 1; end
 

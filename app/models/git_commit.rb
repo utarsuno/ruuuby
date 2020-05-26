@@ -17,6 +17,7 @@ class GitCommit < ApplicationRecord
     COMMIT_HASH = '(\d|[a-z]){40}'.❄️
   end
 
+  include ::Comparable
   include ::Ruuuby::ORMAttribute::Includable::UID
 
   # _________________________________________________________________________________________________________________
@@ -66,32 +67,31 @@ class GitCommit < ApplicationRecord
     ::GitCommit.where('ruuuby_release_id = ?', ruuuby_release.id).sort{|a, b| a.commit_author_date <=> b.commit_author_date }
   end
 
-  # @param [GitCommit] git_commit
+  # @param [RuuubyRelease] them
   #
-  # @raise [ArgumentError] raised if param(git_commit) is not of Class(`GitCommit`)
+  # @raise [ArgumentError] if them is not a +GitCommit+
   #
-  # @return [Boolean] true, if this `GitCommit` belongs to a `Release` of a previous version relative to compared commit, previous point in time is verified if within the same version release
-  def <(git_commit)
-    🛑 ArgumentError.new("| c{GitCommit}-> m{<} got arg(git_commit) w/ type{#{git_commit.class.to_s}} when a{GitCommit} is required |") unless git_commit.is_a?(::GitCommit)
-    if self.ruuuby_release == git_commit.ruuuby_release
-      self.commit_author_date < git_commit.commit_author_date
+  # @return [Integer] 1 for >, 0 for ==, -1 for <
+  def <=>(them)
+    if them.is_a?(::GitCommit)
+      if self.ruuuby_release == them.ruuuby_release
+        self.commit_author_date <=> them.commit_author_date
+      else
+        self.ruuuby_release <=> them.ruuuby_release
+      end
     else
-      self.ruuuby_release < git_commit.ruuuby_release
+      nil
     end
   end
 
-  # @param [GitCommit] git_commit
-  #
-  # @raise [ArgumentError] raised if param(git_commit) is not of Class(`GitCommit`)
-  #
-  # @return [Boolean] true, if this `GitCommit` belongs to a `Release` of a more recent version relative to compared commit, more recent in time is verified if within the same version release
-  def >(git_commit)
-    🛑 ArgumentError.new("| c{GitCommit}-> m{>} got arg(git_commit) w/ type{#{git_commit.class.to_s}} when a{GitCommit} is required |") unless git_commit.is_a?(::GitCommit)
-    if self.ruuuby_release == git_commit.ruuuby_release
-      self.commit_author_date > git_commit.commit_author_date
-    else
-      self.ruuuby_release > git_commit.ruuuby_release
-    end
+  # ----------------
+
+  def source_for_seed
+    release = self.ruuuby_release
+    source  = "@v#{release.vmajor.to_s}_#{release.vminor.to_s}_#{release.vtiny.to_s}"
+    parsed_datetime = (self.commit_author_date.in_time_zone('Central Time (US & Canada)')).to_s.as_iso8601
+    source += ".spawn_git_commit('#{self.commit_subject}', '#{parsed_datetime}', '#{self.commit_hash}')"
+    source
   end
 
 end

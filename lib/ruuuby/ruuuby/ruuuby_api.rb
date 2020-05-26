@@ -13,78 +13,29 @@ module ::Ruuuby
       attr_reader :commit_history
 
       def initialize
-        @commit_history   = ''
-        @unparsed_commits = []
       end
 
-      # upcoming version
-      #def sync_git_commit_history
-      #  last_version               = RuuubyRelease.get_version_prev
-      #  commits_since_last_version = 💎.api_git.fetch_commits_until(last_version.git_commits[0].commit_hash)
-      #  if commits_since_last_version.length == 0
-      #    🛑 RuntimeError.new("current RuuubyRelease has no git commits")
-      #  elsif commits_since_last_version.length == 1
-      #  else
-      #  end
-      #end
-
-      # 💎.api.sync_git_commit_history
-      #
+      # TODO: wip
       def sync_git_commit_history
-        all_commits       = self.commit_history
-        last_verified_hash = GitCommit.get_latest.commit_hash
-
-        unless last_verified_hash == all_commits[0][0]
-          💎.debug('Commits are not synced, syncing them now')
-          all_commits.each do |commit|
-            if commit[0] == last_verified_hash
-              break
-            else
-              @unparsed_commits << commit
-            end
-          end
-          version_of_those_commits = @unparsed_commits[0][2].dup.♻️⟵(' ')
-          version_of_those_commits = version_of_those_commits.split('.').map!{|n| n.to_i}
-          the_version              = version_of_those_commits.join('_')
-          file_lines                = []
-          💎.debug('----------------------------')
-          @unparsed_commits.reverse_each do |single_commit|
-            file_lines << "@v#{the_version}.spawn_git_commit('#{single_commit[2]}', '#{single_commit[1].to_s.as_iso8601}', '#{single_commit[0]}')"
-          end
-          if file_lines.length > 0
-            path_file = ::Ruuuby::MetaData::Paths::SpecificFiles::SEED_GIT_COMMITS
-            puts "Ensuring file{#{path_file}} is ready for release..."
-            ::File.insert_lines_before_expr(path_file, file_lines, "#NEXT_VERSION_HERE")
-            puts "updated, done!"
-
-            # TODO: DYNAMICALLY UPDATE THE ORM STATE HERE!!!
-          end
-          💎.debug('----------------------------')
-        else
-          puts "git commits are currently synced"
-          💎.debug("git commits are currently synced")
+        orm_version_current = ::RuuubyRelease.get_version_curr
+        if orm_version_current.git_commits.empty?
+          🛑 RuntimeError.new("current RuuubyRelease{#{orm_version_current.uid.to_s}} has no git commits")
         end
-      end
+        last_release_commit = orm_version_current.get_commit_newest
+        commits_to_sync     = 💎.api_git.fetch_commits_until(last_release_commit.commit_hash)
 
-      def sync_version_number
-        version_next = RuuubyRelease.get_version_next.uid
-        version_next = version_next[1..version_next.length]
+        if commits_to_sync.∅?
+          puts 'no commits to sync'
+        else
+          raise 'wip'
+        end
 
-        version_curr = RuuubyRelease.get_version_curr.uid_components.join('.')
-
-        💎.debug("Ruuuby's current-version{#{version_curr}}, the next version is{#{version_next}}")
-
-        # TODO: AUTOMATION, if files had changes made, automate and/or make note in relation to then needed GIT operations
-
-        💎.debug('----------------------------')
-        self.api_routine_update_version_file(version_curr, version_next)
-        💎.debug('----------------------------')
-        self.api_routine_update_readme_file(version_curr, version_next)
-        💎.debug('----------------------------')
+        commits_to_sync
       end
 
       🙈
 
+      # TODO: refactor, should just be 1 param(expected_version)
       def api_routine_update_version_file(version_current, version_next)
         self.api_routine_update_file(
             ::Ruuuby::MetaData::Paths::SpecificFiles::RUUUBY_VERSION,
@@ -94,6 +45,7 @@ module ::Ruuuby
         )
       end
 
+      # TODO: refactor, should just be 1 param(expected_version)
       def api_routine_update_readme_file(version_current, version_next)
         self.api_routine_update_file(
             ::Ruuuby::MetaData::Paths::SpecificFiles::RUUUBY_README,
@@ -115,17 +67,6 @@ module ::Ruuuby
           puts 'done!'
         end
         num_matched
-      end
-
-      # ---
-
-      def commit_history
-        if @commit_history.∅?
-          cmd             = 💎.cli.new(💎.cli::Syntax::GitCommands::COMMIT_HISTORY)
-          output          = cmd.run
-          @commit_history = Ruuuby::Routine::CommandCLI::Syntax::GitCommands.parse_commit_history(output)
-        end
-        @commit_history
       end
 
     end

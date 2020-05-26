@@ -1,30 +1,16 @@
 # coding: UTF-8
 
-RSpec.describe 'f28' do
+RSpec.describe 'f28_b06' do
   context 'functionality' do
-    context 'omega constant{Ω}' do
+    context 'plastic ratio' do
       context 'has correct value' do
-        context 'Ωe^Ω = 1' do
-          it 'passes w/ Ruuuby' do
-            expect(Ω * (℮^Ω)).to eq(1)
-          end
-          it 'avoiding default precision-loss' do
-            expect(Ω * (℮ ** Ω)).to_not eq(1)
-          end
+        it 'ρ == ∛((9+√(69))/18.0) + ∛((9-√(69))/18.0)' do
+          expect(ρ.≈≈(∛((9+√(69))/18.0) + ∛((9-√(69))/18.0))).to eq(true)
         end
-        it 'ln(1/Ω) = Ω' do
-          expect((logₑ(Ω^⁻¹)).≈≈(Ω)).to eq(true)
-          expect((logₑ(1.0 / Ω)).≈≈(Ω)).to eq(true)
-        end
-        context 'e^(-Ω) = Ω' do
-          it 'passes w/ Ruuuby' do
-            expect(℮^(-Ω)).to eq(Ω)
-          end
-          it 'avoiding default precision-loss' do
-            expect(℮ ** (-Ω)).to_not eq(Ω)
-          end
+        it 'ρ³ = ρ + 1' do
+          expect(ρ ** 3).to eq(ρ + 1)
         end
       end
-    end # end: {omega constant{Ω}}
+    end # end: {plastic ratio}
   end
 end

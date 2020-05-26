@@ -6,12 +6,7 @@ RSpec.describe 'f30_b02' do
     context 'behavior{b02}' do
 
       it 'exists as needed' do
-        the_ref = 🧬
-        the_id  = the_ref.🆔
-        expect(the_ref.class).to eq(::Math::Space::NucleotideLikeSpace)
-        expect(the_ref.🆔).to eq(::Math::Space::NucleotideLikeSpace.ℹ.🆔)
-        expect(the_ref.🆔).to eq(the_id)
-        expect(🧬.🆔).to eq(the_ref.🆔)
+        expect_feature_behavior_as_needed(🧬, ::Math::Space::NucleotideLikeSpace)
       end
 
       context 'func{∃ᶜ?}' do

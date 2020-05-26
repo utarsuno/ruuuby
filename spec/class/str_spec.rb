@@ -196,9 +196,6 @@ RSpec.describe 'str' do
             it 'func{syntax_len_any_as_int}' do
               expect_syntax(::String, :syntax_len_any_as_int, syntax_str::LEN_ANY_AS_INT)
             end
-            it 'func{syntax_len_3_as_inf}' do
-              expect_syntax(::String, :syntax_len_3_as_inf, syntax_str::LEN_3_AS_INF)
-            end
             it 'func{syntax_len_3_as_int}' do
               expect_syntax(::String, :syntax_len_3_as_int, syntax_str::LEN_3_AS_INT)
             end
@@ -209,14 +206,6 @@ RSpec.describe 'str' do
               expect_syntax(::String, :syntax_trigonometric_angle, syntax_str::TRIGONOMETRIC_ANGLE)
             end
           end # end: {symbolic-math}
-        end
-        context 'cold cache exists' do
-          it 'syntax{SQL_LEN_2_INF} is not cached' do
-            do_not_expect_syntax(::String, :syntax_sql_len_2_inf)
-          end
-          it 'syntax{SQL_LEN_3_INF} is not cached' do
-            do_not_expect_syntax(::String, :syntax_sql_len_3_inf)
-          end
         end
       end # end: {syntax-functions}
     end # end: {by adding needed static functions}
@@ -407,19 +396,6 @@ RSpec.describe 'str' do
 
     context 'functions for math related operations (ex: symbolic math)' do
 
-      context 'func{∞?}' do
-        context 'handles needed scenarios' do
-          it 'cases: positive' do
-            %w(∞ +∞ -∞ ♾️ +♾️ -♾️ ∞ℂ).∀{|scenario| expect(scenario.∞?).to eq(true)}
-          end
-          it 'cases: negative' do
-            cases_a = %w(∞∞ ++∞ ∞-- ♾️∞ ♾️+ --♾️ ℂ∞ ℂ +ℂ -ℂ +ℂ∞ -ℂ∞ ℂ∞+ ℂ∞-)
-            cases_b = ['- ∞', "\n", "\t"]
-            (cases_a + cases_b).∀{|scenario| expect(scenario.∞?).to eq(false)}
-          end
-        end
-      end
-
       context 'func{to_radian}' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
@@ -456,10 +432,6 @@ RSpec.describe 'str' do
               expect('+∞'.to_num).to eq(data_float_inf)
               expect('-∞'.to_num).to eq(data_float_negative_inf)
 
-              expect('♾️'.to_num).to eq(data_float_inf)
-              expect('+♾️'.to_num).to eq(data_float_inf)
-              expect('-♾️'.to_num).to eq(data_float_negative_inf)
-
               expect('∞ℂ'.to_num).to eq(::Float::INFINITY_COMPLEX)
             end
             it 'pie(π)' do
@@ -491,13 +463,13 @@ RSpec.describe 'str' do
               expect('-γ'.to_num).to eq(-γ)
             end
             it 'NaN' do
-              expect('nan'.to_num.¿?).to eq(true)
-              expect('NaN'.to_num.¿?).to eq(true)
-              expect('NAN'.to_num.¿?).to eq(true)
+              expect('nan'.to_num.nan?).to eq(true)
+              expect('NaN'.to_num.nan?).to eq(true)
+              expect('NAN'.to_num.nan?).to eq(true)
             end
             context 'for func{to_num?}' do
               it 'same-cases' do
-                %w(∞ +∞ -∞ ♾️ +♾️ -♾️ ∞ℂ π +π -π Ⴔ Ω Ψ ρ τ 𝚽 γ +γ -γ).∀{|scenario| expect(scenario.to_num?).to eq(true)}
+                %w(∞ +∞ -∞ ∞ℂ π +π -π Ⴔ Ω Ψ ρ τ 𝚽 γ +γ -γ).∀{|scenario| expect(scenario.to_num?).to eq(true)}
               end
             end
           end

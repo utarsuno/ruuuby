@@ -18,15 +18,15 @@ RSpec.describe 'int.rb' do
     context 'by adding function{infinite?}' do
       context 'handles needed scenarios' do
         it 'cases: false' do
-          data_range_ints.∀{|n| expect(n.infinite? || n.∞? || n.♾️? || n.∞ℂ?).to eq(false)}
+          data_range_ints.∀{|n| expect(n.infinite? || n.∞? || n.∞ℂ?).to eq(false)}
         end
       end
     end
 
-    context 'by adding functions{nan?, ¿?}' do
+    context 'by adding function{nan?}' do
       context 'handles needed scenarios' do
         it 'cases: false' do
-          data_range_ints.∀{|n| expect(n.nan? || n.¿?).to eq(false)}
+          data_range_ints.∀{|n| expect(n.nan?).to eq(false)}
         end
       end
     end
@@ -233,7 +233,6 @@ RSpec.describe 'int.rb' do
       context 'func{nan?}' do
         it 'for cases: false' do
           expect{data_int_leet.nan?}.to perform_extremely_quickly
-          expect{data_int_leet.¿?}.to perform_extremely_quickly
         end
       end
     end

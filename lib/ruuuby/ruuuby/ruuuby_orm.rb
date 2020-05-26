@@ -28,23 +28,17 @@ module Ruuuby
 
         # ar_internal_metadata
 
-        module SchemaRuuubyFeatures
-        end
-        module SchemaRuuubyFeatureBehaviors
-        end
-        module SchemaRuuubyChangelogs
-        end
-        module SchemaRuuubyReleases
-        end
-        module SchemaGitCommits
-        end
-        module SchemaRuuubyDirs
-        end
-        module SchemaRuuubyFiles
-        end
+        module SchemaRuuubyFeatures;end
+        module SchemaRuuubyFeatureBehaviors;end
+        module SchemaRuuubyChangelogs;end
+        module SchemaRuuubyReleases;end
+        module SchemaRuuubyGems;end
+        module SchemaGitCommits;end
+        module SchemaRuuubyDirs;end
+        module SchemaRuuubyFiles;end
 
         # @type [Array]
-        ALL_ORM_SCHEMAS = [SchemaRuuubyReleases, SchemaRuuubyFeatures, SchemaRuuubyFeatureBehaviors, SchemaRuuubyChangelogs, SchemaGitCommits, SchemaRuuubyDirs, SchemaRuuubyFiles].❄️
+        ALL_ORM_SCHEMAS = [SchemaRuuubyReleases, SchemaRuuubyFeatures, SchemaRuuubyFeatureBehaviors, SchemaRuuubyChangelogs, SchemaRuuubyGems, SchemaGitCommits, SchemaRuuubyDirs, SchemaRuuubyFiles].❄️
       end
 
       # @return [Array]
@@ -111,6 +105,7 @@ module Ruuuby
           require_relative '../../../app/model_attributes/includable/uid'
           require_relative '../../../app/models/application_record'
           require_relative '../../../app/models/ruuuby_release'
+          require_relative '../../../app/models/ruuuby_gem'
           require_relative '../../../app/models/ruuuby_feature'
           require_relative '../../../app/models/ruuuby_feature_behavior'
           require_relative '../../../app/models/ruuuby_changelog'

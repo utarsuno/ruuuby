@@ -5,31 +5,57 @@
  * `automatic differentiation`
  
 #### v?.?.0
- * `dual-numbers` to be considered as intermediate before automatic differentiation
+ * `dual-numbers` (for before `automatic differentiation`)
+
+#### v0.3.0
+ * `Quaternions`
 
 #### v0.2.0
  * clear `tech debt` and all `feature abstracts`
    * adding `automatic differentiation` should involve near `0% (of time allocation)` towards `version-relating documentation & audits`
  * clear targeted missing coverage
+ * enormous section of missing `ORM` tests
 
 #### v0.1.0
- * `Quaternions`
+ * resolve needed feature coverage w/ `trigonometry`, `geometry`, and `ThetaAngle`
 
-#### v0.0.33-40
+#### v0.0.33-50
  * formalize angles, both notation and implementation
    * (`steradians`, `degree`, `radian`, `gon`, `turns`)
    * `rectangular-form`/`polar-form`
    * `complex-number-plane`/`complex-angles`
    * angular rotation vs angular velocity
-   * dimension vs units
-   * `arcminute`, `arcsecond`
-   * add textual parsing for ThetaAngles (ex: `3°7'30''` == `3 + 7/60 + 30/3600` == `3.125°`)
- * resolve unit tests for `RuuubyFile` path syntax
- * enormous section of missing `ORM` tests
+   * dimensions vs units
+   * add textual parsing for ThetaAngles (ex: `3°7'30''` == `3 + 7/60 + 30/3600` == `3.125°`) {`arcminute`, `arcsecond`}
 
 ---
 
 ### ⚠️: atm documentation & tests synchronization % is too low
+
+---
+
+# v0.0.37
+ * have `ORM`: `RuuubyRelease` and `GitCommit` include `Comparable`; replacing redundant funcs{`>`, `<`} to the single func{`<=>`}
+ * remove `♾️`, `¿` from all sources, textual parsing, code aliases, etc; (too redundant)
+ * remove func{∞?} from Class(`String`)
+ * add `ORM`{`RuuubyGem`}, some functionality was added; also removed Runtime constants needed solely for unit-tests (these tests are now semi-generated w/ `ORM` data))
+ * add `RSpec` section for `locale` (local configs); `(not final design)`
+ * (`f22`) will now be designated for `GC` and the `GC::Profiler`, previous `f22` moved to {`f28_b12`}
+
+| path added | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/virtual/f06.rb` |  |  | `f06` |
+| `app/models/ruuuby_gem.rb` | `RuuubyGem` |  | `f15` |
+| `lib/virtual/f28.rb` |  |  | `f28` |
+| `lib/math/complex_analysis/complex_analysis.rb` | `::Math::ComplexAnalysis` | not currently in use | `f30` |
+| `lib/math/trigonometry/trigonometry.rb` | `::Math::Trigonometry` | not currently in use | `f30` |
+| `lib/math/graph_theory/graph_theory.rb` | `::Math::GraphTheory` | not currently in use | `f30` |
+| `lib/math/geometry/geometry.rb` | `::Math::Geometry` | not currently in use | `f30` |
+| `lib/math/space/discrete/symbolic_numbers_space.rb` | `Math::Space::SymbolicNumbersSpace` | 𝕊 | `f30` |
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Object` | `ⓣ`, `Ⓣ` | `f06` |
 
 ---
 

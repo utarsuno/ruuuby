@@ -20,57 +20,15 @@ RSpec.describe 'db/seed.rb' do
           end
         end
 
-        context 'defines f03' do
-          it 'passes ORM audit' do
-            audit_feature(f03, 'f03', "`𝔠` to alias concept of `cardinality` (offered in both styles of `OOP` & `'functional'`)")
-          end
-        end
-
-        context 'defines f04' do
-          it 'passes ORM audit' do
-            audit_feature(f04, 'f04', '`∅` to alias concept of `empty`')
-          end
-        end
-
         context 'defines f05' do
           it 'passes ORM audit' do
             audit_feature(f05, 'f05', '`>>` to offer reverse functionality of `<<`')
           end
         end
 
-        context 'defines f06' do
-          it 'passes ORM audit' do
-            audit_feature(f06, 'f06', 'enable quick type checks against any object (ex: `variable.int?`)')
-          end
-        end
-
         context 'defines f07' do
           it 'passes ORM audit' do
             audit_feature(f07, 'f07', 'enable quick clean up functions for `enumerables`')
-          end
-        end
-
-        context 'defines f08' do
-          it 'passes ORM audit' do
-            audit_feature(f08, 'f08', 'enable quick editing functions for `enumerables` (& `String`)')
-          end
-        end
-
-        context 'defines f09' do
-          it 'passes ORM audit' do
-            audit_feature(f09, 'f09', 'add math `set operations` (especially for `enumerables` & `String`)')
-          end
-        end
-
-        context 'defines f10' do
-          it 'passes ORM audit' do
-            audit_feature(f10, 'f10', 'offer special character aliases for natural ease of readability')
-          end
-        end
-
-        context 'defines f12' do
-          it 'passes ORM audit' do
-            audit_feature(f12, 'f12', 'enable quick `file/directory io` and alias as file(`📂`) and dir(`🗄️`)')
           end
         end
 
@@ -83,18 +41,6 @@ RSpec.describe 'db/seed.rb' do
         context 'defines f15' do
           it 'passes ORM audit' do
             audit_feature(f15, 'f15', 'enable quicker tracking and auditing of features across versions')
-          end
-        end
-
-        context 'defines f16' do
-          it 'passes ORM audit' do
-            audit_feature(f16, 'f16', "add operation: raising to exponents (`superscript`) via operator(`^`) on `Numeric`'s")
-          end
-        end
-
-        context 'defines f17' do
-          it 'passes ORM audit' do
-            audit_feature(f17, 'f17', 'enable easier math operations')
           end
         end
 
@@ -116,33 +62,9 @@ RSpec.describe 'db/seed.rb' do
           end
         end
 
-        context 'defines f21' do
-          it 'passes ORM audit' do
-            audit_feature(f21, 'f21', 'enable easier textual/numerical/syntax parsing')
-          end
-        end
-
-        context 'defines f22' do
-          it 'passes ORM audit' do
-            audit_feature(f22, 'f22', "create or extend a `numeric` in order to properly support `Complex Infinity`")
-          end
-        end
-
         context 'defines f23' do
           it 'passes ORM audit' do
             audit_feature(f23, 'f23', "gather statistics (and/or more debugging information) on `Ruuuby` {example-context: optimizing ordering of if-conditions / function-calls}")
-          end
-        end
-
-        context 'defines f25' do
-          it 'passes ORM audit' do
-            audit_feature(f25, 'f25', "bundle `Ruuuby` meta-data related functionality w/ base alias(`💎`)")
-          end
-        end
-
-        context 'defines f26' do
-          it 'passes ORM audit' do
-            audit_feature(f26, 'f26', 'add syntax parsing for `ISO8601` as well as aliases for Date(`📅`), Time(`🕒`), and DateTime(`📅🕒`)')
           end
         end
 
@@ -152,6 +74,7 @@ RSpec.describe 'db/seed.rb' do
         context 'v0.0.0' do
           it 'as expected' do
             audit_version(v0_0_0, 'v0.0.0')
+            expect(v0_0_0.num_gems_added).to eq(0)
           end
         end
 
@@ -159,124 +82,254 @@ RSpec.describe 'db/seed.rb' do
           it 'as expected' do
             audit_version(v0_0_1, 'v0.0.1')
             expect(v0_0_1.id).to_not eq(v0_0_0.id)
+            expect(v0_0_1.num_gems_added).to eq(4)
           end
         end
 
-        context 'v0.0.1' do
+        context 'v0.0.2' do
           it 'as expected' do
             audit_version(v0_0_2, 'v0.0.2')
             expect(v0_0_2.id).to_not eq(v0_0_0.id)
             expect(v0_0_2.id).to_not eq(v0_0_1.id)
+            expect(v0_0_2.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.3' do
           it 'as expected' do
             audit_version(v0_0_3, 'v0.0.3')
+            expect(v0_0_3.num_gems_added).to eq(0)
           end
         end
 
-        # TODO: add missing versions
+        context 'v0.0.4' do
+          it 'as expected' do
+            audit_version(v0_0_4, 'v0.0.4')
+            expect(v0_0_4.num_gems_added).to eq(1)
+          end
+        end
+
+        context 'v0.0.5' do
+          it 'as expected' do
+            audit_version(v0_0_5, 'v0.0.5')
+            expect(v0_0_5.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.6' do
+          it 'as expected' do
+            audit_version(v0_0_6, 'v0.0.6')
+            expect(v0_0_6.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.7' do
+          it 'as expected' do
+            audit_version(v0_0_7, 'v0.0.7')
+            expect(v0_0_7.num_gems_added).to eq(1)
+          end
+        end
+
+        context 'v0.0.8' do
+          it 'as expected' do
+            audit_version(v0_0_8, 'v0.0.8')
+            expect(v0_0_8.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.9' do
+          it 'as expected' do
+            audit_version(v0_0_9, 'v0.0.9')
+            expect(v0_0_9.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.10' do
+          it 'as expected' do
+            audit_version(v0_0_10, 'v0.0.10')
+            expect(v0_0_10.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.11' do
+          it 'as expected' do
+            audit_version(v0_0_11, 'v0.0.11')
+            expect(v0_0_11.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.12' do
+          it 'as expected' do
+            audit_version(v0_0_12, 'v0.0.12')
+            expect(v0_0_12.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.13' do
+          it 'as expected' do
+            audit_version(v0_0_13, 'v0.0.13')
+            expect(v0_0_13.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.14' do
+          it 'as expected' do
+            audit_version(v0_0_14, 'v0.0.14')
+            expect(v0_0_14.num_gems_added).to eq(1)
+          end
+        end
+
+        context 'v0.0.15' do
+          it 'as expected' do
+            audit_version(v0_0_15, 'v0.0.15')
+            expect(v0_0_15.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.16' do
+          it 'as expected' do
+            audit_version(v0_0_16, 'v0.0.16')
+            expect(v0_0_16.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.17' do
+          it 'as expected' do
+            audit_version(v0_0_17, 'v0.0.17')
+            expect(v0_0_17.num_gems_added).to eq(0)
+          end
+        end
 
         context 'v0.0.18' do
           it 'as expected' do
             audit_version(v0_0_18, 'v0.0.18')
+            expect(v0_0_18.num_gems_added).to eq(2)
           end
         end
 
         context 'v0.0.19' do
           it 'as expected' do
             audit_version(v0_0_19, 'v0.0.19')
+            expect(v0_0_19.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.20' do
           it 'as expected' do
             audit_version(v0_0_20, 'v0.0.20')
+            expect(v0_0_20.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.21' do
           it 'as expected' do
             audit_version(v0_0_21, 'v0.0.21')
+            expect(v0_0_21.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.22' do
           it 'as expected' do
             audit_version(v0_0_22, 'v0.0.22')
+            expect(v0_0_22.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.23' do
           it 'as expected' do
             audit_version(v0_0_23, 'v0.0.23')
+            expect(v0_0_23.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.24' do
           it 'as expected' do
             audit_version(v0_0_24, 'v0.0.24')
+            expect(v0_0_24.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.25' do
           it 'as expected' do
             audit_version(v0_0_25, 'v0.0.25')
+            expect(v0_0_25.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.26' do
           it 'as expected' do
             audit_version(v0_0_26, 'v0.0.26')
+            expect(v0_0_26.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.27' do
           it 'as expected' do
             audit_version(v0_0_27, 'v0.0.27')
+            expect(v0_0_27.num_gems_added).to eq(1)
           end
         end
 
         context 'v0.0.28' do
           it 'as expected' do
             audit_version(v0_0_28, 'v0.0.28')
+            expect(v0_0_28.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.29' do
           it 'as expected' do
             audit_version(v0_0_29, 'v0.0.29')
+            expect(v0_0_29.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.30' do
           it 'as expected' do
             audit_version(v0_0_30, 'v0.0.30')
+            expect(v0_0_30.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.31' do
           it 'as expected' do
             audit_version(v0_0_31, 'v0.0.31')
+            expect(v0_0_31.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.32' do
           it 'as expected' do
             audit_version(v0_0_32, 'v0.0.32')
+            expect(v0_0_32.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.33' do
           it 'as expected' do
             audit_version(v0_0_33, 'v0.0.33')
+            expect(v0_0_33.num_gems_added).to eq(0)
           end
         end
 
         context 'v0.0.34' do
           it 'as expected' do
             audit_version(v0_0_34, 'v0.0.34')
+            expect(v0_0_34.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.35' do
+          it 'as expected' do
+            audit_version(v0_0_35, 'v0.0.35')
+            expect(v0_0_35.num_gems_added).to eq(1)
+          end
+        end
+
+        context 'v0.0.36' do
+          it 'as expected' do
+            audit_version(v0_0_36, 'v0.0.36')
+            expect(v0_0_36.num_gems_added).to eq(0)
           end
         end
 

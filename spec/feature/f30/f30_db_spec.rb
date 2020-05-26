@@ -10,8 +10,8 @@ RSpec.describe 'f30_db' do
       end
 
       context 'defines behaviors' do
-        it 'has correct number of behaviors{4}' do
-          expect(f30.ruuuby_feature_behaviors.length).to eq(4)
+        it 'has correct number of behaviors{5}' do
+          expect(f30.ruuuby_feature_behaviors.length).to eq(5)
         end
 
         it 'defines{b00}' do
@@ -28,6 +28,10 @@ RSpec.describe 'f30_db' do
 
         it 'defines{b03}' do
           audit_feature_behavior(f30, f30_b03, 'b03', 'create create singleton-Class{NumberLikeSpace}, instanced aliased by{🔢}')
+        end
+
+        it 'defines{b04}' do
+          audit_feature_behavior(f30, f30_b04, 'b04', 'create create singleton-Class{SymbolicNumbersSpace}, instanced aliased by{𝕊}')
         end
       end # end: {defines behaviors}
     end # end: {defines{f30}}

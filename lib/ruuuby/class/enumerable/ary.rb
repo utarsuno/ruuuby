@@ -78,18 +78,21 @@ module ::Ruuuby
         #
         # @return [Array] self, modified if any normalization needed to occur
         def η̂!(normalization_opts)
-          if [:∈ℕ, :∈𝕎, :∈ℤ, :∈ℕ𝕊, :∈𝕎𝕊, :∈ℤ𝕊].include?(normalization_opts)
+          if ::Math::Space::NumberLikeSpace::NORMALIZERS_ALL_NUMS_W_STR.∋?(normalization_opts)
+            🛑num❓($PRM_MANY, self, normalization_opts)
             self.∀ₓᵢ do |element, i|
               if element.num?(normalization_opts)
                 if element.str?
-                  self[i] = element.to_num
+                  if element.to_num?
+                    self[i] = element.to_num
+                  else
+                    raise "normalizer{#{element.to_s}} can't be parsed as a number!"
+                  end
                 end
-              else
-                🛑 RuntimeError.🆕("c{Array}-> m{η̂}-> arg(normalization_opts){#{normalization_opts.to_s}}, internal_element[#{i.to_s}]{#{element.to_s}} is not within(#{normalization_opts.to_s})")
               end
             end
           else
-            🛑 RuntimeError.🆕("c{Array}-> m{η̂} received arg(normalization_opts) with un-supported value(#{normalization_opts.to_s})")
+            raise "normalizer{#{normalization_opts.to_s}} is unknown"
           end
           self
         end

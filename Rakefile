@@ -39,6 +39,7 @@ add_task_rspec(:rspec_unit,        qa.generate_rspec_task_options(qa::Unit))
 add_task_rspec(:rspec_db,          qa.generate_rspec_task_options(qa::DB))
 add_task_rspec(:rspec_audit,       qa.generate_rspec_task_options(qa::Audits))
 add_task_rspec(:rspec_performance, qa.generate_rspec_task_options(qa::Performance))
+add_task_rspec(:rspec_locale,      qa.generate_rspec_task_options(qa::Locale))
 add_task_rspec(:rspec_all,         qa.generate_rspec_task_options(qa::Full))
 
 # ______________________________________________________________________________________________________________________

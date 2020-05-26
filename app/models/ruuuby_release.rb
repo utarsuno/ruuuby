@@ -16,23 +16,7 @@ class ::RuuubyRelease < ApplicationRecord
     ❄️
   end
 
-  # TODO: delete?
-  #
-  # possible values that the column `flag_release_status` may hold
-  module Flags
-    # @type [Integer]
-    RELEASED_IN_PAST  = -1
-    # @type [Integer]
-    RELEASED_PREVIOUS = 0
-    # @type [Integer]
-    RELEASE_CURRENT   = 1
-    # @type [Integer]
-    RELEASE_NEXT      = 2
-    # @type [Integer]
-    RELEASE_IN_FUTURE = 3
-    ❄️
-  end
-
+  include ::Comparable
   include ::Ruuuby::ORMAttribute::Includable::UID
 
   validates :vmajor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
@@ -40,7 +24,9 @@ class ::RuuubyRelease < ApplicationRecord
   validates :vtiny, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :num_commits, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  has_many :git_commits, class_name: 'GitCommit', :dependent => :delete_all
+  has_many :git_commits, class_name: 'GitCommit', :dependent => :delete_all #, :order => "commit_author_date ASC"
+
+  has_many :ruuuby_gems, class_name: 'RuuubyGem', :dependent => :delete_all
 
   before_save :on_before_save
 
@@ -96,13 +82,13 @@ class ::RuuubyRelease < ApplicationRecord
     ::RuuubyRelease.create!(vmajor: major, vminor: minor, vtiny: tiny)
   end
 
-  def gems_added ; @gems_added ||= [] ; end
   def comments ; @comments ||= [] ; end
   def files_added ; @files_added ||= [] ; end
   def files_removed ; @files_removed ||= [] ; end
 
-  def add_gem(gem_name, gem_version)
-    self.gems_added << [gem_name, gem_version]
+  def add_gem(gem_name, gem_version, for_development, for_runtime, tags, ref_source, ref_version)
+    self.ruuuby_gems << RuuubyGem.spawn(gem_name, gem_version, for_development, for_runtime, tags, ref_source, ref_version,self)
+
     self.comments << "add `gem '#{gem_name}', '~> #{gem_version}'`"
   end
 
@@ -172,47 +158,34 @@ class ::RuuubyRelease < ApplicationRecord
     changes
   end
 
-  # @param [RuuubyRelease] ruuuby_release
+  # @param [RuuubyRelease] them
   #
-  # @raise [ArgumentError] raised if parameter provided of not of Class(`RuuubyRelease`)
+  # @raise [ArgumentError] if them is not a +RuuubyRelease+
   #
-  # @return [Boolean] true, if version of self is less than the compared(`RuuubyRelease`)
-  def <(ruuuby_release)
-    🛑 ::ArgumentError.new("| c{RuuubyRelease}-> m{<} got arg(ruuuby_release) w/ type{#{ruuuby_release.class.to_s}} when a{RuuubyRelease} is required |") unless ruuuby_release.is_a?(::RuuubyRelease)
-    if self.vmajor < ruuuby_release.vmajor
-      return true
-    elsif self.vmajor > ruuuby_release.vmajor
-      return false
-    else
-      if self.vminor < ruuuby_release.vminor
-        return true
-      elsif self.vminor > ruuuby_release.vminor
-        return false
+  # @return [Integer] 1 for >, 0 for ==, -1 for <
+  def <=>(them)
+    if them.is_a?(::RuuubyRelease)
+      if self.vmajor > them.vmajor
+        return 1
+      elsif self.vmajor < them.vmajor
+        return -1
       else
-        return self.vtiny < ruuuby_release.vtiny
+        if self.vminor > them.vminor
+          return 1
+        elsif self.vminor < them.vminor
+          return -1
+        else
+          if self.vtiny > them.vtiny
+            return 1
+          elsif self.vtiny < them.vtiny
+            return -1
+          else
+            return 0
+          end
+        end
       end
-    end
-  end
-
-  # @param [RuuubyRelease] ruuuby_release
-  #
-  # @raise [ArgumentError] raised if parameter provided of not of Class(`RuuubyRelease`)
-  #
-  # @return [Boolean] true, if version of self is greater than the compared(`RuuubyRelease`)
-  def >(ruuuby_release)
-    🛑 ::ArgumentError.new("| c{RuuubyRelease}-> m{<} got arg(ruuuby_release) w/ type{#{ruuuby_release.class.to_s}} when a{RuuubyRelease} is required |") unless ruuuby_release.is_a?(::RuuubyRelease)
-    if self.vmajor > ruuuby_release.vmajor
-      return true
-    elsif self.vmajor < ruuuby_release.vmajor
-      return false
     else
-      if self.vminor > ruuuby_release.vminor
-        return true
-      elsif self.vminor < ruuuby_release.vminor
-        return false
-      else
-        return self.vtiny > ruuuby_release.vtiny
-      end
+      nil
     end
   end
 
@@ -268,10 +241,23 @@ class ::RuuubyRelease < ApplicationRecord
     ::RuuubyRelease.where(::RuuubyRelease::Syntax::SQL_UID, args[0].to_i, args[1].to_i, args[2].to_i)
   end
 
+  # @return [GitCommit]
+  def get_commit_newest
+    🛑 RuntimeError.new("| c{RuuubyRelease}-> m{get_commit_newest} can't run w/ no git_commits |") if self.git_commits.empty?
+    self.git_commits.order('commit_author_date DESC').limit(1).first
+  end
+
+  # @return [GitCommit]
+  def get_commit_oldest
+    🛑 RuntimeError.new("| c{RuuubyRelease}-> m{get_commit_oldest} can't run w/ no git_commits |") if self.git_commits.empty?
+    self.git_commits.order('commit_author_date ASC').limit(1).first
+  end
+
   🙈
 
   def on_before_save
-    self.num_commits = self.git_commits.length
+    self.num_commits    = self.git_commits.length
+    self.num_gems_added = self.ruuuby_gems.length
   end
 
   # @param [Symbol] cache_key

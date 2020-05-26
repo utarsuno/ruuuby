@@ -72,13 +72,13 @@ RSpec.describe 'ruuuby_release.rb' do
 
         context 'adds func{get_version_prev}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_prev).to eq(v0_0_34)
+            expect(RuuubyRelease.get_version_prev).to eq(v0_0_35)
           end
         end
 
         context 'adds func{get_version_curr}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_curr).to eq(v0_0_35)
+            expect(RuuubyRelease.get_version_curr).to eq(v0_0_36)
           end
           it 'matches `GitCommit`\'s func{get_latest} return value' do
             expect(RuuubyRelease.get_version_curr.git_commits.last).to eq(GitCommit.get_latest)
@@ -87,7 +87,7 @@ RSpec.describe 'ruuuby_release.rb' do
 
         context 'adds func{get_version_next}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_next).to eq(v0_0_36)
+            expect(RuuubyRelease.get_version_next).to eq(v0_0_37)
           end
         end
 
@@ -149,11 +149,13 @@ RSpec.describe 'ruuuby_release.rb' do
             end
           end
         end
+        context 'RuuubyRelease ORM objects index order is sorted' do
+          it 'ascending' do
+            RuuubyRelease.all.∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev, curr| expect(prev < curr && curr > prev).to eq(true)}
+          end
+        end
         context 'adds func{<}' do
           context 'handles needed cases' do
-            it 'RuuubyRelease ORM objects index order is sorted' do
-              RuuubyRelease.all.∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev, curr| expect(prev < curr && curr > prev).to eq(true)}
-            end
             it 'cases: positive' do
               expect(v0_0_24.<(v0_0_25)).to eq(true)
             end

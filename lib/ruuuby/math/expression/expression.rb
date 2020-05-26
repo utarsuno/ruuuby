@@ -18,7 +18,9 @@ module ::Math
 
     # terminology:
     #  - variables/indeterminates: "a symbol that is treated as a variable"
-    #  - coefficients: "a multiplicative factor in some term of a polynomial, a series, or any expression"
+    #  - coefficients:              "a multiplicative factor in some term of a polynomial, a series, or any expression"
+    #  - monic polynomial:         a polynomial w/ a coefficient of 1 for the highest order term
+    #
     #
     # involves only the following operations:
     #  - addition[+]

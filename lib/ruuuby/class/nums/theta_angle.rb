@@ -12,6 +12,16 @@ class ThetaAngle
 
   REPRESENTATIONS_TO_SYMBOLS = {as_degree: '°'.❄️, as_radian: 'ʳ'.❄️, as_gon: 'ᵍ'.❄️, as_turn: '𝞽'.❄️}.❄️
 
+  # TODO:
+  #module Syntax
+  #  # @type [String]
+  #  TRIGONOMETRIC_ANGLE = '(\d+)?π(/\d+)?'.❄️
+  #  # @type [String]
+  #  FORMAT_DEGREES      = '(\d+)((.)(\d+))?((°(θ))|( degrees))?'.❄️
+  #end
+
+  # include ::Ruuuby::Attribute::Includable::SyntaxCache
+
   # ____________________________________________________________________________________________________________________
   #            ___          __   __   ___  __       ___    __        __
   #  |\/|  /\   |  |__|    /  \ |__) |__  |__)  /\   |  | /  \ |\ | /__`
@@ -96,3 +106,5 @@ end
 # solid angle    | "measure of the amount of the `field of view` from some particular point that a given object covers"
 # steradian      | "used in three-dimensional geometry, and is analogous to the radian, which quantifies `planar angles`"
 # spat (sp)      | "unit of solid angle" | 1 spat = 4π ~= 41253 square degrees of solid angle
+
+# TODO: after adding geometry sub-modules / shapes: attach these formulas --> https://mathworld.wolfram.com/LawofCosines.html

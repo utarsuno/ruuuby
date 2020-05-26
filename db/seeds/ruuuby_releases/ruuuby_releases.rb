@@ -3,6 +3,11 @@
 @v0_0_00.add_comments('initial project creation')
 
 @v0_0_01 = RuuubyRelease.spawn(0, 0, 1)
+@v0_0_01.add_gem('bundler', '2.1.4', true, false, %w(CI), '::Bundler', '::VERSION')
+@v0_0_01.add_gem('rake', '13.0.1', true, false, %w(EXT), '::Rake', '::VERSION')
+@v0_0_01.add_gem('rspec', '3.9.0', true, false, %w(QA), '::RSpec', '::Version::STRING')
+@v0_0_01.add_gem('rdoc', '6.2.1', true, false, %w(DOC), '::RDoc', '::VERSION')
+
 @v0_0_01.add_file('CHANGELOG.md')
 @v0_0_01.add_file('lib/ruuuby/class/nil.rb', ::NilClass, '', @f04)
 @v0_0_01.add_file('lib/ruuuby/enum/emoji.rb', '', 'Ruuuby::Enum::Emoji')
@@ -26,19 +31,25 @@
 @v0_0_03.changelog.added_method_to_class(@f07, :remove_empty!, ::Array)
 
 @v0_0_04 = RuuubyRelease.spawn(0, 0, 4)
-#v0_0_04.add_gem('rspec-benchmark', '0.5.1')
+@v0_0_04.add_gem('rspec-benchmark', '0.5.1', true, false, %w(QA), '::RSpec::Benchmark', '::VERSION')
 #v0_0_04.add_comments('update `ruuuby.gemspec` to require ruby `2.7.0`')
 
 @v0_0_05 = RuuubyRelease.spawn(0, 0, 5)
 @v0_0_06 = RuuubyRelease.spawn(0, 0, 6)
+
 @v0_0_07 = RuuubyRelease.spawn(0, 0, 7)
+@v0_0_07.add_gem('rake-compiler', '1.1.0', true, false, %w(EXT), nil, nil)
+
 @v0_0_08 = RuuubyRelease.spawn(0, 0, 8)
 @v0_0_09 = RuuubyRelease.spawn(0, 0, 9)
 @v0_0_10 = RuuubyRelease.spawn(0, 0, 10)
 @v0_0_11 = RuuubyRelease.spawn(0, 0, 11)
 @v0_0_12 = RuuubyRelease.spawn(0, 0, 12)
 @v0_0_13 = RuuubyRelease.spawn(0, 0, 13)
+
 @v0_0_14 = RuuubyRelease.spawn(0, 0, 14)
+@v0_0_14.add_gem('tty-command', '0.9.0', true, true, %W(CLI), '::TTY::Command', '::VERSION')
+
 @v0_0_15 = RuuubyRelease.spawn(0, 0, 15)
 @v0_0_16 = RuuubyRelease.spawn(0, 0, 16)
 @v0_0_17 = RuuubyRelease.spawn(0, 0, 17)
@@ -62,8 +73,8 @@
 @v0_0_18.add_file('db/db.rb', '', '', @f15)
 @v0_0_18.add_file('db/seed.rb', '', '', @f15)
 
-@v0_0_18.add_gem('sqlite3', '1.4.2')
-@v0_0_18.add_gem('activerecord', '5.2.4.1')
+@v0_0_18.add_gem('sqlite3', '1.4.2', true, false, %W(DB), '::SQLite3', '::VERSION')
+@v0_0_18.add_gem('activerecord', '5.2.4.1', true, false, %W(DB), '::ActiveRecord', '::VERSION::STRING')
 @v0_0_18.changelog.added_methods_to_class(@f12,
                                          [
                                              [:∃?, ::File],
@@ -281,7 +292,7 @@
 @v0_0_26.changelog.added_method_to_class(@f15, :get_latest_version_uid, ::RuuubyRelease)
 
 @v0_0_27 = RuuubyRelease.spawn(0, 0, 27)
-@v0_0_27.add_gem('schema_plus_foreign_keys', '0.1.8')
+@v0_0_27.add_gem('schema_plus_foreign_keys', '0.1.8', true, false, %W(DB), nil, nil)
 @v0_0_27.add_file('db/seeds/git_commits.rb', '', '', @f15)
 @v0_0_27.add_file('db/seeds/ruuuby_features.rb', '', '', @f15)
 @v0_0_27.add_file('db/seeds/ruuuby_releases.rb', '', '', @f15)
@@ -507,7 +518,7 @@
 #
 
 @v0_0_35 = RuuubyRelease.spawn(0, 0, 35)
-@v0_0_35.add_gem('rugged', '1.0.0')
+@v0_0_35.add_gem('rugged', '1.0.0', true, false, %W(GIT), '::Rugged', '::VERSION')
 @v0_0_35.add_file('lib/math/expression/expression.rb', '', 'not currently in use', @f10)
 @v0_0_35.add_file('lib/math/expression/formula.rb', '', 'not currently in use', @f10)
 @v0_0_35.add_file('lib/math/space/tuple_space.rb', '', '', @f30)
@@ -555,3 +566,25 @@
 @v0_0_36.changelog.added_method_to_class(@f10, :perfect_number?, ::Math::NumberTheory)
 @v0_0_36.changelog.added_method_to_class(@f10, :gcd, ::Math::NumberTheory)
 @v0_0_36.changelog.added_method_to_class(@f10, :coprime?, ::Math::NumberTheory)
+
+@v0_0_37 = RuuubyRelease.spawn(0, 0, 37)
+@v0_0_37.add_file('lib/virtual/f06.rb', '', '', @f06)
+@v0_0_37.add_file('lib/virtual/f28.rb', '', '', @f28)
+@v0_0_37.add_file('lib/math/complex_analysis/complex_analysis.rb', '::Math::ComplexAnalysis', 'not currently in use', @f30)
+@v0_0_37.add_file('lib/math/trigonometry/trigonometry.rb', '::Math::Trigonometry', 'not currently in use', @f30)
+@v0_0_37.add_file('lib/math/graph_theory/graph_theory.rb', '::Math::GraphTheory', 'not currently in use', @f30)
+@v0_0_37.add_file('lib/math/geometry/geometry.rb', '::Math::Geometry', 'not currently in use', @f30)
+@v0_0_37.add_file('lib/math/space/discrete/symbolic_numbers_space.rb', ::Math::Space::SymbolicNumbersSpace, '𝕊', @f30)
+@v0_0_37.add_file('app/models/ruuuby_gem.rb', ::RuuubyGem, '', @f15)
+@v0_0_37.add_comments(
+    [
+        'have `ORM`: `RuuubyRelease` and `GitCommit` include `Comparable`; replacing redundant funcs{`>`, `<`} to the single func{`<=>`}',
+        'remove `♾️`, `¿` from all sources, textual parsing, code aliases, etc; (too redundant)',
+        'remove func{∞?} from Class(`String`)',
+        'add `ORM`{`RuuubyGem`}, some functionality was added; also removed Runtime constants needed solely for unit-tests (these tests are now directly generated w/ needed data))',
+        'add `RSpec`/QA section for `locale` (local configs); not final design',
+        '(`f22`) will now be designated for `GC` and the `GC::Profiler`, previous `f22` moved to {`f28_b12`}',
+    ]
+)
+@v0_0_37.changelog.added_method_to_class(@f06, :ⓣ, ::Object)
+@v0_0_37.changelog.added_method_to_class(@f06, :Ⓣ, ::Object)

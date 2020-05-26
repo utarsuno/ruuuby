@@ -56,9 +56,6 @@ module ::Ruuuby
           # @return [Float] the base 10 logarithm of +n+
           def log₁₀(n); ::Math.log10(n); end
 
-          # @return [Float]
-          def ℮; ::Math::E; end
-
           # Return the square-root of the provided argument.
           #
           # @param [Integer, Float, Numeric, String] n
@@ -87,78 +84,7 @@ module ::Ruuuby
             end
           end
 
-          # @return [Float]
-          def π; ::Math::PI; end
-
         end # end: {MathAliases}
-
-        # defines (onto the `main` object) funcs to provide aliases for float functions and constants
-        module FloatAliases
-
-          # @return [Float] +Float::ONE_HALF+
-          def ½; ::Float::ONE_HALF; end
-
-          # @return [Float] +Float::ONE_THIRD+
-          def ⅓; ::Float::ONE_THIRD; end
-
-          # @return [Float] +Float::TWO_THIRDS+
-          def ⅔; ::Float::TWO_THIRDS; end
-
-          # @return [Float] +Float::ONE_FOURTH+
-          def ¼; ::Float::ONE_FOURTH; end
-
-          # @return [Float] +Float::THREE_FOURTHS+
-          def ¾; ::Float::THREE_FOURTHS; end
-
-          # @return [Float] +Float::ONE_FIFTH+
-          def ⅕; ::Float::ONE_FIFTH; end
-
-          # @return [Float] +Float::TWO_FIFTHS+
-          def ⅖; ::Float::TWO_FIFTHS; end
-
-          # @return [Float] +Float::THREE_FIFTHS+
-          def ⅗; ::Float::THREE_FIFTHS; end
-
-          # @return [Float] +Float::FOUR_FIFTHS+
-          def ⅘; ::Float::FOUR_FIFTHS; end
-
-          # @return [Float] +Float::ONE_SIXTH+
-          def ⅙; ::Float::ONE_SIXTH; end
-
-          # @return [Float] +Float::ONE_SEVENTH+
-          def ⅐; ::Float::ONE_SEVENTH; end
-
-          # @return [Float] +Float::ONE_EIGHTH+
-          def ⅛; ::Float::ONE_EIGHTH; end
-
-          # @return [Float] +Float::THREE_EIGHTHS+
-          def ⅜; ::Float::THREE_EIGHTHS; end
-
-          # @return [Float] +Float::FIVE_EIGHTHS+
-          def ⅝; ::Float::FIVE_EIGHTHS; end
-
-          # @return [Float] +Float::SEVEN_EIGHTHS+
-          def ⅞; ::Float::SEVEN_EIGHTHS; end
-
-          # @return [Float] +Float::ONE_NINTH+
-          def ⅑; ::Float::ONE_NINTH; end
-
-          # @return [Float] +Float::ONE_TENTH+
-          def ⅒; ::Float::ONE_TENTH; end
-
-          # @return [Float] Float::INFINITY
-          def ∞; ::Float::INFINITY; end
-
-          # @return [Float] Float::NAN
-          def ¿; ::Float::NAN; end
-
-          # @return [Symbol] 'complex-infinity'
-          def ∞ℂ; :∞ℂ; end
-
-          # @return [Float]
-          def γ; ::Float::EULER_MASCHERONI_CONSTANT; end
-
-        end # end: {FloatAliases}
 
         # defines (onto the `main` object) funcs to provide aliases for math functions relating to trigonometry
         module Trigonometry

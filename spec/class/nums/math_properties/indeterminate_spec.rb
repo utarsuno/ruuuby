@@ -7,19 +7,19 @@ RSpec.describe 'indeterminate' do
     context 'resolves the following indeterminate forms' do
 
       it '0 / 0' do
-        expect((0.0 / 0.0).¿?).to eq(true)
+        expect((0.0 / 0.0).nan?).to eq(true)
       end
 
       it '∞ / ∞' do
-        expect((∞ / ∞).¿?).to eq(true)
+        expect((∞ / ∞).nan?).to eq(true)
       end
 
       it '∞ * 0' do
-        expect((∞ * 0.0).¿?).to eq(true)
+        expect((∞ * 0.0).nan?).to eq(true)
       end
 
       it '∞ - ∞' do
-        expect((∞ - ∞).¿?).to eq(true)
+        expect((∞ - ∞).nan?).to eq(true)
       end
 
       it '0 ^ 0' do
@@ -33,11 +33,11 @@ RSpec.describe 'indeterminate' do
       end
 
       it '1 ^ ∞' do
-        expect((1^(:∞)).¿?).to eq(true)
+        expect((1^(:∞)).nan?).to eq(true)
       end
 
       it '∞ ^ 0' do
-        expect((∞^⁰).¿?).to eq(true)
+        expect((∞^⁰).nan?).to eq(true)
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe 'indeterminate' do
           expect(1 + ∞).to eq(∞)
           expect(1 - ∞).to eq(-∞)
           # TODO: complex inf
-          expect((1 + ¿).¿?).to eq(true)
+          expect((1 + ::Float::NAN).nan?).to eq(true)
         end
 
         it 'for 0' do
@@ -61,7 +61,7 @@ RSpec.describe 'indeterminate' do
           expect(0 + ∞).to eq(∞)
           expect(0 - ∞).to eq(::Float::INFINITY_NEGATIVE)
           # TODO: complex inf
-          expect((0 + ¿).¿?).to eq(true)
+          expect((0 + ::Float::NAN).nan?).to eq(true)
         end
 
         it 'for ∞' do
@@ -69,27 +69,27 @@ RSpec.describe 'indeterminate' do
           expect(∞ + 0).to eq(∞)
           expect(∞ + ∞).to eq(∞)
           # TODO: complex inf
-          expect((∞ - ∞).¿?).to eq(true)
+          expect((∞ - ∞).nan?).to eq(true)
         end
 
         it 'for -∞' do
           expect(::Float::INFINITY_NEGATIVE + 1).to eq(::Float::INFINITY_NEGATIVE)
           expect(::Float::INFINITY_NEGATIVE + 0).to eq(::Float::INFINITY_NEGATIVE)
-          expect((::Float::INFINITY_NEGATIVE + ∞).¿?).to eq(true)
+          expect((::Float::INFINITY_NEGATIVE + ∞).nan?).to eq(true)
           expect(::Float::INFINITY_NEGATIVE + ::Float::INFINITY_NEGATIVE).to eq(::Float::INFINITY_NEGATIVE)
           # TODO: complex inf
-          expect((::Float::INFINITY_NEGATIVE + ¿).¿?).to eq(true)
+          expect((::Float::INFINITY_NEGATIVE + ::Float::NAN).nan?).to eq(true)
         end
 
         # TODO: complex inf
 
-        it 'for ¿' do
-          expect((¿ + 1).¿?).to eq(true)
-          expect((¿ + 0).¿?).to eq(true)
-          expect((¿ + ∞).¿?).to eq(true)
-          expect((¿ - ∞).¿?).to eq(true)
+        it 'for ::Float::NAN' do
+          expect((::Float::NAN + 1).nan?).to eq(true)
+          expect((::Float::NAN + 0).nan?).to eq(true)
+          expect((::Float::NAN + ∞).nan?).to eq(true)
+          expect((::Float::NAN - ∞).nan?).to eq(true)
           # TODO: complex inf
-          expect((¿ + ¿).¿?).to eq(true)
+          expect((::Float::NAN + ::Float::NAN).nan?).to eq(true)
         end
 
       end
@@ -104,7 +104,7 @@ RSpec.describe 'indeterminate' do
         expect(1 - ∞).to eq(::Float::INFINITY_NEGATIVE)
         expect(1 - ::Float::INFINITY_NEGATIVE).to eq(∞)
         # TODO: complex inf
-        expect((1 - ¿).¿?).to eq(true)
+        expect((1 - ::Float::NAN).nan?).to eq(true)
       end
 
       it 'for 0' do
@@ -113,25 +113,25 @@ RSpec.describe 'indeterminate' do
         expect(0 - ∞).to eq(::Float::INFINITY_NEGATIVE)
         expect(0 - ::Float::INFINITY_NEGATIVE).to eq(∞)
         # TODO: complex inf
-        expect((0 - ¿).¿?).to eq(true)
+        expect((0 - ::Float::NAN).nan?).to eq(true)
       end
 
       it 'for ∞' do
         expect(∞ - 1).to eq(∞)
         expect(∞ - 0).to eq(∞)
-        expect((∞ - ∞).¿?).to eq(true)
+        expect((∞ - ∞).nan?).to eq(true)
         expect(∞ - ::Float::INFINITY_NEGATIVE).to eq(∞)
         # TODO: complex inf
-        expect((∞ - ¿).¿?).to eq(true)
+        expect((∞ - ::Float::NAN).nan?).to eq(true)
       end
 
       it 'for -∞' do
         expect(::Float::INFINITY_NEGATIVE - 1).to eq(::Float::INFINITY_NEGATIVE)
         expect(::Float::INFINITY_NEGATIVE - 0).to eq(::Float::INFINITY_NEGATIVE)
         expect(::Float::INFINITY_NEGATIVE - ∞).to eq(::Float::INFINITY_NEGATIVE)
-        expect((::Float::INFINITY_NEGATIVE - ::Float::INFINITY_NEGATIVE).¿?).to eq(true)
+        expect((::Float::INFINITY_NEGATIVE - ::Float::INFINITY_NEGATIVE).nan?).to eq(true)
         # TODO: complex inf
-        expect((::Float::INFINITY_NEGATIVE - ¿).¿?).to eq(true)
+        expect((::Float::INFINITY_NEGATIVE - ::Float::NAN).nan?).to eq(true)
       end
 
     end
@@ -144,34 +144,34 @@ RSpec.describe 'indeterminate' do
         expect(1 * ∞).to eq(∞)
         expect(1 * ::Float::INFINITY_NEGATIVE).to eq(::Float::INFINITY_NEGATIVE)
         # TODO: complex inf
-        expect((1 * ¿).¿?).to eq(true)
+        expect((1 * ::Float::NAN).nan?).to eq(true)
       end
 
       it 'for 0' do
         expect(0 * 1).to eq(0)
         expect(0 * 0).to eq(0)
-        expect((0 * ∞).¿?).to eq(true)
-        expect((0 * ::Float::INFINITY_NEGATIVE).¿?).to eq(true)
+        expect((0 * ∞).nan?).to eq(true)
+        expect((0 * ::Float::INFINITY_NEGATIVE).nan?).to eq(true)
         # TODO: complex inf
-        expect((0 * ¿).¿?).to eq(true)
+        expect((0 * ::Float::NAN).nan?).to eq(true)
       end
 
       it 'for ∞' do
         expect(∞ * 1).to eq(∞)
-        expect((∞ * 0).¿?).to eq(true)
+        expect((∞ * 0).nan?).to eq(true)
         expect(∞ * ∞).to eq(∞)
         expect(∞ * ::Float::INFINITY_NEGATIVE).to eq(::Float::INFINITY_NEGATIVE)
         # TODO: complex inf
-        expect((∞ * ¿).¿?).to eq(true)
+        expect((∞ * ::Float::NAN).nan?).to eq(true)
       end
 
       it 'for -∞' do
         expect(::Float::INFINITY_NEGATIVE * 1).to eq(::Float::INFINITY_NEGATIVE)
-        expect((::Float::INFINITY_NEGATIVE * 0).¿?).to eq(true)
+        expect((::Float::INFINITY_NEGATIVE * 0).nan?).to eq(true)
         expect(::Float::INFINITY_NEGATIVE * ∞).to eq(::Float::INFINITY_NEGATIVE)
         expect(::Float::INFINITY_NEGATIVE * ::Float::INFINITY_NEGATIVE).to eq(∞)
         # TODO: complex inf
-        expect((∞ * ¿).¿?).to eq(true)
+        expect((∞ * ::Float::NAN).nan?).to eq(true)
       end
 
     end
@@ -183,7 +183,7 @@ RSpec.describe 'indeterminate' do
         expect(1 / ∞).to eq(0)
         expect(1 / ::Float::INFINITY_NEGATIVE).to eq(0)
         # TODO: complex inf
-        expect((1 / ¿).¿?).to eq(true)
+        expect((1 / ::Float::NAN).nan?).to eq(true)
       end
 
       it 'for 1 "un-supported" (for now)' do
@@ -196,20 +196,20 @@ RSpec.describe 'indeterminate' do
         expect(0 / ∞).to eq(0)
         expect(0 / ::Float::INFINITY_NEGATIVE).to eq(0)
         # TODO: complex inf
-        expect((0 / ¿).¿?).to eq(true)
+        expect((0 / ::Float::NAN).nan?).to eq(true)
       end
 
       it 'for 0 "un-supported" (for now)' do
-        #expect((0 / 0).¿?).to eq(true)
+        #expect((0 / 0).nan?).to eq(true)
         expect{(0 / 0)}.to raise_error(ZeroDivisionError)
       end
 
       it 'for ∞' do
         expect(∞ / 1).to eq(∞)
-        expect((∞ / ∞).¿?).to eq(true)
-        expect((∞ / ::Float::INFINITY_NEGATIVE).¿?).to eq(true)
+        expect((∞ / ∞).nan?).to eq(true)
+        expect((∞ / ::Float::INFINITY_NEGATIVE).nan?).to eq(true)
         # TODO: complex inf
-        expect((∞ / ¿).¿?).to eq(true)
+        expect((∞ / ::Float::NAN).nan?).to eq(true)
       end
 
       it 'for ∞ "un-supported" (for now)' do
@@ -218,10 +218,10 @@ RSpec.describe 'indeterminate' do
 
       it 'for -∞' do
         expect(::Float::INFINITY_NEGATIVE / 1).to eq(::Float::INFINITY_NEGATIVE)
-        expect((∞ / ∞).¿?).to eq(true)
-        expect((∞ / ::Float::INFINITY_NEGATIVE).¿?).to eq(true)
+        expect((∞ / ∞).nan?).to eq(true)
+        expect((∞ / ::Float::INFINITY_NEGATIVE).nan?).to eq(true)
         # TODO: complex inf
-        expect((∞ / ¿).¿?).to eq(true)
+        expect((∞ / ::Float::NAN).nan?).to eq(true)
       end
 
       it 'for -∞ "un-supported" (for now)' do
@@ -239,14 +239,14 @@ RSpec.describe 'indeterminate' do
         expect(1^⁰).to eq(1)
         expect(1 ** 0).to eq(1)
 
-        expect((1^(:∞)).¿?).to eq(true)
+        expect((1^(:∞)).nan?).to eq(true)
         # notice difference compared to default operator
-        expect((1 ** Float::INFINITY).¿?).to eq(false)
+        expect((1 ** Float::INFINITY).nan?).to eq(false)
 
-        expect((1^(:'-∞')).¿?).to eq(true)
-        expect((1 ** Float::INFINITY_NEGATIVE).¿?).to eq(false)
+        expect((1^(:'-∞')).nan?).to eq(true)
+        expect((1 ** Float::INFINITY_NEGATIVE).nan?).to eq(false)
 
-        expect((1^(Float::INFINITY_COMPLEX)).¿?).to eq(true)
+        expect((1^(Float::INFINITY_COMPLEX)).nan?).to eq(true)
 
         # TODO: complex inf
         # TODO: NAN
@@ -270,27 +270,27 @@ RSpec.describe 'indeterminate' do
 
       it 'for 0 "un-supported" (for now)' do
         # ???
-        #expect((0^⁰).¿?).to eq(true)
-        #expect((0 ** 0).¿?).to eq(true)
-        #expect((0^(::Float::INFINITY_COMPLEX)).¿?).to eq(true)
+        #expect((0^⁰).nan?).to eq(true)
+        #expect((0 ** 0).nan?).to eq(true)
+        #expect((0^(::Float::INFINITY_COMPLEX)).nan?).to eq(true)
       end
 
       it 'for ∞' do
         expect(∞^¹).to eq(∞)
-        expect((∞^⁰).¿?).to eq(true)
+        expect((∞^⁰).nan?).to eq(true)
         expect(∞^(:∞)).to eq(::Float::INFINITY_COMPLEX)
         expect(∞^(:'-∞')).to eq(0)
-        expect((∞^(Float::INFINITY_COMPLEX)).¿?).to eq(true)
+        expect((∞^(Float::INFINITY_COMPLEX)).nan?).to eq(true)
 
         # TODO: NAN
       end
 
       it 'for -∞' do
         expect(Float::INFINITY_NEGATIVE^¹).to eq(Float::INFINITY_NEGATIVE)
-        expect((Float::INFINITY_NEGATIVE^⁰).¿?).to eq(true)
+        expect((Float::INFINITY_NEGATIVE^⁰).nan?).to eq(true)
         expect(Float::INFINITY_NEGATIVE^(:∞)).to eq(::Float::INFINITY_COMPLEX)
         expect(Float::INFINITY_NEGATIVE^(:'-∞')).to eq(0)
-        expect((Float::INFINITY_NEGATIVE^(Float::INFINITY_COMPLEX)).¿?).to eq(true)
+        expect((Float::INFINITY_NEGATIVE^(Float::INFINITY_COMPLEX)).nan?).to eq(true)
 
         # TODO: NAN
       end
@@ -300,10 +300,10 @@ RSpec.describe 'indeterminate' do
         # TODO: these scenarios can tested once an Object representation for Infinity complex exists
 
         #expect(Float::INFINITY_COMPLEX^¹).to eq(Float::INFINITY_COMPLEX)
-        #expect((Float::INFINITY_COMPLEX^⁰).¿?).to eq(true)
+        #expect((Float::INFINITY_COMPLEX^⁰).nan?).to eq(true)
         #expect(Float::INFINITY_COMPLEX^(:∞)).to eq(::Float::INFINITY_COMPLEX)
         #expect(Float::INFINITY_COMPLEX^(:'-∞')).to eq(0)
-        #expect((Float::INFINITY_COMPLEX^(Float::INFINITY_COMPLEX)).¿?).to eq(true)
+        #expect((Float::INFINITY_COMPLEX^(Float::INFINITY_COMPLEX)).nan?).to eq(true)
 
         # TODO: NAN
       end

@@ -69,6 +69,32 @@ module ::Ruuuby
         end
       end
 
+      #    ___    ___       ___
+      #  /'___\ /'___`\   /'___`\
+      # /\ \__//\_\ /\ \ /\_\ /\ \
+      # \ \ ,__\/_/// /__\/_/// /__
+      #  \ \ \_/  // /_\ \  // /_\ \
+      #   \ \_\  /\______/ /\______/
+      #    \/_/  \/_____/  \/_____/
+      #
+      # @see https://ruby-doc.org/core-2.7.1/GC.html
+      # @see https://ruby-doc.org/core-2.7.1/GC/Profiler.html
+
+      # @return [Hash] the result from func{verify_compaction_references}
+      def gc_verify
+        ::GC.verify_internal_consistency
+        ::GC.verify_transient_heap_internal_consistency
+        result = ::GC.verify_compaction_references
+        💎.debug(result.to_s)
+        result
+      end
+
+      # @return [Boolean] true, if the GC has `stress` mode enabled
+      def gc_overclocked?; ::GC.stress != false; end
+
+      # @return [Boolean] true, if the GC Profiler is enabled
+      def gc_profiler?; ::GC::Profiler.enabled?; end
+
       🙈
 
       def print_program_pid_and_memory

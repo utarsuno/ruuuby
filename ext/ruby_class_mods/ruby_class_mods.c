@@ -401,6 +401,7 @@ static inline void startup_step4_load_needed_ruuuby_files(void) { // -----------
     ensure_loaded_math(space/discrete/boolean-like_space)
     ensure_loaded_math(space/discrete/nucleotide-like_space)
     ensure_loaded_math(space/discrete/number-like_space)
+    ensure_loaded_math(space/discrete/symbolic_numbers_space)
 
     ensure_loaded_math(number_theory/number_theory)
 
@@ -410,6 +411,8 @@ static inline void startup_step4_load_needed_ruuuby_files(void) { // -----------
     // [⚠️] : reminder, do not load "ruuuby/ruuuby_orm" here
 
     ensure_loaded_ruuuby(virtual/env)
+    ensure_loaded_ruuuby(virtual/f06)
+    ensure_loaded_ruuuby(virtual/f28)
 
     ensure_loaded_ruuuby(ruuuby/routine_cli)
     ensure_loaded_ruuuby(ruuuby/ruuuby_api)
@@ -562,7 +565,7 @@ ________________________________________________________________________________
     }
 )
 
-// | function(num?}  |
+// | function(num?} |
 ⓡ𝑓_kargs(m_obj_num,
     if (argc == 0) {
         re_as_bool(is_num(self))
@@ -575,15 +578,23 @@ ________________________________________________________________________________
                 if (them == 🆔n_in_set_universal || them == 🆔n_in_set_universal_w_str_allowed) {
                     re_as_bool(is_finite_num(self))
                 } else if (them == 🆔n_in_set_naturals || them == 🆔n_in_set_naturals_w_str_allowed) {
-                    if (has_smell_of_int(self)) {
-                        re_as_bool(NUM2INT(self) > 0)
+                    if (is_finite_num(self)) {
+                        if (has_smell_of_int(self)) {
+                            re_as_bool(NUM2INT(self) > 0)
+                        } else {re_no}
                     } else {re_no}
                 } else if (them == 🆔n_in_set_wholes || them == 🆔n_in_set_wholes_w_str_allowed) {
-                    if (has_smell_of_int(self)) {
-                        re_as_bool(NUM2INT(self) >= 0)
+                    if (is_finite_num(self)) {
+                        if (has_smell_of_int(self)) {
+                            re_as_bool(NUM2INT(self) >= 0)
+                        } else {re_no}
                     } else {re_no}
                 } else if (them == 🆔n_in_set_integers || them == 🆔n_in_set_integers_w_str_allowed) {
-                    re_as_bool(has_smell_of_int(self))
+                    if (is_finite_num(self)) {
+                        if (has_smell_of_int(self)) {
+                            re_ye
+                        } else {re_no}
+                    } else {re_no}
                 } else {
                     raise_err_arg("| <%"PRIsVALUE">-> m{num?} does not support the received normalizer{%"PRIsVALUE"}; either it is invalid or the current type of{%s} is not valid w/ the valid normalizer |", self, them, rb_obj_classname(self));
                 }
@@ -594,17 +605,23 @@ ________________________________________________________________________________
                     if (them == 🆔n_in_set_universal_w_str_allowed) {
                         re_as_bool(is_finite_num(as_num))
                     } else if (them == 🆔n_in_set_naturals_w_str_allowed) {
-                        if (has_smell_of_int(as_num)) {
-                            int as_int = NUM2INT(as_num);
-                            re_as_bool(as_int > 0)
+                        if (is_finite_num(as_num)) {
+                            if (has_smell_of_int(as_num)) {
+                                re_as_bool(NUM2INT(as_num) > 0)
+                            } else {re_no}
                         } else {re_no}
                     } else if (them == 🆔n_in_set_wholes_w_str_allowed) {
-                        if (has_smell_of_int(as_num)) {
-                            int as_int = NUM2INT(as_num);
-                            re_as_bool(as_int >= 0)
+                        if (is_finite_num(as_num)) {
+                            if (has_smell_of_int(as_num)) {
+                                re_as_bool(NUM2INT(as_num) >= 0)
+                            } else {re_no}
                         } else {re_no}
                     } else if (them == 🆔n_in_set_integers_w_str_allowed) {
-                        re_as_bool(has_smell_of_int(as_num))
+                        if (is_finite_num(as_num)) {
+                            if (has_smell_of_int(as_num)) {
+                                re_ye
+                            } else {re_no}
+                        } else {re_no}
                     } else {
                         raise_err_arg("| <%"PRIsVALUE">-> m{num?} does not support the received normalizer{%"PRIsVALUE"}; either it is invalid or the current type of{String} is not valid w/ the valid normalizer |", self, them);
                     }

@@ -1,4 +1,9 @@
 
+```
+TODO: verify
+"values outputed from the trig functions are transcendental"
+```
+
 ### Principal Values
 
  * none of the six trigonometric functions are `one-to-one`

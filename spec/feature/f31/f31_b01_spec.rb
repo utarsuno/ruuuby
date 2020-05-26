@@ -2,7 +2,7 @@
 
 RSpec.describe 'f31_b01' do
 
-  context 'audits', :audits do
+  context 'locale', :locale do
     context 'feature{f31}' do
       context 'behavior{b01}' do
 

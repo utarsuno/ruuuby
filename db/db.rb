@@ -40,10 +40,29 @@ ActiveRecord::Schema.define do
     t.references :ruuuby_dir, index: true, foreign_key: { references: :ruuuby_dirs }
   end
 
+  # NOTE: eventually will utilize other gems & HTTP requests for retrieving information, ORM fields will potentially need to drastically adapt
+  create_table :ruuuby_gems, force: true do |t|
+    t.string :name, :null => false, unique: true
+    t.string :url_gem, :null => false, unique: true
+
+    t.string :version_current, :null => false, unique: false
+    t.string :version_latest, :null => true, unique: false
+
+    t.boolean :is_development, :null => false, unique: false
+    t.boolean :is_runtime, :null => false, unique: false
+
+    t.string :ref_source, :null => true, unique: false
+    t.string :ref_version, :null => true, unique: false
+
+    t.string :tags, :null => true, unique: false
+
+    t.references :ruuuby_release, index: true, foreign_key: { references: :ruuuby_releases }
+  end
+
   create_table :ruuuby_releases, force: true do |t|
 
-    t.integer :flag_release_status, limit: 1, :null => true
     t.integer :num_commits, limit: 1, :null => false, :default => 0
+    t.integer :num_gems_added, limit: 1, :null => false, :default => 0
 
     t.integer :vmajor, limit: 1, :null => false
     t.integer :vminor, limit: 1, :null => false

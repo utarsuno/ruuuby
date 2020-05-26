@@ -8,7 +8,11 @@ module ::Math
 
     class NumberLikeSpace < ::Math::Space::TypesSpaceⓣ¹
 
-      ALL_NUMS = [::Integer, ::Float, ::Complex, ::Rational, ::BigDecimal].❄️
+      # @type [Array]
+      ALL_NUMS                   = [::Integer, ::Float, ::Complex, ::Rational, ::BigDecimal].❄️
+
+      # @type [Array]
+      NORMALIZERS_ALL_NUMS_W_STR = [:∈ℕ, :∈𝕎, :∈ℤ, :∈ℕ𝕊, :∈𝕎𝕊, :∈ℤ𝕊].❄️
 
       def initialize
         @space_type     = 'types'
