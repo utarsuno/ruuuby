@@ -4,6 +4,7 @@
 | guideline |
 | --- |
 | if including `include/ruby/ruby.h`, don't use the `..._PTR` macros (ex: `RARRAY_PTR`, instead use function `rb_ary_aref`) |
+| avoid `rb_eval_string` when possible, it's quite slow `ಠ╭╮ಠ` (relative to most alternatives) |
 
 | resources |
 | --- |
