@@ -4,29 +4,31 @@ module HelpersDB
   require_relative '../../db/seed'
 
   def audit_feature(the_feature, feature_str, description)
-    expect(the_feature.class).to eq(RuuubyFeature)
+    expect(the_feature.ⓣ).to eq(RuuubyFeature)
     expect(the_feature.uid).to eq(feature_str)
     expect(feature_str.match?(::RuuubyFeature.syntax_uid)).to eq(true)
     expect(description.match?(::RuuubyFeature.syntax_docs_feature_mapping)).to eq(true)
-    expect(the_feature.id.class).to eq(Integer)
+    expect(the_feature.id.ⓣ).to eq(Integer)
     expect(the_feature.description).to eq(description)
-    expect(the_feature.description.class).to eq(String)
+    expect(the_feature.description.ⓣ).to eq(String)
   end
 
   def audit_version(the_version, version_str)
-    expect(the_version.class).to eq(RuuubyRelease)
+    expect(the_version.ⓣ).to eq(RuuubyRelease)
     expect(the_version.uid).to eq(version_str)
     expect(version_str.match?(::RuuubyRelease.syntax_uid)).to eq(true)
-    expect(the_version.id.class).to eq(Integer)
-    if the_version.is_released?
+    expect(the_version.id.ⓣ).to eq(Integer)
+    if the_version.released?
       expect(the_version.num_commits > 0).to eq(true)
+      expect(the_version.has_release_tag?).to eq(true)
     else
       expect(the_version.num_commits).to eq(0)
+      expect(the_version.has_release_tag?).to eq(false)
     end
   end
 
   def audit_feature_behavior(the_feature, the_feature_behavior, uid, description)
-    expect(the_feature_behavior.class).to eq(::RuuubyFeatureBehavior)
+    expect(the_feature_behavior.ⓣ).to eq(::RuuubyFeatureBehavior)
     expect(the_feature_behavior.uid).to eq(uid)
     expect(the_feature_behavior.description).to eq(description)
     expect(the_feature_behavior.ruuuby_feature).to eq(the_feature)
@@ -43,9 +45,6 @@ RSpec.shared_context 'shared_context_db' do
   let(:data_git_author_date_oldest){'2018-12-13T18:03:49-06:00'}
   let(:data_git_author_date_newer){'2020-11-31T18:03:39-06:00'}
   let(:data_git_author_date_wo_normalization){'2019-12-31 18:03:39 -0600'}
-
-  let(:re_ruuuby_feature){RuuubyFeature::Syntax}
-  let(:re_ruuuby_release){RuuubyRelease::Syntax}
 
   let(:v0_0_0){RuuubyRelease.find_by_uid(0, 0, 0)}
   let(:v0_0_1){RuuubyRelease.find_by_uid(0, 0, 1)}
@@ -85,6 +84,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:v0_0_35){RuuubyRelease.find_by_uid(0, 0, 35)}
   let(:v0_0_36){RuuubyRelease.find_by_uid(0, 0, 36)}
   let(:v0_0_37){RuuubyRelease.find_by_uid(0, 0, 37)}
+  let(:v0_0_38){RuuubyRelease.find_by_uid(0, 0, 38)}
 
   let(:f00){RuuubyFeature.find_by_uid(0)}
   let(:f00_b00){f00.ruuuby_feature_behaviors[0]}
@@ -94,7 +94,10 @@ RSpec.shared_context 'shared_context_db' do
   let(:f02){RuuubyFeature.find_by_uid(2)}
   let(:f03){RuuubyFeature.find_by_uid(3)}
   let(:f04){RuuubyFeature.find_by_uid(4)}
+
   let(:f05){RuuubyFeature.find_by_uid(5)}
+  let(:f05_b00){f05.ruuuby_feature_behaviors[0]}
+  let(:f05_b01){f05.ruuuby_feature_behaviors[1]}
 
   let(:f06){RuuubyFeature.find_by_uid(6)}
 
@@ -166,10 +169,15 @@ RSpec.shared_context 'shared_context_db' do
 
   let(:f32){RuuubyFeature.find_by_uid(32)}
 
+  let(:f95){RuuubyFeature.find_by_uid(95)}
+  let(:f96){RuuubyFeature.find_by_uid(96)}
   let(:f97){RuuubyFeature.find_by_uid(97)}
 
   let(:f98){RuuubyFeature.find_by_uid(98)}
   let(:f98_b00){f98.ruuuby_feature_behaviors[0]}
   let(:f98_b01){f98.ruuuby_feature_behaviors[1]}
+  let(:f98_b02){f98.ruuuby_feature_behaviors[2]}
+
+  let(:f99){RuuubyFeature.find_by_uid(99)}
 
 end

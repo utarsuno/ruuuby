@@ -4,28 +4,6 @@ RSpec.describe 'ary' do
 
   context 'extends class{Array}' do
 
-    context 'by adding function{>>}' do
-      it 'works correctly' do
-        expect([] >> 1337).to eq([1337])
-        expect([1337, 1337] >> 1337).to eq([1337, 1337, 1337])
-        expect([1, 2, 3] >> 1337).to eq([1337, 1, 2, 3])
-        expect([1, 2, 3] >> nil).to eq([nil, 1, 2, 3])
-        expect([1, 2, 3] >> [1, 2]).to eq([[1, 2], 1, 2, 3])
-      end
-      it 'handles frozen arrays' do
-        a = [1, 'a'].❄️
-        a.❄️
-        expect{a >> 'test'}.to raise_error(FrozenError)
-      end
-      it 'while preserving object_id' do
-        a = [1337, 'a']
-        b = a.🆔
-        a >> []
-        expect(a).to eq([[], 1337, 'a'])
-        expect(a.🆔).to eq(b)
-      end
-    end
-
     context 'by adding function{≈≈} (equal_contents?)' do
       context 'handles needed scenarios' do
         context 'for cases: positive' do
@@ -333,9 +311,6 @@ RSpec.describe 'ary' do
     end
     it 'func{∖} runs fast enough' do
       expect{[1, 2, 3].∖ [2, 3, 4]}.to perform_quickly
-    end
-    it 'func{>>} runs fast enough' do
-      expect{[1, 2, 3] >> [2, 3, 4]}.to perform_quickly
     end
 
     context 'func{ensure_start!} runs fast enough' do

@@ -9,10 +9,40 @@ RSpec.describe 'f31_b00' do
       it 'exists as needed' do
         the_ref = 💎.api_git
         the_id  = the_ref.🆔
-        expect(the_ref.class).to eq(::Ruuuby::MetaData::GitAPI)
+        expect(the_ref.ⓣ).to eq(::Ruuuby::MetaData::GitAPI)
         expect(the_ref.🆔).to eq(::Ruuuby::MetaData::GitAPI.ℹ.🆔)
         expect(the_ref.🆔).to eq(the_id)
         expect(💎.api_git.🆔).to eq(the_ref.🆔)
+      end
+
+      context 'func{release_tags}' do
+        context 'locale', :locale do
+          it 'fetches tags w/ correct naming schemas' do
+            release_tags = 💎.api_git.release_tags
+            # 30 is an arbitrary number
+            expect(release_tags.length > 30).to eq(true)
+            expect(release_tags[0][0].length).to eq(3)
+            expect(release_tags[0][0].ⓣ).to eq(Array)
+            expect(release_tags[0][1].ⓣ).to eq(String)
+            expect(release_tags[0][1].∅?).to eq(false)
+          end
+          it 'returns the same obj, not one w/ a new obj_id' do
+            💎.api_git.release_tags
+            expect(💎.api_git.release_tags.🆔).to eq(💎.api_git.release_tags.🆔)
+          end
+        end
+      end
+
+      context 'func{branch_names}' do
+        context 'locale', :locale do
+          it 'correctly fetches all branch names' do
+            expect(💎.api_git.branch_names).to eq(%w(master origin/master wip_jruby))
+          end
+        end
+        it 'returns the same obj, not one w/ a new obj_id' do
+          💎.api_git.branch_names
+          expect(💎.api_git.branch_names.🆔).to eq(💎.api_git.branch_names.🆔)
+        end
       end
 
       context 'func{∃commit?}' do

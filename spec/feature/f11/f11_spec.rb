@@ -13,7 +13,7 @@ RSpec.describe 'f11' do
       context 'aleph cardinality' do
         context 'finite cardinality' do
           it 'checked through func{𝔠}' do
-            num_sets_finite.∀{|scenario| expect(scenario.𝔠.class).to eq(::Integer)}
+            num_sets_finite.∀{|scenario| expect(scenario.𝔠.ⓣ).to eq(::Integer)}
           end
           it 'funcs{finite?}' do
             num_sets_finite.∀{|scenario| expect(scenario.finite?).to eq(true)}

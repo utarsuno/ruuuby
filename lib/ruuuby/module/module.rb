@@ -1,3 +1,4 @@
+# coding: UTF-8
 
 # add various functions to existing module +Module+
 class ::Module
@@ -69,9 +70,14 @@ class ::Module
   alias_method :⨍_add_aliases, :f_add_aliases
 
   # @return [Array]
-  def get_all_defined_modules; self.constants.select{|const| self.const_get(const).module?}; end
+  def get_all_defined_modules
+    self.constants.select do |const|
+      c = self.const_get(const)
+      (c.is_a?(::Module) && c.class == ::Module)
+    end
+  end
 
   # @return [Array]
-  def get_all_defined_classes; self.constants.select{|const| self.const_get(const).class?}; end
+  def get_all_defined_classes; self.constants.select{|const| self.const_get(const).is_a?(::Class)}; end
 
 end

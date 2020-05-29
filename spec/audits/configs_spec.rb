@@ -2,7 +2,6 @@
 
 RSpec.describe 'general configs' do
   let(:ruuuby_metadata){::Ruuuby::MetaData}
-  let(:configs_code){::File::Syntax::SourceCode}
 
   #                   __          ___     __
   #   /\     |  |    |  \    |     |     /__`
@@ -33,13 +32,13 @@ RSpec.describe 'general configs' do
               sub_full_path = "#{path_current_extension}/#{sub_path}"
               puts "\t\t\t| checking if file: {#{sub_full_path.to_s}}"
               expect(📁.∃?(sub_full_path)).to eq(true)
-              if sub_path.end_with?(configs_code::C::CODE)
+              if sub_path.end_with?('.c')
                 puts "\t\t\t\t| parent-dir-name{#{path.to_s}} should equal file-name{#{sub_path.to_s}}"
                 expect(path.to_s).to eq(sub_path[0..sub_path.length-3].to_s)
 
                 puts "\t\t\t\t| file-name{#{sub_path.to_s}} should not equal {conftest.c}"
                 expect(sub_path).to_not eq('conftest.c')
-              elsif sub_path.end_with?(configs_code::Ruby::CODE) || sub_path.end_with?(configs_code::C::HEADER)
+              elsif sub_path.end_with?('.rb') || sub_path.end_with?('.h')
                 # do nothing =)
               else
                 puts "\t\t\t\t| unexpected-file{#{sub_path.to_s}}, which is not supported!"

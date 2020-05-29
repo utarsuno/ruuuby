@@ -61,14 +61,14 @@ RSpec.describe 'ruuuby_feature.rb' do
         context 'func{syntax_uid}' do
           it 'exists as needed' do
             expect(RuuubyFeature.respond_to?(:syntax_uid)).to eq(true)
-            expect(RuuubyFeature.syntax_uid.class).to eq(Regexp)
+            expect(RuuubyFeature.syntax_uid.ⓣ).to eq(Regexp)
             expect(RuuubyFeature.syntax_uid.source).to eq("\\A#{RuuubyFeature::Syntax::UID}\\z")
           end
         end
         context 'func{syntax_docs_feature_mapping}' do
           it 'exists as needed' do
             expect(RuuubyFeature.respond_to?(:syntax_docs_feature_mapping)).to eq(true)
-            expect(RuuubyFeature.syntax_docs_feature_mapping.class).to eq(Regexp)
+            expect(RuuubyFeature.syntax_docs_feature_mapping.ⓣ).to eq(Regexp)
             expect(RuuubyFeature.syntax_docs_feature_mapping.source).to eq("\\A#{RuuubyFeature::Syntax::DOCS_FEATURE_MAPPING}\\z")
           end
         end

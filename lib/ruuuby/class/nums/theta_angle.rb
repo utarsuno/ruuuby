@@ -10,6 +10,7 @@
 class ThetaAngle
   include ::Comparable
 
+  # TODO: switch to fixnum representation
   REPRESENTATIONS_TO_SYMBOLS = {as_degree: '°'.❄️, as_radian: 'ʳ'.❄️, as_gon: 'ᵍ'.❄️, as_turn: '𝞽'.❄️}.❄️
 
   # TODO:
@@ -18,6 +19,9 @@ class ThetaAngle
   #  TRIGONOMETRIC_ANGLE = '(\d+)?π(/\d+)?'.❄️
   #  # @type [String]
   #  FORMAT_DEGREES      = '(\d+)((.)(\d+))?((°(θ))|( degrees))?'.❄️
+  #
+  # 1 rad = 10^3 mrad = 10^6 urad
+  #
   #end
 
   # include ::Ruuuby::Attribute::Includable::SyntaxCache

@@ -6,7 +6,7 @@ RSpec.describe 'f30_b00' do
     context 'behavior{b00}' do
 
       it 'exists as needed' do
-        expect_feature_behavior_as_needed(🅱, ::Math::Space::BooleanLikeSpace)
+        expect_feature_behavior_as_needed(🅱, ::Math::Space::BooleanSpace)
       end
 
     end

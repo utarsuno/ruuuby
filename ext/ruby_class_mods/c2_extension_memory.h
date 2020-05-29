@@ -22,7 +22,6 @@ ________________________________________________________________________________
 static VALUE cached_ref_empty_ary;
 
 static VALUE 🆔n_no_empty;
-static VALUE 🆔normalizer_none;
 static VALUE 🆔n_in_set_superscripts;
 static VALUE 🆔n_in_set_naturals;
 static VALUE 🆔n_in_set_wholes;
@@ -61,15 +60,11 @@ static VALUE cached_class_theta_angle;
 static VALUE cached_const_angle_golden;
 static VALUE cached_const_angle_tau;
 
-static VALUE cached_rb_intern_smells_like_int;
-static VALUE cached_rb_intern_ints_bitwise_xor;
-static VALUE cached_rb_intern_raise_to_power;
-static VALUE cached_rb_intern_is_a;
-static VALUE cached_rb_intern_is_finite;
-static VALUE cached_rb_intern_is_empty;
-static VALUE cached_rb_intern_new;
-
-// ID rb_intern(const char*);
+static ID cached_rb_intern_smells_like_int;
+static ID cached_rb_intern_ints_bitwise_xor;
+static ID cached_rb_intern_raise_to_power;
+static ID cached_rb_intern_is_finite;
+static ID cached_rb_intern_is_empty;
 
 static ID cached_rb_intern_as_degree;
 static ID cached_rb_intern_as_radian;
@@ -92,7 +87,7 @@ static ID cached_rb_intern_oblique_angle;
 \__, /~~\ \__, |  | |___ .   \__,
 _____________________________________________________________________________________________________________________ */
 
-static long long exponential_ids[𝔠EXPONENTS];
-static int       exponential_indexes[𝔠EXPONENTS];
+static unsigned long exponential_ids[𝔠EXPONENTS];
+static int           exponential_indexes[𝔠EXPONENTS];
 
 #endif

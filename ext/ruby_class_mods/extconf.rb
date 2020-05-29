@@ -54,13 +54,27 @@ module ExtconfConfigHelper
   module Headers
     FOR_RUBY = %w(ruby ruby/assert ruby/debug ruby/defines ruby/encoding ruby/intern ruby/version ruby/missing)
     #FOR_C    = %w(stdio unistd sys/types sys/stat sys/param sys/mount fcntl string stdlib)
-    FOR_C    = %w(sys/types string stdlib float math tgmath complex)
+    FOR_C    = %w(sys/types string stdlib float math tgmath complex inttypes)
     ALL      = FOR_RUBY + FOR_C + %w(c0_constants c1_typed_checks c2_extension_memory c3_macro_utilities c4_theta_angle ruby_class_mods)
       #ALL = FOR_RUBY
   end
 
   module DataTypes
-    FOR_C = {short: 2, 'unsigned short': 2, int: 4, 'unsigned int': 4, float: 4, size_t: 8, 'long long': 8, long: 8, double: 8}
+    FOR_C = {
+        char: 1,
+        'unsigned char': 1,
+        short: 2,
+        'unsigned short': 2,
+        int: 4,
+        'unsigned int': 4,
+        float: 4,
+        size_t: 8,
+        long: 8,
+        'unsigned long': 8,
+        'long long': 8,
+        double: 8,
+        ID: 8
+    }
   end
 
 end

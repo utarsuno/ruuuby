@@ -95,7 +95,7 @@ class RuuubyFeature < ApplicationRecord
     when :uid_components
       return [self.id_num]
     else
-      raise "c{RuuubyFeature}-> m{cache_calculate} did not recognize cache_key{#{cache_key.to_s}} of type{#{cache_key.class.to_s}}"
+      raise "c{RuuubyFeature}-> m{cache_calculate} did not recognize cache_key{#{cache_key.to_s}} of type{#{cache_key.Ⓣ}}"
     end
   end
 

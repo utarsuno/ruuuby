@@ -25,25 +25,25 @@ RSpec.describe 'str' do
                 context 'cases: positive' do
                   it 'year' do
                     data = '2020'.to_iso8601
-                    expect(data.class).to eq(::DateTime)
+                    expect(data.ⓣ).to eq(::DateTime)
                     expect(data.year).to eq(2020)
                   end
                   it 'year & month' do
                     data = '2000-04'.to_iso8601
-                    expect(data.class).to eq(::DateTime)
+                    expect(data.ⓣ).to eq(::DateTime)
                     expect(data.year).to eq(2000)
                     expect(data.month).to eq(4)
                   end
                   it 'year & month & day' do
                     data = '1999-11-22'.to_iso8601
-                    expect(data.class).to eq(::DateTime)
+                    expect(data.ⓣ).to eq(::DateTime)
                     expect(data.year).to eq(1999)
                     expect(data.month).to eq(11)
                     expect(data.day).to eq(22)
                   end
                   it 'year & month & day & time' do
                     data = '2021-09-01T23:59:00'.to_iso8601
-                    expect(data.class).to eq(::DateTime)
+                    expect(data.ⓣ).to eq(::DateTime)
                     expect(data.year).to eq(2021)
                     expect(data.month).to eq(9)
                     expect(data.day).to eq(1)
@@ -54,7 +54,7 @@ RSpec.describe 'str' do
                   it 'year & month & day & time & time-zone' do
                     data  = '2020-06-02T00:12:12+00:00'.to_iso8601
                     data2 = '2020-06-02T01:12:12+00:00'.to_iso8601
-                    expect(data.class).to eq(::DateTime)
+                    expect(data.ⓣ).to eq(::DateTime)
                     expect(data.year).to eq(2020)
                     expect(data.month).to eq(06)
                     expect(data.day).to eq(02)
@@ -836,49 +836,13 @@ RSpec.describe 'str' do
       end
     end
 
-    context 'func{∅?} (alias for "remove_empty!")' do
+    context 'func{∅?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           expect(''.∅?).to eq(true)
         end
         it 'cases: negative' do
           expect(' '.∅?).to eq(false)
-        end
-      end
-    end
-
-    context 'func{>>} (prepend operation)' do
-      context 'handles cases' do
-        context 'positive' do
-          it 'simple data' do
-            [['', ''], %w(a a), %w(ab ab), [" abcde 101 \n", " abcde 101 \n"]].∀{|a|expect('' >> a[0]).to eq(a[1])}
-          end
-          it 'complex data' do
-            expect('b' >> 'a').to eq('ab')
-            expect('baa' >> 'ba').to eq('babaa')
-            expect('baaDd' >> 'baaDdd').to eq('baaDddbaaDd')
-          end
-          it 'preserves object_id' do
-            a = 'apple'
-            b = a.🆔
-            a >> 'c'
-            expect(a).to eq('capple')
-            expect(a.🆔).to eq(b)
-          end
-        end
-        context 'error' do
-          it 'catches wrong parameter type provided' do
-            [nil, 1337, {}].∀{|a|expect{'' >> a}.to raise_exception(ArgumentError)}
-            expect{'' >> [1] }.to raise_error(ArgumentError)
-            expect{'' >> nil }.to raise_error(ArgumentError)
-            expect{'' >> 1337 }.to raise_error(ArgumentError)
-            expect{'' >> {'apple' => 'aa'} }.to raise_error(ArgumentError)
-          end
-          it 'catches frozen strings' do
-            a = 'my_frozen_string'.❄️
-            a.❄️
-            expect{a.>>('bbb')}.to raise_error(FrozenError)
-          end
         end
       end
     end
@@ -1016,12 +980,6 @@ RSpec.describe 'str' do
         end
       end
     end # end: {character functions}
-
-    it 'func{>>} runs fast enough' do
-      expect{''.>> ''}.to perform_extremely_quickly
-      expect{''.>> 'bASDVASb5t4t'}.to perform_very_quickly
-      expect{a_str.>> 'bASDVASb5t4t'}.to perform_very_quickly
-    end
 
     context 'funcs w/ ♻️' do
       context 'func{♻️⟵}' do

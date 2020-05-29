@@ -21,7 +21,7 @@ class ::Complex
   #
   # @return [Numeric, Float, Complex, Rational]
   def ^(n)
-    evaluated = n.sym?(:∈superscripts)
+    evaluated = n.sym?(:'∈^')
     if evaluated.int?
       self ** evaluated
     elsif evaluated.flt?

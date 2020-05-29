@@ -1,4 +1,4 @@
-# coding: utf-8
+# coding: UTF-8
 
 RSpec.describe 'ruuuby_file.rb' do
 

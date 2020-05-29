@@ -28,6 +28,10 @@ module ::Ruuuby
     # misc notes:
     #  - any two `disparate` commits chosen will have a common ancestor that can be found by traversing down both commit's pointer chains until reaching the common ancestor node
     #  - "git tree" mathematically is a DAG (`directed asyclic graph`), note: every `tree` is a DAG but vise-versa is not implied (@see https://dev.to/nichartley/whats-a-git-tree-5149)
+    #  - `origin/master` vs `origin master`: https://stackoverflow.com/questions/18137175/in-git-what-is-the-difference-between-origin-master-vs-origin-master
+    #
+    # helpful CLI commands:
+    #  - `git log --pretty=format:"%H|%ad|%s" --date=iso`
     #
     # ----------------------------------
     #
@@ -42,6 +46,9 @@ module ::Ruuuby
         @path_gitignore = "#{::Ruuuby::MetaData::Paths::BASE}/.gitignore"
         @last_commit    = @repo.last_commit
         @configs         = @repo.config
+        # cached fields
+        @branch_names   = []
+        @release_tags   = []
       end
 
       # @see https://github.com/desktop/desktop/issues/5057
@@ -66,7 +73,7 @@ module ::Ruuuby
       def ∃commit?(sha)
         🛑str❓(:sha, sha)
         begin
-        @repo.lookup(sha).class == ::Rugged::Commit
+        @repo.lookup(sha).ⓣ == ::Rugged::Commit
         rescue ::Rugged::OdbError
             return false
         end
@@ -100,15 +107,56 @@ module ::Ruuuby
         end
       end
 
-    end
-  end
+      # @return [Array]
+      def remote_release_current; self.release_tags[0]; end
+
+      # @return [Array]
+      def remote_release_previous; self.release_tags[1]; end
+
+      # ____________________________________________________________
+      #  __        __        ___  __      ___    ___       __   __
+      # /  `  /\  /  ` |__| |__  |  \    |__  | |__  |    |  \ /__`
+      # \__, /~~\ \__, |  | |___ |__/    |    | |___ |___ |__/ .__/
+      # ____________________________________________________________
+
+      # @return [Array]
+      def release_tags
+        if @release_tags.∅?
+          @repo.references.each('refs/tags/*') do |ref|
+            first_target = ref.target
+            if first_target.ⓣ == ::Rugged::Tag::Annotation
+              second_target = @repo.lookup(ref.target.oid)
+              if second_target.ⓣ == ::Rugged::Tag::Annotation
+                third_target = second_target.target
+                if third_target.ⓣ == ::Rugged::Commit
+                  @release_tags << [ref.name.to_s.♻️⟶('v').split('.').map(&:to_i), third_target.oid]
+                else
+                  🛑 RuntimeError.new("unexpected Class{#{second_target.Ⓣ}}, func{release_tags}, 3rd-obj{#{third_target.to_s}}")
+                end
+              else
+                🛑 RuntimeError.new("unexpected Class{#{second_target.Ⓣ}}, func{release_tags}, 2nd-obj{#{second_target.to_s}}")
+              end
+            else
+              🛑 RuntimeError.new("unexpected Class{#{first_target.Ⓣ}}, func{release_tags}, 1st-obj{#{first_target.to_s}}")
+            end
+          end
+          @release_tags.sort!{|a,b| a <=> b }.reverse!
+        end
+        @release_tags
+      end
+
+      # @return [Array]
+      def branch_names
+        if @branch_names.∅?
+          @branch_names = @repo.branches.each_name.sort
+        end
+        @branch_names
+      end
+
+    end # end: Class{GitAPI}
+  end # end: Module{MetaData}
 end
 
-module ::Ruuuby
-  # information and utilities that define and work w/ aspects of `Ruuuby`
-  module MetaData
-    def self.api_git; ::Ruuuby::MetaData::GitAPI.ℹ; end
-  end
-end
+module ::Ruuuby; module MetaData; def self.api_git; ::Ruuuby::MetaData::GitAPI.ℹ; end; end; end
 
 # -------------------------------------------- ⚠️ --------------------------------------------

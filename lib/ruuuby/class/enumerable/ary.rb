@@ -78,7 +78,7 @@ module ::Ruuuby
         #
         # @return [Array] self, modified if any normalization needed to occur
         def η̂!(normalization_opts)
-          if ::Math::Space::NumberLikeSpace::NORMALIZERS_ALL_NUMS_W_STR.∋?(normalization_opts)
+          if ::Math::Space::NumberSpace::NORMALIZERS_ALL_NUMS_W_STR.∋?(normalization_opts)
             🛑num❓($PRM_MANY, self, normalization_opts)
             self.∀ₓᵢ do |element, i|
               if element.num?(normalization_opts)

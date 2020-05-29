@@ -15,7 +15,7 @@ RSpec.describe 'f30_db' do
         end
 
         it 'defines{b00}' do
-          audit_feature_behavior(f30, f30_b00, 'b00', 'create create singleton-Class{BooleanLikeSpace}, instanced aliased by{🅱}')
+          audit_feature_behavior(f30, f30_b00, 'b00', 'create create singleton-Class{BooleanSpace}, instanced aliased by{🅱}')
         end
 
         it 'defines{b01}' do
@@ -23,11 +23,11 @@ RSpec.describe 'f30_db' do
         end
 
         it 'defines{b02}' do
-          audit_feature_behavior(f30, f30_b02, 'b02', 'create create singleton-Class{NucleotideLikeSpace}, instanced aliased by{🧬}')
+          audit_feature_behavior(f30, f30_b02, 'b02', 'create create singleton-Class{NucleotideSpace}, instanced aliased by{🧬}')
         end
 
         it 'defines{b03}' do
-          audit_feature_behavior(f30, f30_b03, 'b03', 'create create singleton-Class{NumberLikeSpace}, instanced aliased by{🔢}')
+          audit_feature_behavior(f30, f30_b03, 'b03', 'create create singleton-Class{NumberSpace}, instanced aliased by{🔢}')
         end
 
         it 'defines{b04}' do

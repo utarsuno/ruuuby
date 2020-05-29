@@ -4,8 +4,8 @@ RSpec.describe 'f28_b08' do
   context 'functionality' do
     context 'angle tau' do
       context 'has correct value' do
-        it 'γ == Float::EULER_MASCHERONI_CONSTANT' do
-          expect(γ).to eq(::Float::EULER_MASCHERONI_CONSTANT)
+        it 'γ == Float::CONST_EULER_MASCHERONI' do
+          expect(γ).to eq(::Float::CONST_EULER_MASCHERONI)
           expect(γ.ⓣ).to eq(::Float)
 
           as_string = γ.to_s

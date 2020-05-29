@@ -8,9 +8,6 @@ module ::Ruuuby
   module MetaData
 
     # @return [::Ruuuby::MetaData::RuuubyORM::SchemaORM]
-    def self.meta_orm; ::Ruuuby::MetaData::RuuubyORM::SchemaORM; end
-
-    # @return [::Ruuuby::MetaData::RuuubyORM::SchemaORM]
     def self.meta_logging; ::Ruuuby::MetaData::RuuubyEngine::RuuubyLogging; end
 
     # @return [::Ruuuby::MetaData::Paths]

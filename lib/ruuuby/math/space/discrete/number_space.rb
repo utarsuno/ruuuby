@@ -6,7 +6,7 @@ module ::Math
   # math related code that can be categorized under +Space+
   module Space
 
-    class NumberLikeSpace < ::Math::Space::TypesSpaceⓣ¹
+    class NumberSpace < ::Math::Space::TypesSpaceⓣ¹
 
       # @type [Array]
       ALL_NUMS                   = [::Integer, ::Float, ::Complex, ::Rational, ::BigDecimal].❄️

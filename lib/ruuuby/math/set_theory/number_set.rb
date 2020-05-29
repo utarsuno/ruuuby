@@ -35,7 +35,7 @@ module ::Math
       def initialize(symbol, cardinality, axioms={})
         super(axioms)
         🛑sym❓(:symbol, symbol)
-        @name        = self.class.to_s.♻️⟶∞('::').to_🐍.gsub('_', ' ')
+        @name        = self.Ⓣ.♻️⟶∞('::').to_🐍.gsub('_', ' ')
         @symbol      = symbol
         @𝔠           = cardinality
         @subset_of   = []
@@ -70,7 +70,7 @@ module ::Math
       #
       # @return [Boolean]
       def ⊂?(s)
-        🛑 RuntimeError.new("c{#{self.class.to_s}}-> m{⊂?} requires arg of type{NumberSet}, not the provided type{#{s.class.to_s}}") unless s.is_a?(::Math::SetTheory::NumberSet)
+        🛑 RuntimeError.new("c{#{self.Ⓣ}}-> m{⊂?} requires arg of type{NumberSet}, not the provided type{#{s.Ⓣ}}") unless s.is_a?(::Math::SetTheory::NumberSet)
         if s.symbol == :∅
           false
         else
@@ -84,7 +84,7 @@ module ::Math
       #
       # @return [Boolean]
       def ⊆?(s)
-        🛑 RuntimeError.new("c{#{self.class.to_s}}-> m{⊆?} requires arg of type{NumberSet}, not the provided type{#{s.class.to_s}}") unless s.is_a?(::Math::SetTheory::NumberSet)
+        🛑 RuntimeError.new("c{#{self.Ⓣ}}-> m{⊆?} requires arg of type{NumberSet}, not the provided type{#{s.Ⓣ}}") unless s.is_a?(::Math::SetTheory::NumberSet)
         if s.symbol == :∅
           false
         else
@@ -98,7 +98,7 @@ module ::Math
       #
       # @return [Boolean]
       def ⊃?(s)
-        🛑 RuntimeError.new("c{#{self.class.to_s}}-> m{⊃?} requires arg of type{NumberSet}, not the provided type{#{s.class.to_s}}") unless s.is_a?(::Math::SetTheory::NumberSet)
+        🛑 RuntimeError.new("c{#{self.Ⓣ}}-> m{⊃?} requires arg of type{NumberSet}, not the provided type{#{s.Ⓣ}}") unless s.is_a?(::Math::SetTheory::NumberSet)
         if s.symbol == :∅
           true
         elsif @symbol == s.symbol
@@ -114,7 +114,7 @@ module ::Math
       #
       # @return [Boolean]
       def ⊇?(s)
-        🛑 RuntimeError.new("c{#{self.class.to_s}}-> m{⊇?} requires arg of type{NumberSet}, not the provided type{#{s.class.to_s}}") unless s.is_a?(::Math::SetTheory::NumberSet)
+        🛑 RuntimeError.new("c{#{self.Ⓣ}}-> m{⊇?} requires arg of type{NumberSet}, not the provided type{#{s.Ⓣ}}") unless s.is_a?(::Math::SetTheory::NumberSet)
         if s.symbol == :∅
           true
         elsif @symbol == s.symbol

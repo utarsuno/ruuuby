@@ -23,9 +23,9 @@ class ::RuuubyRelease < ApplicationRecord
   validates :vminor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :vtiny, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :num_commits, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :num_gems_added, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  has_many :git_commits, class_name: 'GitCommit', :dependent => :delete_all #, :order => "commit_author_date ASC"
-
+  has_many :git_commits, class_name: 'GitCommit', :dependent => :delete_all
   has_many :ruuuby_gems, class_name: 'RuuubyGem', :dependent => :delete_all
 
   before_save :on_before_save
@@ -78,9 +78,7 @@ class ::RuuubyRelease < ApplicationRecord
 
   include ::RuuubyRelease::AttributeChangelog
 
-  def self.spawn(major, minor, tiny)
-    ::RuuubyRelease.create!(vmajor: major, vminor: minor, vtiny: tiny)
-  end
+  def self.spawn(major, minor, tiny, description=nil); ::RuuubyRelease.create!(vmajor: major, vminor: minor, vtiny: tiny, description: description); end
 
   def comments ; @comments ||= [] ; end
   def files_added ; @files_added ||= [] ; end
@@ -88,8 +86,6 @@ class ::RuuubyRelease < ApplicationRecord
 
   def add_gem(gem_name, gem_version, for_development, for_runtime, tags, ref_source, ref_version)
     self.ruuuby_gems << RuuubyGem.spawn(gem_name, gem_version, for_development, for_runtime, tags, ref_source, ref_version,self)
-
-    self.comments << "add `gem '#{gem_name}', '~> #{gem_version}'`"
   end
 
   def add_comments(comments)
@@ -130,6 +126,11 @@ class ::RuuubyRelease < ApplicationRecord
   def docs_changelog
     changes = []
     changes << "\n---\n\n# #{self.uid}\n"
+    unless self.ruuuby_gems.empty?
+      self.ruuuby_gems.all.each do |g|
+        self.comments << "add `gem '#{g.name}', '~> #{g.version_current.to_s}'`"
+      end
+    end
     unless @comments.empty?
       @comments.each do |c|
         changes << " * #{c}"
@@ -190,19 +191,13 @@ class ::RuuubyRelease < ApplicationRecord
   end
 
   # @return [RuuubyRelease]
-  def self.get_version_prev
-    ::RuuubyRelease.where('released = ?', true).all.to_ary[-2]
-  end
+  def self.get_version_prev; ::RuuubyRelease.where('released = ?', true).order('vmajor DESC').order('vminor DESC').order('vtiny DESC').limit(2)[1]; end
 
   # @return [RuuubyRelease]
-  def self.get_version_curr
-    ::RuuubyRelease.where('released = ?', true).last
-  end
+  def self.get_version_curr; ::RuuubyRelease.where('released = ?', true).order('vmajor DESC').order('vminor DESC').order('vtiny DESC').limit(1).first; end
 
-  # @return [String] the version UID of the latest release
-  def self.get_version_next
-    ::RuuubyRelease.where('released = ?', false).last
-  end
+  # @return [RuuubyRelease]
+  def self.get_version_next; ::RuuubyRelease.where('released = ?', false).order('vmajor DESC').order('vminor DESC').order('vtiny DESC').limit(1).first; end
 
   # @return [GitCommit]
   def spawn_git_commit(*args); ::GitCommit.spawn(*args, self); end
@@ -217,19 +212,6 @@ class ::RuuubyRelease < ApplicationRecord
     version_str = version_str[1..version_str.length-1] if version_str.start_with?('v')
     version_str = version_str.♻️⟵(' ') if version_str.∋?(' ')
     version_str.split('.').η̂!(:∈𝕎𝕊)
-  end
-
-  # @return [Boolean]
-  def is_released?;self.released? != 0; end
-
-  # @param [Boolean] released_status (default: true)
-  def released!(released_status=true)
-    🛑bool❓(:released_status, released_status)
-    if released_status
-      🛑 ::RuntimeError.🆕("| c{RuuubyRelease}-> m{released!} w/ arg(true) requires the RuuubyRelease to have at least 1 commit message (ORM object) |") unless self.git_commits.length > 0
-    end
-    self.released = released_status
-    self.save!
   end
 
   def self.generate_query_uid(*args)
@@ -253,11 +235,43 @@ class ::RuuubyRelease < ApplicationRecord
     self.git_commits.order('commit_author_date ASC').limit(1).first
   end
 
+  # @return [Boolean]
+  def has_release_tag?
+    num_matches = 0
+    self.git_commits.all.each do |gc|
+      if gc.has_release_tag?
+        @the_release_tag = gc
+        num_matches += 1
+      end
+    end
+    if num_matches > 1
+      🛑 RuntimeError.new("| c{RuuubyRelease}-> m{has_release_tag?} self{#{self.to_s}} has{#{num_matches.to_s}} commits w/ release tags |") if self.git_commits.empty?
+    elsif num_matches == 1
+      return true
+    else
+      return false
+    end
+  end
+
+  def get_release_commit
+    if self.has_release_tag?
+      return @the_release_tag
+    else
+      raise '@the_release_tag not set'
+    end
+  end
+
   🙈
 
   def on_before_save
     self.num_commits    = self.git_commits.length
     self.num_gems_added = self.ruuuby_gems.length
+    is_released         = self.released?
+    if is_released == nil || !is_released
+      if self.has_release_tag?
+        self.released = true
+      end
+    end
   end
 
   # @param [Symbol] cache_key
@@ -272,7 +286,7 @@ class ::RuuubyRelease < ApplicationRecord
     when :uid_components
       return [self.vmajor, self.vminor, self.vtiny]
     else
-      raise "c{RuuubyRelease}-> m{cache_calculate} did not recognize cache_key{#{cache_key.to_s}} of type{#{cache_key.class.to_s}}"
+      raise "c{RuuubyRelease}-> m{cache_calculate} did not recognize cache_key{#{cache_key.to_s}} of type{#{cache_key.Ⓣ}}"
     end
   end
 

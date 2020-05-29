@@ -6,7 +6,7 @@ module ::Math
   # math related code that can be categorized under +Space+
   module Space
 
-    class BooleanLikeSpace < ::Math::Space::TypesSpaceⓣ¹
+    class BooleanSpace < ::Math::Space::TypesSpaceⓣ¹
 
       # common expressions or any sub-components needed for creating them (ex: for `Regular Expressions`)
       module Syntax
@@ -44,10 +44,10 @@ module ::Math
               return false
             end
           elsif n.str?
-            return ::Math::Space::BooleanLikeSpace.syntax_formats_true.match?(n)
+            return ::Math::Space::BooleanSpace.syntax_formats_true.match?(n)
           end
         else
-          🛑 ::Ruuuby::DescriptiveStandardError.new(self, "arg(n) has val{#{n.to_s}} w/ type{#{n.class.to_s}}")
+          🛑 ::Ruuuby::DescriptiveStandardError.new(self, "arg(n) has val{#{n.to_s}} w/ type{#{n.Ⓣ}}")
         end
       end
 
@@ -61,7 +61,7 @@ module ::Math
           when Integer, Float
             n.zero? || n.one?
           when String
-            ::Math::Space::BooleanLikeSpace.syntax_format_any.match?(n)
+            ::Math::Space::BooleanSpace.syntax_format_any.match?(n)
           else
             false
           end

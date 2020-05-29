@@ -33,7 +33,7 @@ class GitCommit < ApplicationRecord
   validates :commit_subject, presence: true
 
   validates_length_of :commit_author_date, :maximum => 32, :minimum => 16
-  validates_length_of :commit_subject, :maximum => 64, :minimum => 5
+  validates_length_of :commit_subject, :maximum => 128, :minimum => 5
   validates_length_of :commit_hash, :is => 40
 
   # @param [String]        commit_msg
@@ -42,11 +42,16 @@ class GitCommit < ApplicationRecord
   # @param [RuuubyRelease] ruuuby_release
   #
   # @return [GitCommit]
-  def self.spawn(commit_msg, release_timestamp, commit_hash, ruuuby_release)
+  def self.spawn(commit_msg, release_timestamp, commit_hash, release_tag, ruuuby_release)
     🛑str❓($PRM_MANY, [commit_msg, release_timestamp, commit_hash])
-    🛑 ArgumentError.new("c{GitCommit}-> m{spawn} got arg(commit_hash){#{commit_hash.to_s}} of type{#{commit_hash.class.to_s}} which is not valid type or format for a commit hash") unless commit_hash.match?(::GitCommit.syntax_commit_hash)
-    🛑 ArgumentError.new("c{GitCommit}-> m{spawn} got arg(release_timestamp){#{release_timestamp.to_s}} of type{#{release_timestamp.class.to_s}} which is not valid type or format for a commit timestamp") unless release_timestamp.match?(::String.syntax_iso8601_normalizable)
-    git_commit = GitCommit.create!(commit_subject: commit_msg, commit_author_date: release_timestamp.as_iso8601, commit_hash: commit_hash)
+    🛑 ArgumentError.new("c{GitCommit}-> m{spawn} got arg(commit_hash){#{commit_hash.to_s}} of type{#{commit_hash.Ⓣ}} which is not valid type or format for a commit hash") unless commit_hash.match?(::GitCommit.syntax_commit_hash)
+    🛑 ArgumentError.new("c{GitCommit}-> m{spawn} got arg(release_timestamp){#{release_timestamp.to_s}} of type{#{release_timestamp.Ⓣ}} which is not valid type or format for a commit timestamp") unless release_timestamp.match?(::String.syntax_iso8601_normalizable)
+    if release_tag.∅?
+      git_commit = GitCommit.create!(commit_subject: commit_msg, commit_author_date: release_timestamp.as_iso8601, commit_hash: commit_hash, release_tag: nil)
+    else
+      🛑str❓(:release_tag, release_tag)
+      git_commit = GitCommit.create!(commit_subject: commit_msg, commit_author_date: release_timestamp.as_iso8601, commit_hash: commit_hash, release_tag: release_tag)
+    end
     git_commit.save!
     ruuuby_release.git_commits << git_commit
     ruuuby_release.save!
@@ -86,10 +91,16 @@ class GitCommit < ApplicationRecord
 
   # ----------------
 
+  # @return [Boolean]
+  def has_release_tag?; !(self.release_tag.∅?); end
+
+  # ----------------
+
   def source_for_seed
     release = self.ruuuby_release
     source  = "@v#{release.vmajor.to_s}_#{release.vminor.to_s}_#{release.vtiny.to_s}"
     parsed_datetime = (self.commit_author_date.in_time_zone('Central Time (US & Canada)')).to_s.as_iso8601
+    # TODO: INCORPORATE RELEASE_TAG INFO!
     source += ".spawn_git_commit('#{self.commit_subject}', '#{parsed_datetime}', '#{self.commit_hash}')"
     source
   end

@@ -23,6 +23,21 @@ RSpec.describe 'f31_b01' do
           context 'git config values' do
             let(:cached_configs){💎.api_git.repo.config.to_hash}
 
+            context 'for{protocol}' do
+              it '{version}' do
+                expect(cached_configs['protocol.version']).to eq('2')
+              end
+            end
+
+            context 'for{i18n}' do
+              it '{commitEncoding}' do
+                expect(cached_configs['i18n.commitencoding']).to eq('utf-8')
+              end
+              it '{logOutputEncoding}' do
+                expect(cached_configs['i18n.logoutputencoding']).to eq('utf-8')
+              end
+            end
+
             context 'for{core}' do
               it 'cases: true' do
                 expect(cached_configs['core.precomposeunicode']).to eq('true')

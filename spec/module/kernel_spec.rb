@@ -59,37 +59,6 @@ RSpec.describe ::Kernel do
         end
       end
 
-      context 'adds function[𝔠]' do
-        context 'handles needed scenarios' do
-          it 'cases: array' do
-            expect(𝔠([])).to eq(0)
-            expect(𝔠([nil])).to eq(1)
-            expect(𝔠([''])).to eq(1)
-            expect(𝔠([1])).to eq(1)
-            expect(𝔠([1, 2, 3, nil, nil, []])).to eq(6)
-          end
-          it 'cases: string' do
-            ['', ' ', "\n", 'a', 'ab', 'ab ', ' ab', ' ab ', '  '].∀ {|scenario| expect(𝔠(scenario)).to eq(scenario.length)}
-          end
-          it 'cases: set' do
-            expect(𝔠(Set[])).to eq(0)
-            expect(𝔠(Set[nil])).to eq(1)
-            expect(𝔠(Set[''])).to eq(1)
-            expect(𝔠(Set[1])).to eq(1)
-            expect(𝔠(Set[1, 2, 3, nil, nil, []])).to eq(5)
-          end
-          it 'cases: hash' do
-            expect(𝔠({})).to eq(0)
-            expect(𝔠({a: 'a'})).to eq(1)
-            expect(𝔠({a: 'a', b: {}, c: nil})).to eq(3)
-          end
-          it 'cases: -1' do
-            expect(𝔠(data_new_obj)).to eq(-1)
-            expect(𝔠(nil)).to eq(-1)
-          end
-        end
-      end
-
     end
   end
 

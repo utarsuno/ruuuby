@@ -6,7 +6,7 @@ module ::Math
     class RealAlgebraicNumbers < ::Math::SetTheory::NumberSet
       include ::Ruuuby::Attribute::Includable::RuuubySingleton
 
-      KNOWN_REAL_ALGEBRAIC = [::Float::PYTHAGORAS_CONSTANT.🆔, ::Float::GOLDEN_RATIO.🆔]
+      KNOWN_REAL_ALGEBRAIC = [::Float::CONST_PYTHAGORAS.🆔, ::Float::RATIO_GOLDEN.🆔]
 
       def initialize
         super(:𝔸ᵣ, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO, {dense: true})

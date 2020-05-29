@@ -523,9 +523,9 @@
 @v0_0_35.add_file('lib/math/expression/formula.rb', '', 'not currently in use', @f10)
 @v0_0_35.add_file('lib/math/space/tuple_space.rb', '', '', @f30)
 @v0_0_35.add_file('lib/math/space/types_space.rb', '', '', @f30)
-@v0_0_35.add_file('lib/math/space/discrete/boolean-like_space.rb', ::Math::Space::BooleanLikeSpace, '', @f30)
-@v0_0_35.add_file('lib/math/space/discrete/number-like_space.rb', ::Math::Space::NumberLikeSpace, '', @f30)
-@v0_0_35.add_file('lib/math/space/discrete/nucleotide-like_space.rb', ::Math::Space::NucleotideLikeSpace, '', @f30)
+@v0_0_35.add_file('lib/math/space/discrete/boolean-like_space.rb', ::Math::Space::BooleanSpace, '', @f30)
+@v0_0_35.add_file('lib/math/space/discrete/number-like_space.rb', ::Math::Space::NumberSpace, '', @f30)
+@v0_0_35.add_file('lib/math/space/discrete/nucleotide-like_space.rb', ::Math::Space::NucleotideSpace, '', @f30)
 @v0_0_35.add_comments(
     [
         'apply general clean-ups, next few versions to have similar target',
@@ -560,12 +560,12 @@
         'local git-config settings are now enforced with newly created `💎.api_git`, version-automation refactorings started',
     ]
 )
-@v0_0_36.changelog.added_method_to_class(@f10, :get_prime_factors, ::Math::NumberTheory)
-@v0_0_36.changelog.added_method_to_class(@f10, :get_divisors, ::Math::NumberTheory)
-@v0_0_36.changelog.added_method_to_class(@f10, :get_proper_divisors, ::Math::NumberTheory)
-@v0_0_36.changelog.added_method_to_class(@f10, :perfect_number?, ::Math::NumberTheory)
-@v0_0_36.changelog.added_method_to_class(@f10, :gcd, ::Math::NumberTheory)
-@v0_0_36.changelog.added_method_to_class(@f10, :coprime?, ::Math::NumberTheory)
+@v0_0_36.changelog.added_method_to_class(@f32, :get_prime_factors, ::Math::NumberTheory)
+@v0_0_36.changelog.added_method_to_class(@f32, :get_divisors, ::Math::NumberTheory)
+@v0_0_36.changelog.added_method_to_class(@f32, :get_proper_divisors, ::Math::NumberTheory)
+@v0_0_36.changelog.added_method_to_class(@f32, :perfect_number?, ::Math::NumberTheory)
+@v0_0_36.changelog.added_method_to_class(@f32, :gcd, ::Math::NumberTheory)
+@v0_0_36.changelog.added_method_to_class(@f32, :coprime?, ::Math::NumberTheory)
 
 @v0_0_37 = RuuubyRelease.spawn(0, 0, 37)
 @v0_0_37.add_file('lib/virtual/f06.rb', '', '', @f06)
@@ -581,7 +581,7 @@
         'have `ORM`: `RuuubyRelease` and `GitCommit` include `Comparable`; replacing redundant funcs{`>`, `<`} to the single func{`<=>`}',
         'remove `♾️`, `¿` from all sources, textual parsing, code aliases, etc; (too redundant)',
         'remove func{∞?} from Class(`String`)',
-        'add `ORM`{`RuuubyGem`}, some functionality was added; also removed Runtime constants needed solely for unit-tests (these tests are now directly generated w/ needed data))',
+        'add `ORM`{`RuuubyGem`}, some functionality was added; also removed runtime constants needed solely for unit-tests (these tests are now semi-generated w/ needed data)',
         'add `RSpec`/QA section for `locale` (local configs); not final design',
         '(`f22`) will now be designated for `GC` and the `GC::Profiler`, previous `f22` moved to {`f28_b12`}',
     ]

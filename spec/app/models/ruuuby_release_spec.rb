@@ -72,22 +72,25 @@ RSpec.describe 'ruuuby_release.rb' do
 
         context 'adds func{get_version_prev}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_prev).to eq(v0_0_35)
+            expect(RuuubyRelease.get_version_prev.uid_components).to eq(💎.api_git.remote_release_previous[0])
+          end
+          it 'correctly matching against the get_release_commit' do
+            expect(RuuubyRelease.get_version_prev.get_release_commit.commit_hash).to eq(💎.api_git.remote_release_previous[1])
           end
         end
 
         context 'adds func{get_version_curr}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_curr).to eq(v0_0_36)
+            expect(RuuubyRelease.get_version_curr.uid_components).to eq(💎.api_git.remote_release_current[0])
           end
-          it 'matches `GitCommit`\'s func{get_latest} return value' do
-            expect(RuuubyRelease.get_version_curr.git_commits.last).to eq(GitCommit.get_latest)
+          it 'correctly matching against the get_release_commit' do
+            expect(RuuubyRelease.get_version_curr.get_release_commit.commit_hash).to eq(💎.api_git.remote_release_current[1])
           end
         end
 
         context 'adds func{get_version_next}' do
           it 'works' do
-            expect(RuuubyRelease.get_version_next).to eq(v0_0_37)
+            expect(RuuubyRelease.get_version_next).to eq(v0_0_38)
           end
         end
 
@@ -113,42 +116,6 @@ RSpec.describe 'ruuuby_release.rb' do
       end # end: {static-functions}
 
       context 'instance-functions' do
-        context 'adds func{released!}' do
-
-          before :all do
-            @fake_release           = RuuubyRelease.spawn(1, 2, 3)
-            @fake_release_w_commits = RuuubyRelease.spawn(3, 2, 1)
-            expect(@fake_release_w_commits.num_commits).to eq(0)
-            @fake_release_w_commits.spawn_git_commit('fake_str', '2019-12-31T18:03:39-0600', '0123456789012345678901234567890123456789')
-            expect(@fake_release_w_commits.num_commits).to eq(1)
-          end
-
-          after :all do
-            @fake_release.♻️!
-            @fake_release_w_commits.♻️!
-          end
-
-          context 'handles needed scenarios' do
-            it 'cases: positive' do
-              expect(@fake_release_w_commits.released).to eq(false)
-              @fake_release_w_commits.released!
-              expect(@fake_release_w_commits.released).to eq(true)
-              @fake_release_w_commits.released!(false)
-              expect(@fake_release_w_commits.released).to eq(false)
-              @fake_release_w_commits.released!(true)
-              expect(@fake_release_w_commits.released).to eq(true)
-            end
-            context 'cases: error' do
-              it 'bad args' do
-                expect{@fake_release.released!(nil)}.to raise_error(ArgumentError)
-              end
-              it 'no git-commits attached, can\'t set to released' do
-                expect{@fake_release.released!}.to raise_error(RuntimeError)
-                expect{@fake_release_w_commits.released!}.to_not raise_error
-              end
-            end
-          end
-        end
         context 'RuuubyRelease ORM objects index order is sorted' do
           it 'ascending' do
             RuuubyRelease.all.∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎{|prev, curr| expect(prev < curr && curr > prev).to eq(true)}

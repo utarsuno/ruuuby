@@ -12,7 +12,7 @@ module ::Ruuuby
         def ℮; ::Math::E; end
 
         # @return [Float]
-        def γ; ::Float::EULER_MASCHERONI_CONSTANT; end
+        def γ; ::Float::CONST_EULER_MASCHERONI; end
 
         # @return [Float] Float::INFINITY
         def ∞; ::Float::INFINITY; end
@@ -20,7 +20,7 @@ module ::Ruuuby
         # the only real solution to: x³ = x + 1
         #
         # @return [Float]
-        def ρ; ::Float::PLASTIC_RATIO; end
+        def ρ; ::Float::RATIO_PLASTIC; end
 
         # a∶b = (2a+b)∶a  ≡ δ
         # a∶b = (2+b/a)∶1 ≡ δ
@@ -28,7 +28,7 @@ module ::Ruuuby
         # δ = 2 + 1/δ
         #
         # @return [Float]
-        def δ; ::Float::SILVER_RATIO; end
+        def δ; ::Float::RATIO_SILVER; end
 
         # a full rotation around the circle, base representation in turns(+θτ+)
         #
@@ -41,15 +41,15 @@ module ::Ruuuby
         # the only positive solution to: x² = x + 1
         #
         # @type [Float]
-        ::Kernel.const_set(:𝚽, ::Float::GOLDEN_RATIO)
+        ::Kernel.const_set(:𝚽, ::Float::RATIO_GOLDEN)
 
         # the only real solution to: x³ = x² + 1
         #
         # @type [Float]
-        ::Kernel.const_set(:Ψ, ::Float::SUPER_GOLDEN_RATIO)
+        ::Kernel.const_set(:Ψ, ::Float::RATIO_GOLDEN_SUPER)
 
         # @type [Float]
-        ::Kernel.const_set(:Ω, ::Float::OMEGA_CONSTANT)
+        ::Kernel.const_set(:Ω, ::Float::CONST_OMEGA)
 
         # let `a+b = circumference of a circle`, (a+b)/a = a/b; (a->longer_arc, b->smaller_arc)
         #

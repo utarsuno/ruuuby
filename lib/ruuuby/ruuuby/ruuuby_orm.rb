@@ -11,8 +11,6 @@ module Ruuuby
       include ::Ruuuby::Attribute::Includable::RuuubySingleton
 
       def initialize
-        @all_versions = nil
-        @table_names  = []
         @connected    = false
         @loaded       = false
         @seeds_loaded = false
@@ -26,54 +24,28 @@ module Ruuuby
         # @type [String]
         DB_DB      = ':memory:'.❄️
 
-        # ar_internal_metadata
-
-        module SchemaRuuubyFeatures;end
-        module SchemaRuuubyFeatureBehaviors;end
-        module SchemaRuuubyChangelogs;end
-        module SchemaRuuubyReleases;end
-        module SchemaRuuubyGems;end
-        module SchemaGitCommits;end
-        module SchemaRuuubyDirs;end
-        module SchemaRuuubyFiles;end
-
-        # @type [Array]
-        ALL_ORM_SCHEMAS = [SchemaRuuubyReleases, SchemaRuuubyFeatures, SchemaRuuubyFeatureBehaviors, SchemaRuuubyChangelogs, SchemaRuuubyGems, SchemaGitCommits, SchemaRuuubyDirs, SchemaRuuubyFiles].❄️
       end
 
-      # @return [Array]
-      def get_versions
-        if @all_versions.∅?
-          @all_versions = ::RuuubyRelease.all.to_ary
+      def get_upcoming_changelog
+        orm_version = ::RuuubyRelease.get_version_next
+        orm_version.docs_changelog.∀ do |l|
+          puts l
         end
-        @all_versions
       end
-
-      # @return [Array]
-      def get_table_names
-        if @table_names.∅?
-          ::Ruuuby::MetaData::RuuubyORM::SchemaORM::ALL_ORM_SCHEMAS.∀ do |orm_schema|
-            @table_names << orm_schema.to_s.♻️⟶∞('::Schema').to_🐍
-          end
-        end
-        @table_names
-      end
-
-      # TODO: def docs_changelog
 
       # ----------------------------------------------------------------------------------------------------------------
 
-      def get_connection_schema ; ::ActiveRecord::Schema.connection ; end
+      def get_connection_schema; ::ActiveRecord::Schema.connection; end
 
-      def get_connection_base   ; ::ActiveRecord::Base.connection   ; end
+      def get_connection_base; ::ActiveRecord::Base.connection; end
 
       # ----------------------------------------------------------------------------------------------------------------
 
       # @return [Boolean] true, if the db-connection had not yet been loaded and did so this function-call
       def ensure_loaded_db_connection
         unless @connected
-          adapter = 💎.meta_orm::DB_ADAPTER
-          db      = 💎.meta_orm::DB_DB
+          adapter = ::Ruuuby::MetaData::RuuubyORM::SchemaORM::DB_ADAPTER
+          db      = ::Ruuuby::MetaData::RuuubyORM::SchemaORM::DB_DB
           ActiveRecord::Base.establish_connection(adapter: adapter, database: db)
           💎.info("Connected to db of type{#{adapter.to_s}} with connection to/type{#{db.to_s}}")
           @connected = true
@@ -87,7 +59,8 @@ module Ruuuby
         unless @seeds_loaded
           require_relative '../../../db/seeds/ruuuby_features'
           require_relative '../../../db/seeds/ruuuby_feature_behaviors'
-          require_relative '../../../db/seeds/ruuuby_releases/ruuuby_releases'
+          require_relative '../../../db/seeds/ruuuby_releases/past'
+          require_relative '../../../db/seeds/ruuuby_releases/active_or_recent'
           require_relative '../../../db/seeds/git_commits'
           💎.info('loaded db seeds')
           @seeds_loaded = true

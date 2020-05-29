@@ -165,7 +165,7 @@ module ::Ruuuby
         #
         # @return [Boolean] true, if this string instance is not contained in the provided str (or array/set)
         def ∉?(them)
-          🛑 ArgumentError.new("| c{String}-> m{∉?} will only accept args of type{String, Array, Set}, not the provided type{#{them.class.to_s}} from arg{#{them.to_s}} |") unless (them.str? || them.ary? || them.is_a?(Set))
+          🛑 ArgumentError.new("| c{String}-> m{∉?} will only accept args of type{String, Array, Set}, not the provided type{#{them.Ⓣ}} from arg{#{them.to_s}} |") unless (them.str? || them.ary? || them.is_a?(Set))
           them.∌?(self)
         end
 
@@ -175,7 +175,7 @@ module ::Ruuuby
         #
         # @return [Boolean] true, if this string instance is contained in the provided str (or array/set)
         def ∈?(them)
-          🛑 ArgumentError.new("| c{String}-> m{∈?} will only accept args of type{String, Array, Set}, not the provided type{#{them.class.to_s}} from arg{#{them.to_s}} |") unless (them.str? || them.ary? || them.is_a?(Set))
+          🛑 ArgumentError.new("| c{String}-> m{∈?} will only accept args of type{String, Array, Set}, not the provided type{#{them.Ⓣ}} from arg{#{them.to_s}} |") unless (them.str? || them.ary? || them.is_a?(Set))
           them.∋?(self)
         end
       end
@@ -250,7 +250,7 @@ module ::Ruuuby
             when '+', '-'
               if self.₁.digit?   ; return Integer(self)
               elsif self.₁?('π') ; return (self.₀?('-')) ? (-::Math::PI) : (::Math::PI)
-              elsif self.₁?('γ') ; return (self.₀?('-')) ? (-::Float::EULER_MASCHERONI_CONSTANT) : (::Float::EULER_MASCHERONI_CONSTANT)
+              elsif self.₁?('γ') ; return (self.₀?('-')) ? (-::Float::CONST_EULER_MASCHERONI) : (::Float::CONST_EULER_MASCHERONI)
               else               ; self.🛑⨍_to_num
               end
             else
@@ -537,10 +537,12 @@ class ::String
     if normalizer == :iso8601
       self.as_iso8601
     else
-      🛑 RuntimeError.new("c{String}-> m{η̂} got invalid arg(normalizer){#{normalizer.to_s}} w/ type{#{normalizer.class.to_s}}")
+      🛑 RuntimeError.new("c{String}-> m{η̂} got invalid arg(normalizer){#{normalizer.to_s}} w/ type{#{normalizer.Ⓣ}}")
     end
   end
 
+  # TODO: missing TDD
+  #
   # @return [String] self with modified +encoding+ if not already +UTF-8+
   def as_utf8; self.force_encoding(::String::Syntax::SQL_ENCODING_UTF_8); end
 

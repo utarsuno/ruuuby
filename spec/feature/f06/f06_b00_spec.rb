@@ -7,7 +7,7 @@ RSpec.describe 'f06_b00' do
     context 'type checks for{Numerics}' do
       context 'func{num?}' do
         it 'added w/o effecting Class-instance{Integer, Float, Rational, Complex, BigDecimal}' do
-          ::Math::Space::NumberLikeSpace::ALL_NUMS.∀{|num_class| expect(num_class.num?).to eq(false)}
+          ::Math::Space::NumberSpace::ALL_NUMS.∀{|num_class| expect(num_class.num?).to eq(false)}
         end
         context 'handles needed scenarios' do
           context 'cases: positive' do

@@ -20,12 +20,6 @@ RSpec.describe 'db/seed.rb' do
           end
         end
 
-        context 'defines f05' do
-          it 'passes ORM audit' do
-            audit_feature(f05, 'f05', '`>>` to offer reverse functionality of `<<`')
-          end
-        end
-
         context 'defines f07' do
           it 'passes ORM audit' do
             audit_feature(f07, 'f07', 'enable quick clean up functions for `enumerables`')
@@ -46,7 +40,7 @@ RSpec.describe 'db/seed.rb' do
 
         context 'defines f18' do
           it 'passes ORM audit' do
-            audit_feature(f18, 'f18', 'simplify import/require statements')
+            audit_feature(f18, 'f18', 'represent needed fields of math into organized groupings w/ abstractions')
           end
         end
 

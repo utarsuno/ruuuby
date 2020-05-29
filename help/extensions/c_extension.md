@@ -1,4 +1,10 @@
 
+## Notes
+
+ * object_id of any positive FIXNUM: `(2 * value) + 1`
+ * object_id of any negative FIXNUM: `(2 * value) - 1`
+ * the c-type `ID` is equivalent to `unsigned long`
+
 ### extension code guidelines
 
 | guideline |

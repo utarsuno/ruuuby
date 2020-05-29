@@ -25,7 +25,7 @@ class ::Rational
   #
   # @return [Numeric, Symbol, Float, Complex, Rational]
   def ^(n)
-    evaluated = n.sym?(:∈superscripts)
+    evaluated = n.sym?(:'∈^')
     if evaluated.int?
       if self != 0
         return self ** evaluated

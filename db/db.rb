@@ -61,13 +61,16 @@ ActiveRecord::Schema.define do
 
   create_table :ruuuby_releases, force: true do |t|
 
-    t.integer :num_commits, limit: 1, :null => false, :default => 0
-    t.integer :num_gems_added, limit: 1, :null => false, :default => 0
+    # optional
+    t.string :description, :null => true
 
     t.integer :vmajor, limit: 1, :null => false
     t.integer :vminor, limit: 1, :null => false
     t.integer :vtiny, limit: 1, :null => false
 
+    # 'cached calculations'
+    t.integer :num_commits, limit: 1, :null => false, :default => 0
+    t.integer :num_gems_added, limit: 1, :null => false, :default => 0
     t.boolean :released, :default => false, :null => false
 
     t.index [:vmajor, :vminor, :vtiny], unique: true
@@ -99,17 +102,12 @@ ActiveRecord::Schema.define do
 
     # non-relative
     t.datetime :commit_author_date, unique: true, :null => false
-    #t.string :commit_author_date, unique: true, :null => false
 
     # commit message
     t.string :commit_subject, :null => false
 
-    #unique: false,
-
-    # ideally unique should be set to{true} as commit messages would be more meaningful w/o duplicates
-    #t.index :commit_subject, unique: false
-
-    #t.index [:commit_subject, :commit_hash], unique: true
+    # release_tag_name if this commit is the final commit in a release AND has a tag pointed at it
+    t.string :release_tag, :null => true
 
     t.references :ruuuby_release, index: true, foreign_key: { references: :ruuuby_releases }
   end

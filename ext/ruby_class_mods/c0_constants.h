@@ -137,6 +137,7 @@ ________________________________________________________________________________
 // superscripts: -9 to +9
 #define 𝔠EXPONENTS   22 // 19 vs 22
 #define 𝔠LONGLONG    sizeof(long long)
+#define 𝔠ULONG       sizeof(unsigned long)
 #define 𝔠THETA_ANGLE sizeof(ThetaAngle)
 // rb_ary_new: uses a default size of 16
 #define 𝔠ARY_DEFAULT 16L

@@ -15,7 +15,7 @@ RSpec.shared_context 'shared_context_f30' do
 
   def expect_feature_behavior_as_needed(the_ref, kclass)
     the_id  = the_ref.🆔
-    expect(the_ref.class).to eq(kclass)
+    expect(the_ref.ⓣ).to eq(kclass)
     expect(the_ref.🆔).to eq(kclass.ℹ.🆔)
     expect(the_ref.🆔).to eq(the_id)
   end

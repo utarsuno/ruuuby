@@ -12,10 +12,10 @@ RSpec.describe 'theta_angle' do
       context 'handling needed scenarios' do
         context 'cases: positive' do
           it 'w/ correct class' do
-            expect(as_degrees.class).to eq(::ThetaAngle)
-            expect(as_radians.class).to eq(::ThetaAngle)
-            expect(as_gons.class).to eq(::ThetaAngle)
-            expect(as_turns.class).to eq(::ThetaAngle)
+            expect(as_degrees.ⓣ).to eq(::ThetaAngle)
+            expect(as_radians.ⓣ).to eq(::ThetaAngle)
+            expect(as_gons.ⓣ).to eq(::ThetaAngle)
+            expect(as_turns.ⓣ).to eq(::ThetaAngle)
           end
           it 'w/ different object-IDs' do
             expect(as_degrees.🆔).to_not eq(as_radians.🆔)
@@ -211,7 +211,7 @@ RSpec.describe 'theta_angle' do
                 result    = angle.abs
                 expect(angle.🆔).to eq(angle_id)
                 expect(result.🆔).to_not eq(angle_id)
-                expect(result.class).to eq(::ThetaAngle)
+                expect(result.ⓣ).to eq(::ThetaAngle)
               end
               it 'positive data' do
                 expect(θ°(45).abs.to_f).to eq(45.0)
@@ -232,13 +232,13 @@ RSpec.describe 'theta_angle' do
                 angle_id  = angle.🆔
                 angle.abs!
                 expect(angle.🆔).to eq(angle_id)
-                expect(angle.class).to eq(::ThetaAngle)
+                expect(angle.ⓣ).to eq(::ThetaAngle)
                 expect(angle.real).to eq(45.0)
                 result = angle.abs!
                 expect(angle.🆔).to eq(angle_id)
                 expect(result.🆔).to eq(angle_id)
                 expect(result.real).to eq(45.0)
-                expect(result.class).to eq(::ThetaAngle)
+                expect(result.ⓣ).to eq(::ThetaAngle)
                 expect(angle).to eq(result)
               end
               it 'positive data' do
@@ -414,8 +414,8 @@ RSpec.describe 'theta_angle' do
                 expect(angle.repr).to eq(:as_degree)
                 expect(angle_id).to eq(angle.🆔)
                 expect(angle_id).to_not eq(angle2.🆔)
-                expect(angle.class).to eq(::ThetaAngle)
-                expect(angle2.class).to eq(::ThetaAngle)
+                expect(angle.ⓣ).to eq(::ThetaAngle)
+                expect(angle2.ⓣ).to eq(::ThetaAngle)
               end
             end
           end # end: {func{normalize!}}
@@ -432,8 +432,8 @@ RSpec.describe 'theta_angle' do
                 expect(angle.repr).to eq(:as_degree)
                 expect(angle_id).to eq(angle.🆔)
                 expect(angle_id).to eq(angle2.🆔)
-                expect(angle.class).to eq(::ThetaAngle)
-                expect(angle2.class).to eq(::ThetaAngle)
+                expect(angle.ⓣ).to eq(::ThetaAngle)
+                expect(angle2.ⓣ).to eq(::ThetaAngle)
               end
               it 'θ°' do
                 [0, -1.1, 1.1, -359, 359, -360, 360].∀{|scenario| expect(θ°(scenario).normalize!).to eq(scenario)}
@@ -1003,29 +1003,29 @@ RSpec.describe 'theta_angle' do
                       angle_a = θ°(90)
                       angle_b = θ°(2)
                       result  = angle_a / angle_b
-                      expect(result.class).to eq(Float)
+                      expect(result.ⓣ).to eq(Float)
                       expect(result).to eq(45.0)
 
                       result = θ°(360.0) / θʳ(2.0 * π)
                       expect(result).to eq(1.0)
-                      expect(result.class).to eq(Float)
+                      expect(result.ⓣ).to eq(Float)
                     end
                     it 'type{θ} / type{Numeric} --> type{θ}' do
                       angle_a = θ°(90)
                       result  = angle_a / 2.0
-                      expect(result.class).to eq(ThetaAngle)
+                      expect(result.ⓣ).to eq(ThetaAngle)
                       expect(result).to eq(45.0)
                     end
                     it 'type{Numeric} / type{θ} --> type{θ}' do
                       angle_a = θ°(2)
                       result  = 90.0 / angle_a
-                      expect(result.class).to eq(ThetaAngle)
+                      expect(result.ⓣ).to eq(ThetaAngle)
                       expect(result).to eq(45.0)
 
                       result_2 = angle_a / 2.0
                       result_3 = result / 2.0
-                      expect(result_2.class).to eq(ThetaAngle)
-                      expect(result_3.class).to eq(ThetaAngle)
+                      expect(result_2.ⓣ).to eq(ThetaAngle)
+                      expect(result_3.ⓣ).to eq(ThetaAngle)
 
                       expect(angle_a.real).to eq(2.0)
                       expect(result.real).to eq(45.0)
@@ -1034,14 +1034,14 @@ RSpec.describe 'theta_angle' do
 
                       angle_a = θ°(2)
                       result  = 90.0 / angle_a
-                      expect(result.class).to eq(ThetaAngle)
+                      expect(result.ⓣ).to eq(ThetaAngle)
                       angle_b = 450.0 / result
-                      expect(angle_b.class).to eq(ThetaAngle)
+                      expect(angle_b.ⓣ).to eq(ThetaAngle)
                       expect(angle_b.real).to eq(10.0)
                       expect(result.real).to eq(45.0)
 
                       angle_c = θ°(100) / angle_b
-                      expect(angle_c.class).to eq(Float)
+                      expect(angle_c.ⓣ).to eq(Float)
                       expect(angle_c).to eq(10.0)
                     end
                   end
@@ -1115,19 +1115,19 @@ RSpec.describe 'theta_angle' do
                   angle_a = θ°(12)
                   angle_b = θ°(5)
                   result  = angle_a % angle_b
-                  expect(result.class).to eq(Float)
+                  expect(result.ⓣ).to eq(Float)
                   expect(result).to eq(2.0)
                 end
                 it 'type{θ} % type{Float} --> type{θ}' do
                   angle_a = θ°(12)
                   result  = angle_a % 5.0
-                  expect(result.class).to eq(ThetaAngle)
+                  expect(result.ⓣ).to eq(ThetaAngle)
                   expect(result).to eq(2.0)
                 end
                 it 'type{Float} % type{θ} --> type{θ}' do
                   angle_a = θ°(5.0)
                   result  = 12.0 % angle_a
-                  expect(result.class).to eq(ThetaAngle)
+                  expect(result.ⓣ).to eq(ThetaAngle)
                   expect(result).to eq(2.0)
                 end
               end # end: {data-types involved are as expected}

@@ -62,7 +62,7 @@ class RuuubyFile < ApplicationRecord
     when :uid
       return self.path_full
     else
-      raise "c{RuuubyFile}-> m{cache_calculate} did not recognize cache_key{#{cache_key.to_s}} of type{#{cache_key.class.to_s}}"
+      raise "c{RuuubyFile}-> m{cache_calculate} did not recognize cache_key{#{cache_key.to_s}} of type{#{cache_key.Ⓣ}}"
     end
   end
 

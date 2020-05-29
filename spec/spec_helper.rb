@@ -19,7 +19,7 @@ module HelpersSyntaxCache
   def expect_syntax(the_class, syntax_id, syntax_before_processing)
     expect(the_class.respond_to?(syntax_id)).to eq(true)
     result = the_class.send(syntax_id)
-    expect(result.class).to eq(Regexp)
+    expect(result.ⓣ).to eq(Regexp)
     expect(result.source).to eq("\\A#{syntax_before_processing}\\z")
     expect(the_class.send(syntax_id).🆔).to eq(result.🆔)
     expect{the_class.send("#{syntax_id}=".to_sym, 5).to raise_error(FrozenError)}
@@ -66,12 +66,12 @@ module HelpersGeneral
 
   def expect_regular_int(val_scenario, val_expected)
     expect(val_scenario).to eq(val_expected)
-    expect(val_scenario.class).to eq(Integer)
+    expect(val_scenario.ⓣ).to eq(Integer)
   end
 
   def expect_regular_flt(val_scenario, val_expected)
     expect(val_scenario).to eq(val_expected)
-    expect(val_scenario.class).to eq(Float)
+    expect(val_scenario.ⓣ).to eq(Float)
   end
 
   def expect_∃⨍(the_func, owner, expected_result=true)
@@ -80,7 +80,7 @@ module HelpersGeneral
 
   def expect_∃const_w_type(the_const, const_type, owner, expected_result=true)
     expect(owner.const_defined?(the_const)).to eq(expected_result)
-    expect(owner.const_get(the_const).class).to eq(const_type)
+    expect(owner.const_get(the_const).ⓣ).to eq(const_type)
   end
 
   def expect_∃const(the_const, owner, expected_result=true)

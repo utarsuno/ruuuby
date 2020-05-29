@@ -7,7 +7,7 @@ module ::Math
     class RealNumbers < ::Math::SetTheory::NumberSet
       include ::Ruuuby::Attribute::Includable::RuuubySingleton
 
-      KNOWN_TRANSCENDENTALS = [::Math::PI.🆔, ::Math::E.🆔, ::Float::OMEGA_CONSTANT.🆔]
+      KNOWN_TRANSCENDENTALS = [::Math::PI.🆔, ::Math::E.🆔, ::Float::CONST_OMEGA.🆔]
 
       def initialize
         super(:ℝ, ::Math::SetTheory::NumberSet::AlephNumbers::ONE, {

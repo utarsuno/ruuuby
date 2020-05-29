@@ -39,9 +39,6 @@ RSpec.describe 'f03' do
           expect_∃⨍(:𝔠, ::Set)
           expect_∃⨍(:𝔠, ::String)
         end
-        it 'for m{Kernel}' do
-          expect_∃⨍(:𝔠, ::Kernel)
-        end
       end
     end
   end

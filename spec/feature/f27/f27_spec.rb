@@ -7,7 +7,7 @@ RSpec.describe 'f27' do
       context 'func{new_radian}' do
         it 'works' do
           angle = ::ThetaAngle.new_radian(1337.0)
-          expect(angle.class).to eq(::ThetaAngle)
+          expect(angle.ⓣ).to eq(::ThetaAngle)
           expect(angle.real).to eq(1337.0)
           expect(angle.ʳ?).to eq(true)
           expect(angle.°?).to eq(false)
@@ -18,7 +18,7 @@ RSpec.describe 'f27' do
       context 'func{new_degree}' do
         it 'works' do
           angle = ::ThetaAngle.new_degree(1337)
-          expect(angle.class).to eq(::ThetaAngle)
+          expect(angle.ⓣ).to eq(::ThetaAngle)
           expect(angle.real).to eq(1337.0)
           expect(angle.°?).to eq(true)
           expect(angle.ʳ?).to eq(false)
@@ -29,7 +29,7 @@ RSpec.describe 'f27' do
       context 'func{new_gon}' do
         it 'works' do
           angle = ::ThetaAngle.new_gon(1337)
-          expect(angle.class).to eq(::ThetaAngle)
+          expect(angle.ⓣ).to eq(::ThetaAngle)
           expect(angle.real).to eq(1337.0)
           expect(angle.ᵍ?).to eq(true)
           expect(angle.ʳ?).to eq(false)
@@ -40,7 +40,7 @@ RSpec.describe 'f27' do
       context 'func{new_turn}' do
         it 'works' do
           angle = ::ThetaAngle.new_turn(1337)
-          expect(angle.class).to eq(::ThetaAngle)
+          expect(angle.ⓣ).to eq(::ThetaAngle)
           expect(angle.real).to eq(1337.0)
           expect(angle.𝞽?).to eq(true)
           expect(angle.ʳ?).to eq(false)

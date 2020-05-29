@@ -41,7 +41,7 @@ module ::Math
   # @return [Boolean] true, if: a² + b² == c²
   def self.τ²_in_golden_ratio?(a: ::Float::INFINITY, b: ::Float::INFINITY)
     🛑num❓($PRM_MANY, [a, b], :∈𝕌) unless a.θ? && b.θ?
-    return (a / b) == ::Float::GOLDEN_RATIO
+    return (a / b) == ::Float::RATIO_GOLDEN
   end
 
   # @param [Integer, Float, Numeric] a (must be larger than b)

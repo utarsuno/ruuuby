@@ -1,9 +1,9 @@
-# coding: utf-8
+# coding: UTF-8
 
 module ::Ruuuby
 
   # @type [String] the version of *Ruuuby* reflected in this source code
-  VERSION = '0.0.37'.freeze
+  VERSION = '0.0.38'.freeze
 
   # @return [String]
   def self.Version; ::Ruuuby::VERSION; end

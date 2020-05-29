@@ -152,12 +152,12 @@ RSpec.describe 'Object' do
     context 'by adding function{🛑sym❓}' do
       context 'handles needed input scenarios' do
         context 'cases: positive' do
-          context 'w/ normalization{:∈superscripts}' do
+          context 'w/ normalization{:∈^}' do
             it 'w/ single param' do
-              expect{🛑sym❓('0', :⁸, :∈superscripts)}.to_not raise_error
+              expect{🛑sym❓('0', :⁸, :'∈^')}.to_not raise_error
             end
             it 'w/ many params' do
-              expect{🛑sym❓($PRM_MANY, [:⁸, :⁻⁴], :∈superscripts)}.to_not raise_error
+              expect{🛑sym❓($PRM_MANY, [:⁸, :⁻⁴], :'∈^')}.to_not raise_error
             end
           end
           context 'w/o normalization' do
@@ -172,12 +172,12 @@ RSpec.describe 'Object' do
         context 'cases: negative' do
           context 'w/ bad normalization' do
             it 'w/ single param' do
-              expect{🛑sym❓('0', :a, :∈superscripts)}.to raise_error(ArgumentError)
+              expect{🛑sym❓('0', :a, :'∈^')}.to raise_error(ArgumentError)
             end
             it 'w/ many params' do
-              expect{🛑sym❓($PRM_MANY, ['5', :a], :∈superscripts)}.to raise_error(ArgumentError)
-              expect{🛑sym❓($PRM_MANY, [:a, 1337], :∈superscripts)}.to raise_error(ArgumentError)
-              expect{🛑sym❓($PRM_MANY, [nil, :a], :∈superscripts)}.to raise_error(ArgumentError)
+              expect{🛑sym❓($PRM_MANY, ['5', :a], :'∈^')}.to raise_error(ArgumentError)
+              expect{🛑sym❓($PRM_MANY, [:a, 1337], :'∈^')}.to raise_error(ArgumentError)
+              expect{🛑sym❓($PRM_MANY, [nil, :a], :'∈^')}.to raise_error(ArgumentError)
             end
           end
           context 'w/o normalization' do
@@ -204,61 +204,6 @@ RSpec.describe 'Object' do
         end
         it 'cases[negative]' do
           [TrueClass, FalseClass, Class, Object, NilClass, '', 'true', 'false', -1, 1, 0, {}].∀{|n|expect(n.ary?).to eq(false)}
-        end
-      end
-    end
-
-    context 'by adding function{module?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          expect(Ruuuby.module?).to eq(true)
-          expect(Kernel.module?).to eq(true)
-        end
-        it 'cases: negative' do
-          [Class, String, NilClass, nil, :Symbol, 'String', 1337].∀{|scenario|expect(scenario.module?).to eq(false)}
-        end
-      end
-    end
-
-    context 'by adding function{class?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          expect(Class.class?).to eq(true)
-          expect(String.class?).to eq(true)
-          expect(NilClass.class?).to eq(true)
-        end
-        it 'cases: negative' do
-          expect(Ruuuby.class?).to eq(false)
-          expect(nil.class?).to eq(false)
-          expect(:Symbol.class?).to eq(false)
-          expect('String'.class?).to eq(false)
-        end
-      end
-    end
-
-    context 'by adding function{singleton?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          expect(💎.api.singleton?).to eq(true)
-          expect(💎.orm.singleton?).to eq(true)
-          expect(💎.engine.singleton?).to eq(true)
-        end
-        it 'cases: negative' do
-          expect(💎.meta_orm.singleton?).to eq(false)
-          expect(String.singleton?).to eq(false)
-          expect(💎.meta_orm.singleton?).to eq(false)
-          expect(1337.singleton?).to eq(false)
-        end
-      end
-    end
-
-    context 'by adding function{nucleotide?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          [Ruuuby, Kernel, Class, String, NilClass].∀{|scenario| expect(scenario.nucleotide?).to eq(true)}
-        end
-        it 'cases: negative' do
-          [nil, :Symbol, 'String', []].∀{|scenario| expect(scenario.nucleotide?).to eq(false)}
         end
       end
     end
@@ -366,40 +311,40 @@ RSpec.describe 'Object' do
     end
 
     context 'by adding function{sym?}' do
-      context 'w/ normalizer(:∈superscripts)' do
+      context 'w/ normalizer(:∈^)' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
             it 'regular exponents' do
-              expect(:⁴.sym?(:∈superscripts)).to eq(4)
-              expect(:².sym?(:∈superscripts)).to eq(2)
-              expect(:⁰.sym?(:∈superscripts)).to eq(0)
-              expect(:⁻².sym?(:∈superscripts)).to eq(-2)
-              expect(:⁻⁴.sym?(:∈superscripts)).to eq(-4)
+              expect(:⁴.sym?(:'∈^')).to eq(4)
+              expect(:².sym?(:'∈^')).to eq(2)
+              expect(:⁰.sym?(:'∈^')).to eq(0)
+              expect(:⁻².sym?(:'∈^')).to eq(-2)
+              expect(:⁻⁴.sym?(:'∈^')).to eq(-4)
             end
             it '± inf' do
-              expect(:∞.sym?(:∈superscripts)).to eq(::Float::INFINITY)
-              expect(:'-∞'.sym?(:∈superscripts)).to eq(::Float::INFINITY_NEGATIVE)
+              expect(:∞.sym?(:'∈^')).to eq(::Float::INFINITY)
+              expect(:'-∞'.sym?(:'∈^')).to eq(::Float::INFINITY_NEGATIVE)
             end
             it 'complex inf' do
-              expect(:∞ℂ.sym?(:∈superscripts)).to eq(::Float::INFINITY_COMPLEX)
+              expect(:∞ℂ.sym?(:'∈^')).to eq(::Float::INFINITY_COMPLEX)
             end
           end
           context 'cases: negative' do
             it 'invalid inf' do
-              expect(:∞∞.sym?(:∈superscripts)).to eq(false)
-              expect(:'--∞'.sym?(:∈superscripts)).to eq(false)
+              expect(:∞∞.sym?(:'∈^')).to eq(false)
+              expect(:'--∞'.sym?(:'∈^')).to eq(false)
             end
             it 'complex inf' do
-              expect(:ℂ∞ℂ.sym?(:∈superscripts)).to eq(false)
+              expect(:ℂ∞ℂ.sym?(:'∈^')).to eq(false)
             end
             it 'invalid exponent' do
-              expect(:²²².sym?(:∈superscripts)).to eq(false)
-              expect(:₂.sym?(:∈superscripts)).to eq(false)
-              expect(:a.sym?(:∈superscripts)).to eq(false)
+              expect(:²²².sym?(:'∈^')).to eq(false)
+              expect(:₂.sym?(:'∈^')).to eq(false)
+              expect(:a.sym?(:'∈^')).to eq(false)
             end
           end
         end
-      end # end: {w/ normalizer(:∈superscripts)}
+      end # end: {w/ normalizer(:'∈^')}
 
       context 'w/o any normalizer' do
         context 'handles needed scenarios' do
@@ -418,42 +363,6 @@ RSpec.describe 'Object' do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :performance do
-
-    context 'func{class?}: performs very quickly' do
-      it 'for cases: true' do
-        expect{NilClass.class?}.to perform_very_quickly
-      end
-      it 'for cases: false' do
-        expect{nil.class?}.to perform_very_quickly
-      end
-    end
-
-    context 'func{module?}: performs very quickly' do
-      it 'for cases: true' do
-        expect{Ruuuby.module?}.to perform_very_quickly
-      end
-      it 'for cases: false' do
-        expect{String.module?}.to perform_very_quickly
-      end
-    end
-
-    context 'func{singleton?}: performs very quickly' do
-      it 'for cases: true' do
-        expect{💎.api.singleton?}.to perform_very_quickly
-      end
-      it 'for cases: false' do
-        expect{String.singleton?}.to perform_very_quickly
-      end
-    end
-
-    context 'func{nucleotide?}: performs very quickly' do
-      it 'for cases: true' do
-        expect{Ruuuby.nucleotide?}.to perform_very_quickly
-      end
-      it 'for cases: false' do
-        expect{nil.nucleotide?}.to perform_very_quickly
-      end
-    end
 
     context 'func{sym?}: performs extremely quickly' do
       it 'for cases: true' do

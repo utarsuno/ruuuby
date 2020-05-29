@@ -18,9 +18,6 @@ RSpec.describe 'f31_db' do
           it 'w/ passing audits' do
             audit_feature_behavior(f31, f31_b00, 'b00', 'offers an abstraction over the `Rugged` gem')
           end
-          it 'provides correct value for latest commit hash' do
-            expect(💎.api_git.repo.last_commit.oid).to eq(GitCommit.get_latest.commit_hash)
-          end
         end
 
         it 'defines{b01}' do

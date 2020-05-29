@@ -35,7 +35,6 @@ Gem::Specification.new do |gem|
   gem.rdoc_options = %w(-x ext --main README.rdoc)
 
   gem.files = Dir.glob('ext/**/*.{c,rb,h}') + Dir.glob('lib/**/*.rb')
-  gem.files -= Dir.glob('lib/ide_helper.rb')
   gem.extensions << 'ext/ruby_class_mods/extconf.rb'
 
   # ===================================================================

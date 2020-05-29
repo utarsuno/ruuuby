@@ -6,12 +6,21 @@ RSpec.describe 'f30_b02' do
     context 'behavior{b02}' do
 
       it 'exists as needed' do
-        expect_feature_behavior_as_needed(🧬, ::Math::Space::NucleotideLikeSpace)
+        expect_feature_behavior_as_needed(🧬, ::Math::Space::NucleotideSpace)
       end
 
       context 'func{∃ᶜ?}' do
         context 'handling needed scenarios' do
           context 'cases: positive' do
+            it 'for regular Ruby Classes' do
+              expect(🧬.∃ᶜ?(:Class)).to eq(true)
+              expect(🧬.∃ᶜ?(:String)).to eq(true)
+              expect(🧬.∃ᶜ?(:Integer)).to eq(true)
+              expect(🧬.∃ᶜ?(:Symbol)).to eq(true)
+              expect(🧬.∃ᶜ?(:NilClass)).to eq(true)
+              expect(🧬.∃ᶜ?(:TrueClass)).to eq(true)
+              expect(🧬.∃ᶜ?(:FalseClass)).to eq(true)
+            end
             it 'for global data' do
               expect(🧬.∃ᶜ?(:QAClass)).to eq(true)
             end
@@ -23,6 +32,10 @@ RSpec.describe 'f30_b02' do
             end
           end
           context 'cases: negative' do
+            it 'for regular Ruby objs' do
+              expect{🧬.∃ᶜ?(nil)}.to raise_error(ArgumentError)
+              expect{🧬.∃ᶜ?('String')}.to raise_error(ArgumentError)
+            end
             it 'for global data' do
               expect(🧬.∃ᶜ?(:QAClassFake)).to eq(false)
               expect(🧬.∃ᶜ?(:Ruuuby)).to eq(false)
@@ -48,9 +61,27 @@ RSpec.describe 'f30_b02' do
         end
       end # end: {func{∃ᶜ?}}
 
+      context 'func{∋ˢ?}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            expect(🧬.∋ˢ?(💎.api)).to eq(true)
+            expect(🧬.∋ˢ?(💎.orm)).to eq(true)
+            expect(🧬.∋ˢ?(💎.engine)).to eq(true)
+          end
+          it 'cases: negative' do
+            expect(🧬.∋ˢ?(💎.cli)).to eq(false)
+            expect(🧬.∋ˢ?(String)).to eq(false)
+            expect(🧬.∋ˢ?(1337)).to eq(false)
+          end
+        end
+      end # end: {func{∋ˢ?}}
+
       context 'func{∃ᵐ?}' do
         context 'handling needed scenarios' do
           context 'cases: positive' do
+            it 'for regular Ruby modules' do
+              expect(🧬.∃ᵐ?(:Kernel)).to eq(true)
+            end
             it 'for global data' do
               expect(🧬.∃ᵐ?(:Ruuuby)).to eq(true)
               expect(🧬.∃ᵐ?(:QAModule)).to eq(true)
@@ -66,6 +97,10 @@ RSpec.describe 'f30_b02' do
             end
           end
           context 'cases: negative' do
+            it 'for regular Ruby data' do
+              [:Class, :String, :NilClass, :Symbol].∀{|scenario| expect(🧬.∃ᵐ?(scenario)).to eq(false)}
+              ['String', 1337, nil].∀{|scenario| expect{🧬.∃ᵐ?(scenario)}.to raise_error(ArgumentError)}
+            end
             it 'for global data' do
               expect(🧬.∃ᵐ?(:BigDecimal)).to eq(false)
               expect(🧬.∃ᵐ?(:RuuubyFake)).to eq(false)

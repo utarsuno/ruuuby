@@ -10,8 +10,8 @@ RSpec.describe 'f98_db' do
     end
 
     context 'defines behaviors' do
-      it 'has correct number of behaviors{2}' do
-        expect(f98.ruuuby_feature_behaviors.length).to eq(2)
+      it 'has correct number of behaviors{3}' do
+        expect(f98.ruuuby_feature_behaviors.length).to eq(3)
       end
 
       it 'defines{b00}' do
@@ -20,6 +20,10 @@ RSpec.describe 'f98_db' do
 
       it 'defines{b01}' do
         audit_feature_behavior(f98, f98_b01, 'b01', 'offer (to `Ruuuby`) access to `C` math functions, especially those involving higher precision')
+      end
+
+      it 'defines{b02' do
+        audit_feature_behavior(f98, f98_b02, 'b02', 'simplify import/require statements & setup as much as possible')
       end
 
     end # end: {defines behaviors}

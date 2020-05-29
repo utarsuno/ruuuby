@@ -18,9 +18,6 @@ module ::Ruuuby
         # @return [String]
         def Ⓣ; self.class.to_s; end
 
-        # @return [Boolean] true, if this object includes the m(`Singleton`)
-        def singleton?; self.class.ancestors.∋?(Singleton); end
-
         # @return [Boolean] true, if this object is an instance of `ThetaAngle`
         def θ?; self.is_a?(::ThetaAngle); end
 
@@ -30,10 +27,10 @@ module ::Ruuuby
         # @raise [WrongParamType]
         def 🛑bool❓(arg_name, arg)
           unless arg_name == $PRM_MANY
-            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, [::FalseClass, ::TrueClass], arg) unless arg.bool?
+            🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, [::FalseClass, ::TrueClass], arg) unless arg.bool?
           else
             arg.∀ₓᵢ do |x, i|
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", [::FalseClass, ::TrueClass], x) unless x.bool?
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", [::FalseClass, ::TrueClass], x) unless x.bool?
             end
           end
         end
@@ -46,18 +43,18 @@ module ::Ruuuby
         def 🛑sym❓(arg_name, arg, normalization_checks=:none)
           unless arg_name == $PRM_MANY
             if normalization_checks != :none
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Symbol, arg) unless arg.sym?(normalization_checks)
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, ::Symbol, arg) unless arg.sym?(normalization_checks)
             else
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Symbol, arg) unless arg.sym?
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, ::Symbol, arg) unless arg.sym?
             end
           else
             if normalization_checks != :none
               arg.∀ₓᵢ do |x, i|
-                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Symbol, x) unless x.sym?(normalization_checks)
+                🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Symbol, x) unless x.sym?(normalization_checks)
               end
             else
               arg.∀ₓᵢ do |x, i|
-                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Symbol, x) unless x.sym?
+                🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Symbol, x) unless x.sym?
               end
             end
           end
@@ -69,10 +66,10 @@ module ::Ruuuby
         # @raise [WrongParamType]
         def 🛑set❓(arg_name, arg)
           unless arg_name == $PRM_MANY
-            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::String, arg) unless arg.set?
+            🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, ::String, arg) unless arg.set?
           else
             arg.∀ₓᵢ do |x, i|
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::String, x) unless x.set?
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::String, x) unless x.set?
             end
           end
         end
@@ -85,18 +82,18 @@ module ::Ruuuby
         def 🛑str❓(arg_name, arg, normalization_checks=:none)
           unless arg_name == $PRM_MANY
             if normalization_checks != :none
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::String, arg) unless arg.str?(normalization_checks)
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, ::String, arg) unless arg.str?(normalization_checks)
             else
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::String, arg) unless arg.str?
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, ::String, arg) unless arg.str?
             end
           else
             if normalization_checks != :none
               arg.∀ₓᵢ do |x, i|
-                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::String, x) unless x.str?(normalization_checks)
+                🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::String, x) unless x.str?(normalization_checks)
               end
             else
               arg.∀ₓᵢ do |x, i|
-                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::String, x) unless x.str?
+                🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::String, x) unless x.str?
               end
             end
           end
@@ -108,10 +105,10 @@ module ::Ruuuby
         # @raise [WrongParamType]
         def 🛑hsh❓(arg_name, arg)
           unless arg_name == $PRM_MANY
-            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::String, arg) unless arg.hsh?
+            🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, ::String, arg) unless arg.hsh?
           else
             arg.∀ₓᵢ do |x, i|
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Hash, x) unless x.hsh?
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Hash, x) unless x.hsh?
             end
           end
         end
@@ -124,18 +121,18 @@ module ::Ruuuby
         def 🛑int❓(arg_name, arg, normalization_checks=:none)
           unless arg_name == $PRM_MANY
             if normalization_checks != :none
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Integer, arg) unless arg.int?(normalization_checks)
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, ::Integer, arg) unless arg.int?(normalization_checks)
             else
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Integer, arg) unless arg.int?
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, ::Integer, arg) unless arg.int?
             end
           else
             if normalization_checks != :none
               arg.∀ₓᵢ do |x, i|
-                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Integer, x) unless x.int?(normalization_checks)
+                🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Integer, x) unless x.int?(normalization_checks)
               end
             else
               arg.∀ₓᵢ do |x, i|
-                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Integer, x) unless x.int?
+                🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Integer, x) unless x.int?
               end
             end
           end
@@ -147,10 +144,10 @@ module ::Ruuuby
         # @raise [WrongParamType]
         def 🛑θ❓(arg_name, arg)
           unless arg_name == $PRM_MANY
-            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::ThetaAngle, arg) unless arg.θ?
+            🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, ::ThetaAngle, arg) unless arg.θ?
           else
             arg.∀ₓᵢ do |x, i|
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::ThetaAngle, x) unless x.θ?
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::ThetaAngle, x) unless x.θ?
             end
           end
         end
@@ -161,10 +158,10 @@ module ::Ruuuby
         # @raise [WrongParamType]
         def 🛑flt❓(arg_name, arg)
           unless arg_name == $PRM_MANY
-            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Float, arg) unless arg.flt?
+            🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, ::Float, arg) unless arg.flt?
           else
             arg.∀ₓᵢ do |x, i|
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Float, x) unless x.flt?
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Float, x) unless x.flt?
             end
           end
         end
@@ -176,18 +173,18 @@ module ::Ruuuby
         def 🛑num❓(arg_name, arg, normalization_checks=:none)
           unless arg_name == $PRM_MANY
             if normalization_checks != :none
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Math::Space::NumberLikeSpace::ALL_NUMS, arg) unless arg.num?(normalization_checks)
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, ::Math::Space::NumberSpace::ALL_NUMS, arg) unless arg.num?(normalization_checks)
             else
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Math::Space::NumberLikeSpace::ALL_NUMS, arg) unless arg.num?
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, ::Math::Space::NumberSpace::ALL_NUMS, arg) unless arg.num?
             end
           else
             if normalization_checks != :none
               arg.∀ₓᵢ do |x, i|
-                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Math::Space::NumberLikeSpace::ALL_NUMS, x) unless x.num?(normalization_checks)
+                🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Math::Space::NumberSpace::ALL_NUMS, x) unless x.num?(normalization_checks)
               end
             else
               arg.∀ₓᵢ do |x, i|
-                🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Math::Space::NumberLikeSpace::ALL_NUMS, x) unless x.num?
+                🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Math::Space::NumberSpace::ALL_NUMS, x) unless x.num?
               end
             end
           end
@@ -200,10 +197,10 @@ module ::Ruuuby
         # @raise [WrongParamType]
         def 🛑ary❓(arg_name, arg)
           unless arg_name == $PRM_MANY
-            🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, arg_name.to_s, ::Array, arg) unless arg.ary?
+            🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, arg_name.to_s, ::Array, arg) unless arg.ary?
           else
             arg.∀ₓᵢ do |x, i|
-              🛑 Ruuuby::ParamErr::throw(self.class, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Array, x) unless x.ary?
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, 🌽_previous_⨍, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Array, x) unless x.ary?
             end
           end
         end
@@ -289,7 +286,6 @@ class ::Object
   alias_method :🆔, :object_id
   ⨍_add_aliases(:freeze, [:❄️, :❄])
   ⨍_add_aliases(:frozen?, [:❄️?, :❄?])
-  alias_method :define_singleton_⨍, :define_singleton_method
   # | ------------------------------------------------------------------------------------------------------------------
 
 end

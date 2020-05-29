@@ -34,11 +34,34 @@
 
 ---
 
+# v0.0.38
+ * (`f98`) replace all usages of c-ext-func{`rb_eval_string`} and others that were significantly slowing down `startup/initial-load time`
+ * (`f18`) moved to {`f98_b02`}, `f18` will now cover the math module `Space`
+ * remove funcs{`class?`, `module?`, `singleton?`} from Class(`Object`); (functionality covered by `🧬`)
+ * remove func{`𝔠`} from `Kernel` (and thus remove `functional-style` support from (`f05`))
+ * track `git tags` w/ related `ORMs` & `APIs`; however, version automation tasks paused until `TDD` catches up for `DB` and/or some event/queue-based logic is added (ex: `RabbitMQ`)
+ * apply various misc cleanups w/ others `wip`
+
+| path added | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/math/statistics/statistical_learning.rb` | `Math::Statistics::StatisticalLearning` | not currently in use | `f30` |
+| `lib/math/statistics/probability_theory.rb` | `Math::Statistics::ProbabilityTheory` | not currently in use | `f30` |
+| `lib/math/statistics/descriptive_statistics.rb` | `Math::Statistics::DescriptiveStatistics` | not currently in use | `f30` |
+| `lib/math/combinatorics/combinatorics.rb` | `Math::Combinatorics` | not currently in use | `f30` |
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Math::Space::NucleotideSpace` | `∋ˢ?` | `f30` |
+| `Ruuuby::MetaData::GitAPI` | `release_tags`, `branch_names`, `remote_release_current`, `remote_release_previous` | `f31` |
+| `Math::NumberTheory` | `aliquot_sum`, `deficient?`, `deficiency`, `abundant?`, `abundance`, `abundancy_index`, `composite?` | `f32` |
+
+---
+
 # v0.0.37
  * have `ORM`: `RuuubyRelease` and `GitCommit` include `Comparable`; replacing redundant funcs{`>`, `<`} to the single func{`<=>`}
  * remove `♾️`, `¿` from all sources, textual parsing, code aliases, etc; (too redundant)
  * remove func{∞?} from Class(`String`)
- * add `ORM`{`RuuubyGem`}, some functionality was added; also removed Runtime constants needed solely for unit-tests (these tests are now semi-generated w/ `ORM` data))
+ * add `ORM`{`RuuubyGem`}, some functionality was added; also removed runtime constants needed solely for unit-tests (these tests are now semi-generated w/ `ORM` data)
  * add `RSpec` section for `locale` (local configs); `(not final design)`
  * (`f22`) will now be designated for `GC` and the `GC::Profiler`, previous `f22` moved to {`f28_b12`}
 

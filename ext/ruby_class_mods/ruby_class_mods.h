@@ -15,15 +15,16 @@ ________________________________________________________________________________
 
 static inline void internal_only_add_frozen_const_to(VALUE kclass, VALUE * internal_global, const char * const_name, VALUE val_to_freeze);
 static inline ID health_check_for_existing_func_name(VALUE context_self, VALUE * func_name_as_str);
-static inline VALUE new_ary(const long known_max_size);
+static inline VALUE 💎new_ary(const long known_max_size);
+#define 💎new_ary_size2(arg_a, arg_b)        rb_ary_new3(2l, arg_a, arg_b);
+#define 💎new_ary_size3(arg_a, arg_b, arg_c) rb_ary_new3(2l, arg_a, arg_b, arg_c);
 
-static void startup_step0_load_needed_default_ruby_libs(void);
+static void startup_step0_load_f98_b02(void);
 static inline void startup_step1_before_loading_extension(void);
 static inline void startup_step2_add_ruuuby_c_extensions(void);
-static void startup_step3_load_3rd_party_gems(void);
 static inline void startup_step4_load_needed_ruuuby_files(void);
 static inline void startup_step5_protect_against_gc(void);
-static inline void internal_only_prepare_f16(void);
+static void internal_only_prepare_f16(void);
 
 static int internal_only_compare_func_4_object_id(const void * l , const void * r);
 
@@ -53,7 +54,7 @@ ________________________________________________________________________________
 #define declare_func(func_name, expr, return_type, single_param) return_type func_name(single_param);return_type func_name(single_param){expr}
 #define declare_static_func(func_name, expr, return_type, single_param) static return_type func_name(single_param);static return_type func_name(single_param){expr}
 
-//#define r_func_pure(func_name, expr)                            PUREFUNC(static VALUE func_name(const VALUE self) {expr})
+//#define r_func_pure(func_name, expr)              PUREFUNC(static VALUE func_name(const VALUE self) {expr})
 #define ⓡ𝑓(func_name, expr)                        PUREFUNC(static VALUE func_name(const VALUE self) {expr})
 #define ⓡ𝑓_def(func_name, expr)                    declare_static_func(func_name, expr, VALUE, VALUE self)
 #define ⓡ𝑓_def2(func_name, param_0, param_1, expr) VALUE func_name(const VALUE param_0, const VALUE param_1);VALUE func_name(const VALUE param_0, const VALUE param_1){expr}
@@ -65,14 +66,13 @@ ________________________________________________________________________________
 
 #define c_func(func_name, expr) declare_func(func_name, expr, void, void)
 
-#define ext_api_add_global_const_str(const_name, const_value)      rb_define_global_const(const_name, r_str_new_frozen_literal(const_value));
-#define ext_api_add_global_module(str)                             rb_define_module(str);
-#define ext_api_add_module_under(under_me, str)                    rb_define_module_under(under_me, str);
-#define ext_api_add_new_sub_class_under(under_me, base_class, str) rb_define_class_under(under_me, str, base_class);
+#define 💎add_global_module(str)                             rb_define_module(str);
+#define 💎add_module_under(under_me, str)                    rb_define_module_under(under_me, str);
+#define 💎add_new_sub_class_under(under_me, base_class, str) rb_define_class_under(under_me, str, base_class);
 
-#define 💎add_func_alias(kclass, name_alias, name_original)    rb_define_alias(kclass, name_alias, name_original);
-#define 💎add_const_under(kclass, const_name, const_value)     rb_define_const(kclass, const_name, const_value);
-#define 💎add_const_flt(const_name, const_as_c_double)          💎add_const_under(R_FLT, const_name, DBL2NUM(const_as_c_double))
+#define 💎add_func_alias(kclass, name_alias, name_original)  rb_define_alias(kclass, name_alias, name_original);
+#define 💎add_const_under(kclass, const_name, const_value)   rb_define_const(kclass, const_name, const_value);
+#define 💎add_const_flt(const_name, const_as_c_double)        💎add_const_under(R_FLT, const_name, DBL2NUM(const_as_c_double))
 #define 💎add_const_theta_angle(const_name, dbl_angle, mode_angle, ref) {\
     ref = θ_new_constant(dbl_angle, mode_angle);\
     rb_define_const(R_MATH, const_name, ref);\
@@ -86,7 +86,6 @@ ________________________________________________________________________________
 }
 
 #define 💎add_c_dbl_as_frozen_const_to(kclass, const_name, const_value, ref)
-//#define ext_api_add_frozen_const_under(kclass, const_name, const_value)
 
 // -----------------------------
 
@@ -128,12 +127,21 @@ ________________________________________________________________________________
 
 #define 💎scan_args_1_optional(func_name) VALUE them; _scan_args_1_optional_as_them_data(rb_obj_classname(self), func_name);
 
-#define 💎EVAL_TO_OBJ_ID(the_expr) rb_obj_id(rb_eval_string(the_expr));
-
-//#define 💎EVAL_TO_VAR_OF_OBJ_ID(the_var, expr) the_var = 💎EVAL_TO_OBJ_ID(expr); rb_global_variable(& the_var);
 #define 💎EVAL_TO_VAR_OF_OBJ_ID(the_var, expr) {\
     the_var = rb_eval_string(expr);\
     rb_global_variable(& the_var);\
+}
+
+#define 💎PROCEDURE_00(the_var) {\
+    the_var = rb_to_symbol(rb_funcall(code_points, rb_intern_pack, 1, pack_as_utf8));\
+    rb_gc_register_mark_object(the_var);\
+}
+
+#define 💎PROCEDURE_01(the_var, ary_of_code_points) unsigned long the_var = NUM2ULONG(rb_obj_id(rb_to_symbol(rb_funcall(ary_of_code_points, rb_intern_pack, 1, pack_as_utf8))));
+
+#define 💎PROCEDURE_02(el_index, the_var, val_to_set) {\
+    el_index = bsearch_power(the_var);\
+    exponential_indexes[bsearch_power_position(el_index)] = val_to_set;\
 }
 
 static inline __attribute__ ((__always_inline__)) VALUE is_finite_num(const VALUE arg);

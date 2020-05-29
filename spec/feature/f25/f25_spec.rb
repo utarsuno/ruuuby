@@ -32,9 +32,6 @@ RSpec.describe 'f25' do
       it 'func{💎.orm}' do
         expect(💎.orm).to eq(::Ruuuby::MetaData::RuuubyORM.ℹ)
       end
-      it 'func{💎.meta_orm}' do
-        expect(💎.meta_orm).to eq(::Ruuuby::MetaData::RuuubyORM::SchemaORM)
-      end
       it 'func{💎.paths}' do
         expect(💎.paths).to eq(::Ruuuby::MetaData::Paths)
       end
@@ -53,7 +50,6 @@ RSpec.describe 'f25' do
         it 'defined in correct location' do
           expect_∃static⨍(:api, 💎)
           expect_∃static⨍(:orm, 💎)
-          expect_∃static⨍(:meta_orm, 💎)
           expect_∃static⨍(:paths, 💎)
           expect_∃static⨍(:engine, 💎)
 

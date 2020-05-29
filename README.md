@@ -6,7 +6,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.37'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.38'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -78,10 +78,10 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 | class(es)/obj  | example | (at least partially) utilizing C-extension?<br/>(java-wip) | notes |
 | ----------:| ------- | :---: |----- |
-| `Integer`  | `1337^²` | ✅ | -coexists with `Integer`'s pre-existing `bitwise XOR` functionality<br/>-`performance penalties`: up to `80%` `slower` than using operator(`**`) |
-| `Float`    | `1337.1337^²` | ✅ | `performance penalties`: up to `90%` `slower` than using operator(`**`) |
-| `Rational` | `3/4r^²` | ✅ | `performance penalties`: up to `105% slower` than using operator(`**`) |
-| `Complex`  | `1337i^²` | ✅ | `performance penalties`: up to `85% slower` than using operator(`**`) |
+| `Integer`  | `1337^²` | ✅ | coexists with `Integer`'s pre-existing `bitwise XOR` functionality<br/>`performance penalties`: `<= 75% slower` than using{`**`} |
+| `Float`    | `1337.1337^²` | ✅ | `performance penalties`: `<= 90% slower` than using{`**`} |
+| `Rational` | `3/4r^²` | ✅ | `performance penalties`: `<= 95% slower` than using{`**`} |
+| `Complex`  | `1337i^²` | ✅ | `performance penalties`: `<= 85% slower` than using{`**`} |
 | `BigDecimal` | `inc` | `inc` | `inc` |
 | `ThetaAngle` | `inc` | `inc` | outputs to unit: `steradian` (depending on input) |
 | `Quaternion` | `inc` | `inc` | |
@@ -102,13 +102,11 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 `instance methods for Kernel will act as 'globally-scoped functions'; meaning they can essentially can be called from anywhere with caller of the method ignored for all contextes`
 
 | module(s) | func(s) added     | as C-extension? <br/> (java-wip) | notes |
-| --------: | :---------------: | :------------------------: | ----- |
-| `Kernel`  | `𝔠`               | ❌                         | (`f03`) |
-| `Kernel`  | `🌽_previous_⨍`   | ❌                        | (`f10`) |
-| `Kernel`  | `∃module?`, `∃class?`<br/>{`static`}`∃⨍_alias?`, `∃⨍?` | ❌ | |
+| --------: | :---------------- | :------------------------: | :---- |
+| `Kernel`  | `🌽_previous_⨍`<br/>`∃module?`, `∃class?`<br/>{`static`}`∃⨍_alias?`, `∃⨍?` | ❌ | (`f10`) |
 | `Module`  | {`static`}`⨍_add_aliases`| ✅                 |  |
 | `Math`    | {`static`}`relative_Δ`, `τ³_is_pythagorean?`, `τ²_in_golden_ratio?`, `τ²_in_super_golden_ratio?` | ❌ | (`f17`) |
-| `Math`    | {`static`}<br/>`cot`, `csc`, `sec`, `sin²`, `cos²`   | ❌  | (`f17`) |
+| `Math`    | {`static`}<br/>`cot`, `csc`, `sec`, `sin²`, `cos²` | ❌  | (`f17`) |
 
 ### Class Modifications:
 
@@ -119,7 +117,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Dir`                  | `η̂_paths`                           | ❌ | (`f12`) |
 | `File`, `Dir`, `ENV`   | `∅?`                                | ❌ | (`f04`) |
 | `Object`               | `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?`<br/>`class?`, `module?`, `nucleotide?` | ✅ | (`f06`) |
-| `Object`               | `singleton?`, `Ⓣ`<br/>`🛑bool❓`, `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑θ❓` | ❌ | (`f06`) |
+| `Object`               | `Ⓣ`<br/>`🛑bool❓`, `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑θ❓` | ❌ | (`f06`) |
 | `Array`, `Set`         | `remove_empty!`                     | ❌/✅ | (`f07`) |
 | `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞`<br/>`downcase?`{`⬇?`}<br/>`upcase?`{`⬆?`} | ❌ | (`f08`) |
 | `String`               | `🐫?`, `🐫⬇?`, `to_🐫`<br/>`🐍⬆?`, `🐍?`, `to_🐍` | ❌ | (`f24`) |
@@ -142,7 +140,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | for                    | base method(s) reference(s)               | alias(es)                  | notes     |
 | ---------------------: | ----------------------------------------- | -------------------------- | --------- |
 | `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲`                 | (`f10`)   |
-| `Object`               | `object_id`, `ⓣ`, `freeze`, `frozen?`, `define_singleton_function` | `🆔`, `class`, [`❄️`, `❄`], [`❄️?`, `❄?`], `define_singleton_⨍` | (`f10`)   |
+| `Object`               | `object_id`, `ⓣ`, `freeze`, `frozen?`    | `🆔`, `class`, [`❄️`, `❄`], [`❄️?`, `❄?`] | (`f10`) |
 | `Class`                | `new`                                     | `🆕`                       | (`f10`)   |
 | `Array`, `Set`         | `remove_empty!`                           | `♻️∅!`                     | (`f10`)   |      
 | `String`, `Symbol`     | `upcase`, `downcase`                      | `⬆`, `⬇`                  | (`f10`) |
@@ -164,11 +162,11 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                           |
 | --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 1009     | # of tests (solely relating to core functionality)              |
-| QA        | performance   | 233      | # of tests (solely relating to performance)                     |
-| QA        | DB            | 176      | # of tests (solely relating to the database)                    |
-| CI        | audits        | 114      | # of tests (solely relating to non-functionality based audits)  |
-| CI        | locale        | 28       | # of tests (solely relating to local-dev-setup)                 |
+| QA        | unit          | 1030     | # of tests (solely relating to core functionality)              |
+| QA        | performance   | 225      | # of tests (solely relating to performance)                     |
+| QA        | DB            | 181      | # of tests (solely relating to the database)                    |
+| CI        | audits        | 113      | # of tests (solely relating to non-functionality based audits)  |
+| CI        | locale        | 34       | # of tests (solely relating to local-dev-setup)                 |
 | structure | features      | ~35      | # of distinct features (that are categorized & tracked) `wip`   |
 | coverage  | LOCs          | ???      | `wip` |
 | coverage  | runtime       | ???      | `wip` |

@@ -1,10 +1,6 @@
+# coding: UTF-8
 
 # (`f14`)
-#
-#==normalization options
-# [str_ary] convert a string into an array of strings (split on newline character)
-# [!∅]      no empty contents
-# [ℕ]       positive integer representation only
 module ::Ruuuby
 
   class DescriptiveStandardError < StandardError
@@ -12,7 +8,7 @@ module ::Ruuuby
     # @param [*]      the_self
     # @param [String] the_error_message
     def initialize(the_self, the_error_message)
-      super("| c{#{the_self.class}}-> m{#{caller_locations(2, 1).first.base_label.to_s}} w/ self{#{the_self.to_s}} #{the_error_message} |")
+      super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(2, 1).first.base_label.to_s}} w/ self{#{the_self.to_s}} #{the_error_message} |")
     end
   end
 
@@ -25,11 +21,11 @@ module ::Ruuuby
     # @param [Symbol, String] the_method
     # @param [Symbol, String] name_arg
     # @param [Class, Array]   arg_types_needed
-    # @param [*]             arg_received
+    # @param [*]              arg_received
     #
     # @return [String]
     def self.throw(name_class, name_method, name_arg, arg_types_needed, arg_received)
-      ParamErr::WrongParamType.🆕(self.generate_error_text(name_class, name_method, name_arg, arg_received.class, arg_types_needed))
+      ParamErr::WrongParamType.🆕(self.generate_error_text(name_class, name_method, name_arg, arg_received.ⓣ, arg_types_needed))
     end
 
     # utility function to generate error message for the exception(WrongParamType)
@@ -37,7 +33,7 @@ module ::Ruuuby
     # @param [Symbol, String] name_class
     # @param [Symbol, String] the_method
     # @param [Symbol, String] arg_name
-    # @param [Class]         received_type
+    # @param [Class]          received_type
     # @param [Class, Array]   required_types
     #
     # @return [String]

@@ -4,6 +4,7 @@ RSpec.shared_context 'shared_context_performance' do
   let(:tΔ_warmup){PerformanceTestHelper::Configs::DEFAULT_WARMUP * 2}
   let(:pΔ_10){1.1}
   let(:pΔ_50){1.5}
+  let(:pΔ_70){1.70}
   let(:pΔ_75){1.75}
   let(:pΔ_80){1.80}
   let(:pΔ_85){1.85}
