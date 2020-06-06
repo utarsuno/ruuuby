@@ -34,6 +34,29 @@
 
 ---
 
+# v0.0.39
+ * update to Ruby version{`2.7.1`} from{`2.7.0`}
+ * update gem(`activerecord`) version from{`5.2.4.1`} to{`5.2.4.3`}
+ * add `RSpec` sections: `integration` & `tech_debt`
+ * add the following `Sequence` objs to `Math::NumberTheory::𝕎¹`: `seq_pronic`, `seq_square`, `seq_fibonacci`, `seq_lucas`, `seq_triangle`, `seq_hexagonal`
+ * remove some non-ASCII characters in `.h` and `.c` files while testing between compilers `clang` & `gcc`
+ * remove both (`f01`, `f02`), (`f10`) now covers these scenarios w/ feature-behaviors
+ * fix typo for const{ANGLE_TAU}, it is now correctly referenced by{`𝞽`} and not{`τ`}
+ * various edge-case bugs w/ `ThetaAngle` identified, some are fixed for this version
+
+| path added | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/ruuuby/math/expr/seq/arithmetic.rb` | `Math::Expr::ArithmeticSequence` | (`Ruby` version{`2.7.1`} just added `Enumerator::ArithmeticSequence` which will be looked at prior to further modifications & clean-up of these `Sequence` classes) | `f10` |
+| `lib/ruuuby/math/expr/seq/geometric.rb` | `Math::Expr::GeometricSequence` |  | `f10` |
+| `lib/ruuuby/math/expr/seq/recursive.rb` | `Math::Expr::RecursiveSequence` |  | `f10` |
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Math::NumberTheory` | `digit_sum`, `digital_root`, `additive_persistence`, `almost_perfect?`, `nᵗʰ_cototient`, `nᵗʰ_euler_totient`, `friendly?` | `f31` |
+| `Math::Combinatorics` | `n_choose_k` | `f32` |
+
+---
+
 # v0.0.38
  * (`f98`) replace all usages of c-ext-func{`rb_eval_string`} and others that were significantly slowing down `startup/initial-load time`
  * (`f18`) moved to {`f98_b02`}, `f18` will now cover the math module `Space`
@@ -44,10 +67,10 @@
 
 | path added | reference | notes | feature(s) |
 | ---: | --- | --- | --- |
-| `lib/math/statistics/statistical_learning.rb` | `Math::Statistics::StatisticalLearning` | not currently in use | `f30` |
-| `lib/math/statistics/probability_theory.rb` | `Math::Statistics::ProbabilityTheory` | not currently in use | `f30` |
-| `lib/math/statistics/descriptive_statistics.rb` | `Math::Statistics::DescriptiveStatistics` | not currently in use | `f30` |
-| `lib/math/combinatorics/combinatorics.rb` | `Math::Combinatorics` | not currently in use | `f30` |
+| `lib/math/statistics/statistical_learning.rb` | `Math::Stats::StatisticalLearning` | not currently in use | `f30` |
+| `lib/math/statistics/probability_theory.rb` | `Math::Stats::ProbabilityTheory` | not currently in use | `f30` |
+| `lib/math/statistics/descriptive_statistics.rb` | `Math::Stats::DescriptiveStatistics` | not currently in use | `f30` |
+| `lib/math/combinatorics/combinatorics.rb` | `Math::Stats` | not currently in use | `f30` |
 
 | class | method(s) added | feature(s) |
 | --- | --- | --- |
@@ -132,7 +155,7 @@
 
 # v0.0.34
  * increase precision of various funcs (ex: `sin²` and `cos²`), by performing calculations in `long double` instead of `double`
- * add `τ` as a 'global-const' which is a ThetaAngle representing a single complete turn
+ * add `𝞽` as a 'global-const' which is a ThetaAngle representing a single complete turn
  * adjust parameter style of class-functions for `Math` to use named params
  * remove global-alias-funcs{`ℂ`, `ℚ`}; these now correspond to a specific singleton instance of the newly created class(`::Math::SetTheory::NumberSet`)
  * (`f28`): add `super golden ratio` as `Ψ`, `silver ratio` as `δ`, `plastic ratio` as `ρ`, `omega constant` as `Ω`

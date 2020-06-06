@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-# mathematics related
+# mathematics related code
 module ::Math
 
   # @see: https://en.wikipedia.org/wiki/Number_theory
@@ -8,7 +8,7 @@ module ::Math
   # math related code that can be categorized under +NumberTheory+
   module NumberTheory
 
-    # equations within +NumberTheory+ that only involve 1-input
+    # equations within +NumberTheory+ that only involve 1-input (which belongs to the `natural-numbers`)
     module ℕ¹
 
       # vocab:
@@ -85,13 +85,20 @@ module ::Math
       # @raise [ArgumentError] if n is not ∈ ℕ
       #
       # @return [Boolean]
+      def self.almost_perfect?(n); ::Math::NumberTheory::ℕ¹.divisors(n).sum == n * 2 - 1; end
+
+      # @param [Integer] n
+      #
+      # @raise [ArgumentError] if n is not ∈ ℕ
+      #
+      # @return [Boolean]
       def self.abundant?(n); ::Math::NumberTheory::ℕ¹.aliquot_sum(n) > n; end
 
       # @param [Integer] n
       #
       # @raise [ArgumentError] if n is not ∈ ℕ OR n is not +abundant+
       #
-      # @return [Boolean]
+      # @return [Integer, Numeric]
       def self.abundance(n)
         if ::Math::NumberTheory::ℕ¹.abundant?(n)
           ::Math::NumberTheory::ℕ¹.aliquot_sum(n) - n
@@ -124,7 +131,7 @@ module ::Math
       #
       # @raise [ArgumentError] if n is not ∈ ℕ OR n is not +deficient+
       #
-      # @return [Boolean]
+      # @return [Integer, Numeric]
       def self.deficiency(n)
         if ::Math::NumberTheory::ℕ¹.deficient?(n)
           n - ::Math::NumberTheory::ℕ¹.aliquot_sum(n)
@@ -137,7 +144,7 @@ module ::Math
       #
       # @raise [ArgumentError] if n is not ∈ ℕ OR n is not +deficient+
       #
-      # @return [Boolean] true, if +n+ is neither +prime+ or +1+
+      # @return [Boolean] true, if +n+ is neither +prime+ nor +1+
       def self.composite?(n)
         🛑num❓(:n, n, :∈ℕ)
         if n < 4
@@ -149,7 +156,156 @@ module ::Math
 
     end # end: {ℕ¹}
 
-    # equations within +NumberTheory+ that involve 2-inputs
+    # equations within +NumberTheory+ that only involve 1-input (which belongs to the `whole-numbers`)
+    module 𝕎¹
+
+      def self.nᵗʰ_euler_totient(n); ::Math::NumberTheory.nth_euler_totient(n); end
+
+      def self.nᵗʰ_cototient(n)
+        🛑num❓(:n, n, :∈𝕎)
+        n - ::Math::NumberTheory.nth_euler_totient(n)
+      end
+
+      # @param [Integer] n
+      #
+      # @raise [ArgumentError] if n is not ∈ 𝕎
+      #
+      # @return [Integer] summation of all digits, in base{10}, from `n`
+      def self.digit_sum(n)
+        🛑num❓(:n, n, :∈𝕎)
+        if n < 10
+          return n
+        else
+          return n.digits.sum
+        end
+      end
+
+      # @param [Integer] n
+      #
+      # @raise [ArgumentError] if n is not ∈ 𝕎
+      #
+      # @return [Integer] summation of all digits recursively until the summation is a single digit, in base{10}, from `n`
+      def self.digital_root(n)
+        🛑num❓(:n, n, :∈𝕎)
+        if n < 10
+          return n
+        else
+          result = n - (9.0 * ((n / 9.0).floor))
+          if result == 0
+            if n % 9 == 0
+              return 9
+            else
+              return 0
+            end
+          else
+            return result
+          end
+        end
+      end
+
+      # @param [Integer] n
+      #
+      # @raise [ArgumentError] if n is not ∈ 𝕎
+      #
+      # @return [Integer] the number of +digit_sum+ iterations that func{+digital_root+} would perform for value `n`
+      def self.additive_persistence(n)
+        🛑num❓(:n, n, :∈𝕎)
+        if n < 10
+          return 0
+        elsif n < 19
+          return 1
+        else
+          the_sum    = n.digits.sum
+          iterations = 1
+          while the_sum >= 10
+            iterations += 1
+            the_sum = the_sum.digits.sum
+          end
+          return iterations
+        end
+      end
+
+      # @param [Integer] n
+      #
+      # @raise [ArgumentError]  if n is not ∈ 𝕎
+      #
+      # @return [Boolean] true, if `n` can be considered a `hexagonal_number`
+      #def self.hexagonal?(n)
+      # 🛑num❓(:n, n, :∈𝕎)
+      #end
+
+      # -------------------------------------------------------------------------------------------- | *b03* | *f32* |
+      @seq_pronic = ::Math::Expr::Sequence.new(:∈𝕎)
+      @seq_pronic.define_singleton_method(:_∋?) do |n|
+        x = ::Math.sqrt(n).to_i
+        (x * (x + 1)) == n
+      end
+      @seq_pronic.define_singleton_method(:calculate_value_at){|n| n * (n + 1)}
+      # -------------------------------------------------------------------------------------------- | *b04* | *f32* |
+      @seq_square = ::Math::Expr::Sequence.new(:∈𝕎)
+      @seq_square.define_singleton_method(:_∋?) do |n|
+        # TODO: for when needed: there are many properties that can be checked for to avoid expensive operations (loops, math operations, overflow checks, etc)
+        square_root = ::Math.sqrt(n)
+        square_root - square_root.floor == 0
+      end
+      @seq_square.define_singleton_method(:calculate_value_at){|n| n * n}
+      # -------------------------------------------------------------------------------------------- | *b05* | *f32* |
+      @seq_fibonacci = ::Math::Expr::Sequence.new(:∈𝕎, [0, 1, 1, 2, 3])
+      @seq_fibonacci.define_singleton_method(:_∋?){|n| ::Math::NumberTheory::𝕎¹.seq_square.∋?(5 * (n * n) + 4) || ::Math::NumberTheory::𝕎¹.seq_square.∋?(5 * (n * n) - 4)}
+      @seq_fibonacci.define_singleton_method(:calculate_value_at) {|n| (((::Float::RATIO_GOLDEN ** n) / ::Math.sqrt(5.0)) + 0.5).floor}
+      # -------------------------------------------------------------------------------------------- | *b06* | *f32* |
+      @seq_lucas = ::Math::Expr::Sequence.new(:∈𝕎, [2, 1, 3])
+      @seq_lucas.define_singleton_method(:A∀ₓ) do |max_n|
+        🛑 NotImplementedError.new('todo =)!')
+      end
+      @seq_lucas.define_singleton_method(:_∋?) do |n|
+        prev = 4
+        if n < prev
+          return false
+        elsif n == prev
+          return true
+        end
+        curr = 7
+        if n < curr
+          return false
+        elsif n == curr
+          return true
+        end
+        while curr < n
+          temp = curr
+          curr += prev
+          prev = temp
+          if curr == n
+            return true
+          elsif curr > n
+            return false
+          end
+        end
+      end
+      @seq_lucas.define_singleton_method(:calculate_value_at){|n| ((::Float::RATIO_GOLDEN ** n) + (::Float::RATIO_GOLDEN_PERPENDICULAR ** n)).round}
+      # -------------------------------------------------------------------------------------------- | *b07* | *f32* |
+      @seq_triangle = ::Math::Expr::Sequence.new(:∈𝕎, [0, 1, 3])
+      @seq_triangle.define_singleton_method(:_∋?) do |n|
+        x = n * 8 + 1
+        if x % 2 == 0
+          false
+        else
+          ::Math::NumberTheory::𝕎¹.seq_square.∋?(x)
+        end
+      end
+      @seq_triangle.define_singleton_method(:calculate_value_at){|n| ::Math::Combinatorics::𝕎².choose(n: n + 1, k: 2)}
+      # -------------------------------------------------------------------------------------------- | *b08* | *f32* |
+      @seq_hexagonal = ::Math::Expr::Sequence.new(:∈𝕎, [0, 1, 6, 15])
+      @seq_hexagonal.define_singleton_method(:calculate_value_at){|n| n * (2 * n - 1)}
+      @seq_hexagonal.define_singleton_method(:_∋?){|n| ::Math::NumberTheory::𝕎¹.seq_triangle.∋?(n)}
+      @seq_hexagonal.define_singleton_method(:A∀ₓ) do |max_n|
+        🛑 NotImplementedError.new('todo =)!')
+      end
+      # --------------------------------------------------------------------------------------------------------------
+      class << self; attr_reader :seq_pronic, :seq_fibonacci, :seq_lucas, :seq_square, :seq_triangle, :seq_hexagonal; end
+    end # end: {𝕎¹}
+
+    # equations within +NumberTheory+ that involve 2-inputs (with both belonging to the `natural-numbers`)
     module ℕ²
 
       # base source from:
@@ -184,6 +340,14 @@ module ::Math
       # @return [Boolean] true, if `a` and `b` have a `greatest common divisor` of 1
       def self.coprime?(a, b); ::Math::NumberTheory::ℕ².gcd(a, b) == 1; end
 
+      # @param [Integer] a
+      # @param [Integer] b
+      #
+      # @raise [ArgumentError] if a or b is not ∈ ℕ
+      #
+      # @return [Boolean] true, if `a` and `b` have a `greatest common divisor` of 1
+      def self.friendly?(a, b); ::Math::NumberTheory::ℕ¹.abundancy_index(a) == ::Math::NumberTheory::ℕ¹.abundancy_index(b); end
+
     end # end: {ℕ²}
 
     # Liouville's Constant
@@ -203,14 +367,17 @@ module ::Math
 end
 
 # TODO: https://en.wikipedia.org/wiki/Diophantine_equation
-# TODO: https://en.wikipedia.org/wiki/Euler%27s_totient_function#Computing_Euler.27s_totient_function
 
 # w/ efficient algorithms
 # TODO: hemiperfect number
 # TODO: highly abundant number
+# TODO: highly cototient number
 # TODO: untouchable number
 # TODO: semiprimes
 # TODO: friendly numbers
-# TODO: pronic numbers
-# TODO: almost perfect numbers
-
+# TODO: tetrahedral numbers
+# TODO: pentatope numbers
+# TODO: square pyramidal number
+# TODO: palindromic
+# TODO: multiplicative persistence
+#

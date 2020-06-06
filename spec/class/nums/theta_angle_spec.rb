@@ -3,47 +3,12 @@
 RSpec.describe 'theta_angle' do
 
   context 'creates class[ThetaAngle]' do
-    let(:as_degrees){θ°(360)}
-    let(:as_radians){θʳ(π * 2)}
-    let(:as_gons){θᵍ(400)}
-    let(:as_turns){θ𝞽(1)}
 
-    context 'class exists w/ constructor' do
-      context 'handling needed scenarios' do
-        context 'cases: positive' do
-          it 'w/ correct class' do
-            expect(as_degrees.ⓣ).to eq(::ThetaAngle)
-            expect(as_radians.ⓣ).to eq(::ThetaAngle)
-            expect(as_gons.ⓣ).to eq(::ThetaAngle)
-            expect(as_turns.ⓣ).to eq(::ThetaAngle)
-          end
-          it 'w/ different object-IDs' do
-            expect(as_degrees.🆔).to_not eq(as_radians.🆔)
-            expect(as_degrees.🆔).to_not eq(as_gons.🆔)
-            expect(as_degrees.🆔).to_not eq(as_turns.🆔)
-            expect(as_radians.🆔).to_not eq(as_gons.🆔)
-            expect(as_radians.🆔).to_not eq(as_turns.🆔)
-            expect(as_gons.🆔).to_not eq(as_turns.🆔)
-          end
-          it 'w/ working equal comparisons' do
-            expect(as_degrees).to eq(θ°(300) + θ°(60))
-            expect(as_radians).to eq(θʳ(π) + θʳ(π))
-            expect(as_gons).to eq(θᵍ(300) + θᵍ(100.0))
-            expect(as_turns).to eq(θ𝞽(½) + θ𝞽(½))
-          end
-        end
-        context 'cases: negative' do
-          it 'bad arg' do
-            expect{θ°(nil)}.to raise_error(ArgumentError)
-          end
-        end
-      end
-    end # end: {class exists w/ constructor}
     context 'w/ needed funcs' do
       context 'func{==}' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
-            context 'DGR to' do
+            context 'θ° to' do
               it 'ints/floats' do
                 expect(θ°(300)).to eq(300)
                 expect(θ°(300)).to eq(300.0)
@@ -259,7 +224,6 @@ RSpec.describe 'theta_angle' do
         end # end: {abs!}
         context 'vocab based funcs' do
           context 'func{complementary_with?}' do
-
             context 'math properties' do
               it 'tan(A) = cot(B)' do
                 expect(tan(θ°(80))).to eq(cot(θ°(10)))
@@ -437,7 +401,6 @@ RSpec.describe 'theta_angle' do
               end
               it 'θ°' do
                 [0, -1.1, 1.1, -359, 359, -360, 360].∀{|scenario| expect(θ°(scenario).normalize!).to eq(scenario)}
-
                 expect(θ°(390).normalize!).to eq(30)
                 expect(θ°(2560).normalize!).to eq(40)
                 expect(θ°(-30).normalize!).to eq(-30)
@@ -445,7 +408,6 @@ RSpec.describe 'theta_angle' do
               end
               it 'θᵍ' do
                 [0, -1.1, 1.1, -399, 399, -400, 400].∀{|scenario| expect(θᵍ(scenario).normalize!).to eq(scenario)}
-
                 expect(θᵍ(444).normalize!).to eq(44)
                 expect(θᵍ(15337).normalize!).to eq(137)
                 expect(θᵍ(-401).normalize!).to eq(-1)
@@ -453,7 +415,6 @@ RSpec.describe 'theta_angle' do
               end
               it 'θ𝞽' do
                 [0, -0.1, 0.1, -1.0, 0.1].∀{|scenario| expect(θ𝞽(scenario).normalize!).to eq(scenario)}
-
                 expect(θ𝞽(-2.0).normalize!.to_f).to eq(-0.0)
                 expect(θ𝞽(-9.5).normalize!.to_f).to eq(-0.5)
                 expect(θ𝞽(3.0).normalize!.to_f).to eq(0.0)
@@ -461,7 +422,6 @@ RSpec.describe 'theta_angle' do
               end
               it 'θʳ' do
                 [0, -0.1, 0.1, -2.0 * π, 2.0 * π].∀{|scenario| expect(θʳ(scenario).normalize!).to eq(scenario)}
-
                 expect(θʳ(-2.0 * π).normalize!).to eq(-2.0 * π)
                 expect(θʳ(2.0 * π).normalize!).to eq(2.0 * π)
                 expect(θʳ(-3.0 * π).normalize!).to eq(-1.0 * π)

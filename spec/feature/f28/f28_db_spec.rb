@@ -51,7 +51,7 @@ RSpec.describe 'f28' do
         end
         context 'created theta angles' do
           it 'has b10' do
-            audit_feature_behavior(f28, f28_b10, 'b10', 'create ThetaAngle constant{τ}, tau')
+            audit_feature_behavior(f28, f28_b10, 'b10', 'create ThetaAngle constant{𝞽}, tau')
           end
           it 'has b11' do
             audit_feature_behavior(f28, f28_b11, 'b11', 'create ThetaAngle constant{Ⴔ}, golden angle')

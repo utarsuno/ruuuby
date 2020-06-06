@@ -8,11 +8,6 @@ RSpec.describe 'f12' do
         expect(📁).to eq(::File)
       end
     end
-    context 'func{📂}' do
-      it 'aliases ::File' do
-        expect(📂).to eq(::File)
-      end
-    end
     context 'func{🗄️}' do
       it 'aliases ::Dir' do
         expect(🗄️).to eq(::Dir)
@@ -20,18 +15,10 @@ RSpec.describe 'f12' do
     end
   end
 
-  context 'audits', :audits do
+  context 'audit', :audit do
 
     context 'feature(f12) passes audits (tests not relating to observed functionality)' do
-      it 'module is defined in correct location' do
-        expect(🧬.∃ᵐ?(:MainF12, ::Ruuuby::Feature::Extendable)).to eq(true)
-      end
       context 'funcs provided are defined in correct location' do
-        it 'for m{MainF12}' do
-          expect_∃⨍(:📁, ::Ruuuby::Feature::Extendable::MainF12)
-          expect_∃⨍(:📂, ::Ruuuby::Feature::Extendable::MainF12)
-          expect_∃⨍(:🗄️, ::Ruuuby::Feature::Extendable::MainF12)
-        end
         context 'for c{File}' do
           it 'static functions' do
             expect_∃static⨍(:replace_expr_with!, ::File)

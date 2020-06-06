@@ -74,7 +74,9 @@
 @v0_0_18.add_file('db/seed.rb', '', '', @f15)
 
 @v0_0_18.add_gem('sqlite3', '1.4.2', true, false, %W(DB), '::SQLite3', '::VERSION')
-@v0_0_18.add_gem('activerecord', '5.2.4.1', true, false, %W(DB), '::ActiveRecord', '::VERSION::STRING')
+
+# TODO: originally added as version{5.2.4.1}, release{0.0.38->39} updated it to 5.2.4.3
+@v0_0_18.add_gem('activerecord', '5.2.4.3', true, false, %W(DB), '::ActiveRecord', '::VERSION::STRING')
 @v0_0_18.changelog.added_methods_to_class(@f12,
                                          [
                                              [:∃?, ::File],
@@ -492,7 +494,7 @@
 @v0_0_34.add_comments(
     [
         'increase precision of various funcs (ex: `sin²` and `cos²`), by performing calculations in `long double` instead of `double` ',
-        'add `τ` as a \'global-const\' which is a ThetaAngle representing a single complete turn',
+        'add `𝞽` as a \'global-const\' which is a ThetaAngle representing a single complete turn',
         'adjust parameter style of class-functions for `Math` to use named params',
         'remove global-alias-funcs{`ℂ`, `ℚ`}; these now correspond to a specific singleton instance of the newly created class(`::Math::SetTheory::NumberSet`)',
         '(`f28`): add `super golden ratio` as `Ψ`, `silver ratio` as `δ`, `plastic ratio` as `ρ`, `omega constant` as `Ω`',

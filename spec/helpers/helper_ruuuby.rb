@@ -11,6 +11,33 @@ RSpec.shared_context 'shared_context_language_deltas' do
 
 end
 
+RSpec.shared_context 'shared_context_f32' do
+  let(:f𝕎¹_error_scenarios){[10.1, 0.1, -1, nil, '1']}
+  let(:fℕ¹_error_scenarios){[10.1, 0.1, 0, -0.0, 0.0, -1, nil, '1']}
+
+  def expect_positive_f32_sequence(the_sequence, max_index)
+    the_sequence.∀ₓᵢ(max_index) do |scenario, index|
+      expect(the_sequence.∋?(scenario)).to eq(true)
+      expect(the_sequence[index]).to eq(scenario)
+    end
+  end
+
+  def expect_negative_f32_sequence(the_sequence, max_index)
+    the_sequence.A∀ₓ(max_index) {|scenario| expect(the_sequence.∋?(scenario)).to eq(false)}
+  end
+
+  def expect_error_f32_sequence(the_sequence)
+    if the_sequence.input_type == :∈𝕎
+      f𝕎¹_error_scenarios.∀{|scenario| expect{the_sequence.∋?(scenario)}.to raise_error(ArgumentError)}
+    elsif the_sequence.input_type == :∈ℕ
+      fℕ¹_error_scenarios.∀{|scenario| expect{the_sequence.∋?(scenario)}.to raise_error(ArgumentError)}
+    else
+      raise "unrecognized input type{#{the_sequence.input_type.to_s}} from sequence{#{the_sequence.to_s}}"
+    end
+  end
+
+end
+
 RSpec.shared_context 'shared_context_f30' do
 
   def expect_feature_behavior_as_needed(the_ref, kclass)
@@ -18,6 +45,24 @@ RSpec.shared_context 'shared_context_f30' do
     expect(the_ref.ⓣ).to eq(kclass)
     expect(the_ref.🆔).to eq(kclass.ℹ.🆔)
     expect(the_ref.🆔).to eq(the_id)
+  end
+
+end
+
+RSpec.shared_context 'shared_context_f27' do
+
+  let(:as_degrees){θ°(360)}
+  let(:as_radians){θʳ(π * 2)}
+  let(:as_gons){θᵍ(400)}
+  let(:as_turns){θ𝞽(1)}
+
+  def expect_theta_angle(obj, expected_type, expected_value)
+    expect(obj.ⓣ).to eq(::ThetaAngle)
+    expect(obj.real).to eq(expected_value)
+    expect(obj.ʳ?).to eq(expected_type == :as_radian)
+    expect(obj.°?).to eq(expected_type == :as_degree)
+    expect(obj.ᵍ?).to eq(expected_type == :as_gon)
+    expect(obj.𝞽?).to eq(expected_type == :as_turn)
   end
 
 end
@@ -73,7 +118,6 @@ RSpec.shared_context 'shared_context_general' do
   let(:data_range_floats_all_but_zero){data_range_floats_negative + data_range_floats_positive}
   let(:data_range_floats_boolean){[-1.0, 0.0, 1.0]}
   let(:data_range_ints){[-1337, -10, -3, -2, -1, 0, 1, 2, 3, 10, 1337]}
-  let(:data_range_ints_zero_to_nine){[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}
   let(:data_range_ints_boolean){[-1, 0, 1]}
   let(:data_range_ints_positive){[1, 2, 3, 10, 1337]}
   let(:data_range_ints_zero_to_positive){[0] + data_range_ints_positive}

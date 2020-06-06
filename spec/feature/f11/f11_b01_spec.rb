@@ -2,7 +2,7 @@
 
 RSpec.describe 'f11_b01' do
 
-  context 'audits', :audits do
+  context 'audit', :audit do
 
     context 'feature-behavior(f11_b01) is defined correctly' do
       it 'creates class{Closure} under module{Math::SetTheory}' do
@@ -26,6 +26,6 @@ RSpec.describe 'f11_b01' do
 
     end
 
-  end # end: {audits}
+  end # end: {audit}
 
 end

@@ -77,23 +77,31 @@ module ::Ruuuby
       #   \ \_\  /\______/ /\______/
       #    \/_/  \/_____/  \/_____/
       #
+      # TODO: implement once needed/more benefit in doing so
+      #  * https://stackoverflow.com/questions/6067139/ruby-garbage-collect
+      #  * https://stackoverflow.com/questions/11912750/ruby-big-array-and-memory
+      #
       # @see https://ruby-doc.org/core-2.7.1/GC.html
       # @see https://ruby-doc.org/core-2.7.1/GC/Profiler.html
+      module F22
 
-      # @return [Hash] the result from func{verify_compaction_references}
-      def gc_verify
-        ::GC.verify_internal_consistency
-        ::GC.verify_transient_heap_internal_consistency
-        result = ::GC.verify_compaction_references
-        💎.debug(result.to_s)
-        result
+        # @return [Hash] the result from func{verify_compaction_references}
+        def self.verify
+          ::GC.verify_internal_consistency
+          ::GC.verify_transient_heap_internal_consistency
+          result = ::GC.verify_compaction_references
+          💎.debug(result.to_s)
+          result
+        end
+
+        # @return [Boolean] true, if the GC has `stress` mode enabled
+        def self.overclocked?; ::GC.stress != false; end
+
+        # @return [Boolean] true, if the GC Profiler is currently enabled
+        def self.profiler?; ::GC::Profiler.enabled?; end
       end
 
-      # @return [Boolean] true, if the GC has `stress` mode enabled
-      def gc_overclocked?; ::GC.stress != false; end
-
-      # @return [Boolean] true, if the GC Profiler is enabled
-      def gc_profiler?; ::GC::Profiler.enabled?; end
+      def gc; ::Ruuuby::MetaData::RuuubyEngine::F22; end
 
       🙈
 
@@ -105,8 +113,32 @@ module ::Ruuuby
         💎.info("pid[#{pid.to_s}] terminating with current memory usage at [#{size.to_s}kB]")
       end
 
+    end # end: {RuuubyEngine}
+
+    # @return [::Ruuuby::MetaData::RuuubyORM::SchemaORM]
+    def self.meta_logging; ::Ruuuby::MetaData::RuuubyEngine::RuuubyLogging; end
+
+    # @return [::Ruuuby::MetaData::RuuubyEngine]
+    def self.engine; ::Ruuuby::MetaData::RuuubyEngine.ℹ; end
+
+    # @return [::Ruuuby::MetaData::RuuubyORM]
+    def self.orm; ::Ruuuby::MetaData::RuuubyORM.ℹ; end
+
+    # @return [::Ruuuby::Routine::CommandCLI]
+    def self.cli; ::Ruuuby::Routine::CommandCLI; end
+
+    # @param [String] content
+    def self.info(content)
+      🛑str❓(:content, content)
+      💎.engine.info(content)
     end
 
-  end
+    # @param [String] content
+    def self.debug(content)
+      🛑str❓(:content, content)
+      💎.engine.debug(content)
+    end
+
+  end # end: {MetaData}
 
 end

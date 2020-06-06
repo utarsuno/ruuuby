@@ -45,4 +45,5 @@
 @v0_0_36.spawn_git_commit('v0.0.36', '2020-05-21T14:43:10-0500', '07ed60431c5e868bce73cbc8a5a007a3f3c1a183', 'refs/tags/v0.0.36')
 @v0_0_37.spawn_git_commit('v0.0.37 release', '2020-05-26T09:03:39-0500', 'e07b6ddb0bd2fa2ec5748f896a75ed9140c5425f', 'refs/tags/v0.0.37')
 @v0_0_38.spawn_git_commit('(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ add early commit to create automation test case (w/ git-commits) to cover for next version', '2020-05-26T21:58:51-0500', 'de7f89a39e9006ce2a516ea99b862bccf312c7fe', nil)
+@v0_0_38.spawn_git_commit('v0.0.38 release', '2020-05-29T13:00:16-0500', '851c0e575b8014a5b2fdf43f0fbfb460a58313d8', 'refs/tags/v0.0.38')
 #NEXT_VERSION_HERE

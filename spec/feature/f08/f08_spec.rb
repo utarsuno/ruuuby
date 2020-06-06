@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 RSpec.describe 'f08' do
-  context 'audits', :audits do
+  context 'audit', :audit do
     context 'feature(f08) passes audits (tests not relating to observed functionality)' do
       it 'module is defined in correct location' do
         expect(🧬.∃ᵐ?(:StringF08, ::Ruuuby::Feature::Includable)).to eq(true)
@@ -16,5 +16,5 @@ RSpec.describe 'f08' do
         end
       end # end: {extra sanity checks: all Classes w/ Enumerable have needed funcs}
     end # end: {feature(f08) passes audits (tests not relating to observed functionality)}
-  end # end: {audits}
+  end # end: {audit}
 end # end: {f08}

@@ -8,18 +8,6 @@ RSpec.describe 'db/seed.rb' do
 
       context 'defines features' do
 
-        context 'defines f01' do
-          it 'passes ORM audit' do
-            audit_feature(f01, 'f01', "`🙈` to alias `private`")
-          end
-        end
-
-        context 'defines f02' do
-          it 'passes ORM audit' do
-            audit_feature(f02, 'f02', "`🛡️` to alias `protected`")
-          end
-        end
-
         context 'defines f07' do
           it 'passes ORM audit' do
             audit_feature(f07, 'f07', 'enable quick clean up functions for `enumerables`')

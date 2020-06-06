@@ -43,7 +43,7 @@ module ::Ruuuby
           when RuuubyEngine::RuuubyLogging::MODE_STDERR
             return ::Logger.new(STDERR)
           when RuuubyEngine::RuuubyLogging::MODE_FILE
-            return ::Logger.new(::File.open(💎.paths::SpecificFiles::LOGGING, ::File::WRONLY | ::File::APPEND | ::File::CREAT), 'daily')
+            return ::Logger.new(::File.open("#{💎.api_git.repo.workdir}/tmp/ruuuby.log", ::File::WRONLY | ::File::APPEND | ::File::CREAT), 'daily')
           else
             return nil
           end

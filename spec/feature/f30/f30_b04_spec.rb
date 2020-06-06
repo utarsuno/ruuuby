@@ -22,7 +22,7 @@ RSpec.describe 'f30_b04' do
             expect(𝕊.∋?('ρ')).to eq(true)
             expect(𝕊.∋?('Ω')).to eq(true)
             expect(𝕊.∋?('γ')).to eq(true)
-            expect(𝕊.∋?('τ')).to eq(true)
+            expect(𝕊.∋?('𝞽')).to eq(true)
             expect(𝕊.∋?('Ⴔ')).to eq(true)
           end
 

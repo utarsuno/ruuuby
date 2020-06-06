@@ -11,8 +11,8 @@ RSpec.describe 'f27_db' do
       end
 
       context 'defines behaviors' do
-        it 'has correct number of behaviors{2}' do
-          expect(f27.ruuuby_feature_behaviors.length).to eq(2)
+        it 'has correct number of behaviors{3}' do
+          expect(f27.ruuuby_feature_behaviors.length).to eq(3)
         end
 
         it 'has{b00}' do
@@ -21,6 +21,10 @@ RSpec.describe 'f27_db' do
 
         it 'has{b01}' do
           audit_feature_behavior(f27, f27_b01, 'b01', 'preserves precision across math operations as best as possible')
+        end
+
+        it 'has{b02}' do
+          audit_feature_behavior(f27, f27_b02, 'b02', 'each ThetaAngle representation has a corresponding static function which calls the needed constructor')
         end
 
       end

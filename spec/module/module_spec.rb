@@ -42,7 +42,7 @@ RSpec.describe 'module' do
       context 'operations {get_all_defined[modules|classes]}' do
         context 'function{get_all_defined_modules} handles needed scenarios' do
           it 'cases: positive' do
-            expect≈≈(💎.get_all_defined_modules, [:QA, :Paths])
+            expect≈≈(💎.get_all_defined_modules, [])
           end
         end
         context 'function{get_all_defined_classes} handles needed scenarios' do

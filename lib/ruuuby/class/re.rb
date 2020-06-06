@@ -13,12 +13,6 @@ class ::Regexp
     MARKER_END   = '\z'.❄️
 
     # @type [String]
-    CHAR_PERIOD  = '\.'.❄️
-
-    # @type [String]
-    CHAR_STAR    = '\*'.❄️
-
-    # @type [String]
     CHAR_LOWER   = '[[:lower:]]'.❄️
 
     # @type [String]

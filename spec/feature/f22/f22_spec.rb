@@ -8,7 +8,7 @@ RSpec.describe 'f22' do
       context 'GC' do
 
         it 'is not overclocked' do
-          expect(💎.engine.gc_overclocked?).to eq(false)
+          expect(💎.engine.gc.overclocked?).to eq(false)
         end
 
       end
@@ -16,7 +16,7 @@ RSpec.describe 'f22' do
       context 'Profiler' do
 
         it 'is disabled' do
-          expect(💎.engine.gc_profiler?).to eq(false)
+          expect(💎.engine.gc.profiler?).to eq(false)
         end
 
       end

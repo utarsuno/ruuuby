@@ -219,7 +219,7 @@ RSpec.describe 'f06_b00' do
     end # end: {type checks for{Numerics}}
   end # end: {functionality}
 
-  context 'audits', :audits do
+  context 'audit', :audit do
     context 'feature{f06}:behavior{b00} passes audits' do
       it 'module is defined in correct location' do
         expect(🧬.∃ᵐ?(:ObjectF06, ::Ruuuby::Feature::Includable)).to eq(true)
@@ -230,7 +230,7 @@ RSpec.describe 'f06_b00' do
         end
       end
     end
-  end # end: {audits}
+  end # end: {audit}
 
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__

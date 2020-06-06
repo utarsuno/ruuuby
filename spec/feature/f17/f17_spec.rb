@@ -37,7 +37,7 @@ RSpec.describe 'f17' do
         end # end: {func{cos}}
         context 'func{tan}' do
           it 'provides needed values' do
-            expect((tan(θ°(0))).≈≈((sin(θ°(0))/cos(θ°(0))))).to eq(true)
+            expect(tan(θ°(0))).to eq(sin(θ°(0))/cos(θ°(0)))
             expect((tan(θ°(30))).≈≈((sin(θ°(30))/cos(θ°(30))))).to eq(true)
             expect((tan(θ°(45))).≈≈((sin(θ°(45))/cos(θ°(45))))).to eq(true)
             expect((tan(θ°(60))).≈≈((sin(θ°(60))/cos(θ°(60))))).to eq(true)
@@ -53,32 +53,43 @@ RSpec.describe 'f17' do
             expect((tan(θ°(300))).≈≈((sin(θ°(300))/cos(θ°(300))))).to eq(true)
             expect((tan(θ°(315))).≈≈((sin(θ°(315))/cos(θ°(315))))).to eq(true)
             expect((tan(θ°(330))).≈≈((sin(θ°(330))/cos(θ°(330))))).to eq(true)
-            #expect((tan(θ°(360))).≈≈((sin(θ°(360))/cos(θ°(360))))).to eq(true)
+            expect(tan(θ°(360))).to eq(sin(θ°(360))/cos(θ°(360)))
           end
         end # end: {func{tan}}
       end # end: {math functions}
     end # end: {trigonometry}
   end # end: {functionality}
 
-  context 'audits', :audits do
+  context 'audit', :audit do
 
     context 'feature(f17) passes audits (tests not relating to observed functionality)' do
       it 'module is defined in correct location' do
-        expect(🧬.∃ᵐ?(:MainF17, ::Ruuuby::Feature::Extendable)).to eq(true)
-        expect(🧬.∃ᵐ?(:MathAliases, ::Ruuuby::Feature::Extendable::MainF17)).to eq(true)
-        expect(🧬.∃ᵐ?(:Trigonometry, ::Ruuuby::Feature::Extendable::MainF17)).to eq(true)
+        expect(🧬.∃ᵐ?(:Trig, ::Math)).to eq(true)
+        expect(🧬.∃ᵐ?(:Funcs, ::Math::Trig)).to eq(true)
       end
       context 'funcs provided are defined in correct location' do
-        it 'for m{MathAliases}' do
-          expect_∃⨍(:√, ::Ruuuby::Feature::Extendable::MainF17::MathAliases)
-          expect_∃⨍(:∛, ::Ruuuby::Feature::Extendable::MainF17::MathAliases)
-        end
-        it 'for m{Trigonometry}' do
-          expect_∃⨍(:sin, ::Ruuuby::Feature::Extendable::MainF17::Trigonometry)
-          expect_∃⨍(:cos, ::Ruuuby::Feature::Extendable::MainF17::Trigonometry)
-          expect_∃⨍(:tan, ::Ruuuby::Feature::Extendable::MainF17::Trigonometry)
+        context 'for module{Trigonometry}' do
+          context 'has needed functions' do
+            it 'squared trig funcs' do
+              expect_∃⨍(:cot², ::Math::Trig::Funcs)
+              expect_∃⨍(:cos², ::Math::Trig::Funcs)
+              expect_∃⨍(:sin², ::Math::Trig::Funcs)
+              expect_∃⨍(:tan², ::Math::Trig::Funcs)
+              expect_∃⨍(:sec², ::Math::Trig::Funcs)
+              expect_∃⨍(:csc², ::Math::Trig::Funcs)
+            end
+            it 'regular trig funcs' do
+              expect_∃⨍(:cot, ::Math::Trig::Funcs)
+              expect_∃⨍(:cos, ::Math::Trig::Funcs)
+              expect_∃⨍(:sin, ::Math::Trig::Funcs)
+              expect_∃⨍(:tan, ::Math::Trig::Funcs)
+              expect_∃⨍(:csc, ::Math::Trig::Funcs)
+              expect_∃⨍(:sec, ::Math::Trig::Funcs)
+            end
+          end
         end
       end
     end
-  end # end: {audits}
+  end # end: {audit}
+
 end

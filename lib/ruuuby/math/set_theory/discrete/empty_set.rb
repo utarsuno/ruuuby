@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-# mathematics related
+# mathematics related code
 module ::Math
 
   # math related code that can be categorized under +SetTheory+

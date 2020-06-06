@@ -2,7 +2,7 @@
 
 RSpec.describe 'f09' do
 
-  context 'audits', :audits do
+  context 'audit', :audit do
 
     context 'feature(f09) passes audits (tests not relating to observed functionality)' do
       it 'module is defined in correct location' do

@@ -1,8 +1,8 @@
 
 ## Notes
 
- * object_id of any positive FIXNUM: `(2 * value) + 1`
- * object_id of any negative FIXNUM: `(2 * value) - 1`
+ * 🆔 of any positive FIXNUM: `(2 * value) + 1`
+ * 🆔 of any negative FIXNUM: `(2 * value) - 1`
  * the c-type `ID` is equivalent to `unsigned long`
 
 ### extension code guidelines
@@ -16,6 +16,7 @@
 | --- |
 | https://docs.ruby-lang.org/en/2.7.0/extension_rdoc.html#label-Ruby+Language+Core |
 | https://www.ruby-forum.com/t/rb-gc-register-address-or-rb-gc-mark/219828/13 |
+| https://bugs.ruby-lang.org/issues/15626 |
 
 ## Ruby Methods
 
@@ -45,10 +46,6 @@ https://we4tech.wordpress.com/2013/05/09/different-type-methods-in-ruby/
 rb_warn
 rb_warning (only print warning if $VERBOSE is true)
 ```
-
-### GCC flags
-
-https://gcc.gnu.org/onlinedocs/gcc/Invoking-GCC.html#Invoking-GCC
 
 ### MacOS C Support
 ```
@@ -89,4 +86,14 @@ static inline int rb_isgraph(int c){ return '!' <= c && c <= '\x7e'; }
 static inline int rb_tolower(int c) { return rb_isupper(c) ? (c|0x20) : c; }
 static inline int rb_toupper(int c) { return rb_islower(c) ? (c&0x5f) : c; }
 
+```
+
+### Misc
+
+```
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+# verifiying: following cmd should output {UTF-8}
+locale charmap
 ```

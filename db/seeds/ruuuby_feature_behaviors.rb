@@ -1,47 +1,98 @@
 
-@f00.spawn_behavior(0, 'create func{η̂!} for class(`Array`)')
+@f00.spawn_behaviors(['create func{η̂!} for class(`Array`)'])
 
-@f05.spawn_behavior(0, 'offer func{>>} to class(`Array`)')
-@f05.spawn_behavior(1, 'offer func{>>} to class(`String`)')
+@f05.spawn_behaviors(['offer func{>>} to class(`Array`)', 'offer func{>>} to class(`String`)'])
 
-@f06.spawn_behavior(0, 'offer func{num?} with param-check-func{🛑num❓} offering the normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌, ∈ℕ𝕊, ∈𝕎𝕊, ∈ℤ𝕊, ∈𝕌𝕊}')
-@f06.spawn_behavior(1, 'offer func{str?} with param-check-func{🛑str❓} offering the normalizers{!∅}')
+@f06.spawn_behaviors(
+    [
+        'offer func{num?} with param-check-func{🛑num❓} offering the normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌, ∈ℕ𝕊, ∈𝕎𝕊, ∈ℤ𝕊, ∈𝕌𝕊}',
+        'offer func{str?} with param-check-func{🛑str❓} offering the normalizers{!∅}'
+    ]
+)
 
-@f11.spawn_behavior(0, 'create module{SetTheory}')
-@f11.spawn_behavior(1, 'create class{Closure}')
-@f11.spawn_behavior(2, 'create class{NumberSet}')
+@f10.spawn_behaviors(
+    [
+        '`🙈` to alias `private`',
+        '`🛡️` to alias `protected`',
+        '`🆕` to alias `new`',
+        '`🌽` to alias `::Kernel`',
+        'alias `Math` funcs{`sqrt`, `cbrt`} w/ {`√`, `∛`}',
+        'alias `Math` funcs{`log_e`, `log2`, `log10`} w/ {`logₑ`, `log₂`, `log₁₀`}'
+    ]
+)
 
-@f24.spawn_behavior(0, 'syntax category{snake_case} aliased w/ {🐍}')
-@f24.spawn_behavior(1, 'syntax category{snake_case_capital} aliased w/ {🐍⬆}')
-@f24.spawn_behavior(2, 'syntax category{camel_case} aliased w/ {🐫}')
-@f24.spawn_behavior(3, 'syntax category{camel_case_lower} aliased w/ {🐫⬇}')
+@f11.spawn_behaviors(['create module{SetTheory}', 'create class{Closure}', 'create class{NumberSet}'])
 
-@f27.spawn_behavior(0, 'has additive identity{0} and multiplicative identity{1}')
-@f27.spawn_behavior(1, 'preserves precision across math operations as best as possible')
+@f12.spawn_behaviors(['offer Class aliases: {`📁` -> `File`}, {`🗄️` -> `Dir`}'])
 
-@f28.spawn_behavior(0, 'create float constant{𝚽}, golden-angle')
-@f28.spawn_behavior(1, 'create float constant{Ψ}, super-golden-ratio')
-@f28.spawn_behavior(2, 'alias float constant{℮}')
-@f28.spawn_behavior(3, 'alias float constant{π}, pie')
-@f28.spawn_behavior(4, 'alias float constant{∞}, infinity')
-@f28.spawn_behavior(5, 'create float constant{δ}, silver-ratio')
-@f28.spawn_behavior(6, 'create float constant{ρ}, plastic-ratio')
-@f28.spawn_behavior(7, 'create float constant{Ω}, omega-constant')
-@f28.spawn_behavior(8, 'create float constant{γ}, euler mascheroni constant')
-@f28.spawn_behavior(9, 'create float constants for unicode characters representing rationals')
-@f28.spawn_behavior(10, 'create ThetaAngle constant{τ}, tau')
-@f28.spawn_behavior(11, 'create ThetaAngle constant{Ⴔ}, golden angle')
-@f28.spawn_behavior(12, 'create or extend a `numeric` in order to properly support `Complex Infinity`')
+@f24.spawn_behaviors(
+    [
+        'syntax category{snake_case} aliased w/ {🐍}',
+        'syntax category{snake_case_capital} aliased w/ {🐍⬆}',
+        'syntax category{camel_case} aliased w/ {🐫}',
+        'syntax category{camel_case_lower} aliased w/ {🐫⬇}'
+    ]
+)
 
-@f30.spawn_behavior(0, 'create create singleton-Class{BooleanSpace}, instanced aliased by{🅱}')
-@f30.spawn_behavior(1, 'support multiple data types and normalization')
-@f30.spawn_behavior(2, 'create create singleton-Class{NucleotideSpace}, instanced aliased by{🧬}')
-@f30.spawn_behavior(3, 'create create singleton-Class{NumberSpace}, instanced aliased by{🔢}')
-@f30.spawn_behavior(4, 'create create singleton-Class{SymbolicNumbersSpace}, instanced aliased by{𝕊}')
+@f26.spawn_behaviors(['offer Class aliases: {`📅` -> `Date`}, {`🕒` -> `Time`}, {`📅🕒` -> `DateTime`}'])
 
-@f31.spawn_behavior(0, 'offers an abstraction over the `Rugged` gem')
-@f31.spawn_behavior(1, 'offers health checks for current local dev state')
+@f27.spawn_behaviors(
+    [
+        'has additive identity{0} and multiplicative identity{1}',
+        'preserves precision across math operations as best as possible',
+        'each ThetaAngle representation has a corresponding static function which calls the needed constructor',
+    ]
+)
 
-@f98.spawn_behavior(0, 'can set the $PROGRAM_NAME')
-@f98.spawn_behavior(1, 'offer (to `Ruuuby`) access to `C` math functions, especially those involving higher precision')
-@f98.spawn_behavior(2, 'simplify import/require statements & setup as much as possible')
+@f28.spawn_behaviors(
+    [
+        'create float constant{𝚽}, golden-angle',
+        'create float constant{Ψ}, super-golden-ratio',
+        'alias float constant{℮}',
+        'alias float constant{π}, pie',
+        'alias float constant{∞}, infinity',
+        'create float constant{δ}, silver-ratio',
+        'create float constant{ρ}, plastic-ratio',
+        'create float constant{Ω}, omega-constant',
+        'create float constant{γ}, euler mascheroni constant',
+        'create float constants for unicode characters representing rationals',
+        'create ThetaAngle constant{𝞽}, tau',
+        'create ThetaAngle constant{Ⴔ}, golden angle',
+        'create or extend a `numeric` in order to properly support `Complex Infinity`'
+    ]
+)
+
+@f30.spawn_behaviors(
+    [
+        'create create singleton-Class{BooleanSpace}, instanced aliased by{🅱}',
+        'support multiple data types and normalization',
+        'create create singleton-Class{NucleotideSpace}, instanced aliased by{🧬}',
+        'create create singleton-Class{NumberSpace}, instanced aliased by{🔢}',
+        'create create singleton-Class{SymbolicNumbersSpace}, instanced aliased by{𝕊}'
+    ]
+)
+
+@f31.spawn_behaviors(['offers an abstraction over the `Rugged` gem', 'offers health checks for current local dev state'])
+
+@f32.spawn_behaviors(
+    [
+        'offers static funcs through module{ℕ¹}',
+        'offers static funcs through module{𝕎¹}',
+        'offers static funcs through module{ℕ²}',
+        'create Sequence{`Pronic`}',
+        'create Sequence{`Square`}',
+        'create Sequence{`Fibonacci`}',
+        'create Sequence{`Lucas`}',
+        'create Sequence{`Triangle`}',
+        'create Sequence{`Hexagonal`}'
+    ]
+)
+
+# TODO: double (_Complex double)
+@f98.spawn_behaviors(
+    [
+        'can set the $PROGRAM_NAME',
+        'offer (to `Ruuuby`) access to `C` math functions, especially those involving higher precision',
+        'simplify import/require statements & setup as much as possible'
+    ]
+)

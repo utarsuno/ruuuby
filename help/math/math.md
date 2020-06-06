@@ -66,7 +66,6 @@
 | 0x04 | `ordinal numbers` | `ordinal` | "is one generalization of the concept of a natural number that is used to describe a way to arrange a (possibly infinite) collection of objects in order, one after another" | |
 | 0x05 | `urelement` | `ur-element`, `atoms`, `individuals` | "an object that is not a `set`, but that may be an `element` of a set" | |
 | 0x06 | `0⁰` | | "a mathematical expression with no agreed-upon value. The most common possibilities are `1` or leaving the expression undefined, with justifications existing for each, depending on context" | `Ruuuby` will evaluate as: `0⁰ == 1` |
-| 0x07 | `golden ratio` | `φ` | "two quantities are in the `golden ratio` if their `ratio` is the same as the `ratio of their sum` to the `larger of the two quantities` | `a+b` is to `a` as `a` is to `b` |
 | 0x08 | `Euler-Mascheroni constant` | `γ` |the `limiting` difference between the `harmonic series` and the `natural logarithm` | "a mathematical constant recurring in analysis and number theory` |
 | 0x09 | `Ordinary Differential Equation` | | a `differential equation` involving only ordinary derivatives with respect to a single independent variable |
 | 0x11 | `Partial Differential Equation` | | a `differential equation` involving partial derivatives with respect to more than one independent variable |
@@ -97,7 +96,6 @@
 | # | more | example |
 | --- | --- | --- |
 | 0x00 | "in the natural numbers `ℕ` and all of its supersets(`ℤ`, `ℚ`, `ℝ`, or `ℂ`), the `additive identity` is `0`. Thus for any one of these numbers `n`, `n + 0 = n = 0 + n`" | `5 + 0 = 5 = 0 + 5` |
-| 0x06 | is solution to  `x² - x - 1 = 0` which is `φ = (1 + √(5))/2` | `φ = 1 + 1/φ` |
 | 0x20, 0x21 | `f: X → Y` is a `function` from the `set X` to the `set Y` |
 | 0x22 | `one-to-one function` is different than `one-to-one correspondence` (`bijective functions`)(0x23) |
 

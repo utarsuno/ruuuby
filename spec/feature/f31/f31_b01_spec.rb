@@ -13,7 +13,7 @@ RSpec.describe 'f31_b01' do
           end
 
           it 'has correct repo path' do
-            expect(💎.api_git.repo.path).to eq("#{::Ruuuby::MetaData::Paths::BASE}/.git/")
+            expect(💎.api_git.repo.path).to eq("#{💎.api_git.repo.workdir}.git/")
           end
 
           it 'has .gitignore file' do

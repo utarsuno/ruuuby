@@ -6,22 +6,24 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.38'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.39'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
 
 #### Example
 
+
 ```ruby
 # true, true
 √(1787569)      == 1337
 √(√(-1337.0^⁴)) == 1337
 
-# true, true, true
+# true, true, true, true
 𝚽 == 1 + (𝚽^⁻¹)
 𝚽 == 2 * sin(θ°(54))
-𝚽 == (θ𝞽(1) - Ⴔ) / Ⴔ
+𝚽 == (θ°(360) - Ⴔ) / Ⴔ
+π == 5 * acos(𝚽 / 2)
 
 # true, true
 θ°(180) == θ𝞽(0.5)
@@ -78,8 +80,8 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 | class(es)/obj  | example | (at least partially) utilizing C-extension?<br/>(java-wip) | notes |
 | ----------:| ------- | :---: |----- |
-| `Integer`  | `1337^²` | ✅ | coexists with `Integer`'s pre-existing `bitwise XOR` functionality<br/>`performance penalties`: `<= 75% slower` than using{`**`} |
-| `Float`    | `1337.1337^²` | ✅ | `performance penalties`: `<= 90% slower` than using{`**`} |
+| `Integer`  | `1337^²` | ✅ | coexists w/ `Integer`'s pre-existing `bitwise XOR` functionality<br/>`performance penalties`: `<= 115% slower` than using{`**`} |
+| `Float`    | `1337.1337^²` | ✅ | `performance penalties`: `<= 115% slower` than using{`**`} |
 | `Rational` | `3/4r^²` | ✅ | `performance penalties`: `<= 95% slower` than using{`**`} |
 | `Complex`  | `1337i^²` | ✅ | `performance penalties`: `<= 85% slower` than using{`**`} |
 | `BigDecimal` | `inc` | `inc` | `inc` |
@@ -91,39 +93,47 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 | (`global`) func(s) added | notes | as C-extension?<br/>(java-wip) |
 | ---: | :--- | :----: |
-| `℮`, `logₑ`, `log₂`, `log₁₀`<br/>`√`, `∛`, `π`, `Ⴔ`<br/>`¼`, `½`, `¾`, `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒`<br/>`∞`, `∞ℂ`, `γ`<br/>`sin`, `cos`, `tan`, `arcsin`, `arccos`, `arctan`, `cot`, `csc`, `sec`, `sin²`, `cos²` | (`f10`, `f17`) | ❌/✅ |
+| `℮`, `logₑ`, `log₂`, `log₁₀`<br/>`√`, `∛`, `π`, `Ⴔ`<br/>`¼`, `½`, `¾`, `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒`<br/>`∞`, `∞ℂ`, `γ` | (`f10`) | ❌/✅ |
 | `🌽` | (`f10`): aliases `Kernel` | ❌ |
-| `📁`, `📂`, `🗄️` | - (`f12`) aliases to:<br/>`File`, `Dir` | ❌ |
+| `📁`, `🗄️` | - (`f12`) aliases to:<br/>`File`, `Dir` | ❌ |
 | `📅`, `🕒`, `📅🕒` | - (`f26`) aliases to:<br/>`Date`, `Time`, `DateTime` | ❌ |
 | `θ°`, `θʳ`, `θᵍ`, `θ𝞽` | `f27` | ✅ |
 
 ### Module Modifications:
 
-`instance methods for Kernel will act as 'globally-scoped functions'; meaning they can essentially can be called from anywhere with caller of the method ignored for all contextes`
+| module(s) | func(s) added     | as C-extension? <br/> (java-wip) | obj fields added |
+| --------: | :---------------- | :------------------------: | --- |
+| `Kernel`  | `∃module?`, `∃class?`<br/>`∃⨍_alias?`, `∃⨍?` | ❌ | |
+| `Module`  | `⨍_add_aliases`| ✅ | |
+| `Math`    | `relative_Δ`, `τ²_in_golden_ratio?`, `τ²_in_super_golden_ratio?` | ❌ | |
 
-| module(s) | func(s) added     | as C-extension? <br/> (java-wip) | notes |
-| --------: | :---------------- | :------------------------: | :---- |
-| `Kernel`  | `🌽_previous_⨍`<br/>`∃module?`, `∃class?`<br/>{`static`}`∃⨍_alias?`, `∃⨍?` | ❌ | (`f10`) |
-| `Module`  | {`static`}`⨍_add_aliases`| ✅                 |  |
-| `Math`    | {`static`}`relative_Δ`, `τ³_is_pythagorean?`, `τ²_in_golden_ratio?`, `τ²_in_super_golden_ratio?` | ❌ | (`f17`) |
-| `Math`    | {`static`}<br/>`cot`, `csc`, `sec`, `sin²`, `cos²` | ❌  | (`f17`) |
+#### Math Modules:
+
+| module(s) | sub-module | func(s) added     | obj fields added |
+| :------- | :---: | :----------------: | ------------------------: |
+| `Trig` | | `cot²`, `cos²`, `sin²`, `tan²`, `sec²`, `csc²` |
+| `Trig` | `ℕ³` | `pythagorean?` | |
+| `NumberTheory` | `ℕ¹` | `prime_factors`, `divisors`, `proper_divisors`, `aliquot_sum`, `perfect?`, `abundant?`, `abundance`, `abundancy_index`, `deficient?`, `deficiency`, `composite?` |
+| `NumberTheory` | `𝕎¹` |  `nᵗʰ_euler_totient`, `nᵗʰ_cototient`, `digit_sum`, `digital_root`, `additive_persistence` | `seq_pronic`, `seq_fibonacci`, `seq_lucas`, `seq_square`, `seq_triangle`, `seq_hexagonal` |
+| `NumberTheory` | `ℕ²` | `gcd`, `coprime?`, `friendly?` |
+| `Combinatorics` | `𝕎²` | `n_choose_k` |
 
 ### Class Modifications:
 
 | class(es)              | func(s) added                       | as C-extension? <br/> (java-wip) | notes   |
 | ---------------------: | ----------------------------------- | :------------------------: | ------- |
-| `File`, `Dir`          | {`static`}`∃?`                     | ❌ | (`f12`) |
-| `File`                 | {`static`} `dirname²`, `dirname³`, `dirname⁴`<br/>`replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` | ❌ | (`f12`) |
+| `File`, `Dir`          | `∃?`                                | ❌ | (`f12`) |
+| `File`                 | `dirname²`, `dirname³`, `dirname⁴`<br/>`replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` | ❌ | (`f12`) |
 | `Dir`                  | `η̂_paths`                           | ❌ | (`f12`) |
 | `File`, `Dir`, `ENV`   | `∅?`                                | ❌ | (`f04`) |
-| `Object`               | `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?`<br/>`class?`, `module?`, `nucleotide?` | ✅ | (`f06`) |
+| `Object`               | `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?` | ✅ | (`f06`) |
 | `Object`               | `Ⓣ`<br/>`🛑bool❓`, `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑θ❓` | ❌ | (`f06`) |
 | `Array`, `Set`         | `remove_empty!`                     | ❌/✅ | (`f07`) |
-| `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞`<br/>`downcase?`{`⬇?`}<br/>`upcase?`{`⬆?`} | ❌ | (`f08`) |
+| `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞`<br/>`downcase?`{`⬇?`}, `upcase?`{`⬆?`}, `downcase!`{`⬇!`}, `upcase!`{`⬆!`} | ❌ | (`f08`) |
 | `String`               | `🐫?`, `🐫⬇?`, `to_🐫`<br/>`🐍⬆?`, `🐍?`, `to_🐍` | ❌ | (`f24`) |
 | `String`               | `as_utf8`, `iso8601?`, `to_iso8601`, `as_iso8601` | ❌ | |
 | `Array`, `String`      | `η̂!`                               | ❌ | (`f08`) |
-| `Array`                | [`frequency_counts`, `📊`]<br/>[`equal_contents?`, `≈≈`]<br/>[`disjunctive_union`, `⊕`]<br/>`∖` | ✅ | (`f09`) |
+| `Array`                | [`disjunctive_union`, `⊕`], `∖`    | ✅ | (`f09`) |
 | `Module`, `String`     | `∋?`, `∌?`, `∈?`, `∉?`             | ❌ | (`f09`) |
 | `Enumerable`           | `∌?`, `∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎`              | ❌ | (`f09`, `f10`) |
 | `Array`, `String`      | `>>`                               | ✅ | (`f05`) |
@@ -137,40 +147,38 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 #### Aliases:
 
-| for                    | base method(s) reference(s)               | alias(es)                  | notes     |
-| ---------------------: | ----------------------------------------- | -------------------------- | --------- |
-| `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲`                 | (`f10`)   |
-| `Object`               | `object_id`, `ⓣ`, `freeze`, `frozen?`    | `🆔`, `class`, [`❄️`, `❄`], [`❄️?`, `❄?`] | (`f10`) |
-| `Class`                | `new`                                     | `🆕`                       | (`f10`)   |
-| `Array`, `Set`         | `remove_empty!`                           | `♻️∅!`                     | (`f10`)   |      
-| `String`, `Symbol`     | `upcase`, `downcase`                      | `⬆`, `⬇`                  | (`f10`) |
-| `String`               | `upcase!`, `downcase!`                    | `⬆!`, `⬇!`                | (`f10`) |
-| `Object`               | `protected_instance_methods`, `private_methods` | `🛡️funcs`, `🙈funcs` | (`f01`,`f02`) |
-| `Array`                | `frequency_counts`, `disjunctive_union`, `equal_contents?`<br/>`↩∀` | `📊`, `⊕`, `≈≈`<br/>`reverse_each` | (`f10`) |
-| `Module`               | `const_defined?`, `private_method_defined?` | `∃const?`, `∃🙈func?`      |           |
-| `Module`               | `private`, `private_constant`<br/>`protected`, `protected_method_defined?` | `🙈`, `🙈constants⟶`<br/>`🛡️`, `∃🛡️func?` | (`f01`)<br/>(`f02`) |
-| `Array`, `Hash`, `Set` | `each`                                    | `∀`                        | (`f10`) |
-| `Array`, `String`      | `reverse`, `reverse!`                     | `↩`, `↩!`                  | (`f10`) |
-| `Enumerable`           | `map`, `each_with_index`                  | `⨍`, `∀ₓᵢ`                 | (`f10`) |
-| `Hash`                 | `key?`                                    | `∃🔑?`                     | (`f10`) |
-| `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                       | (`f04`) |
-| `String`, `Array`, `Set`, `Hash` | `length`                        | `𝔠`                        | (`f03`) |
-| `Proc`                 | `arity`                                   | `𝔠`                        | (`f03`) |
+| for                    | base method(s) reference(s)               | alias(es)                  |
+| ---------------------: | ----------------------------------------- | -------------------------- |
+| `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲`                 |
+| `Object`               | `object_id`, `class`, `freeze`, `frozen?` | `🆔`, `ⓣ`, [`❄️`, `❄`], [`❄️?`, `❄?`] |
+| `Class`                | `new`                                     | `🆕`                       |
+| `Array`, `Set`         | `remove_empty!`                           | `♻️∅!`                     |    
+| `String`, `Symbol`     | `upcase`, `downcase`                      | `⬆`, `⬇`                  |
+| `Array`                | `tally`, `↩∀`                             | `📊`, `reverse_each`       |
+| `Module`               | `private`, `protected`, `const_defined?`, `private_method_defined?`, `protected_method_defined?` | `🙈`, `🛡️`, `∃const?`, `∃🙈⨍`, `∃🛡️⨍?` |
+| `Array`, `Hash`, `Set` | `each`                                    | `∀`                        |
+| `Array`, `String`      | `reverse`, `reverse!`                     | `↩`, `↩!`                  |
+| `Enumerable`           | `map`, `each_with_index`                  | `⨍`, `∀ₓᵢ`                 |
+| `Hash`                 | `key?`                                    | `∃🔑?`                     |
+| `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                       |
+| `String`, `Array`, `Set`, `Hash`, `Proc` | `length` (`arity` for `Proc`) *| `𝔠` |
 
 ---
 
 ### Code Base Statistics:
-| category  | attribute     | value    | desc.                                                           |
-| --------: | :-----------: | :------: | --------------------------------------------------------------- |
-| QA        | unit          | 1030     | # of tests (solely relating to core functionality)              |
-| QA        | performance   | 225      | # of tests (solely relating to performance)                     |
-| QA        | DB            | 181      | # of tests (solely relating to the database)                    |
-| CI        | audits        | 113      | # of tests (solely relating to non-functionality based audits)  |
-| CI        | locale        | 34       | # of tests (solely relating to local-dev-setup)                 |
-| structure | features      | ~35      | # of distinct features (that are categorized & tracked) `wip`   |
-| coverage  | LOCs          | ???      | `wip` |
-| coverage  | runtime       | ???      | `wip` |
-| coverage  | documentation | ???      | `wip` |
+| category  | attribute     | value    | desc.                                                              |
+| --------: | :-----------: | :------: | :----------------------------------------------------------------- |
+| `QA`        | `unit`          | `1088`     | # of tests (for core functionality)                 |
+| `QA`        | `integration`   | `4`        | # of tests (for state/functionality checks on grouped features/components) |
+| `QA`        | `performance`   | `225`      | # of tests (for runtime performance)                |
+| `QA`        | `DB`            | `202`      | # of tests (for `DB` & `ORM`)                       |
+| `CI`        | `audit`         | `114`      | # of tests (for anything non-functionality based)   |
+| `CI`        | `locale`        | `38`       | # of tests (for local-dev configs, setup, preferences, etc) |
+| `tech-debt` | `coverage`      | `5`        | # of tests (solely relating to tracking missing functionality-coverage) |
+| `structure` | `features`      | `~35`      | # of distinct features (that are categorized & tracked) `wip` |
+| `coverage`  | `LOCs`          | `???`      | `wip` |
+| `coverage`  | `runtime`       | `???`      | `wip` |
+| `coverage`  | `documentation` | `???`      | `wip` |
 
 ---
 
@@ -187,7 +195,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `rake` | [`13.0.1`](https://rubygems.org/gems/rake) | ✅, ❌ | `EXT` |
 | `rake-compiler` | [`1.1.0`](https://rubygems.org/gems/rake-compiler) | ✅, ❌ | `EXT` |
 | `sqlite3` | [`1.4.2`](https://rubygems.org/gems/sqlite3) | ✅, ❌ | `DB` |
-| `activerecord` | [`5.2.4.1`](https://rubygems.org/gems/activerecord) | ✅, ❌ | `DB` |
+| `activerecord` | [`5.2.4.3`](https://rubygems.org/gems/activerecord) | ✅, ❌ | `DB` |
 | `schema_plus_foreign_keys` | [`0.1.8`](https://rubygems.org/gems/schema_plus_foreign_keys) | ✅, ❌ | `DB` |
 
 ---
@@ -196,25 +204,28 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 #### General Tasks:
 |  preface           | cmd                 | description                                          |
-| -----------------: | :-----------------: | ---------------------------------------------------: |
+| -----------------: | :-----------------: | :--------------------------------------------------- |
 | `bundle exec rake` | `rdoc`              | generate documentation coverage report               |
 | `bundle exec rake` | `install`           | install gem onto local machine                       |
 | `bundle exec rake` | `compile`           | compile any native C-extensions with code changes    |
 | `bundle exec rake` | `release`           | push git version tags and publish gem to Rubygems    |
 | `bin/`             | `audit`             | general all-around build & health check              |
-| `bin/`             | `audit_db`<br/>`audit_quick`<br/>`audit_quickest`<br/>`audit_all_but_performance` | similar to above but for targeted portions |
+| `bin/`             | `audit_db`<br/>`audit_quick`<br/>`audit_quickest`<br/>`audit_all_but_performance`<br/>`audit_functionality` | similar to above but for targeted portions |
 | `bin/`             | `setup`             | install dependencies                                 |
 | `bin/`             | `console`           | interactive console for easier experimenting         |
 | `gem`              | `server`            | host interactive web-page at `http://0.0.0.0:8808` to see documentation for currently installed gems |
 
 #### Testing Tasks:
-| preface            | cmd                 | w/ warnings? | description |
-| -----------------: | :-----------------: | :----------: | ----------: |
-| `bundle exec rake` | `rspec_unit`        | ❌           | run all unit-tests except tags: {audit, performance, db} |
-| `bundle exec rake` | `rspec_db`          | ❌           | run only db based unit-tests |
-| `bundle exec rake` | `rspec_audit`       | ❌           | run only audit based unit-tests  |
-| `bundle exec rake` | `rspec_performance` | ❌           | run only performance based unit-tests   |
-| `bundle exec rake` | `rspec_all`         | ✅           | run all unit-tests |
+| preface            | cmd                 | description of test contests | w/ warnings?
+| -----------------: | :-----------------: | :---------- | ----------:
+| `bundle exec rake` | `rspec_unit`        | all core expected functionality from `Ruuuby` | ❌ |
+| `bundle exec rake` | `rspec_integration` | expected state & functionality from `Ruuuby` code areas w/ using more than one feature/component | ❌ |
+| `bundle exec rake` | `rspec_db`          | anything relating to the `DB` or `ORM` | ❌ |
+| `bundle exec rake` | `rspec_audit`       | extra-checks for expected code-structure; ensures passing `Ruuuby` functionality tests are not occurring from any artifacts | ❌ |
+| `bundle exec rake` | `rspec_performance` | defines acceptable runtime-performance benchmarks (`TODO: missing Big-O tests`) | ❌ |
+| `bundle exec rake` | `rspec_tech_debt`   | tracks/confirms missing coverage; ∀ resolved-test-case will transfer to a new test-category, lowering the total count of `tech_debt` tests | ❌ |
+| `bundle exec rake` | `rspec_locale`      | extra-checks for properly configured local coding environment (`TODO: need to formalize Ruby build process`) | ❌ |
+| `bundle exec rake` | `rspec_all`         | run all existing tests | ✅ |
 
 ---
 

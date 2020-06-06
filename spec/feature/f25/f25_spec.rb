@@ -32,9 +32,6 @@ RSpec.describe 'f25' do
       it 'func{💎.orm}' do
         expect(💎.orm).to eq(::Ruuuby::MetaData::RuuubyORM.ℹ)
       end
-      it 'func{💎.paths}' do
-        expect(💎.paths).to eq(::Ruuuby::MetaData::Paths)
-      end
       it 'func{💎.engine}' do
         expect(💎.engine).to eq(::Ruuuby::MetaData::RuuubyEngine.ℹ)
       end
@@ -44,13 +41,12 @@ RSpec.describe 'f25' do
     end
   end # end: {functionality}
 
-  context 'audits', :audits do
+  context 'audit', :audit do
     context 'feature(f25) passes audits (tests not relating to observed functionality)' do
       context 'funcs provided are' do
         it 'defined in correct location' do
           expect_∃static⨍(:api, 💎)
           expect_∃static⨍(:orm, 💎)
-          expect_∃static⨍(:paths, 💎)
           expect_∃static⨍(:engine, 💎)
 
           expect_∃static⨍(:info, 💎)
@@ -60,5 +56,5 @@ RSpec.describe 'f25' do
         end
       end
     end # end: {feature(f25) passes audits (tests not relating to observed functionality)}
-  end # end: {audits}
+  end # end: {audit}
 end

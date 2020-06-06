@@ -2,7 +2,7 @@
 
 RSpec.describe 'f11_b00' do
 
-  context 'audits', :audits do
+  context 'audit', :audit do
 
     context 'feature-behavior(f11_b00) is defined correctly' do
       it 'creates module{SetTheory} under module{Math}' do
@@ -20,6 +20,6 @@ RSpec.describe 'f11_b00' do
       end
     end
 
-  end # end: {audits}
+  end # end: {audit}
 
 end

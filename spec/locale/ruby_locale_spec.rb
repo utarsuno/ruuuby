@@ -6,30 +6,59 @@ RSpec.describe 'ruby' do
 
     context 'rubygems' do
 
-      it 'extension_api_version matches RUBY_VERSION' do
-        expect(Gem.extension_api_version).to eq(RUBY_VERSION)
+      it 'Gem.extension_api_version is needed version' do
+        # in 2.7.0
+        #expect(::Gem.extension_api_version).to eq(RUBY_VERSION)
+
+        expect(::Gem.extension_api_version).to eq('2.7.0')
       end
 
-      it 'has correct version{3.1.2}' do
-        expect(Gem.rubygems_version.to_s).to eq('3.1.2')
+      # during 2.7.0->2.7.1 migration; 3.1.2->3.1.4
+      it 'has correct version{3.1.4}' do
+        expect(::Gem.rubygems_version.to_s).to eq('3.1.4')
       end
 
       it 'is not marked as Java platform' do
-        # note: too expensive for unit test but this output can be confirmed w/ cmd: "gem -v"
-        expect(Gem.java_platform?).to eq(false)
+        expect(::Gem.java_platform?).to eq(false)
       end
 
     end
 
     context 'Ruby build configs are as expected' do
 
-      it 'ruby major version is correct' do
-        expect(RUBY_VERSION).to eq('2.7.0')
+      context 'ruby major version is correct' do
+        it 'as defined through global constant{RUBY_VERSION}' do
+          expect(RUBY_VERSION).to eq('2.7.1')
+        end
+        it 'as defined by RbConfig' do
+          expect(::RbConfig::CONFIG['MAJOR']).to eq('2')
+          expect(::RbConfig::CONFIG['MINOR']).to eq('7')
+          expect(::RbConfig::CONFIG['TEENY']).to eq('1')
+        end
       end
 
-      it 'ruby minor version is correct' do
-        expect(RUBY_PATCHLEVEL).to eq(0)
-        expect(RUBY_REVISION).to eq('647ee6f091eafcce70ffb75ddf7e121e192ab217')
+      context 'ruby patch level is correct' do
+        it 'as defined through globals{RUBY_PATCHLEVEL, RUBY_REVISION}' do
+          # 2.7.0
+          # expect(RUBY_PATCHLEVEL).to eq(0)
+          # expect(RUBY_REVISION).to eq('647ee6f091eafcce70ffb75ddf7e121e192ab217')
+
+          # 2.7.1
+          expect(RUBY_PATCHLEVEL).to eq(83)
+          expect(RUBY_REVISION).to eq('a0c7c23c9cec0d0ffcba012279cd652d28ad5bf3')
+        end
+        it 'as defined by RbConfig' do
+          expect(::RbConfig::CONFIG['PATCHLEVEL']).to eq('83')
+        end
+      end
+
+      context 'unicode settings' do
+        it 'global version' do
+          expect(::RbConfig::CONFIG['UNICODE_VERSION']).to eq('12.1.0')
+        end
+        it 'emoji version' do
+          expect(::RbConfig::CONFIG['UNICODE_EMOJI_VERSION']).to eq('12.1')
+        end
       end
 
       it 'current platform is mac{64-bit}' do

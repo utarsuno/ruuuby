@@ -42,8 +42,9 @@ module ::Ruuuby
       attr_reader :repo, :path_gitignore, :last_commit, :configs
 
       def initialize
-        @repo           = ::Rugged::Repository.new(::Ruuuby::MetaData::Paths::BASE)
-        @path_gitignore = "#{::Ruuuby::MetaData::Paths::BASE}/.gitignore"
+        path_base       = ::File.dirname(::File.dirname(::File.dirname(::File.dirname(__FILE__))))
+        @repo           = ::Rugged::Repository.new(path_base)
+        @path_gitignore = "#{@repo.workdir}.gitignore"
         @last_commit    = @repo.last_commit
         @configs         = @repo.config
         # cached fields

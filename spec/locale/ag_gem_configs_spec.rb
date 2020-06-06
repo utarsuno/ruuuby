@@ -54,8 +54,8 @@ RSpec.describe '[AutomaticallyGenerated]: gem configs' do
         end # end: {for gem{sqlite3}}
 
         context 'for gem{activerecord}' do
-          it 'has correct version{5.2.4.1}' do
-            expect(::ActiveRecord::VERSION::STRING).to eq('5.2.4.1')
+          it 'has correct version{5.2.4.3}' do
+            expect(::ActiveRecord::VERSION::STRING).to eq('5.2.4.3')
           end
         end # end: {for gem{activerecord}}
 

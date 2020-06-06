@@ -3,18 +3,14 @@
 # add various functions to existing module +Module+
 class ::Module
 
-  # ---------------------------------------------------------------------------------------------------------- | *f01* |
+  # ---------------------------------------------------------------------------------------------------------- | *f10* |
+  alias_method :∃const?, :const_defined?
+  # -------------------------------------------------------------------------------------------------- | *b00* | *f10* |
   alias_method :🙈, :private
-  alias_method :🙈constants⟶, :private_constant
-  alias_method :🙈class_func, :private_class_method
-  alias_method :🙈instance_funcs, :private_instance_methods
-  # -------------------------------------------------------------------------------------------------- | *f02* | *f13* |
-  alias_method :∃🙈func?, :private_method_defined?
-  # ---------------------------------------------------------------------------------------------------------- | *f02* |
+  alias_method :∃🙈⨍?, :private_method_defined?
+  # -------------------------------------------------------------------------------------------------- | *b01* | *f10* |
   alias_method :🛡️, :protected
-  alias_method :🛡️instance_funcs, :protected_instance_methods
-  # -------------------------------------------------------------------------------------------------- | *f02* | *f13* |
-  alias_method :∃🛡️func?, :protected_method_defined?
+  alias_method :∃🛡️⨍?, :protected_method_defined?
   # ---------------------------------------------------------------------------------------------------------- | *f09* |
 
   # @param [Class]
@@ -39,8 +35,6 @@ class ::Module
 
   # ---------------------------------------------------------------------------------------------------------- | *f13* |
 
-  alias_method :∃const?, :const_defined?
-
   # @param [Symbol] func_name
   # @param [Symbol] alias_name
   #
@@ -62,7 +56,7 @@ class ::Module
   def ∃⨍?(func_name)
     🛑sym❓(:func_name, func_name)
     return true if self.method_defined?(func_name)
-    self.∃🙈func?(func_name)
+    self.∃🙈⨍?(func_name)
   end
 
   # | ------------------------------------------------------------------------------------------------------------------

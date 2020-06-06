@@ -14,10 +14,9 @@
 _____________________________________________________________________________________________________________________ */
 
 static inline void internal_only_add_frozen_const_to(VALUE kclass, VALUE * internal_global, const char * const_name, VALUE val_to_freeze);
-static inline ID health_check_for_existing_func_name(VALUE context_self, VALUE * func_name_as_str);
+
 static inline VALUE 💎new_ary(const long known_max_size);
-#define 💎new_ary_size2(arg_a, arg_b)        rb_ary_new3(2l, arg_a, arg_b);
-#define 💎new_ary_size3(arg_a, arg_b, arg_c) rb_ary_new3(2l, arg_a, arg_b, arg_c);
+#define 💎new_ary_size2(arg_a, arg_b) rb_assoc_new(arg_a, arg_b);
 
 static void startup_step0_load_f98_b02(void);
 static inline void startup_step1_before_loading_extension(void);
@@ -49,20 +48,22 @@ ________________________________________________________________________________
 #define 💎add_public_func_1args_to(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
 #define 💎add_public_func_2args_to(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 2);
 
-#define 💎add_singleton_func_1args_to(kclass, func_name, the_func)  rb_define_singleton_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
+#define 💎add_singleton_func_1args_to(kclass, func_name, the_func) rb_define_singleton_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
+#define 💎add_singleton_func_2args_to(kclass, func_name, the_func) rb_define_singleton_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 2);
+#define 💎add_singleton_func_kargs_to(kclass, func_name, the_func) rb_define_singleton_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), -1);
 
 #define declare_func(func_name, expr, return_type, single_param) return_type func_name(single_param);return_type func_name(single_param){expr}
 #define declare_static_func(func_name, expr, return_type, single_param) static return_type func_name(single_param);static return_type func_name(single_param){expr}
 
 //#define r_func_pure(func_name, expr)              PUREFUNC(static VALUE func_name(const VALUE self) {expr})
-#define ⓡ𝑓(func_name, expr)                        PUREFUNC(static VALUE func_name(const VALUE self) {expr})
-#define ⓡ𝑓_def(func_name, expr)                    declare_static_func(func_name, expr, VALUE, VALUE self)
-#define ⓡ𝑓_def2(func_name, param_0, param_1, expr) VALUE func_name(const VALUE param_0, const VALUE param_1);VALUE func_name(const VALUE param_0, const VALUE param_1){expr}
+#define ⓡ𝑓(func_name, expr)                 PUREFUNC(static VALUE func_name(const VALUE self) {expr})
+#define ⓡ𝑓_def(func_name, expr)                             declare_static_func(func_name, expr, VALUE, VALUE self)
+#define ⓡ𝑓_def2(func_name, param_0, param_1, expr)          VALUE func_name(const VALUE param_0, const VALUE param_1);VALUE func_name(const VALUE param_0, const VALUE param_1){expr}
 #define ⓡ𝑓_def3(func_name, param_0, param_1, param_2, expr) VALUE func_name(VALUE param_0, VALUE param_1, VALUE param_2);VALUE func_name(VALUE param_0, VALUE param_1, VALUE param_2){expr}
 
 #define ⓡ𝑓_kargs(func_name, expr)     static VALUE func_name(int argc, VALUE * argv, VALUE self);static VALUE func_name(int argc, VALUE * argv, VALUE self){expr}
 #define ⓡ𝑓_self_them(func_name, expr) ⓡ𝑓_def2(func_name, self, them, expr)
-#define ⓡ𝑓_self_a_b(func_name, expr)  ⓡ𝑓_def3(func_name, self, param_a, param_b, expr)
+#define ⓡ𝑓_self_a_b(func_name, expr)       ⓡ𝑓_def3(func_name, self, param_a, param_b, expr)
 
 #define c_func(func_name, expr) declare_func(func_name, expr, void, void)
 
@@ -93,16 +94,16 @@ ________________________________________________________________________________
 #define raise_err_runtime(...)       rb_raise(R_ERR_RUNTIME, __VA_ARGS__);
 #define raise_err_zero_division(...) rb_raise(R_ERR_ZERO_DIVISION, __VA_ARGS__);
 
-#define 🛑param_type(nucleotide, kclass, the_func, arg_name, the_arg, required_type) raise_err_arg("| %s{%s}-> m{%s} got arg(%s) w/ type{%s}, required-type{%s} |", nucleotide, kclass, the_func, arg_name, rb_obj_classname(the_arg), required_type);
-#define 🛑c_self_got_bad_param_type(the_func, the_arg, required_type)                raise_err_arg("| c{%s}-> m{%s} got arg w/ type{%s}, required-type{%s} |", rb_obj_classname(self), the_func, rb_obj_classname(the_arg), required_type);
-#define 🛑c_self_got_non_ary_param(the_func, the_arg)                                raise_err_arg("| c{%s}-> m{%s} got arg w/ type{%s}, required-type{Array} |", rb_obj_classname(self), the_func, rb_obj_classname(the_arg));
-#define 🛑c_self_got_non_str_param(the_func, the_arg)                                raise_err_arg("| c{%s}-> m{%s} got arg w/ type{%s}, required-type{String} |", rb_obj_classname(self), the_func, rb_obj_classname(the_arg));
+#define ERR_param_type(nucleotide, kclass, the_func, arg_name, the_arg, required_type) raise_err_arg("| %s{%s}-> m{%s} got arg(%s) w/ type{%s}, required-type{%s} |", nucleotide, kclass, the_func, arg_name, rb_obj_classname(the_arg), required_type);
+#define ERR_c_self_got_bad_param_type(the_func, the_arg, required_type)                raise_err_arg("| c{%s}-> m{%s} got arg w/ type{%s}, required-type{%s} |", rb_obj_classname(self), the_func, rb_obj_classname(the_arg), required_type);
+#define ERR_c_self_got_non_ary_param(the_func, the_arg)                                raise_err_arg("| c{%s}-> m{%s} got arg w/ type{%s}, required-type{Array} |", rb_obj_classname(self), the_func, rb_obj_classname(the_arg));
+#define ERR_c_self_got_non_str_param(the_func, the_arg)                                raise_err_arg("| c{%s}-> m{%s} got arg w/ type{%s}, required-type{String} |", rb_obj_classname(self), the_func, rb_obj_classname(the_arg));
 
-#define 🛑c_self_arg_err__print_self_them(description) raise_err_arg(description, self, them);
-#define 🛑c_self_err_runtime(...)                      raise_err_arg(description, self, them);
+#define ERR_c_self_arg_err__print_self_them(description) raise_err_arg(description, self, them);
+#define ERR_c_self_err_runtime(...)                      raise_err_arg(description, self, them);
 
-#define 🛑m_param_type(kclass, the_func, arg_name, the_arg, required_type) 🛑param_type("m", kclass, the_func, arg_name, the_arg, required_type)
-#define 🛑c_param_type(kclass, the_func, arg_name, the_arg, required_type) 🛑param_type("c", kclass, the_func, arg_name, the_arg, required_type)
+#define ERR_m_param_type(kclass, the_func, arg_name, the_arg, required_type) ERR_param_type("m", kclass, the_func, arg_name, the_arg, required_type)
+#define ERR_c_param_type(kclass, the_func, arg_name, the_arg, required_type) ERR_param_type("c", kclass, the_func, arg_name, the_arg, required_type)
 
 #define _internal_self_throw_arg_err_1opts(kclass, func_name, err_msg) raise_err_arg("| %s{%s}-> m{%s} %s |", kclass, rb_obj_classname(self), func_name, err_msg);
 #define _internal_self_throw_arg_err_2opts(kclass, func_name, err_msg_start, opt_a_format, err_msg_end, opt_a) raise_err_arg("| %s{%s}-> m{%s} %s" #opt_a_format " %s |", kclass, rb_obj_classname(self), func_name, err_msg_start, opt_a, err_msg_end);
@@ -111,12 +112,12 @@ ________________________________________________________________________________
 //#define _internal_self_throw_arg_err_2opts(kclass, func_name, err_msg_start, opt_a_format, err_msg_end, opt_a) rb_raise(R_ERR_ARG, "| %s{%s}-> m{%s} %s" #opt_a_format " %s |", kclass, rb_obj_classname(self), func_name, err_msg_start, opt_a, err_msg_end);
 //#define _internal_self_throw_arg_err_2opts_1int(kclass, func_name, err_msg_start, opt_a_format, err_msg_end, opt_a, the_int) rb_raise(R_ERR_ARG, "| %s{%s}-> m{%s} %s" #opt_a_format " %s |", kclass, rb_obj_classname(self), func_name, err_msg_start, opt_a, err_msg_end);
 
-#define 🛑c_self_throw_arg_err_1opts(func_name, err_msg) _internal_self_throw_arg_err_1opts("c", func_name, err_msg)
+#define ERR_c_self_throw_arg_err_1opts(func_name, err_msg) _internal_self_throw_arg_err_1opts("c", func_name, err_msg)
 
-#define 🛑is_num(kclass, the_func, arg_name, the_arg) if (!(is_num(the_arg))) {🛑m_param_type(kclass, the_func, arg_name, the_arg, "Numeric")}
-#define 🛑is_sym(kclass, the_func, arg_name, the_arg) if (!(is_sym(the_arg))) {🛑m_param_type(kclass, the_func, arg_name, the_arg, "Symbol")}
+#define ERR_is_num(kclass, the_func, arg_name, the_arg) if (!(is_num(the_arg))) {ERR_m_param_type(kclass, the_func, arg_name, the_arg, "Numeric")}
+#define ERR_is_sym(kclass, the_func, arg_name, the_arg) if (!(is_sym(the_arg))) {ERR_m_param_type(kclass, the_func, arg_name, the_arg, "Symbol")}
 
-#define 🛑normalizer_invalid_value(func_name, the_normalizer) raise_err_arg("| <%"PRIsVALUE">-> m{%s} does not support the received normalizer{%"PRIsVALUE"} |", self, func_name, them);
+#define ERR_normalizer_invalid_value(func_name, the_normalizer) raise_err_arg("| <%"PRIsVALUE">-> m{%s} does not support the received normalizer{%"PRIsVALUE"} |", self, func_name, them);
 
 #define _scan_args_1_optional_as_them_data(kclass, func_name) {\
     rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);\

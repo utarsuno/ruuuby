@@ -2,7 +2,7 @@
 
 RSpec.describe 'f11_b02' do
 
-  context 'audits', :audits do
+  context 'audit', :audit do
 
     context 'feature-behavior(f11_b02) is defined correctly' do
       it 'creates class{NumberSet} under module{Math::SetTheory}' do
@@ -274,6 +274,6 @@ RSpec.describe 'f11_b02' do
 
     end
 
-  end # end: {audits}
+  end # end: {audit}
 
 end

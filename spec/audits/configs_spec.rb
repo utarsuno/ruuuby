@@ -2,27 +2,25 @@
 
 RSpec.describe 'general configs' do
   let(:ruuuby_metadata){::Ruuuby::MetaData}
+  let(:path_dir_ext){"#{💎.api_git.repo.workdir}ext"}
+  let(:the_dir_ext){🗄️.🆕(path_dir_ext)}
 
   #                   __          ___     __
   #   /\     |  |    |  \    |     |     /__`
   #  /~~\    \__/    |__/    |     |     .__/
 
-  context 'audits', :audits do
-
-    before :all do
-      @directory_ext = Dir.🆕(::Ruuuby::MetaData::Paths::DIR_EXT)
-    end
+  context 'audit', :audit do
 
     context 'passes file structure audits' do
       context 'extension files have correct file schema' do
         it 'directory{ext/} is healthy' do
 
           puts "\t\t| --- parsing directory{ext/} --- "
-          puts "\t\t| #{::Ruuuby::MetaData::Paths::DIR_EXT} |"
+          puts "\t\t| #{path_dir_ext} |"
           puts "\t\t| ------------------------------- "
 
-          @directory_ext.η̂_paths do |path|
-            path_current_extension = "#{::Ruuuby::MetaData::Paths::DIR_EXT}/#{path.to_s}"
+          the_dir_ext.η̂_paths do |path|
+            path_current_extension = "#{path_dir_ext}/#{path.to_s}"
             puts "\t\t| checking if directory: {#{path_current_extension}} w/ content"
             expect(🗄️.∃?(path_current_extension)).to eq(true)
             sub_paths = 🗄️.🆕("#{path_current_extension}/")

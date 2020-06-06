@@ -6,23 +6,26 @@ RSpec.describe 'f28' do
 
     context 'relating equations' do
       it 'pythagorean theorem w/ golden ratio' do
-        expect(::Math.τ³_is_pythagorean?(a: 1, b: √(𝚽), c: 𝚽)).to eq(true)
-        expect(::Math.τ³_is_pythagorean?(a: 3, b: 4, c: 5)).to eq(true)
+        expect(::Math::Trig::ℕ³.pythagorean?(a: 1, b: √(𝚽), c: 𝚽)).to eq(true)
+        expect(::Math::Trig::ℕ³.pythagorean?(a: 3, b: 4, c: 5)).to eq(true)
       end
     end
 
-    context 'hybrid tests' do
+    context 'hybrid tests', :integration do
+      context 'dual behavior groups for{f28}' do
+        it '{b00, b02}' do
+          expect((-1.0) ** (1.0 / (π * 1i))).to eq(℮)
+        end
 
-      context 'behaviors{f28_b02, f28_b11}' do
+        it '{b00, b03}' do
+          expect(π).to eq(5 * acos(𝚽 / 2))
+        end
 
-        #it "Euler's Formula works w/ golden angle" do
-          # TODO: RangeError: can't convert 0+1i into Float | {ThetaAngle needs to support Complex-Plane-Representation}
-          #  expect(℮ ** (1i * Ⴔ)).to eq(cos(θʳ(Ⴔ)) + 1i * sin(θʳ(Ⴔ)))
-        #end
-
-      end
-
-    end
+        it '{b02, b11}' do
+          expect(℮ ** (1i * Ⴔ.real)).to eq(cos(Ⴔ) + 1i * sin(Ⴔ))
+        end
+      end # end: {dual behavior groups for{f28}}
+    end # end: {hybrid tests}
 
   end # end: {functionality}
 

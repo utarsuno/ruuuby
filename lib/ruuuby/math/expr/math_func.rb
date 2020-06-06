@@ -1,8 +1,10 @@
 # coding: UTF-8
 
+# mathematics related code
 module ::Math
 
-  module Expression
+  module Expr
+
     # - a statement on some 'mathematical object(s)'
     # - a mapping of some input to some output
     #
@@ -15,6 +17,7 @@ module ::Math
       end
 
     end
+
   end
 
 end

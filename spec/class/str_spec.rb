@@ -378,9 +378,7 @@ RSpec.describe 'str' do
       context 'func{digit?}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
-            data_range_ints_zero_to_nine.∀ do |scenario|
-              expect(scenario.to_s.digit?).to eq(true)
-            end
+            (0..9).each{|scenario| expect(scenario.to_s.digit?).to eq(true)}
           end
           it 'cases: negative' do
             expect('+1'.digit?).to eq(false)
@@ -451,8 +449,8 @@ RSpec.describe 'str' do
             it 'golden-angle(Ⴔ)' do
               expect('Ⴔ'.to_num).to eq(Ⴔ)
             end
-            it 'tau-angle(τ)' do
-              expect('τ'.to_num).to eq(τ)
+            it 'tau-angle(𝞽)' do
+              expect('𝞽'.to_num).to eq(𝞽)
             end
             it 'omega-constant{Ω}' do
               expect('Ω'.to_num).to eq(Ω)
@@ -469,22 +467,18 @@ RSpec.describe 'str' do
             end
             context 'for func{to_num?}' do
               it 'same-cases' do
-                %w(∞ +∞ -∞ ∞ℂ π +π -π Ⴔ Ω Ψ ρ τ 𝚽 γ +γ -γ).∀{|scenario| expect(scenario.to_num?).to eq(true)}
+                %w(∞ +∞ -∞ ∞ℂ π +π -π Ⴔ Ω Ψ ρ 𝞽 𝚽 γ +γ -γ).∀{|scenario| expect(scenario.to_num?).to eq(true)}
               end
             end
           end
 
           context 'valid formats of length 1' do
             it 'all cases' do
-              data_range_ints_zero_to_nine.∀ do |scenario|
-                expect_regular_int(scenario.to_s.to_num, scenario)
-              end
+              (0..9).each{|scenario| expect_regular_int(scenario.to_s.to_num, scenario)}
             end
             context 'for func{to_num?}' do
               it 'same-cases' do
-                data_range_ints_zero_to_nine.∀ do |scenario|
-                  expect(scenario.to_s.to_num?).to eq(true)
-                end
+                (0..9).each{|scenario| expect(scenario.to_s.to_num?).to eq(true)}
               end
             end
           end

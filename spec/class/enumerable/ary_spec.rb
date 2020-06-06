@@ -38,15 +38,15 @@ RSpec.describe 'ary' do
         end
       end
       it 'detects bad param' do
-        expect{%w().≈≈ nil}.to raise_exception(ArgumentError, "| c{Array}-> m{equal_contents?} got arg w/ type{NilClass}, required-type{Array} |")
-        expect{[1, nil, 'abc'].≈≈({})}.to raise_exception(ArgumentError, "| c{Array}-> m{equal_contents?} got arg w/ type{Hash}, required-type{Array} |")
+        expect{%w().≈≈ nil}.to raise_exception(ArgumentError, "| c{Array}-> m{≈≈} got arg(them) w/ type{NilClass}, required-type{Array} |")
+        expect{[1, nil, 'abc'].≈≈({})}.to raise_exception(ArgumentError, "| c{Array}-> m{≈≈} got arg(them) w/ type{Hash}, required-type{Array} |")
       end
     end
 
     context 'by adding function{📊} (frequency counts)' do
       context 'handles needed scenarios' do
         it 'for cases: empty' do
-          expect([].📊).to eq([])
+          expect([].📊).to eq({})
         end
         it 'for cases: positive' do
           results = {}

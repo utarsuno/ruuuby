@@ -21,16 +21,16 @@ ________________________________________________________________________________
 
 static VALUE cached_ref_empty_ary;
 
-static VALUE 🆔n_no_empty;
-static VALUE 🆔n_in_set_superscripts;
-static VALUE 🆔n_in_set_naturals;
-static VALUE 🆔n_in_set_wholes;
-static VALUE 🆔n_in_set_integers;
-static VALUE 🆔n_in_set_universal;
-static VALUE 🆔n_in_set_universal_w_str_allowed;
-static VALUE 🆔n_in_set_naturals_w_str_allowed;
-static VALUE 🆔n_in_set_wholes_w_str_allowed;
-static VALUE 🆔n_in_set_integers_w_str_allowed;
+static VALUE n_no_empty;
+static VALUE n_in_set_superscripts;
+static VALUE n_in_set_naturals;
+static VALUE n_in_set_wholes;
+static VALUE n_in_set_integers;
+static VALUE n_in_set_universal;
+static VALUE n_in_set_universal_w_str_allowed;
+static VALUE n_in_set_naturals_w_str_allowed;
+static VALUE n_in_set_wholes_w_str_allowed;
+static VALUE n_in_set_integers_w_str_allowed;
 
 static VALUE cached_flt_nan;
 static VALUE cached_flt_inf;
@@ -45,6 +45,11 @@ static VALUE cached_module_attribute_includable;
 static VALUE cached_module_attribute_extendable;
 
 static VALUE cached_module_param_err;
+
+static VALUE cached_module_number_theory;
+static VALUE cached_module_combinatorics;
+static VALUE cached_module_trigonometry;
+static VALUE cached_module_trigonometry_funcs;
 
 static VALUE cached_global_sym_many_args;
 
@@ -87,7 +92,7 @@ static ID cached_rb_intern_oblique_angle;
 \__, /~~\ \__, |  | |___ .   \__,
 _____________________________________________________________________________________________________________________ */
 
-static unsigned long exponential_ids[𝔠EXPONENTS];
-static int           exponential_indexes[𝔠EXPONENTS];
+static unsigned long exponential_ids[NUM_EXPONENTS];
+static int           exponential_indexes[NUM_EXPONENTS];
 
 #endif

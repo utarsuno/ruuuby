@@ -11,4 +11,6 @@ bundle exec rake compile:ruby_class_mods
 bundle exec rake rspec_audit
 bundle exec rake rspec_locale
 bundle exec rake rspec_db
+bundle exec rake rspec_tech_debt
+bundle exec rake rspec_integration
 bundle exec rake rspec_unit

@@ -39,8 +39,12 @@ class RuuubyFeature < ApplicationRecord
     RuuubyFeature.create!(id_num: id_num, description: description)
   end
 
-  # @return [RuuubyFeatureBehavior]
-  def spawn_behavior(*args); ::RuuubyFeatureBehavior.spawn(*args, self); end
+  # @param [Array] ary_of_strings
+  def spawn_behaviors(ary_of_strings)
+    ary_of_strings.∀ₓᵢ do |x, i|
+      ::RuuubyFeatureBehavior.spawn(i, x, self)
+    end
+  end
 
   def ∋?(behavior)
     unless behavior.is_a?(::RuuubyFeatureBehavior)

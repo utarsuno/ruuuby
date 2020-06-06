@@ -7,6 +7,7 @@ RSpec.describe 'module/math.rb' do
   let(:val_c){359.999}
 
   context 'extends module{Math}' do
+
     context 'by adding needed functions & aliases' do
 
       context 'adds function{relative_Δ}' do
@@ -54,30 +55,30 @@ RSpec.describe 'module/math.rb' do
         end
       end # end: {func{τ²_in_golden_ratio?}}
 
-      context 'func{τ³_is_pythagorean?}' do
+      context 'func{pythagorean??}' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
             it 'w/ ints & floats' do
-              expect(::Math.τ³_is_pythagorean?(a: 3, b: 4, c: 5)).to eq(true)
-              expect(::Math.τ³_is_pythagorean?(a: 3.0, b: 4.0, c: 5.0)).to eq(true)
-              expect(::Math.τ³_is_pythagorean?(a: 3.0, b: 4, c: 5)).to eq(true)
+              expect(::Math::Trig::ℕ³.pythagorean?(a: 3, b: 4, c: 5)).to eq(true)
+              expect(::Math::Trig::ℕ³.pythagorean?(a: 3.0, b: 4.0, c: 5.0)).to eq(true)
+              expect(::Math::Trig::ℕ³.pythagorean?(a: 3.0, b: 4, c: 5)).to eq(true)
             end
             it 'w/ theta angles' do
-              expect(::Math.τ³_is_pythagorean?(a: θ°(30), b: θ°(60), c: θ°(90))).to eq(true)
+              expect(::Math::Trig::ℕ³.pythagorean?(a: θ°(30), b: θ°(60), c: θ°(90))).to eq(true)
             end
           end
           context 'cases: negative' do
             it 'bad params' do
-              expect{::Math.τ³_is_pythagorean?(1, 2, 3)}.to raise_error(ArgumentError)
-              expect{::Math.τ³_is_pythagorean?(a: 1, b: 2, c: nil)}.to raise_error(ArgumentError)
-              expect{::Math.τ³_is_pythagorean?(1, a: 1, b: 2, c: 3)}.to raise_error(ArgumentError)
+              expect{::Math::Trig::ℕ³.pythagorean?(1, 2, 3)}.to raise_error(ArgumentError)
+              expect{::Math::Trig::ℕ³.pythagorean?(a: 1, b: 2, c: nil)}.to raise_error(ArgumentError)
+              expect{::Math::Trig::ℕ³.pythagorean?(1, a: 1, b: 2, c: 3)}.to raise_error(ArgumentError)
             end
             it 'not pythagoras_τ³ tuples' do
-              expect(::Math.τ³_is_pythagorean?(a: 1, b: 2, c: 3)).to eq(false)
+              expect(::Math::Trig::ℕ³.pythagorean?(a: 1, b: 2, c: 3)).to eq(false)
             end
           end
         end
-      end # end: {func{τ³_is_pythagorean?}}
+      end # end: {func{pythagorean?}}
 
     end
   end

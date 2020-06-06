@@ -130,29 +130,20 @@ class ::Array
 
   alias_method :uniq_to_me, :∖
 
-  # Return true if both arrays are matching in contents, supports multiple types and without order mattering.
-  #
   # @param [Array] them
   #
   # @raise [ArgumentError]
   #
-  # @return [Boolean] true, if both arrays have the same contents (order does not matter)
-  alias_method :≈≈, :equal_contents?
+  # @return [Boolean] true, if both arrays are matching in contents, supports multiple types and without order mattering.
+  def ≈≈(them)
+    🛑ary❓(:them, them)
+    self.📊 == them.📊
+  end
 
-  # Retrieve the frequency counts of elements in this array as a hash.
-  #
-  # @example:
-  #   a = [1, 1, '1', nil, [], nil, nil].📊
-  #   a[1]   == 2
-  #   a['1'] == 1
-  #   a[nil] == 3
-  #   a[[]]  == 1
-  #
-  # @raise [ArgumentError]
-  #
-  # @return [Hash|NilClass] nil if empty, otherwise returns a new hash with --> key: a value from the array, value: the total number of occurrences
-  alias_method :📊, :frequency_counts
+  alias_method :📊, :tally
 
+
+  # TODO: organize later but Set and Array classes will perform this differently
   # Performs the symmetric difference (or disjunctive union) of these two arrays, operation order/side does not matter.
   #
   # @param [Array] them

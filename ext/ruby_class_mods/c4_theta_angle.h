@@ -63,27 +63,29 @@ typedef struct ThetaAngles {
     double                  angle_value;
     unsigned char           angle_mode;
     GENERIC_BITWISE_8_FLAGS flags_meta_data;
+    //GENERIC_BITWISE_8_FLAGS flags_vocab;
 } ThetaAngle;
 
-typedef struct ThetaAngles * 👉θ;
+typedef struct ThetaAngles * ptr_theta_angle;
+#define ptrθ ptr_theta_angle
 
 // TODO: combined flag checks
 
-//#define 👉θ_flag_set_coerce(ptr_to_theta_angle) ptr_to_theta_angle->flags_meta_data.b.b4 = FLAG_TRUE;
-//#define 👉θ_flag_clr_coerce(ptr_to_theta_angle) ptr_to_theta_angle->flags_meta_data.b.b4 = FLAG_FALSE;
-//#define 👉θ_flag_get_coerce(ptr_to_theta_angle) ptr_to_theta_angle->flags_meta_data.b.b4;
+//#define ptrθ_flag_set_coerce(ptr_to_theta_angle) ptr_to_theta_angle->flags_meta_data.b.b4 = FLAG_TRUE;
+//#define ptrθ_flag_clr_coerce(ptr_to_theta_angle) ptr_to_theta_angle->flags_meta_data.b.b4 = FLAG_FALSE;
+//#define ptrθ_flag_get_coerce(ptr_to_theta_angle) ptr_to_theta_angle->flags_meta_data.b.b4;
 
-static inline void 👉θ_flag_set_coerce(const 👉θ data);
-static inline void 👉θ_flag_clr_coerce(const 👉θ data);
-static inline int 👉θ_flag_is_coerce(const 👉θ data);
+static inline void ptrθ_flag_set_coerce(const ptrθ data);
+static inline void ptrθ_flag_clr_coerce(const ptrθ data);
+static inline int ptrθ_flag_is_coerce(const ptrθ data);
 
-static inline void 👉θ_flag_set_constant(const 👉θ data);
-static inline void 👉θ_flag_clr_constant(const 👉θ data);
-static inline int 👉θ_flag_is_constant(const 👉θ data);
+static inline void ptrθ_flag_set_constant(const ptrθ data);
+static inline void ptrθ_flag_clr_constant(const ptrθ data);
+static inline int ptrθ_flag_is_constant(const ptrθ data);
 
-static inline void 👉θ_flag_set_cache_synced(const 👉θ data);
-static inline void 👉θ_flag_clr_cache_synced(const 👉θ data);
-static inline int 👉θ_flag_is_cache_synced(const 👉θ data);
+static inline void ptrθ_flag_set_cache_synced(const ptrθ data);
+static inline void ptrθ_flag_clr_cache_synced(const ptrθ data);
+static inline int ptrθ_flag_is_cache_synced(const ptrθ data);
 
 /*____________________________________________________________________________________________________________________
  __   __           __   ___  ___               __      __   ___ ___       __
@@ -91,7 +93,8 @@ static inline int 👉θ_flag_is_cache_synced(const 👉θ data);
 \__/ |__) \__/    |__/ |___ |       /~~\ | \| |__/    .__/ |___  |  \__/ |
 _____________________________________________________________________________________________________________________ */
 
-#define 💎self_to_👉θ_data 👉θ data; TypedData_Get_Struct(self, ThetaAngle, & θ_type, data);
+#define 💎parse_ptrθ(the_data, the_ptr) TypedData_Get_Struct(the_data, ThetaAngle, & θ_type, the_ptr)
+#define 💎self_to_ptrθ_data ptrθ data;  💎parse_ptrθ(self, data);
 
 static void θ_free(void * data);
 static size_t θ_size(const void * data);
@@ -108,19 +111,20 @@ static VALUE θ_m_initialize_as_degree(VALUE self, const VALUE angle);
 static VALUE θ_m_initialize_as_gon(VALUE self, const VALUE angle);
 static VALUE θ_m_initialize_as_turn(VALUE self, const VALUE angle);
 
+// ---------------------------------------
+
+static VALUE θ_duplicate_as_mode(const ptrθ original, const unsigned char angle_mode);
+
 /*____________________________________________________________________________________________________________________
  __   __   ___  __       ___    __        __                __          ___         __
 /  \ |__) |__  |__)  /\   |  | /  \ |\ | /__`     /\  |\ | |  \    |  |  |  | |    /__`
 \__/ |    |___ |  \ /~~\  |  | \__/ | \| .__/    /~~\ | \| |__/    \__/  |  | |___ .__/
 _____________________________________________________________________________________________________________________ */
 
-static VALUE θ_m_to_array(const VALUE self);
+static inline VALUE cθ_get_repr(const unsigned char angle_mode);
 
-PUREFUNC(static inline VALUE cθ_get_representation(const unsigned char angle_mode););
-static unsigned char θSYM2MODE(const VALUE mode_as_sym);
-
-PUREFUNC(static VALUE θ_m_get_real(const VALUE self));
-PUREFUNC(static VALUE θ_m_set_real(const VALUE self, const VALUE num));
+static VALUE θ_m_get_real(const VALUE self);
+static VALUE θ_m_set_real(const VALUE self, const VALUE num);
 //PUREFUNC(static VALUE θ_get_as_radian(const VALUE self));
 //PUREFUNC(static VALUE θ_get_as_degree(const VALUE self));
 //PUREFUNC(static VALUE θ_get_as_gon(const VALUE self));
@@ -132,56 +136,63 @@ PUREFUNC(static VALUE θ_m_set_real(const VALUE self, const VALUE num));
 //PUREFUNC(static VALUE θ_get_is_turns(const VALUE self));
 //static VALUE θ_m_get_windings(const VALUE self);
 
-static VALUE θ_m_addition(const VALUE self, const VALUE value);
-static VALUE θ_m_addition_eq(const VALUE self, const VALUE value);
-static VALUE θ_m_subtraction(const VALUE self, const VALUE value);
-static VALUE θ_m_subtraction_eq(const VALUE self, const VALUE value);
+static VALUE θ_m_to_array(const VALUE self);
 static VALUE θ_m_unary_subtraction(const VALUE self);
 static VALUE θ_m_unary_addition(const VALUE self);
 static VALUE θ_m_unary_complement(const VALUE self);
 static VALUE θ_m_unary_not(const VALUE self);
+static VALUE θ_m_abs(const VALUE self);
+static VALUE θ_m_abs_self(const VALUE self);
+static VALUE θ_m_is_normal(const VALUE self);
+static VALUE θ_m_normalize(const VALUE self);
+static VALUE θ_m_normalize_self(const VALUE self);
+
+static VALUE θ_m_addition(const VALUE self, const VALUE value);
+static VALUE θ_m_addition_eq(const VALUE self, const VALUE value);
+static VALUE θ_m_subtraction(const VALUE self, const VALUE value);
+static VALUE θ_m_subtraction_eq(const VALUE self, const VALUE value);
 static VALUE θ_m_multiplication(const VALUE self, const VALUE value);
 static VALUE θ_m_multiplication_eq(const VALUE self, const VALUE value);
 static VALUE θ_m_division(const VALUE self, const VALUE value);
 static VALUE θ_m_division_eq(const VALUE self, const VALUE value);
 static VALUE θ_m_comparable(const VALUE self, const VALUE them);
-static VALUE θ_m_abs(const VALUE self);
-static VALUE θ_m_abs_self(const VALUE self);
 
 static VALUE θ_m_equals(const VALUE self, const VALUE them);
-static VALUE θ_m_is_normal(const VALUE self);
 static double θ_get_normalized_value(const double value, const unsigned char angle_mode);
-static void 👉θ_normalize(👉θ data);
-static VALUE θ_m_normalize(const VALUE self);
-static VALUE θ_m_normalize_self(const VALUE self);
+static void ptrθ_normalize(ptrθ data);
 
-PUREFUNC(static VALUE θ_m_matches_vocab_term(VALUE self, VALUE angle_type));
+static VALUE θ_m_matches_vocab_term(const VALUE self, const VALUE angle_type);
+
+static VALUE ptrθ_is_normal(const ptrθ data);
 
 static VALUE θ_m_is_explementary_with(const VALUE self, const VALUE them);
 static VALUE θ_m_is_supplementary_with(const VALUE self, const VALUE them);
 
-static inline double θ_get_compatible_value_from_θ_with_mode(const unsigned char angle_mode, 👉θ them);
-static inline long double θ_get_compatible_long_double_val(const unsigned char angle_mode, const 👉θ them);
-static inline double 👉θ_get_compatible_value_from_θ(const 👉θ self, const 👉θ them);
-static inline double 👉θ_get_compatible_value_from_value(const 👉θ self, const VALUE value);
+static inline double θ_get_val_as_mode(const unsigned char angle_mode, const ptrθ them);
+static inline long double θ_get_val_precise_as_mode(const unsigned char angle_mode, const ptrθ them);
+static inline double ptrθ_get_val_from_θ(const ptrθ self, const ptrθ them);
+static inline double ptrθ_get_val_from_VALUE(const ptrθ self, const VALUE value);
 
-static inline void 👉θ_addition_w_double(const 👉θ data, const double value);
-static inline void 👉θ_subtraction_w_double(const 👉θ data, const double value);
-static inline void 👉θ_multiplication_w_double(const 👉θ data, const double value);
-static inline void 👉θ_division_w_double(const 👉θ data, const double value);
+static inline void ptrθ_addition_w_double(const ptrθ data, const double value);
+static inline void ptrθ_subtraction_w_double(const ptrθ data, const double value);
+static inline void ptrθ_multiplication_w_double(const ptrθ data, const double value);
+static inline void ptrθ_division_w_double(const ptrθ data, const double value);
 
-//static inline double 👉θ_get_const_unit(const 👉θ data);
-static inline double 👉θ_get_const_quadrant(const 👉θ data);
-static inline double 👉θ_get_const_straight(const 👉θ data);
-static inline double 👉θ_get_const_perigon(const 👉θ data);
-static inline double 👉θ_get_const_perigon_minus_quadrant(const 👉θ data);
+//static inline double ptrθ_get_const_unit(const ptrθ data);
+static inline double ptrθ_get_const_quadrant(const ptrθ data);
+static inline double ptrθ_get_const_straight(const ptrθ data);
+static inline double ptrθ_get_const_perigon(const ptrθ data);
+static inline double ptrθ_get_const_perigon_minus_quadrant(const ptrθ data);
+
+static inline VALUE ptrθ_get_repr_as_sym(const ptrθ data);
 
 // -------------------
-static inline int is_theta_angle(const VALUE arg);
 
-#define 👉θ_func(func_name, expr) static VALUE func_name(const VALUE self);static VALUE func_name(const VALUE self){💎self_to_👉θ_data; expr}
+#define is_theta_angle(arg) rb_obj_is_instance_of(arg, cached_class_theta_angle)
 
-/*static inline double 👉θ_get_const_unit(const 👉θ data) {
+#define ptrθ_func(func_name, expr) static VALUE func_name(const VALUE self);static VALUE func_name(const VALUE self){💎self_to_ptrθ_data; expr}
+
+/*static inline double ptrθ_get_const_unit(const ptrθ data) {
     switch(data->angle_mode) {
     case θ_MODE_ID_RAD: return θ_RAD_UNIT;
     case θ_MODE_ID_DGR: return θ_DGR_UNIT;

@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-# add various aliases/functions to existing class +File+, (aliased globally by +Kernel+'s function +📁+ and +📂+)
+# add various aliases/functions to existing class +File+, (aliased globally by +Kernel+'s function{+📁+})
 class ::File
 
   # ---------------------------------------------------------------------------------------------------------- | *f04* |

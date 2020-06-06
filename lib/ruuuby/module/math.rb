@@ -16,25 +16,6 @@ module ::Math
     end
   end
 
-  # @note:
-  #  * if `a² + b² = c²`, then the triangle is `right`
-  #  * if `a² + b² > c²`, then the triangle is `acute`
-  #  * if `a² + b² < c²`, then the triangle is `obtuse`
-  #
-  # @param [Integer, Float, Numeric] a
-  # @param [Integer, Float, Numeric] b
-  # @param [Integer, Float, Numeric] c
-  #
-  # @return [Boolean] true, if: a² + b² == c²
-  def self.τ³_is_pythagorean?(a: ::Float::INFINITY, b: ::Float::INFINITY, c: ::Float::INFINITY)
-    if a.θ? && b.θ? && c.θ?
-      return ((a + b + c).° == 180.0)
-    else
-      🛑num❓($PRM_MANY, [a, b, c], :∈𝕌)
-      return (((a ** 2) + (b ** 2)) == (c ** 2))
-    end
-  end
-
   # @param [Integer, Float, Numeric] a (must be larger than b)
   # @param [Integer, Float, Numeric] b
   #
@@ -50,7 +31,7 @@ module ::Math
   # @return [Boolean] true, if: a² + b² == c²
   def self.τ²_in_super_golden_ratio?(a: ::Float::INFINITY, b: ::Float::INFINITY)
     🛑num❓($PRM_MANY, [a, b], :∈𝕌) unless a.θ? && b.θ?
-    return (a % b) == Ψ
+    return (a % b) == ::Float::RATIO_GOLDEN_SUPER
   end
 
 end

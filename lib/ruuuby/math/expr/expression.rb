@@ -1,8 +1,9 @@
 # coding: UTF-8
 
+# mathematics related code
 module ::Math
 
-  module Expression
+  module Expr
     # a singular 'mathematical object', in `Ruuuby` context, something that can be evaluated given content and a context
     #
     # @see https://en.wikipedia.org/wiki/Expression_(mathematics)

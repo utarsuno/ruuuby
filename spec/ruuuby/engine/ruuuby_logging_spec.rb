@@ -43,7 +43,7 @@ RSpec.describe 'ruuuby_logging' do
     end # end: {static funcs}
   end # end: {functionality}
 
-  context 'logging audits', :audits do
+  context 'logging audits', :audit do
 
     context 'w/ file', :logging_mode => 💎::RuuubyEngine::RuuubyLogging::MODE_FILE.to_s do
       specify { expect { 💎.debug('oof') }.to_not output.to_stdout }

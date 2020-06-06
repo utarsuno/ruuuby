@@ -7,14 +7,8 @@ BEGIN {
   # add these methods onto the `main` object (similar to adding methods to `Kernel`, but of smaller scope to avoid polluting other Classes)
   class << self
     include(
-        ::Ruuuby::Feature::Extendable::MainF06,
-        ::Ruuuby::Feature::Extendable::MainF10,
-        ::Ruuuby::Feature::Extendable::MainF12,
-        ::Ruuuby::Feature::Extendable::MainF26,
-        ::Ruuuby::Feature::Extendable::MainF27,
         ::Ruuuby::Feature::Extendable::MainF28,
-        ::Ruuuby::Feature::Extendable::MainF17::MathAliases,
-        ::Ruuuby::Feature::Extendable::MainF17::Trigonometry
+        ::Math::Trig::Funcs
     )
 
     #$🌎 = self
@@ -22,7 +16,6 @@ BEGIN {
 
   💎.engine.warm_up
 
-  # ---------------------------------------------------------------------------------------------------------- | *f28* |
   # TODO: create better solution than loading it here
   module ::Kernel
 
@@ -30,9 +23,7 @@ BEGIN {
     # TODO: https://en.wikipedia.org/wiki/Polar_coordinate_system
     # TODO: https://en.wikipedia.org/wiki/Euler%27s_formula
 
-    def ∅; ::Math::SetTheory::EmptySet.ℹ; end
-
-    def 𝕚; ::Math::SetTheory::ImaginaryNumbers.ℹ; end
+    # ---------------------------------------------------------------------------------------------------------- | *f28* |
 
     ℕ𝕌𝕃𝕃 = ::Math::SetTheory::NullSet.ℹ
 
@@ -59,6 +50,22 @@ BEGIN {
     ℝ = ::Math::SetTheory::RealNumbers.ℹ
 
     𝕌 = ::Math::SetTheory::UniversalSet.ℹ
+
+    # ---------------------------------------------------------------------------------------------------------- | *f06* |
+
+    ::Kernel.const_set(:𝕊, ::Math::Space::SymbolicNumbersSpace.ℹ)
+
+    ::Kernel.const_set(:🅱, ::Math::Space::BooleanSpace.ℹ)
+
+    🙈
+
+    def 🧬; ::Math::Space::NucleotideSpace.ℹ; end
+
+    def 🔢; ::Math::Space::NumberSpace.ℹ; end
+
+    def ∅; ::Math::SetTheory::EmptySet.ℹ; end
+
+    def 𝕚; ::Math::SetTheory::ImaginaryNumbers.ℹ; end
   end
   # | --------------------------------------------------------------------------------------------------------------------
 

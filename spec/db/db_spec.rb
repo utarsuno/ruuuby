@@ -39,7 +39,7 @@ RSpec.describe 'db/db.rb' do
   #                   __          ___     __
   #   /\     |  |    |  \    |     |     /__`
   #  /~~\    \__/    |__/    |     |     .__/
-  context 'audits', :audits do
+  context 'audit', :audit do
 
     context 'has correct db configs' do
       context 'has correct directory structure' do

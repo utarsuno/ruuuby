@@ -2,7 +2,6 @@
 
 Gem::Specification.new do |gem|
   require_relative 'lib/ruuuby/version'
-  require_relative 'lib/ruuuby/ruuuby/metadata/ruuuby_metadata_constants'
 
   gem.name                  = 'ruuuby'
   gem.version               = ::Ruuuby::VERSION
@@ -46,7 +45,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency(:'tty-command', '~> 0.9.0')
   gem.add_runtime_dependency(:'tty-command', '~> 0.9.0')
   gem.add_development_dependency(:sqlite3, '~> 1.4.2')
-  gem.add_development_dependency(:activerecord, '~> 5.2.4.1')
+  gem.add_development_dependency(:activerecord, '~> 5.2.4.3')
   gem.add_development_dependency(:schema_plus_foreign_keys, '~> 0.1.8')
   gem.add_development_dependency(:rugged, '~> 1.0.0')
   # ====================================================================

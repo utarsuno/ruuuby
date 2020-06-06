@@ -30,31 +30,10 @@ module ::Ruuuby
         # @return [Float]
         def δ; ::Float::RATIO_SILVER; end
 
-        # a full rotation around the circle, base representation in turns(+θτ+)
+        # a full rotation around the circle, base representation in turns(+θ𝞽+)
         #
         # @type [ThetaAngle]
-        def τ; ::Math::ANGLE_TAU; end
-
-        # a∶b = (a+b)∶a
-        # a∶b = (1+b/a)∶1
-        #
-        # the only positive solution to: x² = x + 1
-        #
-        # @type [Float]
-        ::Kernel.const_set(:𝚽, ::Float::RATIO_GOLDEN)
-
-        # the only real solution to: x³ = x² + 1
-        #
-        # @type [Float]
-        ::Kernel.const_set(:Ψ, ::Float::RATIO_GOLDEN_SUPER)
-
-        # @type [Float]
-        ::Kernel.const_set(:Ω, ::Float::CONST_OMEGA)
-
-        # let `a+b = circumference of a circle`, (a+b)/a = a/b; (a->longer_arc, b->smaller_arc)
-        #
-        # @type [ThetaAngle]
-        ::Kernel.const_set(:Ⴔ, ::Math::ANGLE_GOLDEN)
+        def 𝞽; ::Math::ANGLE_TAU; end
 
         #  ___  __        __  ___    __           __   __        __  ___           ___  __
         # |__  |__)  /\  /  `  |  | /  \ |\ |    /  ` /  \ |\ | /__`  |   /\  |\ |  |  /__`

@@ -111,19 +111,16 @@ RSpec.configure do |config|
 
   config.profile_examples = 6
 
-  config.include ::Ruuuby::Feature::Extendable::MainF06
-  config.include ::Ruuuby::Feature::Extendable::MainF10
-  config.include ::Ruuuby::Feature::Extendable::MainF12
-  config.include ::Ruuuby::Feature::Extendable::MainF26
-  config.include ::Ruuuby::Feature::Extendable::MainF27
   config.include ::Ruuuby::Feature::Extendable::MainF28
-  config.include ::Ruuuby::Feature::Extendable::MainF17::MathAliases
-  config.include ::Ruuuby::Feature::Extendable::MainF17::Trigonometry
+
+  config.include ::Math::Trig::Funcs
 
   config.include_context 'shared_context_language_deltas'
   config.include_context 'shared_context_general'
   config.include_context 'shared_context_f24'
+  config.include_context 'shared_context_f27'
   config.include_context 'shared_context_f30'
+  config.include_context 'shared_context_f32'
 
   config.include HelpersGeneral
   config.include HelpersFeature16

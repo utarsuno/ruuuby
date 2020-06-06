@@ -1,8 +1,9 @@
 # coding: UTF-8
 
+# mathematics related code
 module ::Math
 
-  module Expression
+  module Expr
 
     # a declaration that `LHS` = `RHS`
     class Equation

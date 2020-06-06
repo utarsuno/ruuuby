@@ -1,8 +1,9 @@
 # coding: UTF-8
 
+# mathematics related code
 module ::Math
 
-  module Statistics
+  module Stats
 
     # relatively focuses more on obtaining `inferences` for relationships between data
     module DescriptiveStatistics

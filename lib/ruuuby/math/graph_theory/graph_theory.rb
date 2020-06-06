@@ -1,5 +1,6 @@
 # coding: UTF-8
 
+# mathematics related code
 module ::Math
 
   module GraphTheory

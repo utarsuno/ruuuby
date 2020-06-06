@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-# mathematics related
+# mathematics related code
 module ::Math
 
   # math related code that can be categorized under +Space+
@@ -17,7 +17,7 @@ module ::Math
           ρ: ::Float::RATIO_PLASTIC,
           δ: ::Float::RATIO_SILVER,
           Ⴔ: ::Math::ANGLE_GOLDEN,
-          τ: ::Math::ANGLE_TAU,
+          𝞽: ::Math::ANGLE_TAU,
           γ: ::Float::CONST_EULER_MASCHERONI,
           Ω: ::Float::CONST_OMEGA,
           ½: ::Float::ONE_HALF,
