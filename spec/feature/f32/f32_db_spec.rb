@@ -10,8 +10,8 @@ RSpec.describe 'f32_db' do
       end
 
       context 'defines behaviors' do
-        it 'has correct number of behaviors{8}' do
-          expect(f32.ruuuby_feature_behaviors.length).to eq(9)
+        it 'has correct number of behaviors{11}' do
+          expect(f32.ruuuby_feature_behaviors.length).to eq(11)
         end
 
         it 'defines{b00}' do
@@ -48,6 +48,14 @@ RSpec.describe 'f32_db' do
 
         it 'defines{b08}' do
           audit_feature_behavior(f32, f32_b08, 'b08', 'create Sequence{`Hexagonal`}')
+        end
+
+        it 'defines{b09}' do
+          audit_feature_behavior(f32, f32_b09, 'b09', 'offers static funcs through module{ℤ³}')
+        end
+
+        it 'defines{b10}' do
+          audit_feature_behavior(f32, f32_b10, 'b10', 'offers static funcs through module{ℤ²}')
         end
 
       end # end: {defines behaviors}

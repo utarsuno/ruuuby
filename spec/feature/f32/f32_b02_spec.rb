@@ -7,30 +7,6 @@ RSpec.describe 'f32_b02' do
 
     context 'ℕ²' do
 
-      context 'func{gcd}' do
-        context 'handles needed scenarios' do
-          it 'cases: positive' do
-            expect(fℕ².gcd(1233, 5556)).to eq(3)
-            expect(fℕ².gcd(5556, 1233)).to eq(3)
-
-            expect(fℕ².gcd(270, 192)).to eq(6)
-            expect(fℕ².gcd(192, 270)).to eq(6)
-
-            expect(fℕ².gcd(12, 20)).to eq(4)
-            expect(fℕ².gcd(20, 12)).to eq(4)
-
-            expect(fℕ².gcd(18, 30)).to eq(6)
-            expect(fℕ².gcd(30, 18)).to eq(6)
-          end
-          it 'cases: error' do
-            expect{fℕ².gcd(18, 30.1)}.to raise_error(ArgumentError)
-            expect{fℕ².gcd(18.2, 30)}.to raise_error(ArgumentError)
-            expect{fℕ².gcd(-18, 30)}.to raise_error(ArgumentError)
-            expect{fℕ².gcd(nil, nil)}.to raise_error(ArgumentError)
-          end
-        end
-      end # end: {func{gcd}}
-
       context 'func{coprime?}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -44,7 +20,6 @@ RSpec.describe 'f32_b02' do
           it 'cases: error' do
             expect{fℕ².coprime?(18, 30.1)}.to raise_error(ArgumentError)
             expect{fℕ².coprime?(18.2, 30)}.to raise_error(ArgumentError)
-            expect{fℕ².coprime?(-18, 30)}.to raise_error(ArgumentError)
             expect{fℕ².coprime?(nil, nil)}.to raise_error(ArgumentError)
           end
         end

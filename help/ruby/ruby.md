@@ -1,4 +1,15 @@
 
+### ENVs (TODO)
+
+```
+RUBYOPT="--jit"
+--Jit-wait
+--jit-verbose=n
+--jit-min-calls=n
+--jit-max-cache
+--jit-save-temps
+```
+
 ### Commands
 
 | cmd | use-cases | see more |
@@ -70,7 +81,28 @@
 | %r | | used to create `Regular Expressions` |
 | %s | | used to created symbols (not subject to expression substitution or escape sequences) |
 
-## Important Documentation from Ruby Source
+### TODOs:
+
+ * resolve the following
+ * http://davidmoulton.me/2013/04/01/resign-ruby-executable-in-osx.html
+ 
+```
+
+codesign -v $(which ruby)
+
+"...code object is not signed at all"
+```
+
+```ruby
+            require 'benchmark'
+            puts Benchmark.measure {
+              10_000.times do
+                ::Math::NumberTheory::ℤ².gcd(1233, 5556)
+              end
+            }
+```
+
+### Important Documentation from Ruby Source
 
 ```ruby
 

@@ -1,5 +1,28 @@
 # coding: UTF-8
 
+module ::Math
+  # math related code that can be categorized under +NumberTheory+
+  module NumberTheory
+    module ℤ³
+      refine ::Integer do
+        # @param [Integer, Numeric] b
+        # @param [Integer, Numeric] mod (must not be 0)
+        #
+        # @raise [ArgumentError] if b is not ∈ ℤ or mod is not ∈ ℤ
+        #
+        # @return [Boolean] true, if `self ≡ b (mod c)`
+        def ≡(b: ∞, mod: ∞)
+          🛑num❓(:b, b, :∈ℤ)
+          🛑 ::Ruuuby::ParamErr::throw('Integer', 'congruent?', 'mod', ::Integer, mod) unless (mod.int? && mod != 0)
+          (self.modulo(mod)) == (b.modulo(mod))
+        end
+      end
+    end
+  end
+end
+
+using ::Math::NumberTheory::ℤ³
+
 # mathematics related code
 module ::Math
 
@@ -156,7 +179,7 @@ module ::Math
 
     end # end: {ℕ¹}
 
-    # equations within +NumberTheory+ that only involve 1-input (which belongs to the `whole-numbers`)
+    # equations within +NumberTheory+ that only involve 1-input which ∈ 𝕎
     module 𝕎¹
 
       def self.nᵗʰ_euler_totient(n); ::Math::NumberTheory.nth_euler_totient(n); end
@@ -190,16 +213,8 @@ module ::Math
         if n < 10
           return n
         else
-          result = n - (9.0 * ((n / 9.0).floor))
-          if result == 0
-            if n % 9 == 0
-              return 9
-            else
-              return 0
-            end
-          else
-            return result
-          end
+          mod_9 = n.modulo(9)
+          return mod_9 == 0 ? 9 : mod_9
         end
       end
 
@@ -224,15 +239,6 @@ module ::Math
           return iterations
         end
       end
-
-      # @param [Integer] n
-      #
-      # @raise [ArgumentError]  if n is not ∈ 𝕎
-      #
-      # @return [Boolean] true, if `n` can be considered a `hexagonal_number`
-      #def self.hexagonal?(n)
-      # 🛑num❓(:n, n, :∈𝕎)
-      #end
 
       # -------------------------------------------------------------------------------------------- | *b03* | *f32* |
       @seq_pronic = ::Math::Expr::Sequence.new(:∈𝕎)
@@ -287,7 +293,7 @@ module ::Math
       @seq_triangle = ::Math::Expr::Sequence.new(:∈𝕎, [0, 1, 3])
       @seq_triangle.define_singleton_method(:_∋?) do |n|
         x = n * 8 + 1
-        if x % 2 == 0
+        if x.even?
           false
         else
           ::Math::NumberTheory::𝕎¹.seq_square.∋?(x)
@@ -308,24 +314,6 @@ module ::Math
     # equations within +NumberTheory+ that involve 2-inputs (with both belonging to the `natural-numbers`)
     module ℕ²
 
-      # base source from:
-      # @see http://www.codecodex.com/wiki/Euclidean_algorithm
-      #
-      # for more information:
-      # @see https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
-      #
-      # @param [Integer] a
-      # @param [Integer] b
-      #
-      # @raise [ArgumentError] if a or b is not ∈ ℕ
-      #
-      # @return [Integer]
-      def self.gcd(a, b)
-        🛑num❓($PRM_MANY, [a, b], :∈ℕ)
-        a, b = b, a%b  until b.zero?
-        a
-      end
-
       # @see https://en.wikipedia.org/wiki/Coprime_integers
       #
       # also referred to as `relatively-prime` and `mutually-prime`
@@ -338,7 +326,7 @@ module ::Math
       # @raise [ArgumentError] if a or b is not ∈ ℕ
       #
       # @return [Boolean] true, if `a` and `b` have a `greatest common divisor` of 1
-      def self.coprime?(a, b); ::Math::NumberTheory::ℕ².gcd(a, b) == 1; end
+      def self.coprime?(a, b); ::Math::NumberTheory::ℤ².gcd(a, b) == 1; end
 
       # @param [Integer] a
       # @param [Integer] b
@@ -349,6 +337,48 @@ module ::Math
       def self.friendly?(a, b); ::Math::NumberTheory::ℕ¹.abundancy_index(a) == ::Math::NumberTheory::ℕ¹.abundancy_index(b); end
 
     end # end: {ℕ²}
+
+    # equations within +NumberTheory+ that involve 2-inputs w/ ∀ input ∈ ℤ {functions w/ exceptions to this rule may exist}
+    module ℤ²
+
+      # for more information:
+      # @see https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
+      # @see http://www.codecodex.com/wiki/Euclidean_algorithm
+      # @see https://tutorialspoint.dev/algorithm/mathematical-algorithms/steins-algorithm-for-finding-gcd
+      #
+      # @param [Integer] a
+      # @param [Integer] b
+      #
+      # @raise [ArgumentError] if a or b is not ∈ ℤ
+      #
+      # @return [Integer]
+      def self.gcd(a, b)
+        🛑num❓($PRM_MANY, [a, b], :∈ℤ)
+        ::Math::NumberTheory.fast_gcd(a.to_i.abs, b.to_i.abs)
+      end
+
+    end # end: {ℤ²}
+
+    # equations within +NumberTheory+ that involve 3-inputs w/ ∀ input ∈ ℤ {functions w/ exceptions to this rule may exist}
+    module ℤ³
+
+      # ‣ [reflexivity]   | `a ≡ a (mod c)`
+      # ‣ [symmetry]     | if `a ≡ b (mod c)` then `b ≡ a (mod c)`
+      # ‣ [transitivity] | if `a ≡ b (mod n)` and `b ≡ c (mod n)`, then `a ≡ c (mod n)`
+      #
+      # @param [Integer, Numeric] a
+      # @param [Integer, Numeric] b
+      # @param [Integer, Numeric] c (must not be 0)
+      #
+      # @raise [ArgumentError] if a or b is not ∈ ℤ or c is not ∈ ℤ
+      #
+      # @return [Boolean] true, if `a ≡ b (mod c)`
+      def self.congruent?(a, b, c)
+        🛑num❓(:a, a, :∈ℤ)
+        a.to_i.≡(b: b, mod: c)
+      end
+
+    end # end: {ℤ³}
 
     # Liouville's Constant
 
@@ -374,7 +404,6 @@ end
 # TODO: highly cototient number
 # TODO: untouchable number
 # TODO: semiprimes
-# TODO: friendly numbers
 # TODO: tetrahedral numbers
 # TODO: pentatope numbers
 # TODO: square pyramidal number

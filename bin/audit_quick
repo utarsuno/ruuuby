@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # encoding: UTF-8
 
-export RUBYOPT='-W:no-deprecated -W:no-experimental'
-
 set -euo pipefail
 IFS=$'\n\t'
 set -vx

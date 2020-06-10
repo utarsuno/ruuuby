@@ -179,10 +179,12 @@ RSpec.describe 'theta_angle' do
                 expect(result.ⓣ).to eq(::ThetaAngle)
               end
               it 'positive data' do
+                expect(θ°(405).abs.to_f).to eq(405.0)
                 expect(θ°(45).abs.to_f).to eq(45.0)
                 expect(θ°(0).abs.to_f).to eq(0.0)
               end
               it 'negative data' do
+                expect(θ°(-405).abs.to_f).to eq(405.0)
                 expect(θ°(-45).abs.to_f).to eq(45.0)
                 expect(θ°(-0.1).abs.to_f).to eq(0.1)
               end
@@ -1134,16 +1136,6 @@ RSpec.describe 'theta_angle' do
           end # end: {handles needed scenarios}
         end # end: {modulo}
       end # end: {math operations}
-      context 'func{to_a}' do
-        context 'handles needed scenarios' do
-          it 'cases: all' do
-            expect(θ°(1337.1337).to_a).to eq([1337.1337, :as_degree])
-            expect(θʳ(1337.1337).to_a).to eq([1337.1337, :as_radian])
-            expect(θᵍ(1337.1337).to_a).to eq([1337.1337, :as_gon])
-            expect(θ𝞽(1337.1337).to_a).to eq([1337.1337, :as_turn])
-          end
-        end # end: {handles needed scenarios}
-      end # end: {func{to_a}}
       context 'func{to_s}' do
         context 'handles needed scenarios' do
           it 'cases: all' do

@@ -157,6 +157,12 @@ RSpec.describe 'f32_b01' do
             expect(::Math::NumberTheory::𝕎¹.nᵗʰ_euler_totient(9)).to eq(6)
             expect(::Math::NumberTheory::𝕎¹.nᵗʰ_euler_totient(10)).to eq(4)
             expect(::Math::NumberTheory::𝕎¹.nᵗʰ_euler_totient(11)).to eq(10)
+            expect(::Math::NumberTheory::𝕎¹.nᵗʰ_euler_totient(12)).to eq(4)
+            expect(::Math::NumberTheory::𝕎¹.nᵗʰ_euler_totient(13)).to eq(12)
+            expect(::Math::NumberTheory::𝕎¹.nᵗʰ_euler_totient(14)).to eq(6)
+            expect(::Math::NumberTheory::𝕎¹.nᵗʰ_euler_totient(15)).to eq(8)
+            expect(::Math::NumberTheory::𝕎¹.nᵗʰ_euler_totient(16)).to eq(8)
+
           end
         end
       end # end: {func{nᵗʰ_euler_totient}}
@@ -175,6 +181,11 @@ RSpec.describe 'f32_b01' do
             expect(::Math::NumberTheory::𝕎¹.nᵗʰ_cototient(8)).to eq(4)
             expect(::Math::NumberTheory::𝕎¹.nᵗʰ_cototient(9)).to eq(3)
             expect(::Math::NumberTheory::𝕎¹.nᵗʰ_cototient(10)).to eq(6)
+            expect(::Math::NumberTheory::𝕎¹.nᵗʰ_cototient(11)).to eq(1)
+            expect(::Math::NumberTheory::𝕎¹.nᵗʰ_cototient(12)).to eq(8)
+            expect(::Math::NumberTheory::𝕎¹.nᵗʰ_cototient(13)).to eq(1)
+            expect(::Math::NumberTheory::𝕎¹.nᵗʰ_cototient(14)).to eq(8)
+            expect(::Math::NumberTheory::𝕎¹.nᵗʰ_cototient(15)).to eq(7)
           end
         end
       end  # end: {func{nᵗʰ_cototient}}
@@ -183,7 +194,7 @@ RSpec.describe 'f32_b01' do
         context 'for funcs{nᵗʰ_euler_totient, nᵗʰ_cototient}' do
           it 'manual formula calculation works w/ selected input-value{10}' do
             euler_totient = 0
-            [1, 2, 3, 4, 5, 6, 7, 8, 9].each do |n|
+            (1..10).each do |n|
               if ::Math::NumberTheory::ℕ².coprime?(n, 10)
                 euler_totient += 1
               end

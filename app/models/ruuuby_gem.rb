@@ -25,7 +25,18 @@ class RuuubyGem < ApplicationRecord
 
   def self.find_by_name(gem_name)
     🛑str❓(:gem_name, gem_name)
-    RuuubyGem.where('name = ?', [gem_name]).first
+    RuuubyGem.where('name = ?', [gem_name]).limit(1).first
+  end
+
+  # @param [Boolean] is_dev
+  # @param [Boolean] is_runtime
+  #
+  # @raise [ArgumentError] if either param provided was not of type `bool`
+  #
+  # @return [ActiveRecord::Relation]
+  def self.fetch_by_type(is_dev, is_runtime)
+    🛑bool❓($PRM_MANY, [is_dev, is_runtime])
+    RuuubyGem.where('is_development = ? AND is_runtime = ?', is_dev, is_runtime).all
   end
 
   # @param [String]        gem_name
@@ -39,6 +50,7 @@ class RuuubyGem < ApplicationRecord
   #
   # @return [RuuubyGem]
   def self.spawn(gem_name, gem_version, for_development, for_runtime, tags, ref_source, ref_version, ruuuby_release)
+    🛑bool❓($PRM_MANY, [for_development, for_runtime])
     ruuuby_gem = RuuubyGem.create!(
         name: gem_name,
         version_current: gem_version,
@@ -66,22 +78,9 @@ class RuuubyGem < ApplicationRecord
   # |  \ |___  |  | \__/  \/  |___    |    |  \ \__/  |  |    |  \ \__/ | \|  |  |  |  | |___
   #
 
-  def source_for_gemspec
-    source = ''
-    if self.name.∋?('-')
-      name_as_source_sym = ":'#{self.name}'"
-    else
-      name_as_source_sym = ":#{self.name}"
-    end
-    if self.is_development
-      source += "gem.add_development_dependency(#{name_as_source_sym}, '~> #{self.version_current}')\n"
-    end
-    if self.is_runtime
-      source += "gem.add_runtime_dependency(#{name_as_source_sym}, '~> #{self.version_current}')\n"
-    end
-    source
-  end
-
+  # @example `RuuubyGem.all.last.source_for_version_test`
+  #
+  # @return [String]
   def source_for_version_test
     initial_spacing = '      '
     source = ''

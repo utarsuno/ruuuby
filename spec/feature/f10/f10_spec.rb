@@ -3,9 +3,6 @@
 RSpec.describe 'f10' do
 
   context 'functionality' do
-    it '{b03}' do
-      expect(🌽).to eq(::Kernel)
-    end
     context '{b04}' do
       context 'adds func{√}' do
         context 'handles needed scenarios' do
@@ -45,9 +42,6 @@ RSpec.describe 'f10' do
       context 'funcs provided are defined in correct location' do
         it 'for{b02}' do
           expect_∃⨍(:🆕, ::Class)
-        end
-        it 'for{b03}' do
-          expect_∃⨍(:🌽, ::Kernel)
         end
         it 'for{b04}' do
           expect_∃⨍(:√, ::Kernel)

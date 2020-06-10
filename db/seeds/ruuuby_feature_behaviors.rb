@@ -1,6 +1,17 @@
 
 @f00.spawn_behaviors(['create func{η̂!} for class(`Array`)'])
 
+@f01.spawn_behaviors(
+    [
+        'supports mode: none (empty methods called for logging)',
+        'supports mode: stdout (log to console)',
+        'supports mode: stderr (log only errors to console)',
+        'supports mode: file (standard Ruby log file logging)',
+        'supports setting the logging level',
+        'supports running a hybrid of logging modes'
+    ]
+)
+
 @f05.spawn_behaviors(['offer func{>>} to class(`Array`)', 'offer func{>>} to class(`String`)'])
 
 @f06.spawn_behaviors(
@@ -15,7 +26,7 @@
         '`🙈` to alias `private`',
         '`🛡️` to alias `protected`',
         '`🆕` to alias `new`',
-        '`🌽` to alias `::Kernel`',
+        '`🏠` to alias `source_location` for `::Method`',
         'alias `Math` funcs{`sqrt`, `cbrt`} w/ {`√`, `∛`}',
         'alias `Math` funcs{`log_e`, `log2`, `log10`} w/ {`logₑ`, `log₂`, `log₁₀`}'
     ]
@@ -84,7 +95,9 @@
         'create Sequence{`Fibonacci`}',
         'create Sequence{`Lucas`}',
         'create Sequence{`Triangle`}',
-        'create Sequence{`Hexagonal`}'
+        'create Sequence{`Hexagonal`}',
+        'offers static funcs through module{ℤ³}',
+        'offers static funcs through module{ℤ²}'
     ]
 )
 

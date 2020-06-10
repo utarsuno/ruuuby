@@ -266,7 +266,6 @@ module ::Ruuuby
         # @return [Symbol]
         def ⁹ ; :⁹ ; end
       end # end: f16
-
     end
 
   end

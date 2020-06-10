@@ -29,7 +29,7 @@ module ::Math
       end
 
       # @param [Symbol] kmodule
-      # @param [Module] owner (default⟶Kernel)
+      # @param [Module, Class] owner (default⟶Kernel)
       #
       # @return [Boolean]
       def ∃ᵐ?(kmodule, owner=::Kernel)

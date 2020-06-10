@@ -7,17 +7,21 @@
 /spec/reports/
 /tmp/
 
-# rspec failure tracking
+# rspec
 .rspec_status
+
+# IDE
 /.idea/
+
+# rdoc
 /html/
 
 # Mac OS generated file
 .DS_Store
 
-# 
+#
 Gemfile.lock
 
-#
+# extension files
 lib/ruby_class_mods.bundle
 lib/ruby_class_mods.so

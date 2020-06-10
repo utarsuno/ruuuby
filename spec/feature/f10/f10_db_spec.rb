@@ -26,7 +26,7 @@ RSpec.describe 'f10_db' do
         end
 
         it 'has{b03}' do
-          audit_feature_behavior(f10, f10_b03, 'b03', '`🌽` to alias `::Kernel`')
+          audit_feature_behavior(f10, f10_b03, 'b03', '`🏠` to alias `source_location` for `::Method`')
         end
 
         it 'has{b04}' do

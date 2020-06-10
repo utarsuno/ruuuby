@@ -10,26 +10,31 @@ module Ruuuby
     class RuuubyORM
       include ::Ruuuby::Attribute::Includable::RuuubySingleton
 
+      attr_accessor :ruuuby_file_version
+
       def initialize
         @connected    = false
         @loaded       = false
         @seeds_loaded = false
       end
 
-      module SchemaORM
-
-        # @type [String]
-        DB_ADAPTER = 'sqlite3'.❄️
-
-        # @type [String]
-        DB_DB      = ':memory:'.❄️
-
-      end
-
       def get_upcoming_changelog
         orm_version = ::RuuubyRelease.get_version_next
         orm_version.docs_changelog.∀ do |l|
           puts l
+        end
+      end
+
+      # wip
+      def full_project_check
+        path    = "#{💎.api_git.repo.workdir}.ruby-version"
+        content = ::File.read(path).to_s
+        ruuuby  = @ruuuby_file_version.generate_source.to_s
+
+        if content == ruuuby
+          💎.debug("file{#{path}} is healthy")
+        else
+          💎.debug("file{#{path}} does not match{#{ruuuby}}")
         end
       end
 
@@ -44,8 +49,8 @@ module Ruuuby
       # @return [Boolean] true, if the db-connection had not yet been loaded and did so this function-call
       def ensure_loaded_db_connection
         unless @connected
-          adapter = ::Ruuuby::MetaData::RuuubyORM::SchemaORM::DB_ADAPTER
-          db      = ::Ruuuby::MetaData::RuuubyORM::SchemaORM::DB_DB
+          adapter = 'sqlite3'
+          db      = ':memory:'
           ActiveRecord::Base.establish_connection(adapter: adapter, database: db)
           💎.info("Connected to db of type{#{adapter.to_s}} with connection to/type{#{db.to_s}}")
           @connected = true
@@ -61,6 +66,7 @@ module Ruuuby
           require_relative '../../../db/seeds/ruuuby_feature_behaviors'
           require_relative '../../../db/seeds/ruuuby_releases/past'
           require_relative '../../../db/seeds/ruuuby_releases/active_or_recent'
+          require_relative '../../../db/seeds/ruuuby_dirs'
           require_relative '../../../db/seeds/git_commits'
           💎.info('loaded db seeds')
           @seeds_loaded = true

@@ -4,7 +4,6 @@
 #RUBYOPT='-W:no-deprecated -W:no-experimental'
 
 require 'bundler/setup'
-
 require 'ruuuby'
 
 # You can add fixtures and/or initialization code here to make experimenting

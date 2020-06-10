@@ -2,6 +2,12 @@
 # encoding: UTF-8
 
 export RUBYOPT='-W:no-deprecated -W:no-experimental'
+export RUUUBY_F0R_QA_POSITIVE_0='b00|b01|b10|b99'
+export RUUUBY_F0R_QA_POSITIVE_1='b00|b01|b02{1337}|b10|b99'
+export RUUUBY_F0R_QA_NEGATIVE_0=''
+export RUUUBY_F0R_QA_NEGATIVE_1='|b1|b100|b_9'
+export RUUUBY_F0R_QA_NEGATIVE_2='b00|b01|b10|b99|b01'
+export RUUUBY_F0R_QA_NEGATIVE_3='b00|b01|b10|b20'
 
 set -euo pipefail
 IFS=$'\n\t'

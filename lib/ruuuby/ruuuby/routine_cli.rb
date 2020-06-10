@@ -22,11 +22,6 @@ module Ruuuby
         @err          = nil
       end
 
-      #==printer options
-      # [null]     no output
-      # [pretty]   colorful output
-      # [progress] minimal output with green dor for success and F for failure
-      # [quiet]    only output actual command stdout and stderr
       def cmd
         if @cmd.nil?
           @cmd = TTY::Command.new(printer: :null) #(printer: :pretty)

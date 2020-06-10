@@ -56,6 +56,12 @@ ________________________________________________________________________________
 static long double LDBL_POW2(const long double n);
 static long double LDBL_POW2(const long double n){return powl(n, 2.0L);}
 
+#define SWAP_INTS(arg_a, arg_b) {\
+    arg_a += arg_b;\
+    arg_b = arg_a - arg_b;\
+    arg_a -= arg_b;\
+}
+
 #define is_class(arg)             (TYPE(arg) == T_CLASS)
 #define is_module(arg)            (TYPE(arg) == T_MODULE)
 #define is_nucleotide(arg)        (is_class(arg) || is_module(arg))

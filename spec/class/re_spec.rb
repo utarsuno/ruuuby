@@ -32,20 +32,20 @@ RSpec.describe 'lib/class/re.rb' do
       context 'static-function{gen_closed_match} handles needed scenarios' do
         it 'cases: positive' do
           result = ::Regexp.gen_closed_match('abc')
-          expect(result.class).to eq(::Regexp)
+          expect(result.ⓣ).to eq(::Regexp)
           expect(result.source).to eq('\Aabc\z')
         end
         it 'cases: positive (w/ only partial modifications)' do
           result = ::Regexp.gen_closed_match('\Aabc')
-          expect(result.class).to eq(::Regexp)
+          expect(result.ⓣ).to eq(::Regexp)
           expect(result.source).to eq('\Aabc\z')
 
           result2 = ::Regexp.gen_closed_match('abc\z')
-          expect(result2.class).to eq(::Regexp)
+          expect(result2.ⓣ).to eq(::Regexp)
           expect(result2.source).to eq('\Aabc\z')
 
           result3 = ::Regexp.gen_closed_match('\Aabc\z')
-          expect(result3.class).to eq(::Regexp)
+          expect(result3.ⓣ).to eq(::Regexp)
           expect(result3.source).to eq('\Aabc\z')
         end
         it 'cases: error' do

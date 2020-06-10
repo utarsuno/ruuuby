@@ -136,7 +136,6 @@ static VALUE θ_m_set_real(const VALUE self, const VALUE num);
 //PUREFUNC(static VALUE θ_get_is_turns(const VALUE self));
 //static VALUE θ_m_get_windings(const VALUE self);
 
-static VALUE θ_m_to_array(const VALUE self);
 static VALUE θ_m_unary_subtraction(const VALUE self);
 static VALUE θ_m_unary_addition(const VALUE self);
 static VALUE θ_m_unary_complement(const VALUE self);

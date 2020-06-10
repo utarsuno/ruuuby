@@ -115,49 +115,4 @@ module ::Kernel
   # -----------------------------------------------------------------------------------------------------------------
 end
 
-# TODO: temporary code & design
-
-f10_configs = ENV['RUUUBY_F10_CONFIGS']
-f12_configs = ENV['RUUUBY_F12_CONFIGS']
-f26_configs = ENV['RUUUBY_F26_CONFIGS']
-
-if f10_configs.str?
-  if f10_configs.include?('b02')
-    module ::Kernel
-      private
-      # @return [::Kernel]
-      def 🌽; ::Kernel; end
-    end
-  end
-  if f10_configs.include?('b03')
-    ::Method.alias_method :🏠, :source_location
-  end
-end
-
-if f12_configs.str?
-  if f12_configs.include?('b00')
-    module ::Kernel
-      private
-      # @return [::File]
-      def 📁; ::File; end
-      # @return [::Dir]
-      def 🗄️; ::Dir; end
-    end
-  end
-end
-
-if f26_configs.str?
-  if f26_configs.include?('b00')
-    module ::Kernel
-      private
-      # @return [::Date]
-      def 📅; ::Date; end
-      # @return [::Time]
-      def 🕒; ::Time; end
-      # @return [::DateTime]
-      def 📅🕒; ::DateTime; end
-    end
-  end
-end
-
 # --------------------------------------------------------------------------------------------------------------------

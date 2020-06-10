@@ -2,6 +2,7 @@
 RSpec.shared_context 'shared_context_performance' do
   let(:tΔ_within){PerformanceTestHelper::Configs::DEFAULT_WITHIN * 2}
   let(:tΔ_warmup){PerformanceTestHelper::Configs::DEFAULT_WARMUP * 2}
+  let(:pΔ_05){1.05}
   let(:pΔ_10){1.1}
   let(:pΔ_50){1.5}
   let(:pΔ_70){1.70}
@@ -30,7 +31,8 @@ module PerformanceTestHelper
 
   module Configs
     # -------------------------------------------- ⚠️ --------------------------------------------
-    NUM_SAMPLES    = 4
+    #NUM_SAMPLES    = 4
+    NUM_SAMPLES    = 2
     # -------------------------------------------- ⚠️ --------------------------------------------
     DEFAULT_WITHIN = 0.2
     DEFAULT_WARMUP = 0.1

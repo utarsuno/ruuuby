@@ -1,6 +1,7 @@
 # coding: UTF-8
 
-RSpec.describe '[AutomaticallyGenerated]: gem configs' do
+# wip
+RSpec.describe '[AutomaticGeneration]: gem configs' do
 
   context 'locale', :locale do
 
@@ -66,6 +67,18 @@ RSpec.describe '[AutomaticallyGenerated]: gem configs' do
         end # end: {for gem{rugged}}
 
       end # end: {by having correct configs}
+
+      context 'by having recommended configs' do
+
+        # during 2.7.0->2.7.1 migration; 3.1.2->3.1.4
+        # verifiable w/ cmd: `gem -v`
+        context 'for gem{rubygems-update}' do
+          it 'has correct version{3.1.4}' do
+            expect(::Gem.rubygems_version.to_s).to eq('3.1.4')
+          end
+        end # end: {for gem{rubygems-update}}
+
+      end # end: {by having recommended configs}
 
     end # end: {all gems are healthy}
 

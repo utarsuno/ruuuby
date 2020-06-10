@@ -6,10 +6,11 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.39'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.40'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
+| `JIT` testing | ```RUBYOPT="--jit --jit-warnings --jit-wait --jit-max-cache=1337 --jit-verbose=2 --jit-debug -w" ./bin/console``` |
 
 #### Example
 
@@ -94,7 +95,6 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | (`global`) func(s) added | notes | as C-extension?<br/>(java-wip) |
 | ---: | :--- | :----: |
 | `℮`, `logₑ`, `log₂`, `log₁₀`<br/>`√`, `∛`, `π`, `Ⴔ`<br/>`¼`, `½`, `¾`, `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒`<br/>`∞`, `∞ℂ`, `γ` | (`f10`) | ❌/✅ |
-| `🌽` | (`f10`): aliases `Kernel` | ❌ |
 | `📁`, `🗄️` | - (`f12`) aliases to:<br/>`File`, `Dir` | ❌ |
 | `📅`, `🕒`, `📅🕒` | - (`f26`) aliases to:<br/>`Date`, `Time`, `DateTime` | ❌ |
 | `θ°`, `θʳ`, `θᵍ`, `θ𝞽` | `f27` | ✅ |
@@ -113,10 +113,14 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | :------- | :---: | :----------------: | ------------------------: |
 | `Trig` | | `cot²`, `cos²`, `sin²`, `tan²`, `sec²`, `csc²` |
 | `Trig` | `ℕ³` | `pythagorean?` | |
-| `NumberTheory` | `ℕ¹` | `prime_factors`, `divisors`, `proper_divisors`, `aliquot_sum`, `perfect?`, `abundant?`, `abundance`, `abundancy_index`, `deficient?`, `deficiency`, `composite?` |
+| `NumberTheory` | `ℕ¹` | `prime_factors`, `divisors`, `proper_divisors`, `aliquot_sum`, `perfect?`, `almost_perfect?`, `abundant?`, `abundance`, `abundancy_index`, `deficient?`, `deficiency`, `composite?` |
 | `NumberTheory` | `𝕎¹` |  `nᵗʰ_euler_totient`, `nᵗʰ_cototient`, `digit_sum`, `digital_root`, `additive_persistence` | `seq_pronic`, `seq_fibonacci`, `seq_lucas`, `seq_square`, `seq_triangle`, `seq_hexagonal` |
-| `NumberTheory` | `ℕ²` | `gcd`, `coprime?`, `friendly?` |
+| `NumberTheory` | `ℕ²` | `coprime?`, `friendly?` |
+| `NumberTheory` | `ℤ²` | `gcd` |
+| `NumberTheory` | `ℤ³` | `congruent?` |
 | `Combinatorics` | `𝕎²` | `n_choose_k` |
+| `ProbabilityTheory` | | | |
+| `StatisticalLearning` | | | |
 
 ### Class Modifications:
 
@@ -168,13 +172,13 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Code Base Statistics:
 | category  | attribute     | value    | desc.                                                              |
 | --------: | :-----------: | :------: | :----------------------------------------------------------------- |
-| `QA`        | `unit`          | `1088`     | # of tests (for core functionality)                 |
-| `QA`        | `integration`   | `4`        | # of tests (for state/functionality checks on grouped features/components) |
+| `QA`        | `unit`          | `1097`     | # of tests (for core functionality)                 |
+| `QA`        | `integration`   | `7`        | # of tests (for state/functionality checks on grouped features/components) |
 | `QA`        | `performance`   | `225`      | # of tests (for runtime performance)                |
-| `QA`        | `DB`            | `202`      | # of tests (for `DB` & `ORM`)                       |
+| `QA`        | `DB`            | `223`      | # of tests (for `DB` & `ORM`)                       |
 | `CI`        | `audit`         | `114`      | # of tests (for anything non-functionality based)   |
-| `CI`        | `locale`        | `38`       | # of tests (for local-dev configs, setup, preferences, etc) |
-| `tech-debt` | `coverage`      | `5`        | # of tests (solely relating to tracking missing functionality-coverage) |
+| `CI`        | `locale`        | `49`       | # of tests (for local-dev configs, setup, preferences, etc) |
+| `tech-debt` | `coverage`      | `5`        | # of tests (for tracking missing functionality) |
 | `structure` | `features`      | `~35`      | # of distinct features (that are categorized & tracked) `wip` |
 | `coverage`  | `LOCs`          | `???`      | `wip` |
 | `coverage`  | `runtime`       | `???`      | `wip` |
@@ -190,6 +194,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `rugged` | [`1.0.0`](https://rubygems.org/gems/rugged) | ✅, ❌ | `GIT` |
 | `rdoc` | [`6.2.1`](https://rubygems.org/gems/rdoc) | ✅, ❌ | `DOC` |
 | `bundler` | [`2.1.4`](https://rubygems.org/gems/bundler) | ✅, ❌ | `CI` |
+| `rubygems-update` | [`3.1.4`](https://rubygems.org/gems/rubygems-update) | ✅, ❌ | `CI` |
 | `rspec` | [`3.9.0`](https://rubygems.org/gems/rspec) | ✅, ❌ | `QA` |
 | `rspec-benchmark` | [`0.5.1`](https://rubygems.org/gems/rspec-benchmark) | ✅, ❌ | `QA` |
 | `rake` | [`13.0.1`](https://rubygems.org/gems/rake) | ✅, ❌ | `EXT` |

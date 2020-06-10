@@ -1,6 +1,7 @@
 # coding: UTF-8
 
 @f00 = RuuubyFeature.spawn(0, "`η̂` to alias concept of `normalization` (offered in any applicable context)")
+@f01 = RuuubyFeature.spawn(1, 'simplify debugging state & logging through the `RuuubyEngine`')
 
 @f03 = RuuubyFeature.spawn(3, "`𝔠` to alias concept of `cardinality`")
 @f04 = RuuubyFeature.spawn(4, '`∅` to alias concept of `empty`')

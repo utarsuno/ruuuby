@@ -295,7 +295,7 @@ RSpec.describe 'complex.rb' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :performance do
+  context 'performance', :performance => 'slow' do
 
     context 'roughly preserves original pre-extension-performance' do
       context 'performance hit for following funcs, are under 85%' do

@@ -12,5 +12,15 @@ class ::Symbol
   alias_method :⬇, :downcase
   alias_method :⬆, :upcase
 
+  # @return [String]
+  def as_source_ruby
+    as_str = self.to_s
+    if as_str.∋?('-')
+      ":'#{as_str}'"
+    else
+      ":#{as_str}"
+    end
+  end
+
   # | ------------------------------------------------------------------------------------------------------------------
 end

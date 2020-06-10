@@ -55,3 +55,25 @@
 @v0_0_39.changelog.added_method_to_class(@f32, :nᵗʰ_cototient, ::Math::NumberTheory)
 @v0_0_39.changelog.added_method_to_class(@f32, :friendly?, ::Math::NumberTheory)
 @v0_0_39.changelog.added_method_to_class(@f33, :n_choose_k, ::Math::Combinatorics)
+
+@v0_0_40 = RuuubyRelease.spawn(0, 0, 40)
+@v0_0_40.add_gem('rubygems-update', '3.1.4', true, false, %W(CI), '::Gem', '.rubygems_version.to_s')
+@v0_0_40.add_comments(
+    [
+        "track `Just-In-Time Compiler` feature through `locale RSpecs` (and eventually the `'Ruuuby Engine'`)",
+        'add first usage of Ruby `Refinements` w/ `using ::Math::NumberTheory::ℤ³` to refine func{`≡`} onto Class{`Integer`}',
+        'move func{`gcd`} to `Math::NumberTheory::ℤ²`, core-implementation moved to `C-ext` (note: while this ~doubles the performance (for just math operations during runtime w/o initial error checks) funcs like `🛑num❓` CAN take `90%` of the functions execution time (atm))',
+        'start adding content for `ORMs: {`RuuubyDir`, `RuuubyFile`}` to help determine direction of most useful functionality needed',
+        'start preparing extension code for large scale refactorings to `ThetaAngle`; (also remove func{`to_a`} while it does not have a use-case for `ThetaAngle`',
+        'switch `Ruuuby Engine Logging` to utilize the same feature loading & setup w/ `environment variables`'
+    ]
+)
+# TODO: missing TDD (for class{Symbol}-> m{as_source_ruby})
+@v0_0_40.changelog.added_method_to_class(@f10, :as_source_ruby, ::Symbol)
+@v0_0_40.changelog.added_method_to_class(@f10, :parse_feature_behaviors, 'ENV')
+@v0_0_40.changelog.added_method_to_class(@f10, :validate_feature_behavior_syntax!, 'ENV')
+@v0_0_40.changelog.added_method_to_class(@f15, :fetch_by_type, 'RuuubyGem')
+@v0_0_40.changelog.added_method_to_class(@f32, :fast_gcd, ::Math::NumberTheory::ℤ²)
+@v0_0_40.changelog.added_method_to_class(@f32, :congruent?, ::Math::NumberTheory::ℤ³)
+@v0_0_40.changelog.added_method_to_class(@f32, :≡, ::Integer)
+@v0_0_40.save!

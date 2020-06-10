@@ -249,7 +249,7 @@ RSpec.describe 'rational.rb' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :performance do
+  context 'performance', :performance => 'slow' do
 
     context 'needed funcs perform fast enough' do
       context 'func{μ?}' do

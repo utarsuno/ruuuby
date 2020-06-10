@@ -60,6 +60,28 @@ RSpec.describe 'f27_b01' do
           expect(the_angle).to eq(::Math::ANGLE_TAU)
         end
 
+        it 'w/ 128 operations' do
+          the_angle = θ°(0)
+          (0..31).each do |index|
+            the_angle += θ°(2.8125)
+            the_angle += θʳ(π / 64.0)
+            the_angle += θᵍ(3.125)
+            the_angle += θ𝞽(1.0 / 128)
+          end
+          expect(the_angle).to eq(::Math::ANGLE_TAU)
+        end
+
+        it 'w/ 256 operations' do
+          the_angle = θ°(0)
+          (0..63).each do |index|
+            the_angle += θ°(1.40625)
+            the_angle += θʳ(π / 128.0)
+            the_angle += θᵍ(1.5625)
+            the_angle += θ𝞽(1.0 / 256)
+          end
+          expect(the_angle).to eq(::Math::ANGLE_TAU)
+        end
+
       end
 
     end

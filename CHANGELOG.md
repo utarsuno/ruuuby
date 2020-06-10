@@ -34,6 +34,26 @@
 
 ---
 
+# v0.0.40
+ * track `Just-In-Time Compiler` feature through `locale RSpecs` (and eventually the `'Ruuuby Engine'`)
+ * add first usage of Ruby `Refinements` w/ `using ::Math::NumberTheory::ℤ³` for func{`≡`} w/ Class{`Integer`}
+ * move func{`gcd`} to `Math::NumberTheory::ℤ²`, core-implementation moved to `C-ext`
+ * start adding content for `ORMs:` {`RuuubyDir`, `RuuubyFile`}
+ * start preparing extension code for large scale refactorings to `ThetaAngle`; (also remove func{`to_a`}, no use-case identified)
+ * switch `Ruuuby Engine Logging` to utilize the same loading & setup w/ `environment variables` as `ORM-Features` do
+ * add/track `gem 'rubygems-update', '~> 3.1.4'`
+
+| context | method(s) added | feature(s) |
+| --- | --- | --- |
+| (c) `Symbol` | `as_source_ruby` | `f10` |
+| (v) `ENV` | `parse_feature_behaviors`, `validate_feature_behavior_syntax!` | `f10` |
+| (m) `RuuubyGem` | `fetch_by_type` | `f15` |
+| (m) `Math::NumberTheory::ℤ²` | `fast_gcd` | `f32` |
+| (m) `Math::NumberTheory::ℤ³` | `congruent?` | `f32` |
+| (Refinement) `Integer` | `≡` | `f32` |
+
+---
+
 # v0.0.39
  * update to Ruby version{`2.7.1`} from{`2.7.0`}
  * update gem(`activerecord`) version from{`5.2.4.1`} to{`5.2.4.3`}

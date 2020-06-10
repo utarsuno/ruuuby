@@ -36,30 +36,4 @@ RSpec.describe 'db/db.rb' do
 
   end
 
-  #                   __          ___     __
-  #   /\     |  |    |  \    |     |     /__`
-  #  /~~\    \__/    |__/    |     |     .__/
-  context 'audit', :audit do
-
-    context 'has correct db configs' do
-      context 'has correct directory structure' do
-        context 'directory{db}' do
-          it 'exists' do
-            expect(🗄️.∃?('./db')).to eq(true)
-          end
-          context 'directory{db/seeds}' do
-            it 'exists' do
-              expect(🗄️.∃?('./db/seeds')).to eq(true)
-            end
-          end
-        end
-        it 'directory{db/migrate} exists' do
-          expect(🗄️.∃?('./db/migrate')).to eq(true)
-          expect(📁.∃?('./db/migrate.rb')).to eq(false)
-        end
-      end
-    end
-
-  end
-
 end

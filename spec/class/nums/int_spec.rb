@@ -213,7 +213,7 @@ RSpec.describe 'int.rb' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :performance do
+  context 'performance', :performance => 'slow' do
 
     context 'funcs extremely quickly' do
       context 'func{finite?}' do
@@ -332,5 +332,4 @@ RSpec.describe 'int.rb' do
       end
     end
   end
-
 end

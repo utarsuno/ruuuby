@@ -32,6 +32,8 @@ module ::Math
 
       def acos(n); ::Math.acos(n); end
 
+
+
       alias_method :cot², :cot2
       alias_method :cos², :cos2
       alias_method :sin², :sin2

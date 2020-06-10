@@ -311,8 +311,8 @@
 @v0_0_27.changelog.added_method_to_class(@f12, :dirname⁴, ::File)
 
 @v0_0_28 = RuuubyRelease.spawn(0, 0, 28)
-@v0_0_28.add_file('lib/ruuuby/ruuuby/ruuuby_orm.rb', ::Ruuuby::MetaData::RuuubyORM, '', @f15)
-@v0_0_28.add_file('lib/ruuuby/ruuuby/routine_cli.rb', ::Ruuuby::Routine::CommandCLI, '', @f15)
+@v0_0_28.add_file('lib/ruuuby/ruuuby/ruuuby_orm.rb', '::Ruuuby::MetaData::RuuubyORM', '', @f15)
+@v0_0_28.add_file('lib/ruuuby/ruuuby/routine_cli.rb', '::Ruuuby::Routine::CommandCLI', '', @f15)
 @v0_0_28.remove_file('app/models/db_schema.rb', 'seemed like a bad location')
 @v0_0_28.remove_file('conditionals/ide_helper.rb', 'moved to `lib/ruuuby/ide_helper.rb`, gets excluded by `ruuuby.gemspec`')
 @v0_0_28.add_comments(
@@ -348,8 +348,8 @@
 @v0_0_28.changelog.added_method_to_class(@f24, :to_🐍, ::String)
 
 @v0_0_29 = RuuubyRelease.spawn(0, 0, 29)
-@v0_0_29.add_file('lib/ruuuby/ruuuby/engine/ruuuby_engine.rb', ::Ruuuby::MetaData::RuuubyEngine, 'alias{`💎.engine`}', @f15)
-@v0_0_29.add_file('lib/ruuuby/ruuuby/engine/ruuuby_logging.rb', ::Ruuuby::MetaData::RuuubyEngine.instance.logger, 'alias{`💎.engine.logger`}', @f15)
+@v0_0_29.add_file('lib/ruuuby/ruuuby/engine/ruuuby_engine.rb', '::Ruuuby::MetaData::RuuubyEngine', 'alias{`💎.engine`}', @f15)
+@v0_0_29.add_file('lib/ruuuby/ruuuby/engine/ruuuby_logging.rb', '::Ruuuby::MetaData::RuuubyEngine.instance.logger', 'alias{`💎.engine.logger`}', @f15)
 @v0_0_29.add_file('lib/ruuuby/ruuuby/metadata/ruuuby_metadata_constants.rb', ::Ruuuby::MetaData, '', @f15)
 @v0_0_29.add_file('app/models/ruuuby_dir', ::RuuubyDir, 'directory operations specifically for `ORM` related context/use-cases', @f15)
 @v0_0_29.add_file('app/models/ruuuby_file', ::RuuubyFile, 'file operations specifically for `ORM` related context/use-cases', @f15)
@@ -388,7 +388,7 @@
 @v0_0_30.changelog.added_method_to_class(@f10, :🅱?, ::Object)
 @v0_0_30.changelog.added_method_to_class(@f10, :🛑🅱❓, ::Object)
 @v0_0_30.changelog.added_method_to_class(@f10, :🧬?, ::Object)
-@v0_0_30.changelog.added_method_to_class(@f10, :cli, ::Ruuuby::Routine::CommandCLI)
+@v0_0_30.changelog.added_method_to_class(@f10, :cli, '::Ruuuby::Routine::CommandCLI')
 @v0_0_30.changelog.added_method_to_class(@f10, :get_all_defined_modules, ::Module)
 @v0_0_30.changelog.added_method_to_class(@f10, :get_all_defined_classes, ::Module)
 @v0_0_30.changelog.added_method_to_class(@f26, :iso8601?, ::String)

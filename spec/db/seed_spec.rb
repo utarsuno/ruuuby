@@ -6,7 +6,34 @@ RSpec.describe 'db/seed.rb' do
 
     context 'has historical release data' do
 
+      context 'has needed gem information' do
+        it 'there exists a gem for{rubygems-update}' do
+          the_gem = ::RuuubyGem.find_by_name('rubygems-update')
+          expect(the_gem.ⓣ).to eq(::RuuubyGem)
+          expect(the_gem.ruuuby_release.uid).to eq('v0.0.40')
+        end
+        context 'expected number per mode types' do
+          it 'for none there is{0}' do
+            expect(::RuuubyGem.fetch_by_type(false, false).length).to eq(0)
+          end
+          it 'for{runtime} there is{0}' do
+            expect(::RuuubyGem.fetch_by_type(false, true).length).to eq(0)
+          end
+          it 'for{development} there is{11}' do
+            expect(::RuuubyGem.fetch_by_type(true, false).length).to eq(11)
+          end
+          it 'for{development & runtime} there is{1}' do
+            expect(::RuuubyGem.fetch_by_type(true, true).length).to eq(1)
+          end
+        end
+        it 'there is only 1 gem which is for mode{development & runtime}' do
+          expect(::RuuubyGem.fetch_by_type(true, true).first).to eq(::RuuubyGem.find_by_name('tty-command'))
+        end
+      end
+
       context 'defines features' do
+
+        Benchmark
 
         context 'defines f07' do
           it 'passes ORM audit' do
@@ -312,6 +339,34 @@ RSpec.describe 'db/seed.rb' do
           it 'as expected' do
             audit_version(v0_0_36, 'v0.0.36')
             expect(v0_0_36.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.37' do
+          it 'as expected' do
+            audit_version(v0_0_37, 'v0.0.37')
+            expect(v0_0_37.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.38' do
+          it 'as expected' do
+            audit_version(v0_0_38, 'v0.0.38')
+            expect(v0_0_38.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.39' do
+          it 'as expected' do
+            audit_version(v0_0_39, 'v0.0.39')
+            expect(v0_0_39.num_gems_added).to eq(0)
+          end
+        end
+
+        context 'v0.0.40' do
+          it 'as expected' do
+            audit_version(v0_0_40, 'v0.0.40')
+            expect(v0_0_40.num_gems_added).to eq(1)
           end
         end
 

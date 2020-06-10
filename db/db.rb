@@ -26,16 +26,19 @@ ActiveRecord::Schema.define do
   create_table :ruuuby_dirs, force: true do |t|
     t.string :path_full, :null => false, unique: true
     t.string :name, :null => false, unique: false
-    t.boolean :is_virtual, :default => false, :null => false
+
+    t.boolean :is_virtual #, :default => false, :null => false
+
+    t.references :parent_dir  #, index: true, foreign_key: { references: :ruuuby_dirs,  }
   end
 
   create_table :ruuuby_files, force: true do |t|
     t.string :path_full, :null => false, unique: true
-    t.string :name, :null => true, unique: false
-    t.string :extensions, :null => true, unique: false
-    t.boolean :is_virtual, :default => false, :null => false
+    t.string :name #, :null => true, unique: false
+    t.string :extensions #, :null => true, unique: false
+    t.boolean :is_virtual #, :null => false, :unique => false
 
-    t.integer :expected_encoding?, limit: 1, :null => false
+    #t.integer :expected_encoding?, limit: 1, :null => false
 
     t.references :ruuuby_dir, index: true, foreign_key: { references: :ruuuby_dirs }
   end
@@ -69,8 +72,8 @@ ActiveRecord::Schema.define do
     t.integer :vtiny, limit: 1, :null => false
 
     # 'cached calculations'
-    t.integer :num_commits, limit: 1, :null => false, :default => 0
-    t.integer :num_gems_added, limit: 1, :null => false, :default => 0
+    t.integer :num_commits, :null => false, :default => 0
+    t.integer :num_gems_added, :null => false, :default => 0
     t.boolean :released, :default => false, :null => false
 
     t.index [:vmajor, :vminor, :vtiny], unique: true

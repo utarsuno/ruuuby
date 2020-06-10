@@ -134,18 +134,4 @@ RSpec.configure do |config|
   config.include RSpec::Benchmark::Matchers, :performance
   config.include_context 'shared_context_performance', :performance
 
-  logging_mode = ENV['RUUUBY_LOGGING_MODE']
-
-  # TODO: temporary solution, might be better to use something like "--exclude-pattern"
-  if logging_mode.to_s == 💎::RuuubyEngine::RuuubyLogging::MODE_FILE.to_s
-    config.filter_run_excluding :logging_mode => 💎::RuuubyEngine::RuuubyLogging::MODE_STDOUT.to_s
-    config.filter_run_excluding :logging_mode => 💎::RuuubyEngine::RuuubyLogging::MODE_NONE.to_s
-  elsif logging_mode.to_s == 💎::RuuubyEngine::RuuubyLogging::MODE_STDOUT.to_s
-    config.filter_run_excluding :logging_mode => 💎::RuuubyEngine::RuuubyLogging::MODE_FILE.to_s
-    config.filter_run_excluding :logging_mode => 💎::RuuubyEngine::RuuubyLogging::MODE_NONE.to_s
-  else
-    config.filter_run_excluding :logging_mode => 💎::RuuubyEngine::RuuubyLogging::MODE_STDOUT.to_s
-    config.filter_run_excluding :logging_mode => 💎::RuuubyEngine::RuuubyLogging::MODE_FILE.to_s
-  end
-
 end

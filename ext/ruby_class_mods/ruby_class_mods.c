@@ -6,12 +6,11 @@
  |___ | |__) |  \ /~~\ |  \  |     |  |  | |    \__/ |  \  |  .__/
 ____________________________________________________________________________________________________________________________________________________________________ */
 
-#include "ruby/encoding.h"
 //#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.0.h"
+#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
 
-//#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
-
-#include "ruby-2.7.0/ruby.h"
+//#include "ruby/encoding.h"
+//#include "ruby-2.7.0/ruby.h"
 
 #include <locale.h>
 
@@ -309,6 +308,7 @@ static void startup_step0_load_f98_b02(void) {
     ensure_loaded_default(logger)
     ensure_loaded_default(time)
     ensure_loaded_default(prime)
+    ensure_loaded_default(benchmark)
     // 3rd party gem libraries
     ensure_loaded_default(tty-command)
     ensure_loaded_default(rugged)
@@ -404,7 +404,6 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
     ensure_loaded_ruuuby(ruuuby/ruuuby_api)
     ensure_loaded_ruuuby(ruuuby/git_api)
 
-    ensure_loaded_ruuuby(ruuuby/engine/ruuuby_logging)
     ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine)
 
     ensure_loaded_ruuuby(configs)
@@ -1068,6 +1067,17 @@ static inline void ptrθ_flag_set_cache_synced(const ptrθ data){data->flags_met
 static inline void ptrθ_flag_clr_cache_synced(const ptrθ data){data->flags_meta_data.b.b5 = FLAG_FALSE;}
 static inline int ptrθ_flag_is_cache_synced(const ptrθ data){return data->flags_meta_data.b.b5;}
 
+/*static const rb_data_type_t θconst_type = {
+    .wrap_struct_name = "const_theta_angle",
+    .function = {
+        .dmark = NULL, // NULL as the struct contains no references to the c-data-type{VALUE}
+        .dfree = θ_free,
+        .dsize = θ_size,
+    },
+    .data = NULL,
+    .flags = RUBY_TYPED_NEVER_FREE,
+};*/
+
 static const rb_data_type_t θ_type = {
     .wrap_struct_name = "theta_angle",
     .function = {
@@ -1079,8 +1089,10 @@ static const rb_data_type_t θ_type = {
     .flags = RUBY_TYPED_FREE_IMMEDIATELY,
 };
 
+//static void θconst_free(void * data) {free(data);}
 static void θ_free(void * data) {free(data);}
 
+//static size_t θconst_size(const void * data) {return sizeof(ConstThetaAngle);}
 static size_t θ_size(const void * data) {return sizeof(ThetaAngle);}
 
 static VALUE θ_alloc(VALUE self) {
@@ -1449,11 +1461,6 @@ static VALUE θ_m_unary_subtraction(const VALUE self) {
         break;
     }
     re_me
-}
-
-static VALUE θ_m_to_array(const VALUE self) {
-    💎self_to_ptrθ_data
-    return 💎new_ary_size2(DBL2NUM(data->angle_value), cθ_get_repr(data->angle_mode));
 }
 
 static VALUE θ_m_unary_addition(const VALUE self) {re_me}
@@ -1964,22 +1971,54 @@ static VALUE m_square_root(const VALUE self, const VALUE val) {
 ⓡ𝑓_self_them(m_number_theory_eulers_totient_func,
     if (is_int(them)) {
         unsigned long n = NUM2ULONG(them);
-        if (n == 0) {re_0}
+        if (n == 0ul) {re_0}
         unsigned long result = n;
-        for (unsigned long p = 2; p * p <= n; ++p) {
-            if (n % p == 0) {
-                while (n % p == 0) {n /= p;}
+        for (unsigned long p = 2ul; p * p <= n; ++p) {
+            if (n % p == 0ul) {
+                while (n % p == 0ul) {
+                    n /= p;
+                }
                 result -= result / p;
             }
         }
-        if (n > 1) {result -= result / n;}
+        if (n > 1ul) {
+            result -= result / n;
+        }
         return ULONG2NUM(result);
     } else {
         rb_raise(R_ERR_ARG, "");
     }
 )
 
-//m_number_theory_binomial_coefficient
+// source solution credit: https://tutorialspoint.dev/algorithm/mathematical-algorithms/steins-algorithm-for-finding-gcd
+ⓡ𝑓_self_a_b(m_number_theory_gcd,
+    int a = RB_FIX2INT(param_a);
+    if (a == 0) {return param_b;}
+    int b = RB_FIX2INT(param_b);
+    if (b == 0) {return param_a;}
+    else if (a == 1 || b == 1) {re_1}
+    // `k` is the greatest shared power of 2
+    int k = 0;
+    for (k = 0; (a > 1 && ((a % 2) == 0)) && (b > 1 && ((b % 2) == 0)); ++k) {
+        a /= 2;
+        b /= 2;
+    }
+    // set `a` to be odd
+    while (a % 2 == 0) {
+        a /= 2;
+    }
+    do {
+        while (b % 2 == 0) {
+            b /= 2;
+        }
+        // `a` and `b` are both `odd` here
+        if (a > b) {
+            SWAP_INTS(a, b);
+        }
+        b -= a;
+    } while (b != 0);
+    return INT2NUM(a << k);
+)
 
 // source solution credit: https://blog.plover.com/math/choose.html
 ⓡ𝑓_self_a_b(m_combinatorics_n_choose_k,
@@ -2052,6 +2091,7 @@ static inline void startup_step1_before_loading_extension(void) {
 
     cached_module_number_theory        = 💎add_module_under(R_MATH, "NumberTheory")
     💎add_singleton_func_1args_to(cached_module_number_theory, "nth_euler_totient", m_number_theory_eulers_totient_func)
+    💎add_singleton_func_2args_to(cached_module_number_theory, "fast_gcd", m_number_theory_gcd)
 
     💎add_new_sub_class_under(cached_module_param_err, R_ERR_ARG, "WrongParamType")
 }
@@ -2059,6 +2099,8 @@ static inline void startup_step1_before_loading_extension(void) {
 static inline void startup_step2_add_ruuuby_c_extensions(void) {
     cached_global_sym_many_args = ID2SYM(rb_intern("*args"));
     rb_define_readonly_variable("$PRM_MANY", &cached_global_sym_many_args);
+
+
 
     💎add_public_func_0args_to(R_OBJ, "ary?"       , m_obj_ary)
     💎add_public_func_0args_to(R_OBJ, "bool?"      , m_obj_bool)
@@ -2112,7 +2154,6 @@ static inline void startup_step2_add_ruuuby_c_extensions(void) {
     💎add_public_func_0args_to(cached_class_theta_angle, "real",               θ_m_get_real)
     💎add_public_func_0args_to(cached_class_theta_angle, "repr",               θ_m_get_repr)
     💎add_public_func_0args_to(cached_class_theta_angle, "windings",           θ_m_get_windings)
-    💎add_public_func_0args_to(cached_class_theta_angle, "to_a",               θ_m_to_array)
     💎add_public_func_0args_to(cached_class_theta_angle, "as_radian",          θ_get_as_radian)
     💎add_public_func_0args_to(cached_class_theta_angle, "as_degree",          θ_get_as_degree)
     💎add_public_func_0args_to(cached_class_theta_angle, "as_gon",             θ_get_as_gon)

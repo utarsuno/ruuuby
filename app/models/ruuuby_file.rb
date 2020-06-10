@@ -27,22 +27,18 @@ class RuuubyFile < ApplicationRecord
 
   validates :path_full, presence: true
   validates :name, presence: true
-  validates :extensions, presence: true
-  validates :is_virtual, presence: true
+  #validates :extensions, presence: true
+  #validates :is_virtual, presence: true
 
   # wip
   #
-  #def self.spawn(full_path, as_virtual=false, ruuuby_directory=nil)
-  #  🛑str❓(:full_path, full_path)
-  #  🛑bool❓(:as_virtual, as_virtual)
-  #  rfile = nil
-  #  if as_virtual
-  #    rfile = RuuubyFile.create!(path_full: full_path, name: nil, extensions: nil, is_virtual: true)
-  #  else
-  #    rfile = RuuubyFile.create!(path_full: full_path, name: nil, extensions: nil, is_virtual: true)
-  #  end
-  #  rfile.save!
-  #end
+  def self.spawn(full_path, name, extensions, as_virtual, ruuuby_directory)
+    🛑str❓(:full_path, full_path)
+    🛑bool❓(:as_virtual, as_virtual)
+    ruuuby_file = RuuubyFile.create!(path_full: full_path, name: name, extensions: extensions, is_virtual: as_virtual, ruuuby_dir_id: ruuuby_directory)
+    ruuuby_file.save!
+    ruuuby_file
+  end
 
   def self.generate_query_uid(*args)
     🛑 ArgumentError.new("| c{RuuubyFile}-> m{generate_query_uid} received{#{args.𝔠.to_s}} args when exactly{1} is required |") if (args.∅? || args.𝔠 > 1)
