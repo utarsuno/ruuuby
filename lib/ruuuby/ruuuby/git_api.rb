@@ -35,22 +35,24 @@ module ::Ruuuby
     #
     # ----------------------------------
     #
-    # 💎.api_git
+    # `💎.engine.api_git`
     class GitAPI
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
 
-      attr_reader :repo, :path_gitignore, :last_commit, :configs
+      attr_reader :repo, :last_commit, :configs
 
-      def initialize
+      def initialize(engine)
+        @engine         = engine
         path_base       = ::File.dirname(::File.dirname(::File.dirname(::File.dirname(__FILE__))))
         @repo           = ::Rugged::Repository.new(path_base)
-        @path_gitignore = "#{@repo.workdir}.gitignore"
         @last_commit    = @repo.last_commit
         @configs         = @repo.config
         # cached fields
         @branch_names   = []
         @release_tags   = []
       end
+
+      # @return [String]
+      def path_gitignore; "#{@repo.workdir}.gitignore"; end
 
       # @see https://github.com/desktop/desktop/issues/5057
       #  - "usually the `UNBORN HEAD` error happens when you are attempting to publish a branch that has no commits"
@@ -158,6 +160,7 @@ module ::Ruuuby
   end # end: Module{MetaData}
 end
 
-module ::Ruuuby; module MetaData; def self.api_git; ::Ruuuby::MetaData::GitAPI.ℹ; end; end; end
-
 # -------------------------------------------- ⚠️ --------------------------------------------
+
+# TODO: https://gist.github.com/trey/2722934
+# TODO: https://gist.github.com/brandonsimpson/54d9e085c9fde5e6ad3a

@@ -7,18 +7,18 @@ RSpec.describe 'f31_b00' do
     context 'behavior{b00}' do
 
       it 'exists as needed' do
-        the_ref = 💎.api_git
+        the_ref = 💎.engine.api_git
         the_id  = the_ref.🆔
         expect(the_ref.ⓣ).to eq(::Ruuuby::MetaData::GitAPI)
-        expect(the_ref.🆔).to eq(::Ruuuby::MetaData::GitAPI.ℹ.🆔)
+        expect(the_ref.🆔).to eq(💎.engine.api_git.🆔)
         expect(the_ref.🆔).to eq(the_id)
-        expect(💎.api_git.🆔).to eq(the_ref.🆔)
+        expect(💎.engine.api_git.🆔).to eq(the_ref.🆔)
       end
 
       context 'func{release_tags}' do
         context 'locale', :locale do
           it 'fetches tags w/ correct naming schemas' do
-            release_tags = 💎.api_git.release_tags
+            release_tags = 💎.engine.api_git.release_tags
             # 30 is an arbitrary number
             expect(release_tags.length > 30).to eq(true)
             expect(release_tags[0][0].length).to eq(3)
@@ -27,8 +27,8 @@ RSpec.describe 'f31_b00' do
             expect(release_tags[0][1].∅?).to eq(false)
           end
           it 'returns the same obj, not one w/ a new obj_id' do
-            💎.api_git.release_tags
-            expect(💎.api_git.release_tags.🆔).to eq(💎.api_git.release_tags.🆔)
+            💎.engine.api_git.release_tags
+            expect(💎.engine.api_git.release_tags.🆔).to eq(💎.engine.api_git.release_tags.🆔)
           end
         end
       end
@@ -36,26 +36,26 @@ RSpec.describe 'f31_b00' do
       context 'func{branch_names}' do
         context 'locale', :locale do
           it 'correctly fetches all branch names' do
-            expect(💎.api_git.branch_names).to eq(%w(master origin/master wip_jruby))
+            expect(💎.engine.api_git.branch_names).to eq(%w(master origin/master wip_jruby))
           end
         end
         it 'returns the same obj, not one w/ a new obj_id' do
-          💎.api_git.branch_names
-          expect(💎.api_git.branch_names.🆔).to eq(💎.api_git.branch_names.🆔)
+          💎.engine.api_git.branch_names
+          expect(💎.engine.api_git.branch_names.🆔).to eq(💎.engine.api_git.branch_names.🆔)
         end
       end
 
       context 'func{∃commit?}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
-            expect(💎.api_git.∃commit?('43d3e4d52c4b12f97b0c94976dc9417c511e7f34')).to eq(true)
+            expect(💎.engine.api_git.∃commit?('43d3e4d52c4b12f97b0c94976dc9417c511e7f34')).to eq(true)
           end
           it 'cases: negative' do
-            expect(💎.api_git.∃commit?('45d3e2d5224b12f97b0c945679c2524c511e7f81')).to eq(false)
+            expect(💎.engine.api_git.∃commit?('45d3e2d5224b12f97b0c945679c2524c511e7f81')).to eq(false)
           end
           it 'cases: error' do
-            expect{💎.api_git.∃commit?(nil)}.to raise_error(ArgumentError)
-            expect{💎.api_git.∃commit?(1)}.to raise_error(ArgumentError)
+            expect{💎.engine.api_git.∃commit?(nil)}.to raise_error(ArgumentError)
+            expect{💎.engine.api_git.∃commit?(1)}.to raise_error(ArgumentError)
           end
         end
       end
@@ -70,8 +70,8 @@ RSpec.describe 'f31_b00' do
           end
 
           it 'cases: error' do
-            expect{💎.api_git.fetch_commits_until(nil)}.to raise_error(ArgumentError)
-            expect{💎.api_git.fetch_commits_until('45d3e2d5224b12f97b0c945679c2524c511e7f81')}.to raise_error(RuntimeError)
+            expect{💎.engine.api_git.fetch_commits_until(nil)}.to raise_error(ArgumentError)
+            expect{💎.engine.api_git.fetch_commits_until('45d3e2d5224b12f97b0c945679c2524c511e7f81')}.to raise_error(RuntimeError)
           end
         end
       end

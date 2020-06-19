@@ -17,7 +17,7 @@ RSpec.describe 'float.rb' do
           [-1337.1, -1.2, -0.3, 0.999999999999, 1.4, 1.5, 1337.6].∀{|scenario| expect(scenario.has_decimals?).to eq(true)}
         end
         it 'cases: negative' do
-          [-1337.0, -1.0, -0.0, 0.0, 1.0, 1337.0].∀{|scenario| expect(scenario.has_decimals?).to eq(false)}
+          [-1337.0, -2.0, -1.0, -0.0, 0.0, 1.0, 2.0, 1337.0].∀{|scenario| expect(scenario.has_decimals?).to eq(false)}
         end
       end
     end
@@ -92,6 +92,10 @@ RSpec.describe 'float.rb' do
           it 'regular cases' do
             expect(359.9999999999999999.≈≈(360)).to eq(true)
           end
+
+          it 'w/ NaN' do
+            expect(data_float_nan.≈≈(data_float_nan)).to eq(true)
+          end
         end # end: {cases: positive}
         context 'cases: negative' do
           it 'medium-magnitude values' do
@@ -138,25 +142,9 @@ RSpec.describe 'float.rb' do
             expect((-1.0).≈≈(1.0)).to eq(false)
           end
 
-          it 'edge cases' do
-            expect(0.0.≈≈(data_float_inf)).to eq(false)
-            expect(0.0.≈≈(data_float_negative_inf)).to eq(false)
+          it 'w/ NaN' do
             expect(0.0.≈≈(data_float_nan)).to eq(false)
-
-            expect(Float::MAX.≈≈(-Float::MAX)).to eq(false)
-            expect((-Float::MAX).≈≈(Float::MAX)).to eq(false)
-            expect(Float::MAX.≈≈(Float::MAX / 2)).to eq(false)
-            expect(Float::MAX.≈≈(-Float::MAX / 2)).to eq(false)
-            expect((-Float::MAX).≈≈(Float::MAX / 2)).to eq(false)
-
-            expect(data_float_inf.≈≈(data_float_negative_inf)).to eq(false)
-            expect(data_float_negative_inf.≈≈(data_float_inf)).to eq(false)
-            expect(data_float_inf.≈≈(Float::MAX)).to eq(false)
-            expect(data_float_negative_inf.≈≈(-Float::MAX)).to eq(false)
-
-            expect(data_float_nan.≈≈(data_float_nan)).to eq(false)
             expect(data_float_nan.≈≈(0)).to eq(false)
-
             expect((-0.0).≈≈(data_float_nan)).to eq(false)
             expect(data_float_nan.≈≈(-0.0)).to eq(false)
             expect(0.0.≈≈(data_float_nan)).to eq(false)
@@ -172,6 +160,22 @@ RSpec.describe 'float.rb' do
             expect(Float::MIN.≈≈(data_float_nan)).to eq(false)
             expect(data_float_nan.≈≈(-Float::MIN)).to eq(false)
             expect((-Float::MIN).≈≈(data_float_nan)).to eq(false)
+          end
+
+          it 'edge cases' do
+            expect(0.0.≈≈(data_float_inf)).to eq(false)
+            expect(0.0.≈≈(data_float_negative_inf)).to eq(false)
+
+            expect(Float::MAX.≈≈(-Float::MAX)).to eq(false)
+            expect((-Float::MAX).≈≈(Float::MAX)).to eq(false)
+            expect(Float::MAX.≈≈(Float::MAX / 2)).to eq(false)
+            expect(Float::MAX.≈≈(-Float::MAX / 2)).to eq(false)
+            expect((-Float::MAX).≈≈(Float::MAX / 2)).to eq(false)
+
+            expect(data_float_inf.≈≈(data_float_negative_inf)).to eq(false)
+            expect(data_float_negative_inf.≈≈(data_float_inf)).to eq(false)
+            expect(data_float_inf.≈≈(Float::MAX)).to eq(false)
+            expect(data_float_negative_inf.≈≈(-Float::MAX)).to eq(false)
           end
         end
         it 'cases: bad-args' do
@@ -428,7 +432,7 @@ RSpec.describe 'float.rb' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :performance => 'slow' do
+  context 'performance', :performance => :slow do
     context 'func{∞ℂ?}: performs extremely quickly' do
       it 'for cases: all' do
         expect{0.0.∞ℂ?}.to perform_extremely_quickly

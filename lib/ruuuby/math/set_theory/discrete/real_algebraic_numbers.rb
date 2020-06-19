@@ -5,7 +5,7 @@ module ::Math
   module SetTheory
 
     class RealAlgebraicNumbers < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
       KNOWN_REAL_ALGEBRAIC = [::Float::CONST_PYTHAGORAS.🆔, ::Float::RATIO_GOLDEN.🆔]
 
@@ -27,15 +27,15 @@ module ::Math
             if ℤ.∋?(n)
               true
             else
-              if ::Numeric.known_transcendental?(n)
-                false
-              else
+              #if ::Numeric.known_transcendental?(n)
+              #  false
+              #else
                 if ::Numeric.known_real_algebraic?(n)
                   return true
                 else
                   nil
                 end
-              end
+              #end
             end
           else
             false

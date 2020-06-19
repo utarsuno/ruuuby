@@ -64,27 +64,26 @@ RSpec.describe 'f17' do
 
     context 'feature(f17) passes audits (tests not relating to observed functionality)' do
       it 'module is defined in correct location' do
-        expect(🧬.∃ᵐ?(:Trig, ::Math)).to eq(true)
-        expect(🧬.∃ᵐ?(:Funcs, ::Math::Trig)).to eq(true)
+        expect_∃ᵐ(:Trig, ::Math)
       end
       context 'funcs provided are defined in correct location' do
         context 'for module{Trigonometry}' do
           context 'has needed functions' do
             it 'squared trig funcs' do
-              expect_∃⨍(:cot², ::Math::Trig::Funcs)
-              expect_∃⨍(:cos², ::Math::Trig::Funcs)
-              expect_∃⨍(:sin², ::Math::Trig::Funcs)
-              expect_∃⨍(:tan², ::Math::Trig::Funcs)
-              expect_∃⨍(:sec², ::Math::Trig::Funcs)
-              expect_∃⨍(:csc², ::Math::Trig::Funcs)
+              expect_∃⨍(:cot², ::Math::Trig)
+              expect_∃⨍(:cos², ::Math::Trig)
+              expect_∃⨍(:sin², ::Math::Trig)
+              expect_∃⨍(:tan², ::Math::Trig)
+              expect_∃⨍(:sec², ::Math::Trig)
+              expect_∃⨍(:csc², ::Math::Trig)
             end
             it 'regular trig funcs' do
-              expect_∃⨍(:cot, ::Math::Trig::Funcs)
-              expect_∃⨍(:cos, ::Math::Trig::Funcs)
-              expect_∃⨍(:sin, ::Math::Trig::Funcs)
-              expect_∃⨍(:tan, ::Math::Trig::Funcs)
-              expect_∃⨍(:csc, ::Math::Trig::Funcs)
-              expect_∃⨍(:sec, ::Math::Trig::Funcs)
+              expect_∃⨍(:cot, ::Math::Trig)
+              expect_∃⨍(:cos, ::Math::Trig)
+              expect_∃⨍(:sin, ::Math::Trig)
+              expect_∃⨍(:tan, ::Math::Trig)
+              expect_∃⨍(:csc, ::Math::Trig)
+              expect_∃⨍(:sec, ::Math::Trig)
             end
           end
         end

@@ -6,9 +6,9 @@ RSpec.describe Ruuuby do
 
     context 'defines needed Feature modules' do
       it 'with needed sub-modules' do
-        expect(🧬.∃ᵐ?(:Feature, ::Ruuuby)).to eq(true)
-        expect(🧬.∃ᵐ?(:Extendable, ::Ruuuby::Feature)).to eq(true)
-        expect(🧬.∃ᵐ?(:Includable, ::Ruuuby::Feature)).to eq(true)
+        expect_∃ᵐ(:Feature, ::Ruuuby)
+        expect_∃ᵐ(:Extendable, ::Ruuuby::Feature)
+        expect_∃ᵐ(:Includable, ::Ruuuby::Feature)
       end
     end
 
@@ -23,14 +23,14 @@ RSpec.describe Ruuuby do
 
     context 'Ruuuby added as module' do
       it 'exists' do
-        expect(🧬.∃ᵐ?(:Ruuuby)).to eq(true)
+        expect_∃ᴹ(:Ruuuby)
       end
       context 'and adds needed sub-modules & classes' do
         it 'module(ParamErr) under module(::Ruuuby)' do
-          expect(🧬.∃ᵐ?(:ParamErr, ::Ruuuby)).to eq(true)
+          expect_∃ᵐ(:ParamErr, ::Ruuuby)
         end
         it 'class(WrongParamType) under module(::Ruuuby::ParamErr)' do
-          expect(🧬.∃ᶜ?(:WrongParamType, ::Ruuuby::ParamErr)).to eq(true)
+          expect_∃ᶜ(:WrongParamType, ::Ruuuby::ParamErr)
         end
       end
     end

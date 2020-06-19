@@ -1,9 +1,8 @@
 # encoding: UTF-8
 
 module HelpersDB
-  require_relative '../../db/seed'
 
-  def audit_feature(the_feature, feature_str, description)
+  def audit_feature(the_feature, feature_str, expected_num_feats, description)
     expect(the_feature.ⓣ).to eq(RuuubyFeature)
     expect(the_feature.uid).to eq(feature_str)
     expect(feature_str.match?(::RuuubyFeature.syntax_uid)).to eq(true)
@@ -11,18 +10,21 @@ module HelpersDB
     expect(the_feature.id.ⓣ).to eq(Integer)
     expect(the_feature.description).to eq(description)
     expect(the_feature.description.ⓣ).to eq(String)
+    expect(the_feature.ruuuby_feature_behaviors.length).to eq(expected_num_feats)
   end
 
   def audit_version(the_version, version_str)
-    expect(the_version.ⓣ).to eq(RuuubyRelease)
+    expect(the_version.ⓣ).to eq(::RuuubyRelease)
     expect(the_version.uid).to eq(version_str)
     expect(version_str.match?(::RuuubyRelease.syntax_uid)).to eq(true)
     expect(the_version.id.ⓣ).to eq(Integer)
     if the_version.released?
-      expect(the_version.num_commits > 0).to eq(true)
+      expect(the_version.git_commits_count.ⓣ).to eq(::Integer)
+      expect(the_version.git_commits_count > 0).to eq(true)
       expect(the_version.has_release_tag?).to eq(true)
     else
-      expect(the_version.num_commits).to eq(0)
+      expect(the_version.git_commits_count.ⓣ).to eq(::Integer)
+      expect(the_version.git_commits_count).to eq(0)
       expect(the_version.has_release_tag?).to eq(false)
     end
   end
@@ -38,7 +40,6 @@ module HelpersDB
 end
 
 RSpec.shared_context 'shared_context_db' do
-
   let(:data_git_hash){'0123456789012345678901234567890123456789'}
   let(:data_git_author_date){'2019-12-31T18:03:39-06:00'}
   let(:data_git_author_date_older){'2019-12-31T18:03:39-06:00'}
@@ -87,6 +88,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:v0_0_38){RuuubyRelease.find_by_uid(0, 0, 38)}
   let(:v0_0_39){RuuubyRelease.find_by_uid(0, 0, 39)}
   let(:v0_0_40){RuuubyRelease.find_by_uid(0, 0, 40)}
+  let(:v0_0_41){RuuubyRelease.find_by_uid(0, 0, 41)}
 
   let(:f00){RuuubyFeature.find_by_uid(0)}
   let(:f00_b00){f00.ruuuby_feature_behaviors[0]}
@@ -109,9 +111,9 @@ RSpec.shared_context 'shared_context_db' do
   let(:f05_b01){f05.ruuuby_feature_behaviors[1]}
 
   let(:f06){RuuubyFeature.find_by_uid(6)}
-
   let(:f06_b00){f06.ruuuby_feature_behaviors[0]}
   let(:f06_b01){f06.ruuuby_feature_behaviors[1]}
+  let(:f06_b02){f06.ruuuby_feature_behaviors[2]}
 
   let(:f07){RuuubyFeature.find_by_uid(7)}
   let(:f08){RuuubyFeature.find_by_uid(8)}
@@ -141,7 +143,11 @@ RSpec.shared_context 'shared_context_db' do
   let(:f19){RuuubyFeature.find_by_uid(19)}
   let(:f20){RuuubyFeature.find_by_uid(20)}
   let(:f21){RuuubyFeature.find_by_uid(21)}
+
   let(:f22){RuuubyFeature.find_by_uid(22)}
+  let(:f22_b00){f22.ruuuby_feature_behaviors[0]}
+  let(:f22_b01){f22.ruuuby_feature_behaviors[1]}
+
   let(:f23){RuuubyFeature.find_by_uid(23)}
 
   let(:f24){RuuubyFeature.find_by_uid(24)}
@@ -159,6 +165,8 @@ RSpec.shared_context 'shared_context_db' do
   let(:f27_b00){f27.ruuuby_feature_behaviors[0]}
   let(:f27_b01){f27.ruuuby_feature_behaviors[1]}
   let(:f27_b02){f27.ruuuby_feature_behaviors[2]}
+  let(:f27_b03){f27.ruuuby_feature_behaviors[3]}
+  let(:f27_b04){f27.ruuuby_feature_behaviors[4]}
 
   let(:f28){RuuubyFeature.find_by_uid(28)}
   let(:f28_b00){f28.ruuuby_feature_behaviors[0]}
@@ -202,6 +210,19 @@ RSpec.shared_context 'shared_context_db' do
   let(:f32_b10){f32.ruuuby_feature_behaviors[10]}
 
   let(:f33){RuuubyFeature.find_by_uid(33)}
+
+  let(:f34){RuuubyFeature.find_by_uid(34)}
+  let(:f34_b00){f34.ruuuby_feature_behaviors[0]}
+  let(:f34_b01){f34.ruuuby_feature_behaviors[1]}
+  let(:f34_b02){f34.ruuuby_feature_behaviors[2]}
+  let(:f34_b03){f34.ruuuby_feature_behaviors[3]}
+  let(:f34_b04){f34.ruuuby_feature_behaviors[4]}
+
+  let(:f35){RuuubyFeature.find_by_uid(35)}
+  let(:f35_b00){f35.ruuuby_feature_behaviors[0]}
+  let(:f35_b01){f35.ruuuby_feature_behaviors[1]}
+  let(:f35_b02){f35.ruuuby_feature_behaviors[2]}
+  let(:f35_b03){f35.ruuuby_feature_behaviors[3]}
 
   let(:f95){RuuubyFeature.find_by_uid(95)}
   let(:f96){RuuubyFeature.find_by_uid(96)}

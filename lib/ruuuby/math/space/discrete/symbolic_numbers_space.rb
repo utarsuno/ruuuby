@@ -96,7 +96,7 @@ module ::Math
         end
       end
 
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
     end
 

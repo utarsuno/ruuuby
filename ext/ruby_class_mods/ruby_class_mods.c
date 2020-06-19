@@ -7,14 +7,19 @@
 ____________________________________________________________________________________________________________________________________________________________________ */
 
 //#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.0.h"
-#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
+//#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
+
+#include "ruby/config.h"
+#include "/Users/utarsuno/.rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
+
+#include <sys/resource.h>
 
 //#include "ruby/encoding.h"
-//#include "ruby-2.7.0/ruby.h"
 
-#include <locale.h>
+//#include <locale.h>
+//#include <ruby.h>
 
-#include <ruby.h>
+/*
 #include <ruby/defines.h>
 #include <ruby/intern.h>
 #include <ruby/debug.h>
@@ -27,12 +32,15 @@ ________________________________________________________________________________
 #include <ruby/subst.h>
 #include <ruby/util.h>
 #include <ruby/version.h>
-#include <ruby/vm.h>
+#include <ruby/vm.h>*/
 
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <inttypes.h>
+
+#include <time.h>
+#include <sys/time.h>
 
 #include <float.h>
 #include <math.h>
@@ -43,61 +51,42 @@ ________________________________________________________________________________
 #include "ruby_class_mods.h"
 #endif
 
-/*____________________________________________________________________________________________________________________________________________________________________
-            __   __   __   __       __   __   ___     __   __   __   __   ___  __   __          __
- |\/|  /\  /  ` |__) /  \ /__` .   |__) |__) |__  __ |__) |__) /  \ /  ` |__  /__` /__` | |\ | / _`
- |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
-____________________________________________________________________________________________________________________________________________________________________ */
-#define r_str_new_frozen_literal(arg) rb_str_new_frozen(rb_str_new_cstr(arg))
-#define cstr_to_rstr(arg)             rb_str_new_cstr(arg)
-
+/*            __                                   ___                       __
+   __        /\ \__                               /\_ \                     /\ \__
+  /\_\    ___\ \ ,_\    __   _ __    ___      __  \//\ \         ____     __\ \ ,_\  __  __  _____
+  \/\ \ /' _ `\ \ \/  /'__`\/\`'__\/' _ `\  /'__`\  \ \ \       /',__\  /'__`\ \ \/ /\ \/\ \/\ '__`\
+   \ \ \/\ \/\ \ \ \_/\  __/\ \ \/ /\ \/\ \/\ \L\.\_ \_\ \_    /\__, `\/\  __/\ \ \_\ \ \_\ \ \ \L\ \
+    \ \_\ \_\ \_\ \__\ \____\\ \_\ \ \_\ \_\ \__/.\_\/\____\   \/\____/\ \____\\ \__\\ \____/\ \ ,__/
+     \/_/\/_/\/_/\/__/\/____/ \/_/  \/_/\/_/\/__/\/_/\/____/    \/___/  \/____/ \/__/ \/___/  \ \ \/
+                                                                                               \ \_\
+                                                                                                \/_/ */
 #define bsearch_power(val_to_find)         (unsigned long *) bsearch (&val_to_find, exponential_ids, NUM_EXPONENTS, sizeof(unsigned long), internal_only_compare_func_4_object_id);
 #define bsearch_power_position(arg_index) ((int)(((int)arg_index - (int)exponential_ids) / sizeof(unsigned long)))
 
-/*____________________________________________________________________________________________________________________
-   __            ___  ___  __                          ___       __   ___  __   __
-  /  `    | |\ |  |  |__  |__) |\ |  /\  |       |__| |__  |    |__) |__  |__) /__`
-  \__,    | | \|  |  |___ |  \ | \| /~~\ |___    |  | |___ |___ |    |___ |  \ .__/
-_____________________________________________________________________________________________________________________ */
-
-static VALUE θ_is_normal(const unsigned char angle_mode, const double angle_value) {
-    if (angle_value == 0.0) {
-        re_ye
-    } else if (angle_value < 0.0) {
-        switch(angle_mode) {
-        case THETA_MODE_ID_TRN:
-            re_as_bool(angle_value >= THETA_TRN_PERIGON_NEGATIVE)
-        case THETA_MODE_ID_DGR:
-            re_as_bool(angle_value >= THETA_DGR_PERIGON_NEGATIVE)
-        case THETA_MODE_ID_RAD:
-            re_as_bool(angle_value >= THETA_RAD_PERIGON_NEGATIVE)
-        default:
-            re_as_bool(angle_value >= THETA_GON_PERIGON_NEGATIVE)
-        }
-    } else {
-        switch(angle_mode) {
-        case THETA_MODE_ID_TRN:
-            re_as_bool(angle_value <= THETA_TRN_PERIGON)
-        case THETA_MODE_ID_DGR:
-            re_as_bool(angle_value <= THETA_DGR_PERIGON)
-        case THETA_MODE_ID_RAD:
-            re_as_bool(angle_value <= THETA_RAD_PERIGON)
-        default:
-            re_as_bool(angle_value <= THETA_GON_PERIGON)
-        }
-    }
-}
-
-static inline VALUE ptrθ_is_normal(const ptrθ data) {
-    return θ_is_normal(data->angle_mode, data->angle_value);
-}
-
-static inline int is_num(VALUE arg) {
+static inline int is_num(const VALUE arg) {
     switch(TYPE(arg)){
     case RUBY_T_FIXNUM:case RUBY_T_FLOAT:case RUBY_T_RATIONAL:case RUBY_T_COMPLEX:case RUBY_T_BIGNUM:
         re_c_ye
     default:
-        re_as_c_bool(rb_obj_is_instance_of(arg, cached_class_big_decimal))
+        re_as_c_bool(rb_obj_is_instance_of(arg, Ⓒbig_decimal))
+    }
+}
+
+/*static inline int is_simple_num(const VALUE arg) {
+    switch(TYPE(arg)){
+    case RUBY_T_FIXNUM:case RUBY_T_FLOAT:case RUBY_T_BIGNUM:
+        re_c_ye
+    default:
+        re_no
+    }
+}*/
+
+static inline int is_non_simple_num(const VALUE arg) {
+    switch(TYPE(arg)){
+    case RUBY_T_RATIONAL:case RUBY_T_COMPLEX:
+        re_c_ye
+    default:
+        re_as_c_bool(rb_obj_is_instance_of(arg, Ⓒbig_decimal))
     }
 }
 
@@ -113,9 +102,9 @@ static inline VALUE 💎new_ary(const long known_max_size) {
 }
 
 static void internal_only_prepare_f16(void) {
-    cached_flt_nan          = rb_const_get_at(R_FLT, rb_intern("NAN"));
+    //rb_gc_disable();
+
     cached_flt_inf          = rb_const_get_at(R_FLT, rb_intern("INFINITY"));
-    cached_flt_e            = rb_const_get_at(R_MATH, rb_intern("E"));
     cached_flt_negative_inf = rb_const_get_at(R_FLT, rb_intern("INFINITY_NEGATIVE"));
     cached_flt_inf_complex  = rb_const_get_at(R_FLT, rb_intern("INFINITY_COMPLEX"));
 
@@ -129,13 +118,13 @@ static void internal_only_prepare_f16(void) {
 
     rb_ary_store(code_points, 0l, INT2FIX(8712));
     rb_ary_store(code_points, 1l, INT2FIX(8469));
-    💎PROCEDURE_00(n_in_set_naturals)
+    💎PROCEDURE_00(n_in_set_natural)
 
     rb_ary_store(code_points, 1l, INT2FIX(120142));
-    💎PROCEDURE_00(n_in_set_wholes)
+    💎PROCEDURE_00(n_in_set_whole)
 
     rb_ary_store(code_points, 1l, INT2FIX(8484));
-    💎PROCEDURE_00(n_in_set_integers)
+    💎PROCEDURE_00(n_in_set_integer)
 
     rb_ary_store(code_points, 1l, INT2FIX(120140));
     💎PROCEDURE_00(n_in_set_universal)
@@ -145,13 +134,13 @@ static void internal_only_prepare_f16(void) {
 
     rb_ary_store(code_points, 1l, INT2FIX(8469));
     rb_ary_push(code_points, INT2FIX(120138));
-    💎PROCEDURE_00(n_in_set_naturals_w_str_allowed)
+    💎PROCEDURE_00(n_in_set_natural_w_str_allowed)
 
     rb_ary_store(code_points, 1l, INT2FIX(120142));
-    💎PROCEDURE_00(n_in_set_wholes_w_str_allowed)
+    💎PROCEDURE_00(n_in_set_whole_w_str_allowed)
 
     rb_ary_store(code_points, 1l, INT2FIX(8484));
-    💎PROCEDURE_00(n_in_set_integers_w_str_allowed)
+    💎PROCEDURE_00(n_in_set_integer_w_str_allowed)
 
     rb_ary_store(code_points, 1l, INT2FIX(120140));
     💎PROCEDURE_00(n_in_set_universal_w_str_allowed)
@@ -279,94 +268,39 @@ static void internal_only_prepare_f16(void) {
     💎PROCEDURE_02(the_index, obj_id_inf, CACHE_INDEX_INF);
     💎PROCEDURE_02(the_index, obj_id_inf_negative, CACHE_INDEX_INF_NEGATIVE);
     💎PROCEDURE_02(the_index, obj_id_inf_complex, CACHE_INDEX_INF_COMPLEX);
+
+    //rb_gc_enable();
 }
 
 static inline void startup_step5_protect_against_gc(void) {
-    rb_global_variable(& cached_rb_intern_as_degree);
-    rb_global_variable(& cached_rb_intern_as_radian);
-    rb_global_variable(& cached_rb_intern_as_gon);
-    rb_global_variable(& cached_rb_intern_as_turn);
-
-    rb_global_variable(& cached_class_set);
-    rb_global_variable(& cached_class_big_decimal);
-
-    rb_global_variable(& cached_global_sym_many_args);
-
-    rb_global_variable(& cached_module_param_err);
-
-    // TODO: expand investigation
-    //size_t rb_obj_memsize_of(VALUE);
-
-    //rb_gc_verify_internal_consistency();
-}
-
-static void startup_step0_load_f98_b02(void) {
-    // Ruby libraries
-    ensure_loaded_default(bigdecimal)
-    ensure_loaded_default(tempfile)
-    ensure_loaded_default(singleton)
-    ensure_loaded_default(logger)
-    ensure_loaded_default(time)
-    ensure_loaded_default(prime)
-    ensure_loaded_default(benchmark)
-    // 3rd party gem libraries
-    ensure_loaded_default(tty-command)
-    ensure_loaded_default(rugged)
+    rb_gc_register_address(& Ⓒset);
+    rb_gc_register_address(& Ⓒtheta_angle);
+    rb_gc_register_address(& Ⓒbig_decimal);
+    rb_gc_register_address(& cached_global_sym_many_args);
+    //rb_global_variable(& cached_global_sym_many_args);
+    //rb_global_variable(& cached_module_param_err);
+    rb_gc_verify_internal_consistency();
 }
 
 static inline void startup_step4_load_needed_ruuuby_files(void) {
     ensure_loaded_ruuuby(virtual/f10)
 
-    ensure_loaded_attribute_includable(cardinality)
-    ensure_loaded_attribute_includable(notation_set_mathematics)
-    ensure_loaded_attribute_includable(subscript_indexing)
-    ensure_loaded_attribute_includable(syntax_cache)
-
-    ensure_loaded_module(enumerable)
-    ensure_loaded_module(module)
-    ensure_loaded_module(kernel)
-
-    ensure_loaded_module(math)
+    ensure_all_loaded_for_attribute_includable()
+    ensure_all_loaded_for_module()
 
     ensure_loaded_class(obj)
     ensure_loaded_class(re)
     ensure_loaded_ruuuby(arg_err)
     ensure_loaded_enumerable(ary)
     ensure_loaded_enumerable(hsh) // must be after{ary}
-    ensure_loaded_nums(int)
-    ensure_loaded_nums(float)
-    ensure_loaded_nums(numeric)
-    ensure_loaded_nums(big_decimal)
-    ensure_loaded_nums(rational)
-    ensure_loaded_nums(complex)
-    ensure_loaded_nums(theta_angle)
+
+    ensure_all_loaded_for_nums()
 
     ensure_loaded_enumerable(set)
 
     ensure_loaded_attribute_extendable(syntax_cache)
 
-    ensure_loaded_attribute_extendable(singleton)
-    ensure_loaded_attribute_includable(singleton)
-
-    ensure_loaded_set_theory(closure)
-    ensure_loaded_set_theory(number_set)
-
-    ensure_loaded_set_theory(discrete/algebraic_numbers)
-    ensure_loaded_set_theory(discrete/boolean_numbers)
-    ensure_loaded_set_theory(discrete/complex_numbers)
-    ensure_loaded_set_theory(discrete/empty_set)
-    ensure_loaded_set_theory(discrete/imaginary_numbers)
-    ensure_loaded_set_theory(discrete/integer_numbers)
-    ensure_loaded_set_theory(discrete/irrational_numbers)
-    ensure_loaded_set_theory(discrete/natural_numbers)
-    ensure_loaded_set_theory(discrete/null_set)
-    ensure_loaded_set_theory(discrete/rational_numbers)
-    ensure_loaded_set_theory(discrete/real_algebraic_numbers)
-    ensure_loaded_set_theory(discrete/real_numbers)
-    ensure_loaded_set_theory(discrete/universal_set)
-    ensure_loaded_set_theory(discrete/whole_numbers)
-
-    ensure_loaded_group_theory(circle_group)
+    ensure_all_loaded_for_set_theory()
 
     ensure_loaded_class(sym) // must be after{attribute_cardinality}
 
@@ -376,37 +310,25 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
 
     internal_only_prepare_f16(); // must be after{ruuuby/types, ruuuby/class/str}
 
-    ensure_loaded_math(space/space)
-    ensure_loaded_math(space/types_space)
-    ensure_loaded_math(space/discrete/boolean_space)
-    ensure_loaded_math(space/discrete/nucleotide_space)
-    ensure_loaded_math(space/discrete/number_space)
-    ensure_loaded_math(space/discrete/symbolic_numbers_space)
+    ensure_all_loaded_for_math_space()
 
     ensure_loaded_math(expr/seq/sequence)
     ensure_loaded_math(expr/seq/recursive)
 
     ensure_loaded_math(number_theory/number_theory) // must be after{expression/sequence/recursive_sequence}
     ensure_loaded_math(combinatorics/combinatorics)
+    ensure_loaded_math(stats/stats)
+    ensure_loaded_math(stats/time_series_analysis)
+    ensure_loaded_math(stats/descriptive_statistics)
 
-    ensure_loaded_math(geometry/geometry)
-    ensure_loaded_math(geometry/trig)
+    ensure_all_loaded_for_geometry()
 
     // [⚠️] : excluding: alternative files are loading these already:
     //          * ensure_loaded_ruuuby(ruuuby/metadata/ruuuby_metadata_constants)
     //          * ensure_loaded_ruuuby(version)
     // [⚠️] : reminder, do not load "ruuuby/ruuuby_orm" here
 
-    ensure_loaded_ruuuby(virtual/env)
-    ensure_loaded_ruuuby(virtual/f28)
-
-    ensure_loaded_ruuuby(ruuuby/routine_cli)
-    ensure_loaded_ruuuby(ruuuby/ruuuby_api)
-    ensure_loaded_ruuuby(ruuuby/git_api)
-
-    ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine)
-
-    ensure_loaded_ruuuby(configs)
+    ensure_all_loaded_for_ruuuby()
 }
 
 // original source modified from: https://stackoverflow.com/questions/36681906/c-qsort-doesnt-seem-to-work-with-unsigned-long
@@ -428,25 +350,24 @@ ________________________________________________________________________________
 \__/ |__) \__/ |___ \__,  |
 _____________________________________________________________________________________________________________________ */
 
-// | function{ary?}  |
+// | func{ary?}  |
 ⓡ𝑓_def(m_obj_ary, re_as_bool(is_ary(self)))
 
-// | function{bool?} |
+// | func{bool?} |
 ⓡ𝑓_def(m_obj_bool, re_as_bool(is_bool(self)))
 
-// | function{hash?} |
+// | func{hash?} |
 ⓡ𝑓_def(m_obj_hash, re_as_bool(is_hsh(self)))
 
-// | function{flt?}   |
+// | func{flt?}   |
 ⓡ𝑓_def(m_obj_flt, re_as_bool(is_float(self)))
 
-// | function{sym?}  |
+// | func{sym?}  |
 ⓡ𝑓_kargs(m_obj_sym,
     if (argc == 0) {
         re_as_bool(is_sym(self))
     } else if (argc == 1) {
-        VALUE them;
-        rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);
+        💎parse_optional_arg_as_them()
         if (is_sym(them)) {
             if (them == n_in_set_superscripts) {
                 if (is_sym(self)) {
@@ -462,7 +383,7 @@ ________________________________________________________________________________
                             } else if (power_to_raise_to == CACHE_INDEX_INF_NEGATIVE) {
                                 return cached_flt_negative_inf;
                             } else {
-                                return cached_flt_inf_complex;
+                                re_inf_complex
                             }
                         } else {
                             re_no
@@ -470,12 +391,8 @@ ________________________________________________________________________________
                     } else {re_no}
                 } else {re_no}
             } else {ERR_normalizer_invalid_value("sym?", them)}
-        } else {
-            raise_err_arg("| <%"PRIsVALUE">-> m{sym?} given 1 arg expects type{Symbol}, not the received type{%s} from arg{%"PRIsVALUE"} |", self, rb_obj_classname(them), them);
-        }
-    } else {
-        raise_err_arg("| <%"PRIsVALUE">-> m{sym?} expects 0 or 1 args, not the received{%d} |", self, argc);
-    }
+        } else {🛑expected_sym("sym?", "normalizer", them)}
+    } else {🛑expected_kargs("sym?", "0 or 1")}
 )
 
 // | func{int?}  |
@@ -483,192 +400,69 @@ ________________________________________________________________________________
     if (argc == 0) {
         re_as_bool(is_int(self))
     } else if (argc == 1) {
-        VALUE them;
-        rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);
-
+        💎parse_optional_arg_as_them()
         if (is_sym(them)) {
-            //printf("\n\nCOVERAGE INT?\n\n");
-            //re_ye
-
-            if (is_int(self)) {
-                if (them == n_in_set_universal || them == n_in_set_universal_w_str_allowed || them == n_in_set_integers || them == n_in_set_integers_w_str_allowed) {
-                    re_ye
-                } else if (them == n_in_set_naturals || them == n_in_set_naturals_w_str_allowed) {
-                    re_as_bool(NUM2INT(self) > 0)
-                } else if (them == n_in_set_wholes || them == n_in_set_wholes_w_str_allowed) {
-                    re_as_bool(NUM2INT(self) >= 0)
-                } else {
-                    //re_no
-                    raise_err_arg("| <%"PRIsVALUE">-> m{num?} does not support the received normalizer{%"PRIsVALUE"}; either it is invalid or the current type of{%s} is not valid w/ the valid normalizer |", self, them, rb_obj_classname(self));
-                }
-            } else if (is_str(self)) {
-                if (them == n_in_set_universal_w_str_allowed || them == n_in_set_integers_w_str_allowed || them == n_in_set_naturals_w_str_allowed || them == n_in_set_wholes_w_str_allowed) {
-                    VALUE looks_like_num = rb_funcall(self, rb_intern("to_num?"), 0);
-                    if (looks_like_num) {
-                        VALUE as_num = rb_funcall(self, rb_intern("to_num"), 0);
-                        if (them == n_in_set_universal_w_str_allowed) {
-                            re_as_bool(is_finite_num(as_num))
-                        } else if (them == n_in_set_naturals_w_str_allowed) {
-                            if (is_finite_num(as_num)) {
-                                if (has_smell_of_int(as_num)) {
-                                    re_as_bool(NUM2INT(as_num) > 0)
-                                } else {re_no}
-                            } else {re_no}
-                        } else if (them == n_in_set_wholes_w_str_allowed) {
-                            if (is_finite_num(as_num)) {
-                                if (has_smell_of_int(as_num)) {
-                                    re_as_bool(NUM2INT(as_num) >= 0)
-                                } else {re_no}
-                            } else {re_no}
-                        } else if (them == n_in_set_integers_w_str_allowed) {
-                            if (is_finite_num(as_num)) {
-                                if (has_smell_of_int(as_num)) {
-                                    re_ye
-                                } else {re_no}
-                            } else {re_no}
-                        } else {
-                            printf("\nw8, error case scenario?\n");
-                            re_no
-                        }
-                    } else {
-                        re_no
-                    }
-                } else {
-                    raise_err_arg("| <%"PRIsVALUE">-> m{num?} does not support the received normalizer{%"PRIsVALUE"}; either it is invalid or the current type of{%s} is not valid w/ the valid normalizer |", self, them, rb_obj_classname(self));
-                }
+            if (is_fixnum(self)) {
+                r_int_passes_normalizer(self, them, "int?", FIX2INT)
+            } else if (is_bignum(self)) {
+                r_int_passes_normalizer(self, them, "int?", NUM2INT)
             } else {re_no}
         } else {
-            raise_err_arg("| <%"PRIsVALUE">-> m{int?} given 1 arg expects type{Symbol}, not the received type{%s} from arg{%"PRIsVALUE"} |", self, rb_obj_classname(them), them);
+            🛑expected_sym("int?", "normalizer", them)
         }
-    } else {
-         raise_err_arg("| <%"PRIsVALUE">-> m{int?} expects 0 or 1 args, not the received{%d} |", self, argc);
-    }
+    } else {🛑expected_kargs("int?", "0 or 1")}
 )
 
-// | function{chr?} |
-ⓡ𝑓_def(m_obj_chr,
-    if (is_str(self)) {
-        re_as_bool(len_str(self) == 1)
-    } else {
-        re_no
-    }
-)
+// | func{chr?} |
+ⓡ𝑓_def(m_obj_chr, if (is_str(self)) {re_as_bool(len_str(self) == 1)} else {re_no})
 
-// | function{set?} |
-ⓡ𝑓_def(m_obj_set, return rb_obj_is_instance_of(self, cached_class_set);)
+// | func{set?} |
+ⓡ𝑓_def(m_obj_set, return rb_obj_is_instance_of(self, Ⓒset);)
 
-// | function{str?}  |
+// | func{str?}  |
 ⓡ𝑓_kargs(m_obj_str,
     if (argc == 0) {
         re_as_bool(is_str(self))
     } else if (argc == 1) {
-        VALUE them;
-        rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);
+        💎parse_optional_arg_as_them()
         if (NIL_P(them)) {
             rb_raise(R_ERR_ARG, "| c{%s}-> m{%s} with self{%"PRIsVALUE"} got null for optional arg |", rb_obj_classname(self), "str?", self);
         }
-
         if (is_sym(them)) {
-
             if (them == n_no_empty) {
                 if (is_str(self)) {
                     if (is_empty_str(self)) {re_no} else {re_ye}
                 } else {re_no}
             } else {
-                //raise_err_arg("| <%"PRIsVALUE">-> m{str?} does not support the received normalizer{%"PRIsVALUE"} |", self, them);
                 ERR_normalizer_invalid_value("str?", them)
             }
         } else {
             raise_err_arg("| <%"PRIsVALUE">-> m{str?} given 1 arg expects type{Symbol}, not the received type{%s} from arg{%"PRIsVALUE"} |", self, rb_obj_classname(them), them);
         }
-    } else {
-        raise_err_arg("| <%"PRIsVALUE">-> m{str?} expects 0 or 1 args, not the received{%d} |", self, argc);
-    }
+    } else {🛑expected_kargs("str?", "0 or 1")}
 )
 
-// | function(num?} |
+// | func(num?} |
 ⓡ𝑓_kargs(m_obj_num,
     if (argc == 0) {
         re_as_bool(is_num(self))
     } else if (argc == 1) {
-        VALUE them;
-        rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);
+        💎parse_optional_arg_as_them()
         if (is_sym(them)) {
-
-            if (is_num(self)) {
-                if (them == n_in_set_universal || them == n_in_set_universal_w_str_allowed) {
-                    re_as_bool(is_finite_num(self))
-                } else if (them == n_in_set_naturals || them == n_in_set_naturals_w_str_allowed) {
-                    if (is_finite_num(self)) {
-                        if (has_smell_of_int(self)) {
-                            re_as_bool(NUM2INT(self) > 0)
-                        } else {re_no}
-                    } else {re_no}
-                } else if (them == n_in_set_wholes || them == n_in_set_wholes_w_str_allowed) {
-                    if (is_finite_num(self)) {
-                        if (has_smell_of_int(self)) {
-                            re_as_bool(NUM2INT(self) >= 0)
-                        } else {re_no}
-                    } else {re_no}
-                } else if (them == n_in_set_integers || them == n_in_set_integers_w_str_allowed) {
-                    if (is_finite_num(self)) {
-                        if (has_smell_of_int(self)) {
-                            re_ye
-                        } else {re_no}
-                    } else {re_no}
-                } else {
-                    raise_err_arg("| <%"PRIsVALUE">-> m{num?} does not support the received normalizer{%"PRIsVALUE"}; either it is invalid or the current type of{%s} is not valid w/ the valid normalizer |", self, them, rb_obj_classname(self));
-                }
+            if (is_fixnum(self)) {
+                r_int_passes_normalizer(self, them, "num?", FIX2INT)
+            } else if (is_bignum(self)) {
+                r_int_passes_normalizer(self, them, "num?", NUM2INT)
+            } else if (is_float(self)) {
+                r_flt_passes_normalizer(self, them, "num?")
+            } else if (is_non_simple_num(self)) {
+                r_non_simple_num_passes_normalizer(self, them, "num?")
             } else if (is_str(self)) {
-                VALUE looks_like_num = rb_funcall(self, rb_intern("to_num?"), 0);
-                if (looks_like_num) {
-                    VALUE as_num = rb_funcall(self, rb_intern("to_num"), 0);
-                    if (them == n_in_set_universal_w_str_allowed) {
-                        re_as_bool(is_finite_num(as_num))
-                    } else if (them == n_in_set_naturals_w_str_allowed) {
-                        if (is_finite_num(as_num)) {
-                            if (has_smell_of_int(as_num)) {
-                                re_as_bool(NUM2INT(as_num) > 0)
-                            } else {re_no}
-                        } else {re_no}
-                    } else if (them == n_in_set_wholes_w_str_allowed) {
-                        if (is_finite_num(as_num)) {
-                            if (has_smell_of_int(as_num)) {
-                                re_as_bool(NUM2INT(as_num) >= 0)
-                            } else {re_no}
-                        } else {re_no}
-                    } else if (them == n_in_set_integers_w_str_allowed) {
-                        if (is_finite_num(as_num)) {
-                            if (has_smell_of_int(as_num)) {
-                                re_ye
-                            } else {re_no}
-                        } else {re_no}
-                    } else {
-                        if (them == n_in_set_universal_w_str_allowed) {
-                            printf("\nBUT IT DOES!\n");
-                        }
-                        raise_err_arg("| <%"PRIsVALUE">-> m{num?} does not support the received normalizer{%"PRIsVALUE"}; either it is invalid or the current type of{String} is not valid w/ the valid normalizer |", self, them);
-                    }
-                } else {re_no}
-            } else {
-                raise_err_arg("| self{%"PRIsVALUE"}-> m{num?} will always return false for self-type{%s} |", self, rb_obj_classname(self));
-            }
-        } else {
-            raise_err_arg("| <%"PRIsVALUE">-> m{num?} given 1 arg expects type{Symbol}, not the received type{%s} from arg{%"PRIsVALUE"} |", self, rb_obj_classname(them), them);
-        }
-    } else {
-        raise_err_arg("| <%"PRIsVALUE">-> m{num?} expects 0 or 1 args, not the received{%d} |", self, argc);
-    }
+                r_str_passes_normalizer(self, them, "num?")
+            } else {re_no}
+        } else {🛑expected_sym("num?", "normalizer", them)}
+    } else {🛑expected_kargs("num?", "0 or 1")}
 )
-
-// | function{class?} |
-//ⓡ𝑓_def(m_obj_class, re_as_bool(is_class(self)))
-
-// | function{module?} |
-//ⓡ𝑓_def(m_obj_module, re_as_bool(is_module(self)))
-
-// | function{m_obj_nucleotide} |
-//ⓡ𝑓_def(m_obj_nucleotide, re_as_bool(is_nucleotide(self)))
 
 /*___________________________________________________________________________________________________________________
        ___  ___  __   ___  __
@@ -676,16 +470,18 @@ ________________________________________________________________________________
 | | \|  |  |___ \__> |___ |  \
 _____________________________________________________________________________________________________________________ */
 
-// | function{finite?}   |
-ⓡ𝑓_def(m_int_is_finite, re_ye)
+// | func{finite?}   |
+static VALUE m_int_is_finite(const VALUE self){re_ye}
 
-// | function{infinite?} |
-ⓡ𝑓_def(m_int_is_not_finite, re_no)
+// | func{infinite?} |
+static VALUE m_int_is_not_finite(const VALUE self){re_no}
 
-// | function{^}        |
+// | func{^}        |
 ⓡ𝑓_self_them(m_int_patch_for_exponentials,
-    if (is_int(them)) {
-        re_me_func_1args(cached_rb_intern_ints_bitwise_xor, them)
+    if (is_fixnum(them)) {
+        return INT2FIX(FIX2INT(self) ^ FIX2INT(them));
+    } else if (is_bignum(them)) {
+        return rb_big_xor(self, them);
     } else {
         const unsigned long id_to_find = NUM2ULONG(rb_obj_id(them));
         unsigned long * the_result    = bsearch_power(id_to_find)
@@ -694,14 +490,14 @@ ________________________________________________________________________________
 
             if (power_to_raise_to < 2) {
                 switch(power_to_raise_to) {
-                case -9: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn9)
-                case -8: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn8)
-                case -7: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn7)
-                case -6: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn6)
-                case -5: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn5)
-                case -4: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn4)
-                case -3: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn3)
-                case -2: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn2)
+                case -9: re_me_func_1args(ID_OF_POW, ℤn9)
+                case -8: re_me_func_1args(ID_OF_POW, ℤn8)
+                case -7: re_me_func_1args(ID_OF_POW, ℤn7)
+                case -6: re_me_func_1args(ID_OF_POW, ℤn6)
+                case -5: re_me_func_1args(ID_OF_POW, ℤn5)
+                case -4: re_me_func_1args(ID_OF_POW, ℤn4)
+                case -3: re_me_func_1args(ID_OF_POW, ℤn3)
+                case -2: re_me_func_1args(ID_OF_POW, ℤn2)
                 case -1: return rb_rational_new(ℤ1, self);
                 case 0:  re_1
                 default: re_me
@@ -709,14 +505,14 @@ ________________________________________________________________________________
             } else if (power_to_raise_to < 10) {
                 //const int val_self = NUM2INT(self);
                 switch(power_to_raise_to) {
-                case 2:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ2)
-                case 3:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ3)
-                case 4:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ4)
-                case 5:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ5)
-                case 6:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ6)
-                case 7:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ7)
-                case 8:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ8)
-                default: re_me_func_1args(cached_rb_intern_raise_to_power, ℤ9)
+                case 2:  re_me_func_1args(ID_OF_POW, ℤ2)
+                case 3:  re_me_func_1args(ID_OF_POW, ℤ3)
+                case 4:  re_me_func_1args(ID_OF_POW, ℤ4)
+                case 5:  re_me_func_1args(ID_OF_POW, ℤ5)
+                case 6:  re_me_func_1args(ID_OF_POW, ℤ6)
+                case 7:  re_me_func_1args(ID_OF_POW, ℤ7)
+                case 8:  re_me_func_1args(ID_OF_POW, ℤ8)
+                default: re_me_func_1args(ID_OF_POW, ℤ9)
                 }
             } else {
                 const int val_self = NUM2INT(self);
@@ -757,48 +553,43 @@ ________________________________________________________________________________
 |    |___ \__/ /~~\  |
 _____________________________________________________________________________________________________________________ */
 
-// | function{has_decimals?} |
-ⓡ𝑓_def(m_flt_has_decimals,
-    double val_self = NUM2DBL(self);
-    if (isnan(val_self)) {
-        re_no
-    } else if (isfinite(val_self)) {
-        if (val_self == trunc(val_self)) {re_no} else {re_ye}
-    } else {re_nil}
-);
+// | func{one?} |
+ⓡ𝑓_def(m_flt_is_one, re_me_eq_to(ℤd1);)
+
+// | func{has_decimals?} |
+ⓡ𝑓_def(m_flt_has_decimals, return r_flt_has_decimals(NUM2DBL(self));)
+
+// | func{smells_like_int?} |
+ⓡ𝑓_def(m_flt_smells_like_int, return r_flt_smells_like_int(NUM2DBL(self));)
 
 // original source code referenced from:
 // @see https://floating-point-gui.de/errors/NearlyEqualsTest.java
 //
-// | function{≈≈} |
+// | func{≈≈} |
 ⓡ𝑓_self_them(m_flt_basically_equal,
-    const double val_self = NUM2DBL(self);
-    if (isnan(val_self) || ((!(is_float(them))) && (!(is_int(them))))) {
-        re_no
-    } else if (self == them) { //rb_obj_equal(self, them)
-        re_ye
-    }
-    double val_them = NUM2DBL(them);
-    if (val_self == val_them) {
-        re_ye
-    } else {
-        const double abs_a  = fabs(val_self);
-        const double abs_b  = fabs(val_them);
-        const double diff   = fabs(val_self - val_them);
-        const double summed = abs_a + abs_b;
-        if (val_self == 0.0 || val_them == 0.0 || (summed < M_FLT_EPSILON)) {
-            re_as_bool(diff < (M_FLT_RELATIVE_ERROR * M_FLT_EPSILON))
-        } else {
-            if (summed <= M_FLT_MAX) {
-                re_as_bool((diff / summed) < M_FLT_EPSILON)
+    if (rb_obj_equal(self, them) || self == them) {re_ye}
+    else if (!is_int_or_flt(them)) {re_no} else {
+        const double val_self = NUM2DBL(self);
+        const double val_them = NUM2DBL(them);
+        if (val_self == val_them) {re_ye} else {
+            const double abs_a  = fabs(val_self);
+            const double abs_b  = fabs(val_them);
+            const double diff   = fabs(val_self - val_them);
+            const double summed = abs_a + abs_b;
+            if (val_self == 0.0 || val_them == 0.0 || (summed < M_FLT_EPSILON)) {
+                re_as_bool(diff < (M_FLT_RELATIVE_ERROR * M_FLT_EPSILON))
             } else {
-                re_as_bool((diff / M_FLT_MAX) < M_FLT_RELATIVE_ERROR)
+                if (summed <= M_FLT_MAX) {
+                    re_as_bool((diff / summed) < M_FLT_EPSILON)
+                } else {
+                    re_as_bool((diff / M_FLT_MAX) < M_FLT_RELATIVE_ERROR)
+                }
             }
         }
     }
 )
 
-// | function{^} |
+// | func{^} |
 ⓡ𝑓_self_them(m_flt_patch_for_exponentials,
     if (is_sym(them)) {
         const unsigned long id_to_find = NUM2ULONG(rb_obj_id(them));
@@ -814,25 +605,25 @@ ________________________________________________________________________________
             }
             if (power_to_raise_to < 10) {
                 switch(power_to_raise_to) {
-                case -9: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn9)
-                case -8: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn8)
-                case -7: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn7)
-                case -6: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn6)
-                case -5: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn5)
-                case -4: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn4)
-                case -3: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn3)
-                case -2: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn2)
-                case -1: re_me_func_1args(cached_rb_intern_raise_to_power, ℤn1)
+                case -9: re_me_func_1args(ID_OF_POW, ℤn9)
+                case -8: re_me_func_1args(ID_OF_POW, ℤn8)
+                case -7: re_me_func_1args(ID_OF_POW, ℤn7)
+                case -6: re_me_func_1args(ID_OF_POW, ℤn6)
+                case -5: re_me_func_1args(ID_OF_POW, ℤn5)
+                case -4: re_me_func_1args(ID_OF_POW, ℤn4)
+                case -3: re_me_func_1args(ID_OF_POW, ℤn3)
+                case -2: re_me_func_1args(ID_OF_POW, ℤn2)
+                case -1: re_me_func_1args(ID_OF_POW, ℤn1)
                 case 0:  if (isinf(val_self)) {re_nan} else { re_1 }
                 case 1:  re_me
-                case 2:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ2)
-                case 3:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ3)
-                case 4:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ4)
-                case 5:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ5)
-                case 6:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ6)
-                case 7:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ7)
-                case 8:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ8)
-                case 9:  re_me_func_1args(cached_rb_intern_raise_to_power, ℤ9)
+                case 2:  re_me_func_1args(ID_OF_POW, ℤ2)
+                case 3:  re_me_func_1args(ID_OF_POW, ℤ3)
+                case 4:  re_me_func_1args(ID_OF_POW, ℤ4)
+                case 5:  re_me_func_1args(ID_OF_POW, ℤ5)
+                case 6:  re_me_func_1args(ID_OF_POW, ℤ6)
+                case 7:  re_me_func_1args(ID_OF_POW, ℤ7)
+                case 8:  re_me_func_1args(ID_OF_POW, ℤ8)
+                case 9:  re_me_func_1args(ID_OF_POW, ℤ9)
                 default: raise_err_runtime("| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |", self, them)
                 }
             } else {
@@ -872,17 +663,7 @@ ________________________________________________________________________________
             }
         } else {ERR_c_self_arg_err__print_self_them("| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |")}
     } else {
-        if (is_float(them)) {
-            const double val_self = NUM2DBL(self);
-            const double val_them = NUM2DBL(them);
-            if (val_self == NUM2DBL(cached_flt_e)) {
-                if (val_them == Ω) {
-                    return DBL2NUM((double) (expl(ΩL)));
-                } else {
-                    return DBL2NUM((double) (expl((long double) NUM2DBL(them))));
-                }
-            } else {ERR_c_self_arg_err__print_self_them("| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |")}
-        } else {ERR_c_self_arg_err__print_self_them("| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |")}
+        ERR_c_self_arg_err__print_self_them("| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |")
     }
 )
 
@@ -892,7 +673,7 @@ ________________________________________________________________________________
 | \| | |___
 _____________________________________________________________________________________________________________________ */
 
-ⓡ𝑓_def(m_nil_empty, re_ye) // func{empty?}
+static VALUE m_nil_empty(const VALUE self) {re_ye}
 
 /*___________________________________________________________________________________________________________________
  __   __   __           __             __   __   ___  __
@@ -925,11 +706,6 @@ ________________________________________________________________________________
     } else {
         ERR_c_self_got_non_str_param(">>", them)
     }
-)
-
-// | function{err_to_num} |
-ⓡ𝑓_def(m_str_err_to_num,
-     rb_raise(R_ERR_RUNTIME, "| c{String}-> m{to_num} may not convert self(%"PRIsVALUE") into a valid numeric |", self);
 )
 
 /*___________________________________________________________________________________________________________________
@@ -986,17 +762,15 @@ ________________________________________________________________________________
     re_me
 )
 
-// | function{disjunctive_union} |
+// | func{disjunctive_union} |
 ⓡ𝑓_self_them(m_ary_disjunctive_union,
     if (is_ary(them)) {
         const long len_me   = len_ary(self);
         const long len_them = len_ary(them);
-        if (len_me == 0 && len_them == 0) {
-            return cached_ref_empty_ary;
+        if ((len_me == 0 && len_them == 0) || len_them == 0) {
+            re_me
         } else if (len_me == 0) {
-            return rb_ary_dup(them);
-        } else if (len_them == 0) {
-            return rb_ary_dup(self);
+            return them;
         } else {
             long  i = 0L;
             VALUE n;
@@ -1045,6 +819,8 @@ ________________________________________________________________________________
                 raise_err_arg("| module-function{f_add_aliases} for self{%"PRIsVALUE"} of type{%s} received a non-symbol{%s} as one of the array-arg's elements |", self, rb_obj_classname(self), rb_obj_classname(v))
             }
         }
+        //rb_gc_force_recycle(param_b);
+        rb_ary_free(param_b);
         re_me
     } else {ERR_m_param_type("Module", "f_add_aliases", "func_aliases", param_b, "Array")}
 )
@@ -1055,71 +831,45 @@ ___       ___ ___                    __        ___
  |  |  | |___  |  /~~\    /~~\ | \| \__> |___ |___
 _____________________________________________________________________________________________________________________ */
 
-static inline void ptrθ_flag_set_constant(const ptrθ data){data->flags_meta_data.b.b3 = FLAG_TRUE;}
-static inline void ptrθ_flag_clr_constant(const ptrθ data){data->flags_meta_data.b.b3 = FLAG_FALSE;}
-static inline int ptrθ_flag_is_constant(const ptrθ data){return data->flags_meta_data.b.b3;}
-
-static inline void ptrθ_flag_set_coerce(const ptrθ data){data->flags_meta_data.b.b4 = FLAG_TRUE;}
-static inline void ptrθ_flag_clr_coerce(const ptrθ data){data->flags_meta_data.b.b4 = FLAG_FALSE;}
-static inline int ptrθ_flag_is_coerce(const ptrθ data){return data->flags_meta_data.b.b4;}
-
-static inline void ptrθ_flag_set_cache_synced(const ptrθ data){data->flags_meta_data.b.b5 = FLAG_TRUE;}
-static inline void ptrθ_flag_clr_cache_synced(const ptrθ data){data->flags_meta_data.b.b5 = FLAG_FALSE;}
-static inline int ptrθ_flag_is_cache_synced(const ptrθ data){return data->flags_meta_data.b.b5;}
-
-/*static const rb_data_type_t θconst_type = {
-    .wrap_struct_name = "const_theta_angle",
-    .function = {
-        .dmark = NULL, // NULL as the struct contains no references to the c-data-type{VALUE}
-        .dfree = θ_free,
-        .dsize = θ_size,
-    },
-    .data = NULL,
-    .flags = RUBY_TYPED_NEVER_FREE,
-};*/
-
-static const rb_data_type_t θ_type = {
-    .wrap_struct_name = "theta_angle",
-    .function = {
-        .dmark = NULL, // NULL as the struct contains no references to the c-data-type{VALUE}
-        .dfree = θ_free,
-        .dsize = θ_size,
-    },
-    .data = NULL,
-    .flags = RUBY_TYPED_FREE_IMMEDIATELY,
-};
-
-//static void θconst_free(void * data) {free(data);}
-static void θ_free(void * data) {free(data);}
-
-//static size_t θconst_size(const void * data) {return sizeof(ConstThetaAngle);}
-static size_t θ_size(const void * data) {return sizeof(ThetaAngle);}
-
-static VALUE θ_alloc(VALUE self) {
-    ptrθ data;
-    return TypedData_Make_Struct(self, ThetaAngle, & θ_type, data);
+static VALUE θ_m_get_size(const VALUE self) {
+    //ptrθ data; 💎parse_ptrθ(self, data);
+    return UINT2NUM((unsigned int) rb_obj_memsize_of(self));
 }
 
-static VALUE θ_new(const double angle, const VALUE sym_mode) {
-    ptrθ data;
-    VALUE argv[2] = {DBL2NUM(angle), sym_mode};
-    VALUE obj     = TypedData_Make_Struct(cached_class_theta_angle, ThetaAngle, & θ_type, data);
-    rb_obj_call_init(obj, 2, argv);
-    return obj;
-}
-
-static VALUE θ_new_constant(const double angle, const VALUE sym_mode) {
-    VALUE obj = θ_new(angle, sym_mode);
-    ptrθ data; 💎parse_ptrθ(obj, data);
-    ptrθ_flag_set_constant(data);
-    RB_OBJ_FREEZE(obj);
-    return obj;
-}
-
-static inline void θ_set_value(const ptrθ data, const double value) {
-    if (!(ptrθ_flag_is_constant(data))) {
+static void θ_set_value(const ptrθ data, const double value) {
+    if (!(ptrθ_flag_is_constant(data))) { //&& data->angle_value != value
         data->angle_value = value;
         ptrθ_flag_clr_cache_synced(data);
+        if (value == 0.0) {
+            ptrθ_flag_set_is_zero(data);
+            ptrθ_flag_set_is_positive(data);
+            ptrθ_flag_set_is_normal(data);
+            ptrθ_flag_clr_perigon(data);
+        } else if (value > 0.0) {
+            ptrθ_flag_set_is_positive(data);
+            ptrθ_flag_clr_is_zero(data);
+            const double max_value = vocab_value_perigon(data->angle_mode);
+            if (value == max_value) {
+                ptrθ_flag_set_is_normal(data);
+            } else if (value < max_value) {
+                ptrθ_flag_set_is_normal(data);
+                ptrθ_flag_set_perigon(data);
+            } else {
+                ptrθ_flag_clr_is_normal(data);
+            }
+        } else {
+            ptrθ_flag_clr_is_positive(data);
+            ptrθ_flag_clr_is_zero(data);
+            const double max_value = vocab_value_perigon(data->angle_mode);
+            if (value == max_value) {
+                ptrθ_flag_set_is_normal(data);
+            } else if (value > max_value) {
+                ptrθ_flag_set_is_normal(data);
+                ptrθ_flag_set_perigon(data);
+            } else {
+                ptrθ_flag_clr_is_normal(data);
+            }
+        }
     } else {
         rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> internal m{set_value} can\'t be called on a constant ThetaAngle |");
     }
@@ -1209,6 +959,16 @@ static inline double ptrθ_get_val_from_θ(const ptrθ self, const ptrθ them) {
     return θ_get_val_as_mode(self->angle_mode, them);
 }
 
+static VALUE θ_equals_θ(const ptrθ a, const ptrθ b) {
+    re_as_bool(a->angle_value == ptrθ_get_val_from_θ(a, b))
+}
+
+static VALUE θVAL_equals_θVAL(const VALUE a, const VALUE b) {
+    ptrθ data_a; 💎parse_ptrθ(a, data_a);
+    ptrθ data_b; 💎parse_ptrθ(b, data_b);
+   return θ_equals_θ(data_a, data_b);
+}
+
 static inline double ptrθ_get_val_from_VALUE(const ptrθ self, const VALUE value) {
     if (is_int(value) || is_float(value)) {
         return NUM2DBL(value);
@@ -1217,19 +977,6 @@ static inline double ptrθ_get_val_from_VALUE(const ptrθ self, const VALUE valu
         return ptrθ_get_val_from_θ(self, data_them);
     } else {
         rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> got arg{%"PRIsVALUE"} that should be an int, float, or ThetaAngle |", value);
-    }
-}
-
-static inline VALUE ptrθ_get_repr_as_sym(const ptrθ data) {
-    switch(data->angle_mode) {
-    case THETA_MODE_ID_RAD:
-        return ID2SYM(cached_rb_intern_as_radian);
-    case THETA_MODE_ID_DGR:
-        return ID2SYM(cached_rb_intern_as_degree);
-    case THETA_MODE_ID_TRN:
-        return ID2SYM(cached_rb_intern_as_turn);
-    default:
-        return ID2SYM(cached_rb_intern_as_gon);
     }
 }
 
@@ -1296,13 +1043,9 @@ static VALUE θ_m_modulo(const VALUE self, const VALUE value) {
 
 static VALUE θ_m_modulo_eq(const VALUE self, const VALUE value) {
     💎self_to_ptrθ_data
-    if (RB_OBJ_FROZEN(self)) {
-        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{modulo=} may not be called on a frozen ThetaAngle |");
-    } else if (ptrθ_flag_is_constant(data)) {
-        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{modulo=} may not be called on a constant ThetaAngle |");
+    if (RB_OBJ_FROZEN(self) || ptrθ_flag_is_constant(data)) {
+        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{modulo=} may not be called on a frozen and/or constant ThetaAngle |");
     }
-    //if (is_int(value) || is_float(value)) {
-    //}
     const long double val_them = (long double) ptrθ_get_val_from_VALUE(data, value);
     const long double val_self = (long double) data->angle_value;
     θ_set_value(data, fmodl(val_self, val_them));
@@ -1312,7 +1055,7 @@ static VALUE θ_m_modulo_eq(const VALUE self, const VALUE value) {
 static VALUE θ_m_coerce(const VALUE self, const VALUE them) {
     if (is_num(them)) {
         💎self_to_ptrθ_data
-        VALUE theta = θ_new(NUM2DBL(them), ptrθ_get_repr_as_sym(data));
+        VALUE theta = θ_new(NUM2DBL(them), cθ_get_repr(data->angle_mode));
         ptrθ the_new_theta; 💎parse_ptrθ(theta, the_new_theta);
         ptrθ_flag_set_coerce(the_new_theta);
         ptrθ_flag_clr_constant(the_new_theta);
@@ -1322,17 +1065,10 @@ static VALUE θ_m_coerce(const VALUE self, const VALUE them) {
     }
 }
 
-static VALUE θ_m_multiplication(const VALUE self, const VALUE value) {
-    💎self_to_ptrθ_data
-    return θ_new(data->angle_value * ptrθ_get_val_from_VALUE(data, value), cθ_get_repr(data->angle_mode));
-}
-
 static VALUE θ_m_multiplication_eq(const VALUE self, const VALUE value) {
     💎self_to_ptrθ_data
-    if (RB_OBJ_FROZEN(self)) {
-        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{*} may not be called on a frozen ThetaAngle |");
-    } else if (ptrθ_flag_is_constant(data)) {
-        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{*} may not be called on a constant ThetaAngle |");
+    if (RB_OBJ_FROZEN(self) || ptrθ_flag_is_constant(data)) {
+        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{*} may not be called on a frozen and/or constant ThetaAngle |");
     }
     ptrθ_multiplication_w_double(data, ptrθ_get_val_from_VALUE(data, value));
     re_me
@@ -1358,10 +1094,8 @@ static VALUE θ_m_division(const VALUE self, const VALUE them) {
 
 static VALUE θ_m_division_eq(const VALUE self, const VALUE value) {
     💎self_to_ptrθ_data
-    if (RB_OBJ_FROZEN(self)) {
-        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{/} may not be called on a frozen ThetaAngle |");
-    } else if (ptrθ_flag_is_constant(data)) {
-        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{/} may not be called on a constant ThetaAngle |");
+    if (RB_OBJ_FROZEN(self) || ptrθ_flag_is_constant(data)) {
+        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{/} may not be called on a frozen and/or constant ThetaAngle |");
     }
     ptrθ_division_w_double(data, ptrθ_get_val_from_VALUE(data, value));
     re_me
@@ -1369,26 +1103,17 @@ static VALUE θ_m_division_eq(const VALUE self, const VALUE value) {
 
 static VALUE θ_m_addition_eq(const VALUE self, const VALUE value) {
     💎self_to_ptrθ_data
-    if (RB_OBJ_FROZEN(self)) {
-        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{+} may not be called on a frozen ThetaAngle |");
-    } else if (ptrθ_flag_is_constant(data)) {
-        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{+} may not be called on a constant ThetaAngle |");
+    if (RB_OBJ_FROZEN(self) || ptrθ_flag_is_constant(data)) {
+        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{+} may not be called on a frozen and/or constant ThetaAngle |");
     }
     ptrθ_addition_w_double(data, ptrθ_get_val_from_VALUE(data, value));
     re_me
 }
 
-static VALUE θ_m_addition(const VALUE self, const VALUE value) {
-    💎self_to_ptrθ_data
-    return θ_new(data->angle_value + ptrθ_get_val_from_VALUE(data, value), cθ_get_repr(data->angle_mode));
-}
-
 static VALUE θ_m_subtraction_eq(const VALUE self, const VALUE value) {
     💎self_to_ptrθ_data
-    if (RB_OBJ_FROZEN(self)) {
-        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{-} may not be called on a frozen ThetaAngle |");
-    } else if (ptrθ_flag_is_constant(data)) {
-        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{-} may not be called on a constant ThetaAngle |");
+    if (RB_OBJ_FROZEN(self) || ptrθ_flag_is_constant(data)) {
+        rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{-} may not be called on a frozen and/or constant ThetaAngle |");
     }
     ptrθ_subtraction_w_double(data, ptrθ_get_val_from_VALUE(data, value));
     re_me
@@ -1428,58 +1153,78 @@ static VALUE θ_m_unary_complement(const VALUE self) {
 
 static VALUE θ_m_unary_subtraction(const VALUE self) {
     💎self_to_ptrθ_data
-    double val_self = θ_get_normalized_value(data->angle_value, data->angle_mode);
-    if (val_self == 0.0) {re_me}
-    switch(data->angle_mode) {
-    case THETA_MODE_ID_RAD:
-        if (val_self > 0.0) {
-            θ_set_value(data, val_self - (2.0 * π));
-        } else {
-            θ_set_value(data, (2.0 * π) + val_self);
-        }
-        break;
-    case THETA_MODE_ID_DGR:
-        if (val_self > 0.0) {
+    if (ptrθ_flag_is_zero(data)) {
+        re_me
+    } else if (ptrθ_flag_is_positive(data)) {
+        const double val_self = ptrθ_normalize_and_get_val(data);
+        switch(data->angle_mode) {
+        case THETA_MODE_ID_RAD:
+            θ_set_value(data, val_self - 𝞽);
+            break;
+        case THETA_MODE_ID_DGR:
             θ_set_value(data, val_self - 360.0);
-        } else {
-            θ_set_value(data, 360.0 + val_self);
-        }
-        break;
-    case THETA_MODE_ID_TRN:
-        if (val_self > 0.0) {
+            break;
+        case THETA_MODE_ID_TRN:
             θ_set_value(data, val_self - 1.0);
-        } else {
-            θ_set_value(data, 1.0 + val_self);
-        }
-        break;
-    default:
-        if (val_self > 0.0) {
+            break;
+        default:
             θ_set_value(data, val_self - 400.0);
-        } else {
-            θ_set_value(data, 400.0 + val_self);
+            break;
         }
-        break;
+    } else {
+        const double val_self = ptrθ_normalize_and_get_val(data);
+        switch(data->angle_mode) {
+        case THETA_MODE_ID_RAD:
+            θ_set_value(data, 𝞽 + val_self);
+            break;
+        case THETA_MODE_ID_DGR:
+            θ_set_value(data, 360.0 + val_self);
+            break;
+        case THETA_MODE_ID_TRN:
+            θ_set_value(data, 1.0 + val_self);
+            break;
+        default:
+            θ_set_value(data, 400.0 + val_self);
+            break;
+        }
     }
     re_me
 }
 
 static VALUE θ_m_unary_addition(const VALUE self) {re_me}
 
-ptrθ_func(θ_m_is_positive, re_as_bool(data->angle_value > 0.0))
-ptrθ_func(θ_m_is_negative, re_as_bool(data->angle_value < 0.0))
-ptrθ_func(θ_m_is_zero,     re_as_bool(data->angle_value == 0.0))
+ptrθ_func_1arg(θ_m_addition,       return θ_new(data->angle_value + ptrθ_get_val_from_VALUE(data, them), cθ_get_repr(data->angle_mode));)
+ptrθ_func_1arg(θ_m_multiplication, return θ_new(data->angle_value * ptrθ_get_val_from_VALUE(data, them), cθ_get_repr(data->angle_mode));)
+
+ptrθ_func(θ_m_normalize,
+    VALUE normalized_angle = θ_new(θ_get_normalized_value(data->angle_value, data->angle_mode), cθ_get_repr(data->angle_mode));
+    ptrθ normalized_data; 💎parse_ptrθ(normalized_angle, normalized_data);
+    θ_set_value(normalized_data, normalized_data->angle_value);
+    return normalized_angle;
+)
+
+ptrθ_func(θ_m_is_positive,  re_as_bool(data->angle_value > 0.0))
+ptrθ_func(θ_m_is_negative,  re_as_bool(data->angle_value < 0.0))
+ptrθ_func(θ_m_is_zero,      re_as_bool(data->angle_value == 0.0))
+ptrθ_func(θ_get_is_radians, re_as_bool(data->angle_mode == THETA_MODE_ID_RAD))
+ptrθ_func(θ_get_is_degrees, re_as_bool(data->angle_mode == THETA_MODE_ID_DGR))
+ptrθ_func(θ_get_is_gons,    re_as_bool(data->angle_mode == THETA_MODE_ID_GON))
+ptrθ_func(θ_get_is_turns,   re_as_bool(data->angle_mode == THETA_MODE_ID_TRN))
+ptrθ_func(θ_m_get_windings, return INT2NUM((int) (θ_get_val_as_mode(THETA_MODE_ID_RAD, data) / 𝞽));)
+ptrθ_func(θ_m_get_repr,     return cθ_get_repr(data->angle_mode);)
+ptrθ_func(θ_m_is_normal,    re_as_bool(ptrθ_flag_is_normal(data)))
 
 static VALUE θ_m_abs(const VALUE self) {
     💎self_to_ptrθ_data
-    if (data->angle_value < 0.0) {
+    if (NO_MATCH_FOR_θ(data, FLAGS_ZERO_AND_POSITIVE)) {
         return θ_new(-1.0 * data->angle_value, cθ_get_repr(data->angle_mode));
     }
     return θ_new(data->angle_value, cθ_get_repr(data->angle_mode));
 }
 
-static VALUE θ_m_abs_self(const VALUE self) {
+static VALUE θ_m_abs_self(VALUE self) {
     💎self_to_ptrθ_data
-    if (data->angle_value < 0.0) {
+    if (NO_MATCH_FOR_θ(data, FLAGS_ZERO_AND_POSITIVE)) {
         ptrθ_multiplication_w_double(data, -1.0);
     }
     re_me
@@ -1499,186 +1244,109 @@ static VALUE θ_m_comparable(const VALUE self, const VALUE them) {
     } else {re_nil}
 }
 
-static VALUE θ_m_is_complementary_with(const VALUE self, const VALUE them) {
+static VALUE θ_m_get_flags(const VALUE self) {
     💎self_to_ptrθ_data
-    if (is_theta_angle(them)) {
-        ptrθ data_them; 💎parse_ptrθ(them, data_them);
-        re_as_bool((data->angle_value + ptrθ_get_val_from_θ(data, data_them)) == ptrθ_get_const_quadrant(data))
-    } else {
-        rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{complementary_with?} requires arg(angle_mode){%"PRIsVALUE"} of type theta_angle |", them);
-    }
+    return INT2NUM((int) data->flags_meta_data.generic_byte);
 }
 
-static VALUE θ_m_is_golden_with(const VALUE self, const VALUE them) {
-    💎self_to_ptrθ_data
-    if (is_theta_angle(them)) {
-        ptrθ data_them; 💎parse_ptrθ(them, data_them);
-        const double val_them = ptrθ_get_val_from_θ(data, data_them);
-        const double val_self = data->angle_value;
-        if (val_self > val_them) {
-            re_as_bool(((val_self + val_them) / val_self) == 𝚽)
-        } else {
-            re_as_bool(((val_self + val_them) / val_them) == 𝚽)
-        }
-    } else {
-        rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{golden_with?} requires arg(angle_mode){%"PRIsVALUE"} of type theta_angle |", them);
-    }
-}
-
-static VALUE θ_m_is_supplementary_with(const VALUE self, const VALUE them) {
-    💎self_to_ptrθ_data
-    if (is_theta_angle(them)) {
-        ptrθ data_them; 💎parse_ptrθ(them, data_them);
-        re_as_bool((data->angle_value + ptrθ_get_val_from_θ(data, data_them)) == ptrθ_get_const_straight(data))
-    } else {
-        rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{supplementary_with?} requires arg(angle_mode){%"PRIsVALUE"} of type theta_angle |", them);
-    }
-}
-
-static VALUE θ_m_is_explementary_with(const VALUE self, const VALUE them) {
-    💎self_to_ptrθ_data
-    if (is_theta_angle(them)) {
-        ptrθ data_them; 💎parse_ptrθ(them, data_them);
-        re_as_bool((data->angle_value + ptrθ_get_val_from_θ(data, data_them)) == ptrθ_get_const_perigon(data))
-    } else {
-        rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{explementary_with?} requires arg(angle_mode){%"PRIsVALUE"} of type theta_angle |", them);
-    }
-}
-
-static VALUE θ_duplicate_as_mode(const ptrθ original, const unsigned char angle_mode) {
-    return θ_new(θ_get_val_as_mode(angle_mode, original), cθ_get_repr(angle_mode));
-}
-
-static VALUE θ_m_initialize_as_degree(VALUE self, const VALUE angle) {
-    if (is_theta_angle(angle)) {
-        ptrθ data_them; 💎parse_ptrθ(angle, data_them);
-        return θ_duplicate_as_mode(data_them, THETA_MODE_ID_DGR);
-    }
-    ERR_is_num("ThetaAngle", "new", "angle_val_as_degree", angle)
-    return θ_new(NUM2DBL(angle), cached_sym_as_degree);
-}
-
-static VALUE θ_m_initialize_as_radian(VALUE self, const VALUE angle) {
-    if (is_theta_angle(angle)) {
-        ptrθ data_them; 💎parse_ptrθ(angle, data_them);
-        return θ_duplicate_as_mode(data_them, THETA_MODE_ID_RAD);
-    }
-    ERR_is_num("ThetaAngle", "new", "angle_val_as_radian", angle)
-    return θ_new(NUM2DBL(angle), cached_sym_as_radian);
-}
-
-static VALUE θ_m_initialize_as_gon(VALUE self, const VALUE angle) {
-    if (is_theta_angle(angle)) {
-        ptrθ data_them; 💎parse_ptrθ(angle, data_them);
-        return θ_duplicate_as_mode(data_them, THETA_MODE_ID_GON);
-    }
-    ERR_is_num("ThetaAngle", "new", "angle_val_as_gon", angle)
-    return θ_new(NUM2DBL(angle), cached_sym_as_gon);
-}
-
-static VALUE θ_m_initialize_as_turn(VALUE self, const VALUE angle) {
-    if (is_theta_angle(angle)) {
-        ptrθ data_them; 💎parse_ptrθ(angle, data_them);
-        return θ_duplicate_as_mode(data_them, THETA_MODE_ID_TRN);
-    }
-    ERR_is_num("ThetaAngle", "new", "angle_val_as_turn", angle)
-    return θ_new(NUM2DBL(angle), cached_sym_as_turn);
-}
+static VALUE θ_m_init_as_dgr(VALUE self, const VALUE angle) {💎θ_INIT_AS(angle, THETA_MODE_ID_DGR, THETA_MODE_DGR, "angle_val_as_degree")}
+static VALUE θ_m_init_as_rad(VALUE self, const VALUE angle) {💎θ_INIT_AS(angle, THETA_MODE_ID_RAD, THETA_MODE_RAD, "angle_val_as_radian")}
+static VALUE θ_m_init_as_gon(VALUE self, const VALUE angle) {💎θ_INIT_AS(angle, THETA_MODE_ID_GON, THETA_MODE_GON, "angle_val_as_gon")}
+static VALUE θ_m_init_as_trn(VALUE self, const VALUE angle) {💎θ_INIT_AS(angle, THETA_MODE_ID_TRN, THETA_MODE_TRN, "angle_val_as_turn")}
 
 static VALUE θ_m_initialize(VALUE self, const VALUE angle, const VALUE angle_mode) {
     ERR_is_num("ThetaAngle", "new", "angle_value", angle)
-    ERR_is_sym("ThetaAngle", "new", "angle_mode", angle_mode)
     💎self_to_ptrθ_data
-    const ID obj_id = SYM2ID(angle_mode);
-    if (obj_id == cached_rb_intern_as_radian) {
-        data->angle_mode = THETA_MODE_ID_RAD;
-    } else if (obj_id == cached_rb_intern_as_turn) {
-        data->angle_mode = THETA_MODE_ID_TRN;
-    } else if (obj_id == cached_rb_intern_as_degree) {
-        data->angle_mode = THETA_MODE_ID_DGR;
-    } else if (obj_id == cached_rb_intern_as_gon) {
-        data->angle_mode = THETA_MODE_ID_GON;
+    if (is_fixnum(angle_mode)) {
+        const unsigned char as_fixnum = (unsigned char) RB_FIX2INT(angle_mode);
+        if (as_fixnum == THETA_MODE_ID_RAD) {
+            data->angle_mode = THETA_MODE_ID_RAD;
+        } else if (as_fixnum == THETA_MODE_ID_DGR) {
+            data->angle_mode = THETA_MODE_ID_DGR;
+        } else if (as_fixnum == THETA_MODE_ID_TRN) {
+            data->angle_mode = THETA_MODE_ID_TRN;
+        } else if (as_fixnum == THETA_MODE_ID_GON) {
+            data->angle_mode = THETA_MODE_ID_GON;
+        } else {
+            rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{new} unable to parse the 2nd arg(angle_mode){%"PRIsVALUE"} w/ type{%s} |", angle_mode, rb_obj_classname(angle_mode));
+        }
     } else {
-        rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{new} unable to parse 2nd arg(angle_mode){%"PRIsVALUE"} |", angle_mode);
+        rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{new} unable to parse 2nd arg(angle_mode){%"PRIsVALUE"} w/ type{%s} |", angle_mode, rb_obj_classname(angle_mode));
     }
-    data->angle_value = NUM2DBL(angle);
-    ptrθ_flag_set_cache_synced(data);
-    💎set_field("@real", DBL2NUM(data->angle_value))
+    const double the_value = NUM2DBL(angle);
+    data->angle_value = the_value;
+    if (the_value == 0.0) {
+        SET_FLAGS(data, FLAGS_NON_CONST_ZERO)
+    } else if (the_value > 0.0) {
+        const double max_normal = vocab_value_perigon(data->angle_mode);
+        if (the_value <= max_normal) {
+            SET_FLAGS(data, FLAGS_NON_CONST_POSITIVE_NORMAL)
+        } else {
+            SET_FLAGS(data, FLAGS_NON_CONST_POSITIVE_NOT_NORMAL)
+        }
+    } else {
+        const double max_normal = vocab_value_perigon_negative(data->angle_mode);
+        if (the_value >= max_normal) {
+            SET_FLAGS(data, FLAGS_NON_CONST_NEGATIVE_NORMAL)
+        } else {
+            SET_FLAGS(data, FLAGS_NON_CONST_NEGATIVE_NOT_NORMAL)
+        }
+    }
     return self;
 }
 
-static inline VALUE cθ_get_repr(const unsigned char angle_mode) {
-    switch(angle_mode) {
-    case THETA_MODE_ID_RAD:
-        return cached_sym_as_radian;
-    case THETA_MODE_ID_DGR:
-        return cached_sym_as_degree;
-    case THETA_MODE_ID_TRN:
-        return cached_sym_as_turn;
-    default:
-        return cached_sym_as_gon;
-    }
-}
+static inline VALUE cθ_get_repr(const unsigned char angle_mode) {θ_ID2MODE(angle_mode);}
 
 static VALUE θ_m_equals(const VALUE self, const VALUE them) {
-    ptrθ data_self; 💎parse_ptrθ(self, data_self);
     if (is_theta_angle(them)) {
-        ptrθ data_them; 💎parse_ptrθ(them, data_them);
-        re_as_bool(data_self->angle_value == ptrθ_get_val_from_θ(data_self, data_them));
+        return θVAL_equals_θVAL(self, them);
     } else if (is_num(them)) {
-        re_as_bool(data_self->angle_value == NUM2DBL(them))
+        return θVAL_equals_NUM(self, them);
     } else {
         re_no
     }
 }
 
-ptrθ_func(θ_m_is_normal, return ptrθ_is_normal(data);)
+static double θ_get_abs_normalized_value(ptrθ data) {
+    double value = θ_get_normalized_value(data->angle_value, data->angle_mode);
+    if (value < 0.0) {
+        return value * -1.0;
+    }
+    return value;
+}
 
 static double θ_get_normalized_value(const double value, const unsigned char angle_mode) {
-    // TODO: the normal check here can be done on the meta_data_flags and thus add in "is-zero" check
-    if (!(θ_is_normal(angle_mode, value))) {
-        if (value > 0) {
-            if (angle_mode == THETA_MODE_ID_RAD) {
-                return fmod(value, THETA_RAD_PERIGON);
-            } else if (angle_mode == THETA_MODE_ID_DGR) {
-                return fmod(value, THETA_DGR_PERIGON);
-            } else if (angle_mode == THETA_MODE_ID_TRN) {
-                return fmod(value, THETA_TRN_PERIGON);
-            } else {
-                return fmod(value, THETA_GON_PERIGON);
-            }
+    if (value == 0.0) {
+        return value;
+    } else if (value > 0.0) {
+        const double max_normal = vocab_value_perigon(angle_mode);
+        if (value <= max_normal) {
+            return value;
         } else {
-            if (angle_mode == THETA_MODE_ID_RAD) {
-                return fmod(value, THETA_RAD_PERIGON_NEGATIVE);
-            } else if (angle_mode == THETA_MODE_ID_DGR) {
-                return fmod(value, THETA_DGR_PERIGON_NEGATIVE);
-            } else if (angle_mode == THETA_MODE_ID_TRN) {
-                return fmod(value, THETA_TRN_PERIGON_NEGATIVE);
-            } else {
-                return fmod(value, THETA_GON_PERIGON_NEGATIVE);
-            }
+            return fmod(value, max_normal);
         }
     } else {
-        return value;
+        const double max_normal = vocab_value_perigon_negative(angle_mode);
+        if (value >= max_normal) {
+            return value;
+        } else {
+            return fmod(value, max_normal);
+        }
     }
 }
 
-static void ptrθ_normalize(ptrθ data) {
-    const double value = data->angle_value;
-    const double new_value = θ_get_normalized_value(value, data->angle_mode);
-    if (new_value != value) {
+static double ptrθ_normalize_and_get_val(ptrθ data) {
+    if (NO_MATCH_FOR_θ(data, FLAGS_NORMAL)) {
+        const double new_value = θ_get_normalized_value(data->angle_value, data->angle_mode);
         θ_set_value(data, new_value);
+        return new_value;
     }
+    return data->angle_value;
 }
 
-static VALUE θ_m_normalize(const VALUE self) {
+static VALUE θ_m_normalize_self(VALUE self) {
     💎self_to_ptrθ_data
-    return θ_new(θ_get_normalized_value(data->angle_value, data->angle_mode), cθ_get_repr(data->angle_mode));
-}
-
-static VALUE θ_m_normalize_self(const VALUE self) {
-    💎self_to_ptrθ_data
-    ptrθ_normalize(data);
+    ptrθ_normalize_and_get_val(data);
     re_me
 }
 
@@ -1734,14 +1402,6 @@ ptrθ_func(θ_get_as_turn,
     }
 )
 
-ptrθ_func(θ_get_is_radians, re_as_bool(data->angle_mode == THETA_MODE_ID_RAD))
-ptrθ_func(θ_get_is_degrees, re_as_bool(data->angle_mode == THETA_MODE_ID_DGR))
-ptrθ_func(θ_get_is_gons,    re_as_bool(data->angle_mode == THETA_MODE_ID_GON))
-ptrθ_func(θ_get_is_turns,   re_as_bool(data->angle_mode == THETA_MODE_ID_TRN))
-ptrθ_func(θ_m_get_repr,     return cθ_get_repr(data->angle_mode);)
-ptrθ_func(θ_m_get_windings, return INT2NUM((int) (θ_get_val_as_mode(THETA_MODE_ID_RAD, data) / (2.0 * π)));)
-
-// TODO: set all needed flags
 static VALUE θ_m_set_real(VALUE self, VALUE num) {
     ERR_is_num("ThetaAngle", "real=", "num", num)
     💎self_to_ptrθ_data
@@ -1754,52 +1414,80 @@ static VALUE θ_m_get_real(const VALUE self) {
     💎self_to_ptrθ_data
     if (!(ptrθ_flag_is_cache_synced(data))) {
         ptrθ_flag_set_cache_synced(data);
-        💎set_field("@real", DBL2NUM(data->angle_value))
+        VALUE the_val = DBL2NUM(data->angle_value);
+        💎set_field("@real", the_val)
+        return the_val;
     }
     return 💎get_field("@real")
 }
 
-static VALUE θ_m_matches_vocab_term(const VALUE self, const VALUE angle_type) {
-    ERR_is_sym("ThetaAngle", "angle?", "0", angle_type)
-    💎self_to_ptrθ_data
-
-    const ID them_id = SYM2ID(angle_type);
-
-    const double self_angle_as_degree = θ_get_val_as_mode(THETA_MODE_ID_DGR, data);
-    if (them_id == cached_rb_intern_zero_angle) {
-        re_as_bool(data->angle_value == 0.0)
-    } else if (them_id == cached_rb_intern_acute_angle) {
-        re_as_bool(self_angle_as_degree >= 0.0 && self_angle_as_degree < THETA_DGR_QUADRANT)
-    } else if (them_id == cached_rb_intern_right_angle) {
-        re_as_bool(θ_get_val_as_mode(THETA_MODE_ID_DGR, data) == THETA_DGR_QUADRANT)
-    } else if (them_id == cached_rb_intern_obtuse_angle) {
-        re_as_bool(self_angle_as_degree > THETA_DGR_QUADRANT && self_angle_as_degree < THETA_DGR_STRAIGHT)
-    } else if (them_id == cached_rb_intern_straight_angle) {
-        re_as_bool(θ_get_val_as_mode(THETA_MODE_ID_DGR, data) == THETA_DGR_STRAIGHT)
-    } else if (them_id == cached_rb_intern_sextant_angle) {
-         re_as_bool(θ_get_val_as_mode(THETA_MODE_ID_DGR, data) == THETA_DGR_SEXTANT)
-    } else if (them_id == cached_rb_intern_reflex_angle) {
-        re_as_bool(self_angle_as_degree > THETA_DGR_STRAIGHT && self_angle_as_degree < THETA_DGR_PERIGON)
-    } else if (them_id == cached_rb_intern_perigon_angle) {
-        re_as_bool(θ_get_val_as_mode(THETA_MODE_ID_DGR, data) == THETA_DGR_PERIGON)
-    } else if (them_id == cached_rb_intern_oblique_angle) {
-        re_as_bool(fmodl((long double) θ_get_val_as_mode(THETA_MODE_ID_DGR, data), 90.0L) != 0.0L)
+ptrθ_func(θ_m_is_right,
+    if (NO_MATCH_FOR_θ(data, FLAGS_NORMAL)) {
+        re_as_bool(θ_get_abs_normalized_value(data) == vocab_value_quadrant(data->angle_mode))
+    } else if (NO_MATCH_FOR_θ(data, FLAGS_ZERO_AND_POSITIVE)) {
+        re_as_bool(fabs(data->angle_value) == vocab_value_quadrant(data->angle_mode))
     } else {
-        ERR_is_sym("ThetaAngle", "angle?", "angle_type_sym_val", angle_type)
-        re_no
+        re_as_bool(data->angle_value == vocab_value_quadrant(data->angle_mode))
     }
-}
+)
 
-/*____________________________________________________________________________________________________________________
- __      __   __   __   ___     ___      ___  __
-/  `    /  ` /  \ |  \ |__     |__  |\ |  |  |__) \ /
-\__,    \__, \__/ |__/ |___    |___ | \|  |  |  \  |
-_____________________________________________________________________________________________________________________ */
+ptrθ_func(θ_m_is_obtuse,
+    if (ANY_MATCH_FOR_FLAGS(data, FLAGS_ZERO_OR_PERIGON)) {
+        re_no
+    } else {
+        const double norm_val = θ_get_abs_normalized_value(data);
+        re_as_bool(norm_val > vocab_value_quadrant(data->angle_mode) && norm_val < vocab_value_straight(data->angle_mode))
+    }
+)
 
-//static void at_exit (void) {
-    //printf("for when needed, this func will run after END {} blocks\n");
-//}
+ptrθ_func(θ_m_is_acute,
+    if (NO_MATCH_FOR_θ(data, FLAGS_NORMAL)) {
+        const double normalized_value = θ_get_normalized_value(data->angle_value, data->angle_mode);
+        re_as_bool(normalized_value >= 0.0 && normalized_value < vocab_value_quadrant(data->angle_mode))
+    } else {
+        re_as_bool(data->angle_value >= 0.0 && data->angle_value < vocab_value_quadrant(data->angle_mode))
+    }
+)
 
+ptrθ_func(θ_m_is_straight,
+    if (ANY_MATCH_FOR_FLAGS(data, FLAGS_ZERO_OR_PERIGON)) {re_no}
+    if (NO_MATCH_FOR_θ(data, FLAGS_NORMAL)) {
+        re_as_bool(θ_get_normalized_value(data->angle_value, data->angle_mode) == vocab_value_straight(data->angle_mode))
+    } else {
+        re_as_bool(data->angle_value == vocab_value_straight(data->angle_mode))
+    }
+)
+
+ptrθ_func(θ_m_is_perigon,
+    if (NO_MATCH_FOR_θ(data, FLAGS_NORMAL)) {
+        re_as_bool(θ_get_normalized_value(data->angle_value, data->angle_mode) == 0.0)
+    } else {
+        re_as_bool(data->angle_value == vocab_value_perigon(data->angle_mode))
+    }
+)
+
+ptrθ_func(θ_m_is_sextant, re_as_bool(data->angle_value == vocab_value_sextant(data->angle_mode)))
+
+ptrθ_func(θ_m_is_oblique, re_as_bool(fmod(data->angle_value, vocab_value_quadrant(data->angle_mode)) != 0.0))
+
+ptrθ_func(θ_m_is_reflex,
+    if (NO_MATCH_FOR_θ(data, FLAGS_NORMAL)) {
+        const double normalized_value = θ_get_normalized_value(data->angle_value, data->angle_mode);
+        re_as_bool(normalized_value > vocab_value_straight(data->angle_mode) && normalized_value < vocab_value_perigon(data->angle_mode))
+    } else {
+        re_as_bool(data->angle_value > vocab_value_straight(data->angle_mode) && data->angle_value < vocab_value_perigon(data->angle_mode))
+    }
+)
+
+/* __                                                                   __
+  /\ \__         __                                                    /\ \__
+  \ \ ,_\  _ __ /\_\     __     ___     ___     ___     ___ ___      __\ \ ,_\  _ __   __  __
+   \ \ \/ /\`'__\/\ \  /'_ `\  / __`\ /' _ `\  / __`\ /' __` __`\  /'__`\ \ \/ /\`'__\/\ \/\ \
+    \ \ \_\ \ \/ \ \ \/\ \L\ \/\ \L\ \/\ \/\ \/\ \L\ \/\ \/\ \/\ \/\  __/\ \ \_\ \ \/ \ \ \_\ \
+     \ \__\\ \_\  \ \_\ \____ \ \____/\ \_\ \_\ \____/\ \_\ \_\ \_\ \____\\ \__\\ \_\  \/`____ \
+      \/__/ \/_/   \/_/\/___L\ \/___/  \/_/\/_/\/___/  \/_/\/_/\/_/\/____/ \/__/ \/_/   `/___/> \
+                         /\____/                                                           /\___/
+                         \_/__/                                                            \/__/ */
 static VALUE m_cos(const VALUE self, const VALUE val) {
     if (is_theta_angle(val)) {
         ptrθ data; 💎parse_ptrθ(val, data);
@@ -1966,7 +1654,15 @@ static VALUE m_square_root(const VALUE self, const VALUE val) {
         rb_raise(R_ERR_ARG, "| m{Math}-> sf{square_root} may not convert the arg{%"PRIsVALUE"} into a Float |", val);
     }
 }
-
+/*                          __                         __    __
+                           /\ \                       /\ \__/\ \
+    ___   __  __    ___ ___\ \ \____     __   _ __    \ \ ,_\ \ \___      __    ___   _ __   __  __
+  /' _ `\/\ \/\ \ /' __` __`\ \ '__`\  /'__`\/\`'__\   \ \ \/\ \  _ `\  /'__`\ / __`\/\`'__\/\ \/\ \
+  /\ \/\ \ \ \_\ \/\ \/\ \/\ \ \ \L\ \/\  __/\ \ \/     \ \ \_\ \ \ \ \/\  __//\ \L\ \ \ \/ \ \ \_\ \
+  \ \_\ \_\ \____/\ \_\ \_\ \_\ \_,__/\ \____\\ \_\      \ \__\\ \_\ \_\ \____\ \____/\ \_\  \/`____ \
+   \/_/\/_/\/___/  \/_/\/_/\/_/\/___/  \/____/ \/_/       \/__/ \/_/\/_/\/____/\/___/  \/_/   `/___/> \
+                                                                                                 /\___/
+                                                                                                 \/__/ */
 // source solution credit: https://www.geeksforgeeks.org/eulers-totient-function/
 ⓡ𝑓_self_them(m_number_theory_eulers_totient_func,
     if (is_int(them)) {
@@ -1985,53 +1681,50 @@ static VALUE m_square_root(const VALUE self, const VALUE val) {
             result -= result / n;
         }
         return ULONG2NUM(result);
+    } else {rb_raise(R_ERR_ARG, "");}
+)
+
+// source solution credit: https://www.geeksforgeeks.org/check-whether-number-semiprime-not/
+ⓡ𝑓_self_them(m_number_theory_is_semiprime,
+    if (is_int(them)) {
+        int num                    = NUM2INT(them);
+        int num_primes_encountered = 0;
+        for (int i = 2; num_primes_encountered < 2 && i * i <= num; ++i) {
+            while (num % i == 0) {
+                num /= i;
+                ++num_primes_encountered;
+            }
+        }
+        // a remaining value of > 1 will be a prime number
+        if (num > 1) {++num_primes_encountered;}
+        re_as_bool(num_primes_encountered == 2)
     } else {
-        rb_raise(R_ERR_ARG, "");
+        rb_raise(R_ERR_ARG, "| m{NumberTheory}-> sf{semiprime?} did not receive type{Integer} for either arg(n){%"PRIsVALUE"} but type{%s} |", them, rb_obj_classname(them));
     }
 )
 
-// source solution credit: https://tutorialspoint.dev/algorithm/mathematical-algorithms/steins-algorithm-for-finding-gcd
-ⓡ𝑓_self_a_b(m_number_theory_gcd,
-    int a = RB_FIX2INT(param_a);
-    if (a == 0) {return param_b;}
-    int b = RB_FIX2INT(param_b);
-    if (b == 0) {return param_a;}
-    else if (a == 1 || b == 1) {re_1}
-    // `k` is the greatest shared power of 2
-    int k = 0;
-    for (k = 0; (a > 1 && ((a % 2) == 0)) && (b > 1 && ((b % 2) == 0)); ++k) {
-        a /= 2;
-        b /= 2;
-    }
-    // set `a` to be odd
-    while (a % 2 == 0) {
-        a /= 2;
-    }
-    do {
-        while (b % 2 == 0) {
-            b /= 2;
-        }
-        // `a` and `b` are both `odd` here
-        if (a > b) {
-            SWAP_INTS(a, b);
-        }
-        b -= a;
-    } while (b != 0);
-    return INT2NUM(a << k);
-)
+/*                         __                            __
+                          /\ \      __                  /\ \__                __
+    ___    ___     ___ ___\ \ \____/\_\    ___      __  \ \ ,_\   ___   _ __ /\_\    ___    ____
+   /'___\ / __`\ /' __` __`\ \ '__`\/\ \ /' _ `\  /'__`\ \ \ \/  / __`\/\`'__\/\ \  /'___\ /',__\
+  /\ \__//\ \L\ \/\ \/\ \/\ \ \ \L\ \ \ \/\ \/\ \/\ \L\.\_\ \ \_/\ \L\ \ \ \/ \ \ \/\ \__//\__, `\
+  \ \____\ \____/\ \_\ \_\ \_\ \_,__/\ \_\ \_\ \_\ \__/.\_\\ \__\ \____/\ \_\  \ \_\ \____\/\____/
+   \/____/\/___/  \/_/\/_/\/_/\/___/  \/_/\/_/\/_/\/__/\/_/ \/__/\/___/  \/_/   \/_/\/____/\/___/ */
 
 // source solution credit: https://blog.plover.com/math/choose.html
 ⓡ𝑓_self_a_b(m_combinatorics_n_choose_k,
     if (is_int(param_a) && is_int(param_b)) {
-         unsigned long n = NUM2ULONG(param_a);
-         unsigned long k = NUM2ULONG(param_b);
-         if (k > n) {
+         unsigned int n = RB_FIX2UINT(param_a);
+         unsigned int k = RB_FIX2UINT(param_b);
+         if (k == 0 || n == k) {
+            re_1
+         } else if (k > n) {
             rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{n_choose_k} got arg(n){%"PRIsVALUE"} w/ value smaller than arg(k){%"PRIsVALUE"} |", param_a, param_b);
          } else if (((k - 1) * 2) < n) {
             k = n - k;
          }
          unsigned long r = 1;
-         unsigned long d;
+         unsigned int d;
          for (d = 1; d <= k; d++) {
             r *= n--;
             r /= d;
@@ -2042,79 +1735,72 @@ static VALUE m_square_root(const VALUE self, const VALUE val) {
     }
 )
 
-static inline void internal_only_add_frozen_const_to(VALUE kclass, VALUE * internal_global, const char * const_name, VALUE val_to_freeze) {
-    RB_OBJ_FREEZE(val_to_freeze);
-    *internal_global = val_to_freeze;
-    rb_define_const(kclass, const_name, val_to_freeze);
-    rb_global_variable(internal_global);
-}
+ⓡ𝑓_self_a_b(m_combinatorics_permutations,
+    if (is_int(param_a) && is_int(param_b)) {
+         int n = RB_FIX2INT(param_a);
+         int k = RB_FIX2INT(param_b);
+         if (n < 0 || k < 0) {
+            rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{permutations} received a negative Integer for either arg(n){%"PRIsVALUE"} or arg(k){%"PRIsVALUE"} |", param_a, param_b);
+         } if (k > n) {
+            rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{permutations} received arg(n){%"PRIsVALUE"} w/ a smaller value than arg(k){%"PRIsVALUE"} |", param_a, param_b);
+         }
+         unsigned long p = 1;
+         for (int i = 0; i < k; i++) {
+            p *= (n - i);
+         }
+         return ULONG2NUM(p);
+    } else {
+        rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{permutations} did not receive type{Integer} for either arg(n){%"PRIsVALUE"} or arg(k){%"PRIsVALUE"} |", param_a, param_b);
+    }
+)
+
+/*                              __
+                               /\ \__                        __                                            __
+    ___              __   __  _\ \ ,_\    __    ___     ____/\_\    ___     ___         ___ ___      __   /\_\    ___
+   /'___\ _______  /'__`\/\ \/'\\ \ \/  /'__`\/' _ `\  /',__\/\ \  / __`\ /' _ `\     /' __` __`\  /'__`\ \/\ \ /' _ `\
+  /\ \__//\______\/\  __/\/>  </ \ \ \_/\  __//\ \/\ \/\__, `\ \ \/\ \L\ \/\ \/\ \    /\ \/\ \/\ \/\ \L\.\_\ \ \/\ \/\ \
+  \ \____\/______/\ \____\/\_/\_\ \ \__\ \____\ \_\ \_\/\____/\ \_\ \____/\ \_\ \_\   \ \_\ \_\ \_\ \__/.\_\\ \_\ \_\ \_\
+   \/____/         \/____/\//\/_/  \/__/\/____/\/_/\/_/\/___/  \/_/\/___/  \/_/\/_/    \/_/\/_/\/_/\/__/\/_/ \/_/\/_/\/_/*/
 
 static inline void startup_step1_before_loading_extension(void) {
-    cached_class_big_decimal          = rb_const_get(rb_cObject, rb_intern("BigDecimal"));
-    cached_class_set                  = rb_const_get(rb_cObject, rb_intern("Set"));
+    Ⓒbig_decimal = rb_const_get(rb_cObject, rb_intern("BigDecimal"));
+    Ⓒset         = rb_const_get(rb_cObject, rb_intern("Set"));
 
-    cached_rb_intern_zero_angle       = rb_intern("zero");
-    cached_rb_intern_acute_angle      = rb_intern("acute");
-    cached_rb_intern_sextant_angle    = rb_intern("sextant");
-    cached_rb_intern_right_angle      = rb_intern("right");
-    cached_rb_intern_obtuse_angle     = rb_intern("obtuse");
-    cached_rb_intern_straight_angle   = rb_intern("straight");
-    cached_rb_intern_reflex_angle      = rb_intern("reflex");
-    cached_rb_intern_perigon_angle    = rb_intern("perigon");
-    cached_rb_intern_oblique_angle    = rb_intern("oblique");
+    cached_rb_intern_smells_like_int = rb_intern("smells_like_int?");
+    cached_rb_intern_is_finite        = rb_intern("finite?");
+    cached_rb_intern_is_empty        = rb_intern("empty?");
 
-    cached_rb_intern_as_degree        = rb_intern("as_degree");
-    cached_rb_intern_as_radian        = rb_intern("as_radian");
-    cached_rb_intern_as_gon           = rb_intern("as_gon");
-    cached_rb_intern_as_turn          = rb_intern("as_turn");
-    cached_sym_as_radian              = ID2SYM(cached_rb_intern_as_radian);
-    cached_sym_as_degree              = ID2SYM(cached_rb_intern_as_degree);
-    cached_sym_as_turn                = ID2SYM(cached_rb_intern_as_turn);
-    cached_sym_as_gon                 = ID2SYM(cached_rb_intern_as_gon);
+    ⓜruuuby          = 💎add_global_module("Ruuuby")
+    ⓜruuuby_metadata = 💎add_module_under(ⓜruuuby, "MetaData")
+    ⓜruuuby_engine   = 💎add_class_under(ⓜruuuby_metadata, rb_cObject, "RuuubyEngine")
 
-    cached_rb_intern_smells_like_int  = rb_intern("smells_like_int?");
-    cached_rb_intern_is_finite         = rb_intern("finite?");
-    cached_rb_intern_ints_bitwise_xor = rb_intern("bitwise_xor");
-    cached_rb_intern_raise_to_power   = rb_intern("**");
-    cached_rb_intern_is_empty         = rb_intern("empty?");
+    💎add_singleton_func_0args_to(ⓜruuuby_engine, "memory_peak_this_runtime", m_memory_peak_this_runtime)
 
-    cached_module_ruuuby               = 💎add_global_module("Ruuuby")
-    cached_module_ruuuby_metadata      = 💎add_module_under(cached_module_ruuuby, "MetaData")
-    cached_module_attribute            = 💎add_module_under(cached_module_ruuuby, "Attribute")
-    cached_module_attribute_includable = 💎add_module_under(cached_module_ruuuby, "Includable")
-    cached_module_attribute_extendable = 💎add_module_under(cached_module_ruuuby, "Extendable")
-    cached_module_param_err            = 💎add_module_under(cached_module_ruuuby, "ParamErr")
+    💎add_module_under(ⓜruuuby, "Attribute")
+    💎add_module_under(ⓜruuuby, "Includable")
+    💎add_module_under(ⓜruuuby, "Extendable")
+    cached_module_param_err = 💎add_module_under(ⓜruuuby, "ParamErr")
 
-    cached_module_combinatorics        = 💎add_module_under(R_MATH, "Combinatorics")
-    cached_module_trigonometry         = 💎add_module_under(R_MATH, "Trig")
-    cached_module_trigonometry_funcs   = 💎add_module_under(cached_module_trigonometry, "Funcs")
+    ⓜcombinatorics = 💎add_module_under(R_MATH, "Combinatorics")
+    ⓜtrigonometry  = 💎add_module_under(R_MATH, "Trig")
+    ⓜnumber_theory = 💎add_module_under(R_MATH, "NumberTheory")
+    💎add_singleton_func_1args_to(ⓜnumber_theory, "nth_euler_totient", m_number_theory_eulers_totient_func)
+    💎add_singleton_func_1args_to(ⓜnumber_theory, "semiprime?", m_number_theory_is_semiprime)
 
-    cached_module_number_theory        = 💎add_module_under(R_MATH, "NumberTheory")
-    💎add_singleton_func_1args_to(cached_module_number_theory, "nth_euler_totient", m_number_theory_eulers_totient_func)
-    💎add_singleton_func_2args_to(cached_module_number_theory, "fast_gcd", m_number_theory_gcd)
+    💎add_class_under(cached_module_param_err, R_ERR_ARG, "WrongParamType")
 
-    💎add_new_sub_class_under(cached_module_param_err, R_ERR_ARG, "WrongParamType")
+    ℤd1 = DBL2NUM(1.0);
+    rb_gc_register_address(& ℤd1);
+
+    cached_flt_nan = DBL2NUM(NAN);
+    rb_gc_register_address(& cached_flt_nan);
 }
 
-static inline void startup_step2_add_ruuuby_c_extensions(void) {
+static void startup_step2_add_ruuuby_c_extensions(void) {
     cached_global_sym_many_args = ID2SYM(rb_intern("*args"));
     rb_define_readonly_variable("$PRM_MANY", &cached_global_sym_many_args);
 
-
-
-    💎add_public_func_0args_to(R_OBJ, "ary?"       , m_obj_ary)
-    💎add_public_func_0args_to(R_OBJ, "bool?"      , m_obj_bool)
-    💎add_public_func_kargs_to(R_OBJ, "int?"       , m_obj_int)
-    💎add_public_func_0args_to(R_OBJ, "flt?"        , m_obj_flt)
-    💎add_public_func_0args_to(R_OBJ, "hsh?"       , m_obj_hash)
-    💎add_public_func_kargs_to(R_OBJ, "sym?"       , m_obj_sym)
-    💎add_public_func_kargs_to(R_OBJ, "str?"       , m_obj_str)
-    💎add_public_func_0args_to(R_OBJ, "chr?"       , m_obj_chr)
-    💎add_public_func_0args_to(R_OBJ, "set?"       , m_obj_set)
-    💎add_public_func_kargs_to(R_OBJ, "num?"       , m_obj_num)
-    //💎add_public_func_0args_to(R_OBJ, "class?"     , m_obj_class)
-    //💎add_public_func_0args_to(R_OBJ, "module?"    , m_obj_module)
-    //💎add_public_func_0args_to(R_OBJ, "nucleotide?", m_obj_nucleotide)
+    init_f06()
 
     💎add_public_func_0args_to(R_INT, "finite?"  , m_int_is_finite)
     💎add_public_func_0args_to(R_INT, "infinite?", m_int_is_not_finite)
@@ -2123,7 +1809,9 @@ static inline void startup_step2_add_ruuuby_c_extensions(void) {
     💎add_func_alias(R_INT, "bitwise_xor", "^")
     💎add_public_func_1args_to(R_INT, "^", m_int_patch_for_exponentials)
 
+    💎add_public_func_0args_to(R_FLT, "one?", m_flt_is_one)
     💎add_public_func_0args_to(R_FLT, "has_decimals?", m_flt_has_decimals)
+    💎add_public_func_0args_to(R_FLT, "smells_like_int?", m_flt_smells_like_int)
     💎add_public_func_1args_to(R_FLT, "basically_equal?", m_flt_basically_equal)
     💎add_public_func_1args_to(R_FLT, "^", m_flt_patch_for_exponentials)
 
@@ -2135,80 +1823,28 @@ static inline void startup_step2_add_ruuuby_c_extensions(void) {
     💎add_public_func_0args_to(R_TRUE, "to_b?",  m_bool_to_b)
     💎add_public_func_0args_to(R_TRUE, "to_i", m_true_to_i)
 
-    💎add_public_func_1args_to(R_STR, ">>", m_str_prepend)
-    💎add_public_func_0args_to(R_STR, "err_to_num", m_str_err_to_num)
+    init_f05()
 
     💎add_public_func_0args_to(R_ARY, "remove_empty!"    , m_ary_remove_empty)
     💎add_public_func_1args_to(R_ARY, "disjunctive_union", m_ary_disjunctive_union)
-    💎add_public_func_1args_to(R_ARY, ">>"               , m_ary_prepend)
 
     💎add_public_func_2args_to(R_MODULE, "f_add_aliases", m_module_add_aliases)
 
-    cached_class_theta_angle = rb_define_class("ThetaAngle", rb_cData);
-    rb_define_alloc_func(cached_class_theta_angle, θ_alloc);
-    rb_define_private_method(cached_class_theta_angle, "initialize" , θ_m_initialize, 2);
+    init_f27()
 
-    rb_define_attr(cached_class_theta_angle, "real", 0, 0);
-    rb_define_attr(cached_class_theta_angle, "repr", 0, 0);
+    rb_gc_adjust_memory_usage((size_t) (56 * 4));
+    💎add_const_theta_angle("ANGLE_GOLDEN",      Ⴔ_RAD, THETA_MODE_RAD, cached_const_angle_golden)
+    💎add_const_theta_angle("ANGLE_TAU",         𝞽, THETA_MODE_RAD, cached_const_angle_tau)
+    💎add_const_theta_angle("ANGLE_RIGHT",       (π / 2.0), THETA_MODE_RAD, cached_const_angle_right)
+    💎add_const_theta_angle("ANGLE_STRAIGHT",    (π), THETA_MODE_RAD, cached_const_angle_straight)
 
-    💎add_public_func_0args_to(cached_class_theta_angle, "real",               θ_m_get_real)
-    💎add_public_func_0args_to(cached_class_theta_angle, "repr",               θ_m_get_repr)
-    💎add_public_func_0args_to(cached_class_theta_angle, "windings",           θ_m_get_windings)
-    💎add_public_func_0args_to(cached_class_theta_angle, "as_radian",          θ_get_as_radian)
-    💎add_public_func_0args_to(cached_class_theta_angle, "as_degree",          θ_get_as_degree)
-    💎add_public_func_0args_to(cached_class_theta_angle, "as_gon",             θ_get_as_gon)
-    💎add_public_func_0args_to(cached_class_theta_angle, "as_turn",            θ_get_as_turn)
-    💎add_public_func_0args_to(cached_class_theta_angle, "radians?",           θ_get_is_radians)
-    💎add_public_func_0args_to(cached_class_theta_angle, "degrees?",           θ_get_is_degrees)
-    💎add_public_func_0args_to(cached_class_theta_angle, "gons?",              θ_get_is_gons)
-    💎add_public_func_0args_to(cached_class_theta_angle, "turns?",             θ_get_is_turns)
-    💎add_public_func_0args_to(cached_class_theta_angle, "normal?",            θ_m_is_normal)
-    💎add_public_func_0args_to(cached_class_theta_angle, "normalize",          θ_m_normalize)
-    💎add_public_func_0args_to(cached_class_theta_angle, "normalize!",         θ_m_normalize_self)
-    💎add_public_func_0args_to(cached_class_theta_angle, "-@",                 θ_m_unary_subtraction)
-    💎add_public_func_0args_to(cached_class_theta_angle, "+@",                 θ_m_unary_addition)
-    💎add_public_func_0args_to(cached_class_theta_angle, "~",                  θ_m_unary_complement)
-    💎add_public_func_0args_to(cached_class_theta_angle, "!",                  θ_m_unary_not)
-    💎add_public_func_0args_to(cached_class_theta_angle, "abs",                θ_m_abs)
-    💎add_public_func_0args_to(cached_class_theta_angle, "abs!",               θ_m_abs_self)
-    💎add_public_func_0args_to(cached_class_theta_angle, "positive?",          θ_m_is_positive)
-    💎add_public_func_0args_to(cached_class_theta_angle, "negative?",          θ_m_is_negative)
-    💎add_public_func_0args_to(cached_class_theta_angle, "zero?",              θ_m_is_zero)
-
-    💎add_public_func_1args_to(cached_class_theta_angle, "coerce"             , θ_m_coerce)
-    💎add_public_func_1args_to(cached_class_theta_angle, "%"                  , θ_m_modulo)
-    💎add_public_func_1args_to(cached_class_theta_angle, "modulo!"            , θ_m_modulo_eq)
-    💎add_public_func_1args_to(cached_class_theta_angle, "real="              , θ_m_set_real)
-    💎add_public_func_1args_to(cached_class_theta_angle, "+"                  , θ_m_addition)
-    💎add_public_func_1args_to(cached_class_theta_angle, "self_addition"      , θ_m_addition_eq)
-    💎add_public_func_1args_to(cached_class_theta_angle, "-"                  , θ_m_subtraction)
-    💎add_public_func_1args_to(cached_class_theta_angle, "self_subtraction"   , θ_m_subtraction_eq)
-    💎add_public_func_1args_to(cached_class_theta_angle, "*"                  , θ_m_multiplication)
-    💎add_public_func_1args_to(cached_class_theta_angle, "self_multiplication", θ_m_multiplication_eq)
-    💎add_public_func_1args_to(cached_class_theta_angle, "/"                  , θ_m_division)
-    💎add_public_func_1args_to(cached_class_theta_angle, "self_division"      , θ_m_division_eq)
-    💎add_public_func_1args_to(cached_class_theta_angle, "=="                 , θ_m_equals)
-    💎add_public_func_1args_to(cached_class_theta_angle, "<=>"                , θ_m_comparable)
-    💎add_public_func_1args_to(cached_class_theta_angle, "angle?"             , θ_m_matches_vocab_term)
-    💎add_public_func_1args_to(cached_class_theta_angle, "complementary_with?", θ_m_is_complementary_with)
-    💎add_public_func_1args_to(cached_class_theta_angle, "supplementary_with?", θ_m_is_supplementary_with)
-    💎add_public_func_1args_to(cached_class_theta_angle, "explementary_with?" , θ_m_is_explementary_with)
-    💎add_public_func_1args_to(cached_class_theta_angle, "golden_with?"       , θ_m_is_golden_with)
-
-    💎add_func_alias(cached_class_theta_angle, "to_f", "real")
-
-    💎add_const_theta_angle("ANGLE_GOLDEN",      Ⴔ_RAD, cached_sym_as_radian, cached_const_angle_golden)
-    💎add_const_theta_angle("ANGLE_TAU",         (2.0 * π), cached_sym_as_radian, cached_const_angle_tau)
     💎add_const_flt("CONST_EULER_MASCHERONI",     γ)
     💎add_const_flt("CONST_PYTHAGORAS",           sqrt(2.0))
-    💎add_const_flt("CONST_OMEGA",                Ω)
     💎add_const_flt("RATIO_GOLDEN",               𝚽)
     💎add_const_flt("RATIO_GOLDEN_PERPENDICULAR", φ)
     💎add_const_flt("RATIO_GOLDEN_SUPER",         Ψ)
     💎add_const_flt("RATIO_PLASTIC",              ρ)
     💎add_const_flt("RATIO_SILVER",               δ)
-
-    internal_only_add_frozen_const_to(R_ARY, & cached_ref_empty_ary, "EMPTY_INSTANCE", rb_ary_new_capa(0L));
 
     VALUE ref;
     💎add_const_flt_wo_ref("ONE_HALF"      , 0.50, & ref);
@@ -2230,53 +1866,58 @@ static inline void startup_step2_add_ruuuby_c_extensions(void) {
     💎add_const_flt_wo_ref("ONE_NINTH"     , (1.0/9.0), & ref);
     💎add_const_flt_wo_ref("ONE_TENTH"     , 0.10, & ref);
 
-    💎add_singleton_func_1args_to(cached_class_theta_angle, "new_radian", θ_m_initialize_as_radian)
-    💎add_singleton_func_1args_to(cached_class_theta_angle, "new_degree", θ_m_initialize_as_degree)
-    💎add_singleton_func_1args_to(cached_class_theta_angle, "new_gon", θ_m_initialize_as_gon)
-    💎add_singleton_func_1args_to(cached_class_theta_angle, "new_turn", θ_m_initialize_as_turn)
+    💎add_singleton_func_1args_to(Ⓒtheta_angle, "new_radian", θ_m_init_as_rad)
+    💎add_singleton_func_1args_to(Ⓒtheta_angle, "new_degree", θ_m_init_as_dgr)
+    💎add_singleton_func_1args_to(Ⓒtheta_angle, "new_gon", θ_m_init_as_gon)
+    💎add_singleton_func_1args_to(Ⓒtheta_angle, "new_turn", θ_m_init_as_trn)
 
-    💎add_singleton_func_2args_to(cached_module_combinatorics, "n_choose_k", m_combinatorics_n_choose_k)
+    💎add_singleton_func_2args_to(ⓜcombinatorics, "permutations", m_combinatorics_permutations)
+    💎add_singleton_func_2args_to(ⓜcombinatorics, "n_choose_k", m_combinatorics_n_choose_k)
 
     💎add_singleton_func_1args_to(R_MATH, "cubic_root", m_cubic_root)
     💎add_singleton_func_1args_to(R_MATH, "square_root", m_square_root)
     💎add_singleton_func_1args_to(R_MATH, "log_e", m_log_e)
 
-    💎add_public_func_1args_to(cached_module_trigonometry_funcs, "cot", m_cot)
-    💎add_public_func_1args_to(cached_module_trigonometry_funcs, "cot2", m_cot2)
+    💎add_public_func_1args_to(ⓜtrigonometry, "cot", m_cot)
+    💎add_public_func_1args_to(ⓜtrigonometry, "cot2", m_cot2)
 
-    💎add_public_func_1args_to(cached_module_trigonometry_funcs, "cos", m_cos)
-    💎add_public_func_1args_to(cached_module_trigonometry_funcs, "cos2", m_cos2)
-    💎add_public_func_1args_to(cached_module_trigonometry_funcs, "acos", m_acos)
+    💎add_public_func_1args_to(ⓜtrigonometry, "cos", m_cos)
+    💎add_public_func_1args_to(ⓜtrigonometry, "cos2", m_cos2)
+    💎add_public_func_1args_to(ⓜtrigonometry, "acos", m_acos)
 
-    💎add_public_func_1args_to(cached_module_trigonometry_funcs, "sin", m_sin)
-    💎add_public_func_1args_to(cached_module_trigonometry_funcs, "sin2", m_sin2)
+    💎add_public_func_1args_to(ⓜtrigonometry, "sin", m_sin)
+    💎add_public_func_1args_to(ⓜtrigonometry, "sin2", m_sin2)
 
-    💎add_public_func_1args_to(cached_module_trigonometry_funcs, "tan", m_tan)
-    💎add_public_func_1args_to(cached_module_trigonometry_funcs, "tan2", m_tan2)
+    💎add_public_func_1args_to(ⓜtrigonometry, "tan", m_tan)
+    💎add_public_func_1args_to(ⓜtrigonometry, "tan2", m_tan2)
 
-    💎add_public_func_1args_to(cached_module_trigonometry_funcs, "csc", m_csc)
-    💎add_public_func_1args_to(cached_module_trigonometry_funcs, "csc2", m_csc2)
+    💎add_public_func_1args_to(ⓜtrigonometry, "csc", m_csc)
+    💎add_public_func_1args_to(ⓜtrigonometry, "csc2", m_csc2)
 
-    💎add_public_func_1args_to(cached_module_trigonometry_funcs, "sec", m_sec)
-    💎add_public_func_1args_to(cached_module_trigonometry_funcs, "sec2", m_sec2)
+    💎add_public_func_1args_to(ⓜtrigonometry, "sec", m_sec)
+    💎add_public_func_1args_to(ⓜtrigonometry, "sec2", m_sec2)
 }
 
 void Init_ruby_class_mods(void) {
-    startup_step0_load_f98_b02();
+    SimpleTimer simple_timer;
+    simple_timer_start(& simple_timer);
+
+    const double memory_at_start = memory_peak_this_runtime();
+    //print_flt_as_mem(memory_at_start);
+
+    startup_step0_load_f98()
+
     startup_step1_before_loading_extension();
     startup_step2_add_ruuuby_c_extensions();
     startup_step4_load_needed_ruuuby_files();
 
-    //ruby_vm_at_exit(& at_exit);
-
-    //💎set_program_name("ruuuby:v.0.0.34"); //ruuuby:v.0.0.34
-
     startup_step5_protect_against_gc();
-}
 
-/*
-  # TODO: w/ TDD for Class(String) {create w/ extension so that 'U*' ID can be re-used)
-  #
-  # @return [Array]
-  def as_utf8_hex; self.as_utf8.unpack('U*'); end
-*/
+    simple_timer_end(& simple_timer);
+    simple_timer_print_delta(& simple_timer, "Ruuuby-Extensions loaded in");
+
+    const char * s = getenv("RUUUBY_FULL_DEBUG");
+    if (s != NULL && (*s) == 't') {
+        rb_funcall(ⓜruuuby_engine, rb_intern("get_mem_stats"), 2, DBL2NUM(memory_at_start), DBL2NUM(memory_peak_this_runtime()));
+    }
+}

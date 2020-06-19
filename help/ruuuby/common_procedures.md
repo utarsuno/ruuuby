@@ -4,10 +4,10 @@
 | step | perform | notes|
 | --- | --- | --- |
 | 0   | run `./bin/console_db` |
-| 1   | enter `💎.api.sync_git_commit_history` | atm `DNE` |
+| 1   | enter `💎.engine.api.sync_git_commit_history` | atm `DNE` |
 | 2   | exit |
 | 3   | `step-0` |
-| 4   | enter `💎.api.sync_version_number` | atm `DNE` |
+| 4   | enter `💎.engine.api.sync_version_number` | atm `DNE` |
 
 	# ╔═════════════════════════════════════════════════════════════════════════════╗
 	# ║ 0x0) ./bin/console_db  ║ 0x1) puts @ruuuby_gemspec.generate_source          ║
@@ -18,7 +18,6 @@
  * formalize this into re-usable procedures
 
 ```ruby
-
 require 'benchmark'
 FIXNUM_MAX = (2**(0.size * 8 -2) -1)
 MAX_SIZE = FIXNUM_MAX / 8192
@@ -34,19 +33,29 @@ def slow_gcd(a, b)
   a
 end
 
+def other_gcd(a, b)
+  a.gcd(b)
+end
+
 def fast_gcd(a, b)
   ::Math::NumberTheory.fast_gcd(a, b)
 end
 
 Benchmark.bmbm do |x|
   x.report('slow_gcd') do
-      10000.times do |i|
+    50000.times do |i|
       slow_gcd(data[i][0], data[i][1])
     end
   end
+  x.report('other_gcd') do
+    50000.times do |i|
+      data[i][0].gcd(data[i][1])
+    end
+  end
   x.report('fast_gcd') do
-      10000.times do |i|
-      fast_gcd(data[i][0], data[i][1])
+    50000.times do |i|
+      ::Math::NumberTheory.fast_gcd(data[i][0], data[i][1])
+      #fast_gcd(data[i][0], data[i][1])
     end
   end
 end
@@ -61,6 +70,36 @@ puts Benchmark.measure {
     fast_gcd(data[i][0], data[i][1])
   end
 }
+
+require 'benchmark'
+FIXNUM_MAX = (2**(0.size * 8 -2) -1)
+MAX_SIZE = FIXNUM_MAX / 8192
+Random.rand(MAX_SIZE)
+data = []
+(100..99999).each do |i|
+  data << [Random.rand(i), Random.rand(i)]
+end
+puts Benchmark.measure {
+  10000.times do |i|
+    b = data[0, data.length-1]
+  end
+}
+puts Benchmark.measure {
+  10000.times do |i|
+    b = data[0..data.length-2]
+  end
+}
+puts Benchmark.measure {
+  10000.times do |i|
+    b = data[0...data.length-1]
+  end
+}
+puts Benchmark.measure {
+  10000.times do |i|
+    b = data[0...-1]
+  end
+}
+
 
 ```
 

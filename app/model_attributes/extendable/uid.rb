@@ -17,6 +17,7 @@ module ::Ruuuby
         # @return [Object] instance of `ApplicationRecord`
         def find_by_uid(*args)
           result = self.generate_query_uid(*args).first
+          #result = self.generate_query_uid(*args).limit(1).first
           🛑 RuntimeError.🆕("unable to find UID{#{args.to_s}}") if result == nil
           result
         end

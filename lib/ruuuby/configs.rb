@@ -8,7 +8,7 @@ BEGIN {
   class << self
     include(
         ::Ruuuby::Feature::Extendable::MainF28,
-        ::Math::Trig::Funcs
+        ::Math::Trig
     )
 
     #$🌎 = self
@@ -19,53 +19,59 @@ BEGIN {
   # TODO: create better solution than loading it here
   module ::Kernel
 
+    # @type [Float]
+    Ω = ::Float::CONST_OMEGA
+
+    # @return [Float]
+    def ₑˆΩ; ::Float::E_POW_CONST_OMEGA; end
+
     # TODO: https://en.wikipedia.org/wiki/Golden_spiral
     # TODO: https://en.wikipedia.org/wiki/Polar_coordinate_system
     # TODO: https://en.wikipedia.org/wiki/Euler%27s_formula
 
     # ---------------------------------------------------------------------------------------------------------- | *f28* |
 
-    ℕ𝕌𝕃𝕃 = ::Math::SetTheory::NullSet.ℹ
+    ℕ𝕌𝕃𝕃 = ::Math::SetTheory::NullSet.instance
 
-    𝔹 = ::Math::SetTheory::BooleanNumbers.ℹ
+    𝔹 = ::Math::SetTheory::BooleanNumbers.instance
 
-    ℕ = ::Math::SetTheory::NaturalNumbers.ℹ
+    ℕ = ::Math::SetTheory::NaturalNumbers.instance
 
-    𝕎 = ::Math::SetTheory::WholeNumbers.ℹ
+    𝕎 = ::Math::SetTheory::WholeNumbers.instance
 
-    ℤ = ::Math::SetTheory::IntegerNumbers.ℹ
+    ℤ = ::Math::SetTheory::IntegerNumbers.instance
 
-    ℚ = ::Math::SetTheory::RationalNumbers.ℹ
+    ℚ = ::Math::SetTheory::RationalNumbers.instance
 
-    𝔸ᵣ = ::Math::SetTheory::RealAlgebraicNumbers.ℹ
+    𝔸ᵣ = ::Math::SetTheory::RealAlgebraicNumbers.instance
 
-    𝔸 = ::Math::SetTheory::AlgebraicNumbers.ℹ
+    𝔸 = ::Math::SetTheory::AlgebraicNumbers.instance
 
-    ℂ = ::Math::SetTheory::ComplexNumbers.ℹ
+    ℂ = ::Math::SetTheory::ComplexNumbers.instance
 
-    𝕋 = ::Math::GroupTheory::CircleGroup.ℹ
+    𝕋 = ::Math::GroupTheory::CircleGroup.instance
 
-    𝕀 = ::Math::SetTheory::IrrationalNumbers.ℹ
+    𝕀 = ::Math::SetTheory::IrrationalNumbers.instance
 
-    ℝ = ::Math::SetTheory::RealNumbers.ℹ
+    ℝ = ::Math::SetTheory::RealNumbers.instance
 
-    𝕌 = ::Math::SetTheory::UniversalSet.ℹ
+    𝕌 = ::Math::SetTheory::UniversalSet.instance
 
     # ---------------------------------------------------------------------------------------------------------- | *f06* |
 
-    ::Kernel.const_set(:𝕊, ::Math::Space::SymbolicNumbersSpace.ℹ)
+    ::Kernel.const_set(:𝕊, ::Math::Space::SymbolicNumbersSpace.instance)
 
-    ::Kernel.const_set(:🅱, ::Math::Space::BooleanSpace.ℹ)
+    ::Kernel.const_set(:🅱, ::Math::Space::BooleanSpace.instance)
 
     🙈
 
-    def 🧬; ::Math::Space::NucleotideSpace.ℹ; end
+    def 🧬; ::Math::Space::NucleotideSpace.instance; end
 
-    def 🔢; ::Math::Space::NumberSpace.ℹ; end
+    def 🔢; ::Math::Space::NumberSpace.instance; end
 
-    def ∅; ::Math::SetTheory::EmptySet.ℹ; end
+    def ∅; ::Math::SetTheory::EmptySet.instance; end
 
-    def 𝕚; ::Math::SetTheory::ImaginaryNumbers.ℹ; end
+    def 𝕚; ::Math::SetTheory::ImaginaryNumbers.instance; end
   end
   # | --------------------------------------------------------------------------------------------------------------------
 

@@ -5,7 +5,7 @@ module ::Math
   module SetTheory
 
     class BooleanNumbers < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
       def initialize
         super(:𝔹, 2)

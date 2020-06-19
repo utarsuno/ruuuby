@@ -31,6 +31,9 @@ module ::Math
   # math related code that can be categorized under +NumberTheory+
   module NumberTheory
 
+    # ==extension funcs:
+    #  - semiprime?
+
     # equations within +NumberTheory+ that only involve 1-input (which belongs to the `natural-numbers`)
     module ℕ¹
 
@@ -82,7 +85,7 @@ module ::Math
           return [1]
         else
           result = ::Math::NumberTheory::ℕ¹.divisors(n)
-          result[0..result.length-2]
+          result[0...-1]
         end
       end
 
@@ -258,7 +261,9 @@ module ::Math
       # -------------------------------------------------------------------------------------------- | *b05* | *f32* |
       @seq_fibonacci = ::Math::Expr::Sequence.new(:∈𝕎, [0, 1, 1, 2, 3])
       @seq_fibonacci.define_singleton_method(:_∋?){|n| ::Math::NumberTheory::𝕎¹.seq_square.∋?(5 * (n * n) + 4) || ::Math::NumberTheory::𝕎¹.seq_square.∋?(5 * (n * n) - 4)}
-      @seq_fibonacci.define_singleton_method(:calculate_value_at) {|n| (((::Float::RATIO_GOLDEN ** n) / ::Math.sqrt(5.0)) + 0.5).floor}
+      @seq_fibonacci.define_singleton_method(:calculate_value_at){|n| (((::Float::RATIO_GOLDEN ** n) / ::Math.sqrt(5.0)) + 0.5).floor}
+      @seq_fibonacci.define_singleton_method(:nᵗʰ_sum){|n| ::Math::NumberTheory::𝕎¹.seq_fibonacci[n + 2] - 1}
+      @seq_fibonacci.define_singleton_method(:nᵗʰ_squared_sum){|n| ::Math::NumberTheory::𝕎¹.seq_fibonacci[n] * ::Math::NumberTheory::𝕎¹.seq_fibonacci[n + 1]}
       # -------------------------------------------------------------------------------------------- | *b06* | *f32* |
       @seq_lucas = ::Math::Expr::Sequence.new(:∈𝕎, [2, 1, 3])
       @seq_lucas.define_singleton_method(:A∀ₓ) do |max_n|
@@ -293,11 +298,7 @@ module ::Math
       @seq_triangle = ::Math::Expr::Sequence.new(:∈𝕎, [0, 1, 3])
       @seq_triangle.define_singleton_method(:_∋?) do |n|
         x = n * 8 + 1
-        if x.even?
-          false
-        else
-          ::Math::NumberTheory::𝕎¹.seq_square.∋?(x)
-        end
+        x.odd? && ::Math::NumberTheory::𝕎¹.seq_square.∋?(x)
       end
       @seq_triangle.define_singleton_method(:calculate_value_at){|n| ::Math::Combinatorics::𝕎².choose(n: n + 1, k: 2)}
       # -------------------------------------------------------------------------------------------- | *b08* | *f32* |
@@ -333,7 +334,7 @@ module ::Math
       #
       # @raise [ArgumentError] if a or b is not ∈ ℕ
       #
-      # @return [Boolean] true, if `a` and `b` have a `greatest common divisor` of 1
+      # @return [Boolean] true, if `a` and `b` have equal values for their `abundancy_index`
       def self.friendly?(a, b); ::Math::NumberTheory::ℕ¹.abundancy_index(a) == ::Math::NumberTheory::ℕ¹.abundancy_index(b); end
 
     end # end: {ℕ²}
@@ -346,6 +347,10 @@ module ::Math
       # @see http://www.codecodex.com/wiki/Euclidean_algorithm
       # @see https://tutorialspoint.dev/algorithm/mathematical-algorithms/steins-algorithm-for-finding-gcd
       #
+      # ‣ [associative law] | gcd(a,b,c) = gcd(a, gcd(b,c))
+      # ‣ [               ] | `∀ a, gcd(a,0) = |a|`
+      # ‣ [               ] | `∀ a, gcd(a,a) = |a|`
+      #
       # @param [Integer] a
       # @param [Integer] b
       #
@@ -353,12 +358,14 @@ module ::Math
       #
       # @return [Integer]
       def self.gcd(a, b)
-        🛑num❓($PRM_MANY, [a, b], :∈ℤ)
-        ::Math::NumberTheory.fast_gcd(a.to_i.abs, b.to_i.abs)
+        🛑nums❓([a, b], :∈ℤ)
+        a.to_i.gcd(b.to_i)
       end
 
     end # end: {ℤ²}
 
+    # `::Math::NumberTheory::ℤ³`
+    #
     # equations within +NumberTheory+ that involve 3-inputs w/ ∀ input ∈ ℤ {functions w/ exceptions to this rule may exist}
     module ℤ³
 
@@ -385,7 +392,7 @@ module ::Math
     module Symbolic
 
       # TODO: Liouville's Constant (OEIS A012245)
-      # https://mathworld.wolfram.com/LiouvillesConstant.html
+      # https://mathworld.wolfram.com/LiouvillesConstant.html.
       # https://en.wikipedia.org/wiki/Liouville_number
       #  ^ (relevant as no Liouville number can be `rational`)
       #  ^ (all Liouville numbers are `transcendental`)
@@ -403,10 +410,8 @@ end
 # TODO: highly abundant number
 # TODO: highly cototient number
 # TODO: untouchable number
-# TODO: semiprimes
 # TODO: tetrahedral numbers
 # TODO: pentatope numbers
 # TODO: square pyramidal number
-# TODO: palindromic
 # TODO: multiplicative persistence
 #

@@ -2,7 +2,6 @@
 
 # add various functions to existing module +Module+
 class ::Module
-
   # ---------------------------------------------------------------------------------------------------------- | *f10* |
   alias_method :∃const?, :const_defined?
   # -------------------------------------------------------------------------------------------------- | *b00* | *f10* |
@@ -62,16 +61,5 @@ class ::Module
   # | ------------------------------------------------------------------------------------------------------------------
 
   alias_method :⨍_add_aliases, :f_add_aliases
-
-  # @return [Array]
-  def get_all_defined_modules
-    self.constants.select do |const|
-      c = self.const_get(const)
-      (c.is_a?(::Module) && c.class == ::Module)
-    end
-  end
-
-  # @return [Array]
-  def get_all_defined_classes; self.constants.select{|const| self.const_get(const).is_a?(::Class)}; end
 
 end

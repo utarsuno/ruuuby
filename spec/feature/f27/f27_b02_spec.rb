@@ -8,14 +8,14 @@ RSpec.describe 'f27_b02' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
             it 'w/ numerics' do
-              expect_theta_angle(::ThetaAngle.new_radian(1337), :as_radian, 1337)
-              expect_theta_angle(::ThetaAngle.new_radian(1337.0), :as_radian, 1337)
+              expect_theta_angle(::ThetaAngle.new_radian(1337), 3, 1337)
+              expect_theta_angle(::ThetaAngle.new_radian(1337.0), 3, 1337)
             end
             it 'w/ ThetaAngle' do
-              expect_theta_angle(::ThetaAngle.new_radian(θʳ(1337.0)), :as_radian, 1337)
-              expect_theta_angle(::ThetaAngle.new_radian(θ°(360)), :as_radian, π * 2)
-              expect_theta_angle(::ThetaAngle.new_radian(θᵍ(400)), :as_radian, π * 2)
-              expect_theta_angle(::ThetaAngle.new_radian(θ𝞽(1)), :as_radian, π * 2)
+              expect_theta_angle(::ThetaAngle.new_radian(θʳ(1337.0)), 3, 1337)
+              expect_theta_angle(::ThetaAngle.new_radian(θ°(360)), 3, π * 2)
+              expect_theta_angle(::ThetaAngle.new_radian(θᵍ(400)), 3, π * 2)
+              expect_theta_angle(::ThetaAngle.new_radian(θ𝞽(1)), 3, π * 2)
             end
           end
           context 'cases: negative' do
@@ -30,14 +30,14 @@ RSpec.describe 'f27_b02' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
             it 'w/ numerics' do
-              expect_theta_angle(::ThetaAngle.new_degree(1337), :as_degree, 1337)
-              expect_theta_angle(::ThetaAngle.new_degree(1337.0), :as_degree, 1337)
+              expect_theta_angle(::ThetaAngle.new_degree(1337), 4, 1337)
+              expect_theta_angle(::ThetaAngle.new_degree(1337.0), 4, 1337)
             end
             it 'w/ ThetaAngle' do
-              expect_theta_angle(::ThetaAngle.new_degree(θʳ(π * 2)), :as_degree, 360)
-              expect_theta_angle(::ThetaAngle.new_degree(θ°(360)), :as_degree, 360)
-              expect_theta_angle(::ThetaAngle.new_degree(θᵍ(400)), :as_degree, 360)
-              expect_theta_angle(::ThetaAngle.new_degree(θ𝞽(1)), :as_degree, 360)
+              expect_theta_angle(::ThetaAngle.new_degree(θʳ(π * 2)), 4, 360)
+              expect_theta_angle(::ThetaAngle.new_degree(θ°(360)), 4, 360)
+              expect_theta_angle(::ThetaAngle.new_degree(θᵍ(400)), 4, 360)
+              expect_theta_angle(::ThetaAngle.new_degree(θ𝞽(1)), 4, 360)
             end
           end
           context 'cases: negative' do
@@ -52,14 +52,14 @@ RSpec.describe 'f27_b02' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
             it 'w/ numerics' do
-              expect_theta_angle(::ThetaAngle.new_gon(1337), :as_gon, 1337)
-              expect_theta_angle(::ThetaAngle.new_gon(1337.0), :as_gon, 1337)
+              expect_theta_angle(::ThetaAngle.new_gon(1337), 6, 1337)
+              expect_theta_angle(::ThetaAngle.new_gon(1337.0), 6, 1337)
             end
             it 'w/ ThetaAngle' do
-              expect_theta_angle(::ThetaAngle.new_gon(θʳ(π * 2)), :as_gon, 400)
-              expect_theta_angle(::ThetaAngle.new_gon(θ°(360)), :as_gon, 400)
-              expect_theta_angle(::ThetaAngle.new_gon(θᵍ(400)), :as_gon, 400)
-              expect_theta_angle(::ThetaAngle.new_gon(θ𝞽(1)), :as_gon, 400)
+              expect_theta_angle(::ThetaAngle.new_gon(θʳ(π * 2)), 6, 400)
+              expect_theta_angle(::ThetaAngle.new_gon(θ°(360)), 6, 400)
+              expect_theta_angle(::ThetaAngle.new_gon(θᵍ(400)), 6, 400)
+              expect_theta_angle(::ThetaAngle.new_gon(θ𝞽(1)), 6, 400)
             end
           end
           context 'cases: negative' do
@@ -74,14 +74,14 @@ RSpec.describe 'f27_b02' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
             it 'w/ numerics' do
-              expect_theta_angle(::ThetaAngle.new_turn(1337), :as_turn, 1337)
-              expect_theta_angle(::ThetaAngle.new_turn(1337.0), :as_turn, 1337)
+              expect_theta_angle(::ThetaAngle.new_turn(1337), 5, 1337)
+              expect_theta_angle(::ThetaAngle.new_turn(1337.0), 5, 1337)
             end
             it 'w/ ThetaAngle' do
-              expect_theta_angle(::ThetaAngle.new_turn(θʳ(π * 2)), :as_turn, 1)
-              expect_theta_angle(::ThetaAngle.new_turn(θ°(360)), :as_turn, 1)
-              expect_theta_angle(::ThetaAngle.new_turn(θᵍ(400)), :as_turn, 1)
-              expect_theta_angle(::ThetaAngle.new_turn(θ𝞽(1)), :as_turn, 1)
+              expect_theta_angle(::ThetaAngle.new_turn(θʳ(π * 2)), 5, 1)
+              expect_theta_angle(::ThetaAngle.new_turn(θ°(360)), 5, 1)
+              expect_theta_angle(::ThetaAngle.new_turn(θᵍ(400)), 5, 1)
+              expect_theta_angle(::ThetaAngle.new_turn(θ𝞽(1)), 5, 1)
             end
           end
           context 'cases: negative' do
@@ -121,7 +121,7 @@ RSpec.describe 'f27_b02' do
             expect(as_degrees).to eq(θ°(300) + θ°(60))
             expect(as_radians).to eq(θʳ(π) + θʳ(π))
             expect(as_gons).to eq(θᵍ(300) + θᵍ(100.0))
-            expect(as_turns).to eq(θ𝞽(½) + θ𝞽(½))
+            expect(as_turns).to eq(θ𝞽(0.5) + θ𝞽(0.5))
           end
         end
       end

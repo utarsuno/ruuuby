@@ -1,8 +1,8 @@
 # coding: UTF-8
 
-RSpec.describe 'f32_b01' do
+RSpec.describe 'f32_b00' do
 
-  context 'feature{f32} behavior{b01} functionality' do
+  context 'feature{f32} behavior{b00} functionality' do
     let(:fℕ¹){::Math::NumberTheory::ℕ¹}
     let(:num_samples_deficient){[1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 19, 21, 22, 23, 25, 26, 27, 29, 31, 32, 33, 34, 35, 37, 38, 39, 41, 43, 44, 45, 46, 47, 49, 50]}
     let(:num_samples_non_deficient){[6, 12, 18, 20, 24, 28, 30, 36, 42]}
@@ -14,6 +14,8 @@ RSpec.describe 'f32_b01' do
       context 'func{prime_factors}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
+            expect(fℕ¹.prime_factors(241)).to eq([[241, 1]])
+            expect(fℕ¹.prime_factors(210)).to eq([[2, 1], [3, 1], [5, 1], [7, 1]])
             expect(fℕ¹.prime_factors(100)).to eq([[2, 2], [5, 2]])
             expect(fℕ¹.prime_factors(76)).to eq([[2, 2], [19, 1]])
             expect(fℕ¹.prime_factors(50)).to eq([[2, 1], [5, 2]])

@@ -6,6 +6,7 @@
 require 'bundler/setup'
 
 require 'ruuuby'
+💎.engine.enable_orm
 require_relative '../db/seed'
 
 # You can add fixtures and/or initialization code here to make experimenting

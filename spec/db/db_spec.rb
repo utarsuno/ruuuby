@@ -7,19 +7,11 @@ RSpec.describe 'db/db.rb' do
     context 'defines expected schemas' do
 
       context 'tables found are as defined' do
-        let(:db_tables){💎.orm.get_connection_base.tables}
+        let(:db_tables){💎.engine.orm.get_connection_base.tables}
 
         it 'for needed tables' do
-          expect(💎.orm.get_connection_schema.tables).to eq(💎.orm.get_connection_base.tables)
-
-          expect(db_tables.∋?('ruuuby_features')).to eq(true)
-          expect(db_tables.∋?('ruuuby_feature_behaviors')).to eq(true)
-          expect(db_tables.∋?('ruuuby_changelogs')).to eq(true)
-          expect(db_tables.∋?('ruuuby_releases')).to eq(true)
-          expect(db_tables.∋?('ruuuby_gems')).to eq(true)
-          expect(db_tables.∋?('git_commits')).to eq(true)
-          expect(db_tables.∋?('ruuuby_dirs')).to eq(true)
-          expect(db_tables.∋?('ruuuby_files')).to eq(true)
+          expect(💎.engine.orm.get_connection_schema.tables).to eq(💎.engine.orm.get_connection_base.tables)
+          💎.engine.orm.expected_tables[:orm].∀{|table_name| expect(db_tables.∋?(table_name)).to eq(true)}
         end
 
         it 'for the additional table created by libraries (not SQLite3)' do
@@ -27,12 +19,19 @@ RSpec.describe 'db/db.rb' do
         end
 
         it 'w/o any additional (un-expected) tables' do
-          expect(db_tables.length - 1).to eq(8)
+          num_tables_generated_by_external_libs = 💎.engine.orm.expected_tables[:application_record].length
+          num_tables_generated_by_orm           = 💎.engine.orm.expected_tables[:orm].length
+          expect(num_tables_generated_by_external_libs).to eq(1)
+          expect(db_tables.length - num_tables_generated_by_external_libs).to eq(num_tables_generated_by_orm)
         end
 
       end
 
     end
+
+    #context 'db_locale', :locale do
+
+    #end
 
   end
 

@@ -1,7 +1,7 @@
 // encoding: UTF-8
 
-#ifndef CRUUUBY_H4_THETA_ANGLE
-#include "c4_theta_angle.h"
+#ifndef CRUUUBY_H6_FEATURE_MACROS
+#include "c6_feature_macros.h"
 #endif
 
 #ifndef CRUUUBY_H
@@ -13,14 +13,8 @@
  |    \__/ | \| \__, .__/ .   |__/ |___ \__, |___ /~~\ |  \ /~~\  |  | \__/ | \| .__/
 _____________________________________________________________________________________________________________________ */
 
-static inline void internal_only_add_frozen_const_to(VALUE kclass, VALUE * internal_global, const char * const_name, VALUE val_to_freeze);
-
-static inline VALUE 💎new_ary(const long known_max_size);
-#define 💎new_ary_size2(arg_a, arg_b) rb_assoc_new(arg_a, arg_b);
-
-static void startup_step0_load_f98_b02(void);
 static inline void startup_step1_before_loading_extension(void);
-static inline void startup_step2_add_ruuuby_c_extensions(void);
+static void startup_step2_add_ruuuby_c_extensions(void);
 static inline void startup_step4_load_needed_ruuuby_files(void);
 static inline void startup_step5_protect_against_gc(void);
 static void internal_only_prepare_f16(void);
@@ -48,6 +42,10 @@ ________________________________________________________________________________
 #define 💎add_public_func_1args_to(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
 #define 💎add_public_func_2args_to(kclass, func_name, the_func)  rb_define_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 2);
 
+#define 💎add_public_func_0args_by_id(kclass, func_id, the_func) rb_define_method_id(kclass, func_id, RUBY_METHOD_FUNC(the_func), 0);
+#define 💎add_public_func_1args_by_id(kclass, func_id, the_func) rb_define_method_id(kclass, func_id, RUBY_METHOD_FUNC(the_func), 1);
+
+#define 💎add_singleton_func_0args_to(kclass, func_name, the_func) rb_define_singleton_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 0);
 #define 💎add_singleton_func_1args_to(kclass, func_name, the_func) rb_define_singleton_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
 #define 💎add_singleton_func_2args_to(kclass, func_name, the_func) rb_define_singleton_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 2);
 #define 💎add_singleton_func_kargs_to(kclass, func_name, the_func) rb_define_singleton_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), -1);
@@ -67,9 +65,9 @@ ________________________________________________________________________________
 
 #define c_func(func_name, expr) declare_func(func_name, expr, void, void)
 
-#define 💎add_global_module(str)                             rb_define_module(str);
-#define 💎add_module_under(under_me, str)                    rb_define_module_under(under_me, str);
-#define 💎add_new_sub_class_under(under_me, base_class, str) rb_define_class_under(under_me, str, base_class);
+#define 💎add_global_module(str)                     rb_define_module(str);
+#define 💎add_module_under(kclass, str)              rb_define_module_under(kclass, str);
+#define 💎add_class_under(kclass, kclass_super, str) rb_define_class_under(kclass, str, kclass_super);
 
 #define 💎add_func_alias(kclass, name_alias, name_original)  rb_define_alias(kclass, name_alias, name_original);
 #define 💎add_const_under(kclass, const_name, const_value)   rb_define_const(kclass, const_name, const_value);
@@ -93,6 +91,10 @@ ________________________________________________________________________________
 #define raise_err_arg(...)           rb_raise(R_ERR_ARG, __VA_ARGS__);
 #define raise_err_runtime(...)       rb_raise(R_ERR_RUNTIME, __VA_ARGS__);
 #define raise_err_zero_division(...) rb_raise(R_ERR_ZERO_DIVISION, __VA_ARGS__);
+
+#define 🛑arg_nums rb_raise(E_ERR_ARG, __VA_ARGS__);
+#define 🛑expected_kargs(the_func, num_args_expected) raise_err_arg("| self{%s}-> m{%s} w/ self{%"PRIsVALUE"} got{%d} args instead of the expected{%s} |", rb_obj_classname(self), the_func, self, argc, num_args_expected);
+#define 🛑expected_sym(the_func, arg_name, the_arg)   raise_err_arg("| self{%s}-> m{%s} w/ self{%"PRIsVALUE"} got{%"PRIsVALUE"} w/ type{%s} instead of the expected type{Symbol} |", rb_obj_classname(self), the_func, self, the_arg, rb_obj_classname(the_arg));
 
 #define ERR_param_type(nucleotide, kclass, the_func, arg_name, the_arg, required_type) raise_err_arg("| %s{%s}-> m{%s} got arg(%s) w/ type{%s}, required-type{%s} |", nucleotide, kclass, the_func, arg_name, rb_obj_classname(the_arg), required_type);
 #define ERR_c_self_got_bad_param_type(the_func, the_arg, required_type)                raise_err_arg("| c{%s}-> m{%s} got arg w/ type{%s}, required-type{%s} |", rb_obj_classname(self), the_func, rb_obj_classname(the_arg), required_type);
@@ -151,6 +153,52 @@ static inline __attribute__ ((__always_inline__)) VALUE has_smell_of_int(const V
 static inline VALUE is_finite_num(const VALUE arg) {return rb_funcall(arg, cached_rb_intern_is_finite, 0);}
 static inline VALUE has_smell_of_int(const VALUE arg){return rb_funcall(arg, cached_rb_intern_smells_like_int, 0);}
 
+static VALUE m_nil_empty(const VALUE self) __attribute__ ((const));
+static VALUE m_int_is_finite(const VALUE self) __attribute__ ((const));
+static VALUE m_int_is_not_finite(const VALUE self) __attribute__ ((const));
+
 void Init_ruby_class_mods(void);
+
+// --------------
+
+static inline VALUE r_flt_has_decimals(const double flt){
+    if (isfinite(flt)) {re_as_bool(flt != trunc(flt))} else {re_no}
+}
+
+static inline VALUE r_flt_smells_like_int(const double flt){
+    if (isfinite(flt)) {re_as_bool(flt == trunc(flt))} else {re_no}
+}
+
+static inline VALUE r_flt_is_universal(const double flt){
+    re_as_bool(isfinite(flt))
+}
+
+// --------------
+
+#define 💎parse_optional_arg_as_them() VALUE them; rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);
+
+//🛑expected_sym(func_name, "did not support the received normalizer", sym)
+
+/*static int SYM2NORM(const VALUE sym, const char * func_name) {
+    if (sym == n_in_set_universal) {
+        return NORM_UNIVERSAL;
+    } else if (sym == n_in_set_universal_w_str_allowed) {
+        return NORM_UNIVERSAL_W_STR;
+    } else if (sym == n_in_set_natural) {
+        return NORM_NATURAL;
+    } else if (sym == n_in_set_natural_w_str_allowed) {
+        return NORM_NATURAL_W_STR;
+    } else if (sym == n_in_set_whole) {
+        return NORM_WHOLE;
+    } else if (sym == n_in_set_whole_w_str_allowed) {
+        return NORM_WHOLE_W_STR;
+    } else if (sym == n_in_set_integer) {
+        return NORM_INTEGER;
+    } else if (sym == n_in_set_integer_w_str_allowed) {
+        return NORM_INTEGER_W_STR;
+    } else {
+        return NORM_ERROR;
+    }
+}*/
 
 #endif

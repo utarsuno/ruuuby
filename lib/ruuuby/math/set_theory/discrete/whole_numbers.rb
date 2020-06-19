@@ -6,7 +6,7 @@ module ::Math
 
     # also called: +counting-numbers+
     class WholeNumbers < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
       def initialize
         super(:𝕎, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO, {
             closed_under_addition: true,

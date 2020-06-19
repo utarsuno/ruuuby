@@ -31,6 +31,8 @@ module ::Math
       # @param [Symbol] kmodule
       # @param [Module, Class] owner (default⟶Kernel)
       #
+      # @raise [ArgumentError]
+      #
       # @return [Boolean]
       def ∃ᵐ?(kmodule, owner=::Kernel)
         🛑 Ruuuby::ParamErr::throw(::Kernel, :∃ᵐ?, :kmodule, ::Symbol, kmodule) unless kmodule.sym?
@@ -43,10 +45,17 @@ module ::Math
         end
       end
 
+      # @param [Symbol] kmodule
+      #
+      # @raise [ArgumentError]
+      #
+      # @return [Boolean] true, if arg(`kmodule`) was found as a global module
+      def ∃ᴹ?(kmodule); self.∃ᵐ?(kmodule, ::Kernel); end
+
       #def ∋?(n); n.nucleotide?; end
       #def ∌?(n); !(self.∋?(n)); end
 
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
     end
 

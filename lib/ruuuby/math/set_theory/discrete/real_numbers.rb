@@ -6,9 +6,9 @@ module ::Math
 
     # includes all the +measuring-numbers+
     class RealNumbers < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
-      KNOWN_TRANSCENDENTALS = [::Math::PI.🆔, ::Math::E.🆔, ::Float::CONST_OMEGA.🆔]
+      #KNOWN_TRANSCENDENTALS = [::Math::PI.🆔, ::Math::E.🆔, ::Float::CONST_OMEGA.🆔]
 
       def initialize
         super(:ℝ, ::Math::SetTheory::NumberSet::AlephNumbers::ONE, {

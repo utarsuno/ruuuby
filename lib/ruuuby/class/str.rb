@@ -36,21 +36,6 @@ module ::Ruuuby
           end
         end
 
-        # auto-define additional aliases for Class(`String`)
-        #
-        # @param [Class] kclass
-        #
-        # @return [Class] `String`
-        def self.included(kclass)
-          kclass.⨍_add_aliases(:downcase, [:⬇])
-          kclass.⨍_add_aliases(:downcase!, [:⬇!])
-          kclass.⨍_add_aliases(:upcase, [:⬆])
-          kclass.⨍_add_aliases(:upcase!, [:⬆!])
-
-          kclass.⨍_add_aliases(:reverse, [:↩])
-          kclass.⨍_add_aliases(:reverse!, [:↩!])
-        end
-
         # @param [String]         stop_at
         # @param [Integer, Float] num_matches (default: 1), use value{-1} or{∞} to have no limit on matches
         #
@@ -234,46 +219,47 @@ module ::Ruuuby
 
           case(self.length)
           when 0
-            self.🛑⨍_to_num
+            🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
           when 1
             if self.digit?
               return self.to_i
             else
-              self.🛑⨍_to_num
+              🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
             end
           when 2
             case(self.₀)
             when '.'
-              if self.₁.digit? ; return Float(self)
-              else             ; self.🛑⨍_to_num
+              if self.₁.digit?
+                return Float(self)
+              else
+                🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
               end
             when '+', '-'
               if self.₁.digit?   ; return Integer(self)
               elsif self.₁?('π') ; return (self.₀?('-')) ? (-::Math::PI) : (::Math::PI)
               elsif self.₁?('γ') ; return (self.₀?('-')) ? (-::Float::CONST_EULER_MASCHERONI) : (::Float::CONST_EULER_MASCHERONI)
-              else               ; self.🛑⨍_to_num
+              else               ;  🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
               end
             else
               if self.₀.digit? && self.₁.digit? ; return Integer(self)
-              else                              ; self.🛑⨍_to_num
+              else                              ; 🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
               end
             end
           when 3
             if self.match?(String.syntax_len_3_as_flt)     ; return Float(self)
             elsif self.match?(String.syntax_len_3_as_int) ; return Integer(self)
-            elsif self.⬇ == 'nan'                        ; return Float::NAN
-            else                                          ; self.🛑⨍_to_num
+            elsif self.downcase == 'nan'                  ; return Float::NAN
+            else                                          ; 🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
             end
           else
             if self.match?(String.syntax_len_any_as_int) ; return Integer(self)
             elsif self.match?(String.syntax_len_any)     ; return Float(self)
-            else                                         ; self.🛑⨍_to_num
+            else                                         ; 🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
             end
           end
         end
 
       end
-
       # defines the operations needed to support Feature(`f24`) that are applied to Class(`String`)
       module StringF24
         # @return [Boolean] true, if this String's content's syntax match camel-case
@@ -337,7 +323,7 @@ module ::Ruuuby
                 chars << c
                 mark = false
               else
-                chars << c.⬇
+                chars << c.downcase
               end
             end
             chars
@@ -347,7 +333,7 @@ module ::Ruuuby
                 mark = true
               elsif mark
                 mark = false
-                chars << c.⬆
+                chars << c.upcase
               else
                 chars << c
               end
@@ -356,7 +342,7 @@ module ::Ruuuby
           elsif self.🐫?
             self
           elsif self.🐫⬇?
-            self[0].⬆ + self[1...self.𝔠]
+            self[0].upcase + self[1...self.𝔠]
           else; 🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "which is not in one of the formats: [🐫, 🐫⬇, 🐍⬆, 🐍]"); end
         end
 
@@ -494,9 +480,6 @@ class ::String
     # @type [String]
     TRIGONOMETRIC_ANGLE   = '(\d+)?π(/\d+)?'.❄️
 
-    # @type [String]
-    SQL_ENCODING_UTF_8    = 'UTF-8'.❄️
-
     ❄️
   end
 
@@ -508,13 +491,20 @@ class ::String
   # ---------------------------------------------------------------------------------------------------------- | *f08* |
   include ::Ruuuby::Feature::Includable::StringF08
 
+  alias_method :⬇, :downcase
+  alias_method :⬇!, :downcase!
+  alias_method :⬆, :upcase
+  alias_method :⬆!, :upcase!
+
+  alias_method :↩, :reverse
+  alias_method :↩!, :reverse!
+
   alias_method :♻️⟶, :remove_until
   alias_method :♻️⟶∞, :remove_until_last
 
   # ---------------------------------------------------------------------------------------------------------- | *f09* |
   include ::Ruuuby::Feature::Includable::StringF09
   # ---------------------------------------------------------------------------------------------------------- | *f21* |
-  alias_method :🛑⨍_to_num, :err_to_num
 
   include ::Ruuuby::Feature::Includable::StringF21
   # ---------------------------------------------------------------------------------------------------------- | *f24* |
@@ -541,9 +531,10 @@ class ::String
     end
   end
 
-  # TODO: missing TDD
-  #
   # @return [String] self with modified +encoding+ if not already +UTF-8+
-  def as_utf8; self.force_encoding(::String::Syntax::SQL_ENCODING_UTF_8); end
+  def as_utf8; self.force_encoding(::Encoding::UTF_8); end
+
+  # @return [Boolean] true, if this `String` has equal contents written forwards or backwards
+  def palindrome?; self == self.↩; end
 
 end

@@ -26,7 +26,7 @@ class ::Numeric
   #  * (π + (1 - π)) is not transcendental
   #
   # @return [Boolean]
-  def self.known_transcendental?(n); ::Math::SetTheory::RealNumbers::KNOWN_TRANSCENDENTALS.∋?(n.🆔); end
+  #def self.known_transcendental?(n); ::Math::SetTheory::RealNumbers::KNOWN_TRANSCENDENTALS.∋?(n.🆔); end
 
   # @return [Boolean]
   def self.known_real_algebraic?(n); ::Math::SetTheory::RealAlgebraicNumbers::KNOWN_REAL_ALGEBRAIC.∋?(n.🆔); end

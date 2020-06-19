@@ -6,7 +6,7 @@ module ::Math
 
     # also called: +counting-numbers+
     class NaturalNumbers < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
       def initialize
         super(:ℕ, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO, {

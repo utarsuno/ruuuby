@@ -13,16 +13,6 @@ RSpec.describe 'f28_b00' do
         it '𝚽 == (1 + √(5)) / 2.0' do
           expect(𝚽).to eq((1 + √(5)) / 2.0)
         end
-        it '0 == 𝚽^² - 𝚽 - 1' do
-          expect((𝚽^²) - 𝚽 - 1.0).to eq(0)
-        end
-        it '𝚽^² == 𝚽 + 1' do
-          expect(𝚽^²).to eq(𝚽 + 1)
-        end
-        it '𝚽 = 1 + 1/𝚽' do
-          expect(𝚽).to eq(1 + Rational(1, 𝚽))
-          expect(𝚽).to eq(1 + (𝚽^⁻¹))
-        end
         context 'trig related functions' do
           it '𝚽 = 2 * sin(54°)' do
             expect(𝚽).to eq(2 * sin(θ°(54)))
@@ -36,5 +26,23 @@ RSpec.describe 'f28_b00' do
         end
       end
     end # end: {golden ratio}
+  end
+
+  context 'integration tests' do
+    context '{f28_b00} and {f16}' do
+      it '0 == 𝚽^² - 𝚽 - 1' do
+        expect((𝚽 ** 2) - 𝚽 - 1.0).to eq(0)
+        expect((𝚽^²) - 𝚽 - 1.0).to eq(0)
+      end
+      it '𝚽 = 1 + 1/𝚽' do
+        expect(𝚽).to eq(1 + Rational(1, 𝚽))
+        expect(𝚽).to eq(1 + (𝚽^⁻¹))
+        expect(𝚽).to eq(1 + 𝚽 ** -1)
+      end
+      it '𝚽^² == 𝚽 + 1' do
+        expect(𝚽^²).to eq(𝚽 + 1)
+        expect(𝚽 ** 2).to eq(𝚽 + 1)
+      end
+    end
   end
 end

@@ -14,6 +14,49 @@ RSpec.describe 'str' do
 
   context 'extends class[String]' do
 
+    context 'tech_debt', :tech_debt do
+      it 'complete missing TDD' do
+        expect_∃⨍(:as_utf8, ::String)
+      end
+    end
+
+    context 'by adding needed functions' do
+      context 'func{palindrome?}' do
+        context 'scenarios not handled correctly?', :tech_debt do
+          it 'see char generated from{[770].pack("U*")}' do
+            expect('η̂'.palindrome?).to eq(false)
+          end
+        end
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            expect(''.palindrome?).to eq(true)
+            expect('a'.palindrome?).to eq(true)
+            expect('aa'.palindrome?).to eq(true)
+            expect('aaa'.palindrome?).to eq(true)
+            expect('aba'.palindrome?).to eq(true)
+            expect('a a'.palindrome?).to eq(true)
+            expect(' a a '.palindrome?).to eq(true)
+            expect('10101'.palindrome?).to eq(true)
+            expect("0\n\t1___1\t\n0".palindrome?).to eq(true)
+            expect('1337ℤ7331'.palindrome?).to eq(true)
+            expect('1❓337❓ℤ❓733❓1'.palindrome?).to eq(true)
+          end
+          it 'cases: negative' do
+            expect('aâ'.palindrome?).to eq(false)
+            expect('a '.palindrome?).to eq(false)
+            expect('ab'.palindrome?).to eq(false)
+            expect('aab'.palindrome?).to eq(false)
+            expect('baaa'.palindrome?).to eq(false)
+            expect('abab'.palindrome?).to eq(false)
+            expect('a ab'.palindrome?).to eq(false)
+            expect(' ba a '.palindrome?).to eq(false)
+            expect('1b0101'.palindrome?).to eq(false)
+            expect('0101b0'.palindrome?).to eq(false)
+          end
+        end
+      end
+    end
+
     context 'by adding needed static functions' do
       context 'syntax-functions' do
         context 'warm cache exists' do
@@ -563,24 +606,24 @@ RSpec.describe 'str' do
         end
         context 'cases: error' do
           it 'empty string' do
-            expect{''.to_num}.to raise_error(RuntimeError)
+            expect{''.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
           end
           it 'invalid formats of length 1' do
-            expect{'-'.to_num}.to raise_error(RuntimeError)
-            expect{'+'.to_num}.to raise_error(RuntimeError)
-            expect{'.'.to_num}.to raise_error(RuntimeError)
-            expect{'a'.to_num}.to raise_error(RuntimeError)
-            expect{"\n".to_num}.to raise_error(RuntimeError)
+            expect{'-'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
+            expect{'+'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
+            expect{'.'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
+            expect{'a'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
+            expect{"\n".to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
           end
           it 'invalid formats of length 2' do
-            expect{'-+'.to_num}.to raise_error(RuntimeError)
-            expect{'1+'.to_num}.to raise_error(RuntimeError)
-            expect{'+.'.to_num}.to raise_error(RuntimeError)
-            expect{'aa'.to_num}.to raise_error(RuntimeError)
+            expect{'-+'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
+            expect{'1+'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
+            expect{'+.'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
+            expect{'aa'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
 
             # such scenarios will not be allowed
-            expect{'0.'.to_num}.to raise_error(RuntimeError)
-            expect{'7.'.to_num}.to raise_error(RuntimeError)
+            expect{'0.'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
+            expect{'7.'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
           end
           context 'for func{to_num?}' do
             it 'same-cases' do

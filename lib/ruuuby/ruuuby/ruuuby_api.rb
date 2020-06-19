@@ -7,25 +7,70 @@ module ::Ruuuby
   # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
 
-    # `💎.api`
+    # @see https://stackoverflow.com/questions/4426280/what-do-pty-and-tty-mean
+    # | tty | teletype        | "in UNIX, /dev/tty* is any device that acts like a `teletype`, ie, a terminal"
+    # | pty | pseudo-teletype | "device entry that acts like a terminal to the process performing I/O, but is managed by something else"
+    #
+    # `💎.engine.api`
     class RuuubyAPI
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
 
-      def initialize
-        @gem_tty = nil
+      def initialize(engine)
+        @path_openssl = nil
+        @gem_tty      = nil
+        @engine       = engine
       end
 
+      def path_openssl
+        require 'openssl'
+        if @path_openssl.nil?
+          @path_openssl = self.run_cmd!('brew --prefix openssl@1.1')
+        end
+        @path_openssl
+      end
+
+      # TODO: move into ORM part of engine
       def info_release_state
-        release_current = 💎.api_git.remote_release_current
-        #release_previous = 💎.api_git.remote_release_previous
+        release_current = 💎.engine.api_git.remote_release_current
+        #release_previous = 💎.engine.api_git.remote_release_previous
 
         puts "the last released version was{#{release_current.to_s}}"
       end
 
+      # TODO: create/utilize brew API layer
+      def local_dev_health_check
+        self.run_cmd!('brew doctor')
+      end
+
       def run_cmd(cmd)
-        out, err = self.get_tty.run(cmd, only_output_on_error: true, timeout: 6, pty: false)
+        out, err = self.get_tty.run(cmd, timeout: 6, pty: false)
         return out, err
       end
+
+      def run_cmd!(cmd)
+        out, err = self.get_tty.run(cmd, timeout: 6, pty: false)
+        unless err.empty?
+          raise "cmd{#{cmd.to_s}} encountered error{#{err.to_s}}"
+        end
+        out = out.to_s.strip.split("\n")
+        if out.ary? && out.length == 1
+          out = out[0].to_s
+          if out.include?("\n")
+            return out.gsub!("\n", '')
+          else
+            return out
+          end
+        elsif out.str?
+          if out.include?("\n")
+            return out.gsub!("\n", '')
+          else
+            return out
+          end
+        else
+          out
+        end
+      end
+
+      🙈
 
       #==printer options
       # [null]     no output
@@ -34,23 +79,18 @@ module ::Ruuuby
       # [quiet]    only output actual command stdout and stderr
       def get_tty
         if @gem_tty.nil?
-          @gem_tty = ::TTY::Command.new(printer: :null) #(printer: :pretty)
+          if @engine.logger.nil?
+            @gem_tty = ::TTY::Command.new(printer: :pretty) #(printer: :pretty) #printer: :null
+          else
+            @gem_tty = ::TTY::Command.new(output: @engine.logger, color: false)
+          end
         end
         @gem_tty
       end
 
-      🙈
-
     end
   end
 
-end
-
-module ::Ruuuby
-  # information and utilities that define and work w/ aspects of `Ruuuby`
-  module MetaData
-    def self.api; ::Ruuuby::MetaData::RuuubyAPI.ℹ; end
-  end
 end
 
 # -------------------------------------------- ⚠️ --------------------------------------------

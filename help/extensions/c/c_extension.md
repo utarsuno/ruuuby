@@ -90,7 +90,10 @@ static inline int rb_toupper(int c) { return rb_islower(c) ? (c&0x5f) : c; }
 
 ### Misc
 
+ * https://stackoverflow.com/questions/10192903/time-in-milliseconds-in-c
+
 ```
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 

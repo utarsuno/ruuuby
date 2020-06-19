@@ -9,19 +9,15 @@ RSpec.describe 'f31_b01' do
         context 'all health checks' do
 
           it 'passes health checks' do
-            expect(💎.api_git.healthy?).to eq(true)
+            expect(💎.engine.api_git.healthy?).to eq(true)
           end
 
           it 'has correct repo path' do
-            expect(💎.api_git.repo.path).to eq("#{💎.api_git.repo.workdir}.git/")
-          end
-
-          it 'has .gitignore file' do
-            expect(📁.∃?(💎.api_git.path_gitignore)).to eq(true)
+            expect(💎.engine.api_git.repo.path).to eq("#{💎.engine.api_git.repo.workdir}.git/")
           end
 
           context 'git config values' do
-            let(:cached_configs){💎.api_git.repo.config.to_hash}
+            let(:cached_configs){💎.engine.api_git.repo.config.to_hash}
 
             context 'for{protocol}' do
               it '{version}' do

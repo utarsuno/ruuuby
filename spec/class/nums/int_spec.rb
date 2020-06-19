@@ -42,8 +42,19 @@ RSpec.describe 'int.rb' do
         end
         it 'works for values outside of (1)' do
           expect(1337 ^ 1337).to eq(0)
+          expect(11 ^ 11).to eq(0)
+          expect(10 ^ 10).to eq(0)
+          expect(7 ^ 7).to eq(0)
+          expect(5 ^ 5).to eq(0)
+
           expect(1337 ^ 0).to eq(1337)
           expect(0 ^ 1337).to eq(1337)
+
+          expect(11 ^ 10).to eq(1)
+          expect(10 ^ 11).to eq(1)
+
+          expect(5 ^ 7).to eq(2)
+          expect(7 ^ 5).to eq(2)
         end
       end
 
@@ -213,7 +224,7 @@ RSpec.describe 'int.rb' do
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
-  context 'performance', :performance => 'slow' do
+  context 'performance', :performance => :slow do
 
     context 'funcs extremely quickly' do
       context 'func{finite?}' do

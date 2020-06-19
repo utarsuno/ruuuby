@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # encoding: UTF-8
 
+export RUUUBY_FULL_DEBUG="f"
+
 set -euo pipefail
 IFS=$'\n\t'
 set -vx

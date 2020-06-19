@@ -224,86 +224,6 @@ RSpec.describe 'theta_angle' do
             end
           end
         end # end: {abs!}
-        context 'vocab based funcs' do
-          context 'func{complementary_with?}' do
-            context 'math properties' do
-              it 'tan(A) = cot(B)' do
-                expect(tan(θ°(80))).to eq(cot(θ°(10)))
-                expect(tan(θ°(45))).to eq(cot(θ°(45)))
-                expect(tan(θ°(10))).to eq(cot(θ°(80)))
-              end
-              it 'sec(A) = csc(B)' do
-                expect(sec(θ°(80))).to eq(csc(θ°(10)))
-                expect(sec(θ°(45))).to eq(csc(θ°(45)))
-                expect(sec(θ°(10))).to eq(csc(θ°(80)))
-              end
-              it 'cos²(A) + cos²(B) = 1' do
-                expect(cos²(θ°(80)) + cos²(θ°(10))).to eq(1)
-                expect(cos²(θ°(45)) + cos²(θ°(45))).to eq(1)
-                expect(cos²(θ°(10)) + cos²(θ°(80))).to eq(1)
-              end
-              it 'sin²(A) + sin²(B) = 1' do
-                expect(sin²(θ°(80)) + sin²(θ°(10))).to eq(1)
-                expect(sin²(θ°(45)) + sin²(θ°(45))).to eq(1)
-                expect(sin²(θ°(10)) + sin²(θ°(80))).to eq(1)
-              end
-              it 'cot²(45°) + 1 = csc²(45°)' do
-                expect(cot²(θ°(45)) + 1).to eq(csc²(θ°(45)))
-              end
-              it 'tan²(45°) + 1 = sec²(45°)' do
-                expect(cot²(θ°(45)) + 1).to eq(csc²(θ°(45)))
-              end
-            end
-
-            context 'handles needed scenarios' do
-              it 'cases: positive' do
-                expect(θ°(45).complementary_with?(θ𝞽(1.0 / 8.0))).to eq(true)
-                expect(θᵍ(50).complementary_with?(θ𝞽(1.0 / 8.0))).to eq(true)
-                expect(θᵍ(50).complementary_with?(θ°(45))).to eq(true)
-                expect(θ𝞽(1.0 / 8.0).complementary_with?(θᵍ(50))).to eq(true)
-                expect(θ𝞽(1.0 / 8.0).complementary_with?(θ°(45))).to eq(true)
-                expect(θʳ(θ°(45).ʳ.to_f).complementary_with?(θ°(45))).to eq(true)
-              end
-              it 'cases: negative' do
-                expect(θ°(46).complementary_with?(θ𝞽(1.0 / 8.0))).to eq(false)
-                expect(θᵍ(51).complementary_with?(θ𝞽(1.0 / 8.0))).to eq(false)
-              end
-            end
-          end # end: {func{complementary_with?}}
-          context 'func{supplementary_with?}' do
-            context 'handles needed scenarios' do
-              it 'cases: positive' do
-                expect(θ°(90).supplementary_with?(θ𝞽(¼))).to eq(true)
-                expect(θᵍ(100).supplementary_with?(θ𝞽(¼))).to eq(true)
-                expect(θᵍ(100).supplementary_with?(θ°(90))).to eq(true)
-                expect(θ𝞽(¼).supplementary_with?(θᵍ(100))).to eq(true)
-                expect(θ𝞽(¼).supplementary_with?(θ°(90))).to eq(true)
-                expect(θ𝞽(¼).supplementary_with?(θ𝞽(¼))).to eq(true)
-                expect(θʳ(θ°(90).ʳ.to_f).supplementary_with?(θ°(90))).to eq(true)
-              end
-              it 'cases: negative' do
-                expect(θ°(46).supplementary_with?(θ𝞽(1.0 / 8.0))).to eq(false)
-                expect(θᵍ(51).supplementary_with?(θ𝞽(1.0 / 8.0))).to eq(false)
-              end
-            end
-          end # end: {func{supplementary_with?}}
-          context 'func{explementary_with?}' do
-            context 'handles needed scenarios' do
-              it 'cases: positive' do
-                expect(θ°(180).explementary_with?(θ𝞽(½))).to eq(true)
-                expect(θᵍ(200).explementary_with?(θ𝞽(½))).to eq(true)
-                expect(θᵍ(200).explementary_with?(θ°(180))).to eq(true)
-                expect(θ𝞽(½).explementary_with?(θᵍ(200))).to eq(true)
-                expect(θ𝞽(½).explementary_with?(θ𝞽(½))).to eq(true)
-                expect(θʳ(θ°(180).ʳ.to_f).explementary_with?(θ°(180))).to eq(true)
-              end
-              it 'cases: negative' do
-                expect(θ°(46).explementary_with?(θ𝞽(1.0 / 8.0))).to eq(false)
-                expect(θᵍ(51).explementary_with?(θ𝞽(1.0 / 8.0))).to eq(false)
-              end
-            end
-          end # end: {func{explementary_with?}}
-        end # end: {vocab based funcs}
         context 'func{windings}' do
           context 'handles needed scenarios' do
             it 'cases: positive direction' do
@@ -377,7 +297,7 @@ RSpec.describe 'theta_angle' do
                 angle2   = angle.normalize
                 expect(angle.real).to eq(370.0)
                 expect(angle2.real).to eq(10)
-                expect(angle.repr).to eq(:as_degree)
+                expect(angle.repr).to eq(4)
                 expect(angle_id).to eq(angle.🆔)
                 expect(angle_id).to_not eq(angle2.🆔)
                 expect(angle.ⓣ).to eq(::ThetaAngle)
@@ -395,7 +315,7 @@ RSpec.describe 'theta_angle' do
                 angle_id = angle.🆔
                 angle2   = angle.normalize!
                 expect(angle.real).to eq(10.0)
-                expect(angle.repr).to eq(:as_degree)
+                expect(angle.repr).to eq(4)
                 expect(angle_id).to eq(angle.🆔)
                 expect(angle_id).to eq(angle2.🆔)
                 expect(angle.ⓣ).to eq(::ThetaAngle)
@@ -588,149 +508,6 @@ RSpec.describe 'theta_angle' do
             end
           end # end: {func{<=>}}
         end # end: {comparison funcs}
-        context 'func{∠?(:acute)}' do
-          context 'handles needed scenarios' do
-            it 'cases: positive' do
-              [0, 45, 89].∀ {|scenario| expect((θ°(scenario).∠?(:acute))).to eq(true)}
-              [0, π * ¼, (π * ½) * 0.95].∀ {|scenario| expect((θʳ(scenario).∠?(:acute))).to eq(true)}
-              [0, 50, 99].∀ {|scenario| expect(θᵍ(scenario).∠?(:acute)).to eq(true)}
-              [0, 0.1, 0.24, 0.2499].∀ {|scenario| expect(θ𝞽(scenario).∠?(:acute)).to eq(true)}
-            end
-            it 'cases: negative' do
-              [-10, 90, 182, 361].∀ {|scenario| expect(θ°(scenario).∠?(:acute)).to eq(false)}
-              [-π * ¼, π * ½, π, 2.0 * π, 2.0 * π + ¼].∀ {|scenario| expect(θʳ(scenario).∠?(:acute)).to eq(false)}
-              [-10, 100, 101, 182, 361].∀ {|scenario| expect(θᵍ(scenario).∠?(:acute)).to eq(false)}
-              [-0.1, ¼, 0.26].∀ {|scenario| expect(θ𝞽(scenario).∠?(:acute)).to eq(false)}
-            end
-          end # end: {handles needed scenarios}
-        end # end: {func{∠?(:acute)}}
-        context 'func{obtuse_angle?}' do
-          context 'handles needed scenarios' do
-            it 'cases: positive' do
-              [91, 100, 145, 179].∀ {|scenario| expect((θ°(scenario).∠?(:obtuse))).to eq(true)}
-              [π - ¼, (π * ½) * 1.25].∀ {|scenario| expect((θʳ(scenario).∠?(:obtuse))).to eq(true)}
-              [101, 150, 199].∀ {|scenario| expect(θᵍ(scenario).∠?(:obtuse)).to eq(true)}
-              [0.26, 0.35, 0.49].∀ {|scenario| expect(θ𝞽(scenario).∠?(:obtuse)).to eq(true)}
-            end
-            it 'cases: negative' do
-              [-10, 0, 89, 90, 180, 181, 361].∀ {|scenario| expect(θ°(scenario).∠?(:obtuse)).to eq(false)}
-              [-π * ¼, π * ½, π, 2.0 * π, 2.0 * π + ¼].∀ {|scenario| expect(θʳ(scenario).∠?(:obtuse)).to eq(false)}
-              [-10, 0, 99, 100, 200, 201].∀ {|scenario| expect(θᵍ(scenario).∠?(:obtuse)).to eq(false)}
-              [-0.1, 0, ½, 0.51].∀ {|scenario| expect(θ𝞽(scenario).∠?(:obtuse)).to eq(false)}
-            end
-          end # end: {handles needed scenarios}
-        end # end: {func{obtuse_angle?}}
-        context 'func{oblique_angle?}' do
-          context 'handles needed scenarios' do
-            it 'cases: positive' do
-              [181, 200, 300, 359, 361].∀ {|scenario| expect((θ°(scenario).∠?(:oblique))).to eq(true)}
-              [π + ¼, 2.0 * π - ¼].∀ {|scenario| expect((θʳ(scenario).∠?(:oblique))).to eq(true)}
-              [201, 299, 399, 401].∀ {|scenario| expect(θᵍ(scenario).∠?(:oblique)).to eq(true)}
-              [0.51, 0.76, 0.99, 1.01].∀ {|scenario| expect(θ𝞽(scenario).∠?(:oblique)).to eq(true)}
-            end
-            it 'cases: negative' do
-              expect(θ°(90).∠?(:oblique)).to eq(false)
-              expect(θ°((360 * 5) + 90).∠?(:oblique)).to eq(false)
-              expect(θʳ(π * ½).∠?(:oblique)).to eq(false)
-              expect(θᵍ(100).∠?(:oblique)).to eq(false)
-              expect(θ𝞽(¼).∠?(:oblique)).to eq(false)
-            end
-          end # end: {handles needed scenarios}
-        end # end: {func{oblique_angle?}}
-        context 'func{sextant_angle?}' do
-          context 'handles needed scenarios' do
-            it 'cases: positive' do
-              expect(θ°(60).∠?(:sextant)).to eq(true)
-              # TODO: need to increase precision (utilize flags) to get around precision errors for the alt angle types
-            end
-            it 'cases: negative' do
-              [-10, 0, 89, 90, 179, 180, 360, 361].∀ {|scenario| expect(θ°(scenario).∠?(:sextant)).to eq(false)}
-              [π - ¼, 2.0 * π + ¼, π, 2.0 * π].∀ {|scenario| expect(θʳ(scenario).∠?(:sextant)).to eq(false)}
-              [-10, 0, 199, 200, 400, 401].∀ {|scenario| expect(θᵍ(scenario).∠?(:sextant)).to eq(false)}
-              [-0.1, 0, 0.49, ½, 1].∀ {|scenario| expect(θ𝞽(scenario).∠?(:sextant)).to eq(false)}
-            end
-          end # end: {handles needed scenarios}
-        end # end: {func{sextant_angle?}}
-        context 'func{reflex_angle?}' do
-          context 'handles needed scenarios' do
-            it 'cases: positive' do
-              [181, 200, 300, 359].∀ {|scenario| expect((θ°(scenario).∠?(:reflex))).to eq(true)}
-              [π + ¼, 2.0 * π - ¼].∀ {|scenario| expect((θʳ(scenario).∠?(:reflex))).to eq(true)}
-              [201, 300, 399].∀ {|scenario| expect(θᵍ(scenario).∠?(:reflex)).to eq(true)}
-              [0.51, 0.75, 0.99].∀ {|scenario| expect(θ𝞽(scenario).∠?(:reflex)).to eq(true)}
-            end
-            it 'cases: negative' do
-              [-10, 0, 89, 90, 179, 180, 360, 361].∀ {|scenario| expect(θ°(scenario).∠?(:reflex)).to eq(false)}
-              [π - ¼, 2.0 * π + ¼, π, 2.0 * π].∀ {|scenario| expect(θʳ(scenario).∠?(:reflex)).to eq(false)}
-              [-10, 0, 199, 200, 400, 401].∀ {|scenario| expect(θᵍ(scenario).∠?(:reflex)).to eq(false)}
-              [-0.1, 0, 0.49, ½, 1].∀ {|scenario| expect(θ𝞽(scenario).∠?(:reflex)).to eq(false)}
-            end
-          end # end: {handles needed scenarios}
-        end # end: {func{reflex_angle?}}
-        context 'func{zero_angle?}' do
-          context 'handles needed scenarios' do
-            it 'cases: positive' do
-              expect(θ°(0).∠?(:zero)).to eq(true)
-              expect(θʳ(0).∠?(:zero)).to eq(true)
-              expect(θᵍ(0).∠?(:zero)).to eq(true)
-              expect(θ𝞽(0).∠?(:zero)).to eq(true)
-            end
-            it 'cases: negative' do
-              [-10, 89, 91, 182, 361].∀ {|scenario| expect(θ°(scenario).∠?(:zero)).to eq(false)}
-              [-π * ¼, 1, π * ½ + 1, π, 2.0 * π, 2.0 * π + ¼].∀ {|scenario| expect(θʳ(scenario).∠?(:zero)).to eq(false)}
-              [-10, 99, 101, 182, 361].∀ {|scenario| expect(θᵍ(scenario).∠?(:zero)).to eq(false)}
-              [-0.1, 0.24, 0.26, 0.49, 0.51, 1].∀ {|scenario| expect(θ𝞽(scenario).∠?(:zero)).to eq(false)}
-            end
-          end # end: {handles needed scenarios}
-        end # end: {func{right_angle?}}
-        context 'func{right_angle?}' do
-          context 'handles needed scenarios' do
-            it 'cases: positive' do
-              expect(θ°(90).∠?(:right)).to eq(true)
-              expect(θʳ(π * ½).∠?(:right)).to eq(true)
-              expect(θᵍ(100).∠?(:right)).to eq(true)
-              expect(θ𝞽(¼).∠?(:right)).to eq(true)
-            end
-            it 'cases: negative' do
-              [-10, 0, 89, 91, 182, 361].∀ {|scenario| expect(θ°(scenario).∠?(:right)).to eq(false)}
-              [-π * ¼, 0, 1, π * ½ + 1, π, 2.0 * π, 2.0 * π + ¼].∀ {|scenario| expect(θʳ(scenario).∠?(:right)).to eq(false)}
-              [-10, 0, 99, 101, 182, 361].∀ {|scenario| expect(θᵍ(scenario).∠?(:right)).to eq(false)}
-              [-0.1, 0, 0.24, 0.26, 0.49, 0.51, 1].∀ {|scenario| expect(θ𝞽(scenario).∠?(:right)).to eq(false)}
-            end
-          end # end: {handles needed scenarios}
-        end # end: {func{right_angle?}}
-        context 'func{straight_angle?}' do
-          context 'handles needed scenarios' do
-            it 'cases: positive' do
-              expect(θ°(180).∠?(:straight)).to eq(true)
-              expect(θʳ(π).∠?(:straight)).to eq(true)
-              expect(θᵍ(200).∠?(:straight)).to eq(true)
-              expect(θ𝞽(½).∠?(:straight)).to eq(true)
-            end
-            it 'cases: negative' do
-              [-10, 0, 89, 91, 182, 259, 299, 361, 360.1337, 1337].∀ {|scenario| expect(θ°(scenario).∠?(:straight)).to eq(false)}
-              [-π * ¼, 0, 1, π * ½ + 1, 2.0 * π + ¼].∀ {|scenario| expect(θʳ(scenario).∠?(:straight)).to eq(false)}
-              [-10, 0, 99, 101, 182, 361, 399, 359, 401, 1337].∀ {|scenario| expect(θᵍ(scenario).∠?(:straight)).to eq(false)}
-              [-0.1, 0, 0.24, ¼, 0.26, 0.49, 0.51, 1].∀ {|scenario| expect(θ𝞽(scenario).∠?(:straight)).to eq(false)}
-            end
-          end # end: {handles needed scenarios}
-        end # end: {func{straight_angle?}}
-        context 'func{perigon_angle?}' do
-          context 'handles needed scenarios' do
-            it 'cases: positive' do
-              expect(θ°(360).∠?(:perigon)).to eq(true)
-              expect(θʳ(π * 2.0).∠?(:perigon)).to eq(true)
-              expect(θᵍ(400).∠?(:perigon)).to eq(true)
-              expect(θ𝞽(1).∠?(:perigon)).to eq(true)
-            end
-            it 'cases: negative' do
-              [-10, 0, 89, 91, 182, 259, 299, 361, 360.1337, 1337].∀ {|scenario| expect(θ°(scenario).∠?(:perigon)).to eq(false)}
-              [-π * ¼, 0, 1, π * ½ + 1, π, 2.0 * π + ¼].∀ {|scenario| expect(θʳ(scenario).∠?(:perigon)).to eq(false)}
-              [-10, 0, 99, 101, 182, 361, 399, 359, 401, 1337].∀ {|scenario| expect(θᵍ(scenario).∠?(:perigon)).to eq(false)}
-              [-0.1, 0, ½, 1.5, 1337, 0.99, 1.01].∀ {|scenario| expect(θᵍ(scenario).∠?(:perigon)).to eq(false)}
-            end
-          end # end: {handles needed scenarios}
-        end # end: {func{perigon_angle?}}
       end # end: {math functions}
       context 'math operations' do
         context 'addition' do
@@ -1141,18 +918,18 @@ RSpec.describe 'theta_angle' do
           it 'cases: all' do
             expect(θ°(1337.1337).to_s).to eq('1337.1337°θ')
             expect(θʳ(1337.1337).to_s).to eq('1337.1337ʳθ')
-            expect(θᵍ(1337.1337).to_s).to eq('1337.1337ᵍθ')
             expect(θ𝞽(1337.1337).to_s).to eq('1337.1337𝞽θ')
+            expect(θᵍ(1337.1337).to_s).to eq('1337.1337ᵍθ')
           end
         end # end: {handles needed scenarios}
       end # end: {func{to_s}}
       context 'func{repr}' do
         context 'handles needed scenarios' do
           it 'cases: all' do
-            expect(θ°(1337.1337).repr).to eq(:as_degree)
-            expect(θʳ(1337.1337).repr).to eq(:as_radian)
-            expect(θᵍ(1337.1337).repr).to eq(:as_gon)
-            expect(θ𝞽(1337.1337).repr).to eq(:as_turn)
+            expect(θʳ(1337.1337).repr).to eq(3)
+            expect(θ°(1337.1337).repr).to eq(4)
+            expect(θ𝞽(1337.1337).repr).to eq(5)
+            expect(θᵍ(1337.1337).repr).to eq(6)
           end
         end # end: {handles needed scenarios}
       end # end: {func{repr}}

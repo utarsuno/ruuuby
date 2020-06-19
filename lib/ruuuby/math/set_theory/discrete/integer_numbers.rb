@@ -5,7 +5,7 @@ module ::Math
   module SetTheory
 
     class IntegerNumbers < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
       def initialize
         super(:ℤ, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO, {

@@ -5,7 +5,7 @@ module ::Math
   module SetTheory
 
     class UniversalSet < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
       def initialize
         super(:𝕌, ::Math::SetTheory::NumberSet::AlephNumbers::ONE)

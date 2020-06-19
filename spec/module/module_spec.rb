@@ -39,19 +39,6 @@ RSpec.describe 'module' do
         end
       end
 
-      context 'operations {get_all_defined[modules|classes]}' do
-        context 'function{get_all_defined_modules} handles needed scenarios' do
-          it 'cases: positive' do
-            expect≈≈(💎.get_all_defined_modules, [])
-          end
-        end
-        context 'function{get_all_defined_classes} handles needed scenarios' do
-          it 'cases: positive' do
-            expect≈≈(💎.get_all_defined_classes, [:RuuubyORM, :RuuubyAPI, :RuuubyEngine, :GitAPI])
-          end
-        end
-      end
-
       context 'operations {∋?, ∌?, ∈?, ∉?}' do
         context 'function{∋?} handles needed scenarios' do
           it 'cases: positive' do
@@ -167,19 +154,6 @@ RSpec.describe 'module' do
           end
         end
       end
-
-      context 'operations {get_all_defined[modules|classes]}' do
-        context 'function{get_all_defined_modules} handles needed performance scenarios' do
-          it 'cases: positive' do
-            expect{💎.get_all_defined_modules}.to perform_very_quickly
-          end
-        end
-        context 'function{get_all_defined_classes} handles needed performance scenarios' do
-          it 'cases: positive' do
-            expect{💎.get_all_defined_classes}.to perform_very_quickly
-          end
-        end
-      end # end: {operations {get_all_defined[modules|classes]}}
 
       context 'operations {∋?, ∌?, ∈?, ∉?}' do
         context 'func{∋?} for cases:' do

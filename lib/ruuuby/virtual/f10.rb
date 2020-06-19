@@ -43,7 +43,13 @@ module ::Kernel
   # ------------------------------------------------------------------------------------------------ | *b05* | *f10* |
 
   # @return [Float] the base ℮ logarithm of +n+
-  def logₑ(n); ::Math.log_e(n); end
+  def logₑ(n)
+    if n < 0 && n == (Ω ** -1)
+      ::BigMath.exp(-Ω, 42)
+    else
+      ::Math.log_e(n.to_f)
+    end
+  end
 
   # @param [Numeric, Float, Complex] n
   #
@@ -103,9 +109,6 @@ module ::Kernel
   #
   # @type [Float]
   Ψ = ::Float::RATIO_GOLDEN_SUPER
-
-  # @type [Float]
-  Ω = ::Float::CONST_OMEGA
 
   # ‣ let `a+b = circumference of a circle`, (a+b)/a = a/b; (a->longer_arc, b->smaller_arc)
   #

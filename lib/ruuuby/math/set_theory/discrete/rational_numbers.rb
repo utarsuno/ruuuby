@@ -5,7 +5,7 @@ module ::Math
   module SetTheory
 
     class RationalNumbers < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
       def initialize
         super(:ℚ, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO, {

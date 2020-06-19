@@ -6,7 +6,7 @@ module ::Math
 
     # "the `complex-numbers` are the `algebraic completion` of the `real-numbers`"
     class ComplexNumbers < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
       def initialize
         super(:ℂ, ::Math::SetTheory::NumberSet::AlephNumbers::ONE, {

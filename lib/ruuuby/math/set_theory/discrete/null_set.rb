@@ -5,7 +5,7 @@ module ::Math
   module SetTheory
 
     class NullSet < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
       def initialize
         super(:ℕ𝕌𝕃𝕃, ::Math::SetTheory::NumberSet::AlephNumbers::UNKNOWN_ℕ)

@@ -6,7 +6,7 @@ RSpec.describe 'f16' do
 
     context 'feature(16) passes audits (tests not relating to observed functionality)' do
       it 'module is defined in correct location' do
-        expect(🧬.∃ᵐ?(:ObjectF16, ::Ruuuby::Feature::Includable)).to eq(true)
+        expect_∃ᵐ(:ObjectF16, ::Ruuuby::Feature::Includable)
       end
       context 'funcs provided are defined in correct location' do
         it 'for m{ObjectF16}' do

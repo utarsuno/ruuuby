@@ -12,7 +12,7 @@ module ::Math
     # - "the `multiplicative group` of all `complex numbers` with absolute value 1"
     # - the `unit circle` in the `complex plane`
     class CircleGroup < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
       def initialize
         super(:𝕋, nil)

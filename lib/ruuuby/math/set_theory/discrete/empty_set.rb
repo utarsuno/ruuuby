@@ -8,7 +8,7 @@ module ::Math
 
     # aliased by{+∅+}
     class EmptySet < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
       def initialize; super(:∅, 0); end
 

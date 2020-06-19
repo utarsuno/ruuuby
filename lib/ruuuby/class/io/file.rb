@@ -31,26 +31,6 @@ class ::File
     File.dirname(File.dirname(path))
   end
 
-  # @param [String] path
-  #
-  # @raise [WrongParamType]
-  #
-  # @return [String]
-  def self.dirname³(path)
-    🛑str❓(:path, path)
-    File.dirname(File.dirname(File.dirname(path)))
-  end
-
-  # @param [String] path
-  #
-  # @raise [WrongParamType]
-  #
-  # @return [String]
-  def self.dirname⁴(path)
-    🛑str❓(:path, path)
-    File.dirname(File.dirname(File.dirname(File.dirname(path))))
-  end
-
   # | ------------------------------------------------------------------------------------------------------------------
 
   # @param [String] the_path
@@ -135,3 +115,10 @@ class ::File
   end
 
 end
+
+# TODO: simple file user/group permission checks/fixes
+
+# TODO: https://askubuntu.com/questions/49184/sudo-chown-r-rootmyusername-var-lib-php-session-what-should-i-put-in-usernam
+# TODO: https://phoenixnap.com/kb/linux-file-permissions
+# TODO: https://stackoverflow.com/questions/16376995/bundler-cannot-install-any-gems-without-sudo
+#

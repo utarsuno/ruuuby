@@ -17,7 +17,7 @@ module ::Math
       #
       # @return [Integer]
       def self.choose(n: 0, k: 0)
-        🛑num❓($PRM_MANY, [n, k], :∈𝕎)
+        🛑nums❓([n, k], :∈𝕎)
         ::Math::Combinatorics.n_choose_k(n.to_i, k.to_i)
       end
 
@@ -30,10 +30,12 @@ module ::Math
     # ===================================================================
 
     # static-func:
-    #  choose(n, k)
+    #  choose(n, k) --> # of combinations (unordered subsets)
+    #  permutations(n, k) --> # of permutations w/ `n` elements is `n!`
 
   end
 
 end
 
 # TODO: https://en.wikipedia.org/wiki/Catalan_number
+

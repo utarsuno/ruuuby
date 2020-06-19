@@ -11,6 +11,23 @@ RSpec.shared_context 'shared_context_language_deltas' do
 
 end
 
+RSpec.shared_context 'shared_context_f34' do
+
+  def expect_sum_of_interior_angles(the_shape, expected_number_of_sides)
+    result = the_shape.sum_of_interior_angles
+    expect(result.ⓣ).to eq(::ThetaAngle)
+    if the_shape.is_a?(::Math::Geometry::Circle)
+      expect(the_shape.num_sides).to eq(::Float::INFINITY)
+      expect(θ°(360)).to eq(result)
+    else
+      expect(the_shape.num_sides.ⓣ).to eq(::Integer)
+      expect(the_shape.num_sides).to eq(expected_number_of_sides)
+      expect((θ°(180.0 * (the_shape.num_sides - 2)))).to eq(result)
+    end
+  end
+
+end
+
 RSpec.shared_context 'shared_context_f32' do
   let(:f𝕎¹_error_scenarios){[10.1, 0.1, -1, nil, '1']}
   let(:fℕ¹_error_scenarios){[10.1, 0.1, 0, -0.0, 0.0, -1, nil, '1']}
@@ -43,7 +60,7 @@ RSpec.shared_context 'shared_context_f30' do
   def expect_feature_behavior_as_needed(the_ref, kclass)
     the_id  = the_ref.🆔
     expect(the_ref.ⓣ).to eq(kclass)
-    expect(the_ref.🆔).to eq(kclass.ℹ.🆔)
+    expect(the_ref.🆔).to eq(kclass.instance.🆔)
     expect(the_ref.🆔).to eq(the_id)
   end
 
@@ -59,10 +76,11 @@ RSpec.shared_context 'shared_context_f27' do
   def expect_theta_angle(obj, expected_type, expected_value)
     expect(obj.ⓣ).to eq(::ThetaAngle)
     expect(obj.real).to eq(expected_value)
-    expect(obj.ʳ?).to eq(expected_type == :as_radian)
-    expect(obj.°?).to eq(expected_type == :as_degree)
-    expect(obj.ᵍ?).to eq(expected_type == :as_gon)
-    expect(obj.𝞽?).to eq(expected_type == :as_turn)
+    expect(obj.repr).to eq(expected_type)
+    expect(obj.ʳ?).to eq(expected_type == 3)
+    expect(obj.°?).to eq(expected_type == 4)
+    expect(obj.𝞽?).to eq(expected_type == 5)
+    expect(obj.ᵍ?).to eq(expected_type == 6)
   end
 
 end
@@ -120,7 +138,7 @@ RSpec.shared_context 'shared_context_general' do
   let(:data_range_ints){[-1337, -10, -3, -2, -1, 0, 1, 2, 3, 10, 1337]}
   let(:data_range_ints_boolean){[-1, 0, 1]}
   let(:data_range_ints_positive){[1, 2, 3, 10, 1337]}
-  let(:data_range_ints_zero_to_positive){[0] + data_range_ints_positive}
+  let(:data_range_ints_whole_nums){[0] + data_range_ints_positive}
   let(:data_range_ints_negative){[-1337, -10, -3, -2, -1]}
   let(:data_range_rational_positive){[Rational(1, 1), Rational(2, 1), Rational(3, 1), Rational(10, 1), Rational(1337, 1)]}
   let(:data_range_rational_w_complex){[Rational(Complex(1.0, 1.5), 1), Rational(2, Complex(1.0, -1.5))]}
@@ -169,11 +187,26 @@ RSpec.shared_context 'shared_context_general' do
   let(:data_negative_infinity_with_complex){Complex(1.0/0.0, 1.5)}
 
   let(:data_∈𝕌_true){[0, 0.0, -1, -1.0, 1, 1.0, Rational(3, 5), Complex(2, 3), BigDecimal('1.337')]}
-  let(:data_∈𝕌_false){[::Float::INFINITY, ::Float::INFINITY_NEGATIVE, ::Float::NAN]}
+  let(:data_∈𝕌𝕊_true){data_∈𝕌_true + %w(0 0.0 -1 -1.0 1 1.0 1.337)}
+
+  let(:data_∈𝕌_false){[::Float::INFINITY, ::Float::INFINITY_NEGATIVE, ::Float::NAN, ::Float::INFINITY_COMPLEX]}
+  let(:data_∈𝕌𝕊_false){data_∈𝕌_false + %w(∞ -∞)}
+
   let(:data_∈ℕ_true){[1, 1.0, 1337, 1337.0, Rational(1337), Complex(1337), BigDecimal('1337.0')]}
-  let(:data_∈ℕ_false){[-0.0, 0, 0.0, Complex(0.0), BigDecimal('0.0')]}
+  let(:data_∈ℕ𝕊_true){data_∈ℕ_true + %w(1 1.0 1337 1337.0)}
+
+  let(:data_∈ℕ_false){[-0.0, 0, 0.0, Complex(0.0), BigDecimal('0.0'), ∞]}
+  let(:data_∈ℕ𝕊_false){data_∈ℕ_false + %w(0 0.0)} #-0.0
+
   let(:data_∈𝕎_true){[0, 0.0, 1, 1.0, Rational(1337), Complex(1337), BigDecimal('1337.0')]}
+  let(:data_∈𝕎𝕊_true){data_∈𝕎_true + %w(0 0.0 1 1.0)}
+
   let(:data_∈𝕎_false){[-1, -1.0, Rational(-1337), Complex(-1337), BigDecimal('-1337.0')]}
+  let(:data_∈𝕎𝕊_false){data_∈𝕎_false + %w(0.1337 -0.1337 1337.1337)}
+
   let(:data_∈ℤ_true){[0, 0.0, -1, -1.0, 1, 1.0, Rational(1337), Complex(1337), BigDecimal('1337.0')]}
+  let(:data_∈ℤ𝕊_true){data_∈ℤ_true + %w(0 0.0 -1 -1.0 1 1.0)}
+
   let(:data_∈ℤ_false){[-1.1, 0.5, 0.1337, 1.1337, Rational(1337.1), Complex(1337.1), 1i, BigDecimal('1337.1')]}
+  let(:data_∈ℤ𝕊_false){data_∈ℤ_false + %w(-1.1 -1.1 0.1337, -0.45, 1.1)}
 end

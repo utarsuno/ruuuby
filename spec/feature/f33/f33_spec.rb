@@ -5,6 +5,26 @@ RSpec.describe 'f33' do
   context 'feature{f33} functionality' do
     let(:f𝕎²){::Math::Combinatorics::𝕎²}
 
+    context 'func{permutations}' do
+      context 'handles needed scenarios' do
+        it 'cases: positive' do
+          expect(::Math::Combinatorics.permutations(1337, 3)).to eq(2384619720)
+          expect(::Math::Combinatorics.permutations(1337, 2)).to eq(1786232)
+          expect(::Math::Combinatorics.permutations(1337, 1)).to eq(1337)
+          expect(::Math::Combinatorics.permutations(10, 2)).to eq(90)
+          expect(::Math::Combinatorics.permutations(10, 3)).to eq(720)
+          expect(::Math::Combinatorics.permutations(10, 0)).to eq(1)
+          expect(::Math::Combinatorics.permutations(10, 1)).to eq(10)
+          expect(::Math::Combinatorics.permutations(8, 5)).to eq(6720)
+        end
+        it 'cases: error' do
+          expect{::Math::Combinatorics.permutations(10, -2)}.to raise_error(ArgumentError)
+          expect{::Math::Combinatorics.permutations(-10, 3)}.to raise_error(ArgumentError)
+          expect{::Math::Combinatorics.permutations(10, 20)}.to raise_error(ArgumentError)
+        end
+      end
+    end
+
     context 'func{n_choose_k}' do
 
       context 'handles needed scenarios' do

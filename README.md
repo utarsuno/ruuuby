@@ -2,18 +2,15 @@
 
 ```flavored modifications & extensions for increased quality of Ruby coding life```
 
-## Usage
-
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.40'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.41'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
 | `JIT` testing | ```RUBYOPT="--jit --jit-warnings --jit-wait --jit-max-cache=1337 --jit-verbose=2 --jit-debug -w" ./bin/console``` |
 
-#### Example
-
+### Example
 
 ```ruby
 # true, true
@@ -69,22 +66,22 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 ---
 
-# ⚠️: documentation & test-coverage not fully synced atm
+## ⚠️: documentation & test-coverage not fully synced atm
 
 ---
 
-## Language Changes:
+## Overview:
 
 #### Operations Supported (patched in)
 
 > (⚠️ wip): raising to powers(via-superscripts: `⁻⁹...⁻¹, ⁰, ¹...⁹`) with operator(`^`)
 
-| class(es)/obj  | example | (at least partially) utilizing C-extension?<br/>(java-wip) | notes |
-| ----------:| ------- | :---: |----- |
-| `Integer`  | `1337^²` | ✅ | coexists w/ `Integer`'s pre-existing `bitwise XOR` functionality<br/>`performance penalties`: `<= 115% slower` than using{`**`} |
-| `Float`    | `1337.1337^²` | ✅ | `performance penalties`: `<= 115% slower` than using{`**`} |
-| `Rational` | `3/4r^²` | ✅ | `performance penalties`: `<= 95% slower` than using{`**`} |
-| `Complex`  | `1337i^²` | ✅ | `performance penalties`: `<= 85% slower` than using{`**`} |
+| context | example | `performance penalties` compared to operator{`**`} |
+| ----------:| ------- |----- |
+| `Integer`  | `1337^²` | `<= 115% slower`<br/>coexisting w/ `bitwise XOR` functionality |
+| `Float`    | `1337.1337^²` | `<= 115% slower` |
+| `Rational` | `3/4r^²`  | `<= 95% slower` |
+| `Complex`  | `1337i^²` | `<= 85% slower` |
 | `BigDecimal` | `inc` | `inc` | `inc` |
 | `ThetaAngle` | `inc` | `inc` | outputs to unit: `steradian` (depending on input) |
 | `Quaternion` | `inc` | `inc` | |
@@ -92,20 +89,20 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 ### TOPLEVEL_BINDING Modifications:
 
-| (`global`) func(s) added | notes | as C-extension?<br/>(java-wip) |
-| ---: | :--- | :----: |
-| `℮`, `logₑ`, `log₂`, `log₁₀`<br/>`√`, `∛`, `π`, `Ⴔ`<br/>`¼`, `½`, `¾`, `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒`<br/>`∞`, `∞ℂ`, `γ` | (`f10`) | ❌/✅ |
-| `📁`, `🗄️` | - (`f12`) aliases to:<br/>`File`, `Dir` | ❌ |
-| `📅`, `🕒`, `📅🕒` | - (`f26`) aliases to:<br/>`Date`, `Time`, `DateTime` | ❌ |
-| `θ°`, `θʳ`, `θᵍ`, `θ𝞽` | `f27` | ✅ |
+| func(s) added | notes |
+| ---: | :--- |
+| `℮`, `logₑ`, `log₂`, `log₁₀`<br/>`√`, `∛`, `π`, `Ⴔ`<br/>`¼`, `½`, `¾`, `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒`<br/>`∞`, `∞ℂ`, `γ` | |
+| `📁`, `🗄️` | `File`, `Dir` |
+| `📅`, `🕒`, `📅🕒` | `Date`, `Time`, `DateTime` |
+| `θ°`, `θʳ`, `θᵍ`, `θ𝞽` | `ThetaAngle` |
 
 ### Module Modifications:
 
-| module(s) | func(s) added     | as C-extension? <br/> (java-wip) | obj fields added |
-| --------: | :---------------- | :------------------------: | --- |
-| `Kernel`  | `∃module?`, `∃class?`<br/>`∃⨍_alias?`, `∃⨍?` | ❌ | |
-| `Module`  | `⨍_add_aliases`| ✅ | |
-| `Math`    | `relative_Δ`, `τ²_in_golden_ratio?`, `τ²_in_super_golden_ratio?` | ❌ | |
+| module    | func(s) added     |
+| --------: | :---------------- |
+| `Kernel`  | `∃module?`, `∃class?`, `∃⨍_alias?`, `∃⨍?` |
+| `Module`  | `⨍_add_aliases` |
+| `Math`    | `relative_Δ`, `τ²_in_golden_ratio?`, `τ²_in_super_golden_ratio?` |
 
 #### Math Modules:
 
@@ -113,41 +110,43 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | :------- | :---: | :----------------: | ------------------------: |
 | `Trig` | | `cot²`, `cos²`, `sin²`, `tan²`, `sec²`, `csc²` |
 | `Trig` | `ℕ³` | `pythagorean?` | |
+| `NumberTheory` | | `semiprime?` | |
 | `NumberTheory` | `ℕ¹` | `prime_factors`, `divisors`, `proper_divisors`, `aliquot_sum`, `perfect?`, `almost_perfect?`, `abundant?`, `abundance`, `abundancy_index`, `deficient?`, `deficiency`, `composite?` |
 | `NumberTheory` | `𝕎¹` |  `nᵗʰ_euler_totient`, `nᵗʰ_cototient`, `digit_sum`, `digital_root`, `additive_persistence` | `seq_pronic`, `seq_fibonacci`, `seq_lucas`, `seq_square`, `seq_triangle`, `seq_hexagonal` |
 | `NumberTheory` | `ℕ²` | `coprime?`, `friendly?` |
-| `NumberTheory` | `ℤ²` | `gcd` |
 | `NumberTheory` | `ℤ³` | `congruent?` |
-| `Combinatorics` | `𝕎²` | `n_choose_k` |
-| `ProbabilityTheory` | | | |
-| `StatisticalLearning` | | | |
+| `Combinatorics` | `𝕎²` | `n_choose_k`, `permutations` |
+| `Stats` | | `arithmetic_mean` | |
+| `Stats` | `TimeSeriesAnalysis` | `exponential_moving_average` | |
+| `Stats` | `ProbabilityTheory` | | |
+| `Stats` | `StatisticalLearning` | | |
 
 ### Class Modifications:
 
-| class(es)              | func(s) added                       | as C-extension? <br/> (java-wip) | notes   |
-| ---------------------: | ----------------------------------- | :------------------------: | ------- |
-| `File`, `Dir`          | `∃?`                                | ❌ | (`f12`) |
-| `File`                 | `dirname²`, `dirname³`, `dirname⁴`<br/>`replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` | ❌ | (`f12`) |
-| `Dir`                  | `η̂_paths`                           | ❌ | (`f12`) |
-| `File`, `Dir`, `ENV`   | `∅?`                                | ❌ | (`f04`) |
-| `Object`               | `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?` | ✅ | (`f06`) |
-| `Object`               | `Ⓣ`<br/>`🛑bool❓`, `🛑int❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑θ❓` | ❌ | (`f06`) |
-| `Array`, `Set`         | `remove_empty!`                     | ❌/✅ | (`f07`) |
-| `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞`<br/>`downcase?`{`⬇?`}, `upcase?`{`⬆?`}, `downcase!`{`⬇!`}, `upcase!`{`⬆!`} | ❌ | (`f08`) |
-| `String`               | `🐫?`, `🐫⬇?`, `to_🐫`<br/>`🐍⬆?`, `🐍?`, `to_🐍` | ❌ | (`f24`) |
-| `String`               | `as_utf8`, `iso8601?`, `to_iso8601`, `as_iso8601` | ❌ | |
-| `Array`, `String`      | `η̂!`                               | ❌ | (`f08`) |
-| `Array`                | [`disjunctive_union`, `⊕`], `∖`    | ✅ | (`f09`) |
-| `Module`, `String`     | `∋?`, `∌?`, `∈?`, `∉?`             | ❌ | (`f09`) |
-| `Enumerable`           | `∌?`, `∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎`              | ❌ | (`f09`, `f10`) |
-| `Array`, `String`      | `>>`                               | ✅ | (`f05`) |
-| `String`               | `digit?`, `to_num`, `to_num?`      | ❌ | (`f21`) |
-| `Array`                | `end_with?`, `start_with?`         | ❌ | (`f08`) |
-| `String`, `Array`      | `ensure_start!`, `ensure_ending!`  | ❌ | (`f08`) |
-| `NilClass`             | `empty?`                           | ✅ | - ⚠️: philosophically debatable <br/> - (`f04`) |
-| `Integer`              | `finite?`, `infinite?`               | ✅ | (`f11`) |
-| `Numeric`              | `∞?`                               | ❌ | (`f11`) |
-| `Float`                | `≈≈`, `∞ℂ?`                        | ❌ | (`f17`) |
+| class(es)              | func(s) added                       | notes |
+| ---------------------: | :---------------------------------: | :------------------------: |
+| `File`, `Dir`          | `∃?`                                | |
+| `File`                 | `dirname²`, `replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` |
+| `Dir`                  | `η̂_paths`                           | |
+| `File`, `Dir`, `ENV`   | `∅?`                                | |
+| `Object`               | `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?` | |
+| `Object`               | `Ⓣ`<br/>`🛑bool❓`, `🛑int❓`, `🛑num❓`, `🛑nums❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑θ❓` | |
+| `Array`, `Set`         | `remove_empty!`                     | |
+| `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞`<br/>`downcase?`{`⬇?`}, `upcase?`{`⬆?`}, `downcase!`{`⬇!`}, `upcase!`{`⬆!`} | |
+| `String`               | `🐫?`, `🐫⬇?`, `to_🐫`<br/>`🐍⬆?`, `🐍?`, `to_🐍` | |
+| `String`               | `palindrome?`, `as_utf8`, `iso8601?`, `to_iso8601`, `as_iso8601` | |
+| `Array`, `String`      | `η̂!`                               | |
+| `Array`                | [`disjunctive_union`, `⊕`], `∖`    | |
+| `Module`, `String`     | `∋?`, `∌?`, `∈?`, `∉?`             | |
+| `Enumerable`           | `∌?`, `∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎`              | |
+| `Array`, `String`      | `>>`                               | |
+| `String`               | `digit?`, `to_num`, `to_num?`      | |
+| `Array`                | `end_with?`, `start_with?`         | |
+| `String`, `Array`      | `ensure_start!`, `ensure_ending!`  | |
+| `NilClass`             | `empty?`                           | ⚠️: philosophically debatable |
+| `Integer`              | `finite?`, `infinite?`               | |
+| `Numeric`              | `∞?`                               | |
+| `Float`                | `≈≈`, `∞ℂ?`                        | |
 
 #### Aliases:
 
@@ -170,19 +169,19 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ---
 
 ### Code Base Statistics:
-| category  | attribute     | value    | desc.                                                              |
-| --------: | :-----------: | :------: | :----------------------------------------------------------------- |
-| `QA`        | `unit`          | `1097`     | # of tests (for core functionality)                 |
-| `QA`        | `integration`   | `7`        | # of tests (for state/functionality checks on grouped features/components) |
-| `QA`        | `performance`   | `225`      | # of tests (for runtime performance)                |
-| `QA`        | `DB`            | `223`      | # of tests (for `DB` & `ORM`)                       |
-| `CI`        | `audit`         | `114`      | # of tests (for anything non-functionality based)   |
-| `CI`        | `locale`        | `49`       | # of tests (for local-dev configs, setup, preferences, etc) |
-| `tech-debt` | `coverage`      | `5`        | # of tests (for tracking missing functionality) |
-| `structure` | `features`      | `~35`      | # of distinct features (that are categorized & tracked) `wip` |
-| `coverage`  | `LOCs`          | `???`      | `wip` |
-| `coverage`  | `runtime`       | `???`      | `wip` |
-| `coverage`  | `documentation` | `???`      | `wip` |
+| category    | attribute       | value(s)         | # of  |
+| ----------: | :-------------: | ---------------: | :---- |
+| `QA`        | `unit`          | `1146`           | tests (for core functionality) |
+| `QA`        | `integration`   | `17`             | tests (for state/functionality checks on grouped features/components) |
+| `QA`        | `performance`   | `223`            | tests (for runtime performance) |
+| `QA`        | `DB`            | `228`            | tests (for `DB` & `ORM`) |
+| `CI`        | `audit`         | `117`            | tests (for anything non-functionality based) |
+| `CI`        | `locale`        | `50`:`4`         | local config tests{`core`:`excessive_checks`} |
+| `tech-debt` | `coverage`      | `9`              | tests (for tracking missing functionality) |
+| `structure` | `features`      | `0`:`28`:`9`:`4` | features{`stable`:`wip`:`⚠️`:`todo`} |
+| `coverage`  | `LOCs`          | `???`            | `wip` |
+| `coverage`  | `runtime`       | `???`            | `wip` |
+| `coverage`  | `documentation` | `???`            | `wip` |
 
 ---
 
@@ -215,9 +214,9 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `bundle exec rake` | `compile`           | compile any native C-extensions with code changes    |
 | `bundle exec rake` | `release`           | push git version tags and publish gem to Rubygems    |
 | `bin/`             | `audit`             | general all-around build & health check              |
-| `bin/`             | `audit_db`<br/>`audit_quick`<br/>`audit_quickest`<br/>`audit_all_but_performance`<br/>`audit_functionality` | similar to above but for targeted portions |
+| `bin/`             | `audit_db`<br/>`audit_quick`<br/>`audit_quickest`<br/>`audit_all_but_performance`<br/>`audit_functionality`<br/>`audit_locale`<br/>`audit_locale_full` | similar to above but for targeted portions |
 | `bin/`             | `setup`             | install dependencies                                 |
-| `bin/`             | `console`           | interactive console for easier experimenting         |
+| `bin/`             | `console`<br/>`console_db`<br/>`console_debug`<br/>`console_jit` | interactive console for easier experimenting |
 | `gem`              | `server`            | host interactive web-page at `http://0.0.0.0:8808` to see documentation for currently installed gems |
 
 #### Testing Tasks:

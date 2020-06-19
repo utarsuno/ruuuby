@@ -5,7 +5,7 @@ module ::Math
   module SetTheory
 
     class IrrationalNumbers < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
       KNOWN_IRRATIONALS = [::Math::PI.🆔, ::Math::E.🆔, ::Float::RATIO_GOLDEN.🆔, ::Float::RATIO_GOLDEN_SUPER.🆔, ::Float::RATIO_PLASTIC.🆔]
 

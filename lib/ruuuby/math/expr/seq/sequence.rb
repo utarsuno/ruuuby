@@ -24,11 +24,7 @@ module ::Math
 
       def ∋?(n)
         🛑num❓(:n, n, @input_type)
-        if @cached.∋?(n)
-          true
-        else
-          self._∋?(n.to_i)
-        end
+        @cached.∋?(n) || self._∋?(n.to_i)
       end
 
       def [](index)

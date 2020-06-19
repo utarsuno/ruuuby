@@ -4,7 +4,7 @@ RSpec.describe 'f08' do
   context 'audit', :audit do
     context 'feature(f08) passes audits (tests not relating to observed functionality)' do
       it 'module is defined in correct location' do
-        expect(🧬.∃ᵐ?(:StringF08, ::Ruuuby::Feature::Includable)).to eq(true)
+        expect_∃ᵐ(:StringF08, ::Ruuuby::Feature::Includable)
       end
       context 'extra sanity checks: all Classes w/ Enumerable have needed funcs' do
         context 'func{∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎}' do

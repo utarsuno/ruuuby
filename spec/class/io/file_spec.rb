@@ -21,14 +21,5 @@ RSpec.describe 'class/io/file.rb' do
       end
     end
 
-    context 'by adding "static" function{dirname³}' do
-      context 'handles needed scenarios' do
-        # positive cases intentionally omitted for time being
-        it 'cases: error' do
-          expect{::File.dirname³(nil)}.to raise_error(ArgumentError)
-        end
-      end
-    end
-
   end
 end

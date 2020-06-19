@@ -6,12 +6,12 @@ RSpec.describe 'f11_b01' do
 
     context 'feature-behavior(f11_b01) is defined correctly' do
       it 'creates class{Closure} under module{Math::SetTheory}' do
-        expect(🧬.∃ᶜ?(:Closure, ::Math::SetTheory)).to eq(true)
+        expect_∃ᶜ(:Closure, ::Math::SetTheory)
       end
 
       context 'creates inner-module{Axioms}' do
         it 'as expected' do
-          expect(🧬.∃ᵐ?(:Axioms, ::Math::SetTheory::Closure)).to eq(true)
+          expect_∃ᵐ(:Axioms, ::Math::SetTheory::Closure)
         end
         it 'w/ needed constants' do
           expect_∃const_w_type(:CLOSED_UNDER_ADDITION, Symbol, ::Math::SetTheory::Closure::Axioms)

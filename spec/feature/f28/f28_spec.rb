@@ -6,13 +6,13 @@ RSpec.describe 'f28' do
 
     context 'relating equations' do
       it 'pythagorean theorem w/ golden ratio' do
-        expect(::Math::Trig::ℕ³.pythagorean?(a: 1, b: √(𝚽), c: 𝚽)).to eq(true)
         expect(::Math::Trig::ℕ³.pythagorean?(a: 3, b: 4, c: 5)).to eq(true)
       end
     end
 
     context 'hybrid tests', :integration do
       context 'dual behavior groups for{f28}' do
+
         it '{b00, b02}' do
           expect((-1.0) ** (1.0 / (π * 1i))).to eq(℮)
         end
@@ -22,8 +22,9 @@ RSpec.describe 'f28' do
         end
 
         it '{b02, b11}' do
-          expect(℮ ** (1i * Ⴔ.real)).to eq(cos(Ⴔ) + 1i * sin(Ⴔ))
+          expect(℮ ** (1i * Ⴔ.ʳ)).to eq(cos(Ⴔ) + 1i * sin(Ⴔ))
         end
+
       end # end: {dual behavior groups for{f28}}
     end # end: {hybrid tests}
 

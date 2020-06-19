@@ -64,12 +64,10 @@ RSpec.describe 'f30_b02' do
       context 'func{∋ˢ?}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
-            expect(🧬.∋ˢ?(💎.api)).to eq(true)
-            expect(🧬.∋ˢ?(💎.orm)).to eq(true)
             expect(🧬.∋ˢ?(💎.engine)).to eq(true)
           end
           it 'cases: negative' do
-            expect(🧬.∋ˢ?(💎.cli)).to eq(false)
+            expect(🧬.∋ˢ?(::Ruuuby)).to eq(false)
             expect(🧬.∋ˢ?(String)).to eq(false)
             expect(🧬.∋ˢ?(1337)).to eq(false)
           end

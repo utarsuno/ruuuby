@@ -46,6 +46,19 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
           it 'has correct version{0.9.0}' do
             expect(::TTY::Command::VERSION).to eq('0.9.0')
           end
+          context 'reports expected config values' do
+            it 'for func{record_separator}' do
+              expect(::TTY::Command.record_separator).to eq("\n")
+            end
+            it 'for func{windows?}' do
+              expect(::TTY::Command.windows?).to eq(false)
+            end
+            it 'helpful ENV_VARs are set' do
+              path_to_ruby = ::File.join(RbConfig::CONFIG['bindir'], RbConfig::CONFIG['ruby_install_name'] + RbConfig::CONFIG['EXEEXT'])
+              expect(ENV['RUBY']).to eq(path_to_ruby)
+              expect(RbConfig.ruby).to eq(path_to_ruby)
+            end
+          end
         end # end: {for gem{tty-command}}
 
         context 'for gem{sqlite3}' do
@@ -67,18 +80,6 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
         end # end: {for gem{rugged}}
 
       end # end: {by having correct configs}
-
-      context 'by having recommended configs' do
-
-        # during 2.7.0->2.7.1 migration; 3.1.2->3.1.4
-        # verifiable w/ cmd: `gem -v`
-        context 'for gem{rubygems-update}' do
-          it 'has correct version{3.1.4}' do
-            expect(::Gem.rubygems_version.to_s).to eq('3.1.4')
-          end
-        end # end: {for gem{rubygems-update}}
-
-      end # end: {by having recommended configs}
 
     end # end: {all gems are healthy}
 

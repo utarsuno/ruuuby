@@ -76,4 +76,37 @@
 @v0_0_40.changelog.added_method_to_class(@f32, :fast_gcd, ::Math::NumberTheory::ℤ²)
 @v0_0_40.changelog.added_method_to_class(@f32, :congruent?, ::Math::NumberTheory::ℤ³)
 @v0_0_40.changelog.added_method_to_class(@f32, :≡, ::Integer)
-@v0_0_40.save!
+
+@v0_0_41 = RuuubyRelease.spawn(0, 0, 41)
+@v0_0_41.add_file('ext/ruby_class_mods/c5_internal_structs.h', '', '', @f98)
+@v0_0_41.add_file('ext/ruby_class_mods/c6_feature_macros.h', '', '', @f98)
+#@v0_0_41.add_file('lib/ruuuby/math/stats/stats.rb', '', '', @f35)
+#@v0_0_41.add_file('lib/ruuuby/math/stats/time_series_analysis.rb', '', '', @f35)
+@v0_0_41.add_file('lib/ruuuby/math/geometry/shape/shape.rb', 'Math::Geometry::Shape', 'not currently utilized, just file added early', @f34)
+@v0_0_41.add_file('lib/ruuuby/math/geometry/shape/plane_figure.rb', 'Math::Geometry::PlaneFigure', 'same as above desc.', @f34)
+@v0_0_41.add_file('lib/ruuuby/math/geometry/shape/quadrilateral.rb', 'Math::Geometry::Triangle', 'same as above desc.', @f34)
+@v0_0_41.add_file('lib/ruuuby/math/geometry/shape/shape.rb', 'Math::Geometry::Quadrilateral', 'same as above desc.', @f34)
+@v0_0_41.add_file('db/db_schema.rb', '', 'split content from file `db/db.rb`', @f15)
+@v0_0_41.add_file('lib/ruuuby/ruuuby/api/abstract_space.rb', '', 'starting ground for molding base-abstract class needed for API-like classes', @f02)
+@v0_0_41.add_file('lib/ruuuby/ruuuby/api/api_brew.rb', '', 'not currently utilized, just file added early', @f02)
+@v0_0_41.add_file('lib/ruuuby/ruuuby/api/api_docker.rb', '', 'same as above desc.', @f02)
+@v0_0_41.add_comments(
+    [
+        'iterative upgrade for `💎.engine` w/ `JIT`, `CLI`, `logging`; (further enable tracking patterns w/ memory, cpu, and other OS stats)',
+        'apply clean-ups to{`ThetaAngle`}; (bug-fixes, repetitive-code elimination, increased bitwise-flags utilization, Symbol repr replace w/ FIXNUM, etc)',
+        'start applying cleaner `OOP` design for badly needed areas (ex: remove various `Singletons & globals`)',
+        '(wip) create logical-divisions within the `RSpec` categories, significantly enabling more content to be `lazy-loaded` (faster start-up time esp. for targeted scripts; ex: compare `rspec_locale{0.04s}` vs `rspec_locale_full{1.33s})`',
+        'continued resolution of missing coverage from previous versions, still `wip`',
+    ]
+)
+
+@v0_0_41.changelog.added_method_to_class(@f10, :palindrome?, ::String)
+@v0_0_41.changelog.added_method_to_class(@f15, :num_where, 'ApplicationRecord')
+@v0_0_41.changelog.added_method_to_class(@f15, :num_release_tags, 'GitCommit')
+@v0_0_41.changelog.added_method_to_class(@f15, :num_released, 'RuuubyRelease')
+@v0_0_41.changelog.added_method_to_class(@f22, :memory_peak_this_runtime, 'Ruuuby::MetaData::RuuubyEngine')
+@v0_0_41.changelog.added_method_to_class(@f32, :semiprime?, 'Math::NumberTheory')
+@v0_0_41.changelog.added_method_to_class(@f33, :permutations, 'Math::Combinatorics')
+#@v0_0_41.changelog.added_method_to_class(@f35, :arithmetic_mean, 'Math::Stats')
+#@v0_0_41.changelog.added_method_to_class(@f35, :exponential_moving_average, 'Math::Stats::TimeSeries')
+@v0_0_41.save!

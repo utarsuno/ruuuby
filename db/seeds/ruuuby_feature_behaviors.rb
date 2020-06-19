@@ -16,8 +16,9 @@
 
 @f06.spawn_behaviors(
     [
-        'offer func{num?} with param-check-func{🛑num❓} offering the normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌, ∈ℕ𝕊, ∈𝕎𝕊, ∈ℤ𝕊, ∈𝕌𝕊}',
-        'offer func{str?} with param-check-func{🛑str❓} offering the normalizers{!∅}'
+        'offer func{num?, 🛑num❓, 🛑nums❓} w/ normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌, ∈ℕ𝕊, ∈𝕎𝕊, ∈ℤ𝕊, ∈𝕌𝕊}',
+        'offer func{str?, 🛑str❓, 🛑strs❓} offering the normalizers{!∅}',
+        'offer func{int?, 🛑int❓, 🛑ints❓} offering the normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌}'
     ]
 )
 
@@ -36,6 +37,8 @@
 
 @f12.spawn_behaviors(['offer Class aliases: {`📁` -> `File`}, {`🗄️` -> `Dir`}'])
 
+@f22.spawn_behaviors(['offers a light layer over `GC`', 'offers a light layer over `JIT`'])
+
 @f24.spawn_behaviors(
     [
         'syntax category{snake_case} aliased w/ {🐍}',
@@ -52,6 +55,8 @@
         'has additive identity{0} and multiplicative identity{1}',
         'preserves precision across math operations as best as possible',
         'each ThetaAngle representation has a corresponding static function which calls the needed constructor',
+        'vocabulary functions involving 2 ThetaAngle are provided in module {ThetaAngle::Pair}',
+        'vocabulary functions involving 1 ThetaAngle are provided as funcs',
     ]
 )
 
@@ -98,6 +103,25 @@
         'create Sequence{`Hexagonal`}',
         'offers static funcs through module{ℤ³}',
         'offers static funcs through module{ℤ²}'
+    ]
+)
+
+@f34.spawn_behaviors(
+    [
+        'offer basic abstractions to `Shape`',
+        'offer basic abstractions to `Shape::PlaneFigure`',
+        'offer basic abstractions to `Shape::Triangle`',
+        'offer basic abstractions to `Shape::Quadrilateral`',
+        'offer basic abstractions to `Shape::Circle`',
+    ]
+)
+
+@f35.spawn_behaviors(
+    [
+        'offer categorical abstractions w/ module{`DescriptiveStatistics`}',
+        'offer categorical abstractions w/ module{`ProbabilityTheory`}',
+        'offer categorical abstractions w/ module{`StatisticalLearning`}',
+        'offer categorical abstractions w/ module{`TimeSeries`}',
     ]
 )
 

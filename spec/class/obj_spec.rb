@@ -94,61 +94,6 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function{🛑str❓}' do
-      context 'handles needed input scenarios' do
-        context 'cases: positive' do
-          context 'w/ normalization{!∅}' do
-            it 'w/ single param' do
-              expect{🛑str❓('0', '5', :'!∅')}.to_not raise_error
-              expect{🛑str❓('0', ' ', :'!∅')}.to_not raise_error
-              expect{🛑str❓('0', "\n", :'!∅')}.to_not raise_error
-            end
-            it 'w/ many params' do
-              expect{🛑str❓($PRM_MANY, %w(a bb), :'!∅')}.to_not raise_error
-            end
-          end
-          context 'w/o extra normalization' do
-            it 'w/ single param' do
-              expect{🛑str❓('0', '5')}.to_not raise_error
-              expect{🛑str❓('0', ' ')}.to_not raise_error
-              expect{🛑str❓('0', "\n")}.to_not raise_error
-            end
-            it 'w/ many params' do
-              expect{🛑str❓($PRM_MANY, %w(a bb))}.to_not raise_error
-            end
-          end
-        end
-        context 'cases: negative' do
-          context 'w/ bad normalizer' do
-            it 'w/ single param' do
-              expect{🛑str❓('0', '', nil)}.to raise_error(ArgumentError)
-            end
-            it 'w/ many params' do
-              expect{🛑str❓('0', ['a', '', 'bb'], nil)}.to raise_error(ArgumentError)
-            end
-          end
-          context 'w/ normalization{!∅}' do
-            it 'w/ single param' do
-              expect{🛑str❓('0', '', :'!∅')}.to raise_error(ArgumentError)
-            end
-            it 'w/ many params' do
-              expect{🛑str❓($PRM_MANY, ['a', '', 'bb'], :'!∅')}.to raise_error(ArgumentError)
-            end
-          end
-          context 'w/o extra normalization' do
-            it 'w/ single param' do
-              expect{🛑str❓('0', nil)}.to raise_error(ArgumentError)
-            end
-            it 'w/ many params' do
-              expect{🛑str❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
-              expect{🛑str❓($PRM_MANY, [5, '5'])}.to raise_error(ArgumentError)
-              expect{🛑str❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
-            end
-          end
-        end
-      end
-    end
-
     context 'by adding function{🛑sym❓}' do
       context 'handles needed input scenarios' do
         context 'cases: positive' do
@@ -445,20 +390,9 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'func{🛑int❓}: performs extremely quickly' do
-      it 'cases: positive' do
-        expect{🛑int❓('0', 5)}.to perform_extremely_quickly
-      end
-    end
     context 'func{🛑ary❓}: performs extremely quickly' do
       it 'cases: positive' do
         expect{🛑ary❓('0', [])}.to perform_extremely_quickly
-      end
-    end
-
-    context 'func{🛑str❓}: performs extremely quickly' do
-      it 'cases: positive' do
-        expect{🛑str❓('0', '5')}.to perform_extremely_quickly
       end
     end
 

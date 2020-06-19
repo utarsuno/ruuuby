@@ -33,36 +33,52 @@ end
 
 module CategoriesQA
   ALL_SINGULAR_CATEGORIES = %w(audit db performance locale tech_debt unit integration)
+  PATH_BASE               = ::File.dirname(__FILE__)
+  module Preload
+    DB_PARTIAL = %w(/db/db.rb)
+    DB_FULL    = %w(/db/db.rb /db/seed.rb)
+  end
 end
 
-def add_task_rspec(task_name, with_warnings, singular_category_test, exclude_other_categories)
+# https://rubydoc.info/github/rspec/rspec-core/RSpec/Core/Configuration
+
+def add_task_rspec(task_name, sub_category, with_warnings, singular_category_test, exclude_other_categories, exclude_patterns='', files_to_require=[])
+  official_task_name = "#{task_name}"
+  official_task_name += "_#{sub_category}" unless sub_category.empty?
   local_opts = ['--format progress', '--color', '--require spec_helper']
-  if with_warnings
-    local_opts << '--warnings'
-  end
+  local_opts << '--warnings' if with_warnings
   if singular_category_test && task_name != 'unit'
     local_opts << "--tag @#{task_name}"
   end
   if exclude_other_categories
     CategoriesQA::ALL_SINGULAR_CATEGORIES.each do |c|
-      if c != task_name
-        local_opts << "--tag ~@#{c}"
-      end
+      local_opts << "--tag ~@#{c}" if c != task_name
     end
   end
-  rspec_task            = RSpec::Core::RakeTask.new("rspec_#{task_name}".to_sym)
+  rspec_task            = RSpec::Core::RakeTask.new("rspec_#{official_task_name}".to_sym)
   rspec_task.verbose    = with_warnings
   rspec_task.rspec_opts = local_opts.join(' ')
+  unless files_to_require.empty?
+    files_to_require.each do |relative_path|
+      rspec_task.rspec_opts << " --require #{CategoriesQA::PATH_BASE}#{relative_path}"
+    end
+  end
+  unless exclude_patterns.empty?
+    rspec_task.rspec_opts << " --exclude-pattern \"#{exclude_patterns}\""
+  end
+
+  #puts "task{#{official_task_name}}, rspec_opts{#{rspec_task.rspec_opts.to_s}}"
 end
 
-add_task_rspec('unit', false,  true, true)
-add_task_rspec('audit', false, true, true)
-add_task_rspec('db', false, true, true)
-add_task_rspec('performance', false, true, true)
-add_task_rspec('locale', false, true, true)
-add_task_rspec('tech_debt', false, true, true)
-add_task_rspec('integration', false, true, true)
-add_task_rspec('all', true,  false, false)
+add_task_rspec('unit', '',false,  true, true)
+add_task_rspec('audit', '', false, true, true)
+add_task_rspec('db', '', false, true, true, '', CategoriesQA::Preload::DB_FULL)
+add_task_rspec('performance', '', false, true, true)
+add_task_rspec('locale', '', false, true, true, '**/*_full_verification_spec.rb', CategoriesQA::Preload::DB_PARTIAL)
+add_task_rspec('locale', 'full', false, true, true, '', CategoriesQA::Preload::DB_PARTIAL)
+add_task_rspec('tech_debt', '', false, true, true)
+add_task_rspec('integration', '', false, true, true)
+add_task_rspec('all', '', true,  false, false, '', CategoriesQA::Preload::DB_FULL)
 
 # ______________________________________________________________________________________________________________________
 #  __       ___       __        __   ___

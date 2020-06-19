@@ -1,7 +1,8 @@
 
 ### GCC flags
 
-https://gcc.gnu.org/onlinedocs/gcc/Invoking-GCC.html#Invoking-GCC
+* https://gcc.gnu.org/onlinedocs/gcc/Invoking-GCC.html#Invoking-GCC
+* https://stackoverflow.com/questions/7880812/complete-list-of-clang-flags
 
 ---
 
@@ -14,6 +15,8 @@ https://gcc.gnu.org/onlinedocs/gcc/Invoking-GCC.html#Invoking-GCC
 `fix later w/ a build-process w/ Docker and such`
 
 ```
+# Wnested-externs
+# Wabi
 # faggressive-loop-optimizations
 # fira-loop-pressure
 # fearly-inlining
@@ -32,6 +35,7 @@ https://gcc.gnu.org/onlinedocs/gcc/Invoking-GCC.html#Invoking-GCC
 
 ### misc
 
+ * https://stackoverflow.com/questions/10192903/time-in-milliseconds-in-c
  * https://stackoverflow.com/questions/9450394/how-to-install-gcc-piece-by-piece-with-gmp-mpfr-mpc-elf-without-shared-libra
 
 ```

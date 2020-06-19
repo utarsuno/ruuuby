@@ -8,7 +8,7 @@ module ::Math
   #
   # @return [Float] relative difference of the provided args, order does not matter
   def self.relative_Δ(a: ::Float::INFINITY, b: ::Float::INFINITY)
-    🛑num❓($PRM_MANY, [a, b], :∈𝕌)
+    🛑nums❓([a, b], :∈𝕌)
     if a == 0 && b == 0
       return 0
     else
@@ -21,7 +21,7 @@ module ::Math
   #
   # @return [Boolean] true, if: a² + b² == c²
   def self.τ²_in_golden_ratio?(a: ::Float::INFINITY, b: ::Float::INFINITY)
-    🛑num❓($PRM_MANY, [a, b], :∈𝕌) unless a.θ? && b.θ?
+    🛑nums❓([a, b], :∈𝕌) unless a.θ? && b.θ?
     return (a / b) == ::Float::RATIO_GOLDEN
   end
 
@@ -30,7 +30,7 @@ module ::Math
   #
   # @return [Boolean] true, if: a² + b² == c²
   def self.τ²_in_super_golden_ratio?(a: ::Float::INFINITY, b: ::Float::INFINITY)
-    🛑num❓($PRM_MANY, [a, b], :∈𝕌) unless a.θ? && b.θ?
+    🛑nums❓([a, b], :∈𝕌) unless a.θ? && b.θ?
     return (a % b) == ::Float::RATIO_GOLDEN_SUPER
   end
 

@@ -168,27 +168,31 @@ module ::Ruuuby
 
         # @param [Symbol] arg_name
         # @param [*]      arg
+        # @param [Symbol] normalization_checks
         #
         # @raise [WrongParamType]
         def 🛑num❓(arg_name, arg, normalization_checks=:none)
-          unless arg_name == $PRM_MANY
-            if normalization_checks != :none
-              🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, arg_name.to_s, ::Math::Space::NumberSpace::ALL_NUMS, arg) unless arg.num?(normalization_checks)
-            else
-              🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, arg_name.to_s, ::Math::Space::NumberSpace::ALL_NUMS, arg) unless arg.num?
+          if normalization_checks != :none
+            🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, arg_name.to_s, ::Math::Space::NumberSpace::ALL_NUMS, arg) unless arg.num?(normalization_checks)
+          else
+            🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, arg_name.to_s, ::Math::Space::NumberSpace::ALL_NUMS, arg) unless arg.num?
+          end
+        end
+
+        # @param [Array]  args
+        # @param [Symbol] normalization_checks
+        #
+        # @raise [WrongParamType]
+        def 🛑nums❓(args, normalization_checks=:none)
+          if normalization_checks != :none
+            args.∀ₓᵢ do |x, i|
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, "[#{i.to_s}]{#{x.to_s}}-t{#{x.class.to_s}}", ::Math::Space::NumberSpace::ALL_NUMS, x) unless x.num?(normalization_checks)
             end
           else
-            if normalization_checks != :none
-              arg.∀ₓᵢ do |x, i|
-                🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Math::Space::NumberSpace::ALL_NUMS, x) unless x.num?(normalization_checks)
-              end
-            else
-              arg.∀ₓᵢ do |x, i|
-                🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Math::Space::NumberSpace::ALL_NUMS, x) unless x.num?
-              end
+            args.∀ₓᵢ do |x, i|
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, "[#{i.to_s}]{#{x.to_s}}-t{#{x.class.to_s}}", ::Math::Space::NumberSpace::ALL_NUMS, x) unless x.num?
             end
           end
-
         end
 
         # @param [Symbol] arg_name

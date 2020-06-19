@@ -2,6 +2,7 @@
 # encoding: UTF-8
 
 export RUBYOPT='-W:no-deprecated -W:no-experimental'
+export RUUUBY_FULL_DEBUG="f"
 
 set -euo pipefail
 IFS=$'\n\t'

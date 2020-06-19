@@ -31,12 +31,14 @@ ________________________________________________________________________________
 #define ႴL_RAD 2.399963229728653L   // more accurate version --> 2.39996322972865332
 #define Ⴔ_TRN  (1.0 / (1.618033988749895 * 1.618033988749895))
 
+#define 𝞽      (2.0 * π)
+
 #define FLAG_FALSE 0u
 #define FLAG_TRUE  1u
 
 #define θRAD2DGR(arg)                   ((180.0 * arg) / π)
 #define θRAD2GON(arg)                   ((200.0 * arg) / π)
-#define θRAD2TRN(arg)                   (arg / (2.0 * π))
+#define θRAD2TRN(arg)                   (arg / 𝞽)
 #define θDGR2RAD(arg)                   ((arg * π) / 180.0)
 #define θDGR2GON(arg)                   ((200.0 / 180.0) * arg)
 #define θDGR2TRN(arg)                   (arg / 360.0)
@@ -44,8 +46,12 @@ ________________________________________________________________________________
 #define θGON2RAD(arg)                   ((arg * π) / 200.0)
 #define θGON2TRN(arg)                   (arg / 400.0)
 #define θTRN2DGR(arg)                   (arg * 360.0)
-#define θTRN2RAD(arg)                   (arg * (2.0 * π))
+#define θTRN2RAD(arg)                   (arg * 𝞽)
 #define θTRN2GON(arg)                   (arg * 400.0)
+
+#define MINUTE_OF_ARC (1.0/60.0) // of 1 degree
+#define SECOND_OF_ARC (1.0/3600.0) // of 1 degree
+#define BINARY_ANGLE  (1.0/256.0) // of 1 𝞽
 
 #define θRADL2LDGR(arg)                 ((180.0L * arg) / πL)
 #define θRADL2LGON(arg)                 ((200.0L * arg) / πL)
@@ -95,7 +101,7 @@ ________________________________________________________________________________
 #define THETA_GON_OCTANT           50.0
 #define THETA_DGR_OCTANT           45.0
 #define THETA_TRN_OCTANT           ⅛
-#define THETA_RAD_SEXTANT          (π / 3.0) // (π * ⅓) // ((60.0 / 360.0) * (2.0 * π))
+#define THETA_RAD_SEXTANT          (π / 3.0) // (π * ⅓) // ((60.0 / 360.0) * 𝞽)
 #define THETA_GON_SEXTANT          ((60.0 / 360.0) * 400.0)
 #define THETA_DGR_SEXTANT          60.0
 #define THETA_TRN_SEXTANT          (60.0 / 360.0)
@@ -111,7 +117,7 @@ ________________________________________________________________________________
 #define THETA_GON_PERIGON_MINUS_QUADRANT         300.0
 #define THETA_DGR_PERIGON_MINUS_QUADRANT         270.0
 #define THETA_TRN_PERIGON_MINUS_QUADRANT         0.75
-#define THETA_RAD_PERIGON          (2.0 * π)
+#define THETA_RAD_PERIGON          𝞽
 #define THETA_GON_PERIGON          400.0
 #define THETA_DGR_PERIGON          360.0
 #define THETA_TRN_PERIGON          1.0
@@ -124,14 +130,14 @@ ________________________________________________________________________________
 #define CACHE_INDEX_INF_NEGATIVE 1338
 #define CACHE_INDEX_INF_COMPLEX  1339
 
-#define THETA_MODE_RAD ℤ2
+#define THETA_MODE_RAD ℤ3
 #define THETA_MODE_DGR ℤ4
+#define THETA_MODE_TRN ℤ5
 #define THETA_MODE_GON ℤ6
-#define THETA_MODE_TRN ℤ8
-#define THETA_MODE_ID_RAD 3
-#define THETA_MODE_ID_DGR 4
-#define THETA_MODE_ID_GON 5
-#define THETA_MODE_ID_TRN 6
+#define THETA_MODE_ID_RAD (unsigned char) 3
+#define THETA_MODE_ID_DGR (unsigned char) 4
+#define THETA_MODE_ID_TRN (unsigned char) 5
+#define THETA_MODE_ID_GON (unsigned char) 6
 
 // superscripts: -9 to +9
 #define NUM_EXPONENTS 22 // 19 vs 22
@@ -150,6 +156,7 @@ static const VALUE ℤn2 = INT2FIX(-2);
 static const VALUE ℤn1 = INT2FIX(-1);
 static const VALUE ℤ0  = INT2FIX(0);
 static const VALUE ℤ1  = INT2FIX(1);
+static VALUE ℤd1;
 static const VALUE ℤ2  = INT2FIX(2);
 static const VALUE ℤ3  = INT2FIX(3);
 static const VALUE ℤ4  = INT2FIX(4);
@@ -158,6 +165,28 @@ static const VALUE ℤ6  = INT2FIX(6);
 static const VALUE ℤ7  = INT2FIX(7);
 static const VALUE ℤ8  = INT2FIX(8);
 static const VALUE ℤ9  = INT2FIX(9);
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+//static ID cached_rb_intern_raise_to_power; rb_intern("**");
+#define ID_OF_POW 134
+#define ID_OF_UMINUS 133
+#define ID_OF_UPLUS 132
+#define ID_OF_COMPARE 135
+#define ID_OF_POW 134
+#define ID_OF_RSHIFT 137
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+#define NORM_ERROR 0
+#define NORM_UNIVERSAL 2
+#define NORM_UNIVERSAL_W_STR 3
+#define NORM_NATURAL 4
+#define NORM_NATURAL_W_STR 5
+#define NORM_WHOLE 6
+#define NORM_WHOLE_W_STR 7
+#define NORM_INTEGER 8
+#define NORM_INTEGER_W_STR 9
 
 // ---------------------------------------------------------------------------------------------------------------------
 

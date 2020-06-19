@@ -95,6 +95,40 @@ module HelpersGeneral
     end
   end
 
+  # @param [Symbol] kmodule
+  # @param [Class]  owner
+  def expect_∃ᶜ(kmodule, owner)
+    expect(🧬.∃ᶜ?(kmodule, owner)).to eq(true)
+  end
+
+  # @param [Symbol] kmodule
+  # @param [Class]  owner
+  def expect_∄ᶜ(kmodule, owner)
+    expect(🧬.∃ᶜ?(kmodule, owner)).to eq(false)
+  end
+
+  # @param [Symbol] kmodule
+  # @param [Class]  owner
+  def expect_∃ᵐ(kmodule, owner)
+    expect(🧬.∃ᵐ?(kmodule, owner)).to eq(true)
+  end
+
+  # @param [Symbol] kmodule
+  # @param [Class]  owner
+  def expect_∄ᵐ(kmodule, owner)
+    expect(🧬.∃ᵐ?(kmodule, owner)).to eq(false)
+  end
+
+  # @param [Symbol] kmodule
+  def expect_∃ᴹ(kmodule)
+    expect(🧬.∃ᴹ?(kmodule)).to eq(true)
+  end
+
+  # @param [Symbol] kmodule
+  def expect_∄ᴹ(kmodule)
+    expect(🧬.∃ᴹ?(kmodule)).to eq(false)
+  end
+
 end
 
 RSpec.configure do |config|
@@ -109,11 +143,11 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.profile_examples = 6
+  config.profile_examples = 4
 
   config.include ::Ruuuby::Feature::Extendable::MainF28
 
-  config.include ::Math::Trig::Funcs
+  config.include ::Math::Trig
 
   config.include_context 'shared_context_language_deltas'
   config.include_context 'shared_context_general'
@@ -121,6 +155,7 @@ RSpec.configure do |config|
   config.include_context 'shared_context_f27'
   config.include_context 'shared_context_f30'
   config.include_context 'shared_context_f32'
+  config.include_context 'shared_context_f34'
 
   config.include HelpersGeneral
   config.include HelpersFeature16
@@ -131,7 +166,13 @@ RSpec.configure do |config|
   config.include_context 'shared_context_db', :db
 
   config.include PerformanceTestHelper, :performance
+
   config.include RSpec::Benchmark::Matchers, :performance
   config.include_context 'shared_context_performance', :performance
+
+  #config.filter_run_excluding :performance => lambda {|v| v == 'slow'}
+
+  #config.filter_run_excluding :performance => 'slow'
+  # https://github.com/rspec/rspec-core/issues/2567
 
 end

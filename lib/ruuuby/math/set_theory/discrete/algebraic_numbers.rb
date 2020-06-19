@@ -5,7 +5,7 @@ module ::Math
   module SetTheory
 
     class AlgebraicNumbers < ::Math::SetTheory::NumberSet
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
       def initialize
         super(:𝔸, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO)

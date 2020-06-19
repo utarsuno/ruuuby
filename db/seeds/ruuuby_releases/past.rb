@@ -425,8 +425,8 @@
 #| (c) `Symbol`   | `power?`, `pow_to_i` |
 
 @v0_0_32 = RuuubyRelease.spawn(0, 0, 32)
-@v0_0_32.add_file('lib/ruuuby/module/attribute/includable/singleton.rb', ::Ruuuby::Attribute::Includable::RuuubySingleton, '', @f10)
-@v0_0_32.add_file('lib/ruuuby/module/attribute/extendable/singleton.rb', ::Ruuuby::Attribute::Includable::RuuubySingleton, '', @f10)
+@v0_0_32.add_file('lib/ruuuby/module/attribute/includable/singleton.rb', '::Ruuuby::Attribute::Includable::RuuubySingleton', '', @f10)
+@v0_0_32.add_file('lib/ruuuby/module/attribute/extendable/singleton.rb', '::Ruuuby::Attribute::Includable::RuuubySingleton', '', @f10)
 @v0_0_32.add_file('lib/ruuuby/class/proc.rb', ::Proc, '', @f10)
 @v0_0_32.add_comments(
     [

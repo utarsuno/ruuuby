@@ -14,7 +14,6 @@
 _____________________________________________________________________________________________________________________ */
 
 // @see original bitwise struct from: https://www.chiefdelphi.com/t/extracting-individual-bits-in-c/48028/8
-
 typedef union {
     struct {
         unsigned b0:1;
@@ -58,6 +57,15 @@ typedef union generic_bitwise_8_flags {
 #define θFLAG_IS_CACHE_SYNCED 5
 // 0 indicates that the value is currently an exact match, 1 indicates the current value may have had operations performed on it and thus may contain precision error
 #define θFLAG_LIKELY_HAS_PRECISION_LOSS 6
+// used as a quicker check if this value is exactly 1 full turn or not
+#define θFLAG_IS_PERIGON 7
+
+#define θFLAG_VOCAB_IS_RIGHT 0
+#define θFLAG_VOCAB_IS_STRAIGHT 1
+#define θFLAG_VOCAB_IS_ACUTE 2
+#define θFLAG_VOCAB_IS_SEXTANT 3
+#define θFLAG_VOCAB_IS_OBLIQUE 4
+#define θFLAG_VOCAB_IS_REFLEX 5
 
 typedef struct ThetaAngles {
     double                  angle_value;
@@ -69,15 +77,31 @@ typedef struct ThetaAngles {
 typedef struct ThetaAngles * ptr_theta_angle;
 #define ptrθ ptr_theta_angle
 
-// TODO: combined flag checks
+#define FLAGS_NON_CONST_ZERO 0x7
+#define FLAGS_NON_CONST_POSITIVE_NORMAL 0x6
+#define FLAGS_NON_CONST_POSITIVE_NOT_NORMAL 0x2
+#define FLAGS_NON_CONST_NEGATIVE_NORMAL 0x4
+#define FLAGS_NON_CONST_NEGATIVE_NOT_NORMAL 0x0
+#define FLAGS_ZERO_AND_POSITIVE 0x3
+#define FLAGS_NORMAL 0x4
+#define FLAGS_ZERO_OR_PERIGON 0x41
 
-//#define ptrθ_flag_set_coerce(ptr_to_theta_angle) ptr_to_theta_angle->flags_meta_data.b.b4 = FLAG_TRUE;
-//#define ptrθ_flag_clr_coerce(ptr_to_theta_angle) ptr_to_theta_angle->flags_meta_data.b.b4 = FLAG_FALSE;
-//#define ptrθ_flag_get_coerce(ptr_to_theta_angle) ptr_to_theta_angle->flags_meta_data.b.b4;
+#define SET_FLAGS(the_data, the_flags) the_data->flags_meta_data.generic_byte = the_flags;
+#define NO_MATCH_FOR_θ(the_data, the_flags) (the_data->flags_meta_data.generic_byte & the_flags) == 0
+#define ANY_MATCH_FOR_FLAGS(the_data, the_flags) (the_data->flags_meta_data.generic_byte & the_flags) != 0
+#define NO_MATCH_FOR_ANY_θ(the_data, the_flags) (the_data->flags_meta_data.generic_byte & the_flags) == 0
 
 static inline void ptrθ_flag_set_coerce(const ptrθ data);
 static inline void ptrθ_flag_clr_coerce(const ptrθ data);
 static inline int ptrθ_flag_is_coerce(const ptrθ data);
+
+static inline void ptrθ_flag_set_is_zero(const ptrθ data);
+static inline void ptrθ_flag_clr_is_zero(const ptrθ data);
+static inline int ptrθ_flag_is_zero(const ptrθ data);
+
+static inline void ptrθ_flag_set_is_normal(const ptrθ data);
+static inline void ptrθ_flag_clr_is_normal(const ptrθ data);
+static inline int ptrθ_flag_is_normal(const ptrθ data);
 
 static inline void ptrθ_flag_set_constant(const ptrθ data);
 static inline void ptrθ_flag_clr_constant(const ptrθ data);
@@ -87,33 +111,125 @@ static inline void ptrθ_flag_set_cache_synced(const ptrθ data);
 static inline void ptrθ_flag_clr_cache_synced(const ptrθ data);
 static inline int ptrθ_flag_is_cache_synced(const ptrθ data);
 
+static inline void ptrθ_flag_set_is_positive(const ptrθ data);
+static inline void ptrθ_flag_clr_is_positive(const ptrθ data);
+static inline int ptrθ_flag_is_positive(const ptrθ data);
+
+static inline void ptrθ_flag_set_perigon(const ptrθ data);
+static inline void ptrθ_flag_clr_perigon(const ptrθ data);
+static inline int ptrθ_flag_is_perigon(const ptrθ data);
+
+// -------------------------
+
+static inline void ptrθ_flag_set_is_normal(const ptrθ data){data->flags_meta_data.b.b2 = FLAG_TRUE;}
+static inline void ptrθ_flag_clr_is_normal(const ptrθ data){data->flags_meta_data.b.b2 = FLAG_FALSE;}
+static inline int ptrθ_flag_is_normal(const ptrθ data){return data->flags_meta_data.b.b2 == FLAG_TRUE;}
+
+static inline void ptrθ_flag_set_is_zero(const ptrθ data){data->flags_meta_data.b.b0 = FLAG_TRUE;}
+static inline void ptrθ_flag_clr_is_zero(const ptrθ data){data->flags_meta_data.b.b0 = FLAG_FALSE;}
+static inline int ptrθ_flag_is_zero(const ptrθ data){return data->flags_meta_data.b.b0 == FLAG_TRUE;}
+
+static inline void ptrθ_flag_set_is_positive(const ptrθ data){data->flags_meta_data.b.b1 = FLAG_TRUE;}
+static inline void ptrθ_flag_clr_is_positive(const ptrθ data){data->flags_meta_data.b.b1 = FLAG_FALSE;}
+static inline int ptrθ_flag_is_positive(const ptrθ data){return data->flags_meta_data.b.b1 == FLAG_TRUE;}
+
+static inline void ptrθ_flag_set_constant(const ptrθ data){data->flags_meta_data.b.b3 = FLAG_TRUE;}
+static inline void ptrθ_flag_clr_constant(const ptrθ data){data->flags_meta_data.b.b3 = FLAG_FALSE;}
+static inline int ptrθ_flag_is_constant(const ptrθ data){return data->flags_meta_data.b.b3 == FLAG_TRUE;}
+
+static inline void ptrθ_flag_set_coerce(const ptrθ data){data->flags_meta_data.b.b4 = FLAG_TRUE;}
+static inline void ptrθ_flag_clr_coerce(const ptrθ data){data->flags_meta_data.b.b4 = FLAG_FALSE;}
+static inline int ptrθ_flag_is_coerce(const ptrθ data){return data->flags_meta_data.b.b4 == FLAG_TRUE;}
+
+static inline void ptrθ_flag_set_cache_synced(const ptrθ data){data->flags_meta_data.b.b5 = FLAG_TRUE;}
+static inline void ptrθ_flag_clr_cache_synced(const ptrθ data){data->flags_meta_data.b.b5 = FLAG_FALSE;}
+static inline int ptrθ_flag_is_cache_synced(const ptrθ data){return data->flags_meta_data.b.b5 == FLAG_TRUE;}
+
+static inline void ptrθ_flag_set_perigon(const ptrθ data){data->flags_meta_data.b.b7 = FLAG_TRUE;}
+static inline void ptrθ_flag_clr_perigon(const ptrθ data){data->flags_meta_data.b.b7 = FLAG_FALSE;}
+static inline int ptrθ_flag_is_perigon(const ptrθ data){return data->flags_meta_data.b.b7 == FLAG_TRUE;}
+
+static double vocab_value_perigon_negative(const unsigned char angle_mode);
+static double vocab_value_perigon(const unsigned char angle_mode);
+static double vocab_value_sextant(const unsigned char angle_mode);
+static double vocab_value_straight(const unsigned char angle_mode);
+static double vocab_value_quadrant(const unsigned char angle_mode);
 /*____________________________________________________________________________________________________________________
  __   __           __   ___  ___               __      __   ___ ___       __
 /  \ |__)    |    |  \ |__  |__      /\  |\ | |  \    /__` |__   |  |  | |__)
 \__/ |__) \__/    |__/ |___ |       /~~\ | \| |__/    .__/ |___  |  \__/ |
 _____________________________________________________________________________________________________________________ */
 
+//static void θconst_free(void * data) {free(data);}
+static void θ_free(void * data) {free(data);}
+
+//static size_t θconst_size(const void * data) {return sizeof(ConstThetaAngle);}
+static size_t θ_size(const void * data) {return sizeof(ThetaAngle);}
+
+static const rb_data_type_t θ_type = {
+    .data             = NULL,
+    .flags             = RUBY_TYPED_FREE_IMMEDIATELY,
+    .wrap_struct_name = "theta_angle",
+    .function         = {
+        .dmark = NULL, // NULL as the struct contains no references to the c-data-type{VALUE}
+        .dfree = θ_free,
+        .dsize = θ_size,
+    },
+};
+
 #define 💎parse_ptrθ(the_data, the_ptr) TypedData_Get_Struct(the_data, ThetaAngle, & θ_type, the_ptr)
 #define 💎self_to_ptrθ_data ptrθ data;  💎parse_ptrθ(self, data);
 
 static void θ_free(void * data);
 static size_t θ_size(const void * data);
+
 static VALUE θ_alloc(VALUE self);
+static VALUE θ_alloc(VALUE self) {
+    ptrθ data;
+    return TypedData_Make_Struct(self, ThetaAngle, & θ_type, data);
+}
+
 static VALUE θ_m_initialize(VALUE self, const VALUE angle, const VALUE angle_mode);
 
 static VALUE θ_new(const double angle, const VALUE sym_mode);
+static VALUE θ_new(const double angle, const VALUE sym_mode) {
+    ptrθ data;
+    VALUE argv[2] = {DBL2NUM(angle), sym_mode};
+    VALUE obj     = TypedData_Make_Struct(Ⓒtheta_angle, ThetaAngle, & θ_type, data);
+    rb_obj_call_init(obj, 2, argv);
+    return obj;
+}
+
 static VALUE θ_new_constant(const double angle, const VALUE sym_mode);
+static VALUE θ_new_constant(const double angle, const VALUE sym_mode) {
+    VALUE obj = θ_new(angle, sym_mode);
+    ptrθ data; 💎parse_ptrθ(obj, data);
+    ptrθ_flag_set_constant(data);
+    RB_OBJ_FREEZE(obj);
+    return obj;
+}
 
 // ---------------------------------------
 
-static VALUE θ_m_initialize_as_radian(VALUE self, const VALUE angle);
-static VALUE θ_m_initialize_as_degree(VALUE self, const VALUE angle);
-static VALUE θ_m_initialize_as_gon(VALUE self, const VALUE angle);
-static VALUE θ_m_initialize_as_turn(VALUE self, const VALUE angle);
+static VALUE θ_m_init_as_rad(VALUE self, const VALUE angle);
+static VALUE θ_m_init_as_dgr(VALUE self, const VALUE angle);
+static VALUE θ_m_init_as_gon(VALUE self, const VALUE angle);
+static VALUE θ_m_init_as_trn(VALUE self, const VALUE angle);
+
+#define 💎θ_INIT_AS(angle, mode_id, mode_value, arg_name) {\
+    if (is_theta_angle(angle)) {\
+        ptrθ data_them; 💎parse_ptrθ(angle, data_them);\
+        return θ_new(θ_get_val_as_mode(mode_id, data_them), mode_value);\
+    } else if (is_num(angle)) {\
+        return θ_new(NUM2DBL(angle), mode_value);\
+    } else {\
+        ERR_m_param_type("ThetaAngle", "new", arg_name, angle, "Numeric")\
+    }\
+}
 
 // ---------------------------------------
 
-static VALUE θ_duplicate_as_mode(const ptrθ original, const unsigned char angle_mode);
+static VALUE θ_m_get_size(const VALUE self);
 
 /*____________________________________________________________________________________________________________________
  __   __   ___  __       ___    __        __                __          ___         __
@@ -121,36 +237,37 @@ static VALUE θ_duplicate_as_mode(const ptrθ original, const unsigned char angl
 \__/ |    |___ |  \ /~~\  |  | \__/ | \| .__/    /~~\ | \| |__/    \__/  |  | |___ .__/
 _____________________________________________________________________________________________________________________ */
 
+// ---------------------------------------
+
+static VALUE θ_equals_θ(const ptrθ a, const ptrθ b);
+
+static VALUE θVAL_equals_θVAL(const VALUE a, const VALUE b);
+
+static VALUE θVAL_equals_NUM(const VALUE a, const VALUE b);
+static VALUE θVAL_equals_NUM(const VALUE a, const VALUE b) {
+    ptrθ data_a; 💎parse_ptrθ(a, data_a);
+   re_as_bool(data_a->angle_value == NUM2DBL(b))
+}
+
+// ---------------------------------------
+
 static inline VALUE cθ_get_repr(const unsigned char angle_mode);
 
 static VALUE θ_m_get_real(const VALUE self);
 static VALUE θ_m_set_real(const VALUE self, const VALUE num);
-//PUREFUNC(static VALUE θ_get_as_radian(const VALUE self));
-//PUREFUNC(static VALUE θ_get_as_degree(const VALUE self));
-//PUREFUNC(static VALUE θ_get_as_gon(const VALUE self));
-//PUREFUNC(static VALUE θ_get_as_turn(const VALUE self));
-//PUREFUNC(static VALUE θ_m_get_repr(const VALUE self));
-//PUREFUNC(static VALUE θ_get_is_radians(const VALUE self));
-//PUREFUNC(static VALUE θ_get_is_degrees(const VALUE self));
-//PUREFUNC(static VALUE θ_get_is_gons(const VALUE self));
-//PUREFUNC(static VALUE θ_get_is_turns(const VALUE self));
-//static VALUE θ_m_get_windings(const VALUE self);
 
 static VALUE θ_m_unary_subtraction(const VALUE self);
-static VALUE θ_m_unary_addition(const VALUE self);
+static VALUE θ_m_unary_addition(const VALUE self) __attribute__ ((const));
 static VALUE θ_m_unary_complement(const VALUE self);
 static VALUE θ_m_unary_not(const VALUE self);
 static VALUE θ_m_abs(const VALUE self);
-static VALUE θ_m_abs_self(const VALUE self);
+static VALUE θ_m_abs_self(VALUE self);
 static VALUE θ_m_is_normal(const VALUE self);
-static VALUE θ_m_normalize(const VALUE self);
-static VALUE θ_m_normalize_self(const VALUE self);
+static VALUE θ_m_normalize_self(VALUE self);
 
-static VALUE θ_m_addition(const VALUE self, const VALUE value);
 static VALUE θ_m_addition_eq(const VALUE self, const VALUE value);
 static VALUE θ_m_subtraction(const VALUE self, const VALUE value);
 static VALUE θ_m_subtraction_eq(const VALUE self, const VALUE value);
-static VALUE θ_m_multiplication(const VALUE self, const VALUE value);
 static VALUE θ_m_multiplication_eq(const VALUE self, const VALUE value);
 static VALUE θ_m_division(const VALUE self, const VALUE value);
 static VALUE θ_m_division_eq(const VALUE self, const VALUE value);
@@ -158,17 +275,11 @@ static VALUE θ_m_comparable(const VALUE self, const VALUE them);
 
 static VALUE θ_m_equals(const VALUE self, const VALUE them);
 static double θ_get_normalized_value(const double value, const unsigned char angle_mode);
-static void ptrθ_normalize(ptrθ data);
-
-static VALUE θ_m_matches_vocab_term(const VALUE self, const VALUE angle_type);
-
-static VALUE ptrθ_is_normal(const ptrθ data);
-
-static VALUE θ_m_is_explementary_with(const VALUE self, const VALUE them);
-static VALUE θ_m_is_supplementary_with(const VALUE self, const VALUE them);
+static double ptrθ_normalize_and_get_val(ptrθ data);
 
 static inline double θ_get_val_as_mode(const unsigned char angle_mode, const ptrθ them);
 static inline long double θ_get_val_precise_as_mode(const unsigned char angle_mode, const ptrθ them);
+
 static inline double ptrθ_get_val_from_θ(const ptrθ self, const ptrθ them);
 static inline double ptrθ_get_val_from_VALUE(const ptrθ self, const VALUE value);
 
@@ -177,27 +288,110 @@ static inline void ptrθ_subtraction_w_double(const ptrθ data, const double val
 static inline void ptrθ_multiplication_w_double(const ptrθ data, const double value);
 static inline void ptrθ_division_w_double(const ptrθ data, const double value);
 
-//static inline double ptrθ_get_const_unit(const ptrθ data);
 static inline double ptrθ_get_const_quadrant(const ptrθ data);
 static inline double ptrθ_get_const_straight(const ptrθ data);
 static inline double ptrθ_get_const_perigon(const ptrθ data);
 static inline double ptrθ_get_const_perigon_minus_quadrant(const ptrθ data);
 
-static inline VALUE ptrθ_get_repr_as_sym(const ptrθ data);
-
 // -------------------
 
-#define is_theta_angle(arg) rb_obj_is_instance_of(arg, cached_class_theta_angle)
+static inline VALUE is_theta_angle(const VALUE arg);
+static inline VALUE is_theta_angle(const VALUE arg){return rb_obj_is_instance_of(arg, Ⓒtheta_angle);}
 
-#define ptrθ_func(func_name, expr) static VALUE func_name(const VALUE self);static VALUE func_name(const VALUE self){💎self_to_ptrθ_data; expr}
+#define ptrθ_func(func_name, expr)      static VALUE func_name(const VALUE self);static VALUE func_name(const VALUE self){💎self_to_ptrθ_data; expr}
+#define ptrθ_func_1arg(func_name, expr) static VALUE func_name(const VALUE self, const VALUE them);static VALUE func_name(const VALUE self, const VALUE them){💎self_to_ptrθ_data; expr}
 
-/*static inline double ptrθ_get_const_unit(const ptrθ data) {
-    switch(data->angle_mode) {
-    case θ_MODE_ID_RAD: return θ_RAD_UNIT;
-    case θ_MODE_ID_DGR: return θ_DGR_UNIT;
-    case θ_MODE_ID_TRN: return θ_TRN_UNIT;
-    default:            return θ_GON_UNIT;
+// ------------------------------------------------------------------------------------------------------------------
+
+#define θ_ID2MODE(as_id) {\
+    switch(as_id) {\
+    case (unsigned char) THETA_MODE_ID_RAD:\
+        return THETA_MODE_RAD;\
+    case (unsigned char) THETA_MODE_ID_DGR:\
+        return THETA_MODE_DGR;\
+    case (unsigned char) THETA_MODE_ID_TRN:\
+        return THETA_MODE_TRN;\
+    default:\
+        return THETA_MODE_GON;\
+    }\
+}
+// ------------------------------------------------------------------------------------------------------------------
+
+static double θ_get_abs_normalized_value(ptrθ data);
+
+/*static double θ_get_abs_val(ptrθ data);
+static double θ_get_abs_val(ptrθ data) {
+    if (NO_MATCH_FOR_θ(data, FLAGS_ZERO_AND_POSITIVE)) {
+        return -1.0 * data->angle_value;
     }
+    return data->angle_value;
 }*/
+
+// ------------------------------------------------------------------------------------------------------------------
+
+static double vocab_value_perigon(const unsigned char angle_mode) {
+    switch(angle_mode){
+    case THETA_MODE_ID_RAD:
+        return THETA_RAD_PERIGON;
+    case THETA_MODE_ID_DGR:
+        return THETA_DGR_PERIGON;
+    case THETA_MODE_ID_TRN:
+        return THETA_TRN_PERIGON;
+    default:
+        return THETA_GON_PERIGON;
+    }
+}
+
+static double vocab_value_perigon_negative(const unsigned char angle_mode) {
+    switch(angle_mode){
+    case THETA_MODE_ID_RAD:
+        return THETA_RAD_PERIGON_NEGATIVE;
+    case THETA_MODE_ID_DGR:
+        return THETA_DGR_PERIGON_NEGATIVE;
+    case THETA_MODE_ID_TRN:
+        return THETA_TRN_PERIGON_NEGATIVE;
+    default:
+        return THETA_GON_PERIGON_NEGATIVE;
+    }
+}
+
+static double vocab_value_sextant(const unsigned char angle_mode) {
+    switch(angle_mode){
+    case THETA_MODE_ID_RAD:
+        return THETA_RAD_SEXTANT;
+    case THETA_MODE_ID_DGR:
+        return THETA_DGR_SEXTANT;
+    case THETA_MODE_ID_TRN:
+        return THETA_TRN_SEXTANT;
+    default:
+        return THETA_GON_SEXTANT;
+    }
+}
+
+static double vocab_value_straight(const unsigned char angle_mode) {
+    switch(angle_mode){
+    case THETA_MODE_ID_RAD:
+        return THETA_RAD_STRAIGHT;
+    case THETA_MODE_ID_DGR:
+        return THETA_DGR_STRAIGHT;
+    case THETA_MODE_ID_TRN:
+        return THETA_TRN_STRAIGHT;
+    default:
+        return THETA_GON_STRAIGHT;
+    }
+}
+
+static double vocab_value_quadrant(const unsigned char angle_mode) {
+    switch(angle_mode){
+    case THETA_MODE_ID_RAD:
+        return THETA_RAD_QUADRANT;
+    case THETA_MODE_ID_DGR:
+        return THETA_DGR_QUADRANT;
+    case THETA_MODE_ID_TRN:
+        return THETA_TRN_QUADRANT;
+    default:
+        return THETA_GON_QUADRANT;
+    }
+}
 
 #endif

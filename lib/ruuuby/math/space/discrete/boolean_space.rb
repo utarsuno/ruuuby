@@ -70,7 +70,7 @@ module ::Math
 
       def ∌?(n); !(self.∋?(n)); end
 
-      include ::Ruuuby::Attribute::Includable::RuuubySingleton
+      include ::Singleton
 
     end
 
