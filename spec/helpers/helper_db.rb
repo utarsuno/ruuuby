@@ -13,7 +13,10 @@ module HelpersDB
     expect(the_feature.ruuuby_feature_behaviors.length).to eq(expected_num_feats)
   end
 
-  def audit_version(the_version, version_str)
+  # @param [RuuubyRelease] the_version
+  # @param [String]        version_str
+  # @param [Integer]       num_gems_added
+  def audit_version(the_version, version_str, num_gems_added)
     expect(the_version.ⓣ).to eq(::RuuubyRelease)
     expect(the_version.uid).to eq(version_str)
     expect(version_str.match?(::RuuubyRelease.syntax_uid)).to eq(true)
@@ -27,6 +30,8 @@ module HelpersDB
       expect(the_version.git_commits_count).to eq(0)
       expect(the_version.has_release_tag?).to eq(false)
     end
+    expect(the_version.num_gems_added.ⓣ).to eq(::Integer)
+    expect(the_version.num_gems_added).to eq(num_gems_added)
   end
 
   def audit_feature_behavior(the_feature, the_feature_behavior, uid, description)
@@ -89,6 +94,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:v0_0_39){RuuubyRelease.find_by_uid(0, 0, 39)}
   let(:v0_0_40){RuuubyRelease.find_by_uid(0, 0, 40)}
   let(:v0_0_41){RuuubyRelease.find_by_uid(0, 0, 41)}
+  let(:v0_0_42){RuuubyRelease.find_by_uid(0, 0, 42)}
 
   let(:f00){RuuubyFeature.find_by_uid(0)}
   let(:f00_b00){f00.ruuuby_feature_behaviors[0]}
@@ -114,6 +120,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:f06_b00){f06.ruuuby_feature_behaviors[0]}
   let(:f06_b01){f06.ruuuby_feature_behaviors[1]}
   let(:f06_b02){f06.ruuuby_feature_behaviors[2]}
+  let(:f06_b03){f06.ruuuby_feature_behaviors[3]}
 
   let(:f07){RuuubyFeature.find_by_uid(7)}
   let(:f08){RuuubyFeature.find_by_uid(8)}

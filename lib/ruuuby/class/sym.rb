@@ -15,11 +15,7 @@ class ::Symbol
   # @return [String]
   def as_source_ruby
     as_str = self.to_s
-    if as_str.∋?('-')
-      ":'#{as_str}'"
-    else
-      ":#{as_str}"
-    end
+    as_str.∋?('-') ? ":'#{as_str}'" : ":#{as_str}"
   end
 
   # | ------------------------------------------------------------------------------------------------------------------

@@ -146,4 +146,7 @@ module ::Math
   end
 end
 
+# TODO: https://mathworld.wolfram.com/Cevian.html
+#
+
 # -------------------------------------------- ⚠️ --------------------------------------------

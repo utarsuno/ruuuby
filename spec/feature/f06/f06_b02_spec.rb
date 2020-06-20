@@ -114,6 +114,16 @@ RSpec.describe 'f06_b02' do
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :performance do
+
+    context 'func{int?}: performs extremely quickly' do
+      it 'for cases: true' do
+        expect{5.int?}.to perform_extremely_quickly
+      end
+      it 'for cases: false' do
+        expect{'0'.int?}.to perform_extremely_quickly
+      end
+    end
+
     context 'func{🛑int❓}: performs extremely quickly' do
       it 'cases: positive' do
         expect{🛑int❓('0', 5)}.to perform_extremely_quickly

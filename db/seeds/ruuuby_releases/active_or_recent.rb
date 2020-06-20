@@ -99,7 +99,6 @@
         'continued resolution of missing coverage from previous versions, still `wip`',
     ]
 )
-
 @v0_0_41.changelog.added_method_to_class(@f10, :palindrome?, ::String)
 @v0_0_41.changelog.added_method_to_class(@f15, :num_where, 'ApplicationRecord')
 @v0_0_41.changelog.added_method_to_class(@f15, :num_release_tags, 'GitCommit')
@@ -109,4 +108,15 @@
 @v0_0_41.changelog.added_method_to_class(@f33, :permutations, 'Math::Combinatorics')
 #@v0_0_41.changelog.added_method_to_class(@f35, :arithmetic_mean, 'Math::Stats')
 #@v0_0_41.changelog.added_method_to_class(@f35, :exponential_moving_average, 'Math::Stats::TimeSeries')
-@v0_0_41.save!
+
+@v0_0_42 = RuuubyRelease.spawn(0, 0, 42)
+@v0_0_42.add_comments(
+    [
+        'change normalizer from{!∅} to{∉∅}; add{f06_b03} to provide this normalizer for funcs{ary?, 🛑ary❓}',
+        'provide function aliases{`wma`, `ema`} to `Math::Stats::TimeSeries`'
+    ]
+)
+@v0_0_42.changelog.added_method_to_class(@f27, :octant?, 'ThetaAngle')
+#@v0_0_42.changelog.added_method_to_class(@f35, :median, 'Math::Stats')
+#@v0_0_42.changelog.added_method_to_class(@f35, :weighted_moving_average, 'Math::Stats::TimeSeries')
+@v0_0_42.save!

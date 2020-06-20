@@ -48,4 +48,5 @@
 @v0_0_38.spawn_git_commit('v0.0.38 release', '2020-05-29T13:00:16-0500', '851c0e575b8014a5b2fdf43f0fbfb460a58313d8', 'refs/tags/v0.0.38')
 @v0_0_39.spawn_git_commit('v0.0.39 release', '2020-06-06T11:29:11-0500', '65c3af772cb3c3317a2f35114c667f68b4cc201c', 'refs/tags/v0.0.39')
 @v0_0_40.spawn_git_commit('v0.0.40 release', '2020-06-10T13:31:59-0500', 'f0fa2790089d16a14bbc63e7bac8aac1e374657e', 'refs/tags/v0.0.40')
+@v0_0_41.spawn_git_commit('v0.0.41 release', '2020-06-19T14:22:40-0500', 'cece0c920a9c810340e2a4930f2dc195fae9aa33', 'refs/tags/v0.0.41')
 #NEXT_VERSION_HERE

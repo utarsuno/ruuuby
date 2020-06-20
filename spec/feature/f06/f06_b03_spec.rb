@@ -1,44 +1,41 @@
 # encoding: UTF-8
 
-RSpec.describe 'f06_b01' do
+RSpec.describe 'f06_b03' do
 
   context 'functionality' do
 
-    context 'by adding function{str?}' do
-      context 'with correct return values of' do
-        it 'true' do
-          ['', ' ', 'hello world', '2', 'nil', 2.to_s].∀{|s|expect(s.str?).to eq(true)}
+    context 'by adding function{ary?}' do
+      it 'without effecting Array instance' do
+        expect(Array.ary?).to eq(false)
+      end
+      context 'handles needed input scenarios' do
+        it 'cases[positive]' do
+          [[], [] + [], [[]], [nil], [true], [false], ['a'], [1, 2]].∀{|n|expect(n.ary?).to eq(true)}
         end
-        it 'false' do
-          [String, nil, 0, 1, {}, [], ['str'], :str].∀{|s|expect(s.str?).to eq(false)}
-        end
-        it 'a newly created object inheriting String (does not match)' do
-          expect(MockString.🆕('my_str').str?).to eq(false)
+        it 'cases[negative]' do
+          [TrueClass, FalseClass, Class, Object, NilClass, '', 'true', 'false', -1, 1, 0, {}].∀{|n|expect(n.ary?).to eq(false)}
         end
       end
     end
 
-    context 'by adding function{🛑str❓}' do
+    context 'by adding function{🛑ary❓}' do
       context 'handles needed input scenarios' do
         context 'cases: positive' do
           context 'w/ normalization{∉∅}' do
             it 'w/ single param' do
-              expect{🛑str❓('0', '5', :∉∅)}.to_not raise_error
-              expect{🛑str❓('0', ' ', :∉∅)}.to_not raise_error
-              expect{🛑str❓('0', "\n", :∉∅)}.to_not raise_error
+              expect{🛑ary❓('0', [nil], :∉∅)}.to_not raise_error
+              expect{🛑ary❓('0', [1337, '1337'], :∉∅)}.to_not raise_error
             end
             it 'w/ many params' do
-              expect{🛑str❓($PRM_MANY, %w(a bb), :∉∅)}.to_not raise_error
+              expect{🛑ary❓($PRM_MANY, [[nil], [1], [[nil]]], :∉∅)}.to_not raise_error
             end
           end
           context 'w/o extra normalization' do
             it 'w/ single param' do
-              expect{🛑str❓('0', '5')}.to_not raise_error
-              expect{🛑str❓('0', ' ')}.to_not raise_error
-              expect{🛑str❓('0', "\n")}.to_not raise_error
+              expect{🛑ary❓('0', [])}.to_not raise_error
             end
             it 'w/ many params' do
-              expect{🛑str❓($PRM_MANY, %w(a bb))}.to_not raise_error
+              expect{🛑ary❓($PRM_MANY, [[], [1], [[nil]]])}.to_not raise_error
             end
           end
         end
@@ -79,7 +76,7 @@ RSpec.describe 'f06_b01' do
     context 'feature{f06}:behavior{b00} passes audits' do
       context 'funcs provided are defined in correct location' do
         it 'for m{ObjectF06}' do
-          expect_∃⨍(:🛑str❓, ::Ruuuby::Feature::Includable::ObjectF06)
+          expect_∃⨍(:🛑ary❓, ::Ruuuby::Feature::Includable::ObjectF06)
         end
       end
     end
@@ -90,18 +87,18 @@ RSpec.describe 'f06_b01' do
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :performance do
 
-    context 'func{str?}: performs extremely quickly' do
+    context 'func{ary?}: performs extremely quickly' do
       it 'for cases: true' do
-        expect{''.str?}.to perform_extremely_quickly
+        expect{['a'].ary?}.to perform_extremely_quickly
       end
       it 'for cases: false' do
-        expect{5.str?}.to perform_extremely_quickly
+        expect{0.ary?}.to perform_extremely_quickly
       end
     end
 
     context 'func{🛑str❓}: performs extremely quickly' do
       it 'cases: positive' do
-        expect{🛑str❓('0', '5')}.to perform_extremely_quickly
+        expect{🛑ary❓('0', [])}.to perform_extremely_quickly
       end
     end
   end # end: {performance}

@@ -5,7 +5,7 @@ RSpec.describe 'f06_db_orm' do
   context 'db_orm', :db do
     context 'feature{f06}' do
       it 'passes ORM audit' do
-        audit_feature(f06, 'f06', 3, 'enable quick type checks against any object (ex: `variable.int?`)')
+        audit_feature(f06, 'f06', 4, 'enable quick type checks against any object (ex: `variable.int?`)')
       end
     end
 
@@ -15,11 +15,15 @@ RSpec.describe 'f06_db_orm' do
       end
 
       it 'defines{b01}' do
-        audit_feature_behavior(f06, f06_b01, 'b01', 'offer func{str?, 🛑str❓, 🛑strs❓} offering the normalizers{!∅}')
+        audit_feature_behavior(f06, f06_b01, 'b01', 'offer func{str?, 🛑str❓, 🛑strs❓} w/ normalizers{∉∅}')
       end
 
       it 'defines{b02}' do
-        audit_feature_behavior(f06, f06_b02, 'b02', 'offer func{int?, 🛑int❓, 🛑ints❓} offering the normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌}')
+        audit_feature_behavior(f06, f06_b02, 'b02', 'offer func{int?, 🛑int❓, 🛑ints❓} w/ normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌}')
+      end
+
+      it 'defines{b03}' do
+        audit_feature_behavior(f06, f06_b03, 'b03', 'offer func{ary?, 🛑ary❓, 🛑arys❓} w/ normalizers{∉∅}')
       end
     end # end: {defines behaviors}
 

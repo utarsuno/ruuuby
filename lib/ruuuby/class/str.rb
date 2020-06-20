@@ -43,7 +43,7 @@ module ::Ruuuby
         #
         # @return [String] self, with all content (leading up to arg{terminating_pattern}) removed
         def remove_until(stop_at, num_matches=1)
-          🛑str❓(:stop_at, stop_at, :'!∅')
+          🛑str❓(:stop_at, stop_at, :∉∅)
           🛑 ArgumentError.🆕("| c{String}-> m{remove_until} got arg(num_matches){#{num_matches.to_s}} which ∉ [Integer, Float] |") unless (num_matches.int? || num_matches.flt?)
           return '' if self == stop_at
           🛑 RuntimeError.🆕("| c{String}-> m{remove_until} got arg(stop_at){#{stop_at}} which is not contained in self{#{self}} |") if (self.∅? || self.∌?(stop_at))
@@ -77,7 +77,7 @@ module ::Ruuuby
         #
         # @return [String] self, with all content (leading up to arg{stop_at}) removed, searched from reversed order and then returned back in original order
         def ♻️⟵(stop_at, num_matches=1)
-          🛑str❓(:stop_at, stop_at, :'!∅')
+          🛑str❓(:stop_at, stop_at, :∉∅)
           self.↩.♻️⟶(stop_at.reverse, num_matches).↩
         end
 

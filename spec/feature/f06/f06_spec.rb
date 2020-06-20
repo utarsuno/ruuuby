@@ -19,7 +19,6 @@ RSpec.describe 'f06' do
             expect_∃⨍(:🛑θ❓, ::Ruuuby::Feature::Includable::ObjectF06)
             expect_∃⨍(:🛑bool❓, ::Ruuuby::Feature::Includable::ObjectF06)
             expect_∃⨍(:🛑flt❓, ::Ruuuby::Feature::Includable::ObjectF06)
-            expect_∃⨍(:🛑ary❓, ::Ruuuby::Feature::Includable::ObjectF06)
             expect_∃⨍(:🛑sym❓, ::Ruuuby::Feature::Includable::ObjectF06)
           end
         end

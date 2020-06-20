@@ -3,7 +3,6 @@
 RSpec.describe 'f35_b00' do
 
   context 'feature{f35} behavior{b00} functionality' do
-
     context 'module{DescriptiveStatistics}' do
       it 'exists', :audit do
         expect_∃ᵐ(:DescriptiveStatistics, ::Math::Stats)
@@ -11,7 +10,6 @@ RSpec.describe 'f35_b00' do
     end
 
     context 'adds needed static functions' do
-
       context 'func{arithmetic_mean}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
@@ -34,14 +32,50 @@ RSpec.describe 'f35_b00' do
             last_scenario = [234 + 643 + 65742 + 14532 - 625234 + 235 + 564362 + 1337 + 1337 - 99999]
             expect(::Math::Stats.arithmetic_mean(*last_scenario)).to eq((last_scenario.sum.to_f) / last_scenario.length)
           end
-          it 'cases: error' do
-            expect{::Math::Stats.arithmetic_mean()}.to raise_error(ArgumentError)
-            expect{::Math::Stats.arithmetic_mean(nil)}.to raise_error(ArgumentError)
+          context 'cases: error' do
+            it 'bad args' do
+              expect{::Math::Stats.arithmetic_mean()}.to raise_error(ArgumentError)
+              expect{::Math::Stats.arithmetic_mean(nil)}.to raise_error(ArgumentError)
+            end
+            it 'values outside of 𝕌' do
+              expect{::Math::Stats.arithmetic_mean(::Float::INFINITY)}.to raise_error(ArgumentError)
+              expect{::Math::Stats.arithmetic_mean(::Float::INFINITY_NEGATIVE)}.to raise_error(ArgumentError)
+            end
           end
         end
-      end
+      end # end: {func{arithmetic_mean}}
 
-    end
+      context 'func{median}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            expect(::Math::Stats.median(1337)).to eq(1337)
+            expect(::Math::Stats.median(*[1337])).to eq(1337)
 
+            expect(::Math::Stats.median(0, 1)).to eq(0.5)
+            expect(::Math::Stats.median(1, 0)).to eq(0.5)
+
+            expect(::Math::Stats.median(1, 2, 3)).to eq(2)
+            expect(::Math::Stats.median(3, 1, 2)).to eq(2)
+
+            expect(::Math::Stats.median(3, 3, 1)).to eq(3)
+            expect(::Math::Stats.median(3, 3, 3)).to eq(3)
+
+            expect(::Math::Stats.median(1337, 1337, 1335, 1335)).to eq(1336)
+            expect(::Math::Stats.median(1337, 1337, 1335, 1335, 1337)).to eq(1337)
+            expect(::Math::Stats.median(1337, 1337, 1335, 1335, 1337, 1337)).to eq(1337)
+          end
+          context 'cases: negative' do
+            it 'bad args' do
+              expect{::Math::Stats.median()}.to raise_error(ArgumentError)
+              expect{::Math::Stats.median(nil)}.to raise_error(ArgumentError)
+            end
+            it 'values outside of 𝕌' do
+              expect{::Math::Stats.median(::Float::INFINITY)}.to raise_error(ArgumentError)
+              expect{::Math::Stats.median(::Float::INFINITY_NEGATIVE)}.to raise_error(ArgumentError)
+            end
+          end
+        end
+      end # end: {func{median}}
+    end # end: {adds needed static functions}
   end # end: {functionality}
 end

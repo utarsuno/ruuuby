@@ -55,15 +55,15 @@ ________________________________________________________________________________
      \/_/   \/___/  \/___/ */
 
 #define init_f06(){\
-    💎add_public_func_0args_to(R_OBJ, "ary?"  , m_obj_ary)\
     💎add_public_func_0args_to(R_OBJ, "bool?" , m_obj_bool)\
-    💎add_public_func_kargs_to(R_OBJ, "int?"  , m_obj_int)\
     💎add_public_func_0args_to(R_OBJ, "flt?"   , m_obj_flt)\
     💎add_public_func_0args_to(R_OBJ, "hsh?"  , m_obj_hash)\
-    💎add_public_func_kargs_to(R_OBJ, "sym?"  , m_obj_sym)\
-    💎add_public_func_kargs_to(R_OBJ, "str?"  , m_obj_str)\
     💎add_public_func_0args_to(R_OBJ, "chr?"  , m_obj_chr)\
     💎add_public_func_0args_to(R_OBJ, "set?"  , m_obj_set)\
+    💎add_public_func_kargs_to(R_OBJ, "ary?"  , m_obj_ary)\
+    💎add_public_func_kargs_to(R_OBJ, "int?"  , m_obj_int)\
+    💎add_public_func_kargs_to(R_OBJ, "sym?"  , m_obj_sym)\
+    💎add_public_func_kargs_to(R_OBJ, "str?"  , m_obj_str)\
     💎add_public_func_kargs_to(R_OBJ, "num?"  , m_obj_num)\
 }
 
@@ -111,6 +111,7 @@ ________________________________________________________________________________
     💎add_public_func_0args_to(Ⓒtheta_angle, "straight?",          θ_m_is_straight)\
     💎add_public_func_0args_to(Ⓒtheta_angle, "oblique?",           θ_m_is_oblique)\
     💎add_public_func_0args_to(Ⓒtheta_angle, "perigon?",           θ_m_is_perigon)\
+    💎add_public_func_0args_to(Ⓒtheta_angle, "octant?",            θ_m_is_octant)\
     💎add_public_func_0args_to(Ⓒtheta_angle, "sextant?",           θ_m_is_sextant)\
     💎add_public_func_0args_to(Ⓒtheta_angle, "reflex?",             θ_m_is_reflex)\
     💎add_public_func_1args_to(Ⓒtheta_angle, "coerce"             , θ_m_coerce)\

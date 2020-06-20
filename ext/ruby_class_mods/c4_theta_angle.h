@@ -152,6 +152,7 @@ static inline int ptrθ_flag_is_perigon(const ptrθ data){return data->flags_met
 static double vocab_value_perigon_negative(const unsigned char angle_mode);
 static double vocab_value_perigon(const unsigned char angle_mode);
 static double vocab_value_sextant(const unsigned char angle_mode);
+static double vocab_value_octant(const unsigned char angle_mode);
 static double vocab_value_straight(const unsigned char angle_mode);
 static double vocab_value_quadrant(const unsigned char angle_mode);
 /*____________________________________________________________________________________________________________________
@@ -352,6 +353,19 @@ static double vocab_value_perigon_negative(const unsigned char angle_mode) {
         return THETA_TRN_PERIGON_NEGATIVE;
     default:
         return THETA_GON_PERIGON_NEGATIVE;
+    }
+}
+
+static double vocab_value_octant(const unsigned char angle_mode) {
+    switch(angle_mode){
+    case THETA_MODE_ID_RAD:
+        return THETA_RAD_OCTANT;
+    case THETA_MODE_ID_DGR:
+        return THETA_DGR_OCTANT;
+    case THETA_MODE_ID_TRN:
+        return THETA_TRN_OCTANT;
+    default:
+        return THETA_GON_OCTANT;
     }
 }
 

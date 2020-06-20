@@ -42,7 +42,7 @@ class RuuubyFile < ApplicationRecord
 
   def self.generate_query_uid(*args)
     🛑 ArgumentError.new("| c{RuuubyFile}-> m{generate_query_uid} received{#{args.𝔠.to_s}} args when exactly{1} is required |") if (args.∅? || args.𝔠 > 1)
-    🛑str❓(:arg0, args[0], :'!∅')
+    🛑str❓(:arg0, args[0], :∉∅)
     ::RuuubyFile.where(::RuuubyFile::Syntax::SQL_UID, args[0])
   end
 

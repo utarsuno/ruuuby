@@ -4,7 +4,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.41'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.42'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -116,8 +116,8 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `NumberTheory` | `ℕ²` | `coprime?`, `friendly?` |
 | `NumberTheory` | `ℤ³` | `congruent?` |
 | `Combinatorics` | `𝕎²` | `n_choose_k`, `permutations` |
-| `Stats` | | `arithmetic_mean` | |
-| `Stats` | `TimeSeriesAnalysis` | `exponential_moving_average` | |
+| `Stats` | | `arithmetic_mean`, `median` | |
+| `Stats` | `TimeSeries` | `exponential_moving_average` | |
 | `Stats` | `ProbabilityTheory` | | |
 | `Stats` | `StatisticalLearning` | | |
 
@@ -171,11 +171,11 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Code Base Statistics:
 | category    | attribute       | value(s)         | # of  |
 | ----------: | :-------------: | ---------------: | :---- |
-| `QA`        | `unit`          | `1146`           | tests (for core functionality) |
+| `QA`        | `unit`          | `1162`           | tests (for core functionality) |
 | `QA`        | `integration`   | `17`             | tests (for state/functionality checks on grouped features/components) |
 | `QA`        | `performance`   | `223`            | tests (for runtime performance) |
-| `QA`        | `DB`            | `228`            | tests (for `DB` & `ORM`) |
-| `CI`        | `audit`         | `117`            | tests (for anything non-functionality based) |
+| `QA`        | `DB`            | `230`            | tests (for `DB` & `ORM`) |
+| `CI`        | `audit`         | `120`            | tests (for anything non-functionality based) |
 | `CI`        | `locale`        | `50`:`4`         | local config tests{`core`:`excessive_checks`} |
 | `tech-debt` | `coverage`      | `9`              | tests (for tracking missing functionality) |
 | `structure` | `features`      | `0`:`28`:`9`:`4` | features{`stable`:`wip`:`⚠️`:`todo`} |

@@ -37,7 +37,7 @@ class ::File
   # @param [String] the_line
   # @param [String] expression
   def self.insert_line_before_expr(the_path, the_line, expression)
-    🛑str❓($PRM_MANY, [the_path, the_line, expression], :'!∅')
+    🛑str❓($PRM_MANY, [the_path, the_line, expression], :∉∅)
     ::File.replace_expr_with!(the_path, expression, "#{the_line}\n#{expression}", 1)
   end
 
@@ -45,7 +45,7 @@ class ::File
   # @param [Array]  the_lines
   # @param [String] expression
   def self.insert_lines_before_expr(the_path, the_lines, expression)
-    🛑str❓($PRM_MANY, [the_path, expression], :'!∅')
+    🛑str❓($PRM_MANY, [the_path, expression], :∉∅)
     🛑ary❓(:the_lines, the_lines)
     combined_lines = ''
     the_lines.each do |line|
@@ -64,7 +64,7 @@ class ::File
   #
   # @return [Integer] -1 if an error occurred, 0 if there were no matches, otherwise n, (a positive int), for number of matches
   def self.replace_expr_with(the_path, expression, replacement, num_matches=1)
-    🛑str❓($PRM_MANY, [the_path, expression, replacement], :'!∅')
+    🛑str❓($PRM_MANY, [the_path, expression, replacement], :∉∅)
     🛑int❓(:num_matches, num_matches, :∈ℕ)
     num_matched = 0
 

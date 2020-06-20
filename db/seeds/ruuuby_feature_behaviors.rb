@@ -17,8 +17,9 @@
 @f06.spawn_behaviors(
     [
         'offer func{num?, 🛑num❓, 🛑nums❓} w/ normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌, ∈ℕ𝕊, ∈𝕎𝕊, ∈ℤ𝕊, ∈𝕌𝕊}',
-        'offer func{str?, 🛑str❓, 🛑strs❓} offering the normalizers{!∅}',
-        'offer func{int?, 🛑int❓, 🛑ints❓} offering the normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌}'
+        'offer func{str?, 🛑str❓, 🛑strs❓} w/ normalizers{∉∅}',
+        'offer func{int?, 🛑int❓, 🛑ints❓} w/ normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌}',
+        'offer func{ary?, 🛑ary❓, 🛑arys❓} w/ normalizers{∉∅}'
     ]
 )
 

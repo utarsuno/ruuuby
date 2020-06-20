@@ -9,7 +9,7 @@ module ::Math
 
       # @example
       #
-      #  ‣ trade-off between `num-samples` and the `weight` attached to the most recent data point can tuned w/:
+      #  ‣ trade-off between `num-samples` and the `weight` attached to the most recent data point can be tuned w/:
       #    ‣ let T = target weight % for most recent data point
       #    ‣ let C = smoothing_constant (usually 2.0)
       #    ‣ `(C / T) - 1` == `num-samples`
@@ -25,12 +25,12 @@ module ::Math
       #
       # @return [Array]
       def self.exponential_moving_average(data, n, smoothing_constant=2.0)
-        if data.∅? || !data.ary? || !n.int?(:∈ℕ)
-          🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{exponential_moving_average} got bad args {#{n.to_s},#{n.class.to_s}}, data-class-was{#{data.class.to_s}} |")
-        elsif n + 1 > data.length || n <= 1
+        🛑ary❓(:data, data, :∉∅)
+        🛑int❓(:n, n, :∈ℕ)
+        len_data = data.length
+        if n + 1 > len_data || n <= 1
           🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{exponential_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
         else
-          len_data = data.length
           ema_prev = ::Math::Stats.arithmetic_mean(*(data[0, n]))
           ema_data = [ema_prev]
           k_const  = smoothing_constant / (n + 1.0)
@@ -44,6 +44,34 @@ module ::Math
           end
           ema_data
         end
+      end
+
+      def self.weighted_moving_average(data, n)
+        🛑ary❓(:data, data, :∉∅)
+        🛑int❓(:n, n, :∈ℕ)
+        len_data = data.length
+        if n + 1 > len_data || n <= 1
+          🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{weighted_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
+        else
+          wma_data = []
+          index    = n
+          while index < len_data
+            delta     = index - n
+            nodes     = data[delta, index - delta.abs]
+            local_wma = 0
+            nodes.∀ₓᵢ do |x, i|
+              local_wma += (n - i) * x
+            end
+            wma_data << (local_wma / ((n * (n + 1.0)) / 2.0))
+            index += 1
+          end
+          wma_data
+        end
+      end
+
+      class << self
+        alias_method :wma, :weighted_moving_average
+        alias_method :ema, :exponential_moving_average
       end
 
     end

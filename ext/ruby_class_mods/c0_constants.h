@@ -71,28 +71,6 @@ ________________________________________________________________________________
 #define M_FLT_EPSILON        2.220446049250313e-16
 #define M_FLT_RELATIVE_ERROR 0.1 // 2 // 0.00001
 
-//#define M_FLT_INF_COMPLEX             (-10.0e-30f * 10.0e-30f)
-//#define M_FLT_INF_COMPLEX             -0.0
-/*
-#define ½                               0.50
-#define ⅓                               (1.0/3.0)
-#define ⅔                               (2.0/3.0)
-#define ¼                               0.25
-#define ¾                               0.75
-#define ⅕                               0.20
-#define ⅖                               0.40
-#define ⅗                               0.60
-#define ⅘                               0.80
-#define ⅙                               (1.0/6.0)
-#define ⅚                               (5.0/6.0)
-#define ⅐                              (1.0/7.0)
-#define ⅛                               0.125
-#define ⅜                               0.375
-#define ⅝                               0.625
-#define ⅞                               0.875
-#define ⅑                              (1.0/9.0)
-#define ⅒                              0.10*/
-
 #define THETA_DGR_UNIT             (1.0 / 360.0)
 #define THETA_GON_UNIT             (1.0 / 400.0)
 #define THETA_RAD_UNIT             (0.0025 * (π * 2.0))
@@ -100,7 +78,7 @@ ________________________________________________________________________________
 #define THETA_RAD_OCTANT           (0.25 * π)
 #define THETA_GON_OCTANT           50.0
 #define THETA_DGR_OCTANT           45.0
-#define THETA_TRN_OCTANT           ⅛
+#define THETA_TRN_OCTANT           0.125
 #define THETA_RAD_SEXTANT          (π / 3.0) // (π * ⅓) // ((60.0 / 360.0) * 𝞽)
 #define THETA_GON_SEXTANT          ((60.0 / 360.0) * 400.0)
 #define THETA_DGR_SEXTANT          60.0
@@ -113,10 +91,10 @@ ________________________________________________________________________________
 #define THETA_GON_STRAIGHT         200.0
 #define THETA_DGR_STRAIGHT         180.0
 #define THETA_TRN_STRAIGHT         0.50
-#define THETA_RAD_PERIGON_MINUS_QUADRANT         (π * (3.0/2.0))
-#define THETA_GON_PERIGON_MINUS_QUADRANT         300.0
-#define THETA_DGR_PERIGON_MINUS_QUADRANT         270.0
-#define THETA_TRN_PERIGON_MINUS_QUADRANT         0.75
+#define THETA_RAD_PERIGON_MINUS_QUADRANT (π * (3.0/2.0))
+#define THETA_GON_PERIGON_MINUS_QUADRANT 300.0
+#define THETA_DGR_PERIGON_MINUS_QUADRANT 270.0
+#define THETA_TRN_PERIGON_MINUS_QUADRANT 0.75
 #define THETA_RAD_PERIGON          𝞽
 #define THETA_GON_PERIGON          400.0
 #define THETA_DGR_PERIGON          360.0

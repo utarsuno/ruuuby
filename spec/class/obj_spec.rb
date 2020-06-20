@@ -71,29 +71,6 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function{🛑ary❓}' do
-      context 'handles needed input scenarios' do
-        context 'cases: positive' do
-          it 'w/ single param' do
-            expect{🛑ary❓('0', [])}.to_not raise_error
-          end
-          it 'w/ many params' do
-            expect{🛑ary❓($PRM_MANY, [[], [1], [[nil]]])}.to_not raise_error
-          end
-        end
-        context 'cases: negative' do
-          it 'w/ single param' do
-            expect{🛑ary❓('0', nil)}.to raise_error(ArgumentError)
-          end
-          it 'w/ many params' do
-            expect{🛑ary❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
-            expect{🛑ary❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
-            expect{🛑ary❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
-          end
-        end
-      end
-    end
-
     context 'by adding function{🛑sym❓}' do
       context 'handles needed input scenarios' do
         context 'cases: positive' do
@@ -135,20 +112,6 @@ RSpec.describe 'Object' do
               expect{🛑sym❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
             end
           end
-        end
-      end
-    end
-
-    context 'by adding function{ary?}' do
-      it 'without effecting Array instance' do
-        expect(Array.ary?).to eq(false)
-      end
-      context 'handles needed input scenarios' do
-        it 'cases[positive]' do
-          [[], [] + [], [[]], [nil], [true], [false], ['a'], [1, 2]].∀{|n|expect(n.ary?).to eq(true)}
-        end
-        it 'cases[negative]' do
-          [TrueClass, FalseClass, Class, Object, NilClass, '', 'true', 'false', -1, 1, 0, {}].∀{|n|expect(n.ary?).to eq(false)}
         end
       end
     end
@@ -241,20 +204,6 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function{str?}' do
-      context 'with correct return values of' do
-        it 'true' do
-          ['', ' ', 'hello world', '2', 'nil', 2.to_s].∀{|s|expect(s.str?).to eq(true)}
-        end
-        it 'false' do
-          [String, nil, 0, 1, {}, [], ['str'], :str].∀{|s|expect(s.str?).to eq(false)}
-        end
-        it 'a newly created object inheriting String (does not match)' do
-          expect(MockString.🆕('my_str').str?).to eq(false)
-        end
-      end
-    end
-
     context 'by adding function{sym?}' do
       context 'w/ normalizer(:∈^)' do
         context 'handles needed scenarios' do
@@ -318,15 +267,6 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'func{ary?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{['a'].ary?}.to perform_extremely_quickly
-      end
-      it 'for cases: false' do
-        expect{0.ary?}.to perform_extremely_quickly
-      end
-    end
-
     context 'func{bool?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{true.bool?}.to perform_extremely_quickly
@@ -346,30 +286,12 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'func{int?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{5.int?}.to perform_extremely_quickly
-      end
-      it 'for cases: false' do
-        expect{'0'.int?}.to perform_extremely_quickly
-      end
-    end
-
     context 'func{flt?}: performs extremely quickly' do
       it 'for cases: true' do
         expect{5.0.flt?}.to perform_extremely_quickly
       end
       it 'for cases: false' do
         expect{'0'.flt?}.to perform_extremely_quickly
-      end
-    end
-
-    context 'func{str?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{''.str?}.to perform_extremely_quickly
-      end
-      it 'for cases: false' do
-        expect{5.str?}.to perform_extremely_quickly
       end
     end
 
@@ -387,12 +309,6 @@ RSpec.describe 'Object' do
         it 'w/ many params' do
           expect{🛑sym❓($PRM_MANY, [:symbol_fake_other, :symbol_fake])}.to perform_extremely_quickly
         end
-      end
-    end
-
-    context 'func{🛑ary❓}: performs extremely quickly' do
-      it 'cases: positive' do
-        expect{🛑ary❓('0', [])}.to perform_extremely_quickly
       end
     end
 

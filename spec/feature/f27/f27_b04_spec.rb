@@ -4,7 +4,7 @@ RSpec.describe 'f27_b04' do
 
   context 'functionality for {f27_b04}' do
 
-    context 'func{zero_angle?}' do
+    context 'func{zero?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           expect(θ°(0).∅?).to eq(true)
@@ -19,9 +19,9 @@ RSpec.describe 'f27_b04' do
           [-0.1, 0.24, 0.26, 0.49, 0.51, 1].∀ {|scenario| expect(θ𝞽(scenario).∅?).to eq(false)}
         end
       end # end: {handles needed scenarios}
-    end # end: {func{zero_angle?}}
+    end # end: {func{zero?}}
 
-    context 'func{right_angle?}' do
+    context 'func{right?}' do
       context 'handles needed scenarios' do
         context 'cases: positive' do
           it '°' do
@@ -50,9 +50,9 @@ RSpec.describe 'f27_b04' do
           [-0.1, 0, 0.24, 0.26, 0.49, 0.51, 1].∀ {|scenario| expect(θ𝞽(scenario).⦜?).to eq(false)}
         end
       end # end: {handles needed scenarios}
-    end # end: {func{right_angle?}}
+    end # end: {func{right?}}
 
-    context 'func{obtuse_angle?}' do
+    context 'func{obtuse?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           [91, 100, 145, 179, 539].∀ {|scenario| expect((θ°(scenario).⦦?)).to eq(true)}
@@ -67,7 +67,7 @@ RSpec.describe 'f27_b04' do
           [-0.1, 0, 0.5, 0.51].∀ {|scenario| expect(θ𝞽(scenario).⦦?).to eq(false)}
         end
       end # end: {handles needed scenarios}
-    end # end: {func{obtuse_angle?}}
+    end # end: {func{obtuse?}}
 
     context 'func{∠?(:acute)}' do
       context 'handles needed scenarios' do
@@ -94,7 +94,7 @@ RSpec.describe 'f27_b04' do
       end # end: {handles needed scenarios}
     end # end: {func{∠?(:acute)}}
 
-    context 'func{straight_angle?}' do
+    context 'func{straight?}' do
       context 'handles needed scenarios' do
         context 'cases: positive' do
           it '°' do
@@ -121,9 +121,9 @@ RSpec.describe 'f27_b04' do
           [-0.1, 0, 0.24, ¼, 0.26, 0.49, 0.51, 1].∀ {|scenario| expect(θ𝞽(scenario)._?).to eq(false)}
         end
       end # end: {handles needed scenarios}
-    end # end: {func{straight_angle?}}
+    end # end: {func{straight?}}
 
-    context 'func{perigon_angle?}' do
+    context 'func{perigon?}' do
       context 'handles needed scenarios' do
         context 'cases: positive' do
           it '°' do
@@ -150,9 +150,36 @@ RSpec.describe 'f27_b04' do
           [-0.1, 0, ½, 1.5, 1337, 0.99, 1.01].∀ {|scenario| expect(θᵍ(scenario).○?).to eq(false)}
         end
       end # end: {handles needed scenarios}
-    end # end: {func{perigon_angle?}}
+    end # end: {func{perigon?}}
 
-    context 'func{sextant_angle?}' do
+    context 'func{octant?}' do
+      context 'handles needed scenarios' do
+        it 'cases: positive' do
+          expect(θ°(45).octant?).to eq(true)
+          expect(θʳ((45.0 / 360) * 2.0 * π).octant?).to eq(true)
+          expect(θᵍ((45.0 / 360) * 400.0).octant?).to eq(true)
+          expect(θ𝞽(45.0 / 360).octant?).to eq(true)
+        end
+        it 'cases: negative' do
+          expect(θ°(44).octant?).to eq(false)
+          expect(θʳ((44.0 / 360) * 2.0 * π).octant?).to eq(false)
+          expect(θᵍ((44.0 / 360) * 400.0).octant?).to eq(false)
+          expect(θ𝞽(44.0 / 360).octant?).to eq(false)
+
+          expect(θ°(46).octant?).to eq(false)
+          expect(θʳ((46.0 / 360) * 2.0 * π).octant?).to eq(false)
+          expect(θᵍ((46.0 / 360) * 400.0).octant?).to eq(false)
+          expect(θ𝞽(46.0 / 360).octant?).to eq(false)
+
+          expect(θ°(90).octant?).to eq(false)
+          expect(θʳ((90.0 / 360) * 2.0 * π).octant?).to eq(false)
+          expect(θᵍ((90.0 / 360) * 400.0).octant?).to eq(false)
+          expect(θ𝞽(90.0 / 360).octant?).to eq(false)
+        end
+      end
+    end # end: {func{octant?}}
+
+    context 'func{sextant?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           expect(θ°(60).𝟞𝟘°?).to eq(true)
@@ -167,9 +194,9 @@ RSpec.describe 'f27_b04' do
           [-0.1, 0, 0.49, ½, 1].∀ {|scenario| expect(θ𝞽(scenario).𝟞𝟘°?).to eq(false)}
         end
       end # end: {handles needed scenarios}
-    end # end: {func{sextant_angle?}}
+    end # end: {func{sextant?}}
 
-    context 'func{oblique_angle?}' do
+    context 'func{oblique?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           [181, 200, 300, 359, 361].∀ {|scenario| expect(θ°(scenario).oblique?).to eq(true)}
@@ -208,9 +235,9 @@ RSpec.describe 'f27_b04' do
           end
         end
       end # end: {handles needed scenarios}
-    end # end: {func{oblique_angle?}}
+    end # end: {func{oblique?}}
 
-    context 'func{reflex_angle?}' do
+    context 'func{reflex?}' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           [181, 200, 300, 359, 719].∀ {|scenario| expect(θ°(scenario).reflex?).to eq(true)}
@@ -225,7 +252,7 @@ RSpec.describe 'f27_b04' do
           [-0.1, 0, 0.49, ½, 1, 1.1, 1.49, 2, 2.01].∀ {|scenario| expect(θ𝞽(scenario).reflex?).to eq(false)}
         end
       end # end: {handles needed scenarios}
-    end # end: {func{reflex_angle?}}
+    end # end: {func{reflex?}}
 
   end
 

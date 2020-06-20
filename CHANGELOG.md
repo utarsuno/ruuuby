@@ -31,6 +31,18 @@
 
 ---
 
+# v0.0.42
+ * change normalizer from{!∅} to{∉∅}; add{f06_b03} to provide this normalizer for funcs{ary?, 🛑ary❓}
+ * provide function aliases{`wma`, `ema`} to `Math::Stats::TimeSeries`
+
+| class | method(s) added | feature(s) |
+| --- | --- | --- |
+| `ThetaAngle` | `octant?` | `f28` |
+| `Math::Stats` | `median` | `f35` |
+| `Math::Stats::TimeSeries` | `weighted_moving_average` | `f35` |
+
+---
+
 # v0.0.41
  * iterative upgrade for `💎.engine`'s `JIT`, `CLI`, and `logging`
    * (further track stats like memory, cpu, and other OS specifics)

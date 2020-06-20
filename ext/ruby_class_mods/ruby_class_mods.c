@@ -110,7 +110,7 @@ static void internal_only_prepare_f16(void) {
 
     VALUE pack_as_utf8     = rb_str_new_cstr("U*");
     VALUE rb_intern_pack   = rb_intern("pack");
-    VALUE code_points      = 💎new_ary_size2(INT2FIX(33), INT2FIX(8709));
+    VALUE code_points      = 💎new_ary_size2(INT2FIX(8713), INT2FIX(8709));
 
     💎PROCEDURE_00(n_no_empty)
 
@@ -318,8 +318,8 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
     ensure_loaded_math(number_theory/number_theory) // must be after{expression/sequence/recursive_sequence}
     ensure_loaded_math(combinatorics/combinatorics)
     ensure_loaded_math(stats/stats)
-    ensure_loaded_math(stats/time_series_analysis)
-    ensure_loaded_math(stats/descriptive_statistics)
+    ensure_loaded_math(stats/time_series)
+    ensure_loaded_math(stats/descriptive_stats)
 
     ensure_all_loaded_for_geometry()
 
@@ -351,7 +351,22 @@ ________________________________________________________________________________
 _____________________________________________________________________________________________________________________ */
 
 // | func{ary?}  |
-ⓡ𝑓_def(m_obj_ary, re_as_bool(is_ary(self)))
+ⓡ𝑓_kargs(m_obj_ary,
+    if (argc == 0) {
+        re_as_bool(is_ary(self))
+    } else if (argc == 1) {
+        💎parse_optional_arg_as_them()
+        if (is_sym(them)) {
+            if (them == n_no_empty) {
+                if (is_ary(self)) {
+                    if (is_empty_ary(self)) {re_no} else {re_ye}
+                } else {re_no}
+            } else {
+                ERR_normalizer_invalid_value("ary?", them)
+            }
+        } else {🛑expected_sym("ary?", "normalizer", them)}
+    } else {🛑expected_kargs("ary?", "0 or 1")}
+)
 
 // | func{bool?} |
 ⓡ𝑓_def(m_obj_bool, re_as_bool(is_bool(self)))
@@ -1465,6 +1480,8 @@ ptrθ_func(θ_m_is_perigon,
         re_as_bool(data->angle_value == vocab_value_perigon(data->angle_mode))
     }
 )
+
+ptrθ_func(θ_m_is_octant, re_as_bool(data->angle_value == vocab_value_octant(data->angle_mode)))
 
 ptrθ_func(θ_m_is_sextant, re_as_bool(data->angle_value == vocab_value_sextant(data->angle_mode)))
 
