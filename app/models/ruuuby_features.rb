@@ -2,7 +2,7 @@
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
-class RuuubyFeature < ApplicationRecord
+class ::RuuubyFeature < ::ApplicationRecord
 
   has_many :ruuuby_feature_behaviors, class_name: 'RuuubyFeatureBehavior'
 
@@ -59,9 +59,9 @@ class RuuubyFeature < ApplicationRecord
 
   def self.spawn(id_num, description, flag_state=::RuuubyFeature::EnumFlagState::STATE_NULL, feature_tags=[])
     if flag_state.nil?
-      RuuubyFeature.create!(id_num: id_num, description: description, tags: feature_tags.to_s)
+      ::RuuubyFeature.create!(id_num: id_num, description: description, tags: feature_tags.to_s)
     else
-      RuuubyFeature.create!(id_num: id_num, description: description, flag_state: flag_state, tags: feature_tags.to_s)
+      ::RuuubyFeature.create!(id_num: id_num, description: description, flag_state: flag_state, tags: feature_tags.to_s)
     end
   end
 
@@ -104,12 +104,12 @@ class RuuubyFeature < ApplicationRecord
   end
 
   def self.generate_query_uid(*args)
-    🛑 ArgumentError.new("| c{RuuubyFeature}-> m{generate_query_uid} received no args |") if args.∅?
+    🛑 ::ArgumentError.new("| c{RuuubyFeature}-> m{generate_query_uid} received no args |") if args.∅?
     if args.length == 1 && args[0].str? && args[0].match?(::RuuubyFeature.syntax_uid)
-      return RuuubyFeature.generate_query_uid(*(self.parse_uid_str(args[0])))
+      return ::RuuubyFeature.generate_query_uid(*(self.parse_uid_str(args[0])))
     end
     🛑nums❓(args, :∈𝕎𝕊)
-    RuuubyFeature.where(::RuuubyFeature::Syntax::SQL_UID, args[0].to_i)
+    ::RuuubyFeature.where(::RuuubyFeature::Syntax::SQL_UID, args[0].to_i)
   end
 
   🙈

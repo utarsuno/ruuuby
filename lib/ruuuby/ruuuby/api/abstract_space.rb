@@ -9,7 +9,8 @@ module ::Ruuuby
     class AbstractSpace
 
       def initialize
-        @spaces = {}
+        @spaces   = {}
+        @entities = {}
       end
 
       def add_space(space)
@@ -23,6 +24,12 @@ module ::Ruuuby
           🛑 RuntimeError.new("| self{#{self.to_s}} class{#{self.Ⓣ}}, func{add_space} called but there already exists a space w/ name{#{space.name}} |")
         end
       end
+
+    end
+
+    class AbstractEntity
+
+
 
     end
 

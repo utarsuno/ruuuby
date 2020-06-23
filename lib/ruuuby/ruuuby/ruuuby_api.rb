@@ -12,12 +12,12 @@ module ::Ruuuby
     # | pty | pseudo-teletype | "device entry that acts like a terminal to the process performing I/O, but is managed by something else"
     #
     # `💎.engine.api`
-    class RuuubyAPI
+    class RuuubyAPI < ::Ruuuby::MetaData::RuuubyEngineComponent
 
       def initialize(engine)
+        super(engine)
         @path_openssl = nil
         @gem_tty      = nil
-        @engine       = engine
       end
 
       def path_openssl

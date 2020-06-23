@@ -1,4 +1,4 @@
-// encoding: utf-8
+// encoding: UTF-8
 
 #ifndef CRUUUBY_H3_MACRO_UTILITIES
 #include "c3_macro_utilities.h"

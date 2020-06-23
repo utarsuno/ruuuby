@@ -55,16 +55,16 @@ ________________________________________________________________________________
      \/_/   \/___/  \/___/ */
 
 #define init_f06(){\
-    💎add_public_func_0args_to(R_OBJ, "bool?" , m_obj_bool)\
-    💎add_public_func_0args_to(R_OBJ, "flt?"   , m_obj_flt)\
-    💎add_public_func_0args_to(R_OBJ, "hsh?"  , m_obj_hash)\
-    💎add_public_func_0args_to(R_OBJ, "chr?"  , m_obj_chr)\
-    💎add_public_func_0args_to(R_OBJ, "set?"  , m_obj_set)\
-    💎add_public_func_kargs_to(R_OBJ, "ary?"  , m_obj_ary)\
-    💎add_public_func_kargs_to(R_OBJ, "int?"  , m_obj_int)\
-    💎add_public_func_kargs_to(R_OBJ, "sym?"  , m_obj_sym)\
-    💎add_public_func_kargs_to(R_OBJ, "str?"  , m_obj_str)\
-    💎add_public_func_kargs_to(R_OBJ, "num?"  , m_obj_num)\
+    💎add_public_func_0args_to(R_OBJ, "bool?" , m_obj_is_bool)\
+    💎add_public_func_0args_to(R_OBJ, "hsh?"  , m_obj_is_hash)\
+    💎add_public_func_0args_to(R_OBJ, "chr?"  , m_obj_is_chr)\
+    💎add_public_func_0args_to(R_OBJ, "set?"  , m_obj_is_set)\
+    💎add_public_func_kargs_to(R_OBJ, "ary?"  , m_obj_is_ary)\
+    💎add_public_func_kargs_to(R_OBJ, "int?"  , m_obj_is_int)\
+    💎add_public_func_kargs_to(R_OBJ, "flt?"   , m_obj_is_flt)\
+    💎add_public_func_kargs_to(R_OBJ, "sym?"  , m_obj_is_sym)\
+    💎add_public_func_kargs_to(R_OBJ, "str?"  , m_obj_is_str)\
+    💎add_public_func_kargs_to(R_OBJ, "num?"  , m_obj_is_num)\
 }
 
 /*   ___    ___    ________

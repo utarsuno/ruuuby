@@ -4,7 +4,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.42'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.43'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -115,10 +115,11 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `NumberTheory` | `𝕎¹` |  `nᵗʰ_euler_totient`, `nᵗʰ_cototient`, `digit_sum`, `digital_root`, `additive_persistence` | `seq_pronic`, `seq_fibonacci`, `seq_lucas`, `seq_square`, `seq_triangle`, `seq_hexagonal` |
 | `NumberTheory` | `ℕ²` | `coprime?`, `friendly?` |
 | `NumberTheory` | `ℤ³` | `congruent?` |
-| `Combinatorics` | `𝕎²` | `n_choose_k`, `permutations` |
+| `Combinatorics` | `𝕎¹` | `len_powerset` |
+| `Combinatorics` | `𝕎²` | `n_choose_k`, `permutations`, `len_ordered_with_replacement` |
 | `Stats` | | `arithmetic_mean`, `median` | |
-| `Stats` | `TimeSeries` | `exponential_moving_average` | |
-| `Stats` | `ProbabilityTheory` | | |
+| `Stats` | `TimeSeries` | `simple_moving_average`, `weighted_moving_average`, `exponential_moving_average`, `aroon_up`, `aroon_down`, `aroon_oscillator` | |
+| `Stats` | `Probability` | | |
 | `Stats` | `StatisticalLearning` | | |
 
 ### Class Modifications:
@@ -171,11 +172,11 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Code Base Statistics:
 | category    | attribute       | value(s)         | # of  |
 | ----------: | :-------------: | ---------------: | :---- |
-| `QA`        | `unit`          | `1162`           | tests (for core functionality) |
-| `QA`        | `integration`   | `17`             | tests (for state/functionality checks on grouped features/components) |
-| `QA`        | `performance`   | `223`            | tests (for runtime performance) |
-| `QA`        | `DB`            | `230`            | tests (for `DB` & `ORM`) |
-| `CI`        | `audit`         | `120`            | tests (for anything non-functionality based) |
+| `QA`        | `unit`          | `1189`           | tests (for core functionality) |
+| `QA`        | `integration`   | `18`             | tests (for state/functionality checks on grouped features/components) |
+| `QA`        | `performance`   | `153`:`85`       | tests{`non_numeric`,`numeric`} (for runtime performance) |
+| `QA`        | `DB`            | `232`            | tests (for `DB` & `ORM`) |
+| `CI`        | `audit`         | `125`            | tests (for anything non-functionality based) |
 | `CI`        | `locale`        | `50`:`4`         | local config tests{`core`:`excessive_checks`} |
 | `tech-debt` | `coverage`      | `9`              | tests (for tracking missing functionality) |
 | `structure` | `features`      | `0`:`28`:`9`:`4` | features{`stable`:`wip`:`⚠️`:`todo`} |
@@ -207,17 +208,18 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Commands
 
 #### General Tasks:
-|  preface           | cmd                 | description                                          |
-| -----------------: | :-----------------: | :--------------------------------------------------- |
-| `bundle exec rake` | `rdoc`              | generate documentation coverage report               |
-| `bundle exec rake` | `install`           | install gem onto local machine                       |
-| `bundle exec rake` | `compile`           | compile any native C-extensions with code changes    |
-| `bundle exec rake` | `release`           | push git version tags and publish gem to Rubygems    |
-| `bin/`             | `audit`             | general all-around build & health check              |
-| `bin/`             | `audit_db`<br/>`audit_quick`<br/>`audit_quickest`<br/>`audit_all_but_performance`<br/>`audit_functionality`<br/>`audit_locale`<br/>`audit_locale_full` | similar to above but for targeted portions |
-| `bin/`             | `setup`             | install dependencies                                 |
-| `bin/`             | `console`<br/>`console_db`<br/>`console_debug`<br/>`console_jit` | interactive console for easier experimenting |
-| `gem`              | `server`            | host interactive web-page at `http://0.0.0.0:8808` to see documentation for currently installed gems |
+|  preface               | cmd                 | description                                          |
+| ---------------------: | :-----------------: | :--------------------------------------------------- |
+| `bundle exec rake`     | `rdoc`              | generate documentation coverage report               |
+| `bundle exec rake`     | `install`           | install gem onto local machine                       |
+| `bundle exec rake`     | `compile`           | compile any native C-extensions with code changes    |
+| `bundle exec rake`     | `release`           | push git version tags and publish gem to Rubygems    |
+| `bin/`                 | `audit`             | general all-around build & health check              |
+| `bin/`                 | `audit_db`<br/>`audit_quick`<br/>`audit_quickest`<br/>`audit_all_but_performance`<br/>`audit_functionality`<br/>`audit_locale`<br/>`audit_locale_full` | similar to above but for targeted portions |
+| `bin/`                 | `setup`             | install dependencies                                 |
+| `bin/`                 | `console`<br/>`console_db`<br/>`console_debug`<br/>`console_jit` | interactive console for easier experimenting |
+| `bin/manually_execute` | `clean_up`          | delete any temporary/generated content, quick way to force a full re-compile |
+| `gem`                  | `server`            | host interactive web-page at `http://0.0.0.0:8808` to see documentation for currently installed gems |
 
 #### Testing Tasks:
 | preface            | cmd                 | description of test contests | w/ warnings?

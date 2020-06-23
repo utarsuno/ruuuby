@@ -19,7 +19,7 @@ module ::Math
 
       undef_method :sum_of_interior_angles
 
-      def sum_of_interior_angles; θ°(360); end
+      def sum_of_interior_angles; ::ThetaAngle.new_degree(360); end
 
     end
 

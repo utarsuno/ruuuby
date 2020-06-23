@@ -9,7 +9,7 @@ module Ruuuby
   module MetaData
 
     # `💎.engine.orm`
-    class RuuubyORM
+    class RuuubyORM < ::Ruuuby::MetaData::RuuubyEngineComponent
 
       attr_accessor :ruuuby_file_version, :state_flag, :expected_tables
 
@@ -22,7 +22,7 @@ module Ruuuby
       # | 5 | db seeds loaded |
 
       def initialize(engine)
-        @engine          = engine
+        super(engine)
         @state_flag       = 0
         @expected_tables = {
             orm: %w(ruuuby_releases ruuuby_gems ruuuby_features ruuuby_feature_behaviors ruuuby_changelogs git_commits ruuuby_dirs ruuuby_files),

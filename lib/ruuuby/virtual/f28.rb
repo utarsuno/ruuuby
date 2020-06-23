@@ -1,5 +1,7 @@
 # coding: UTF-8
 
+using ::ThetaAngle::ContextStrParsing
+
 module ::Ruuuby
   module Feature
     module Extendable
@@ -11,6 +13,8 @@ module ::Ruuuby
         # @return [Float]
         def ℮; ::Math::E; end
 
+        # the `limiting` difference between the `harmonic series` and the `natural logarithm`
+        #
         # @return [Float]
         def γ; ::Float::CONST_EULER_MASCHERONI; end
 
@@ -97,6 +101,34 @@ module ::Ruuuby
 
         # @return [Symbol] 'complex-infinity'
         def ∞ℂ; ::Float::INFINITY_COMPLEX; end
+
+        # -------------------------------------------------------------------------------------------------------- | *f27* |
+
+        # @param [Float, Int, ThetaAngle, String] arg
+        #
+        # @return [ThetaAngle]
+        def θ°(arg)
+          if arg.str?
+            ::ThetaAngle.new_degree(arg.°)
+          else
+            ::ThetaAngle.new_degree(arg)
+          end
+        end
+
+        # @param [Float, Int, ThetaAngle] arg
+        #
+        # @return [ThetaAngle]
+        def θʳ(arg); ::ThetaAngle.new_radian(arg); end
+
+        # @param [Float, Int, ThetaAngle] arg
+        #
+        # @return [ThetaAngle]
+        def θᵍ(arg); ::ThetaAngle.new_gon(arg); end
+
+        # @param [Float, Int, ThetaAngle] arg
+        #
+        # @return [ThetaAngle]
+        def θ𝞽(arg); ::ThetaAngle.new_turn(arg); end
 
       end
     end

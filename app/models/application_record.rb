@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 # utilize class +ApplicationRecord+ as a location for any re-usable ORM functionality & abstraction
-class ApplicationRecord < ActiveRecord::Base
+class ::ApplicationRecord < ActiveRecord::Base
 
   #    ___                                         __
   #  /'___\                                       /\ \__  __

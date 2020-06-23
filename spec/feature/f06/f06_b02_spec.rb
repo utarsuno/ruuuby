@@ -50,7 +50,7 @@ RSpec.describe 'f06_b02' do
           context 'cases: positive' do
             context 'w/ normalization{∈ℕ}' do
               it 'w/ single param' do
-                expect{🛑int❓('0', 5, :∈ℕ)}.to_not raise_error
+                expect{🛑int❓(:arg, 5, :∈ℕ)}.to_not raise_error
               end
               it 'w/ many params' do
                 expect{🛑int❓($PRM_MANY, [1, 3, 1337], :∈ℕ)}.to_not raise_error
@@ -58,7 +58,7 @@ RSpec.describe 'f06_b02' do
             end
             context 'w/o extra normalization' do
               it 'w/ single param' do
-                expect{🛑int❓('0', 5)}.to_not raise_error
+                expect{🛑int❓(:arg, 5)}.to_not raise_error
               end
               it 'w/ many params' do
                 expect{🛑int❓($PRM_MANY, [-1, 0, 1])}.to_not raise_error
@@ -68,15 +68,15 @@ RSpec.describe 'f06_b02' do
           context 'cases: negative' do
             context 'w/ bad normalizer' do
               it 'w/ single param' do
-                expect{🛑int❓('0', 1337, nil)}.to raise_error(ArgumentError)
+                expect{🛑int❓(:arg, 1337, nil)}.to raise_error(ArgumentError)
               end
               it 'w/ many params' do
-                expect{🛑int❓('0', [-1, 0, 1], nil)}.to raise_error(ArgumentError)
+                expect{🛑int❓(:arg, [-1, 0, 1], nil)}.to raise_error(ArgumentError)
               end
             end
             context 'w/ normalization{∈ℕ}' do
               it 'w/ single param' do
-                expect{🛑int❓('0', -1337, :∈ℕ)}.to raise_error(ArgumentError)
+                expect{🛑int❓(:arg, -1337, :∈ℕ)}.to raise_error(ArgumentError)
               end
               it 'w/ many params' do
                 expect{🛑int❓($PRM_MANY, [-1, 0, 1], :∈ℕ)}.to raise_error(ArgumentError)
@@ -84,7 +84,7 @@ RSpec.describe 'f06_b02' do
             end
             context 'w/o extra normalization' do
               it 'w/ single param' do
-                expect{🛑int❓('0', '5')}.to raise_error(ArgumentError)
+                expect{🛑int❓(:arg, '5')}.to raise_error(ArgumentError)
               end
               it 'w/ many params' do
                 expect{🛑int❓($PRM_MANY, [-1, 0, nil])}.to raise_error(ArgumentError)
@@ -116,17 +116,51 @@ RSpec.describe 'f06_b02' do
   context 'performance', :performance do
 
     context 'func{int?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{5.int?}.to perform_extremely_quickly
-      end
-      it 'for cases: false' do
-        expect{'0'.int?}.to perform_extremely_quickly
+      context 'for needed scenarios' do
+        context 'cases: positive' do
+          it 'w/o normalization' do
+            expect{1337.int?}.to perform_extremely_quickly
+          end
+          it '𝕌' do
+            expect{1337.int?(:∈𝕌)}.to perform_extremely_quickly
+          end # end: {𝕌}
+          it 'ℤ' do
+            expect{1337.int?(:∈ℤ)}.to perform_extremely_quickly
+          end # end: {ℤ}
+          it 'ℕ' do
+            expect{1337.int?(:∈ℕ)}.to perform_extremely_quickly
+          end # end: {ℕ}
+          it '𝕎' do
+            expect{1337.int?(:∈𝕎)}.to perform_extremely_quickly
+          end # end: {𝕎}
+        end
+        context 'cases: negative' do
+          it 'w/o normalization' do
+            expect{'0'.int?}.to perform_extremely_quickly
+          end
+        end
       end
     end
 
     context 'func{🛑int❓}: performs extremely quickly' do
-      it 'cases: positive' do
-        expect{🛑int❓('0', 5)}.to perform_extremely_quickly
+      context 'for needed scenarios' do
+        context 'cases: positive' do
+          it 'w/o normalization' do
+            expect{🛑int❓(:arg, 5)}.to perform_extremely_quickly
+          end
+          it '𝕌' do
+            expect{🛑int❓(:arg, 1337, :∈𝕌)}.to perform_extremely_quickly
+          end # end: {𝕌}
+          it 'ℤ' do
+            expect{🛑int❓(:arg, 1337, :∈ℤ)}.to perform_extremely_quickly
+          end # end: {ℤ}
+          it 'ℕ' do
+            expect{🛑int❓(:arg, 1337, :∈ℕ)}.to perform_extremely_quickly
+          end # end: {ℕ}
+          it '𝕎' do
+            expect{🛑int❓(:arg, 1337, :∈𝕎)}.to perform_extremely_quickly
+          end # end: {𝕎}
+        end
       end
     end
   end # end: {performance}

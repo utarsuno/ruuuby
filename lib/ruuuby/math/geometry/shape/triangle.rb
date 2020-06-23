@@ -101,15 +101,15 @@ module ::Math
         @num_sides = 3
         if @side_a == @side_b && @side_a == @side_c
           @longest_val = @side_a
-          @angle_a         = θ°(60)
-          @angle_b         = θ°(60)
-          @angle_c         = θ°(60)
+          @angle_a         = ::ThetaAngle.new_degree(60)
+          @angle_b         = ::ThetaAngle.new_degree(60)
+          @angle_c         = ::ThetaAngle.new_degree(60)
         else
           @longest_val = [@side_a, @side_b, @side_c].max
-          @angle_a         = θʳ(::Math.acos(( ((@side_b ** 2) + (@side_c ** 2) - (@side_a ** 2)) / (2.0 * @side_b * @side_c) )))
-          @angle_b         = θʳ(::Math.acos(( ((@side_c ** 2) + (@side_a ** 2) - (@side_b ** 2)) / (2.0 * @side_c * @side_a) )))
+          @angle_a         = ::ThetaAngle.new_radian(::Math.acos(( ((@side_b ** 2) + (@side_c ** 2) - (@side_a ** 2)) / (2.0 * @side_b * @side_c) )))
+          @angle_b         = ::ThetaAngle.new_radian(::Math.acos(( ((@side_c ** 2) + (@side_a ** 2) - (@side_b ** 2)) / (2.0 * @side_c * @side_a) )))
           #@angle_c        = θʳ(::Math.acos(( ((@side_a ** 2) + (@side_b ** 2) + (@side_c ** 2)) / (2.0 * @side_a * @side_b) )))
-          @angle_c         = θ°(180.0) - (@angle_a + @angle_b)
+          @angle_c         = ::ThetaAngle.new_degree(180.0) - (@angle_a + @angle_b)
           #@angle_c        = θʳ(::Math.acos(((@side_a ** 2 + @side_b ** 2 + @side_c ** 2) / (2.0 * @side_a * @side_b))))
         end
         super()

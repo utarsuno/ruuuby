@@ -119,4 +119,28 @@
 @v0_0_42.changelog.added_method_to_class(@f27, :octant?, 'ThetaAngle')
 #@v0_0_42.changelog.added_method_to_class(@f35, :median, 'Math::Stats')
 #@v0_0_42.changelog.added_method_to_class(@f35, :weighted_moving_average, 'Math::Stats::TimeSeries')
-@v0_0_42.save!
+#
+
+@v0_0_43 = RuuubyRelease.spawn(0, 0, 43)
+@v0_0_43.add_file('lib/ruuuby/math/geometry/theta_angle/context_str.rb', '', 'Refinements onto `String` for parsing to and from `ThetaAngle`', @f27)
+@v0_0_43.add_file('lib/ruuuby/ruuuby/engine/ruuuby_engine_component.rb', '', 'start of cleaner design w/ `RuuubyEngine` and relating objs', @f10)
+@v0_0_43.add_file('lib/ruuuby/ruuuby/api/api_locale.rb', '', '', @f10)
+@v0_0_43.add_file('bin/manually_execute/clean_up', '', 'delete any temporary/generated content, quick way to force a full re-compile', @f10)
+@v0_0_43.add_comments(
+    [
+        'add{f06_b04} to provide normalizer{∈𝕌} for funcs{flt? 🛑flt❓}',
+        'start adding textual parsing for `ThetaAngle` via `Refinement` in{`ThetaAngle::ContextStrParsing`}',
+        'increase scope tested in some db_audit funcs',
+    ]
+)
+
+@v0_0_43.changelog.added_method_to_class(@f34, :aroon_up, 'Math::Stats::TimeSeries')
+@v0_0_43.changelog.added_method_to_class(@f34, :aroon_down, 'Math::Stats::TimeSeries')
+@v0_0_43.changelog.added_method_to_class(@f34, :aroon_oscillator, 'Math::Stats::TimeSeries')
+@v0_0_43.changelog.added_method_to_class(@f34, :simple_moving_average, 'Math::Stats::TimeSeries')
+@v0_0_43.changelog.added_method_to_class(@f33, :len_powerset, 'Math::Combinatorics::𝕎¹')
+@v0_0_43.changelog.added_method_to_class(@f33, :len_ordered_with_replacement, 'Math::Combinatorics::𝕎²')
+# (Refinements)
+@v0_0_43.changelog.added_method_to_class(@f27, :°?, ::String)
+@v0_0_43.changelog.added_method_to_class(@f27, :°, ::String)
+@v0_0_43.save!

@@ -3,11 +3,6 @@
 RSpec.describe 'f35_b00' do
 
   context 'feature{f35} behavior{b00} functionality' do
-    context 'module{DescriptiveStatistics}' do
-      it 'exists', :audit do
-        expect_∃ᵐ(:DescriptiveStatistics, ::Math::Stats)
-      end
-    end
 
     context 'adds needed static functions' do
       context 'func{arithmetic_mean}' do
@@ -78,4 +73,19 @@ RSpec.describe 'f35_b00' do
       end # end: {func{median}}
     end # end: {adds needed static functions}
   end # end: {functionality}
+
+  context 'feature{f35} behavior{b00} audit', :audit do
+    context 'module{Descriptive}' do
+      it 'exists' do
+        expect_∃ᵐ(:Descriptive, ::Math::Stats)
+      end
+      context 'w/ needed funcs' do
+        it 'func{exponential_moving_average} aliased via{ema}' do
+          expect_∃static⨍(:arithmetic_mean, ::Math::Stats)
+          expect_∃static⨍(:median, ::Math::Stats)
+        end
+      end
+    end
+  end # end: {audit}
+
 end

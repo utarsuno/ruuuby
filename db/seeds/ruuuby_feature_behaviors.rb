@@ -16,10 +16,11 @@
 
 @f06.spawn_behaviors(
     [
-        'offer func{num?, 🛑num❓, 🛑nums❓} w/ normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌, ∈ℕ𝕊, ∈𝕎𝕊, ∈ℤ𝕊, ∈𝕌𝕊}',
-        'offer func{str?, 🛑str❓, 🛑strs❓} w/ normalizers{∉∅}',
-        'offer func{int?, 🛑int❓, 🛑ints❓} w/ normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌}',
-        'offer func{ary?, 🛑ary❓, 🛑arys❓} w/ normalizers{∉∅}'
+        'offer funcs{num?, 🛑num❓, 🛑nums❓} w/ normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌, ∈ℕ𝕊, ∈𝕎𝕊, ∈ℤ𝕊, ∈𝕌𝕊}',
+        'offer funcs{str?, 🛑str❓, 🛑strs❓} w/ normalizers{∉∅}',
+        'offer funcs{int?, 🛑int❓, 🛑ints❓} w/ normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌}',
+        'offer funcs{ary?, 🛑ary❓, 🛑arys❓} w/ normalizers{∉∅}',
+        'offer funcs{flt?, 🛑flt❓} w/ normalizers{∈𝕌}'
     ]
 )
 
@@ -38,7 +39,12 @@
 
 @f12.spawn_behaviors(['offer Class aliases: {`📁` -> `File`}, {`🗄️` -> `Dir`}'])
 
-@f22.spawn_behaviors(['offers a light layer over `GC`', 'offers a light layer over `JIT`'])
+@f22.spawn_behaviors(
+    [
+        'offers a light layer over `GC`',
+        'offers a light layer over `JIT`'
+    ]
+)
 
 @f24.spawn_behaviors(
     [
@@ -119,8 +125,8 @@
 
 @f35.spawn_behaviors(
     [
-        'offer categorical abstractions w/ module{`DescriptiveStatistics`}',
-        'offer categorical abstractions w/ module{`ProbabilityTheory`}',
+        'offer categorical abstractions w/ module{`Descriptive`}',
+        'offer categorical abstractions w/ module{`Probability`}',
         'offer categorical abstractions w/ module{`StatisticalLearning`}',
         'offer categorical abstractions w/ module{`TimeSeries`}',
     ]

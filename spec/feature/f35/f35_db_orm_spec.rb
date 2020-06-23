@@ -11,11 +11,11 @@ RSpec.describe 'f35_db_orm' do
 
       context 'defines behaviors' do
         it 'defines{b00}' do
-          audit_feature_behavior(f35, f35_b00, 'b00', 'offer categorical abstractions w/ module{`DescriptiveStatistics`}')
+          audit_feature_behavior(f35, f35_b00, 'b00', 'offer categorical abstractions w/ module{`Descriptive`}')
         end
 
         it 'defines{b01}' do
-          audit_feature_behavior(f35, f35_b01, 'b01', 'offer categorical abstractions w/ module{`ProbabilityTheory`}')
+          audit_feature_behavior(f35, f35_b01, 'b01', 'offer categorical abstractions w/ module{`Probability`}')
         end
 
         it 'defines{b02}' do

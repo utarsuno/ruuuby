@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# encoding: UTF-8
+
+export RUUUBY_FULL_DEBUG="t"
+
+set -euo pipefail
+IFS=$'\n\t'
+set -vx
+
+bundle exec rake clobber
+bundle exec rake clean

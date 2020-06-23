@@ -20,8 +20,8 @@ RSpec.describe 'f27_b02' do
           end
           context 'cases: negative' do
             it 'bad arg' do
-              expect{θ𝞽(nil)}.to raise_error(ArgumentError)
-              expect{::ThetaAngle.new_turn(nil)}.to raise_error(ArgumentError)
+              expect{θ𝞽(nil)}.to raise_error(::ArgumentError)
+              expect{::ThetaAngle.new_turn(nil)}.to raise_error(::ArgumentError)
             end
           end
         end
@@ -39,11 +39,89 @@ RSpec.describe 'f27_b02' do
               expect_theta_angle(::ThetaAngle.new_degree(θᵍ(400)), 4, 360)
               expect_theta_angle(::ThetaAngle.new_degree(θ𝞽(1)), 4, 360)
             end
+            context 'w/ str' do
+              context 'w/ positive vals' do
+                it 'w/ regular data' do
+                  expect_theta_angle(θ°('60'), 4, 60)
+                  expect_theta_angle(θ°('60°'), 4, 60)
+                  expect_theta_angle(θ°('60 °'), 4, 60)
+                  expect_theta_angle(θ°('60°θ'), 4, 60)
+                  expect_theta_angle(θ°('60 °θ'), 4, 60)
+                  expect_theta_angle(θ°('60 dgr'), 4, 60)
+                  expect_theta_angle(θ°('60 degrees'), 4, 60)
+                end
+                it 'w/ arc-minute & arc-second' do
+                  expect_theta_angle(θ°("60'"), 4, 1)
+                  expect_theta_angle(θ°("60''"), 4, 1 / 60.0)
+                  expect_theta_angle(θ°("60' 60''"), 4, 1 + 1 / 60.0)
+                  expect_theta_angle(θ°("60° 60' 60''"), 4, 60 + 1 + 1 / 60.0)
+                  expect_theta_angle(θ°("60° 60''"), 4, 60 + 1 / 60.0)
+                  expect_theta_angle(θ°("60° 60'"), 4, 61)
+                end
+              end
+              context 'w/ negative vals' do
+                it 'w/ regular data' do
+                  expect_theta_angle(θ°('-60'), 4, -60)
+                  expect_theta_angle(θ°('-60°'), 4, -60)
+                  expect_theta_angle(θ°('-60 °'), 4, -60)
+                  expect_theta_angle(θ°('-60°θ'), 4, -60)
+                  expect_theta_angle(θ°('-60 °θ'), 4, -60)
+                  expect_theta_angle(θ°('-60 dgr'), 4, -60)
+                  expect_theta_angle(θ°('-60 degrees'), 4, -60)
+                end
+                it 'w/ arc-minute & arc-second' do
+                  expect_theta_angle(θ°("60'"), 4, 1)
+                  expect_theta_angle(θ°("60''"), 4, 1 / 60.0)
+                  expect_theta_angle(θ°("60' 60''"), 4, 1.0 * (1 + (1 / 60.0)))
+                  expect_theta_angle(θ°("-60° 60' 60''"), 4, -1.0 * (60 + 1 + 1 / 60.0))
+                  expect_theta_angle(θ°("-60° 60''"), 4, -1.0 * (60 + 1 / 60.0))
+                  expect_theta_angle(θ°("-60° 60'"), 4, -61)
+                end
+              end
+              context 'w/ decimals' do
+                it 'w/ regular data' do
+                  expect_theta_angle(θ°('60.1337'), 4, 60.1337)
+                  expect_theta_angle(θ°('60.1337°'), 4, 60.1337)
+                  expect_theta_angle(θ°('60.1337 °'), 4, 60.1337)
+                  expect_theta_angle(θ°('60.1337°θ'), 4, 60.1337)
+                  expect_theta_angle(θ°('60.1337 °θ'), 4, 60.1337)
+                  expect_theta_angle(θ°('60.1337 dgr'), 4, 60.1337)
+                  expect_theta_angle(θ°('60.1337 degrees'), 4, 60.1337)
+                end
+                it 'w/ arc-minute & arc-second' do
+                  expect_theta_angle(θ°("60.1337°60'"), 4, 60.1337 + 1)
+                  expect_theta_angle(θ°("60.1337° 60''"), 4, 60.1337 + 1 / 60.0)
+                end
+              end
+            end
           end
           context 'cases: negative' do
             it 'bad arg' do
-              expect{θ𝞽(nil)}.to raise_error(ArgumentError)
-              expect{::ThetaAngle.new_turn(nil)}.to raise_error(ArgumentError)
+              expect{θ𝞽(nil)}.to raise_error(::ArgumentError)
+              expect{::ThetaAngle.new_turn(nil)}.to raise_error(::ArgumentError)
+            end
+            context 'w/ bad str' do
+              it 'w/o numerical content' do
+                expect{θ°('°')}.to raise_error(::RuntimeError)
+                expect{θ°('dgr')}.to raise_error(::RuntimeError)
+                expect{θ°('degrees')}.to raise_error(::RuntimeError)
+                expect{θ°(' dgr')}.to raise_error(::RuntimeError)
+                expect{θ°(' degrees')}.to raise_error(::RuntimeError)
+              end
+              it 'w/ empty content' do
+                expect{θ°('')}.to raise_error(::RuntimeError)
+                expect{θ°(' ')}.to raise_error(::RuntimeError)
+                expect{θ°('-')}.to raise_error(::RuntimeError)
+              end
+              it 'w/ nearly good data' do
+                expect{θ°(' 60')}.to raise_error(::RuntimeError)
+                expect{θ°('60°°')}.to raise_error(::RuntimeError)
+                expect{θ°('°60 °')}.to raise_error(::RuntimeError)
+                expect{θ°('.60°θ')}.to raise_error(::RuntimeError)
+                expect{θ°('.60 °θ')}.to raise_error(::RuntimeError)
+                expect{θ°('60 dgrs')}.to raise_error(::RuntimeError)
+                expect{θ°('60 degree')}.to raise_error(::RuntimeError)
+              end
             end
           end
         end
@@ -64,8 +142,8 @@ RSpec.describe 'f27_b02' do
           end
           context 'cases: negative' do
             it 'bad arg' do
-              expect{θᵍ(nil)}.to raise_error(ArgumentError)
-              expect{::ThetaAngle.new_gon(nil)}.to raise_error(ArgumentError)
+              expect{θᵍ(nil)}.to raise_error(::ArgumentError)
+              expect{::ThetaAngle.new_gon(nil)}.to raise_error(::ArgumentError)
             end
           end
         end
@@ -86,8 +164,8 @@ RSpec.describe 'f27_b02' do
           end
           context 'cases: negative' do
             it 'bad arg' do
-              expect{θ𝞽(nil)}.to raise_error(ArgumentError)
-              expect{::ThetaAngle.new_turn(nil)}.to raise_error(ArgumentError)
+              expect{θ𝞽(nil)}.to raise_error(::ArgumentError)
+              expect{::ThetaAngle.new_turn(nil)}.to raise_error(::ArgumentError)
             end
           end
         end
@@ -133,10 +211,10 @@ RSpec.describe 'f27_b02' do
     context 'static functions provided are' do
       context 'defined in correct location' do
         it 'for module{Kernel}' do
-          expect_∃⨍(:θ°, ::Kernel)
-          expect_∃⨍(:θʳ, ::Kernel)
-          expect_∃⨍(:θᵍ, ::Kernel)
-          expect_∃⨍(:θ𝞽, ::Kernel)
+          expect_∃⨍(:θ°, ::Ruuuby::Feature::Extendable::MainF28)
+          expect_∃⨍(:θʳ, ::Ruuuby::Feature::Extendable::MainF28)
+          expect_∃⨍(:θᵍ, ::Ruuuby::Feature::Extendable::MainF28)
+          expect_∃⨍(:θ𝞽, ::Ruuuby::Feature::Extendable::MainF28)
         end
         it 'for class{ThetaAngle}' do
           expect_∃static⨍(:new_radian, ::ThetaAngle)

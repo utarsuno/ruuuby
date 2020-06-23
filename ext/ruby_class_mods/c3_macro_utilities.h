@@ -64,13 +64,26 @@ __attribute__ ((access (read_only, 1))) static void ensure_file_loaded(const cha
     ensure_loaded_math(space/discrete/symbolic_numbers_space)\
 }
 
+#define ensure_all_loaded_for_math_expressions(){\
+    ensure_loaded_math(expr/seq/sequence)\
+    ensure_loaded_math(expr/seq/recursive)\
+}
+
 #define ensure_all_loaded_for_geometry(){\
     ensure_loaded_math(geometry/shape/shape)\
     ensure_loaded_math(geometry/shape/plane_figure)\
     ensure_loaded_math(geometry/shape/quadrilateral)\
     ensure_loaded_math(geometry/shape/circle)\
-    ensure_loaded_math(geometry/shape/triangle)\
     ensure_loaded_math(geometry/trig)\
+    ensure_loaded_math(geometry/theta_angle/theta_angle)\
+    ensure_loaded_math(geometry/theta_angle/context_str)\
+}
+
+#define ensure_all_loaded_for_statistics(){\
+    ensure_loaded_math(combinatorics/combinatorics)\
+    ensure_loaded_math(stats/stats)\
+    ensure_loaded_math(stats/time_series)\
+    ensure_loaded_math(stats/descriptive)\
 }
 
 #define ensure_all_loaded_for_ruuuby(){\
@@ -89,7 +102,6 @@ __attribute__ ((access (read_only, 1))) static void ensure_file_loaded(const cha
     ensure_loaded_nums(big_decimal)\
     ensure_loaded_nums(rational)\
     ensure_loaded_nums(complex)\
-    ensure_loaded_nums(theta_angle)\
 }
 
 #define ensure_all_loaded_for_attribute_includable(){\

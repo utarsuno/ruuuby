@@ -28,6 +28,9 @@ module ::Math
 
   # @see: https://en.wikipedia.org/wiki/Number_theory
   #
+  # vocab:
+  #  - | `ordinal numbers` | "is one generalization of the concept of a natural number that is used to describe a way to arrange a (possibly infinite) collection of objects in order, one after another" |
+  #
   # math related code that can be categorized under +NumberTheory+
   module NumberTheory
 
@@ -41,6 +44,8 @@ module ::Math
       #  - prime number:        a natural-number that can't be created from the multiplication of other natural-numbers
       #  - factors:             the numbers multiplied together resulting in another number
       #  - prime factorization: process of finding the prime numbers which multiply to equal some original number
+      #
+      # "the decomposition of a `composite number` into a product of smaller integers"
       #
       # @example
       #   prime factors of 76 are: 2² x 19¹

@@ -27,6 +27,7 @@ module ::Math
       def self.exponential_moving_average(data, n, smoothing_constant=2.0)
         🛑ary❓(:data, data, :∉∅)
         🛑int❓(:n, n, :∈ℕ)
+        🛑flt❓(:smoothing_constant, smoothing_constant, :∈𝕌)
         len_data = data.length
         if n + 1 > len_data || n <= 1
           🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{exponential_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
@@ -36,7 +37,7 @@ module ::Math
           k_const  = smoothing_constant / (n + 1.0)
           index    = n
           while index < len_data
-            # data[index] --> current node
+            # data[index] --> current_node
             ema_today = k_const * (data[index] - ema_prev) + ema_prev
             ema_prev  = ema_today
             ema_data << ema_today
@@ -46,16 +47,22 @@ module ::Math
         end
       end
 
+      # @param [Array]   data
+      # @param [Integer] n
+      #
+      # @raise [ArgumentError]
+      #
+      # @return [Array]
       def self.weighted_moving_average(data, n)
         🛑ary❓(:data, data, :∉∅)
         🛑int❓(:n, n, :∈ℕ)
         len_data = data.length
-        if n + 1 > len_data || n <= 1
+        if n > len_data || n <= 1
           🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{weighted_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
         else
           wma_data = []
           index    = n
-          while index < len_data
+          while index < len_data + 1
             delta     = index - n
             nodes     = data[delta, index - delta.abs]
             local_wma = 0
@@ -69,9 +76,117 @@ module ::Math
         end
       end
 
+      # @param [Array]   data
+      # @param [Integer] n
+      #
+      # @raise [ArgumentError]
+      #
+      # @return [Array]
+      def self.simple_moving_average(data, n)
+        🛑ary❓(:data, data, :∉∅)
+        🛑int❓(:n, n, :∈ℕ)
+        len_data = data.length
+        if n > len_data || n <= 1
+          🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{simple_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
+        else
+          sma_data = []
+          index    = n
+          while index < len_data + 1
+            delta     = index - n
+            nodes     = data[delta, index - delta.abs]
+            local_sma = ::Math::Stats.arithmetic_mean(*nodes)
+            sma_data << local_sma
+            index += 1
+          end
+          sma_data
+        end
+      end
+
+      # @param [Array]   data
+      # @param [Integer] n
+      #
+      # @raise [ArgumentError]
+      #
+      # @return [Array]
+      def self.aroon_up(data, n)
+        🛑ary❓(:data, data, :∉∅)
+        🛑int❓(:n, n, :∈ℕ)
+        len_data = data.length
+        if n > len_data || n <= 1
+          🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{simple_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
+        else
+          aroon_data = []
+          index      = n
+          while index < len_data + 1
+            delta     = index - n
+            nodes     = data[delta, index - delta.abs]
+            max_index = nodes.∀ₓᵢ.max[1].to_f
+            aroon_data << ((n - max_index) / n.to_f) * 100.0
+            index += 1
+          end
+          aroon_data
+        end
+      end
+
+      # @param [Array]   data
+      # @param [Integer] n
+      #
+      # @raise [ArgumentError]
+      #
+      # @return [Array]
+      def self.aroon_down(data, n)
+        🛑ary❓(:data, data, :∉∅)
+        🛑int❓(:n, n, :∈ℕ)
+        len_data = data.length
+        if n > len_data || n <= 1
+          🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{simple_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
+        else
+          aroon_data = []
+          index      = n
+          while index < len_data + 1
+            delta     = index - n
+            nodes     = data[delta, index - delta.abs]
+            min_index = nodes.∀ₓᵢ.min[1].to_f
+            aroon_data << ((n - min_index) / n.to_f) * 100.0
+            index += 1
+          end
+          aroon_data
+        end
+      end
+
+      # @param [Array]   data
+      # @param [Integer] n
+      #
+      # @raise [ArgumentError]
+      #
+      # @return [Array]
+      def self.aroon_oscillator(data, n)
+        🛑ary❓(:data, data, :∉∅)
+        🛑int❓(:n, n, :∈ℕ)
+        len_data = data.length
+        if n > len_data || n <= 1
+          🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{simple_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
+        else
+          aroon_data = []
+          index      = n
+          while index < len_data + 1
+            delta     = index - n
+            nodes     = data[delta, index - delta.abs]
+            max_index = nodes.∀ₓᵢ.max[1].to_f
+            min_index = nodes.∀ₓᵢ.min[1].to_f
+            min_val   = ((n - min_index) / n.to_f) * 100.0
+            max_val   = ((n - max_index) / n.to_f) * 100.0
+            aroon_data << max_val - min_val
+            index += 1
+          end
+          aroon_data
+        end
+      end
+
       class << self
         alias_method :wma, :weighted_moving_average
         alias_method :ema, :exponential_moving_average
+        alias_method :sma, :simple_moving_average
       end
 
     end

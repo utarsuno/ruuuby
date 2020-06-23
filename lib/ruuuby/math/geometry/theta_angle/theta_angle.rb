@@ -13,19 +13,6 @@ class ThetaAngle
   # TODO: switch to fixnum representation
   REPRESENTATIONS_TO_SYMBOLS = {as_degree: '°'.❄️, as_radian: 'ʳ'.❄️, as_gon: 'ᵍ'.❄️, as_turn: '𝞽'.❄️}.❄️
 
-  # TODO:
-  #module Syntax
-  #  # @type [String]
-  #  TRIGONOMETRIC_ANGLE = '(\d+)?π(/\d+)?'.❄️
-  #  # @type [String]
-  #  FORMAT_DEGREES      = '(\d+)((.)(\d+))?((°(θ))|( degrees))?'.❄️
-  #
-  # 1 rad = 10^3 mrad = 10^6 urad
-  #
-  #end
-
-  # include ::Ruuuby::Attribute::Includable::SyntaxCache
-
   # ____________________________________________________________________________________________________________________
   #            ___          __   __   ___  __       ___    __        __
   #  |\/|  /\   |  |__|    /  \ |__) |__  |__)  /\   |  | /  \ |\ | /__`
@@ -36,8 +23,6 @@ class ThetaAngle
   def ∅?; self.real.zero?; end
 
   module Vocab
-
-
 
   end
 
@@ -135,6 +120,7 @@ class ThetaAngle
   alias_method :_?, :straight?
   alias_method :○?, :perigon?
   alias_method :𝟞𝟘°?, :sextant?
+  alias_method :𝟜𝟝°?, :octant?
 
   alias_method :ʳ, :as_radian
   alias_method :ʳ?, :radians?

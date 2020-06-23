@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
@@ -9,16 +9,16 @@ module ::Ruuuby
   module MetaData
 
     # TODO: https://github.com/Homebrew/brew/releases
-    class BrewAPI < ::Ruuuby::MetaData::RuuubyEngineComponent
-
-      attr_reader :repo, :last_commit, :configs
+    class LocaleAPI < ::Ruuuby::MetaData::RuuubyEngineComponent
 
       def initialize(engine)
         super(engine)
       end
 
-    end # end: Class{BrewAPI}
+    end # end: Class{LocaleAPI}
   end
 end
+
+# echo $ZSH_VERSION
 
 # -------------------------------------------- ⚠️ --------------------------------------------

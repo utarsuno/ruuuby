@@ -23,11 +23,34 @@
    * `complex-number-plane`/`complex-angles`
    * angular rotation vs angular velocity
    * dimensions vs units
-   * add textual parsing for ThetaAngles (ex: `3°7'30''` == `3 + 7/60 + 30/3600` == `3.125°`) {`arcminute`, `arcsecond`}
+
+##### by v0.0.45
+ * finish textual parsing for ThetaAngles
 
 ---
 
 ### ⚠️: atm documentation & tests synchronization % is too low
+
+---
+
+# v0.0.43
+ * add{f06_b04} to provide normalizer{∈𝕌} for funcs{flt? 🛑flt❓}
+ * start adding textual parsing for `ThetaAngle` via `Refinement` in{`ThetaAngle::ContextStrParsing`}
+ * increase scope tested in some db_audit funcs
+
+| path added | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/ruuuby/math/geometry/theta_angle/context_str.rb` | `ThetaAngle::ContextStrParsing` | Refinements onto `String` for parsing to and from `ThetaAngle` | `f27` |
+| `lib/ruuuby/ruuuby/engine/ruuuby_engine_component.rb` | `Ruuuby::MetaData::RuuubyEngineComponent` | start of cleaner design w/ `RuuubyEngine` and relating objs | `f10` |
+| `lib/ruuuby/ruuuby/api/api_locale.rb` | `Ruuuby::MetaData::LocaleAPI` |  | `f10` |
+| `bin/manually_execute/clean_up` |  | delete any temporary/generated content, quick way to force a full re-compile | `f10` |
+
+| context | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Math::Stats::TimeSeries` | `aroon_up`, `aroon_down`, `aroon_oscillator`, `simple_moving_average` | `f35` |
+| `Math::Combinatorics::𝕎¹` | `len_powerset` | `f33` |
+| `Math::Combinatorics::𝕎²` | `len_ordered_with_replacement` | `f33` |
+| (`Refinement`) `String` | `°?`, `°` | `f27` |
 
 ---
 
@@ -274,7 +297,7 @@
 
 | path added | reference | notes | feature(s) |
 | ---: | --- | --- | --- |
-| `lib/ruuuby/class/nums/theta_angle.rb` | ``ThetaAngle`` |  | `f27` |
+| `lib/ruuuby/class/nums/theta_angle.rb` | `ThetaAngle` |  | `f27` |
 
 | class / module | method(s) added | feature(s) |
 | --- | --- | --- |
@@ -301,8 +324,8 @@
 
 | path added | reference | notes | feature(s) |
 | ---: | --- | --- | --- |
-| `lib/ruuuby/module/attribute/includable/singleton.rb` | ``Ruuuby::Attribute::Includable::RuuubySingleton`` |  | `f10` |
-| `lib/ruuuby/module/attribute/extendable/singleton.rb` | ``Ruuuby::Attribute::Extendable::RuuubySingleton`` |  | `f10` |
+| `lib/ruuuby/module/attribute/includable/singleton.rb` | `Ruuuby::Attribute::Includable::RuuubySingleton` |  | `f10` |
+| `lib/ruuuby/module/attribute/extendable/singleton.rb` | `Ruuuby::Attribute::Extendable::RuuubySingleton` |  | `f10` |
 | `lib/ruuuby/class/proc.rb` | ``Proc`` |  | `f10` |
 
 | class | method(s) added | feature(s) |
@@ -367,7 +390,7 @@
 
 | path added | reference | notes | feature(s) |
 | ---: | --- | --- | --- |
-| `lib/ruuuby/ruuuby/engine/ruuuby_engine.rb` | ``Ruuuby::MetaData::RuuubyEngine`` | alias{`💎.engine`} | `f15` |
+| `lib/ruuuby/ruuuby/engine/ruuuby_engine.rb` | `Ruuuby::MetaData::RuuubyEngine` | alias{`💎.engine`} | `f15` |
 | `lib/ruuuby/ruuuby/engine/ruuuby_logging.rb` | `Ruuuby::MetaData::RuuubyEngine.instance.logger` | alias{`💎.engine.logger`} | `f15` |
 | `lib/ruuuby/ruuuby/metadata/ruuuby_metadata_constants.rb` | ``Ruuuby::MetaData`` |  | `f15` |
 | `app/models/ruuuby_dir` | ``RuuubyDir`` | directory operations specifically for `ORM` related context/use-cases | `f15` |

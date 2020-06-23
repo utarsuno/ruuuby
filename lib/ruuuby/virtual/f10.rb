@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 ::Range.alias_method :∀, :each
 # ---------------------------------------------------------------------------------------------------------- | *f03* |
@@ -66,28 +66,6 @@ module ::Kernel
   #
   # @return [Float] the base 10 logarithm of +n+
   def log₁₀(n); ::Math.log10(n); end
-
-  # -------------------------------------------------------------------------------------------------------- | *f27* |
-
-  # @param [Float, Int, ThetaAngle] arg
-  #
-  # @return [ThetaAngle]
-  def θ°(arg); ::ThetaAngle.new_degree(arg); end
-
-  # @param [Float, Int, ThetaAngle] arg
-  #
-  # @return [ThetaAngle]
-  def θʳ(arg); ::ThetaAngle.new_radian(arg); end
-
-  # @param [Float, Int, ThetaAngle] arg
-  #
-  # @return [ThetaAngle]
-  def θᵍ(arg); ::ThetaAngle.new_gon(arg); end
-
-  # @param [Float, Int, ThetaAngle] arg
-  #
-  # @return [ThetaAngle]
-  def θ𝞽(arg); ::ThetaAngle.new_turn(arg); end
 
   # -------------------------------------------------------------------------------------------------------- | *f28* |
 

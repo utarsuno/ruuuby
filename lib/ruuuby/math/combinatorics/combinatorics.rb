@@ -5,6 +5,21 @@ module ::Math
 
   module Combinatorics
 
+    # equations within +Combinatorics+ that involve 1-input (belonging to the `whole-numbers`)
+    module 𝕎¹
+
+      # @param [Integer] n
+      #
+      # @raise [ArgumentError] if `n` is not ∈ 𝕎
+      #
+      # @return [Integer]
+      def self.len_powerset(n: 0)
+        🛑int❓(:n, n, :∈𝕎)
+        2 ** n
+      end
+
+    end # end: {𝕎¹}
+
     # equations within +Combinatorics+ that involve 2-inputs (with both belonging to the `whole-numbers`)
     module 𝕎²
 
@@ -21,7 +36,18 @@ module ::Math
         ::Math::Combinatorics.n_choose_k(n.to_i, k.to_i)
       end
 
-    end
+      # @param [Numeric] n | sample_size
+      # @param [Numeric] k | number_of_items
+      #
+      # @raise [ArgumentError] if `n` or `k` are not ∈ 𝕎
+      #
+      # @return [Integer]
+      def self.len_ordered_with_replacement(n: 0, k: 0)
+        🛑nums❓([n, k], :∈𝕎)
+        n ** k
+      end
+
+    end # end: {𝕎²}
 
     # ===================================================================
     #  ___     ___  ___       __     __           ___            __   __

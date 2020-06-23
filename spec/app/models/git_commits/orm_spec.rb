@@ -22,7 +22,7 @@ RSpec.describe 'git_commits.rb' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
             it 'can be created' do
-              fake_git_commit = ::GitCommit.spawn('fake_str_a', data_git_author_date, data_git_hash, 'ref/fake_str_a', @fake_release_older)
+              fake_git_commit = ::GitCommit.spawn('fake_str_a', data_git_author_date, data_git_hash, 'refs/tags/v0.0.1337', @fake_release_older)
               expect(fake_git_commit.commit_subject).to eq('fake_str_a')
               expect(fake_git_commit.commit_author_date).to eq(data_git_author_date)
               expect(fake_git_commit.commit_hash).to eq(data_git_hash)
@@ -30,7 +30,7 @@ RSpec.describe 'git_commits.rb' do
               fake_git_commit.♻️!
             end
             it 'allows non-normalized iso8601 formatted (and then saves as normalized)' do
-              fake_git_commit = GitCommit.spawn('fake_str_a', data_git_author_date_wo_normalization, data_git_hash, 'ref/fake_str_a', @fake_release_older)
+              fake_git_commit = GitCommit.spawn('fake_str_a', data_git_author_date_wo_normalization, data_git_hash, 'refs/tags/v0.0.1337', @fake_release_older)
               expect(fake_git_commit.commit_author_date).to eq(data_git_author_date)
               fake_git_commit.♻️!
             end
@@ -56,7 +56,7 @@ RSpec.describe 'git_commits.rb' do
               it 'within the same release' do
                 fake_git_commit_oldest = GitCommit.spawn('fake_str_a', data_git_author_date_oldest, data_git_hash, nil, @fake_release_older)
                 fake_git_commit_older  = GitCommit.spawn('fake_str_a', data_git_author_date_older, data_git_hash, nil, @fake_release_newer)
-                fake_git_commit_newer  = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, 'ref/fake_str_a', @fake_release_newer)
+                fake_git_commit_newer  = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, 'refs/tags/v0.0.1337', @fake_release_newer)
                 expect(fake_git_commit_older < fake_git_commit_newer).to eq(true)
                 expect(fake_git_commit_oldest < fake_git_commit_newer).to eq(true)
                 expect(fake_git_commit_oldest < fake_git_commit_older).to eq(true)
@@ -68,7 +68,7 @@ RSpec.describe 'git_commits.rb' do
             context 'cases: negative' do
               it 'within the same release' do
                 fake_git_commit_older = GitCommit.spawn('fake_str_a', data_git_author_date_older, data_git_hash, nil, @fake_release_newer)
-                fake_git_commit_newer = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, 'ref/fake_str_a', @fake_release_newer)
+                fake_git_commit_newer = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, 'refs/tags/v0.0.1337', @fake_release_newer)
                 expect(fake_git_commit_newer < fake_git_commit_older).to eq(false)
                 fake_git_commit_newer.♻️!
                 fake_git_commit_older.♻️!
@@ -81,7 +81,7 @@ RSpec.describe 'git_commits.rb' do
             it 'cases: positive' do
               fake_git_commit_oldest = GitCommit.spawn('fake_str_a', data_git_author_date_oldest, data_git_hash, nil, @fake_release_older)
               fake_git_commit_older  = GitCommit.spawn('fake_str_a', data_git_author_date_older, data_git_hash, nil, @fake_release_newer)
-              fake_git_commit_newer  = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, 'ref/fake_str_a', @fake_release_newer)
+              fake_git_commit_newer  = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, 'refs/tags/v0.0.1337', @fake_release_newer)
               expect(fake_git_commit_newer > fake_git_commit_older).to eq(true)
               expect(fake_git_commit_newer > fake_git_commit_oldest).to eq(true)
               expect(fake_git_commit_older > fake_git_commit_oldest).to eq(true)
@@ -92,7 +92,7 @@ RSpec.describe 'git_commits.rb' do
             it 'cases: negative' do
               fake_git_commit_oldest = GitCommit.spawn('fake_str_a', data_git_author_date_oldest, data_git_hash, nil, @fake_release_older)
               fake_git_commit_older  = GitCommit.spawn('fake_str_a', data_git_author_date_older, data_git_hash, nil, @fake_release_newer)
-              fake_git_commit_newer  = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, 'ref/fake_str_a', @fake_release_newer)
+              fake_git_commit_newer  = GitCommit.spawn('fake_str_a', data_git_author_date_newer, data_git_hash, 'refs/tags/v0.0.1337', @fake_release_newer)
               expect(fake_git_commit_older > fake_git_commit_newer).to eq(false)
               expect(fake_git_commit_oldest > fake_git_commit_newer).to eq(false)
               expect(fake_git_commit_oldest > fake_git_commit_older).to eq(false)

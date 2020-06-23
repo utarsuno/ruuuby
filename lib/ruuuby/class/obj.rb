@@ -154,14 +154,25 @@ module ::Ruuuby
 
         # @param [Symbol] arg_name
         # @param [*]      arg
+        # @param [Symbol] normalization_checks
         #
         # @raise [WrongParamType]
-        def 🛑flt❓(arg_name, arg)
+        def 🛑flt❓(arg_name, arg, normalization_checks=:none)
           unless arg_name == $PRM_MANY
-            🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, arg_name.to_s, ::Float, arg) unless arg.flt?
+            if normalization_checks != :none
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, arg_name.to_s, ::Float, arg) unless arg.flt?(normalization_checks)
+            else
+              🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, arg_name.to_s, ::Float, arg) unless arg.flt?
+            end
           else
-            arg.∀ₓᵢ do |x, i|
-              🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Float, x) unless x.flt?
+            if normalization_checks != :none
+              arg.∀ₓᵢ do |x, i|
+                🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Float, x) unless x.flt?(normalization_checks)
+              end
+            else
+              arg.∀ₓᵢ do |x, i|
+                🛑 Ruuuby::ParamErr::throw(self.ⓣ, caller_locations(1, 1).first.base_label.to_s, "#{$PRM_MANY.to_s}[#{i.to_s}]", ::Float, x) unless x.flt?
+              end
             end
           end
         end

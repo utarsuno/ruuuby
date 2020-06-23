@@ -5,15 +5,30 @@ RSpec.describe 'f06_b03' do
   context 'functionality' do
 
     context 'by adding function{ary?}' do
-      it 'without effecting Array instance' do
-        expect(Array.ary?).to eq(false)
-      end
-      context 'handles needed input scenarios' do
-        it 'cases[positive]' do
-          [[], [] + [], [[]], [nil], [true], [false], ['a'], [1, 2]].∀{|n|expect(n.ary?).to eq(true)}
+      context 'handling needed scenarios' do
+        context 'cases: positive' do
+          it 'w/ normalization{∉∅}' do
+            [[[]], [nil], [true], [false], ['a'], [1337]].∀{|n|expect(n.ary?(:∉∅)).to eq(true)}
+          end
+          it 'w/o normalization' do
+            [[], [] + [], [[]], [nil], [true], [false], ['a'], [1337]].∀{|n|expect(n.ary?).to eq(true)}
+          end
         end
-        it 'cases[negative]' do
-          [TrueClass, FalseClass, Class, Object, NilClass, '', 'true', 'false', -1, 1, 0, {}].∀{|n|expect(n.ary?).to eq(false)}
+        context 'cases: negative' do
+          it 'w/o effecting Class-instance{Array}' do
+            expect(::Array.ary?).to eq(false)
+            expect(::Array.ary?(:∉∅)).to eq(false)
+          end
+          context 'data-based' do
+            it 'w/ normalization{∉∅}' do
+              [TrueClass, FalseClass, Class, Object, NilClass, '', 'true', 'false', -1, 1, 0, {}].∀{|n|expect(n.ary?(:∉∅)).to eq(false)}
+              expect([].ary?(:∉∅)).to eq(false)
+              expect(([] + []).ary?(:∉∅)).to eq(false)
+            end
+            it 'w/o normalization' do
+              [TrueClass, FalseClass, Class, Object, NilClass, '', 'true', 'false', -1, 1, 0, {}].∀{|n|expect(n.ary?).to eq(false)}
+            end
+          end
         end
       end
     end
@@ -23,8 +38,8 @@ RSpec.describe 'f06_b03' do
         context 'cases: positive' do
           context 'w/ normalization{∉∅}' do
             it 'w/ single param' do
-              expect{🛑ary❓('0', [nil], :∉∅)}.to_not raise_error
-              expect{🛑ary❓('0', [1337, '1337'], :∉∅)}.to_not raise_error
+              expect{🛑ary❓(:arg, [nil], :∉∅)}.to_not raise_error
+              expect{🛑ary❓(:arg, [1337, '1337'], :∉∅)}.to_not raise_error
             end
             it 'w/ many params' do
               expect{🛑ary❓($PRM_MANY, [[nil], [1], [[nil]]], :∉∅)}.to_not raise_error
@@ -32,7 +47,7 @@ RSpec.describe 'f06_b03' do
           end
           context 'w/o extra normalization' do
             it 'w/ single param' do
-              expect{🛑ary❓('0', [])}.to_not raise_error
+              expect{🛑ary❓(:arg, [])}.to_not raise_error
             end
             it 'w/ many params' do
               expect{🛑ary❓($PRM_MANY, [[], [1], [[nil]]])}.to_not raise_error
@@ -42,28 +57,20 @@ RSpec.describe 'f06_b03' do
         context 'cases: negative' do
           context 'w/ bad normalizer' do
             it 'w/ single param' do
-              expect{🛑str❓('0', '', nil)}.to raise_error(ArgumentError)
+              expect{🛑ary❓(:arg, '', nil)}.to raise_error(ArgumentError)
             end
             it 'w/ many params' do
-              expect{🛑str❓('0', ['a', '', 'bb'], nil)}.to raise_error(ArgumentError)
+              expect{🛑ary❓(:arg, ['a', '', 'bb'], nil)}.to raise_error(ArgumentError)
             end
           end
           context 'w/ normalization{∉∅}' do
             it 'w/ single param' do
-              expect{🛑str❓('0', '', :∉∅)}.to raise_error(ArgumentError)
-            end
-            it 'w/ many params' do
-              expect{🛑str❓($PRM_MANY, ['a', '', 'bb'], :∉∅)}.to raise_error(ArgumentError)
+              expect{🛑ary❓(:arg, [], :∉∅)}.to raise_error(ArgumentError)
             end
           end
           context 'w/o extra normalization' do
             it 'w/ single param' do
-              expect{🛑str❓('0', nil)}.to raise_error(ArgumentError)
-            end
-            it 'w/ many params' do
-              expect{🛑str❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
-              expect{🛑str❓($PRM_MANY, [5, '5'])}.to raise_error(ArgumentError)
-              expect{🛑str❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+              expect{🛑ary❓(:arg, nil)}.to raise_error(ArgumentError)
             end
           end
         end
@@ -88,19 +95,41 @@ RSpec.describe 'f06_b03' do
   context 'performance', :performance do
 
     context 'func{ary?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{['a'].ary?}.to perform_extremely_quickly
-      end
-      it 'for cases: false' do
-        expect{0.ary?}.to perform_extremely_quickly
+      context 'for needed scenarios' do
+        context 'cases: positive' do
+          it 'w/o normalizer' do
+            expect{[].ary?}.to perform_extremely_quickly
+            expect{['a'].ary?}.to perform_extremely_quickly
+          end
+          it 'w/ normalizer{∉∅}' do
+            expect{['a'].ary?(:∉∅)}.to perform_extremely_quickly
+          end
+        end
+        context 'cases: negative' do
+          it 'w/o normalizer' do
+            expect{0.ary?}.to perform_extremely_quickly
+          end
+          it 'w/ normalizer{∉∅}' do
+            expect{[].ary?(:∉∅)}.to perform_extremely_quickly
+          end
+        end
       end
     end
 
-    context 'func{🛑str❓}: performs extremely quickly' do
-      it 'cases: positive' do
-        expect{🛑ary❓('0', [])}.to perform_extremely_quickly
+    context 'func{🛑ary❓}: performs extremely quickly' do
+      context 'handles needed scenarios' do
+        context 'cases: positive' do
+          it 'w/o normalizer' do
+            expect{🛑ary❓(:arg, [])}.to perform_extremely_quickly
+            expect{🛑ary❓(:arg, [nil])}.to perform_extremely_quickly
+          end
+          it 'w/ normalizer{∉∅}' do
+            expect{🛑ary❓(:arg, [nil], :∉∅)}.to perform_extremely_quickly
+          end
+        end
       end
     end
+
   end # end: {performance}
 
 end

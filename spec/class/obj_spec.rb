@@ -154,28 +154,6 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'function{θ?}' do
-      context 'handles needed scenarios' do
-        context 'cases: positive' do
-          it 'w/ single param' do
-            expect(θ°(0).θ?).to eq(true)
-            expect(θᵍ(0).θ?).to eq(true)
-            expect(θʳ(0).θ?).to eq(true)
-            expect(θ𝞽(0).θ?).to eq(true)
-          end
-        end
-        context 'cases: negative' do
-          it 'w/ single param' do
-            expect(0.θ?).to eq(false)
-            expect(360.0.θ?).to eq(false)
-            expect(Rational(::Math::PI, 2).θ?).to eq(false)
-            expect(nil.θ?).to eq(false)
-            expect(''.θ?).to eq(false)
-          end
-        end
-      end
-    end
-
     context 'by adding function{hsh?}' do
       it 'without effecting Integer instance' do
         expect(Hash.hsh?).to eq(false)
@@ -186,20 +164,6 @@ RSpec.describe 'Object' do
         end
         it 'returns correct value{false}' do
           [nil, '', '{}', [], [{}], 1337].∀{|h|expect(h.hsh?).to eq(false)}
-        end
-      end
-    end
-
-    context 'by adding function{flt?}' do
-      it 'without effecting Class-instance{Float}' do
-        expect(Float.flt?).to eq(false)
-      end
-      context 'handles needed input scenarios' do
-        it 'returns correct value{true}' do
-          data_range_floats_boolean.∀{|n| expect(n.flt?).to eq(true)}
-        end
-        it 'returns correct value{false}' do
-          [nil, '', '1337', {}, [], 2].∀{|n| expect(n.flt?).to eq(false)}
         end
       end
     end
@@ -283,15 +247,6 @@ RSpec.describe 'Object' do
       end
       it 'for cases: false' do
         expect{5.hsh?}.to perform_extremely_quickly
-      end
-    end
-
-    context 'func{flt?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{5.0.flt?}.to perform_extremely_quickly
-      end
-      it 'for cases: false' do
-        expect{'0'.flt?}.to perform_extremely_quickly
       end
     end
 

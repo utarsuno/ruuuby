@@ -11,6 +11,7 @@ RSpec.describe 'general configs' do
 
   context 'audit', :audit do
 
+=begin
     context 'passes file structure audits' do
       context 'extension files have correct file schema' do
         it 'directory{ext/} is healthy' do
@@ -47,6 +48,7 @@ RSpec.describe 'general configs' do
         end # end{directory{ext/} is healthy}
       end # end{extension files have correct file schema}
     end
+=end
 
 =begin
     context 'f12' do

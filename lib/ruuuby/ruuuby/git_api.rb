@@ -36,12 +36,12 @@ module ::Ruuuby
     # ----------------------------------
     #
     # `💎.engine.api_git`
-    class GitAPI
+    class GitAPI < ::Ruuuby::MetaData::RuuubyEngineComponent
 
       attr_reader :repo, :last_commit, :configs
 
       def initialize(engine)
-        @engine         = engine
+        super(engine)
         path_base       = ::File.dirname(::File.dirname(::File.dirname(::File.dirname(__FILE__))))
         @repo           = ::Rugged::Repository.new(path_base)
         @last_commit    = @repo.last_commit

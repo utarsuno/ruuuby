@@ -79,4 +79,24 @@ void simple_timer_print_delta(SimpleTimer * simple_timer, const char * descripti
     printf("%s %" PRIu64 " ms, or{%" PRIu64 "} microseconds\n", description, delta_us / 1000, delta_us);
 }
 
+/*                               __
+                                /\ \                                         __
+   _ __   __  __  __  __  __  __\ \ \____  __  __         __    ___      __ /\_\    ___      __
+  /\`'__\/\ \/\ \/\ \/\ \/\ \/\ \\ \ '__`\/\ \/\ \      /'__`\/' _ `\  /'_ `\/\ \ /' _ `\  /'__`\
+  \ \ \/ \ \ \_\ \ \ \_\ \ \ \_\ \\ \ \L\ \ \ \_\ \    /\  __//\ \/\ \/\ \L\ \ \ \/\ \/\ \/\  __/
+   \ \_\  \ \____/\ \____/\ \____/ \ \_,__/\/`____ \   \ \____\ \_\ \_\ \____ \ \_\ \_\ \_\ \____\
+    \/_/   \/___/  \/___/  \/___/   \/___/  `/___/> \   \/____/\/_/\/_/\/___L\ \/_/\/_/\/_/\/____/
+                                               /\___/                    /\____/
+                                               \/__/                     \_/__/                   */
+
+static void establish_logging_mode(void);
+static void establish_logging_mode() {
+    const char * s = getenv("RUUUBY_FULL_DEBUG");
+    if (s != NULL && (*s) == 't') {
+        RUUUBY_FULL_DEBUG = FLAG_TRUE;
+        memory_at_start   = memory_peak_this_runtime();
+        //print_flt_as_mem(memory_at_start);
+    }
+}
+
 #endif

@@ -22,7 +22,7 @@ module ::Math
       end
 
       # @return [ThetaAngle]
-      def sum_of_interior_angles; θ°(180.0 * (@num_sides - 2)); end
+      def sum_of_interior_angles; ::ThetaAngle.new_degree(180.0 * (@num_sides - 2)); end
 
     end
 

@@ -283,6 +283,8 @@ static inline void startup_step5_protect_against_gc(void) {
 }
 
 static inline void startup_step4_load_needed_ruuuby_files(void) {
+    ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine_component)\
+
     ensure_loaded_ruuuby(virtual/f10)
 
     ensure_all_loaded_for_attribute_includable()
@@ -312,14 +314,10 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
 
     ensure_all_loaded_for_math_space()
 
-    ensure_loaded_math(expr/seq/sequence)
-    ensure_loaded_math(expr/seq/recursive)
+    ensure_all_loaded_for_math_expressions()
 
     ensure_loaded_math(number_theory/number_theory) // must be after{expression/sequence/recursive_sequence}
-    ensure_loaded_math(combinatorics/combinatorics)
-    ensure_loaded_math(stats/stats)
-    ensure_loaded_math(stats/time_series)
-    ensure_loaded_math(stats/descriptive_stats)
+    ensure_all_loaded_for_statistics()
 
     ensure_all_loaded_for_geometry()
 
@@ -329,6 +327,8 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
     // [⚠️] : reminder, do not load "ruuuby/ruuuby_orm" here
 
     ensure_all_loaded_for_ruuuby()
+
+    ensure_loaded_math(geometry/shape/triangle)
 }
 
 // original source modified from: https://stackoverflow.com/questions/36681906/c-qsort-doesnt-seem-to-work-with-unsigned-long
@@ -351,132 +351,96 @@ ________________________________________________________________________________
 _____________________________________________________________________________________________________________________ */
 
 // | func{ary?}  |
-ⓡ𝑓_kargs(m_obj_ary,
-    if (argc == 0) {
-        re_as_bool(is_ary(self))
-    } else if (argc == 1) {
-        💎parse_optional_arg_as_them()
-        if (is_sym(them)) {
-            if (them == n_no_empty) {
-                if (is_ary(self)) {
-                    if (is_empty_ary(self)) {re_no} else {re_ye}
-                } else {re_no}
-            } else {
-                ERR_normalizer_invalid_value("ary?", them)
-            }
-        } else {🛑expected_sym("ary?", "normalizer", them)}
-    } else {🛑expected_kargs("ary?", "0 or 1")}
+ⓡ𝑓_kargs(m_obj_is_ary,
+    💎parse_kargs_with_normalizer("ary?", re_as_bool(is_ary(self)),
+    if (them == n_no_empty) {
+        if (is_ary(self)) {
+            if (is_empty_ary(self)) {re_no} else {re_ye}
+        } else {re_no}
+    } else {🛑normalizer_value("ary?", them)})
 )
 
 // | func{bool?} |
-ⓡ𝑓_def(m_obj_bool, re_as_bool(is_bool(self)))
+ⓡ𝑓_def(m_obj_is_bool, re_as_bool(is_bool(self)))
 
 // | func{hash?} |
-ⓡ𝑓_def(m_obj_hash, re_as_bool(is_hsh(self)))
+ⓡ𝑓_def(m_obj_is_hash, re_as_bool(is_hsh(self)))
 
 // | func{flt?}   |
-ⓡ𝑓_def(m_obj_flt, re_as_bool(is_float(self)))
+ⓡ𝑓_kargs(m_obj_is_flt,
+    💎parse_kargs_with_normalizer("flt?", re_as_bool(is_float(self)),
+    if (them == n_in_set_universal) {
+        if (is_float(self)) {
+            return r_flt_is_universal(NUM2DBL(self));
+        } else {re_no}
+    } else {🛑normalizer_value("flt?", them)})
+)
 
 // | func{sym?}  |
-ⓡ𝑓_kargs(m_obj_sym,
-    if (argc == 0) {
-        re_as_bool(is_sym(self))
-    } else if (argc == 1) {
-        💎parse_optional_arg_as_them()
-        if (is_sym(them)) {
-            if (them == n_in_set_superscripts) {
-                if (is_sym(self)) {
-                    const unsigned long id_to_find  = NUM2ULONG(rb_obj_id(self));
-                    unsigned long *     the_result = bsearch_power(id_to_find);
-                    if (the_result != NULL) {
-                        const int power_to_raise_to = exponential_indexes[bsearch_power_position(the_result)];
-                        if (power_to_raise_to < 10) {
-                            return INT2NUM(power_to_raise_to);
-                        } else if (power_to_raise_to > 1336 && power_to_raise_to < 1400) {
-                            if (power_to_raise_to == CACHE_INDEX_INF) {
-                                re_inf
-                            } else if (power_to_raise_to == CACHE_INDEX_INF_NEGATIVE) {
-                                return cached_flt_negative_inf;
-                            } else {
-                                re_inf_complex
-                            }
-                        } else {
-                            re_no
-                        }
-                    } else {re_no}
+ⓡ𝑓_kargs(m_obj_is_sym,
+    💎parse_kargs_with_normalizer("sym?", re_as_bool(is_sym(self)),
+    if (them == n_in_set_superscripts) {
+        if (is_sym(self)) {
+            const unsigned long id_to_find  = NUM2ULONG(rb_obj_id(self));
+            unsigned long *     the_result = bsearch_power(id_to_find);
+            if (the_result != NULL) {
+                const int power_to_raise_to = exponential_indexes[bsearch_power_position(the_result)];
+                if (power_to_raise_to < 10) {
+                    return INT2NUM(power_to_raise_to);
+                } else if (power_to_raise_to > 1336 && power_to_raise_to < 1400) {
+                    if (power_to_raise_to == CACHE_INDEX_INF) {
+                        re_inf
+                    } else if (power_to_raise_to == CACHE_INDEX_INF_NEGATIVE) {
+                        return cached_flt_negative_inf;
+                    } else {
+                        re_inf_complex
+                    }
                 } else {re_no}
-            } else {ERR_normalizer_invalid_value("sym?", them)}
-        } else {🛑expected_sym("sym?", "normalizer", them)}
-    } else {🛑expected_kargs("sym?", "0 or 1")}
+            } else {re_no}
+        } else {re_no}
+    } else {🛑normalizer_value("sym?", them)})
 )
 
 // | func{int?}  |
-ⓡ𝑓_kargs(m_obj_int,
-    if (argc == 0) {
-        re_as_bool(is_int(self))
-    } else if (argc == 1) {
-        💎parse_optional_arg_as_them()
-        if (is_sym(them)) {
-            if (is_fixnum(self)) {
-                r_int_passes_normalizer(self, them, "int?", FIX2INT)
-            } else if (is_bignum(self)) {
-                r_int_passes_normalizer(self, them, "int?", NUM2INT)
-            } else {re_no}
-        } else {
-            🛑expected_sym("int?", "normalizer", them)
-        }
-    } else {🛑expected_kargs("int?", "0 or 1")}
+ⓡ𝑓_kargs(m_obj_is_int,
+    💎parse_kargs_with_normalizer("int?", re_as_bool(is_int(self)),
+    if (is_fixnum(self)) {
+        r_int_passes_normalizer(self, them, "int?", FIX2INT)
+    } else if (is_bignum(self)) {
+        r_int_passes_normalizer(self, them, "int?", NUM2INT)
+    } else {re_no})
 )
 
 // | func{chr?} |
-ⓡ𝑓_def(m_obj_chr, if (is_str(self)) {re_as_bool(len_str(self) == 1)} else {re_no})
+ⓡ𝑓_def(m_obj_is_chr, if (is_str(self)) {re_as_bool(len_str(self) == 1)} else {re_no})
 
 // | func{set?} |
-ⓡ𝑓_def(m_obj_set, return rb_obj_is_instance_of(self, Ⓒset);)
+ⓡ𝑓_def(m_obj_is_set, return rb_obj_is_instance_of(self, Ⓒset);)
 
 // | func{str?}  |
-ⓡ𝑓_kargs(m_obj_str,
-    if (argc == 0) {
-        re_as_bool(is_str(self))
-    } else if (argc == 1) {
-        💎parse_optional_arg_as_them()
-        if (NIL_P(them)) {
-            rb_raise(R_ERR_ARG, "| c{%s}-> m{%s} with self{%"PRIsVALUE"} got null for optional arg |", rb_obj_classname(self), "str?", self);
-        }
-        if (is_sym(them)) {
-            if (them == n_no_empty) {
-                if (is_str(self)) {
-                    if (is_empty_str(self)) {re_no} else {re_ye}
-                } else {re_no}
-            } else {
-                ERR_normalizer_invalid_value("str?", them)
-            }
-        } else {
-            raise_err_arg("| <%"PRIsVALUE">-> m{str?} given 1 arg expects type{Symbol}, not the received type{%s} from arg{%"PRIsVALUE"} |", self, rb_obj_classname(them), them);
-        }
-    } else {🛑expected_kargs("str?", "0 or 1")}
+ⓡ𝑓_kargs(m_obj_is_str,
+    💎parse_kargs_with_normalizer("str?", re_as_bool(is_str(self)),
+    if (them == n_no_empty) {
+        if (is_str(self)) {
+            if (is_empty_str(self)) {re_no} else {re_ye}
+        } else {re_no}
+    } else {🛑normalizer_value("str?", them)})
 )
 
 // | func(num?} |
-ⓡ𝑓_kargs(m_obj_num,
-    if (argc == 0) {
-        re_as_bool(is_num(self))
-    } else if (argc == 1) {
-        💎parse_optional_arg_as_them()
-        if (is_sym(them)) {
-            if (is_fixnum(self)) {
-                r_int_passes_normalizer(self, them, "num?", FIX2INT)
-            } else if (is_bignum(self)) {
-                r_int_passes_normalizer(self, them, "num?", NUM2INT)
-            } else if (is_float(self)) {
-                r_flt_passes_normalizer(self, them, "num?")
-            } else if (is_non_simple_num(self)) {
-                r_non_simple_num_passes_normalizer(self, them, "num?")
-            } else if (is_str(self)) {
-                r_str_passes_normalizer(self, them, "num?")
-            } else {re_no}
-        } else {🛑expected_sym("num?", "normalizer", them)}
-    } else {🛑expected_kargs("num?", "0 or 1")}
+ⓡ𝑓_kargs(m_obj_is_num,
+    💎parse_kargs_with_normalizer("num?", re_as_bool(is_num(self)),
+    if (is_fixnum(self)) {
+        r_int_passes_normalizer(self, them, "num?", FIX2INT)
+    } else if (is_bignum(self)) {
+        r_int_passes_normalizer(self, them, "num?", NUM2INT)
+    } else if (is_float(self)) {
+        r_flt_passes_normalizer(self, them, "num?")
+    } else if (is_non_simple_num(self)) {
+        r_non_simple_num_passes_normalizer(self, them, "num?")
+    } else if (is_str(self)) {
+        r_str_passes_normalizer(self, them, "num?")
+    } else {re_no})
 )
 
 /*___________________________________________________________________________________________________________________
@@ -531,7 +495,6 @@ static VALUE m_int_is_not_finite(const VALUE self){re_no}
                 }
             } else {
                 const int val_self = NUM2INT(self);
-
                 if (power_to_raise_to == CACHE_INDEX_INF_COMPLEX) {
                     if (val_self == 0) {
                         re_0
@@ -539,7 +502,6 @@ static VALUE m_int_is_not_finite(const VALUE self){re_no}
                         re_nan
                     }
                 }
-
                 if (val_self == 1 || val_self == -1) {
                     re_nan
                 } else if (val_self == 0) {
@@ -729,14 +691,14 @@ ________________________________________________________________________________
 /~~\    |  \    |  \    /~~\     |
 _____________________________________________________________________________________________________________________ */
 
-// | function{>>} |
+// | func{>>} |
 ⓡ𝑓_self_them(m_ary_prepend,
     r_ary_pre_modify(self)
     r_ary_prepend(self, them)
     re_me
 )
 
-// | function{remove_empty!} |
+// | func{remove_empty!} |
 ⓡ𝑓_def(m_ary_remove_empty,
     r_ary_pre_modify(self)
     long len_me = len_ary(self);
@@ -818,7 +780,7 @@ ________________________________________________________________________________
 |  | \__/ |__/ \__/ |___ |___
 _____________________________________________________________________________________________________________________ */
 
-// | function(⨍_add_aliases} |
+// | func(⨍_add_aliases} |
 ⓡ𝑓_self_a_b(m_module_add_aliases,
     if (is_ary(param_b)) {
         const long len_them = len_ary(param_b);
@@ -1283,7 +1245,7 @@ static VALUE θ_m_initialize(VALUE self, const VALUE angle, const VALUE angle_mo
         } else if (as_fixnum == THETA_MODE_ID_GON) {
             data->angle_mode = THETA_MODE_ID_GON;
         } else {
-            rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{new} unable to parse the 2nd arg(angle_mode){%"PRIsVALUE"} w/ type{%s} |", angle_mode, rb_obj_classname(angle_mode));
+            rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{new} unable to parse 2nd arg(angle_mode){%"PRIsVALUE"} w/ type{%s} |", angle_mode, rb_obj_classname(angle_mode));
         }
     } else {
         rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{new} unable to parse 2nd arg(angle_mode){%"PRIsVALUE"} w/ type{%s} |", angle_mode, rb_obj_classname(angle_mode));
@@ -1919,8 +1881,7 @@ void Init_ruby_class_mods(void) {
     SimpleTimer simple_timer;
     simple_timer_start(& simple_timer);
 
-    const double memory_at_start = memory_peak_this_runtime();
-    //print_flt_as_mem(memory_at_start);
+    establish_logging_mode();
 
     startup_step0_load_f98()
 
@@ -1933,8 +1894,7 @@ void Init_ruby_class_mods(void) {
     simple_timer_end(& simple_timer);
     simple_timer_print_delta(& simple_timer, "Ruuuby-Extensions loaded in");
 
-    const char * s = getenv("RUUUBY_FULL_DEBUG");
-    if (s != NULL && (*s) == 't') {
+    if (RUUUBY_FULL_DEBUG == FLAG_TRUE) {
         rb_funcall(ⓜruuuby_engine, rb_intern("get_mem_stats"), 2, DBL2NUM(memory_at_start), DBL2NUM(memory_peak_this_runtime()));
     }
 }

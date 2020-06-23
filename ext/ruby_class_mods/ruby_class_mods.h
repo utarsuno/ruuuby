@@ -120,6 +120,7 @@ ________________________________________________________________________________
 #define ERR_is_sym(kclass, the_func, arg_name, the_arg) if (!(is_sym(the_arg))) {ERR_m_param_type(kclass, the_func, arg_name, the_arg, "Symbol")}
 
 #define ERR_normalizer_invalid_value(func_name, the_normalizer) raise_err_arg("| <%"PRIsVALUE">-> m{%s} does not support the received normalizer{%"PRIsVALUE"} |", self, func_name, them);
+#define 🛑normalizer_value(func_name, the_normalizer) ERR_normalizer_invalid_value(func_name, the_normalizer)
 
 #define _scan_args_1_optional_as_them_data(kclass, func_name) {\
     rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);\
@@ -176,6 +177,9 @@ static inline VALUE r_flt_is_universal(const double flt){
 // --------------
 
 #define 💎parse_optional_arg_as_them() VALUE them; rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them);
+#define 💎parse_optional_arg_as_them_a_normalizer(func_name, expr) VALUE them; rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them); if (is_sym(them)) {expr} else {🛑expected_sym(func_name, "normalizer", them)}
+
+#define 💎parse_kargs_with_normalizer(func_name, expr_0args, expr_1arg) if (argc == 0) {expr_0args} else if (argc == 1) {💎parse_optional_arg_as_them(); if (is_sym(them)) {expr_1arg} else {🛑expected_sym(func_name, "normalizer", them)}} else {🛑expected_kargs(func_name, "0 or 1")}
 
 //🛑expected_sym(func_name, "did not support the received normalizer", sym)
 
@@ -200,5 +204,7 @@ static inline VALUE r_flt_is_universal(const double flt){
         return NORM_ERROR;
     }
 }*/
+
+// ---------------
 
 #endif

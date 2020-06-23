@@ -15,6 +15,11 @@ class GitCommit < ApplicationRecord
   module Syntax
     # @type [String]
     COMMIT_HASH = '(\d|[a-z]){40}'.❄️
+
+    # @type [String]
+    RELEASE_TAG = 'refs/tags/v\d.\d.\d(\d)?(\d)?(\d)?'.❄️
+
+    ❄️
   end
 
   include ::Comparable
@@ -50,6 +55,7 @@ class GitCommit < ApplicationRecord
       git_commit = GitCommit.create!(commit_subject: commit_msg, commit_author_date: release_timestamp.as_iso8601, commit_hash: commit_hash, release_tag: nil)
     else
       🛑str❓(:release_tag, release_tag)
+      🛑 ArgumentError.new("| c{GitCommit}-> m{spawn} got arg(release_tag){#{release_tag}} which does not have correct syntax |") unless ::GitCommit.syntax_release_tag.match?(release_tag)
       git_commit = GitCommit.create!(commit_subject: commit_msg, commit_author_date: release_timestamp.as_iso8601, commit_hash: commit_hash, release_tag: release_tag)
     end
     git_commit.save!
