@@ -245,9 +245,6 @@ RSpec.describe 'str' do
             it 'func{syntax_len_3_as_flt}' do
               expect_syntax(::String, :syntax_len_3_as_flt, syntax_str::LEN_3_AS_FLT)
             end
-            it 'func{syntax_trigonometric_angle}' do
-              expect_syntax(::String, :syntax_trigonometric_angle, syntax_str::TRIGONOMETRIC_ANGLE)
-            end
           end # end: {symbolic-math}
         end
       end # end: {syntax-functions}
@@ -435,34 +432,6 @@ RSpec.describe 'str' do
 
     end # end-context: {functions for single character operations}
 
-    context 'functions for math related operations (ex: symbolic math)' do
-
-      context 'func{to_radian}' do
-        context 'handles needed scenarios' do
-          context 'cases: positive' do
-            it 'format A' do
-              expect('0'.to_radian).to eq(0.0)
-              expect('π'.to_radian).to eq(180.0)
-            end
-            it 'format B' do
-              expect('2π'.to_radian).to eq(360.0)
-              expect('3π'.to_radian).to eq(540.0)
-            end
-            it 'format C' do
-              expect('2π/3'.to_radian).to eq(120)
-            end
-            it 'format D' do
-              expect('π/2'.to_radian).to eq(90.0)
-            end
-          end
-          it 'cases: error' do
-            ['', 'a', 'ππ', '/3', '2', 'π / 3'].∀{|scenario_err| expect{scenario_err.to_radian}.to raise_error(RuntimeError)}
-          end
-        end
-      end
-
-    end # end-context: {functions for math related operations (ex: symbolic math)}
-
     context 'func{to_num} and func{to_num?}' do
       context 'handles needed scenarios' do
         context 'cases: positive' do
@@ -471,7 +440,7 @@ RSpec.describe 'str' do
             it 'infinity' do
               expect('∞'.to_num).to eq(data_float_inf)
               expect('+∞'.to_num).to eq(data_float_inf)
-              expect('-∞'.to_num).to eq(data_float_negative_inf)
+              expect('-∞'.to_num).to eq(::Float::INFINITY_NEGATIVE)
 
               expect('∞ℂ'.to_num).to eq(::Float::INFINITY_COMPLEX)
             end
@@ -1097,28 +1066,6 @@ RSpec.describe 'str' do
         end
         it 'cases: negative' do
           expect{' '.∅?}.to perform_very_quickly
-        end
-      end
-    end
-
-    context 'func{to_radian}' do
-      context 'handles needed scenarios very quickly' do
-        context 'cases: positive' do
-          it 'format A' do
-            expect{'0'.to_radian}.to perform_very_quickly
-            expect{'π'.to_radian}.to perform_very_quickly
-          end
-          it 'format B' do
-            expect{'2π'.to_radian}.to perform_very_quickly
-            expect{'1337π'.to_radian}.to perform_very_quickly
-          end
-          it 'format C' do
-            expect{'2π/3'.to_radian}.to perform_very_quickly
-            expect{'1337π/1337'.to_radian}.to perform_very_quickly
-          end
-          it 'format D' do
-            expect{'π/2'.to_radian}.to perform_very_quickly
-          end
         end
       end
     end

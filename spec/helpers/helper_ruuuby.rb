@@ -83,6 +83,11 @@ RSpec.shared_context 'shared_context_f27' do
     expect(obj.ᵍ?).to eq(expected_type == 6)
   end
 
+  def expect_theta_angle_rad(obj, expected_value); expect_theta_angle(obj, 3, expected_value); end
+  def expect_theta_angle_dgr(obj, expected_value); expect_theta_angle(obj, 4, expected_value); end
+  def expect_theta_angle_trn(obj, expected_value); expect_theta_angle(obj, 5, expected_value); end
+  def expect_theta_angle_gon(obj, expected_value); expect_theta_angle(obj, 6, expected_value); end
+
 end
 
 RSpec.shared_context 'shared_context_f24' do
@@ -123,8 +128,7 @@ RSpec.shared_context 'shared_context_general' do
   let(:data_int_negative_one){-1}
   let(:data_float_nan){0.0/0.0}
   let(:data_float_inf){1.0/0.0}
-  let(:data_float_negative_inf){-1.0/0.0}
-  let(:data_float_error_cases){[data_float_nan, data_float_inf, data_float_negative_inf]}
+  let(:data_float_error_cases){[data_float_nan, data_float_inf, ::Float::INFINITY_NEGATIVE]}
   let(:data_range_complex_simple){[Complex(-1337.0), Complex(-10.0), Complex(-1.0), Complex(0.0), Complex(1.0), Complex(10.0), Complex(1337.0)]}
   let(:data_range_complex){[Complex(-1337.0, 1.25), Complex(-10.0, 1.25), Complex(-1.0, 1.25), Complex(0.0, 1.25), Complex(1.0, 1.25), Complex(10.0, 1.25), Complex(1337.0, 1.25)]}
   let(:data_range_complex_nan_and_infs){[data_complex_nan, data_complex_inf, data_complex_negative_inf]}
@@ -132,7 +136,7 @@ RSpec.shared_context 'shared_context_general' do
   let(:data_range_floats_positive){[1.0, 2.0, 3.0, 10.0, 1337.0]}
   let(:data_range_floats_zero_to_positive){[0.0] + data_range_floats_positive}
   let(:data_range_floats){data_range_floats_negative + data_range_floats_zero_to_positive}
-  let(:data_range_floats_w_infs){data_range_floats + [data_float_inf, data_float_negative_inf]}
+  let(:data_range_floats_w_infs){data_range_floats + [data_float_inf, ::Float::INFINITY_NEGATIVE]}
   let(:data_range_floats_all_but_zero){data_range_floats_negative + data_range_floats_positive}
   let(:data_range_floats_boolean){[-1.0, 0.0, 1.0]}
   let(:data_range_ints){[-1337, -10, -3, -2, -1, 0, 1, 2, 3, 10, 1337]}
@@ -151,7 +155,7 @@ RSpec.shared_context 'shared_context_general' do
   let(:data_range_complex_one_from_zero_to_positive){[data_complex_zero] + data_range_complex_one_to_positive}
   let(:data_range_complex_negative_one){[Complex(-1, 1), Complex(-1, 3), Complex(-1, 1337), Complex(-1, 1), Complex(-1, 3), Complex(-1, 1337)]}
   let(:data_range_complex_one_w_negative_complex){[Complex(1, -1), Complex(1, -3), Complex(1, -1337), Complex(1, -1), Complex(1, -3), Complex(1, -1337)]}
-  let(:data_range_complex_just_infs){[Complex(data_float_inf, 0), Complex(data_float_negative_inf, 0)]}
+  let(:data_range_complex_just_infs){[Complex(data_float_inf, 0), Complex(::Float::INFINITY_NEGATIVE, 0)]}
   let(:data_rational_default){Rational(2, 3)}
   let(:data_rational_zero){Rational(0)}
   let(:data_rational_zero_w_complex_denominator){Rational(0, Complex(0, 1.5))}
@@ -164,11 +168,7 @@ RSpec.shared_context 'shared_context_general' do
   let(:data_rational_leet){Rational(1337, 1)}
   let(:data_rational_negative_leet){Rational(-1337, 1)}
 
-  let(:data_ary_leet){[1, 3, 3, 7]}
-  let(:data_set_leet){Set[1, 3, 3, 7]}
-
   let(:data_str_fake_name){'fake_name'}
-  let(:data_str_fake_name2){'second_fake_name'}
 
   let(:data_minus_leet){Complex(-1337)}
   let(:data_minus_leet2){Rational(-1337, 2)}

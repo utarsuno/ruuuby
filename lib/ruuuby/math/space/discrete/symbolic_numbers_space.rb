@@ -8,36 +8,78 @@ module ::Math
 
     class SymbolicNumbersSpace < ::Math::Space::TypesSpaceⓣ¹
 
-      MAPPING = {
-          ∞: ::Float::INFINITY,
-          π: ::Math::PI,
-          ℮: ::Math::E,
-          𝚽: ::Float::RATIO_GOLDEN,
-          Ψ: ::Float::RATIO_GOLDEN_SUPER,
-          ρ: ::Float::RATIO_PLASTIC,
-          δ: ::Float::RATIO_SILVER,
-          Ⴔ: ::Math::ANGLE_GOLDEN,
-          𝞽: ::Math::ANGLE_TAU,
-          γ: ::Float::CONST_EULER_MASCHERONI,
-          Ω: ::Float::CONST_OMEGA,
-          ½: ::Float::ONE_HALF,
-          ⅓: ::Float::ONE_THIRD,
-          ⅔: ::Float::TWO_THIRDS,
-          ¼: ::Float::ONE_FOURTH,
-          ¾: ::Float::THREE_FOURTHS,
-          ⅕: ::Float::ONE_FIFTH,
-          ⅖: ::Float::TWO_FIFTHS,
-          ⅗: ::Float::THREE_FIFTHS,
-          ⅘: ::Float::FOUR_FIFTHS,
-          ⅙: ::Float::ONE_SIXTH,
-          ⅐: ::Float::ONE_SEVENTH,
-          ⅛: ::Float::ONE_EIGHTH,
-          ⅜: ::Float::THREE_EIGHTHS,
-          ⅝: ::Float::FIVE_EIGHTHS,
-          ⅞: ::Float::SEVEN_EIGHTHS,
-          ⅑: ::Float::ONE_NINTH,
-          ⅒: ::Float::ONE_TENTH,
-      }
+      module ContextStrParsing
+        refine ::String do
+
+          def symbolic?
+            case(self)
+            when 'π', '𝚽'
+              true
+            else
+              false
+            end
+          end
+
+          def parse_symbolic_to_num
+            case(self)
+            when 'π'
+              return ::Math::PI
+            when '𝚽'
+              return ::Float::RATIO_GOLDEN
+            else
+              raise "self{#{self.to_s}} is not symbolic"
+            end
+          end
+
+        end
+      end
+
+      if RUUUBY_F28_B09
+        MAPPING = {
+            ∞: ::Float::INFINITY,
+            π: ::Math::PI,
+            ℮: ::Math::E,
+            𝚽: ::Float::RATIO_GOLDEN,
+            Ψ: ::Float::RATIO_GOLDEN_SUPER,
+            ρ: ::Float::RATIO_PLASTIC,
+            δ: ::Float::RATIO_SILVER,
+            Ⴔ: ::Math::ANGLE_GOLDEN,
+            𝞽: ::Math::ANGLE_TAU,
+            γ: ::Float::CONST_EULER_MASCHERONI,
+            Ω: ::Float::CONST_OMEGA,
+            ½: ::Float::ONE_HALF,
+            ⅓: ::Float::ONE_THIRD,
+            ⅔: ::Float::TWO_THIRDS,
+            ¼: ::Float::ONE_FOURTH,
+            ¾: ::Float::THREE_FOURTHS,
+            ⅕: ::Float::ONE_FIFTH,
+            ⅖: ::Float::TWO_FIFTHS,
+            ⅗: ::Float::THREE_FIFTHS,
+            ⅘: ::Float::FOUR_FIFTHS,
+            ⅙: ::Float::ONE_SIXTH,
+            ⅐: ::Float::ONE_SEVENTH,
+            ⅛: ::Float::ONE_EIGHTH,
+            ⅜: ::Float::THREE_EIGHTHS,
+            ⅝: ::Float::FIVE_EIGHTHS,
+            ⅞: ::Float::SEVEN_EIGHTHS,
+            ⅑: ::Float::ONE_NINTH,
+            ⅒: ::Float::ONE_TENTH,
+        }
+      else
+        MAPPING = {
+            ∞: ::Float::INFINITY,
+            π: ::Math::PI,
+            ℮: ::Math::E,
+            𝚽: ::Float::RATIO_GOLDEN,
+            Ψ: ::Float::RATIO_GOLDEN_SUPER,
+            ρ: ::Float::RATIO_PLASTIC,
+            δ: ::Float::RATIO_SILVER,
+            Ⴔ: ::Math::ANGLE_GOLDEN,
+            𝞽: ::Math::ANGLE_TAU,
+            γ: ::Float::CONST_EULER_MASCHERONI,
+            Ω: ::Float::CONST_OMEGA
+        }
+      end
 
       def initialize
         @space_type     = 'types'

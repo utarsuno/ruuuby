@@ -8,8 +8,7 @@ module ::Ruuuby
   # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
 
-    # TODO: https://github.com/Homebrew/brew/releases
-    class LocaleAPI < ::Ruuuby::MetaData::RuuubyEngineComponent
+    class LocaleAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
 
       def initialize(engine)
         super(engine)

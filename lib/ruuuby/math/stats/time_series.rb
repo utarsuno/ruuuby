@@ -30,7 +30,7 @@ module ::Math
         🛑flt❓(:smoothing_constant, smoothing_constant, :∈𝕌)
         len_data = data.length
         if n + 1 > len_data || n <= 1
-          🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{exponential_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
+          🛑 ::ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{exponential_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
         else
           ema_prev = ::Math::Stats.arithmetic_mean(*(data[0, n]))
           ema_data = [ema_prev]
@@ -58,7 +58,7 @@ module ::Math
         🛑int❓(:n, n, :∈ℕ)
         len_data = data.length
         if n > len_data || n <= 1
-          🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{weighted_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
+          🛑 ::ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{weighted_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
         else
           wma_data = []
           index    = n
@@ -87,7 +87,7 @@ module ::Math
         🛑int❓(:n, n, :∈ℕ)
         len_data = data.length
         if n > len_data || n <= 1
-          🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{simple_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
+          🛑 ::ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{simple_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
         else
           sma_data = []
           index    = n
@@ -113,7 +113,7 @@ module ::Math
         🛑int❓(:n, n, :∈ℕ)
         len_data = data.length
         if n > len_data || n <= 1
-          🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{simple_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
+          🛑 ::ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{simple_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than len{#{(data.length-1).to_s}} provided |")
         else
           aroon_data = []
           index      = n
@@ -139,7 +139,7 @@ module ::Math
         🛑int❓(:n, n, :∈ℕ)
         len_data = data.length
         if n > len_data || n <= 1
-          🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{simple_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
+          🛑 ::ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{simple_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than len{#{(data.length-1).to_s}} provided |")
         else
           aroon_data = []
           index      = n
@@ -165,7 +165,7 @@ module ::Math
         🛑int❓(:n, n, :∈ℕ)
         len_data = data.length
         if n > len_data || n <= 1
-          🛑 ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{simple_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
+          🛑 ::ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{simple_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than len{#{(data.length-1).to_s}} provided |")
         else
           aroon_data = []
           index      = n

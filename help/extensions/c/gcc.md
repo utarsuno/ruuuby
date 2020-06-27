@@ -3,6 +3,7 @@
 
 * https://gcc.gnu.org/onlinedocs/gcc/Invoking-GCC.html#Invoking-GCC
 * https://stackoverflow.com/questions/7880812/complete-list-of-clang-flags
+* https://docs.freebsd.org/info/gcc/gcc.info.Preprocessor_Options.html
 
 ---
 
@@ -35,6 +36,8 @@
 
 ### misc
 
+ * https://stackoverflow.com/questions/14737104/what-is-the-default-c-std-standard-version-for-the-current-gcc-especially-on-u
+ * https://developers.redhat.com/blog/2018/03/21/compiler-and-linker-flags-gcc/
  * https://stackoverflow.com/questions/10192903/time-in-milliseconds-in-c
  * https://stackoverflow.com/questions/9450394/how-to-install-gcc-piece-by-piece-with-gmp-mpfr-mpc-elf-without-shared-libra
 

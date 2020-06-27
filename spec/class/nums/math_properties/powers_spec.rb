@@ -47,7 +47,7 @@ RSpec.describe 'math-operations: raise to subscript powers' do
         expect((-1^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val < 1' do
-        expect(-2^(:∞)).to eq(data_float_negative_inf)
+        expect(-2^(:∞)).to eq(::Float::INFINITY_NEGATIVE)
         expect(-2^(:'-∞')).to eq(0)
         expect((-2^(:∞ℂ)).nan?).to eq(true)
       end
@@ -89,7 +89,7 @@ RSpec.describe 'math-operations: raise to subscript powers' do
       end
       it 'handles val < 0 && val > -1' do
         expect((-0.5)^(:∞)).to eq(0.0)
-        expect((-0.5)^(:'-∞')).to eq(data_float_negative_inf)
+        expect((-0.5)^(:'-∞')).to eq(::Float::INFINITY_NEGATIVE)
         expect((-0.5^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val -1' do
@@ -98,7 +98,7 @@ RSpec.describe 'math-operations: raise to subscript powers' do
         expect((-1.0^(:∞ℂ)).nan?).to eq(true)
       end
       it 'handles val < 1' do
-        expect(-2.0^(:∞)).to eq(data_float_negative_inf)
+        expect(-2.0^(:∞)).to eq(::Float::INFINITY_NEGATIVE)
         expect(-2.0^(:'-∞')).to eq(0.0)
         expect((-2.0^(:∞ℂ)).nan?).to eq(true)
       end

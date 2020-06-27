@@ -12,6 +12,19 @@ module ::Ruuuby
         def get_mem_stats(val_a, val_b)
           💎.engine.ext_mem_stats = {before: val_a, after: val_b}
         end
+
+        # @param [String] the_version_flag
+        def set_compiler_version(the_version_flag)
+          💎.engine.ext_compiler_stats = the_version_flag
+        end
+
+        def set_timer_stats(val)
+          💎.engine.ext_timer_stats = val
+        end
+
+        def print_ext_stats
+          💎.engine.print_ext_stats
+        end
       end
 
       module Syntax
@@ -21,9 +34,19 @@ module ::Ruuuby
       include ::Ruuuby::Attribute::Includable::SyntaxCache
       include ::Singleton
 
-      attr_reader :logger, :state_flag, :logging_level, :logging_mode, :api, :api_git
+      attr_reader :logger, :state_flag, :logging_level, :logging_mode, :api, :api_git, :api_brew, :api_docker, :path_base
 
-      attr_accessor :ext_mem_stats
+      attr_reader :gc, :jit
+
+      attr_accessor :ext_mem_stats, :ext_compiler_stats, :ext_timer_stats, :cached_info
+
+      def print_ext_stats
+        delta_ms              = self.ext_timer_stats / 1000.0
+        mem_start             = self.ext_mem_stats[:before].to_f / 1024.0
+        mem_end               = self.ext_mem_stats[:after].to_f / 1024.0
+        💎.engine.cached_info = "extensions w/ compiler{#{self.ext_compiler_stats}}, loaded in{#{delta_ms.to_s} ms}, w/ the following pre/post-memory benchmarks: {#{mem_start.to_s} MB -> #{mem_end.to_s} MB}"
+        puts 💎.engine.cached_info
+      end
 
       # state flags
       # | 0 | not started |
@@ -31,6 +54,7 @@ module ::Ruuuby
       # | 2 | engined stopped |
 
       def initialize
+        @path_base      = "#{::File.dirname(::File.dirname(::File.dirname(::File.dirname(::File.dirname(__FILE__)))))}/"
         @state_flag      = 0
         @logger         = nil
         @echo_to_stdout = false
@@ -38,7 +62,13 @@ module ::Ruuuby
         @logging_level  = ::Logger::DEBUG
         @api            = ::Ruuuby::MetaData::RuuubyAPI.new(self)
         @api_git        = ::Ruuuby::MetaData::GitAPI.new(self)
+        @api_brew       = ::Ruuuby::MetaData::BrewAPI.new(self)
+        @api_docker     = ::Ruuuby::MetaData::DockerAPI.new(self)
+        @api_locale     = ::Ruuuby::MetaData::LocaleAPI.new(self)
         @orm            = nil
+
+        @gc  = ::Ruuuby::MetaData::RuuubyEngine::F22B00
+        @jit = ::Ruuuby::MetaData::RuuubyEngine::F22B01
       end
 
       # @raise [RuntimeError] if called more than once
@@ -48,7 +78,7 @@ module ::Ruuuby
           self.gc.total_memory_usage_current('starting-up') if @logging_level == ::Logger::INFO
           @state_flag += 1
         else
-          🛑 RuntimeError.new("| RuuubyEngine should only be warmed up once |")
+          🛑 ::RuntimeError.new("| RuuubyEngine should only be warmed up once |")
         end
       end
 
@@ -102,11 +132,36 @@ module ::Ruuuby
       #  * https://stackoverflow.com/questions/11912750/ruby-big-array-and-memory
       #  * https://samsaffron.com/archive/2013/11/22/demystifying-the-ruby-gc
       #  * https://www.speedshop.co/2017/03/09/a-guide-to-gc-stat.html
+      #  # https://bugs.ruby-lang.org/projects/ruby-master/wiki/RGenGC
+      #  # https://medium.com/@zanker/the-ruby-vm-and-how-apps-break-part-2-e8b4620ad50d
+      #  # https://www.speedshop.co/2017/03/09/a-guide-to-gc-stat.html
+      #  # https://github.com/ruby/ruby/blob/v2_7_0/gc.c#L258
       #
       # @see https://ruby-doc.org/core-2.7.1/GC.html
       # @see https://ruby-doc.org/core-2.7.1/GC/Profiler.html
+      #
+      # @see following sources for notes marked below:
+      #  - http://tmm1.net/ruby21-rgengc/
+      #  - https://engineering.appfolio.com/appfolio-engineering/2018/1/2/how-ruby-uses-memory
+      #
+      #  ‣ `Ruby` divides the heap into two sections:
+      #    ‣ protected    | `FL_WB_PROTECTED`                                          | promotable to `oldgen`
+      #    ‣ un-protected | missing `write-barrier`; un-safe access from `C-extension` | not promotable but can be remembered
+      #
+      #  ‣ `pages` in `heap` either belong in `eden` or `tomb`
+      #    ‣ `eden`      | has pages with live objects
+      #    ‣ `tomb`      | has pages w/o any objects
+      #    ‣ `ruby_heap` | `tomb` + `eden`
+      #
+      #  ‣ expected stats: (⚠️: depends on version and build settings)
+      #    ‣ object slot       | 40-bytes
+      #    ‣ # of object slots | 408 (per 16kb memory page)
+      #
+      #  ‣ an object that does not fit into this 40 byte slot will get assigned both a slot an heap-space (usually allocated via standard `malloc` route)
+      #
+      # ==extension_functions
+      #  - mem_usage_peak | returns Integer
       module F22B00
-
         # @return [Hash] the result from func{verify_compaction_references}
         def self.verify
           ::GC.verify_internal_consistency
@@ -116,48 +171,84 @@ module ::Ruuuby
           result
         end
 
+        # @return [Integer]
+        def self.total_memory_usage_current(message)
+          # command from: https://stackoverflow.com/questions/7220896/get-current-ruby-process-memory-usage
+          out    = 💎.engine.api.run_cmd!("ps ax -o pid,rss | grep -E \"^[[:space:]]*#{$$}\"")
+          mem_kb = out.♻️⟶(' ').strip.to_i
+          mem_mb = (just_memory / 1024.0)
+          💎.engine.info("pid{#{$$.to_s}} #{message} w/ memory-usage currently at{#{mem_kb.to_s}} KB, equivalently: {#{mem_mb.to_s}} MB")
+          mem_kb
+        end
+
+        def self.perform_full; ::GC.start(full_mark: true, immediate_sweep: true); end
+
+        def self.perform_quick; ::GC.start(full_mark: false, immediate_sweep: false); end
+
+        # @see source for formula & source credit: https://engineering.appfolio.com/appfolio-engineering/2018/1/2/how-ruby-uses-memory#
+        #
+        # @return [Float] the % of `heap memory` not being efficiently utilized
+        def self.percentage_fragmentation
+          stats              = ::GC.stat
+          ratio_memory_filled = stats[:heap_live_slots].to_f / (stats[:heap_eden_pages] * self.stats_slots_per_heap_page)
+          return 1.0 - ratio_memory_filled
+        end
+
+        # @return [Float] the % of `Ruby Objects` marked as `oldgen` and won't be scanned during a minor mark garbage collection
+        def self.percentage_protected_from_minor_marks(with_remembered_objects_too=false)
+          stats = ::GC.stat
+          if with_remembered_objects_too
+            ((stats[:old_objects] + stats[:remembered_wb_unprotected_objects]) / stats[:heap_live_slots].to_f) * 100.0
+          else
+            (stats[:old_objects] / stats[:heap_live_slots].to_f) * 100.0
+          end
+        end
+
         # @return [Boolean] true, if the GC has `stress` mode enabled
         def self.overclocked?; ::GC.stress != false; end
 
         # @return [Boolean] true, if the GC Profiler is currently enabled
         def self.profiler?; ::GC::Profiler.enabled?; end
 
-        # @return [Integer]
-        def self.total_memory_usage_current(message)
-          # command from: https://stackoverflow.com/questions/7220896/get-current-ruby-process-memory-usage
-          out         = 💎.engine.api.run_cmd!("ps ax -o pid,rss | grep -E \"^[[:space:]]*#{$$}\"")
-          just_memory = out.♻️⟶(' ').strip.to_i
-          in_mb       = (just_memory / 1024.0)
-          💎.engine.info("pid[#{$$.to_s}] #{message} w/ current memory-usage at: {#{just_memory.to_s}} kb == {#{in_mb.to_s}} mb")
-          just_memory
-        end
+        # ENV_VARs FOR GC
+        #
+        # # TODO: tune these for ex. a quick/short-lived script mode and for a long-process/server mode
+        # # TODO: create ORM for ENV_VARs lol
+        #
+        # | ENV_VAR                          | default value     | notes                   |
+        # | -------------------------------- | ----------------- | ----------------------- |
+        # | GC_HEAP_INIT_SLOTS               | 10000             |                         |
+        # | GC_HEAP_FREE_SLOTS               | 4096              |                         |
+        # | GC_HEAP_GROWTH_FACTOR            | 1.8               |                         |
+        # | GC_HEAP_GROWTH_MAX_SLOTS         | 0                 | 0 disables a max growth |
+        # | GC_HEAP_OLDOBJECT_LIMIT_FACTOR   | 2.0               |                         |
+        # | GC_HEAP_FREE_SLOTS_MIN_RATIO     | 0.20              |                         |
+        # | GC_HEAP_FREE_SLOTS_GOAL_RATIO    | 0.40              |                         |
+        # | GC_HEAP_FREE_SLOTS_MAX_RATIO     | 0.60              |                         |
+        # | GC_MALLOC_LIMIT_MIN              | 16 * 1024 * 1024  | 16MB                    |
+        # | GC_MALLOC_LIMIT_MAX              | 32 * 1024 * 1024  | 32MB                    |
+        # | GC_MALLOC_LIMIT_GROWTH_FACTOR    | 1.4               |                         |
+        # | GC_OLDMALLOC_LIMIT_MIN           | 16 * 1024 * 1024  |                         |
+        # | GC_OLDMALLOC_LIMIT_GROWTH_FACTOR | 1.2               |                         |
+        # | GC_OLDMALLOC_LIMIT_MAX           | 128 * 1024 * 1024 | 128MB                   |
 
-        # @return [Integer]
-        def self.total_memory_usage_peak; ::Ruuuby::MetaData::RuuubyEngine.memory_peak_this_runtime; end
+        # @return [Float]
+        def self.stats_bytes_per_object_slot; ::GC::INTERNAL_CONSTANTS[:RVALUE_SIZE].to_f; end
 
-        # @return [Hash] output of `::GC::INTERNAL_CONSTANTS`
-        #def self.info; ::GC::INTERNAL_CONSTANTS; end
+        # @return [Float]
+        def self.stats_slots_per_heap_page; ::GC::INTERNAL_CONSTANTS[:HEAP_PAGE_OBJ_LIMIT].to_f; end
+
       end
 
       # @see https://ruby-doc.org/core-2.7.0/RubyVM/MJIT.html
       module F22B01
-
         # @return [Boolean]
         def self.enabled?; ::RubyVM::MJIT.enabled?; end
-
         # @return [Boolean]
         def self.pause; ::RubyVM::MJIT.pause; end
-
         # @return [Boolean]
         def self.resume; ::RubyVM::MJIT.resume; end
-
-      end
-
-      # @return [Module]
-      def gc; ::Ruuuby::MetaData::RuuubyEngine::F22B00; end
-
-      # @return [Module]
-      def jit; ::Ruuuby::MetaData::RuuubyEngine::F22B01; end
+      end # end: {F22B01}
 
       🙈
 
@@ -250,7 +341,7 @@ module ::Ruuuby
           💎.engine.define_singleton_method(:debug) do |content|
           end
         when 'b03'
-          @logger = ::Logger.new(::File.open("#{@api_git.repo.workdir}/tmp/ruuuby.log", ::File::WRONLY | ::File::APPEND | ::File::CREAT), 'daily')
+          @logger = ::Logger.new(::File.open("#{@path_base}tmp/ruuuby.log", ::File::WRONLY | ::File::APPEND | ::File::CREAT), 'daily')
           💎.engine.define_singleton_method(:info) do |content|
             🛑str❓(:content, content)
             @logger.info(content)
@@ -265,9 +356,9 @@ module ::Ruuuby
           🛑 RuntimeError.new("| RuuubyEngine got invalid @logging_mode{#{@logging_mode.to_s}} w/ type{#{@logging_mode.class.to_s} for func{_create_logger} |")
         end
         unless @logger.nil?
-          @logger.level= @logging_level
+          @logger.level = @logging_level
         end
-        💎.engine.debug("logger created w/ mode{#{logging_mode.to_s}} and logging-level{#{@logging_level.to_s}}")
+        💎.engine.info("logger created w/ mode{#{logging_mode.to_s}} and logging-level{#{@logging_level.to_s}}")
       end
 
       def _create_default_logger_and_level
@@ -285,3 +376,4 @@ module ::Ruuuby
 end
 
 # TODO: for later; https://ruby-doc.org/core-2.5.1/Process.html#method-c-setpriority
+# TODO: https://ruby-doc.org/core-2.5.1/Process.html

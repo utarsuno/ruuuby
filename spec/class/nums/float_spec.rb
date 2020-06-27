@@ -31,7 +31,7 @@ RSpec.describe 'float.rb' do
           it 'edge cases' do
             expect(Float::MAX.≈≈(Float::MAX)).to eq(true)
             expect(data_float_inf.≈≈(data_float_inf)).to eq(true)
-            expect(data_float_negative_inf.≈≈(data_float_negative_inf)).to eq(true)
+            expect(::Float::INFINITY_NEGATIVE.≈≈(::Float::INFINITY_NEGATIVE)).to eq(true)
           end
 
           it 'w/ zero' do
@@ -150,8 +150,8 @@ RSpec.describe 'float.rb' do
             expect(0.0.≈≈(data_float_nan)).to eq(false)
             expect(data_float_nan.≈≈(data_float_inf)).to eq(false)
             expect(data_float_inf.≈≈(data_float_nan)).to eq(false)
-            expect(data_float_nan.≈≈(data_float_negative_inf)).to eq(false)
-            expect(data_float_negative_inf.≈≈(data_float_nan)).to eq(false)
+            expect(data_float_nan.≈≈(::Float::INFINITY_NEGATIVE)).to eq(false)
+            expect(::Float::INFINITY_NEGATIVE.≈≈(data_float_nan)).to eq(false)
             expect(data_float_nan.≈≈(Float::MAX)).to eq(false)
             expect(Float::MAX.≈≈(data_float_nan)).to eq(false)
             expect(data_float_nan.≈≈(-Float::MAX)).to eq(false)
@@ -164,7 +164,7 @@ RSpec.describe 'float.rb' do
 
           it 'edge cases' do
             expect(0.0.≈≈(data_float_inf)).to eq(false)
-            expect(0.0.≈≈(data_float_negative_inf)).to eq(false)
+            expect(0.0.≈≈(::Float::INFINITY_NEGATIVE)).to eq(false)
 
             expect(Float::MAX.≈≈(-Float::MAX)).to eq(false)
             expect((-Float::MAX).≈≈(Float::MAX)).to eq(false)
@@ -172,10 +172,10 @@ RSpec.describe 'float.rb' do
             expect(Float::MAX.≈≈(-Float::MAX / 2)).to eq(false)
             expect((-Float::MAX).≈≈(Float::MAX / 2)).to eq(false)
 
-            expect(data_float_inf.≈≈(data_float_negative_inf)).to eq(false)
-            expect(data_float_negative_inf.≈≈(data_float_inf)).to eq(false)
+            expect(data_float_inf.≈≈(::Float::INFINITY_NEGATIVE)).to eq(false)
+            expect(::Float::INFINITY_NEGATIVE.≈≈(data_float_inf)).to eq(false)
             expect(data_float_inf.≈≈(Float::MAX)).to eq(false)
-            expect(data_float_negative_inf.≈≈(-Float::MAX)).to eq(false)
+            expect(::Float::INFINITY_NEGATIVE.≈≈(-Float::MAX)).to eq(false)
           end
         end
         it 'cases: bad-args' do
@@ -196,7 +196,7 @@ RSpec.describe 'float.rb' do
             expect{0.0^⁻⁹}.to raise_error(ZeroDivisionError)
             expect{data_float_nan^⁻⁹}.to raise_error(RuntimeError)
             expect(data_float_inf^⁻⁹).to eq(0)
-            expect(data_float_negative_inf^⁻⁹).to eq(0)
+            expect(::Float::INFINITY_NEGATIVE^⁻⁹).to eq(0)
           end
         end
       end
@@ -210,7 +210,7 @@ RSpec.describe 'float.rb' do
             expect{0.0^⁻⁸}.to raise_error(ZeroDivisionError)
             expect{data_float_nan^⁻⁸}.to raise_error(RuntimeError)
             expect(data_float_inf^⁻⁸).to eq(0)
-            expect(data_float_negative_inf^⁻⁸).to eq(0)
+            expect(::Float::INFINITY_NEGATIVE^⁻⁸).to eq(0)
           end
         end
       end
@@ -224,7 +224,7 @@ RSpec.describe 'float.rb' do
             expect{0.0^⁻⁷}.to raise_error(ZeroDivisionError)
             expect{data_float_nan^⁻⁷}.to raise_error(RuntimeError)
             expect(data_float_inf^⁻⁷).to eq(0)
-            expect(data_float_negative_inf^⁻⁷).to eq(0)
+            expect(::Float::INFINITY_NEGATIVE^⁻⁷).to eq(0)
           end
         end
       end
@@ -238,7 +238,7 @@ RSpec.describe 'float.rb' do
             expect{0.0^⁻⁶}.to raise_error(ZeroDivisionError)
             expect{data_float_nan^⁻⁶}.to raise_error(RuntimeError)
             expect(data_float_inf^⁻⁶).to eq(0)
-            expect(data_float_negative_inf^⁻⁶).to eq(0)
+            expect(::Float::INFINITY_NEGATIVE^⁻⁶).to eq(0)
           end
         end
       end
@@ -252,7 +252,7 @@ RSpec.describe 'float.rb' do
             expect{0.0^⁻⁵}.to raise_error(ZeroDivisionError)
             expect{data_float_nan^⁻⁵}.to raise_error(RuntimeError)
             expect(data_float_inf^⁻⁵).to eq(0)
-            expect(data_float_negative_inf^⁻⁵).to eq(0)
+            expect(::Float::INFINITY_NEGATIVE^⁻⁵).to eq(0)
           end
         end
       end
@@ -266,7 +266,7 @@ RSpec.describe 'float.rb' do
             expect{0.0^⁻⁴}.to raise_error(ZeroDivisionError)
             expect{data_float_nan^⁻⁴}.to raise_error(RuntimeError)
             expect(data_float_inf^⁻⁴).to eq(0)
-            expect(data_float_negative_inf^⁻⁴).to eq(0)
+            expect(::Float::INFINITY_NEGATIVE^⁻⁴).to eq(0)
           end
         end
       end
@@ -280,7 +280,7 @@ RSpec.describe 'float.rb' do
             expect{0.0^⁻³}.to raise_error(ZeroDivisionError)
             expect{data_float_nan^⁻³}.to raise_error(RuntimeError)
             expect(data_float_inf^⁻³).to eq(0)
-            expect(data_float_negative_inf^⁻³).to eq(0)
+            expect(::Float::INFINITY_NEGATIVE^⁻³).to eq(0)
           end
         end
       end
@@ -294,7 +294,7 @@ RSpec.describe 'float.rb' do
             expect{0.0^⁻²}.to raise_error(ZeroDivisionError)
             expect{data_float_nan^⁻²}.to raise_error(RuntimeError)
             expect(data_float_inf^⁻²).to eq(0)
-            expect(data_float_negative_inf^⁻²).to eq(0)
+            expect(::Float::INFINITY_NEGATIVE^⁻²).to eq(0)
           end
         end
       end
@@ -309,7 +309,7 @@ RSpec.describe 'float.rb' do
             expect{0.0^⁻¹}.to raise_error(ZeroDivisionError)
             expect{data_float_nan^⁻¹}.to raise_error(RuntimeError)
             expect(data_float_inf^⁻¹).to eq(0)
-            expect(data_float_negative_inf^⁻¹).to eq(0)
+            expect(::Float::INFINITY_NEGATIVE^⁻¹).to eq(0)
           end
         end
       end
@@ -319,7 +319,7 @@ RSpec.describe 'float.rb' do
           it 'cases: positive' do
             expect_scenarios_power_operations(data_range_floats, :⁰, 0, true)
             expect((data_float_inf^⁰).nan?).to eq(true)
-            expect((data_float_negative_inf^⁰).nan?).to eq(true)
+            expect((::Float::INFINITY_NEGATIVE^⁰).nan?).to eq(true)
           end
           it 'cases: negative' do
             expect{data_float_nan^⁰}.to raise_error(RuntimeError)

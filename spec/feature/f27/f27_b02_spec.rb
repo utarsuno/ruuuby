@@ -4,6 +4,7 @@ RSpec.describe 'f27_b02' do
 
   context 'functionality' do
     context 'static functions / constructors' do
+
       context 'func{new_radian}' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
@@ -20,8 +21,8 @@ RSpec.describe 'f27_b02' do
           end
           context 'cases: negative' do
             it 'bad arg' do
-              expect{θ𝞽(nil)}.to raise_error(::ArgumentError)
-              expect{::ThetaAngle.new_turn(nil)}.to raise_error(::ArgumentError)
+              expect{θʳ(nil)}.to raise_error(::ArgumentError)
+              expect{::ThetaAngle.new_radian(nil)}.to raise_error(::ArgumentError)
             end
           end
         end
@@ -38,61 +39,6 @@ RSpec.describe 'f27_b02' do
               expect_theta_angle(::ThetaAngle.new_degree(θ°(360)), 4, 360)
               expect_theta_angle(::ThetaAngle.new_degree(θᵍ(400)), 4, 360)
               expect_theta_angle(::ThetaAngle.new_degree(θ𝞽(1)), 4, 360)
-            end
-            context 'w/ str' do
-              context 'w/ positive vals' do
-                it 'w/ regular data' do
-                  expect_theta_angle(θ°('60'), 4, 60)
-                  expect_theta_angle(θ°('60°'), 4, 60)
-                  expect_theta_angle(θ°('60 °'), 4, 60)
-                  expect_theta_angle(θ°('60°θ'), 4, 60)
-                  expect_theta_angle(θ°('60 °θ'), 4, 60)
-                  expect_theta_angle(θ°('60 dgr'), 4, 60)
-                  expect_theta_angle(θ°('60 degrees'), 4, 60)
-                end
-                it 'w/ arc-minute & arc-second' do
-                  expect_theta_angle(θ°("60'"), 4, 1)
-                  expect_theta_angle(θ°("60''"), 4, 1 / 60.0)
-                  expect_theta_angle(θ°("60' 60''"), 4, 1 + 1 / 60.0)
-                  expect_theta_angle(θ°("60° 60' 60''"), 4, 60 + 1 + 1 / 60.0)
-                  expect_theta_angle(θ°("60° 60''"), 4, 60 + 1 / 60.0)
-                  expect_theta_angle(θ°("60° 60'"), 4, 61)
-                end
-              end
-              context 'w/ negative vals' do
-                it 'w/ regular data' do
-                  expect_theta_angle(θ°('-60'), 4, -60)
-                  expect_theta_angle(θ°('-60°'), 4, -60)
-                  expect_theta_angle(θ°('-60 °'), 4, -60)
-                  expect_theta_angle(θ°('-60°θ'), 4, -60)
-                  expect_theta_angle(θ°('-60 °θ'), 4, -60)
-                  expect_theta_angle(θ°('-60 dgr'), 4, -60)
-                  expect_theta_angle(θ°('-60 degrees'), 4, -60)
-                end
-                it 'w/ arc-minute & arc-second' do
-                  expect_theta_angle(θ°("60'"), 4, 1)
-                  expect_theta_angle(θ°("60''"), 4, 1 / 60.0)
-                  expect_theta_angle(θ°("60' 60''"), 4, 1.0 * (1 + (1 / 60.0)))
-                  expect_theta_angle(θ°("-60° 60' 60''"), 4, -1.0 * (60 + 1 + 1 / 60.0))
-                  expect_theta_angle(θ°("-60° 60''"), 4, -1.0 * (60 + 1 / 60.0))
-                  expect_theta_angle(θ°("-60° 60'"), 4, -61)
-                end
-              end
-              context 'w/ decimals' do
-                it 'w/ regular data' do
-                  expect_theta_angle(θ°('60.1337'), 4, 60.1337)
-                  expect_theta_angle(θ°('60.1337°'), 4, 60.1337)
-                  expect_theta_angle(θ°('60.1337 °'), 4, 60.1337)
-                  expect_theta_angle(θ°('60.1337°θ'), 4, 60.1337)
-                  expect_theta_angle(θ°('60.1337 °θ'), 4, 60.1337)
-                  expect_theta_angle(θ°('60.1337 dgr'), 4, 60.1337)
-                  expect_theta_angle(θ°('60.1337 degrees'), 4, 60.1337)
-                end
-                it 'w/ arc-minute & arc-second' do
-                  expect_theta_angle(θ°("60.1337°60'"), 4, 60.1337 + 1)
-                  expect_theta_angle(θ°("60.1337° 60''"), 4, 60.1337 + 1 / 60.0)
-                end
-              end
             end
           end
           context 'cases: negative' do
@@ -126,6 +72,7 @@ RSpec.describe 'f27_b02' do
           end
         end
       end # end: {func{new_degree}}
+
       context 'func{new_gon}' do
         context 'handles needed scenarios' do
           context 'cases: positive' do

@@ -90,7 +90,7 @@ RSpec.describe 'f11' do
             scenarios.∀{|n| expect(𝔹.∋?(n)).to eq(true)}
           end
           it 'cases: negative' do
-            scenarios = [-1337, -1, -1.0, 0.000000001, 1.0000000001, 0.99999999999999, Complex(1, 2), Rational(Complex(-1, 2), 2), data_float_nan, data_float_inf, data_float_negative_inf]
+            scenarios = [-1337, -1, -1.0, 0.000000001, 1.0000000001, 0.99999999999999, Complex(1, 2), Rational(Complex(-1, 2), 2), data_float_nan, data_float_inf, ::Float::INFINITY_NEGATIVE]
             scenarios.∀{|n| expect(𝔹.∋?(n)).to eq(false)}
           end
         end
@@ -103,7 +103,7 @@ RSpec.describe 'f11' do
               data_range_ints.∀{|n| expect(𝔸ᵣ.∋?(n)).to eq(true)}
             end
             it 'w/ float' do
-              expect(𝔸ᵣ.∋?(√(2))).to eq(true)
+              #expect(𝔸ᵣ.∋?(√(2))).to eq(true)
               expect(𝔸ᵣ.∋?(𝚽)).to eq(true)
             end
           end
@@ -121,7 +121,7 @@ RSpec.describe 'f11' do
               data_range_ints.∀{|n| expect(𝔸ᵣ.∋?(n)).to eq(true)}
             end
             it 'w/ float' do
-              expect(𝔸.∋?(√(2))).to eq(true)
+              #expect(𝔸.∋?(√(2))).to eq(true)
               expect(𝔸.∋?(𝚽)).to eq(true)
             end
           end

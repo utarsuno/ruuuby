@@ -157,3 +157,9 @@ end
 # solid angle    | "measure of the amount of the `field of view` from some particular point that a given object covers"
 # steradian      | "used in three-dimensional geometry, and is analogous to the radian, which quantifies `planar angles`"
 # spat (sp)      | "unit of solid angle" | 1 spat = 4π ~= 41253 square degrees of solid angle
+
+# TODO:
+#  - https://en.wikipedia.org/wiki/Circular_segment
+#  - https://en.wikipedia.org/wiki/Circular_sector
+#  - https://en.wikipedia.org/wiki/Conic_section
+#  -

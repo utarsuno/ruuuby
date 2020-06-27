@@ -2,7 +2,7 @@
 
 RSpec.describe 'general configs' do
   let(:ruuuby_metadata){::Ruuuby::MetaData}
-  let(:path_dir_ext){"#{💎.engine.api_git.repo.workdir}ext"}
+  let(:path_dir_ext){"#{💎.engine.path_base}ext"}
   let(:the_dir_ext){🗄️.🆕(path_dir_ext)}
 
   #                   __          ___     __

@@ -42,7 +42,10 @@
 @f22.spawn_behaviors(
     [
         'offers a light layer over `GC`',
-        'offers a light layer over `JIT`'
+        'offers a light layer over `JIT`',
+        'offers a light layer over `OpenCL`',
+        'offers a light layer over `OpenGL`',
+        'offers a light layer over `GCC`'
     ]
 )
 
@@ -64,6 +67,7 @@
         'each ThetaAngle representation has a corresponding static function which calls the needed constructor',
         'vocabulary functions involving 2 ThetaAngle are provided in module {ThetaAngle::Pair}',
         'vocabulary functions involving 1 ThetaAngle are provided as funcs',
+        'offer `Refinement` w/ module{ThetaAngle::ContextStrParsing} for parsing `String` objs into `ThetaAngleAngle` objs'
     ]
 )
 
@@ -135,7 +139,7 @@
 # TODO: double (_Complex double)
 @f98.spawn_behaviors(
     [
-        'can set the $PROGRAM_NAME',
+        'dynamically add `macros` w/ `mkmf` in order to (during pre-processing) include/exclude feature-code to be compiled w/ or w/o',
         'offer (to `Ruuuby`) access to `C` math functions, especially those involving higher precision',
         'simplify import/require statements & setup as much as possible'
     ]

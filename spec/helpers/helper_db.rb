@@ -106,6 +106,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:v0_0_41){::RuuubyRelease.find_by_uid(0, 0, 41)}
   let(:v0_0_42){::RuuubyRelease.find_by_uid(0, 0, 42)}
   let(:v0_0_43){::RuuubyRelease.find_by_uid(0, 0, 43)}
+  let(:v0_0_44){::RuuubyRelease.find_by_uid(0, 0, 44)}
 
   let(:f00){::RuuubyFeature.find_by_uid(0)}
   let(:f00_b00){f00.ruuuby_feature_behaviors[0]}
@@ -166,6 +167,9 @@ RSpec.shared_context 'shared_context_db' do
   let(:f22){::RuuubyFeature.find_by_uid(22)}
   let(:f22_b00){f22.ruuuby_feature_behaviors[0]}
   let(:f22_b01){f22.ruuuby_feature_behaviors[1]}
+  let(:f22_b02){f22.ruuuby_feature_behaviors[2]}
+  let(:f22_b03){f22.ruuuby_feature_behaviors[3]}
+  let(:f22_b04){f22.ruuuby_feature_behaviors[4]}
 
   let(:f23){::RuuubyFeature.find_by_uid(23)}
 
@@ -186,6 +190,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:f27_b02){f27.ruuuby_feature_behaviors[2]}
   let(:f27_b03){f27.ruuuby_feature_behaviors[3]}
   let(:f27_b04){f27.ruuuby_feature_behaviors[4]}
+  let(:f27_b05){f27.ruuuby_feature_behaviors[5]}
 
   let(:f28){::RuuubyFeature.find_by_uid(28)}
   let(:f28_b00){f28.ruuuby_feature_behaviors[0]}
@@ -242,6 +247,8 @@ RSpec.shared_context 'shared_context_db' do
   let(:f35_b01){f35.ruuuby_feature_behaviors[1]}
   let(:f35_b02){f35.ruuuby_feature_behaviors[2]}
   let(:f35_b03){f35.ruuuby_feature_behaviors[3]}
+
+  let(:f36){::RuuubyFeature.find_by_uid(36)}
 
   let(:f95){::RuuubyFeature.find_by_uid(95)}
   let(:f96){::RuuubyFeature.find_by_uid(96)}

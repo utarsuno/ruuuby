@@ -13,6 +13,9 @@
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
 
+#define 💎set_field(var_name, var_var) rb_iv_set(self, var_name, var_var);
+#define 💎get_field(var_name)          rb_iv_get(self, var_name);
+
 #define ensure_file_loaded(path) if (rb_require(path) != Qtrue){printf("path already loaded {%s}\n", path);};
 /*__attribute__ ((access (read_only, 1))) static void ensure_file_loaded(const char * path);
 __attribute__ ((access (read_only, 1))) static void ensure_file_loaded(const char * path) {
@@ -84,6 +87,7 @@ __attribute__ ((access (read_only, 1))) static void ensure_file_loaded(const cha
     ensure_loaded_math(stats/stats)\
     ensure_loaded_math(stats/time_series)\
     ensure_loaded_math(stats/descriptive)\
+    ensure_loaded_math(stats/time_series_data)\
 }
 
 #define ensure_all_loaded_for_ruuuby(){\
@@ -91,6 +95,9 @@ __attribute__ ((access (read_only, 1))) static void ensure_file_loaded(const cha
     ensure_loaded_ruuuby(virtual/f28)\
     ensure_loaded_ruuuby(ruuuby/ruuuby_api)\
     ensure_loaded_ruuuby(ruuuby/git_api)\
+    ensure_loaded_ruuuby(ruuuby/api/api_brew)\
+    ensure_loaded_ruuuby(ruuuby/api/api_docker)\
+    ensure_loaded_ruuuby(ruuuby/api/api_locale)\
     ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine)\
     ensure_loaded_ruuuby(configs)\
 }
@@ -136,6 +143,7 @@ __attribute__ ((access (read_only, 1))) static void ensure_file_loaded(const cha
 #define re_inf_complex     return cached_flt_inf_complex;
 #define re_1               return ℤ1;
 #define re_n1              return ℤn1;
+#define re_me_mem_size     return UINT2NUM((unsigned int) rb_obj_memsize_of(self));
 // essentially returns "self.send(func_name, arg)"
 #define re_me_func_1args(func_name, arg) return rb_funcall(self, func_name, 1, arg);
 
@@ -164,16 +172,10 @@ printf ("The current local time is: %s\n", ctime (&timer));
     //printf("for when needed, this func will run after END {} blocks\n");
 //}
 
-//💎set_program_name("ruuuby:v.0.0.34");
-
   # TODO: w/ TDD for Class(String) {create w/ extension so that 'U*' ID can be re-used)
   #
   # @return [Array]
   def as_utf8_hex; self.as_utf8.unpack('U*'); end
-
-
-#define r_str_new_frozen_literal(arg) rb_str_new_frozen(rb_str_new_cstr(arg))
-#define cstr_to_rstr(arg)             rb_str_new_cstr(arg)
 
 static inline void internal_only_add_frozen_const_to(VALUE kclass, VALUE * internal_global, const char * const_name, VALUE val_to_freeze);
 

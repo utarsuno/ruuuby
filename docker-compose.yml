@@ -3,12 +3,17 @@ version: '3.7'
 
 services:
 
-  ruuuby:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    environment:
-      SERVICE_NAME: "ruuuby"
-    tty: false
-    volumes:
-      - ./:/ruuuby
+  #ruuuby:
+  #  build:
+  #    context: .
+  #    dockerfile: ./Dockerfile
+  #  environment:
+  #    SERVICE_NAME: "ruuuby"
+  #  tty: false
+  #  # TODO: don't utilize this setup style
+  #  volumes:
+  #    - ./:/ruuuby
+
+  #postgres:
+
+#volumes:

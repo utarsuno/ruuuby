@@ -8,15 +8,11 @@
  /  ` /  \ |\ | /__`  |   /\  |\ |  |     \  /  /\  |    |  | |__  /__`
  \__, \__/ | \| .__/  |  /~~\ | \|  |      \/  /~~\ |___ \__/ |___ .__/
 ____________________________________________________________________________________________________________________________________________________________________ */
-#define CUSTOM_ERROR_CODE 137
-
 #define γ      0.5772156649015329
 #define γL     0.5772156649015329L
 #define π      3.14159265358979323846264338327950288  // double      pi  = acos(-1);
 #define πL     3.14159265358979323846264338327950288L // long double pie = acosl(-1);
 #define 𝚽      1.618033988749895 // more accurate version --> 1.61803398874989484820458683436
-#define φ      (-0.618033988749895)
-#define φL     (-0.618033988749895L)
 #define Ω      0.5671432904097838
 #define ΩL     0.567143290409783872999968662210L
 #define Ψ      1.46557123187676802665673122521993910  // less accurate version --> 1.4655712318767682
@@ -30,8 +26,8 @@ ________________________________________________________________________________
 #define Ⴔ_RAD  2.399963229728653
 #define ႴL_RAD 2.399963229728653L   // more accurate version --> 2.39996322972865332
 #define Ⴔ_TRN  (1.0 / (1.618033988749895 * 1.618033988749895))
-
 #define 𝞽      (2.0 * π)
+//#define M_SQRT2 1.41421356237309504880168872420969808
 
 #define FLAG_FALSE 0u
 #define FLAG_TRUE  1u
@@ -170,5 +166,25 @@ static const VALUE ℤ9  = INT2FIX(9);
 
 #define ARG_OPTS_ONE_OPTIONAL                  "01"
 #define ARG_OPTS_ONE_REQUIRED_AND_ONE_OPTIONAL "11"
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+#define FLAG_RUNTIME_VERSION_C_89 (unsigned short) 1
+#define FLAG_RUNTIME_VERSION_C_99 (unsigned short) 2
+#define FLAG_RUNTIME_VERSION_C_11 (unsigned short) 3
+#define FLAG_RUNTIME_VERSION_C_17 (unsigned short) 4
+#define FLAG_RUNTIME_VERSION_GNU_89 (unsigned short) 5
+#define FLAG_RUNTIME_VERSION_GNU_99 (unsigned short) 6
+#define FLAG_RUNTIME_VERSION_GNU_11 (unsigned short) 7
+#define FLAG_RUNTIME_VERSION_GNU_17 (unsigned short) 8
+#define FLAG_RUNTIME_VERSION_DEFAULT (unsigned short) 9
+
+#define VAL_STD_VERSION_C_99 199901
+#define VAL_STD_VERSION_C_11 201112
+#define VAL_STD_VERSION_C_17 201710
+#define VAL_STD_VERSION_GNU_99 VAL_STD_VERSION_C_99
+#define VAL_STD_VERSION_GNU_11 VAL_STD_VERSION_C_11
+#define VAL_STD_VERSION_GNU_17 VAL_STD_VERSION_C_17
+#define VAL_STD_VERSION_DEFAULT VAL_STD_VERSION_GNU_17
 
 #endif

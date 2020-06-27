@@ -39,49 +39,6 @@ RSpec.describe 'module' do
         end
       end
 
-      context 'operations {∋?, ∌?, ∈?, ∉?}' do
-        context 'function{∋?} handles needed scenarios' do
-          it 'cases: positive' do
-            expect(StandardError.∋?(RuntimeError)).to eq(true)
-          end
-          it 'cases: negative' do
-            expect(RuntimeError.∋?(StandardError)).to eq(false)
-            expect(StandardError.∋?(Ruuuby)).to eq(false)
-            expect(Ruuuby.∋?(StandardError)).to eq(false)
-          end
-        end
-        context 'function{∌?} handles needed scenarios' do
-          it 'cases: positive' do
-            expect(RuntimeError.∌?(StandardError)).to eq(true)
-            expect(Ruuuby.∌?(StandardError)).to eq(true)
-            expect(StandardError.∌?(Ruuuby)).to eq(true)
-          end
-          it 'cases: negative' do
-            expect(StandardError.∌?(RuntimeError)).to eq(false)
-          end
-        end
-        context 'function{∈?} handles needed scenarios' do
-          it 'cases: positive' do
-            expect(RuntimeError.∈?(StandardError)).to eq(true)
-          end
-          it 'cases: negative' do
-            expect(StandardError.∈?(RuntimeError)).to eq(false)
-            expect(StandardError.∈?(Ruuuby)).to eq(false)
-            expect(Ruuuby.∈?(StandardError)).to eq(false)
-          end
-        end
-        context 'function{∉?} handles needed scenarios' do
-          it 'cases: positive' do
-            expect(StandardError.∉?(RuntimeError)).to eq(true)
-            expect(StandardError.∉?(Ruuuby)).to eq(true)
-            expect(Ruuuby.∉?(StandardError)).to eq(true)
-          end
-          it 'cases: negative' do
-            expect(RuntimeError.∉?(StandardError)).to eq(false)
-          end
-        end
-      end # end: {operations {∋?, ∌?, ∈?, ∉?}}
-
     end
 
     context 'by adding function{∃⨍_alias?}' do
@@ -154,45 +111,6 @@ RSpec.describe 'module' do
           end
         end
       end
-
-      context 'operations {∋?, ∌?, ∈?, ∉?}' do
-        context 'func{∋?} for cases:' do
-          it 'positive' do
-            expect{StandardError.∋?(RuntimeError)}.to perform_very_quickly
-          end
-          it 'negative' do
-            expect{RuntimeError.∋?(StandardError)}.to perform_very_quickly
-            expect{StandardError.∋?(Ruuuby)}.to perform_very_quickly
-          end
-        end
-        context 'func{∌?} for cases:' do
-          it 'positive' do
-            expect{RuntimeError.∌?(StandardError)}.to perform_very_quickly
-            expect{Ruuuby.∌?(StandardError)}.to perform_very_quickly
-          end
-          it 'negative' do
-            expect{StandardError.∌?(RuntimeError)}.to perform_very_quickly
-          end
-        end
-        context 'func{∈?} for cases:' do
-          it 'positive' do
-            expect{RuntimeError.∈?(StandardError)}.to perform_very_quickly
-          end
-          it 'negative' do
-            expect{StandardError.∈?(RuntimeError)}.to perform_very_quickly
-            expect{StandardError.∈?(Ruuuby)}.to perform_very_quickly
-          end
-        end
-        context 'func{∉?} for cases:' do
-          it 'positive' do
-            expect{StandardError.∉?(RuntimeError)}.to perform_very_quickly
-            expect{Ruuuby.∉?(StandardError)}.to perform_very_quickly
-          end
-          it 'negative' do
-            expect{RuntimeError.∉?(StandardError)}.to perform_very_quickly
-          end
-        end
-      end # end: {operations {∋?, ∌?, ∈?, ∉?}}
 
     end
 

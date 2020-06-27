@@ -10,27 +10,6 @@ class ::Module
   # -------------------------------------------------------------------------------------------------- | *b01* | *f10* |
   alias_method :🛡️, :protected
   alias_method :∃🛡️⨍?, :protected_method_defined?
-  # ---------------------------------------------------------------------------------------------------------- | *f09* |
-
-  # @param [Class]
-  #
-  # @return [Boolean] true, if this particular `Class-instance` is a parent-class of the provided arg
-  def ∋?(sub_class); (sub_class < self) && true ? true : false; end
-
-  # @param [Class]
-  #
-  # @return [Boolean] true, if this particular `Class-instance` is not a parent-class of the provided arg
-  def ∌?(sub_class); !self.∋?(sub_class); end
-
-  # @param [Class]
-  #
-  # @return [Boolean] true, if this particular `Class-instance` is a sub-class of the provided arg
-  def ∈?(parent_class); (self < parent_class) && true ? true : false; end
-
-  # @param [Class]
-  #
-  # @return [Boolean] true, if this particular `Class-instance` is not a sub-class of the provided arg
-  def ∉?(parent_class); !self.∈?(parent_class); end
 
   # ---------------------------------------------------------------------------------------------------------- | *f13* |
 

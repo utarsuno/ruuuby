@@ -155,16 +155,25 @@ static double vocab_value_sextant(const unsigned char angle_mode);
 static double vocab_value_octant(const unsigned char angle_mode);
 static double vocab_value_straight(const unsigned char angle_mode);
 static double vocab_value_quadrant(const unsigned char angle_mode);
+
 /*____________________________________________________________________________________________________________________
  __   __           __   ___  ___               __      __   ___ ___       __
 /  \ |__)    |    |  \ |__  |__      /\  |\ | |  \    /__` |__   |  |  | |__)
 \__/ |__) \__/    |__/ |___ |       /~~\ | \| |__/    .__/ |___  |  \__/ |
 _____________________________________________________________________________________________________________________ */
 
-//static void θconst_free(void * data) {free(data);}
-static void θ_free(void * data) {free(data);}
+static void ptrθ_free(ptrθ data);
+static void ptrθ_free(ptrθ data) {
+    //printf("ABOUT TO FREE THETA_ANGLE{%f}\n", data->angle_value);
+    //rb_raise(R_ERR_ARG, "| ABOUT TO FREE {%"PRIsVALUE"} into a theta_angle |", (void *)data);
+    free(data);
+}
 
-//static size_t θconst_size(const void * data) {return sizeof(ConstThetaAngle);}
+static void θ_free(void * data);
+static void θ_free(void * data) {
+    ptrθ_free(data);
+}
+
 static size_t θ_size(const void * data) {return sizeof(ThetaAngle);}
 
 static const rb_data_type_t θ_type = {
@@ -181,7 +190,6 @@ static const rb_data_type_t θ_type = {
 #define 💎parse_ptrθ(the_data, the_ptr) TypedData_Get_Struct(the_data, ThetaAngle, & θ_type, the_ptr)
 #define 💎self_to_ptrθ_data ptrθ data;  💎parse_ptrθ(self, data);
 
-static void θ_free(void * data);
 static size_t θ_size(const void * data);
 
 static VALUE θ_alloc(VALUE self);
@@ -205,6 +213,8 @@ static VALUE θ_new_constant(const double angle, const VALUE sym_mode);
 static VALUE θ_new_constant(const double angle, const VALUE sym_mode) {
     VALUE obj = θ_new(angle, sym_mode);
     ptrθ data; 💎parse_ptrθ(obj, data);
+    VALUE the_val = DBL2NUM(data->angle_value);
+    rb_iv_set(obj, "@real", the_val);
     ptrθ_flag_set_constant(data);
     RB_OBJ_FREEZE(obj);
     return obj;
@@ -284,10 +294,10 @@ static inline long double θ_get_val_precise_as_mode(const unsigned char angle_m
 static inline double ptrθ_get_val_from_θ(const ptrθ self, const ptrθ them);
 static inline double ptrθ_get_val_from_VALUE(const ptrθ self, const VALUE value);
 
-static inline void ptrθ_addition_w_double(const ptrθ data, const double value);
-static inline void ptrθ_subtraction_w_double(const ptrθ data, const double value);
-static inline void ptrθ_multiplication_w_double(const ptrθ data, const double value);
-static inline void ptrθ_division_w_double(const ptrθ data, const double value);
+static inline void ptrθ_add_d(const ptrθ data, const double value);
+static inline void ptrθ_subtract_d(const ptrθ data, const double value);
+static inline void ptrθ_multiply_d(const ptrθ data, const double value);
+static inline void ptrθ_division_d(const ptrθ data, const double value);
 
 static inline double ptrθ_get_const_quadrant(const ptrθ data);
 static inline double ptrθ_get_const_straight(const ptrθ data);

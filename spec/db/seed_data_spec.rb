@@ -293,9 +293,15 @@ RSpec.describe 'db/seed.rb' do
           end
         end
 
-        #context 'v0.0.43' do
+        context 'v0.0.43' do
+          it 'as expected' do
+            audit_version(v0_0_43, 'v0.0.43', 0)
+          end
+        end
+
+        #context 'v0.0.44' do
         #  it 'as expected' do
-        #    audit_version(v0_0_43, 'v0.0.43', 0)
+        #    audit_version(v0_0_44, 'v0.0.44', 0)
         #  end
         #end
 

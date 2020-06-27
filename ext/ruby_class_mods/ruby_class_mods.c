@@ -6,46 +6,66 @@
  |___ | |__) |  \ /~~\ |  \  |     |  |  | |    \__/ |  \  |  .__/
 ____________________________________________________________________________________________________________________________________________________________________ */
 
-//#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.0.h"
-//#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
+#ifndef GENERIC_BUILD
+    //#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.0.h"
+    //#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
+    #include "/Users/utarsuno/.rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
 
-#include "ruby/config.h"
-#include "/Users/utarsuno/.rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
+    #include <ruby/defines.h>
+    #include <ruby/version.h>
+    #include <ruby/vm.h>
 
-#include <sys/resource.h>
+    #include <fcntl.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-//#include "ruby/encoding.h"
+    #include <sys/resource.h>
+    #include <sys/types.h>
+    #include <sys/stat.h>
 
-//#include <locale.h>
-//#include <ruby.h>
+    #include <unistd.h>
+    #include <math.h>
+    #include <inttypes.h>
 
-/*
-#include <ruby/defines.h>
-#include <ruby/intern.h>
-#include <ruby/debug.h>
-#include <ruby/assert.h>
-#include <ruby/missing.h>
-#include <ruby/re.h>
-#include <ruby/regex.h>
-#include <ruby/ruby.h>
-#include <ruby/st.h>
-#include <ruby/subst.h>
-#include <ruby/util.h>
-#include <ruby/version.h>
-#include <ruby/vm.h>*/
+    #include <float.h>
+    #include <tgmath.h>
+    #include <complex.h>
 
-#include <stdio.h>
-#include <stdlib.h>
+    #ifdef RUUUBY_F98_DEBUG
+        #ifdef RUUUBY_F98_TIMER
+            #include <time.h>
+            #include <sys/time.h>
+        #endif
+        #ifdef RUUUBY_F98_OPENCL
+            #define CL_SILENCE_DEPRECATION
+            #define GL_SILENCE_DEPRECATION
+            #include <OpenCL/cl.h>
+        #endif
+    #endif
 
-#include <inttypes.h>
+#else
+    /*
+    #include "ruby/encoding.h"
+    #include <locale.h>
+    #include <ruby.h>
+    #include "ruby/config.h"
+    #include "ruby/ruby.h"
 
-#include <time.h>
-#include <sys/time.h>
-
-#include <float.h>
-#include <math.h>
-#include <tgmath.h>
-#include <complex.h>
+    #include <ruby/defines.h>
+    #include <ruby/intern.h>
+    #include <ruby/debug.h>
+    #include <ruby/assert.h>
+    #include <ruby/missing.h>
+    #include <ruby/re.h>
+    #include <ruby/regex.h>
+    #include <ruby/ruby.h>
+    #include <ruby/st.h>
+    #include <ruby/subst.h>
+    #include <ruby/util.h>
+    #include <ruby/version.h>
+    #include <ruby/vm.h>
+    */
+#endif
 
 #ifndef CRUUUBY_H
 #include "ruby_class_mods.h"
@@ -60,6 +80,31 @@ ________________________________________________________________________________
      \/_/\/_/\/_/\/__/\/____/ \/_/  \/_/\/_/\/__/\/_/\/____/    \/___/  \/____/ \/__/ \/___/  \ \ \/
                                                                                                \ \_\
                                                                                                 \/_/ */
+
+
+static VALUE time_series_get_percentile(const VALUE self, const VALUE percentile) {
+    if (is_fixnum(percentile)) {
+        💎self_to_ptr_time_series
+        const int as_int = FIX2INT(percentile);
+        if (as_int >= 0 && as_int < 101) {
+            return DBL2NUM(data->vals[as_int]);
+        } else {
+            rb_raise(R_ERR_ARG, "| c{TimeSeriesData}-> m{percentile} got arg out-of-bounds w/ value{%"PRIsVALUE"}-type{%s} |", percentile, rb_obj_classname(percentile));
+        }
+    } else if (is_float(percentile)) {
+        💎self_to_ptr_time_series
+        const double as_flt = NUM2DBL(percentile);
+        if (isfinite(as_flt) && as_flt >= 0.0 && as_flt <= 100.0) {
+            return DBL2NUM(data->vals[(int) (round(data->leeen * as_flt))]);
+        } else {
+            rb_raise(R_ERR_ARG, "| c{TimeSeriesData}-> m{percentile} got arg out-of-bounds w/ value{%"PRIsVALUE"}-type{%s} |", percentile, rb_obj_classname(percentile));
+        }
+    } else {
+        rb_raise(R_ERR_ARG, "| c{TimeSeriesData}-> m{percentile} got did get type{Fixnum, Float} for arg(index){%"PRIsVALUE"} but type{%s} |", percentile, rb_obj_classname(percentile));
+    }
+}
+
+
 #define bsearch_power(val_to_find)         (unsigned long *) bsearch (&val_to_find, exponential_ids, NUM_EXPONENTS, sizeof(unsigned long), internal_only_compare_func_4_object_id);
 #define bsearch_power_position(arg_index) ((int)(((int)arg_index - (int)exponential_ids) / sizeof(unsigned long)))
 
@@ -112,38 +157,38 @@ static void internal_only_prepare_f16(void) {
     VALUE rb_intern_pack   = rb_intern("pack");
     VALUE code_points      = 💎new_ary_size2(INT2FIX(8713), INT2FIX(8709));
 
-    💎PROCEDURE_00(n_no_empty)
+    💎PROCEDURE_00(🅽_no_empty)
 
     rb_ary_modify(code_points);
 
     rb_ary_store(code_points, 0l, INT2FIX(8712));
     rb_ary_store(code_points, 1l, INT2FIX(8469));
-    💎PROCEDURE_00(n_in_set_natural)
+    💎PROCEDURE_00(🅽_natural)
 
     rb_ary_store(code_points, 1l, INT2FIX(120142));
-    💎PROCEDURE_00(n_in_set_whole)
+    💎PROCEDURE_00(🅽_whole)
 
     rb_ary_store(code_points, 1l, INT2FIX(8484));
-    💎PROCEDURE_00(n_in_set_integer)
+    💎PROCEDURE_00(🅽_integer)
 
     rb_ary_store(code_points, 1l, INT2FIX(120140));
-    💎PROCEDURE_00(n_in_set_universal)
+    💎PROCEDURE_00(🅽_universal)
 
     rb_ary_store(code_points, 1l, INT2FIX(94));
-    💎PROCEDURE_00(n_in_set_superscripts)
+    💎PROCEDURE_00(🅽_superscripts)
 
     rb_ary_store(code_points, 1l, INT2FIX(8469));
     rb_ary_push(code_points, INT2FIX(120138));
-    💎PROCEDURE_00(n_in_set_natural_w_str_allowed)
+    💎PROCEDURE_00(🅽_natural_w_str_allowed)
 
     rb_ary_store(code_points, 1l, INT2FIX(120142));
-    💎PROCEDURE_00(n_in_set_whole_w_str_allowed)
+    💎PROCEDURE_00(🅽_whole_w_str_allowed)
 
     rb_ary_store(code_points, 1l, INT2FIX(8484));
-    💎PROCEDURE_00(n_in_set_integer_w_str_allowed)
+    💎PROCEDURE_00(🅽_integer_w_str_allowed)
 
     rb_ary_store(code_points, 1l, INT2FIX(120140));
-    💎PROCEDURE_00(n_in_set_universal_w_str_allowed)
+    💎PROCEDURE_00(🅽_universal_w_str_allowed)
 
     rb_ary_free(code_points);
 
@@ -275,6 +320,7 @@ static void internal_only_prepare_f16(void) {
 static inline void startup_step5_protect_against_gc(void) {
     rb_gc_register_address(& Ⓒset);
     rb_gc_register_address(& Ⓒtheta_angle);
+    rb_gc_register_address(& Ⓒtime_series_data);
     rb_gc_register_address(& Ⓒbig_decimal);
     rb_gc_register_address(& cached_global_sym_many_args);
     //rb_global_variable(& cached_global_sym_many_args);
@@ -284,6 +330,7 @@ static inline void startup_step5_protect_against_gc(void) {
 
 static inline void startup_step4_load_needed_ruuuby_files(void) {
     ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine_component)\
+    ensure_loaded_ruuuby(ruuuby/engine/ruuuby_api_component)\
 
     ensure_loaded_ruuuby(virtual/f10)
 
@@ -318,7 +365,6 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
 
     ensure_loaded_math(number_theory/number_theory) // must be after{expression/sequence/recursive_sequence}
     ensure_all_loaded_for_statistics()
-
     ensure_all_loaded_for_geometry()
 
     // [⚠️] : excluding: alternative files are loading these already:
@@ -353,9 +399,9 @@ ________________________________________________________________________________
 // | func{ary?}  |
 ⓡ𝑓_kargs(m_obj_is_ary,
     💎parse_kargs_with_normalizer("ary?", re_as_bool(is_ary(self)),
-    if (them == n_no_empty) {
+    if (them == 🅽_no_empty) {
         if (is_ary(self)) {
-            if (is_empty_ary(self)) {re_no} else {re_ye}
+            if (r_ary_is_empty(self)) {re_no} else {re_ye}
         } else {re_no}
     } else {🛑normalizer_value("ary?", them)})
 )
@@ -369,7 +415,7 @@ ________________________________________________________________________________
 // | func{flt?}   |
 ⓡ𝑓_kargs(m_obj_is_flt,
     💎parse_kargs_with_normalizer("flt?", re_as_bool(is_float(self)),
-    if (them == n_in_set_universal) {
+    if (them == 🅽_universal) {
         if (is_float(self)) {
             return r_flt_is_universal(NUM2DBL(self));
         } else {re_no}
@@ -379,7 +425,7 @@ ________________________________________________________________________________
 // | func{sym?}  |
 ⓡ𝑓_kargs(m_obj_is_sym,
     💎parse_kargs_with_normalizer("sym?", re_as_bool(is_sym(self)),
-    if (them == n_in_set_superscripts) {
+    if (them == 🅽_superscripts) {
         if (is_sym(self)) {
             const unsigned long id_to_find  = NUM2ULONG(rb_obj_id(self));
             unsigned long *     the_result = bsearch_power(id_to_find);
@@ -412,7 +458,7 @@ ________________________________________________________________________________
 )
 
 // | func{chr?} |
-ⓡ𝑓_def(m_obj_is_chr, if (is_str(self)) {re_as_bool(len_str(self) == 1)} else {re_no})
+ⓡ𝑓_def(m_obj_is_chr, if (is_str(self)) {re_as_bool(r_str_len(self) == 1)} else {re_no})
 
 // | func{set?} |
 ⓡ𝑓_def(m_obj_is_set, return rb_obj_is_instance_of(self, Ⓒset);)
@@ -420,9 +466,9 @@ ________________________________________________________________________________
 // | func{str?}  |
 ⓡ𝑓_kargs(m_obj_is_str,
     💎parse_kargs_with_normalizer("str?", re_as_bool(is_str(self)),
-    if (them == n_no_empty) {
+    if (them == 🅽_no_empty) {
         if (is_str(self)) {
-            if (is_empty_str(self)) {re_no} else {re_ye}
+            if (r_str_is_empty(self)) {re_no} else {re_ye}
         } else {re_no}
     } else {🛑normalizer_value("str?", them)})
 )
@@ -652,18 +698,6 @@ ________________________________________________________________________________
 
 static VALUE m_nil_empty(const VALUE self) {re_ye}
 
-/*___________________________________________________________________________________________________________________
- __   __   __           __             __   __   ___  __
-|__) /  \ /  \ |       /  ` |     /\  /__` /__` |__  /__`
-|__) \__/ \__/ |___    \__, |___ /~~\ .__/ .__/ |___ .__/
-_____________________________________________________________________________________________________________________ */
-
-ⓡ𝑓(m_bool_to_b, re_me) // func{to_b}
-
-ⓡ𝑓(m_true_to_i, re_1)  // func{to_i}
-
-ⓡ𝑓(m_false_to_i, re_0) // func{to_i}
-
 /*____________________________________________________________________________________________________________________
  __     ___     __                   __
 /__`     |     |__)    |    |\ |    / _`
@@ -673,7 +707,7 @@ ________________________________________________________________________________
 // | function{>>} |
 ⓡ𝑓_self_them(m_str_prepend,
     if (is_str(them)) {
-        if (is_empty_str(them)) {
+        if (r_str_is_empty(them)) {
             re_me
         } else {
             r_str_pre_modify(self)
@@ -701,7 +735,7 @@ ________________________________________________________________________________
 // | func{remove_empty!} |
 ⓡ𝑓_def(m_ary_remove_empty,
     r_ary_pre_modify(self)
-    long len_me = len_ary(self);
+    long len_me = r_ary_len(self);
     if (len_me == 0){re_me}
     long i;
     int delete_node = 0;
@@ -717,11 +751,11 @@ ________________________________________________________________________________
                 case RUBY_T_NIL:
                     delete_node = 1; break;
                 case RUBY_T_STRING:
-                    if (is_empty_str(v)) {delete_node = 1;} ; break;
+                    if (r_str_is_empty(v)) {delete_node = 1;} ; break;
                 case RUBY_T_ARRAY:
-                    if (is_empty_ary(v)) {delete_node = 1;} ; break;
+                    if (r_ary_is_empty(v)) {delete_node = 1;} ; break;
                 case RUBY_T_HASH:
-                    if (is_empty_hsh(v)) {delete_node = 1;} ; break;
+                    if (r_hsh_is_empty(v)) {delete_node = 1;} ; break;
                 default:
                     if (is_empty_generic(v)) {
                         delete_node = 1;
@@ -742,8 +776,8 @@ ________________________________________________________________________________
 // | func{disjunctive_union} |
 ⓡ𝑓_self_them(m_ary_disjunctive_union,
     if (is_ary(them)) {
-        const long len_me   = len_ary(self);
-        const long len_them = len_ary(them);
+        const long len_me   = r_ary_len(self);
+        const long len_them = r_ary_len(them);
         if ((len_me == 0 && len_them == 0) || len_them == 0) {
             re_me
         } else if (len_me == 0) {
@@ -783,7 +817,7 @@ ________________________________________________________________________________
 // | func(⨍_add_aliases} |
 ⓡ𝑓_self_a_b(m_module_add_aliases,
     if (is_ary(param_b)) {
-        const long len_them = len_ary(param_b);
+        const long len_them = r_ary_len(param_b);
         if (len_them == 0) {raise_err_arg("| module-function{f_add_aliases} for self{%"PRIsVALUE"} of type{%s} received an empty array |", self, rb_obj_classname(self))}
         long i;
         VALUE v;
@@ -808,10 +842,7 @@ ___       ___ ___                    __        ___
  |  |  | |___  |  /~~\    /~~\ | \| \__> |___ |___
 _____________________________________________________________________________________________________________________ */
 
-static VALUE θ_m_get_size(const VALUE self) {
-    //ptrθ data; 💎parse_ptrθ(self, data);
-    return UINT2NUM((unsigned int) rb_obj_memsize_of(self));
-}
+static VALUE θ_m_get_size(const VALUE self){re_me_mem_size}
 
 static void θ_set_value(const ptrθ data, const double value) {
     if (!(ptrθ_flag_is_constant(data))) { //&& data->angle_value != value
@@ -828,11 +859,13 @@ static void θ_set_value(const ptrθ data, const double value) {
             const double max_value = vocab_value_perigon(data->angle_mode);
             if (value == max_value) {
                 ptrθ_flag_set_is_normal(data);
+                ptrθ_flag_set_perigon(data);
             } else if (value < max_value) {
                 ptrθ_flag_set_is_normal(data);
-                ptrθ_flag_set_perigon(data);
+                ptrθ_flag_clr_perigon(data);
             } else {
                 ptrθ_flag_clr_is_normal(data);
+                ptrθ_flag_clr_perigon(data);
             }
         } else {
             ptrθ_flag_clr_is_positive(data);
@@ -840,11 +873,13 @@ static void θ_set_value(const ptrθ data, const double value) {
             const double max_value = vocab_value_perigon(data->angle_mode);
             if (value == max_value) {
                 ptrθ_flag_set_is_normal(data);
+                ptrθ_flag_set_perigon(data);
             } else if (value > max_value) {
                 ptrθ_flag_set_is_normal(data);
-                ptrθ_flag_set_perigon(data);
+                ptrθ_flag_clr_perigon(data);
             } else {
                 ptrθ_flag_clr_is_normal(data);
+                ptrθ_flag_clr_perigon(data);
             }
         }
     } else {
@@ -993,10 +1028,10 @@ static inline double ptrθ_get_const_perigon_minus_quadrant(const ptrθ data) {
     }
 }
 
-static inline void ptrθ_addition_w_double       (const ptrθ data, const double value) {θ_set_value(data, data->angle_value + value);}
-static inline void ptrθ_subtraction_w_double    (const ptrθ data, const double value) {θ_set_value(data, data->angle_value - value);}
-static inline void ptrθ_multiplication_w_double (const ptrθ data, const double value) {θ_set_value(data, data->angle_value * value);}
-static inline void ptrθ_division_w_double       (const ptrθ data, const double value) {θ_set_value(data, data->angle_value / value);}
+static inline void ptrθ_add_d      (const ptrθ data, const double value) {θ_set_value(data, data->angle_value + value);}
+static inline void ptrθ_subtract_d (const ptrθ data, const double value) {θ_set_value(data, data->angle_value - value);}
+static inline void ptrθ_multiply_d (const ptrθ data, const double value) {θ_set_value(data, data->angle_value * value);}
+static inline void ptrθ_division_d (const ptrθ data, const double value) {θ_set_value(data, data->angle_value / value);}
 
 static VALUE θ_m_modulo(const VALUE self, const VALUE value) {
     💎self_to_ptrθ_data
@@ -1047,7 +1082,7 @@ static VALUE θ_m_multiplication_eq(const VALUE self, const VALUE value) {
     if (RB_OBJ_FROZEN(self) || ptrθ_flag_is_constant(data)) {
         rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{*} may not be called on a frozen and/or constant ThetaAngle |");
     }
-    ptrθ_multiplication_w_double(data, ptrθ_get_val_from_VALUE(data, value));
+    ptrθ_multiply_d(data, ptrθ_get_val_from_VALUE(data, value));
     re_me
 }
 
@@ -1074,7 +1109,7 @@ static VALUE θ_m_division_eq(const VALUE self, const VALUE value) {
     if (RB_OBJ_FROZEN(self) || ptrθ_flag_is_constant(data)) {
         rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{/} may not be called on a frozen and/or constant ThetaAngle |");
     }
-    ptrθ_division_w_double(data, ptrθ_get_val_from_VALUE(data, value));
+    ptrθ_division_d(data, ptrθ_get_val_from_VALUE(data, value));
     re_me
 }
 
@@ -1083,7 +1118,7 @@ static VALUE θ_m_addition_eq(const VALUE self, const VALUE value) {
     if (RB_OBJ_FROZEN(self) || ptrθ_flag_is_constant(data)) {
         rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{+} may not be called on a frozen and/or constant ThetaAngle |");
     }
-    ptrθ_addition_w_double(data, ptrθ_get_val_from_VALUE(data, value));
+    ptrθ_add_d(data, ptrθ_get_val_from_VALUE(data, value));
     re_me
 }
 
@@ -1092,7 +1127,7 @@ static VALUE θ_m_subtraction_eq(const VALUE self, const VALUE value) {
     if (RB_OBJ_FROZEN(self) || ptrθ_flag_is_constant(data)) {
         rb_raise(R_ERR_RUNTIME, "| c{ThetaAngle}-> m{-} may not be called on a frozen and/or constant ThetaAngle |");
     }
-    ptrθ_subtraction_w_double(data, ptrθ_get_val_from_VALUE(data, value));
+    ptrθ_subtract_d(data, ptrθ_get_val_from_VALUE(data, value));
     re_me
 }
 
@@ -1103,7 +1138,7 @@ static VALUE θ_m_subtraction(const VALUE self, const VALUE value) {
 
 static VALUE θ_m_unary_not(const VALUE self) {
     💎self_to_ptrθ_data
-    ptrθ_multiplication_w_double(data, -1.0);
+    ptrθ_multiply_d(data, -1.0);
     re_me
 }
 
@@ -1202,7 +1237,7 @@ static VALUE θ_m_abs(const VALUE self) {
 static VALUE θ_m_abs_self(VALUE self) {
     💎self_to_ptrθ_data
     if (NO_MATCH_FOR_θ(data, FLAGS_ZERO_AND_POSITIVE)) {
-        ptrθ_multiplication_w_double(data, -1.0);
+        ptrθ_multiply_d(data, -1.0);
     }
     re_me
 }
@@ -1236,15 +1271,11 @@ static VALUE θ_m_initialize(VALUE self, const VALUE angle, const VALUE angle_mo
     💎self_to_ptrθ_data
     if (is_fixnum(angle_mode)) {
         const unsigned char as_fixnum = (unsigned char) RB_FIX2INT(angle_mode);
-        if (as_fixnum == THETA_MODE_ID_RAD) {
-            data->angle_mode = THETA_MODE_ID_RAD;
-        } else if (as_fixnum == THETA_MODE_ID_DGR) {
-            data->angle_mode = THETA_MODE_ID_DGR;
-        } else if (as_fixnum == THETA_MODE_ID_TRN) {
-            data->angle_mode = THETA_MODE_ID_TRN;
-        } else if (as_fixnum == THETA_MODE_ID_GON) {
-            data->angle_mode = THETA_MODE_ID_GON;
-        } else {
+        switch(as_fixnum) {
+        case THETA_MODE_ID_RAD: case THETA_MODE_ID_DGR: case THETA_MODE_ID_GON: case THETA_MODE_ID_TRN:
+            data->angle_mode = as_fixnum;
+            break;
+        default:
             rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{new} unable to parse 2nd arg(angle_mode){%"PRIsVALUE"} w/ type{%s} |", angle_mode, rb_obj_classname(angle_mode));
         }
     } else {
@@ -1269,7 +1300,7 @@ static VALUE θ_m_initialize(VALUE self, const VALUE angle, const VALUE angle_mo
             SET_FLAGS(data, FLAGS_NON_CONST_NEGATIVE_NOT_NORMAL)
         }
     }
-    return self;
+    re_me
 }
 
 static inline VALUE cθ_get_repr(const unsigned char angle_mode) {θ_ID2MODE(angle_mode);}
@@ -1389,13 +1420,17 @@ static VALUE θ_m_set_real(VALUE self, VALUE num) {
 
 static VALUE θ_m_get_real(const VALUE self) {
     💎self_to_ptrθ_data
-    if (!(ptrθ_flag_is_cache_synced(data))) {
-        ptrθ_flag_set_cache_synced(data);
-        VALUE the_val = DBL2NUM(data->angle_value);
-        💎set_field("@real", the_val)
-        return the_val;
+    if (!(ptrθ_flag_is_constant(data))) {
+        if (!(ptrθ_flag_is_cache_synced(data))) {
+            ptrθ_flag_set_cache_synced(data);
+            VALUE the_val = DBL2NUM(data->angle_value);
+            💎set_field("@real", the_val)
+            return the_val;
+        }
+        return 💎get_field("@real")
+    } else {
+        return 💎get_field("@real")
     }
-    return 💎get_field("@real")
 }
 
 ptrθ_func(θ_m_is_right,
@@ -1749,11 +1784,13 @@ static inline void startup_step1_before_loading_extension(void) {
     cached_rb_intern_is_finite        = rb_intern("finite?");
     cached_rb_intern_is_empty        = rb_intern("empty?");
 
-    ⓜruuuby          = 💎add_global_module("Ruuuby")
-    ⓜruuuby_metadata = 💎add_module_under(ⓜruuuby, "MetaData")
-    ⓜruuuby_engine   = 💎add_class_under(ⓜruuuby_metadata, rb_cObject, "RuuubyEngine")
+    ⓜruuuby            = 💎add_global_module("Ruuuby")
+    ⓜruuuby_metadata   = 💎add_module_under(ⓜruuuby, "MetaData")
+    ⓜruuuby_engine     = 💎add_class_under(ⓜruuuby_metadata, rb_cObject, "RuuubyEngine")
+    ⓜruuuby_engine_jit = 💎add_module_under(ⓜruuuby_engine, "F22B01")
+    ⓜruuuby_engine_gc  = 💎add_module_under(ⓜruuuby_engine, "F22B00")
 
-    💎add_singleton_func_0args_to(ⓜruuuby_engine, "memory_peak_this_runtime", m_memory_peak_this_runtime)
+    ⓜruuuby_engine_singleton = rb_singleton_class(ⓜruuuby_engine);
 
     💎add_module_under(ⓜruuuby, "Attribute")
     💎add_module_under(ⓜruuuby, "Includable")
@@ -1796,12 +1833,6 @@ static void startup_step2_add_ruuuby_c_extensions(void) {
 
     💎add_public_func_0args_to(R_NIL, "empty?", m_nil_empty)
 
-    💎add_public_func_0args_to(R_FALSE, "to_b?", m_bool_to_b)
-    💎add_public_func_0args_to(R_FALSE, "to_i", m_false_to_i)
-
-    💎add_public_func_0args_to(R_TRUE, "to_b?",  m_bool_to_b)
-    💎add_public_func_0args_to(R_TRUE, "to_i", m_true_to_i)
-
     init_f05()
 
     💎add_public_func_0args_to(R_ARY, "remove_empty!"    , m_ary_remove_empty)
@@ -1811,44 +1842,24 @@ static void startup_step2_add_ruuuby_c_extensions(void) {
 
     init_f27()
 
+#ifdef RUUUBY_F28_B09
+    init_f28_b09();
+#endif
+
+    init_f36()
+
     rb_gc_adjust_memory_usage((size_t) (56 * 4));
-    💎add_const_theta_angle("ANGLE_GOLDEN",      Ⴔ_RAD, THETA_MODE_RAD, cached_const_angle_golden)
-    💎add_const_theta_angle("ANGLE_TAU",         𝞽, THETA_MODE_RAD, cached_const_angle_tau)
-    💎add_const_theta_angle("ANGLE_RIGHT",       (π / 2.0), THETA_MODE_RAD, cached_const_angle_right)
-    💎add_const_theta_angle("ANGLE_STRAIGHT",    (π), THETA_MODE_RAD, cached_const_angle_straight)
+    💎add_const_theta_angle("ANGLE_GOLDEN",   Ⴔ_RAD, THETA_MODE_RAD, cached_const_angle_golden)
+    💎add_const_theta_angle("ANGLE_TAU",      𝞽, THETA_MODE_RAD, cached_const_angle_tau)
+    💎add_const_theta_angle("ANGLE_RIGHT",    (π / 2.0), THETA_MODE_RAD, cached_const_angle_right)
+    💎add_const_theta_angle("ANGLE_STRAIGHT", (π), THETA_MODE_RAD, cached_const_angle_straight)
 
-    💎add_const_flt("CONST_EULER_MASCHERONI",     γ)
-    💎add_const_flt("CONST_PYTHAGORAS",           sqrt(2.0))
-    💎add_const_flt("RATIO_GOLDEN",               𝚽)
-    💎add_const_flt("RATIO_GOLDEN_PERPENDICULAR", φ)
-    💎add_const_flt("RATIO_GOLDEN_SUPER",         Ψ)
-    💎add_const_flt("RATIO_PLASTIC",              ρ)
-    💎add_const_flt("RATIO_SILVER",               δ)
+    💎add_const_flt("CONST_EULER_MASCHERONI",  γ)
 
-    VALUE ref;
-    💎add_const_flt_wo_ref("ONE_HALF"      , 0.50, & ref);
-    💎add_const_flt_wo_ref("ONE_THIRD"     , (1.0/3.0), & ref);
-    💎add_const_flt_wo_ref("TWO_THIRDS"    , (2.0/3.0), & ref);
-    💎add_const_flt_wo_ref("ONE_FOURTH"    , 0.25, & ref);
-    💎add_const_flt_wo_ref("THREE_FOURTHS" , 0.75, & ref);
-    💎add_const_flt_wo_ref("ONE_FIFTH"     , 0.20, & ref);
-    💎add_const_flt_wo_ref("TWO_FIFTHS"    , 0.40, & ref);
-    💎add_const_flt_wo_ref("THREE_FIFTHS"  , 0.60, & ref);
-    💎add_const_flt_wo_ref("FOUR_FIFTHS"   , 0.80, & ref);
-    💎add_const_flt_wo_ref("ONE_SIXTH"     , (1.0/6.0), & ref);
-    💎add_const_flt_wo_ref("FIVE_SIXTH"    , (5.0/6.0), & ref);
-    💎add_const_flt_wo_ref("ONE_SEVENTH"   , (1.0/7.0), & ref);
-    💎add_const_flt_wo_ref("ONE_EIGHTH"    , 0.125, & ref);
-    💎add_const_flt_wo_ref("THREE_EIGHTHS" , 0.375, & ref);
-    💎add_const_flt_wo_ref("FIVE_EIGHTHS"  , 0.625, & ref);
-    💎add_const_flt_wo_ref("SEVEN_EIGHTHS" , 0.875, & ref);
-    💎add_const_flt_wo_ref("ONE_NINTH"     , (1.0/9.0), & ref);
-    💎add_const_flt_wo_ref("ONE_TENTH"     , 0.10, & ref);
-
-    💎add_singleton_func_1args_to(Ⓒtheta_angle, "new_radian", θ_m_init_as_rad)
-    💎add_singleton_func_1args_to(Ⓒtheta_angle, "new_degree", θ_m_init_as_dgr)
-    💎add_singleton_func_1args_to(Ⓒtheta_angle, "new_gon", θ_m_init_as_gon)
-    💎add_singleton_func_1args_to(Ⓒtheta_angle, "new_turn", θ_m_init_as_trn)
+    💎add_const_flt("RATIO_GOLDEN",            𝚽)
+    💎add_const_flt("RATIO_GOLDEN_SUPER",      Ψ)
+    💎add_const_flt("RATIO_PLASTIC",           ρ)
+    💎add_const_flt("RATIO_SILVER",            δ)
 
     💎add_singleton_func_2args_to(ⓜcombinatorics, "permutations", m_combinatorics_permutations)
     💎add_singleton_func_2args_to(ⓜcombinatorics, "n_choose_k", m_combinatorics_n_choose_k)
@@ -1877,24 +1888,179 @@ static void startup_step2_add_ruuuby_c_extensions(void) {
     💎add_public_func_1args_to(ⓜtrigonometry, "sec2", m_sec2)
 }
 
-void Init_ruby_class_mods(void) {
-    SimpleTimer simple_timer;
-    simple_timer_start(& simple_timer);
+/*                               __
+                                /\ \                                         __
+   _ __   __  __  __  __  __  __\ \ \____  __  __         __    ___      __ /\_\    ___      __
+  /\`'__\/\ \/\ \/\ \/\ \/\ \/\ \\ \ '__`\/\ \/\ \      /'__`\/' _ `\  /'_ `\/\ \ /' _ `\  /'__`\
+  \ \ \/ \ \ \_\ \ \ \_\ \ \ \_\ \\ \ \L\ \ \ \_\ \    /\  __//\ \/\ \/\ \L\ \ \ \/\ \/\ \/\  __/
+   \ \_\  \ \____/\ \____/\ \____/ \ \_,__/\/`____ \   \ \____\ \_\ \_\ \____ \ \_\ \_\ \_\ \____\
+    \/_/   \/___/  \/___/  \/___/   \/___/  `/___/> \   \/____/\/_/\/_/\/___L\ \/_/\/_/\/_/\/____/
+                                               /\___/                    /\____/
+                                               \/__/                     \_/__/                   */
 
-    establish_logging_mode();
+#ifdef RUUUBY_F98_TIMER
+    typedef struct SimpleTimerStruct {
+        struct timespec time_start;
+        struct timespec time_end;
+    } SimpleTimer;
+#endif
 
-    startup_step0_load_f98()
+typedef struct Ruuuby_Engine_Stats {
+    unsigned char flag_f28_b09;
+    #ifdef RUUUBY_F98_COMPILER
+        unsigned char runtime_compiler_version;
+    #endif
+    #ifdef RUUUBY_F98_MEMORY
+        double max_memory_before_extensions_loaded;
+        double max_memory_after_extensions_loaded;
+    #endif
+    #ifdef RUUUBY_F98_TIMER
+        SimpleTimer simple_timer;
+    #endif
+} RuuubyEngineStats;
 
-    startup_step1_before_loading_extension();
-    startup_step2_add_ruuuby_c_extensions();
-    startup_step4_load_needed_ruuuby_files();
+#ifdef RUUUBY_F98_DEBUG
 
-    startup_step5_protect_against_gc();
+    #ifdef RUUUBY_F98_MEMORY
+        // @see https://www.man7.org/linux/man-pages/man2/getrusage.2.html
+        // @see https://pubs.opengroup.org/onlinepubs/009695399/functions/getrusage.html
 
-    simple_timer_end(& simple_timer);
-    simple_timer_print_delta(& simple_timer, "Ruuuby-Extensions loaded in");
+        static double memory_peak_this_runtime(void);
+        static double memory_peak_this_runtime() {
+            struct rusage r_usage;
+            getrusage(RUSAGE_SELF, & r_usage);
+            return ((double) (r_usage.ru_maxrss)) / 1024.0;
+        }
 
-    if (RUUUBY_FULL_DEBUG == FLAG_TRUE) {
-        rb_funcall(ⓜruuuby_engine, rb_intern("get_mem_stats"), 2, DBL2NUM(memory_at_start), DBL2NUM(memory_peak_this_runtime()));
+        #define stats_memory_track(rusage){\
+            getrusage(RUSAGE_SELF, rusage);\
+        }
+
+        //static inline void print_flt_as_mem(const double dbl) {
+        //    printf("KB{%f}, MB{%f}\n", dbl, dbl / 1024.0);
+        //}
+
+        static VALUE m_memory_peak_this_runtime(const VALUE self);
+        static VALUE m_memory_peak_this_runtime(const VALUE self){return DBL2NUM(memory_peak_this_runtime());}
+    #endif // end: {RUUUBY_F98_MEMORY}
+
+    #ifdef RUUUBY_F98_COMPILER
+        static inline VALUE compiler_version_to_s(const unsigned short compiler_version) __attribute__ ((const));
+        static inline VALUE compiler_version_to_s(const unsigned short compiler_version) {💎parse_compiler_version_to_string(compiler_version);}
+
+        // @see https://stackoverflow.com/questions/14737104/what-is-the-default-c-std-standard-version-for-the-current-gcc-especially-on-u
+        static inline unsigned short establish_compiler_version(void) __attribute__ ((const));
+        static inline unsigned short establish_compiler_version(void) {
+            #ifdef __STRICT_ANSI__
+                #ifdef __STDC_VERSION__
+                    switch(__STDC_VERSION__){
+                        case VAL_STD_VERSION_C_99:
+                            return FLAG_RUNTIME_VERSION_C_99;
+                        case VAL_STD_VERSION_C_11:
+                            return FLAG_RUNTIME_VERSION_C_11;
+                        case VAL_STD_VERSION_C_17:
+                            return FLAG_RUNTIME_VERSION_C_17;
+                        default:
+                            return FLAG_RUNTIME_VERSION_DEFAULT;
+                    }
+                #else
+                    return FLAG_RUNTIME_VERSION_C_89;
+                #endif
+            #else
+                #ifdef __STDC_VERSION__
+                    switch(__STDC_VERSION__) {
+                        case VAL_STD_VERSION_GNU_99:
+                            return FLAG_RUNTIME_VERSION_GNU_99;
+                        case VAL_STD_VERSION_GNU_11:
+                            return FLAG_RUNTIME_VERSION_GNU_11;
+                        case VAL_STD_VERSION_GNU_17:
+                            return FLAG_RUNTIME_VERSION_GNU_17;
+                        default:
+                            return FLAG_RUNTIME_VERSION_DEFAULT;
+                    }
+                #else
+                    return FLAG_RUNTIME_VERSION_GNU_89;
+                #endif
+            #endif
+        }
+    #endif // end: {RUUUBY_F98_COMPILER}
+
+    #ifdef RUUUBY_F98_TIMER
+        void simple_timer_start(SimpleTimer * simple_timer);
+        void simple_timer_end(SimpleTimer * simple_timer);
+
+        void simple_timer_start(SimpleTimer * simple_timer) {
+            clock_gettime(CLOCK_MONOTONIC_RAW, & (simple_timer->time_start));
+        }
+
+        void simple_timer_end(SimpleTimer * simple_timer) {
+            clock_gettime(CLOCK_MONOTONIC_RAW, & (simple_timer->time_end));
+        }
+    #endif // end: {RUUUBY_F98_TIMER}
+
+    static void engine_start_up(RuuubyEngineStats * engine);
+    static void engine_start_up(RuuubyEngineStats * engine) {
+        #ifdef RUUUBY_F98_TIMER
+            simple_timer_start(& (engine->simple_timer));
+        #endif
+        #ifdef RUUUBY_F98_MEMORY
+            engine->max_memory_before_extensions_loaded = memory_peak_this_runtime();
+        #endif
     }
+
+    static void engine_start_up_finished(RuuubyEngineStats * engine);
+    static void engine_start_up_finished(RuuubyEngineStats * engine) {
+        #ifdef RUUUBY_F98_COMPILER
+            engine->runtime_compiler_version = establish_compiler_version();
+            rb_funcall(ⓜruuuby_engine, STATS_FUNC_ID_COMPILER, 1, compiler_version_to_s(engine->runtime_compiler_version));
+        #endif
+        #ifdef RUUUBY_F98_MEMORY
+            engine->max_memory_after_extensions_loaded = memory_peak_this_runtime();
+            rb_funcall(ⓜruuuby_engine, STATS_FUNC_ID_MEMORY, 2, DBL2NUM(engine->max_memory_before_extensions_loaded), DBL2NUM(engine->max_memory_after_extensions_loaded));
+        #endif
+        #ifdef RUUUBY_F98_TIMER
+            simple_timer_end(& (engine->simple_timer));
+
+            const uint64_t delta_us = (engine->simple_timer.time_end.tv_sec - engine->simple_timer.time_start.tv_sec) * 1000000 + (engine->simple_timer.time_end.tv_nsec - engine->simple_timer.time_start.tv_nsec) / 1000;
+            const unsigned int delta_us_int = (unsigned int) delta_us;
+            rb_funcall(ⓜruuuby_engine, STATS_FUNC_ID_TIMER, 1, UINT2NUM(delta_us_int));
+        #endif
+
+        rb_funcall(ⓜruuuby_engine, STATS_FUNC_ID_PRINT, 0);
+    }
+#endif // end: {RUUUBY_F98_DEBUG}
+
+void Init_ruby_class_mods(void) {
+    RuuubyEngineStats ruuuby_engine;
+
+    #ifdef RUUUBY_F28_B09
+        ruuuby_engine.flag_f28_b09 = FLAG_TRUE;
+        rb_define_global_const("RUUUBY_F28_B09", Qtrue);
+    #else
+        ruuuby_engine.flag_f28_b09 = FLAG_FALSE;
+        rb_define_global_const("RUUUBY_F28_B09", Qfalse);
+    #endif
+
+    #ifndef RUUUBY_F98_DEBUG
+        startup_step0_load_f98()
+        startup_step1_before_loading_extension();
+        startup_step2_add_ruuuby_c_extensions();
+        startup_step4_load_needed_ruuuby_files();
+        startup_step5_protect_against_gc();
+    #else
+        engine_start_up(& ruuuby_engine);
+
+        startup_step0_load_f98()
+        startup_step1_before_loading_extension();
+
+        #ifdef RUUUBY_F98_MEMORY
+            rb_define_module_function(ⓜruuuby_engine_gc, "mem_usage_peak", m_memory_peak_this_runtime, 0);
+        #endif
+
+        startup_step2_add_ruuuby_c_extensions();
+        startup_step4_load_needed_ruuuby_files();
+        startup_step5_protect_against_gc();
+
+        engine_start_up_finished(& ruuuby_engine);
+    #endif
 }

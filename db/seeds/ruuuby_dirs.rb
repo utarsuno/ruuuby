@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-dir_base                   = ::RuuubyDir.spawn(💎.engine.api_git.repo.workdir, 'ruuuby', false)
+dir_base                   = ::RuuubyDir.spawn(💎.engine.path_base, 'ruuuby', false)
 @dir_ext                   = dir_base.spawn_dir('ext/', 'ext', false)
 @dir_ext_ruby_class_mods   = @dir_ext.spawn_dir('ruby_class_mods/', 'ruby_class_mods', false)
 @dir_db                    = dir_base.spawn_dir('db/', 'db', false)

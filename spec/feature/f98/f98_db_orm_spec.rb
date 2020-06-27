@@ -10,7 +10,7 @@ RSpec.describe 'f98_db_orm' do
     end
     context 'defines behaviors' do
       it 'defines{b00}' do
-        audit_feature_behavior(f98, f98_b00, 'b00', 'can set the $PROGRAM_NAME')
+        audit_feature_behavior(f98, f98_b00, 'b00', 'dynamically add `macros` w/ `mkmf` in order to (during pre-processing) include/exclude feature-code to be compiled w/ or w/o')
       end
 
       it 'defines{b01}' do

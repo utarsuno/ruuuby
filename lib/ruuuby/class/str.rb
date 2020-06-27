@@ -44,7 +44,7 @@ module ::Ruuuby
         # @return [String] self, with all content (leading up to arg{terminating_pattern}) removed
         def remove_until(stop_at, num_matches=1)
           🛑str❓(:stop_at, stop_at, :∉∅)
-          🛑 ArgumentError.🆕("| c{String}-> m{remove_until} got arg(num_matches){#{num_matches.to_s}} which ∉ [Integer, Float] |") unless (num_matches.int? || num_matches.flt?)
+          🛑int❓(:num_matches, num_matches)
           return '' if self == stop_at
           🛑 RuntimeError.🆕("| c{String}-> m{remove_until} got arg(stop_at){#{stop_at}} which is not contained in self{#{self}} |") if (self.∅? || self.∌?(stop_at))
           🛑 ArgumentError.🆕("| c{String}-> m{remove_until} got arg(stop_at){#{stop_at}}-len{#{stop_at.𝔠.to_s}} which is longer than self{#{self}} of len{#{self.𝔠.to_s}} |") if stop_at.𝔠 > self.𝔠
@@ -170,36 +170,6 @@ module ::Ruuuby
 
         # @return [Boolean] true, if this `String` is length 1 with a it's character being a digit (ascii value between 48 and 57)
         def digit?; self.𝔠₁? && self.ord < 58 && self.ord > 47; end
-
-        # TODO: temporary design
-        #
-        # @raise [RuntimeError] if this `String` is not expressing a radian expression
-        #
-        # @return [Float]
-        def to_radian
-          if self.match?(::String.syntax_trigonometric_angle)
-            parts = self.split('π').remove_empty!
-            if parts.length == 0
-              180.0
-            elsif parts.length == 1
-              if parts[0].∋?('/')
-                180.0 / (parts[0].split('/')[-1].to_i)
-              else
-                180.0 * parts[0].to_i
-              end
-            else
-              multiplier = parts[0].to_i
-              if parts[1].∋?('/')
-                (180.0 * multiplier) / (parts[1].split('/')[-1].to_i)
-              else
-                (180.0 * multiplier) * parts[1].to_i
-              end
-            end
-          else
-            return 0 if self == '0'
-            🛑 RuntimeError.🆕("| c{String}-> m{to_radian} self{#{self}} is not a radian expression |")
-          end
-        end
 
         # @return [Boolean] true, if this `String` can be converted into a number w/o raising any exception
         def to_num?
@@ -476,9 +446,6 @@ class ::String
     #
     # @type [String]
     LEN_ANY               = '[+-]?\d+?((\.\d+e?\d*)|(e\d+))?'.❄️
-
-    # @type [String]
-    TRIGONOMETRIC_ANGLE   = '(\d+)?π(/\d+)?'.❄️
 
     ❄️
   end

@@ -8,30 +8,21 @@
 #define CRUUUBY_H2_EXTENSION_MEMORY "defined(CRUUUBY_H2_EXTENSION_MEMORY)"
 
 /*____________________________________________________________________________________________________________________
-  __        __        ___
- /  `  /\  /  ` |__| |__
- \__, /~~\ \__, |  | |___
-_____________________________________________________________________________________________________________________ */
-
-static unsigned char RUUUBY_FULL_DEBUG = FLAG_FALSE;
-static double memory_at_start;
-
-/*____________________________________________________________________________________________________________________
  __        __        ___      __        __
 /  `  /\  /  ` |__| |__  .   |__) |  | |__) \ /
 \__, /~~\ \__, |  | |___ .   |  \ \__/ |__)  |
 _____________________________________________________________________________________________________________________ */
 
-static VALUE n_no_empty;
-static VALUE n_in_set_superscripts;
-static VALUE n_in_set_natural;
-static VALUE n_in_set_whole;
-static VALUE n_in_set_integer;
-static VALUE n_in_set_universal;
-static VALUE n_in_set_universal_w_str_allowed;
-static VALUE n_in_set_natural_w_str_allowed;
-static VALUE n_in_set_whole_w_str_allowed;
-static VALUE n_in_set_integer_w_str_allowed;
+static VALUE 🅽_no_empty;
+static VALUE 🅽_superscripts;
+static VALUE 🅽_natural;
+static VALUE 🅽_whole;
+static VALUE 🅽_integer;
+static VALUE 🅽_universal;
+static VALUE 🅽_universal_w_str_allowed;
+static VALUE 🅽_natural_w_str_allowed;
+static VALUE 🅽_whole_w_str_allowed;
+static VALUE 🅽_integer_w_str_allowed;
 
 static VALUE cached_flt_nan;
 static VALUE cached_flt_inf;
@@ -43,6 +34,9 @@ static VALUE cached_module_param_err;
 static VALUE ⓜruuuby;
 static VALUE ⓜruuuby_metadata;
 static VALUE ⓜruuuby_engine;
+static VALUE ⓜruuuby_engine_jit;
+static VALUE ⓜruuuby_engine_gc;
+static VALUE ⓜruuuby_engine_singleton;
 
 static VALUE ⓜnumber_theory;
 static VALUE ⓜcombinatorics;
@@ -53,6 +47,7 @@ static VALUE cached_global_sym_many_args;
 static VALUE Ⓒbig_decimal;
 static VALUE Ⓒset;
 static VALUE Ⓒtheta_angle;
+static VALUE Ⓒtime_series_data;
 
 static VALUE cached_const_angle_golden;
 static VALUE cached_const_angle_tau;

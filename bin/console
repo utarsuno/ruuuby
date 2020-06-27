@@ -3,7 +3,6 @@
 
 RUBYOPT='-W:no-deprecated -W:no-experimental'
 ENV['RUUUBY_F01']="b01|b03|b04{debug}"
-ENV['RUUUBY_FULL_DEBUG']='f'
 require 'bundler/setup'
 require 'ruuuby'
 
@@ -13,18 +12,6 @@ require 'ruuuby'
 # (If you use this, don't forget to add pry to your Gemfile!)
 # require "pry"
 # Pry.start
-
-#module ::Ruuuby
-#  module RefinementTest
-#    refine ::String do
-#      def to_class
-#        puts '::Ruuuby::RefinementTest::String#to_class'
-#      end
-#    end
-#  end
-#end
-#
-#using ::Ruuuby::RefinementTest
 
 require 'irb'
 IRB.start(__FILE__)

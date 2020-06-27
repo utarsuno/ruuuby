@@ -12,7 +12,7 @@ RSpec.describe 'f27_b01' do
           the_angle = θ°(90)
           the_angle += θʳ(π / 2.0)
           the_angle += θᵍ(100.0)
-          the_angle += θ𝞽(¼)
+          the_angle += θ𝞽(0.25)
           expect(the_angle).to eq(::Math::ANGLE_TAU)
         end
 
@@ -22,7 +22,7 @@ RSpec.describe 'f27_b01' do
             the_angle += θ°(45)
             the_angle += θʳ(π / 4.0)
             the_angle += θᵍ(50.0)
-            the_angle += θ𝞽(⅛)
+            the_angle += θ𝞽(1.0 / 8.0)
           end
           expect(the_angle).to eq(::Math::ANGLE_TAU)
         end

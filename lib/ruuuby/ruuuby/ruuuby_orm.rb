@@ -9,7 +9,7 @@ module Ruuuby
   module MetaData
 
     # `💎.engine.orm`
-    class RuuubyORM < ::Ruuuby::MetaData::RuuubyEngineComponent
+    class RuuubyORM < ::Ruuuby::MetaData::RuuubyAPIComponent
 
       attr_accessor :ruuuby_file_version, :state_flag, :expected_tables
 
@@ -118,7 +118,7 @@ module Ruuuby
 
       # wip
       def full_project_check
-        path    = "#{@engine.api_git.repo.workdir}.ruby-version"
+        path    = "#{@engine.path_base}.ruby-version"
         content = ::File.read(path).to_s
         ruuuby  = @ruuuby_file_version.generate_source.to_s
 
@@ -176,5 +176,8 @@ module Ruuuby
   end
 end
 
-
 # -------------------------------------------- ⚠️ --------------------------------------------
+
+# TODO: switch to Postgres (gem 'pg')
+# TODO: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/PostgreSQLAdapter.html
+# TODO: https://medium.com/carwow-product-engineering/5-things-i-wish-my-grandfather-told-me-about-activerecord-and-postgres-93416faa09e7

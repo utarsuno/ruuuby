@@ -1,8 +1,9 @@
+# encoding: UTF-8
 
-@v0_0_00 = RuuubyRelease.spawn(0, 0, 0)
+@v0_0_00 = ::RuuubyRelease.spawn(0, 0, 0)
 @v0_0_00.add_comments('initial project creation')
 
-@v0_0_01 = RuuubyRelease.spawn(0, 0, 1)
+@v0_0_01 = ::RuuubyRelease.spawn(0, 0, 1)
 @v0_0_01.add_gem('bundler', '2.1.4', true, false, %w(CI), '::Bundler', '::VERSION')
 @v0_0_01.add_gem('rake', '13.0.1', true, false, %w(EXT), '::Rake', '::VERSION')
 @v0_0_01.add_gem('rspec', '3.9.0', true, false, %w(QA), '::RSpec', '::Version::STRING')
@@ -14,10 +15,10 @@
 @v0_0_01.add_file('bin/audit', '', 'for running rdoc, rspecs, and coverage reports')
 @v0_0_01.changelog.added_method_to_class(@f04, :empty?, ::NilClass)
 
-@v0_0_02 = RuuubyRelease.spawn(0, 0, 2)
+@v0_0_02 = ::RuuubyRelease.spawn(0, 0, 2)
 @v0_0_02.changelog.added_method_to_class(@f06, :bool?, ::Object)
 
-@v0_0_03 = RuuubyRelease.spawn(0, 0, 3)
+@v0_0_03 = ::RuuubyRelease.spawn(0, 0, 3)
 @v0_0_03.add_comments(
     [
         'modify `Ruuuby::Enum::Emoji` from `Strings` to `Symbols`',
@@ -30,31 +31,32 @@
 @v0_0_03.changelog.added_method_to_class(@f06, :ary?, ::Object)
 @v0_0_03.changelog.added_method_to_class(@f07, :remove_empty!, ::Array)
 
-@v0_0_04 = RuuubyRelease.spawn(0, 0, 4)
-@v0_0_04.add_gem('rspec-benchmark', '0.5.1', true, false, %w(QA), '::RSpec::Benchmark', '::VERSION')
+@v0_0_04 = ::RuuubyRelease.spawn(0, 0, 4)
+# TODO: originally added as version{0.5.1}, release{0.0.43->44} updated it to {0.6.0}
+@v0_0_04.add_gem('rspec-benchmark', '0.6.0', true, false, %w(QA), '::RSpec::Benchmark', '::VERSION')
 #v0_0_04.add_comments('update `ruuuby.gemspec` to require ruby `2.7.0`')
 
-@v0_0_05 = RuuubyRelease.spawn(0, 0, 5)
-@v0_0_06 = RuuubyRelease.spawn(0, 0, 6)
+@v0_0_05 = ::RuuubyRelease.spawn(0, 0, 5)
+@v0_0_06 = ::RuuubyRelease.spawn(0, 0, 6)
 
-@v0_0_07 = RuuubyRelease.spawn(0, 0, 7)
+@v0_0_07 = ::RuuubyRelease.spawn(0, 0, 7)
 @v0_0_07.add_gem('rake-compiler', '1.1.0', true, false, %w(EXT), nil, nil)
 
-@v0_0_08 = RuuubyRelease.spawn(0, 0, 8)
-@v0_0_09 = RuuubyRelease.spawn(0, 0, 9)
-@v0_0_10 = RuuubyRelease.spawn(0, 0, 10)
-@v0_0_11 = RuuubyRelease.spawn(0, 0, 11)
-@v0_0_12 = RuuubyRelease.spawn(0, 0, 12)
-@v0_0_13 = RuuubyRelease.spawn(0, 0, 13)
+@v0_0_08 = ::RuuubyRelease.spawn(0, 0, 8)
+@v0_0_09 = ::RuuubyRelease.spawn(0, 0, 9)
+@v0_0_10 = ::RuuubyRelease.spawn(0, 0, 10)
+@v0_0_11 = ::RuuubyRelease.spawn(0, 0, 11)
+@v0_0_12 = ::RuuubyRelease.spawn(0, 0, 12)
+@v0_0_13 = ::RuuubyRelease.spawn(0, 0, 13)
 
-@v0_0_14 = RuuubyRelease.spawn(0, 0, 14)
+@v0_0_14 = ::RuuubyRelease.spawn(0, 0, 14)
 @v0_0_14.add_gem('tty-command', '0.9.0', true, true, %W(CLI), '::TTY::Command', '::VERSION')
 
-@v0_0_15 = RuuubyRelease.spawn(0, 0, 15)
-@v0_0_16 = RuuubyRelease.spawn(0, 0, 16)
-@v0_0_17 = RuuubyRelease.spawn(0, 0, 17)
+@v0_0_15 = ::RuuubyRelease.spawn(0, 0, 15)
+@v0_0_16 = ::RuuubyRelease.spawn(0, 0, 16)
+@v0_0_17 = ::RuuubyRelease.spawn(0, 0, 17)
 
-@v0_0_18 = RuuubyRelease.spawn(0, 0, 18)
+@v0_0_18 = ::RuuubyRelease.spawn(0, 0, 18)
 @v0_0_18.add_comments(
     [
         'renaming existing func(`🛑str_or_ary❓`) to(`🛑countable❓`); it now checks for `Set` as well',
@@ -92,7 +94,7 @@
 @v0_0_18.changelog.added_method_to_class(@f10, :🏠, ::Method)
 
 
-@v0_0_19 = RuuubyRelease.spawn(0, 0, 19)
+@v0_0_19 = ::RuuubyRelease.spawn(0, 0, 19)
 @v0_0_19.add_comments(
     [
         "add data-validation and more narrowly define data types for `ORM`, still lots of TODOs here",
@@ -123,7 +125,7 @@
 @v0_0_19.changelog.added_method_to_class(@f16, :⁻⁸, ::Object)
 @v0_0_19.changelog.added_method_to_class(@f16, :⁻⁹, ::Object)
 
-@v0_0_20 = RuuubyRelease.spawn(0, 0, 20)
+@v0_0_20 = ::RuuubyRelease.spawn(0, 0, 20)
 @v0_0_20.add_comments(
     [
         '(`f98`) add consts `RATIO_DEGREES_TO_RADIAN` and `RATIO_RADIANS_TO_DEGREE` into module `Math`',
@@ -142,7 +144,7 @@
 @v0_0_20.changelog.added_method_to_class(@f17, :∠ᶜ, ::Kernel)
 @v0_0_20.changelog.added_method_to_class(@f17, :∠°, ::Kernel)
 
-@v0_0_21 = RuuubyRelease.spawn(0, 0, 21)
+@v0_0_21 = ::RuuubyRelease.spawn(0, 0, 21)
 @v0_0_21.add_file('bin/console_db', '', 'same as `/bin/console` but also pre-loads `db/seed.rb`')
 @v0_0_21.add_file('lib/ruuuby/class/re.rb', ::Regexp, '', @f20)
 #@v0_0_21.add_file('app/models/db_schema.rb', ::RuuubyDBSchema, '`temporary design`', @f15)
@@ -167,7 +169,7 @@
 @v0_0_21.changelog.added_method_to_class(@f09, :∉?, ::Module)
 @v0_0_21.changelog.added_method_to_class(@f14, :🛑ℤ❓, ::Object)
 
-@v0_0_22 = RuuubyRelease.spawn(0, 0, 22)
+@v0_0_22 = ::RuuubyRelease.spawn(0, 0, 22)
 @v0_0_22.add_file('lib/ruuuby/class/sym.rb', ::Symbol, '', @f10)
 @v0_0_22.add_file('lib/ruuuby/module/attribute/includable/attribute_cardinality.rb', ::Ruuuby::Attribute::Includable::Cardinality, '', @f04)
 @v0_0_22.add_file('lib/ruuuby/module/attribute/includable/attribute_subscript_indexing.rb', ::Ruuuby::Attribute::Includable::SubscriptIndexing, '', @f10)
@@ -213,7 +215,7 @@
 @v0_0_22.changelog.added_method_to_class(@f21, :to_num, ::String)
 @v0_0_22.changelog.added_method_to_class(@f21, :to_num?, ::String)
 
-@v0_0_23 = RuuubyRelease.spawn(0, 0, 23)
+@v0_0_23 = ::RuuubyRelease.spawn(0, 0, 23)
 @v0_0_23.add_comments(
     [
         '(starting-point) add support for representing `Complex Infinity` through Symbol(`∞ℂ`)',
@@ -232,7 +234,7 @@
 @v0_0_23.changelog.added_method_to_class(@f17, :¿?, ::Float)
 @v0_0_23.changelog.added_method_to_class(@f17, :∞ℂ?, ::Float)
 
-@v0_0_24 = RuuubyRelease.spawn(0, 0, 24)
+@v0_0_24 = ::RuuubyRelease.spawn(0, 0, 24)
 @v0_0_24.add_file('lib/ruuuby/configs.rb', '', '', @f23)
 @v0_0_24.add_comments(
     [
@@ -241,7 +243,7 @@
     ]
 )
 
-@v0_0_25 = RuuubyRelease.spawn(0, 0, 25)
+@v0_0_25 = ::RuuubyRelease.spawn(0, 0, 25)
 @v0_0_25.add_file('lib/ruuuby/global_funcs.rb', '', '', @f15)
 @v0_0_25.add_file('ext/ruby/class_mods/c0_constants.h', '', '', @f98)
 @v0_0_25.add_file('ext/ruby/class_mods/c1_typed_checks.h', '', '', @f98)
@@ -270,7 +272,7 @@
 @v0_0_25.changelog.added_method_to_class(@f17, :tan°, TOPLEVEL_BINDING)
 @v0_0_25.changelog.added_method_to_class(@f17, :to_radian, ::String)
 
-@v0_0_26 = RuuubyRelease.spawn(0, 0, 26)
+@v0_0_26 = ::RuuubyRelease.spawn(0, 0, 26)
 @v0_0_26.add_file('lib/ruuuby/module/attribute/includable/notation_set_mathematics.rb', ::Ruuuby::Attribute::Includable::Notation::SetMathematics, '', @f09)
 @v0_0_26.add_file('lib/ruuuby/ruuuby/ruuuby_metadata.rb', ::Ruuuby::MetaData, 'design pending')
 @v0_0_26.remove_file('conditionals/ruuuby_configs.rb', 'configs not needed during runtime should be dynamically handled, not with conditionally loaded files (created explicitly for such need)')
@@ -293,7 +295,7 @@
 @v0_0_26.changelog.added_method_to_class(@f15, :get_next_version_uid, ::RuuubyRelease)
 @v0_0_26.changelog.added_method_to_class(@f15, :get_latest_version_uid, ::RuuubyRelease)
 
-@v0_0_27 = RuuubyRelease.spawn(0, 0, 27)
+@v0_0_27 = ::RuuubyRelease.spawn(0, 0, 27)
 @v0_0_27.add_gem('schema_plus_foreign_keys', '0.1.8', true, false, %W(DB), nil, nil)
 @v0_0_27.add_file('db/seeds/git_commits.rb', '', '', @f15)
 @v0_0_27.add_file('db/seeds/ruuuby_features.rb', '', '', @f15)
@@ -310,7 +312,7 @@
 )
 @v0_0_27.changelog.added_method_to_class(@f12, :dirname⁴, ::File)
 
-@v0_0_28 = RuuubyRelease.spawn(0, 0, 28)
+@v0_0_28 = ::RuuubyRelease.spawn(0, 0, 28)
 @v0_0_28.add_file('lib/ruuuby/ruuuby/ruuuby_orm.rb', '::Ruuuby::MetaData::RuuubyORM', '', @f15)
 @v0_0_28.add_file('lib/ruuuby/ruuuby/routine_cli.rb', '::Ruuuby::Routine::CommandCLI', '', @f15)
 @v0_0_28.remove_file('app/models/db_schema.rb', 'seemed like a bad location')
@@ -347,7 +349,7 @@
 @v0_0_28.changelog.added_method_to_class(@f24, :to_🐫, ::String)
 @v0_0_28.changelog.added_method_to_class(@f24, :to_🐍, ::String)
 
-@v0_0_29 = RuuubyRelease.spawn(0, 0, 29)
+@v0_0_29 = ::RuuubyRelease.spawn(0, 0, 29)
 @v0_0_29.add_file('lib/ruuuby/ruuuby/engine/ruuuby_engine.rb', '::Ruuuby::MetaData::RuuubyEngine', 'alias{`💎.engine`}', @f15)
 @v0_0_29.add_file('lib/ruuuby/ruuuby/engine/ruuuby_logging.rb', '::Ruuuby::MetaData::RuuubyEngine.instance.logger', 'alias{`💎.engine.logger`}', @f15)
 @v0_0_29.add_file('lib/ruuuby/ruuuby/metadata/ruuuby_metadata_constants.rb', ::Ruuuby::MetaData, '', @f15)
@@ -374,7 +376,7 @@
 @v0_0_29.changelog.added_method_to_class(@f10, :engine, ::Ruuuby::MetaData)
 @v0_0_29.changelog.added_method_to_class(@f12, :insert_line_before_expr, ::File)
 
-@v0_0_30 = RuuubyRelease.spawn(0, 0, 30)
+@v0_0_30 = ::RuuubyRelease.spawn(0, 0, 30)
 @v0_0_30.add_file('app/model_attributes/extendable/uid.rb', '', '', @f15)
 @v0_0_30.add_file('app/model_attributes/includable/uid.rb', '', '', @f15)
 @v0_0_30.add_comments(
@@ -395,7 +397,7 @@
 @v0_0_30.changelog.added_method_to_class(@f26, :to_iso8601, ::String)
 @v0_0_30.changelog.added_method_to_class(@f26, :as_iso8601, ::String)
 
-@v0_0_31 = RuuubyRelease.spawn(0, 0, 31)
+@v0_0_31 = ::RuuubyRelease.spawn(0, 0, 31)
 @v0_0_31.add_file('lib/ruuuby/virtual/env', ::ENV, 'note: `class << ENV`', @f10)
 @v0_0_31.add_file('db/seeds/ruuuby_releases/future_ruuuby_releases.rb', '', 'not currently used', @f15)
 @v0_0_31.add_comments(
@@ -424,7 +426,7 @@
 #| ------------------- | --------------------- |
 #| (c) `Symbol`   | `power?`, `pow_to_i` |
 
-@v0_0_32 = RuuubyRelease.spawn(0, 0, 32)
+@v0_0_32 = ::RuuubyRelease.spawn(0, 0, 32)
 @v0_0_32.add_file('lib/ruuuby/module/attribute/includable/singleton.rb', '::Ruuuby::Attribute::Includable::RuuubySingleton', '', @f10)
 @v0_0_32.add_file('lib/ruuuby/module/attribute/extendable/singleton.rb', '::Ruuuby::Attribute::Includable::RuuubySingleton', '', @f10)
 @v0_0_32.add_file('lib/ruuuby/class/proc.rb', ::Proc, '', @f10)
@@ -439,7 +441,7 @@
 @v0_0_32.changelog.added_method_to_class(@f10, :∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎, ::Enumerable)
 
 # TODO: heavily out of sync with README.md (but start automating this)
-@v0_0_33 = RuuubyRelease.spawn(0, 0, 33)
+@v0_0_33 = ::RuuubyRelease.spawn(0, 0, 33)
 @v0_0_33.add_file('lib/ruuuby/class/nums/theta_angle.rb', ::ThetaAngle, '', @f27)
 @v0_0_33.add_comments(
     [
@@ -472,7 +474,7 @@
 #| `Kernel`   | `∠ᶜ`, `∠°` |
 #
 
-@v0_0_34 = RuuubyRelease.spawn(0, 0, 34)
+@v0_0_34 = ::RuuubyRelease.spawn(0, 0, 34)
 @v0_0_34.add_file('lib/ruuuby/math/set_theory/closure.rb', ::Math::SetTheory::Closure, '', @f11)
 @v0_0_34.add_file('lib/ruuuby/math/set_theory/number_set.rb', ::Math::SetTheory::NumberSet, '', @f11)
 @v0_0_34.add_file('lib/ruuuby/math/set_theory/discrete/algebraic_numbers.rb', ::Math::SetTheory::AlgebraicNumbers, '', @f11)
@@ -519,8 +521,9 @@
 #| `TOPLEVEL_BINDING`   | `sin°`, `cos°`, `tan°`, etc... |
 #
 
-@v0_0_35 = RuuubyRelease.spawn(0, 0, 35)
-@v0_0_35.add_gem('rugged', '1.0.0', true, false, %W(GIT), '::Rugged', '::VERSION')
+@v0_0_35 = ::RuuubyRelease.spawn(0, 0, 35)
+# during 0.0.33->0.0.34 migration; 1.0.0->1.0.1
+@v0_0_35.add_gem('rugged', '1.0.1', true, false, %W(GIT), '::Rugged', '::VERSION')
 @v0_0_35.add_file('lib/math/expression/expression.rb', '', 'not currently in use', @f10)
 @v0_0_35.add_file('lib/math/expression/formula.rb', '', 'not currently in use', @f10)
 @v0_0_35.add_file('lib/math/space/tuple_space.rb', '', '', @f30)
@@ -550,7 +553,7 @@
 @v0_0_35.changelog.added_method_to_class(@f24, :to_🐫⬇, ::String)
 @v0_0_35.changelog.added_method_to_class(@f24, :to_🐍⬆, ::String)
 
-@v0_0_36 = RuuubyRelease.spawn(0, 0, 36)
+@v0_0_36 = ::RuuubyRelease.spawn(0, 0, 36)
 @v0_0_36.add_file('lib/math/expression/equation.rb', '', 'not currently in use', @f10)
 @v0_0_36.add_file('lib/math/expression/sequence.rb', '', 'not currently in use', @f10)
 @v0_0_36.add_file('lib/math/group_theory/circle_group.rb', '', 'not active yet, preparation for future versions', @f30)
@@ -569,7 +572,7 @@
 @v0_0_36.changelog.added_method_to_class(@f32, :gcd, ::Math::NumberTheory)
 @v0_0_36.changelog.added_method_to_class(@f32, :coprime?, ::Math::NumberTheory)
 
-@v0_0_37 = RuuubyRelease.spawn(0, 0, 37)
+@v0_0_37 = ::RuuubyRelease.spawn(0, 0, 37)
 @v0_0_37.add_file('lib/virtual/f06.rb', '', '', @f06)
 @v0_0_37.add_file('lib/virtual/f28.rb', '', '', @f28)
 @v0_0_37.add_file('lib/math/complex_analysis/complex_analysis.rb', '::Math::ComplexAnalysis', 'not currently in use', @f30)

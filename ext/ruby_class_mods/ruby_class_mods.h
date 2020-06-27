@@ -1,7 +1,7 @@
 // encoding: UTF-8
 
-#ifndef CRUUUBY_H6_FEATURE_MACROS
-#include "c6_feature_macros.h"
+#ifndef CRUUUBY_H7_TIME_SERIES_DATA
+#include "c7_time_series_data.h"
 #endif
 
 #ifndef CRUUUBY_H
@@ -27,13 +27,7 @@ static int internal_only_compare_func_4_object_id(const void * l , const void * 
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
 
-// str is of type [char *], for VALUE use func{ruby_set_script_name}
-//
-// @return [void]
-#define 💎set_program_name(str) ruby_script(str)
-
-#define 💎set_field(var_name, var_var) rb_iv_set(self, var_name, var_var);
-#define 💎get_field(var_name)          rb_iv_get(self, var_name);
+#define ensure_loaded_ruuuby(path) ensure_file_loaded("ruuuby/" #path)
 
 #define 💎add_private_func_0args_to(kclass, func_name, the_func) rb_define_private_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 0);
 #define 💎add_private_func_1args_to(kclass, func_name, the_func) rb_define_private_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
@@ -54,7 +48,7 @@ ________________________________________________________________________________
 #define declare_static_func(func_name, expr, return_type, single_param) static return_type func_name(single_param);static return_type func_name(single_param){expr}
 
 //#define r_func_pure(func_name, expr)              PUREFUNC(static VALUE func_name(const VALUE self) {expr})
-#define ⓡ𝑓(func_name, expr)                 PUREFUNC(static VALUE func_name(const VALUE self) {expr})
+#define ⓡ𝑓(func_name, expr)                                 PUREFUNC(static VALUE func_name(const VALUE self) {expr});
 #define ⓡ𝑓_def(func_name, expr)                             declare_static_func(func_name, expr, VALUE, VALUE self)
 #define ⓡ𝑓_def2(func_name, param_0, param_1, expr)          VALUE func_name(const VALUE param_0, const VALUE param_1);VALUE func_name(const VALUE param_0, const VALUE param_1){expr}
 #define ⓡ𝑓_def3(func_name, param_0, param_1, param_2, expr) VALUE func_name(VALUE param_0, VALUE param_1, VALUE param_2);VALUE func_name(VALUE param_0, VALUE param_1, VALUE param_2){expr}
@@ -118,6 +112,8 @@ ________________________________________________________________________________
 
 #define ERR_is_num(kclass, the_func, arg_name, the_arg) if (!(is_num(the_arg))) {ERR_m_param_type(kclass, the_func, arg_name, the_arg, "Numeric")}
 #define ERR_is_sym(kclass, the_func, arg_name, the_arg) if (!(is_sym(the_arg))) {ERR_m_param_type(kclass, the_func, arg_name, the_arg, "Symbol")}
+#define 🛑_is_ary(kclass, the_func, arg_name, the_arg) if (!(is_ary(the_arg))) {ERR_m_param_type(kclass, the_func, arg_name, the_arg, "Array")}
+#define 🛑_is_int(kclass, the_func, arg_name, the_arg) if (!(is_int(the_arg))) {ERR_m_param_type(kclass, the_func, arg_name, the_arg, "Integer")}
 
 #define ERR_normalizer_invalid_value(func_name, the_normalizer) raise_err_arg("| <%"PRIsVALUE">-> m{%s} does not support the received normalizer{%"PRIsVALUE"} |", self, func_name, them);
 #define 🛑normalizer_value(func_name, the_normalizer) ERR_normalizer_invalid_value(func_name, the_normalizer)
@@ -148,11 +144,13 @@ ________________________________________________________________________________
     exponential_indexes[bsearch_power_position(el_index)] = val_to_set;\
 }
 
-static inline __attribute__ ((__always_inline__)) VALUE is_finite_num(const VALUE arg);
-static inline __attribute__ ((__always_inline__)) VALUE has_smell_of_int(const VALUE arg);
+//static inline __attribute__ ((__always_inline__)) VALUE is_finite_num(const VALUE arg);
+static VALUE is_finite_num(const VALUE arg);
+//static inline __attribute__ ((__always_inline__)) VALUE has_smell_of_int(const VALUE arg);
+static VALUE has_smell_of_int(const VALUE arg);
 
-static inline VALUE is_finite_num(const VALUE arg) {return rb_funcall(arg, cached_rb_intern_is_finite, 0);}
-static inline VALUE has_smell_of_int(const VALUE arg){return rb_funcall(arg, cached_rb_intern_smells_like_int, 0);}
+static VALUE is_finite_num(const VALUE arg) {return rb_funcall(arg, cached_rb_intern_is_finite, 0);}
+static VALUE has_smell_of_int(const VALUE arg){return rb_funcall(arg, cached_rb_intern_smells_like_int, 0);}
 
 static VALUE m_nil_empty(const VALUE self) __attribute__ ((const));
 static VALUE m_int_is_finite(const VALUE self) __attribute__ ((const));
@@ -184,21 +182,21 @@ static inline VALUE r_flt_is_universal(const double flt){
 //🛑expected_sym(func_name, "did not support the received normalizer", sym)
 
 /*static int SYM2NORM(const VALUE sym, const char * func_name) {
-    if (sym == n_in_set_universal) {
+    if (sym == 🅽_universal) {
         return NORM_UNIVERSAL;
-    } else if (sym == n_in_set_universal_w_str_allowed) {
+    } else if (sym == 🅽_universal_w_str_allowed) {
         return NORM_UNIVERSAL_W_STR;
-    } else if (sym == n_in_set_natural) {
+    } else if (sym == 🅽_natural) {
         return NORM_NATURAL;
-    } else if (sym == n_in_set_natural_w_str_allowed) {
+    } else if (sym == 🅽_natural_w_str_allowed) {
         return NORM_NATURAL_W_STR;
-    } else if (sym == n_in_set_whole) {
+    } else if (sym == 🅽_whole) {
         return NORM_WHOLE;
-    } else if (sym == n_in_set_whole_w_str_allowed) {
+    } else if (sym == 🅽_whole_w_str_allowed) {
         return NORM_WHOLE_W_STR;
-    } else if (sym == n_in_set_integer) {
+    } else if (sym == 🅽_integer) {
         return NORM_INTEGER;
-    } else if (sym == n_in_set_integer_w_str_allowed) {
+    } else if (sym == 🅽_integer_w_str_allowed) {
         return NORM_INTEGER_W_STR;
     } else {
         return NORM_ERROR;

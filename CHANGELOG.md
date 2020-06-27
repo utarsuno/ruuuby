@@ -24,17 +24,42 @@
    * angular rotation vs angular velocity
    * dimensions vs units
 
-##### by v0.0.45
- * finish textual parsing for ThetaAngles
-
 ---
 
 ### ⚠️: atm documentation & tests synchronization % is too low
 
 ---
 
+# v0.0.44
+
+ * enable `non-core feature code` to be included/excluded during `pre-processing` as opposed to during `start-up` and/or `runtime`
+ * (`wip`) track `OpenCL` & `OpenGL` through `locale RSpecs` (and eventually the `'Ruuuby Engine'`)
+ * update gem(`rugged`) version from{`1.0.0`} to{`1.0.1`}
+ * update gem(`rspec-benchmark`) version from{`0.5.1`} to{`0.6.0`}
+ * add majority of needed initial `ThetaAngle` syntax parsing content; remaining is pending implementation of new functionality/refactors for `ThetaAngle`
+ * (`wip`) create class{`TimeSeriesData`}, in similair fashion as `ThetaAngle` (`Ruby object` wrapper over a `C struct instance`)
+ * increase and track various default-values for `Ruby Garbage Collector configs`
+   * `TimeSeriesData` will eventually be able to be used for discovering optimal `GC-settings`
+   * ex: finding optimal `heap-size` and `garbage-collection-frequency` depending on context of script
+
+| path added | reference | notes | feature(s) |
+| ---: | --- | --- | --- |
+| `lib/ruuuby/math/stats/time_series_data.rb` | `TimeSeriesData` | `wip` | `f34` |
+| `ext/ruby_class_mods/c7_times_series_data.rb` | `TimeSeriesData` | `wip` | `f35` |
+| `lib/ruuuby/ruuuby/engine/ruuuby_api_component.rb` |  | `temp/wip` | `f97` |
+| `bin/compilation_modes/build_w_debugging` |  | `temp/wip` | `f97` |
+| `bin/compilation_modes/build_simple` |  | `temp/wip` | `f97` |
+
+| context | method(s) added | feature(s) |
+| --- | --- | --- |
+| `Ruuuby::MetaData::RuuubyEngine::F22B00` | `percentage_protected_from_minor_marks`, `percentage_fragmentation`, `stats_bytes_per_object_slot`, `stats_slots_per_heap_page`, `perform_quick`, `perform_full` | `f23` |
+| (Refinement) `String` | `ʳ?`, `ʳ`, `ᵍ?`, `ᵍ`, `𝞽?`, `𝞽` | `f28` |
+| `TimeSeriesData` | `mem_size`, `free_memory`, `len`, `mean`, `sum`, `max`, `min`, `median`, `range`, `σ²`=>`variance`, `σ`=>`std_dev`, `percentile`, `mse` | `f36` |
+
+---
+
 # v0.0.43
- * add{f06_b04} to provide normalizer{∈𝕌} for funcs{flt? 🛑flt❓}
+ * add{`f06_b04`} to provide normalizer{`∈𝕌`} for funcs{`flt?`, `🛑flt❓`}
  * start adding textual parsing for `ThetaAngle` via `Refinement` in{`ThetaAngle::ContextStrParsing`}
  * increase scope tested in some db_audit funcs
 

@@ -36,23 +36,26 @@ module ::Ruuuby
     # ----------------------------------
     #
     # `💎.engine.api_git`
-    class GitAPI < ::Ruuuby::MetaData::RuuubyEngineComponent
+    class GitAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
 
       attr_reader :repo, :last_commit, :configs
 
       def initialize(engine)
         super(engine)
-        path_base       = ::File.dirname(::File.dirname(::File.dirname(::File.dirname(__FILE__))))
-        @repo           = ::Rugged::Repository.new(path_base)
-        @last_commit    = @repo.last_commit
-        @configs         = @repo.config
+        @repo         = ::Rugged::Repository.new(@engine.path_base)
         # cached fields
-        @branch_names   = []
-        @release_tags   = []
+        @branch_names = []
+        @release_tags = []
       end
 
       # @return [String]
-      def path_gitignore; "#{@repo.workdir}.gitignore"; end
+      def path_gitignore; "#{@engine.path_base}.gitignore"; end
+
+      # @return [Rugged::Commit]
+      def last_commit; @repo.last_commit; end
+
+      # @return [Rugged::Config]
+      def configs; @repo.config; end
 
       # @see https://github.com/desktop/desktop/issues/5057
       #  - "usually the `UNBORN HEAD` error happens when you are attempting to publish a branch that has no commits"
@@ -121,6 +124,10 @@ module ::Ruuuby
       # /  `  /\  /  ` |__| |__  |  \    |__  | |__  |    |  \ /__`
       # \__, /~~\ \__, |  | |___ |__/    |    | |___ |___ |__/ .__/
       # ____________________________________________________________
+
+      def _calculate_version
+        💎.engine.api.run_cmd!('git --version')
+      end
 
       # @return [Array]
       def release_tags

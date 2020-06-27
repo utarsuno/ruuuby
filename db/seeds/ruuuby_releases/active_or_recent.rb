@@ -143,4 +143,48 @@
 # (Refinements)
 @v0_0_43.changelog.added_method_to_class(@f27, :°?, ::String)
 @v0_0_43.changelog.added_method_to_class(@f27, :°, ::String)
-@v0_0_43.save!
+
+@v0_0_44 = RuuubyRelease.spawn(0, 0, 44)
+@v0_0_44.add_file('lib/ruuuby/math/stats/time_series_data.rb', '', '', @f34)
+@v0_0_44.add_file('ext/ruby_class_mods/c7_times_series_data.rb', '', '', @f35)
+@v0_0_44.add_file('lib/ruuuby/ruuuby/engine/ruuuby_api_component.rb', '', '', @f97)
+@v0_0_44.add_file('lib/ruuuby/ruuuby/engine/ruuuby_api_component.rb', '', '', @f97)
+@v0_0_44.add_comments(
+    [
+        'start migration of enabling `non-core feature code` to be included/excluded before `compilation` during `pre-processing` as opposed to during `start-up` and/or `runtime`',
+        "(`wip`) track `OpenCL` & `OpenGL` through `locale RSpecs` (and eventually the `'Ruuuby Engine'`)",
+        'update gem(`rugged`) version from{`1.0.0`} to{`1.0.1`}',
+        'update gem(`rspec-benchmark`) version from{`0.5.1`} to{`0.6.0`}',
+        'add majority of needed initial `ThetaAngle` syntax parsing content; remaining is pending implementation of new functionality/refactors for `ThetaAngle`',
+        '(`wip`) create class{`TimeSeriesData`}, in similair fashion as `ThetaAngle` (`Ruby object` wrapper over a `C struct instance`)',
+        'increase and track various default-values for `Ruby Garbage Collector configs`; `TimeSeriesData` will eventually be able to be used for discovering optimal `GC-settings`',
+     ]
+)
+@v0_0_44.changelog.added_method_to_class(@f22, :percentage_protected_from_minor_marks, 'Ruuuby::MetaData::RuuubyEngine::F22B00')
+@v0_0_44.changelog.added_method_to_class(@f22, :percentage_fragmentation, 'Ruuuby::MetaData::RuuubyEngine::F22B00')
+@v0_0_44.changelog.added_method_to_class(@f22, :stats_bytes_per_object_slot, 'Ruuuby::MetaData::RuuubyEngine::F22B00')
+@v0_0_44.changelog.added_method_to_class(@f22, :stats_slots_per_heap_page, 'Ruuuby::MetaData::RuuubyEngine::F22B00')
+@v0_0_44.changelog.added_method_to_class(@f22, :perform_full, 'Ruuuby::MetaData::RuuubyEngine::F22B00')
+@v0_0_44.changelog.added_method_to_class(@f22, :perform_quick, 'Ruuuby::MetaData::RuuubyEngine::F22B00')
+# (Refinements)
+@v0_0_44.changelog.added_method_to_class(@f27, :ʳ?, ::String)
+@v0_0_44.changelog.added_method_to_class(@f27, :ʳ, ::String)
+@v0_0_44.changelog.added_method_to_class(@f27, :ᵍ?, ::String)
+@v0_0_44.changelog.added_method_to_class(@f27, :ᵍ, ::String)
+@v0_0_44.changelog.added_method_to_class(@f27, :𝞽?, ::String)
+@v0_0_44.changelog.added_method_to_class(@f27, :𝞽, ::String)
+@v0_0_44.changelog.added_method_to_class(@f35, :mem_size, 'TimeSeriesData')
+@v0_0_44.changelog.added_method_to_class(@f35, :free_memory, 'TimeSeriesData')
+@v0_0_44.changelog.added_method_to_class(@f35, :len, 'TimeSeriesData')
+@v0_0_44.changelog.added_method_to_class(@f35, :sma, 'TimeSeriesData')
+@v0_0_44.changelog.added_method_to_class(@f35, :mean, 'TimeSeriesData')
+@v0_0_44.changelog.added_method_to_class(@f35, :sum, 'TimeSeriesData')
+@v0_0_44.changelog.added_method_to_class(@f35, :max, 'TimeSeriesData')
+@v0_0_44.changelog.added_method_to_class(@f35, :min, 'TimeSeriesData')
+@v0_0_44.changelog.added_method_to_class(@f35, :median, 'TimeSeriesData')
+@v0_0_44.changelog.added_method_to_class(@f35, :range, 'TimeSeriesData')
+@v0_0_44.changelog.added_method_to_class(@f35, :variance, 'TimeSeriesData')
+@v0_0_44.changelog.added_method_to_class(@f35, :std_dev, 'TimeSeriesData')
+@v0_0_44.changelog.added_method_to_class(@f35, :percentile, 'TimeSeriesData')
+@v0_0_44.changelog.added_method_to_class(@f35, :mse, 'TimeSeriesData')
+@v0_0_44.save!

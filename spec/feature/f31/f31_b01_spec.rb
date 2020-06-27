@@ -13,7 +13,7 @@ RSpec.describe 'f31_b01' do
           end
 
           it 'has correct repo path' do
-            expect(💎.engine.api_git.repo.path).to eq("#{💎.engine.api_git.repo.workdir}.git/")
+            expect(💎.engine.api_git.repo.path).to eq("#{💎.engine.path_base}.git/")
           end
 
           context 'git config values' do

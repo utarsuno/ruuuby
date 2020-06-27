@@ -154,7 +154,7 @@ RSpec.describe 'f06_b00' do
                   expect{🛑nums❓(data_∈𝕌_false, :∈𝕌)}.to raise_error(ArgumentError)
                   expect{🛑nums❓([0, data_float_nan, 1], :∈𝕌)}.to raise_error(ArgumentError)
                   expect{🛑nums❓([data_float_inf, 0, 1], :∈𝕌)}.to raise_error(ArgumentError)
-                  expect{🛑nums❓([0, 1, data_float_negative_inf], :∈𝕌)}.to raise_error(ArgumentError)
+                  expect{🛑nums❓([0, 1, ::Float::INFINITY_NEGATIVE], :∈𝕌)}.to raise_error(ArgumentError)
                 end
                 it '∈𝕌𝕊' do
                   expect{🛑nums❓(data_∈𝕌𝕊_false, :∈𝕌𝕊)}.to raise_error(ArgumentError)

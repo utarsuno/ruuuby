@@ -11,10 +11,10 @@ RSpec.describe 'f27_b03' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect(funcs.explementary?(θ°(180), θ𝞽(0.5))).to eq(true)
-            expect(funcs.explementary?(θᵍ(200), θ𝞽(½))).to eq(true)
+            expect(funcs.explementary?(θᵍ(200), θ𝞽(0.5))).to eq(true)
             expect(funcs.explementary?(θᵍ(200), θ°(180))).to eq(true)
-            expect(funcs.explementary?(θ𝞽(½), θᵍ(200))).to eq(true)
-            expect(funcs.explementary?(θ𝞽(½), θ𝞽(½))).to eq(true)
+            expect(funcs.explementary?(θ𝞽(0.5), θᵍ(200))).to eq(true)
+            expect(funcs.explementary?(θ𝞽(0.5), θ𝞽(0.5))).to eq(true)
             expect(funcs.explementary?(θʳ(θ°(180).ʳ), θ°(180))).to eq(true)
           end
           it 'cases: negative' do
@@ -44,11 +44,11 @@ RSpec.describe 'f27_b03' do
       context 'offers func{supplementary?}' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
-            expect(funcs.supplementary?(θ°(90), θ𝞽(¼))).to eq(true)
-            expect(funcs.supplementary?(θᵍ(100), θ𝞽(¼))).to eq(true)
+            expect(funcs.supplementary?(θ°(90), θ𝞽(0.25))).to eq(true)
+            expect(funcs.supplementary?(θᵍ(100), θ𝞽(0.25))).to eq(true)
             expect(funcs.supplementary?(θᵍ(100), θ°(90))).to eq(true)
-            expect(funcs.supplementary?(θ𝞽(¼), θᵍ(100))).to eq(true)
-            expect(funcs.supplementary?(θ𝞽(¼), θ𝞽(¼))).to eq(true)
+            expect(funcs.supplementary?(θ𝞽(0.25), θᵍ(100))).to eq(true)
+            expect(funcs.supplementary?(θ𝞽(0.25), θ𝞽(0.25))).to eq(true)
             expect(funcs.supplementary?(θʳ(θ°(90).ʳ), θ°(90))).to eq(true)
           end
           it 'cases: negative' do

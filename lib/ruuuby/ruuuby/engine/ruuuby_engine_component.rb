@@ -4,9 +4,16 @@ module ::Ruuuby
   # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
     class RuuubyEngineComponent
-      def initialize(engine)
-        @engine = engine
+
+      attr_reader :versionable
+
+      # @param [*]       engine
+      # @param [Boolean] versionable
+      def initialize(engine, versionable=false)
+        @engine      = engine
+        @versionable = versionable
       end
+
     end
   end
 end

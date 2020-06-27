@@ -96,7 +96,7 @@ RSpec.describe 'theta_angle' do
             expect((-θ°(-45)).real).to eq(θ°(315).real)
 
             expect((-θᵍ(-50))).to eq(θ°(315))
-            expect((-θ𝞽(-(⅛)))).to eq(θ°(315))
+            expect((-θ𝞽(-(1.0 / 8.0)))).to eq(θ°(315))
             expect((-θʳ(::Math::PI / -4.0))).to eq(θ°(315))
           end
         end

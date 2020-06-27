@@ -7,7 +7,9 @@ module ::Math
     class RealAlgebraicNumbers < ::Math::SetTheory::NumberSet
       include ::Singleton
 
-      KNOWN_REAL_ALGEBRAIC = [::Float::CONST_PYTHAGORAS.🆔, ::Float::RATIO_GOLDEN.🆔]
+      #KNOWN_REAL_ALGEBRAIC = [::Float::CONST_PYTHAGORAS.🆔, ::Float::RATIO_GOLDEN.🆔]
+
+      KNOWN_REAL_ALGEBRAIC = [::Float::RATIO_GOLDEN.🆔]
 
       def initialize
         super(:𝔸ᵣ, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO, {dense: true})

@@ -5,7 +5,7 @@ RSpec.describe 'f27_db_orm' do
   context 'db_orm', :db do
     context 'defines f27' do
       it 'passes ORM audit' do
-        audit_feature(f27, 'f27', 5, 'add new class (`ThetaAngle`) for easier operations involving angles')
+        audit_feature(f27, 'f27', 6, 'add new class (`ThetaAngle`) for easier operations involving angles')
       end
       context 'defines behaviors' do
         it 'has{b00}' do
@@ -26,6 +26,10 @@ RSpec.describe 'f27_db_orm' do
 
         it 'has{b04}' do
           audit_feature_behavior(f27, f27_b04, 'b04', 'vocabulary functions involving 1 ThetaAngle are provided as funcs')
+        end
+
+        it 'has{b05}' do
+          audit_feature_behavior(f27, f27_b05, 'b05', 'offer `Refinement` w/ module{ThetaAngle::ContextStrParsing} for parsing `String` objs into `ThetaAngleAngle` objs')
         end
       end
     end

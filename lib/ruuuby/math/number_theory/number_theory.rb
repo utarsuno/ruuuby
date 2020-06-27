@@ -298,7 +298,7 @@ module ::Math
           end
         end
       end
-      @seq_lucas.define_singleton_method(:calculate_value_at){|n| ((::Float::RATIO_GOLDEN ** n) + (::Float::RATIO_GOLDEN_PERPENDICULAR ** n)).round}
+      @seq_lucas.define_singleton_method(:calculate_value_at){|n| ((::Float::RATIO_GOLDEN ** n) + (-0.618033988749895 ** n)).round}
       # -------------------------------------------------------------------------------------------- | *b07* | *f32* |
       @seq_triangle = ::Math::Expr::Sequence.new(:∈𝕎, [0, 1, 3])
       @seq_triangle.define_singleton_method(:_∋?) do |n|

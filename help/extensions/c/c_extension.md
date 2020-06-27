@@ -11,12 +11,16 @@
 | --- |
 | if including `include/ruby/ruby.h`, don't use the `..._PTR` macros (ex: `RARRAY_PTR`, instead use function `rb_ary_aref`) |
 | avoid `rb_eval_string` when possible, it's quite slow `ಠ╭╮ಠ` (relative to most alternatives) |
+| use `ALLOC_N` over `malloc`; ex: `(double *) malloc(sizeof(double) * n) == ALLOC_N(double, n)` |
 
 | resources |
 | --- |
 | https://docs.ruby-lang.org/en/2.7.0/extension_rdoc.html#label-Ruby+Language+Core |
 | https://www.ruby-forum.com/t/rb-gc-register-address-or-rb-gc-mark/219828/13 |
 | https://bugs.ruby-lang.org/issues/15626 |
+| https://ruby-doc.com/docs/ProgrammingRuby/html/ext_ruby.html |
+| https://bugs.ruby-lang.org/projects/ruby-master/wiki/RGenGC |
+| https://github.com/ruby/ruby/blob/v2_7_0/gc.c#L258 |
 
 ## Ruby Methods
 

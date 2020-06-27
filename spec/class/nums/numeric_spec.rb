@@ -7,7 +7,7 @@ RSpec.describe 'numeric.rb' do
       context 'handles needed scenarios' do
         it 'cases: positive' do
           expect(data_float_inf.∞?).to eq(true)
-          expect(data_float_negative_inf.∞?).to eq(true)
+          expect(::Float::INFINITY_NEGATIVE.∞?).to eq(true)
         end
         it 'cases: negative' do
           expect(data_float_nan.∞?).to eq(false)
@@ -26,7 +26,7 @@ RSpec.describe 'numeric.rb' do
     context 'func[∞?]: performs very quickly' do
       it 'for cases: true' do
         expect{data_float_inf.∞?}.to perform_very_quickly
-        expect{data_float_negative_inf.∞?}.to perform_very_quickly
+        expect{::Float::INFINITY_NEGATIVE.∞?}.to perform_very_quickly
       end
       it 'cases: negative' do
         expect{data_float_nan.∞?}.to perform_very_quickly

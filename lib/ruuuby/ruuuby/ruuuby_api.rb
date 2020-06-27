@@ -12,7 +12,7 @@ module ::Ruuuby
     # | pty | pseudo-teletype | "device entry that acts like a terminal to the process performing I/O, but is managed by something else"
     #
     # `💎.engine.api`
-    class RuuubyAPI < ::Ruuuby::MetaData::RuuubyEngineComponent
+    class RuuubyAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
 
       def initialize(engine)
         super(engine)
@@ -46,6 +46,7 @@ module ::Ruuuby
         return out, err
       end
 
+      # TODO: useful cmd: ps -lww -p <PID>
       def run_cmd!(cmd)
         out, err = self.get_tty.run(cmd, timeout: 6, pty: false)
         unless err.empty?
@@ -69,6 +70,8 @@ module ::Ruuuby
           out
         end
       end
+
+      def _calculate_version; 1337; end
 
       🙈
 

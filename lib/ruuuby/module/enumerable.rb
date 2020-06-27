@@ -38,6 +38,6 @@ module ::Enumerable
   # @param [*] arg
   #
   # @return [Boolean] true, if this Enumerable instance contains the provided arg
-  def ∌?(arg) ; not self.include?(arg) ; end
+  def ∌?(arg); not self.include?(arg); end
 
 end

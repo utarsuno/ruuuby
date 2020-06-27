@@ -4,7 +4,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.43'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.44'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -122,6 +122,13 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Stats` | `Probability` | | |
 | `Stats` | `StatisticalLearning` | | |
 
+#### Custom Math Classes:
+
+| context        | class        | notes |
+| -------------: | :----------- | ----- |
+| `Trigonometry` | `ThetaAngle` |       |
+| `Statistics`   | `TimeSeries` |       |
+
 ### Class Modifications:
 
 | class(es)              | func(s) added                       | notes |
@@ -135,13 +142,11 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Array`, `Set`         | `remove_empty!`                     | |
 | `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞`<br/>`downcase?`{`⬇?`}, `upcase?`{`⬆?`}, `downcase!`{`⬇!`}, `upcase!`{`⬆!`} | |
 | `String`               | `🐫?`, `🐫⬇?`, `to_🐫`<br/>`🐍⬆?`, `🐍?`, `to_🐍` | |
-| `String`               | `palindrome?`, `as_utf8`, `iso8601?`, `to_iso8601`, `as_iso8601` | |
+| `String`               | `digit?`, `to_num`, `to_num?`, `palindrome?`<br/>`as_utf8`, `iso8601?`, `to_iso8601`, `as_iso8601`<br/>`∋?`, `∌?`, `∈?`, `∉?` | |
 | `Array`, `String`      | `η̂!`                               | |
 | `Array`                | [`disjunctive_union`, `⊕`], `∖`    | |
-| `Module`, `String`     | `∋?`, `∌?`, `∈?`, `∉?`             | |
 | `Enumerable`           | `∌?`, `∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎`              | |
 | `Array`, `String`      | `>>`                               | |
-| `String`               | `digit?`, `to_num`, `to_num?`      | |
 | `Array`                | `end_with?`, `start_with?`         | |
 | `String`, `Array`      | `ensure_start!`, `ensure_ending!`  | |
 | `NilClass`             | `empty?`                           | ⚠️: philosophically debatable |
@@ -172,14 +177,14 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Code Base Statistics:
 | category    | attribute       | value(s)         | # of  |
 | ----------: | :-------------: | ---------------: | :---- |
-| `QA`        | `unit`          | `1189`           | tests (for core functionality) |
+| `QA`        | `unit`          | `1218`           | tests (for core functionality) |
 | `QA`        | `integration`   | `18`             | tests (for state/functionality checks on grouped features/components) |
-| `QA`        | `performance`   | `153`:`85`       | tests{`non_numeric`,`numeric`} (for runtime performance) |
-| `QA`        | `DB`            | `232`            | tests (for `DB` & `ORM`) |
-| `CI`        | `audit`         | `125`            | tests (for anything non-functionality based) |
-| `CI`        | `locale`        | `50`:`4`         | local config tests{`core`:`excessive_checks`} |
+| `QA`        | `performance`   | `141`:`85`       | tests{`non_numeric`,`numeric`} (for runtime performance) |
+| `QA`        | `DB`            | `238`            | tests (for `DB` & `ORM`) |
+| `CI`        | `audit`         | `128`            | tests (for anything non-functionality based) |
+| `CI`        | `locale`        | `61`:`12`        | local config tests{`core`:`excessive_checks`} |
 | `tech-debt` | `coverage`      | `9`              | tests (for tracking missing functionality) |
-| `structure` | `features`      | `0`:`28`:`9`:`4` | features{`stable`:`wip`:`⚠️`:`todo`} |
+| `structure` | `features`      | `0`:`29`:`9`:`4` | features{`stable`:`wip`:`⚠️`:`todo`} |
 | `coverage`  | `LOCs`          | `???`            | `wip` |
 | `coverage`  | `runtime`       | `???`            | `wip` |
 | `coverage`  | `documentation` | `???`            | `wip` |
@@ -191,12 +196,12 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | gem | version | :development, :runtime | category |
 | ---: | :--- | :---: | ---: |
 | `tty-command` | [`0.9.0`](https://rubygems.org/gems/tty-command) | ✅, ✅ | `CLI` |
-| `rugged` | [`1.0.0`](https://rubygems.org/gems/rugged) | ✅, ❌ | `GIT` |
+| `rugged` | [`1.0.1`](https://rubygems.org/gems/rugged) | ✅, ❌ | `GIT` |
 | `rdoc` | [`6.2.1`](https://rubygems.org/gems/rdoc) | ✅, ❌ | `DOC` |
 | `bundler` | [`2.1.4`](https://rubygems.org/gems/bundler) | ✅, ❌ | `CI` |
 | `rubygems-update` | [`3.1.4`](https://rubygems.org/gems/rubygems-update) | ✅, ❌ | `CI` |
 | `rspec` | [`3.9.0`](https://rubygems.org/gems/rspec) | ✅, ❌ | `QA` |
-| `rspec-benchmark` | [`0.5.1`](https://rubygems.org/gems/rspec-benchmark) | ✅, ❌ | `QA` |
+| `rspec-benchmark` | [`0.6.0`](https://rubygems.org/gems/rspec-benchmark) | ✅, ❌ | `QA` |
 | `rake` | [`13.0.1`](https://rubygems.org/gems/rake) | ✅, ❌ | `EXT` |
 | `rake-compiler` | [`1.1.0`](https://rubygems.org/gems/rake-compiler) | ✅, ❌ | `EXT` |
 | `sqlite3` | [`1.4.2`](https://rubygems.org/gems/sqlite3) | ✅, ❌ | `DB` |
@@ -215,9 +220,9 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `bundle exec rake`     | `compile`           | compile any native C-extensions with code changes    |
 | `bundle exec rake`     | `release`           | push git version tags and publish gem to Rubygems    |
 | `bin/`                 | `audit`             | general all-around build & health check              |
-| `bin/`                 | `audit_db`<br/>`audit_quick`<br/>`audit_quickest`<br/>`audit_all_but_performance`<br/>`audit_functionality`<br/>`audit_locale`<br/>`audit_locale_full` | similar to above but for targeted portions |
+| `bin/`                 | `audit_db`<br/>`audit_quick`<br/>`audit_all_but_performance`<br/>`audit_functionality`<br/>`audit_locale`<br/>`audit_locale_full` | similar to above but for targeted portions |
 | `bin/`                 | `setup`             | install dependencies                                 |
-| `bin/`                 | `console`<br/>`console_db`<br/>`console_debug`<br/>`console_jit` | interactive console for easier experimenting |
+| `bin/`                 | `console`<br/>`console_db`<br/>`console_jit` | interactive console for easier experimenting |
 | `bin/manually_execute` | `clean_up`          | delete any temporary/generated content, quick way to force a full re-compile |
 | `gem`                  | `server`            | host interactive web-page at `http://0.0.0.0:8808` to see documentation for currently installed gems |
 

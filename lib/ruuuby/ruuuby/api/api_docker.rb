@@ -16,12 +16,16 @@ module ::Ruuuby
     # TODO: docs.docker.com/registry/spec/api
     #
     # `💎.engine.api_docker`
-    class DockerAPI < ::Ruuuby::MetaData::RuuubyEngineComponent
+    class DockerAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
 
       attr_reader :repo, :last_commit, :configs
 
       def initialize(engine)
         super(engine)
+      end
+
+      def _calculate_version
+        💎.engine.api.run_cmd!('docker --version')
       end
 
     end # end: Class{DockerAPI}

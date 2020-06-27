@@ -11,7 +11,6 @@ RSpec.describe 'f21' do
       context 'funcs provided are' do
         it 'defined in correct location' do
           expect_∃⨍(:digit?, ::Ruuuby::Feature::Includable::StringF21)
-          expect_∃⨍(:to_radian, ::Ruuuby::Feature::Includable::StringF21)
           expect_∃⨍(:to_num?, ::Ruuuby::Feature::Includable::StringF21)
           expect_∃⨍(:to_num, ::Ruuuby::Feature::Includable::StringF21)
         end

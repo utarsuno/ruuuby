@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+# encoding: UTF-8
+
+export RUUUBY_F98="0"
+
+zsh "$PATH_CLEAN_LOCAL"
+
+set -euo pipefail
+IFS=$'\n\t'
+set -vx
+
+bundle exec rake compile
