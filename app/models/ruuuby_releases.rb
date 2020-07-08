@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
@@ -26,65 +26,107 @@ class ::RuuubyRelease < ApplicationRecord
 
   has_many :git_commits, class_name: 'GitCommit', :dependent => :delete_all
   has_many :ruuuby_gems, class_name: 'RuuubyGem', :dependent => :delete_all
+  has_many :ruuuby_changelogs, class_name: 'RuuubyChangelog', :dependent => :delete_all
 
   before_save :on_before_save
 
-  # TODO: delete (actually use the created ORM obj)
-  module AttributeChangelog
-
-    class InternalRuuubyChangelog
-      def initialize(orm_owner)
-        @orm_owner = orm_owner
-        @changelog = []
-      end
-
-      def add_entry(feature, description)
-        @changelog << RuuubyChangelog.spawn(@orm_owner, feature, description)
-      end
-
-      def added_method_to_class(feature, method_name, nucleotide_name)
-        self.add_entry(feature, "+m{#{method_name.to_s}}->c{#{nucleotide_name.to_s}}")
-      end
-
-      def added_methods_to_class(feature, added_methods)
-        added_methods.each do |am|
-          self.added_method_to_class(feature, am[0], am[1])
-        end
-      end
-
-      def added_global_func(feature, func_name)
-        self.added_method_to_class(feature, func_name, ::Kernel)
-      end
-
-      # @return [Array]
-      def get_docs
-        return [] if @changelog.empty?
-        the_docs = []
-        the_docs << "| class | method(s) added | feature(s) |\n"
-        the_docs << "| --- | --- | --- |\n"
-        @changelog.each do |c|
-          the_docs << c.docs_changelog
-        end
-        the_docs
-      end
-    end
-
-    def changelog
-      @changelog ||= AttributeChangelog::InternalRuuubyChangelog.new(self)
-    end
-
-  end
-
-  include ::RuuubyRelease::AttributeChangelog
-
   def self.spawn(major, minor, tiny, description=nil); ::RuuubyRelease.create!(vmajor: major, vminor: minor, vtiny: tiny, description: description); end
 
-  def comments ; @comments ||= [] ; end
-  def files_added ; @files_added ||= [] ; end
-  def files_removed ; @files_removed ||= [] ; end
-
   def add_gem(gem_name, gem_version, for_development, for_runtime, tags, ref_source, ref_version)
-    self.ruuuby_gems << RuuubyGem.spawn(gem_name, gem_version, for_development, for_runtime, tags, ref_source, ref_version,self)
+    the_gem = ::RuuubyGem.spawn(gem_name, gem_version, for_development, for_runtime, tags, ref_source, ref_version,self)
+    unless self.ruuuby_gems.include?(the_gem)
+      self.ruuuby_gems << the_gem
+    end
+    self.save!
+    ruuuby_changelog = the_gem.spawn_version_initial(self, ::RuuubyFeature.find_by_uid(15), gem_version)
+    unless self.ruuuby_changelogs.include?(ruuuby_changelog)
+      self.ruuuby_changelogs << ruuuby_changelog
+    end
+    self.save!
+    the_gem
+  end
+
+  # @return [Array]
+  def get_docs2
+    the_docs = []
+    the_docs << "\n---\n\n# `#{self.uid}`\n\n"
+
+    unless self.comments.empty?
+      self.comments.∀ do |comment|
+        the_docs << " * #{comment}\n"
+      end
+      the_docs << "\n"
+    end
+
+    gem_changes = self._get_changelog_for_ruuuby_gems
+    gem_changes.∀ do |gem_change|
+      the_docs << gem_change
+    end
+
+    unless self.paths_added.empty?
+      the_docs << "| path added | reference | notes | feature(s) |\n"
+      the_docs << "| ----: | ---- | ---- | ---- |\n"
+      self.paths_added.each do |c|
+        c1 = c[1].empty? ? '' : "`#{c[1]}`"
+        the_docs << "| #{c[0]} | #{c1} | #{c[2]} | #{c[3]} |\n"
+      end
+      the_docs << "\n"
+    end
+
+    unless self.paths_removed.empty?
+      the_docs << "| path removed | notes |\n"
+      the_docs << "| ----: | ---- |\n"
+      self.paths_added.each do |c|
+        c1 = c[1].empty? ? '' : "`#{c[1]}`"
+        the_docs << "| #{c[0]} | #{c1} | #{c[2]} | #{c[3]} |\n"
+      end
+      the_docs << "\n"
+    end
+
+    the_docs << "| context | method(s) added | feature(s) |\n"
+    the_docs << "| ---: | :--- | ---: |\n"
+    self.ruuuby_changelogs.each do |ruuuby_changelog|
+      if ruuuby_changelog.applies_to == ::RuuubyFeature.orm_Ⓣ_🐍
+        the_docs << ruuuby_changelog.docs_changelog
+      end
+    end
+    the_docs
+  end
+
+  # @param [RuuubyFeature] ruuuby_feature
+  # @param [String]        method_name
+  # @param [String]        kclass
+  #
+  # @return [RuuubyChangelog]
+  def spawn_kclass_method(ruuuby_feature, method_name, kclass)
+    ruuuby_changelog = ruuuby_feature.spawn_kclass_method(self, method_name, kclass)
+    unless self.ruuuby_changelogs.include?(ruuuby_changelog)
+      self.ruuuby_changelogs << ruuuby_changelog
+      self.save!
+    end
+    ruuuby_changelog
+  end
+
+  # @param [RuuubyFeature] ruuuby_feature
+  # @param [String]        kclass
+  # @param [Array]         method_names
+  #
+  # @return [RuuubyChangelog]
+  def spawn_kclass_methods(ruuuby_feature, kclass, method_names)
+    method_names.∀ do |method_name|
+      ruuuby_feature.spawn_kclass_method(self, method_name, kclass)
+    end
+  end
+
+  # @param [RuuubyGem] ruuuby_gem
+  # @param [String]    new_version
+  #
+  # @return [RuuubyChangelog]
+  def update_gem(ruuuby_gem, new_version)
+    ruuuby_changelog = ruuuby_gem.spawn_version_update(self, ::RuuubyFeature.find_by_uid(15), new_version)
+    self.ruuuby_changelogs << ruuuby_changelog unless self.ruuuby_changelogs.include?(ruuuby_changelog)
+    self.save!
+    ruuuby_changelog
   end
 
   def add_comments(comments)
@@ -97,14 +139,19 @@ class ::RuuubyRelease < ApplicationRecord
     end
   end
 
-  def remove_file(path, notes='')
-    path = path.to_s.empty? ? '' : "`#{path.to_s}`"
-    self.files_removed << [path, notes]
+  # @param [String] path
+  # @param [String] notes
+  def path_removed(path, notes='')
+    self.paths_removed << [path.∅? ? '' : "`#{path.to_s}`", notes]
   end
 
-  def add_file(path, reference='', notes='', features='')
-    path      = path.to_s.empty? ? '' : "`#{path.to_s}`"
-    reference = reference.to_s.empty? ? '' : "`#{reference.to_s}`"
+  # @param [String]                       path
+  # @param [String]                       reference
+  # @param [String]                       notes
+  # @param [String, Array, RuuubyFeature] features
+  def path_added(path, reference='', notes='', features='')
+    path      = path.∅? ? '' : "`#{path}`"
+    reference = reference.∅? ? '' : "#{reference}"
     feats     = ''
     if features.ary?
       features.each do |f|
@@ -112,50 +159,9 @@ class ::RuuubyRelease < ApplicationRecord
       end
       feats = feats[0..feats.length-3]
     else
-      feats = features.to_s.empty? ? '' : "`#{features.uid}`"
+      feats = features.to_s.∅? ? '' : "`#{features.uid}`"
     end
-    self.files_added << [path, reference, notes, feats]
-  end
-
-  def add_entry_to_changelog(feature, description)
-    self.changelog << RuuubyChangelog.spawn(self, feature, description)
-  end
-
-  # @return [Array]
-  def docs_changelog
-    changes = []
-    changes << "\n---\n\n# #{self.uid}\n"
-    unless self.ruuuby_gems.empty?
-      self.ruuuby_gems.all.each do |g|
-        self.comments << "add `gem '#{g.name}', '~> #{g.version_current.to_s}'`"
-      end
-    end
-    unless @comments.empty?
-      @comments.each do |c|
-        changes << " * #{c}"
-      end
-    end
-    unless @files_added.empty?
-      changes << "\n"
-      changes << "| path added | reference | notes | feature(s) |\n"
-      changes << "| ---: | --- | --- | --- |\n"
-      @files_added.each do |c|
-        c1 = c[1].empty? ? '' : "`#{c[1]}`"
-        changes << "| #{c[0]} | #{c1} | #{c[2]} | #{c[3]} |\n"
-      end
-      changes << "\n"
-    end
-    unless @files_removed.empty?
-      changes << "\n"
-      changes << "| path removed | notes |\n"
-      changes << "| ---: | --- |\n"
-      @files_removed.each do |f|
-        changes << "| #{f[0]} | #{f[1]} |\n"
-      end
-      changes << "\n"
-    end
-    changes += self.changelog.get_docs
-    changes
+    self.paths_added << [path, reference, notes, feats]
   end
 
   # @param [RuuubyRelease] them
@@ -175,13 +181,7 @@ class ::RuuubyRelease < ApplicationRecord
         elsif self.vminor < them.vminor
           return -1
         else
-          if self.vtiny > them.vtiny
-            return 1
-          elsif self.vtiny < them.vtiny
-            return -1
-          else
-            return 0
-          end
+          self.vtiny <=> them.vtiny
         end
       end
     else
@@ -217,9 +217,9 @@ class ::RuuubyRelease < ApplicationRecord
   end
 
   def self.generate_query_uid(*args)
-    🛑 ArgumentError.new("| c{RuuubyRelease}-> m{generate_query_uid} received no args |") if args.∅?
+    🛑 ::ArgumentError.new("| c{RuuubyRelease}-> m{generate_query_uid} received no args |") if args.∅?
     if args.length == 1 && args[0].str? && args[0].match?(::RuuubyRelease.syntax_uid)
-      return RuuubyRelease.generate_query_uid(*(self.parse_uid_str(args[0])))
+      return ::RuuubyRelease.generate_query_uid(*(self.parse_uid_str(args[0])))
     end
     🛑nums❓(args, :∈𝕎𝕊)
     ::RuuubyRelease.where(::RuuubyRelease::Syntax::SQL_UID, args[0].to_i, args[1].to_i, args[2].to_i)
@@ -263,7 +263,32 @@ class ::RuuubyRelease < ApplicationRecord
     end
   end
 
+  # cached fields
+
+  # @return [Array]
+  def comments; @comments ||= []; end
+
+  # @return [Array]
+  def paths_added; @paths_added ||= []; end
+
+  # @return [Array]
+  def paths_removed; @paths_removed ||= []; end
+
   🙈
+
+  def _get_changelog_for_ruuuby_gems
+    content = []
+    content << "| gem updated | version previous | version current |\n"
+    content << "| ----: | :---: | :---- |\n"
+    results      = ::RuuubyChangelog.where('ruuuby_release_id = ? AND applies_to = ?', self.id, ::RuuubyGem.orm_Ⓣ_🐍)
+    results.each do |gem_change|
+      gem_name = gem_change.applies_to_uid
+      the_gem  = ::RuuubyGem.find_by_name(gem_name)
+      content << the_gem.source_for_changelog
+    end
+    content << "\n" unless content.∅?
+    content
+  end
 
   def on_before_save
     self.num_gems_added = self.ruuuby_gems.length

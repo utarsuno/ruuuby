@@ -14,7 +14,7 @@ require 'rdoc/rdoc'
 
 spec = ::Gem::Specification.new do |s|
   s.name       = 'ruby_class_mods'
-  s.platform   = ::Gem::Platform::RUBY # ::Gem::Platform::CURRENT
+  s.platform   = ::Gem::Platform::CURRENT #::Gem::Platform::RUBY
   s.extensions = ::FileList['ext/**/extconf.rb']
   #s.cross_platform = %w[x86_64-darwin18] %w[x86-linux x86_64-linux x86_64-darwin18 x86-darwin18]
 end

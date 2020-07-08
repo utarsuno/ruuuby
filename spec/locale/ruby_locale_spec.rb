@@ -66,6 +66,10 @@ RSpec.describe 'ruby' do
           it 'as defined through global{RUBY_PLATFORM}' do
             expect(RUBY_PLATFORM).to eq('x86_64-darwin18')
           end
+          it 'as defined through module{Etc}' do
+            expect(::Etc.uname[:sysname]).to eq('Darwin')
+            expect(::Etc.uname[:machine]).to eq('x86_64')
+          end
           it 'as defined through build-settings{::RbConfig}' do
             expect(build_configs['host_os']).to eq('darwin18.7.0')
             expect(build_configs['host_vendor']).to eq('apple')

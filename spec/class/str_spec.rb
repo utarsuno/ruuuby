@@ -222,12 +222,6 @@ RSpec.describe 'str' do
             end
           end # end: {time-related}
           context 'snake vs camel case' do
-            it 'func{syntax_char_uppercase}' do
-              expect_syntax(::String, :syntax_char_uppercase, syntax_str::CHAR_UPPERCASE)
-            end
-            it 'func{syntax_char_lowercase}' do
-              expect_syntax(::String, :syntax_char_lowercase, syntax_str::CHAR_LOWERCASE)
-            end
             it 'func{syntax_case_camel}' do
               expect_syntax(::String, :syntax_case_camel, syntax_str::CASE_CAMEL)
             end
@@ -1058,7 +1052,7 @@ RSpec.describe 'str' do
       end
     end
 
-    context 'func{∅?} (alias for "remove_empty!")' do
+    context 'func{∅?}' do
       # TODO: ADD TEST CASES TO MEASURE BIG-O NOTATION
       context 'handles needed scenarios very quickly' do
         it 'cases: positive' do

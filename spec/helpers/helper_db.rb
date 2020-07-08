@@ -9,7 +9,6 @@ module HelpersDB
     expect(the_feature.description.ⓣ).to eq(::String)
     expect(the_feature.uid).to eq(feature_str)
     expect(feature_str.match?(::RuuubyFeature.syntax_uid)).to eq(true)
-    expect(description.match?(::RuuubyFeature.syntax_docs_feature_mapping)).to eq(true)
     expect(the_feature.description).to eq(description)
     expect(the_feature.ruuuby_feature_behaviors.length).to eq(expected_num_feats)
   end
@@ -107,6 +106,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:v0_0_42){::RuuubyRelease.find_by_uid(0, 0, 42)}
   let(:v0_0_43){::RuuubyRelease.find_by_uid(0, 0, 43)}
   let(:v0_0_44){::RuuubyRelease.find_by_uid(0, 0, 44)}
+  let(:v0_0_45){::RuuubyRelease.find_by_uid(0, 0, 45)}
 
   let(:f00){::RuuubyFeature.find_by_uid(0)}
   let(:f00_b00){f00.ruuuby_feature_behaviors[0]}
@@ -134,6 +134,9 @@ RSpec.shared_context 'shared_context_db' do
   let(:f06_b02){f06.ruuuby_feature_behaviors[2]}
   let(:f06_b03){f06.ruuuby_feature_behaviors[3]}
   let(:f06_b04){f06.ruuuby_feature_behaviors[4]}
+  let(:f06_b05){f06.ruuuby_feature_behaviors[5]}
+  let(:f06_b06){f06.ruuuby_feature_behaviors[6]}
+  let(:f06_b07){f06.ruuuby_feature_behaviors[7]}
 
   let(:f07){::RuuubyFeature.find_by_uid(7)}
   let(:f08){::RuuubyFeature.find_by_uid(8)}
@@ -170,6 +173,8 @@ RSpec.shared_context 'shared_context_db' do
   let(:f22_b02){f22.ruuuby_feature_behaviors[2]}
   let(:f22_b03){f22.ruuuby_feature_behaviors[3]}
   let(:f22_b04){f22.ruuuby_feature_behaviors[4]}
+  let(:f22_b05){f22.ruuuby_feature_behaviors[5]}
+  let(:f22_b06){f22.ruuuby_feature_behaviors[6]}
 
   let(:f23){::RuuubyFeature.find_by_uid(23)}
 
@@ -191,6 +196,10 @@ RSpec.shared_context 'shared_context_db' do
   let(:f27_b03){f27.ruuuby_feature_behaviors[3]}
   let(:f27_b04){f27.ruuuby_feature_behaviors[4]}
   let(:f27_b05){f27.ruuuby_feature_behaviors[5]}
+  let(:f27_b06){f27.ruuuby_feature_behaviors[6]}
+  let(:f27_b07){f27.ruuuby_feature_behaviors[7]}
+  let(:f27_b08){f27.ruuuby_feature_behaviors[8]}
+  let(:f27_b09){f27.ruuuby_feature_behaviors[9]}
 
   let(:f28){::RuuubyFeature.find_by_uid(28)}
   let(:f28_b00){f28.ruuuby_feature_behaviors[0]}
@@ -249,6 +258,12 @@ RSpec.shared_context 'shared_context_db' do
   let(:f35_b03){f35.ruuuby_feature_behaviors[3]}
 
   let(:f36){::RuuubyFeature.find_by_uid(36)}
+  let(:f36_b00){f36.ruuuby_feature_behaviors[0]}
+  let(:f36_b01){f36.ruuuby_feature_behaviors[1]}
+  let(:f36_b02){f36.ruuuby_feature_behaviors[2]}
+  let(:f36_b03){f36.ruuuby_feature_behaviors[3]}
+  let(:f36_b04){f36.ruuuby_feature_behaviors[4]}
+  let(:f36_b05){f36.ruuuby_feature_behaviors[5]}
 
   let(:f95){::RuuubyFeature.find_by_uid(95)}
   let(:f96){::RuuubyFeature.find_by_uid(96)}

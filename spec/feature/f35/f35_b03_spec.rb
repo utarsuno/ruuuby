@@ -242,25 +242,25 @@ RSpec.describe 'f35_b00' do
     end
     context 'w/ needed funcs' do
       it 'func{exponential_moving_average} aliased via{ema}'  do
-        expect_∃static⨍(:exponential_moving_average, ::Math::Stats::TimeSeries)
-        expect_∃static⨍(:ema, ::Math::Stats::TimeSeries)
+        expect_∃⨍_static(:exponential_moving_average, ::Math::Stats::TimeSeries)
+        expect_∃⨍_static(:ema, ::Math::Stats::TimeSeries)
       end
       it 'func{weighted_moving_average} aliased via{wma}'  do
-        expect_∃static⨍(:weighted_moving_average, ::Math::Stats::TimeSeries)
-        expect_∃static⨍(:wma, ::Math::Stats::TimeSeries)
+        expect_∃⨍_static(:weighted_moving_average, ::Math::Stats::TimeSeries)
+        expect_∃⨍_static(:wma, ::Math::Stats::TimeSeries)
       end
       it 'func{simple_moving_average} aliased via{sma}'  do
-        expect_∃static⨍(:simple_moving_average, ::Math::Stats::TimeSeries)
-        expect_∃static⨍(:sma, ::Math::Stats::TimeSeries)
+        expect_∃⨍_static(:simple_moving_average, ::Math::Stats::TimeSeries)
+        expect_∃⨍_static(:sma, ::Math::Stats::TimeSeries)
       end
       it 'func{aroon_up} aliased via{aroon⇧}' do
-        expect_∃static⨍(:aroon_up, ::Math::Stats::TimeSeries)
+        expect_∃⨍_static(:aroon_up, ::Math::Stats::TimeSeries)
       end
       it 'func{aroon_down}' do
-        expect_∃static⨍(:aroon_down, ::Math::Stats::TimeSeries)
+        expect_∃⨍_static(:aroon_down, ::Math::Stats::TimeSeries)
       end
       it 'func{aroon_oscillator}' do
-        expect_∃static⨍(:aroon_oscillator, ::Math::Stats::TimeSeries)
+        expect_∃⨍_static(:aroon_oscillator, ::Math::Stats::TimeSeries)
       end
     end
   end # end: {audits}

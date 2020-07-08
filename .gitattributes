@@ -1,0 +1,28 @@
+
+# binary
+*.png -text -diff
+*.jpg -text -diff
+*.jpeg -text -diff
+*.pdf -text -diff
+*.bundle -text -diff
+*.o -text -diff
+# web
+*.md diff=markdown text=markdown eol=lf
+*.html diff=html text=html eol=lf
+*.css diff=css text=css eol=lf
+# c
+*.h diff=cpp text=cpp eol=lf
+*.c diff=cpp text=cpp eol=lf
+# ruby
+*.rb diff=ruby text=ruby eol=lf
+*.gemspec diff=ruby text=ruby eol=lf
+# java
+*.java diff=java text=java eol=lf
+# python
+*.py diff=python text=python eol=lf
+# php
+*.php diff=php text=php eol=lf
+# text
+*.txt diff=text text=text eol=lf
+*.text diff=text text=text eol=lf
+*.log diff=text text=text eol=lf

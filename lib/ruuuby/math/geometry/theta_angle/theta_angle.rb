@@ -7,11 +7,16 @@
 #
 # vocabulary:
 #  * ephemeral    | lasting for a very short time |
+#
+#
+# | degree | ° | θ°.new(360)            |
+# | radian | ʳ | θʳ.new(2 * ::Math::PI) |
+# | gon    | ᵍ | θᵍ.new(400)            |
+# | turn   | 𝞽 | θ𝞽.new(1)              |
+#
+#
 class ThetaAngle
   include ::Comparable
-
-  # TODO: switch to fixnum representation
-  REPRESENTATIONS_TO_SYMBOLS = {as_degree: '°'.❄️, as_radian: 'ʳ'.❄️, as_gon: 'ᵍ'.❄️, as_turn: '𝞽'.❄️}.❄️
 
   # ____________________________________________________________________________________________________________________
   #            ___          __   __   ___  __       ___    __        __
@@ -22,37 +27,30 @@ class ThetaAngle
   # @return [Boolean] true, if `self.real == 0`
   def ∅?; self.real.zero?; end
 
-  module Vocab
-
-  end
-
+  # `{f27_b03}`
   module Pair
 
     # @return [Boolean] true, if the provided angles summed together equal{360°}
     def self.explementary?(θa, θb)
-      🛑θ❓(:θa, θa)
-      🛑θ❓(:θb, θb)
+      🛑θs❓([θa, θb])
       θa + θb == ::Math::ANGLE_TAU
     end
 
     # @return [Boolean] true, if the provided angles summed together equal{90°}
     def self.complementary?(θa, θb)
-      🛑θ❓(:θa, θa)
-      🛑θ❓(:θb, θb)
+      🛑θs❓([θa, θb])
       θa + θb == ::Math::ANGLE_RIGHT
     end
 
     # @return [Boolean] true, if the provided angles summed together equal{180°}
     def self.supplementary?(θa, θb)
-      🛑θ❓(:θa, θa)
-      🛑θ❓(:θb, θb)
+      🛑θs❓([θa, θb])
       θa + θb == ::Math::ANGLE_STRAIGHT
     end
 
     # @return [Boolean] true, if the provided angles summed together equal{360°} and are in the ratio{𝚽}
     def self.golden?(θa, θb)
-      🛑θ❓(:θa, θa)
-      🛑θ❓(:θb, θb)
+      🛑θs❓([θa, θb])
       if θa >= θb
         ((θa + θb) / θa).real.≈≈(::Float::RATIO_GOLDEN)
       else
@@ -162,4 +160,3 @@ end
 #  - https://en.wikipedia.org/wiki/Circular_segment
 #  - https://en.wikipedia.org/wiki/Circular_sector
 #  - https://en.wikipedia.org/wiki/Conic_section
-#  -

@@ -10,8 +10,8 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
       context 'by having correct configs' do
 
         context 'for gem{bundler}' do
-          it 'has correct version{2.1.4}' do
-            expect(::Bundler::VERSION).to eq('2.1.4')
+          it 'has correct version{2.2.0.rc.1}' do
+            expect(::Bundler::VERSION).to eq('2.2.0.rc.1')
           end
           it 'does not requires sudo' do
             expect(::Bundler.requires_sudo?).to eq(false)
@@ -37,7 +37,6 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
         end # end: {for gem{rspec}}
 
         context 'for gem{rspec-benchmark}' do
-          # during 0.0.43->44 migration; 0.5.1->0.6.0
           it 'has correct version{0.6.0}' do
             expect(::RSpec::Benchmark::VERSION).to eq('0.6.0')
           end
@@ -75,7 +74,6 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
         end # end: {for gem{activerecord}}
 
         context 'for gem{rugged}' do
-          # during 0.0.43->44 migration; 1.0.0->1.0.1
           it 'has correct version{1.0.1}' do
             expect(::Rugged::VERSION).to eq('1.0.1')
           end

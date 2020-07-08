@@ -71,13 +71,6 @@ RSpec.describe 'ruuuby_features.rb' do
             expect(RuuubyFeature.syntax_uid.source).to eq("\\A#{RuuubyFeature::Syntax::UID}\\z")
           end
         end
-        context 'func{syntax_docs_feature_mapping}' do
-          it 'exists as needed' do
-            expect(RuuubyFeature.respond_to?(:syntax_docs_feature_mapping)).to eq(true)
-            expect(RuuubyFeature.syntax_docs_feature_mapping.ⓣ).to eq(Regexp)
-            expect(RuuubyFeature.syntax_docs_feature_mapping.source).to eq("\\A#{RuuubyFeature::Syntax::DOCS_FEATURE_MAPPING}\\z")
-          end
-        end
       end
 
       context 'with needed constants' do

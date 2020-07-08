@@ -6,6 +6,12 @@ ENV['RUUUBY_F01']="b01|b03|b04{debug}"
 require 'bundler/setup'
 require 'ruuuby'
 
+$ruuuby = 💎
+
+class << ::Rugged
+  remove_method :libgit2_version
+end
+
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
 

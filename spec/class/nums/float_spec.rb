@@ -441,85 +441,85 @@ RSpec.describe 'float.rb' do
 
     context 'roughly preserves original pre-extension-performance' do
 
-      context 'performance hit for following funcs, are under 115%' do
+      context 'performance hit for following funcs, are under 95%' do
         it '`^⁻¹` (compared to `** -1`)' do
-          expect {3.0^⁻¹}.to perform_slower_than {3.0 ** -1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+          expect {3.0^⁻¹}.to perform_slower_than {3.0 ** -1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
         end
 
         it '`^⁰` (compared to `** 0`)' do
-          expect {3.0^⁰}.to perform_slower_than {3.0 ** 0}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+          expect {3.0^⁰}.to perform_slower_than {3.0 ** 0}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
         end
 
         it '`^¹` (compared to `** 1`)' do
-          expect {3.0^¹}.to perform_slower_than {3.0 ** 1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+          expect {3.0^¹}.to perform_slower_than {3.0 ** 1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
         end
       end
 
-      context 'performance hit for following funcs, are under 115%' do
+      context 'performance hit for following funcs, are under 95%' do
         context 'positive exponents' do
           it '`^²` (compared to `** 2`)' do
-            expect {3.0^²}.to perform_slower_than {3.0 ** 2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^²}.to perform_slower_than {3.0 ** 2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^³` (compared to `** 3`)' do
-            expect {3.0^³}.to perform_slower_than {3.0 ** 3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^³}.to perform_slower_than {3.0 ** 3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^⁴` (compared to `** 4`)' do
-            expect {3.0^⁴}.to perform_slower_than {3.0 ** 4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁴}.to perform_slower_than {3.0 ** 4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^⁵` (compared to `** 5`)' do
-            expect {3.0^⁵}.to perform_slower_than {3.0 ** 5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁵}.to perform_slower_than {3.0 ** 5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^⁶` (compared to `** 6`)' do
-            expect {3.0^⁶}.to perform_slower_than {3.0 ** 6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁶}.to perform_slower_than {3.0 ** 6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^⁷` (compared to `** 7`)' do
-            expect {3.0^⁷}.to perform_slower_than {3.0 ** 7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁷}.to perform_slower_than {3.0 ** 7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^⁸` (compared to `** 8`)' do
-            expect {3.0^⁸}.to perform_slower_than {3.0 ** 8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁸}.to perform_slower_than {3.0 ** 8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^⁹` (compared to `** 9`)' do
-            expect {3.0^⁹}.to perform_slower_than {3.0 ** 9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁹}.to perform_slower_than {3.0 ** 9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
         end
         context 'negative exponents' do
           it '`^⁻²` (compared to `** -2`)' do
-            expect {3.0^⁻²}.to perform_slower_than {3.0 ** -2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁻²}.to perform_slower_than {3.0 ** -2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^⁻³` (compared to `** -3`)' do
-            expect {3.0^⁻³}.to perform_slower_than {3.0 ** -3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁻³}.to perform_slower_than {3.0 ** -3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^⁻⁴` (compared to `** -4`)' do
-            expect {3.0^⁻⁴}.to perform_slower_than {3.0 ** -4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁻⁴}.to perform_slower_than {3.0 ** -4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^⁻⁵` (compared to `** -5`)' do
-            expect {3.0^⁻⁵}.to perform_slower_than {3.0 ** -5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁻⁵}.to perform_slower_than {3.0 ** -5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^⁻⁶` (compared to `** -6`)' do
-            expect {3.0^⁻⁶}.to perform_slower_than {3.0 ** -6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁻⁶}.to perform_slower_than {3.0 ** -6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^⁻⁷` (compared to `** -7`)' do
-            expect {3.0^⁻⁷}.to perform_slower_than {3.0 ** -7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁻⁷}.to perform_slower_than {3.0 ** -7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^⁻⁸` (compared to `** -8`)' do
-            expect {3.0^⁻⁸}.to perform_slower_than {3.0 ** -8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁻⁸}.to perform_slower_than {3.0 ** -8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
 
           it '`^⁻⁹` (compared to `** -9`)' do
-            expect {3.0^⁻⁹}.to perform_slower_than {3.0 ** -9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_115)
+            expect {3.0^⁻⁹}.to perform_slower_than {3.0 ** -9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
           end
         end
       end
@@ -529,4 +529,5 @@ RSpec.describe 'float.rb' do
     # TODO: Add performance tests for (≈≈)
 
   end
+
 end

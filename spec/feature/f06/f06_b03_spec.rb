@@ -42,7 +42,7 @@ RSpec.describe 'f06_b03' do
               expect{🛑ary❓(:arg, [1337, '1337'], :∉∅)}.to_not raise_error
             end
             it 'w/ many params' do
-              expect{🛑ary❓($PRM_MANY, [[nil], [1], [[nil]]], :∉∅)}.to_not raise_error
+              expect{🛑arys❓([[nil], [1], [[nil]]], :∉∅)}.to_not raise_error
             end
           end
           context 'w/o extra normalization' do
@@ -50,7 +50,7 @@ RSpec.describe 'f06_b03' do
               expect{🛑ary❓(:arg, [])}.to_not raise_error
             end
             it 'w/ many params' do
-              expect{🛑ary❓($PRM_MANY, [[], [1], [[nil]]])}.to_not raise_error
+              expect{🛑arys❓([[], [1], [[nil]]])}.to_not raise_error
             end
           end
         end
@@ -80,7 +80,7 @@ RSpec.describe 'f06_b03' do
   end # end: {functionality}
 
   context 'audit', :audit do
-    context 'feature{f06}:behavior{b00} passes audits' do
+    context 'feature{f06}:behavior{b03} passes audits' do
       context 'funcs provided are defined in correct location' do
         it 'for m{ObjectF06}' do
           expect_∃⨍(:🛑ary❓, ::Ruuuby::Feature::Includable::ObjectF06)

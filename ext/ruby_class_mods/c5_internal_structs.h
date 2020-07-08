@@ -36,33 +36,33 @@ ________________________________________________________________________________
                                                \/__/                     \_/__/*/
 
 #define STATS_FUNC_ID_COMPILER rb_intern("set_compiler_version")
-#define STATS_FUNC_ID_MEMORY rb_intern("get_mem_stats")
-#define STATS_FUNC_ID_TIMER rb_intern("set_timer_stats")
-#define STATS_FUNC_ID_PRINT rb_intern("print_ext_stats")
+#define STATS_FUNC_ID_MEMORY   rb_intern("get_mem_stats")
+#define STATS_FUNC_ID_TIMER    rb_intern("set_timer_stats")
+#define STATS_FUNC_ID_PRINT    rb_intern("print_ext_stats")
 
 #define 💎parse_compiler_version_to_string(arg){\
-        switch(compiler_version) {\
-            case FLAG_RUNTIME_VERSION_C_89:\
-                return c_str_to_frozen_r_str("c89");\
-            case FLAG_RUNTIME_VERSION_C_99:\
-                return c_str_to_frozen_r_str("c99");\
-            case FLAG_RUNTIME_VERSION_C_11:\
-                return c_str_to_frozen_r_str("c11");\
-            case FLAG_RUNTIME_VERSION_C_17:\
-                return c_str_to_frozen_r_str("c17");\
-            case FLAG_RUNTIME_VERSION_GNU_11:\
-                return c_str_to_frozen_r_str("gnu11");\
-            case FLAG_RUNTIME_VERSION_GNU_17:\
-                return c_str_to_frozen_r_str("gnu17");\
-            case FLAG_RUNTIME_VERSION_GNU_89:\
-                return c_str_to_frozen_r_str("gnu89");\
-            case FLAG_RUNTIME_VERSION_GNU_99:\
-                return c_str_to_frozen_r_str("gnu99");\
-            case FLAG_RUNTIME_VERSION_DEFAULT:\
-                return c_str_to_frozen_r_str("default");\
-            default:\
-                return c_str_to_frozen_r_str("???");\
-        }\
+    switch(compiler_version) {\
+        case FLAG_RUNTIME_VERSION_C_89:\
+            return c_str_to_frozen_r_str("c89");\
+        case FLAG_RUNTIME_VERSION_C_99:\
+            return c_str_to_frozen_r_str("c99");\
+        case FLAG_RUNTIME_VERSION_C_11:\
+            return c_str_to_frozen_r_str("c11");\
+        case FLAG_RUNTIME_VERSION_C_17:\
+            return c_str_to_frozen_r_str("c17");\
+        case FLAG_RUNTIME_VERSION_GNU_11:\
+            return c_str_to_frozen_r_str("gnu11");\
+        case FLAG_RUNTIME_VERSION_GNU_17:\
+            return c_str_to_frozen_r_str("gnu17");\
+        case FLAG_RUNTIME_VERSION_GNU_89:\
+            return c_str_to_frozen_r_str("gnu89");\
+        case FLAG_RUNTIME_VERSION_GNU_99:\
+            return c_str_to_frozen_r_str("gnu99");\
+        case FLAG_RUNTIME_VERSION_DEFAULT:\
+            return c_str_to_frozen_r_str("default");\
+        default:\
+            return c_str_to_frozen_r_str("???");\
+    }\
 }
 
 #endif

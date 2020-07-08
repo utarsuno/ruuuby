@@ -3,7 +3,7 @@
 # -------------------------------------------- ⚠️ --------------------------------------------
 
 # NOTE: eventually will utilize other gems & HTTP requests for retrieving information, ORM fields will potentially need to drastically adapt
-class RuuubyGem < ApplicationRecord
+class ::RuuubyGem < ::ApplicationRecord
 
   belongs_to :ruuuby_release, class_name: 'RuuubyRelease'
 
@@ -12,6 +12,14 @@ class RuuubyGem < ApplicationRecord
   #  /\   |   |  |__) | |__) |  |  |  |__  /__`
   # /~~\  |   |  |  \ | |__) \__/  |  |___ .__/
   # ________________________________________________________________________________________________________________ */
+
+  module EnumFlags
+    # @type [Integer]
+    CHANGELOG_TYPE_CREATED         = 0
+
+    # @type [Integer]
+    CHANGELOG_TYPE_VERSION_UPDATED = 1
+  end
 
   # _________________________________________________________________________________________________________________
   #  __   __
@@ -25,7 +33,7 @@ class RuuubyGem < ApplicationRecord
 
   def self.find_by_name(gem_name)
     🛑str❓(:gem_name, gem_name)
-    RuuubyGem.where('name = ?', [gem_name]).limit(1).first
+    ::RuuubyGem.where('name = ?', [gem_name]).limit(1).first
   end
 
   # @param [Boolean] is_dev
@@ -35,8 +43,8 @@ class RuuubyGem < ApplicationRecord
   #
   # @return [ActiveRecord::Relation]
   def self.fetch_by_type(is_dev, is_runtime)
-    🛑bool❓($PRM_MANY, [is_dev, is_runtime])
-    RuuubyGem.where('is_development = ? AND is_runtime = ?', is_dev, is_runtime).all
+    🛑bools❓([is_dev, is_runtime])
+    ::RuuubyGem.where('is_development = ? AND is_runtime = ?', is_dev, is_runtime).all
   end
 
   # @param [String]        gem_name
@@ -50,8 +58,8 @@ class RuuubyGem < ApplicationRecord
   #
   # @return [RuuubyGem]
   def self.spawn(gem_name, gem_version, for_development, for_runtime, tags, ref_source, ref_version, ruuuby_release)
-    🛑bool❓($PRM_MANY, [for_development, for_runtime])
-    ruuuby_gem = RuuubyGem.create!(
+    🛑bools❓([for_development, for_runtime])
+    the_ruuuby_gem = ::RuuubyGem.create!(
         name: gem_name,
         version_current: gem_version,
         is_development: for_development,
@@ -62,16 +70,58 @@ class RuuubyGem < ApplicationRecord
         ref_version: ref_version,
         url_gem: "https://rubygems.org/gems/#{gem_name}"
     )
-    ruuuby_gem.save!
-    ruuuby_gem
+    the_ruuuby_gem.save!
+    the_ruuuby_gem
   end
+
+  # @param [RuuubyRelease] ruuuby_release
+  # @param [RuuubyFeature] ruuuby_feature
+  # @param [String]        new_version
+  #
+  # @return [RuuubyChangelog]
+  def spawn_version_update(ruuuby_release, ruuuby_feature, new_version)
+    # "update gem{`#{self.name}`} from version{`#{self.version_current}`} to version{`#{new_version}`}"
+    changelog                    = ::RuuubyChangelog.spawn(ruuuby_release, ruuuby_feature, '')
+    changelog['applies_to']      = ::RuuubyGem.orm_Ⓣ_🐍
+    changelog['applies_to_uid']  = self.name
+    changelog['metadata_flag']    = ::RuuubyGem::EnumFlags::CHANGELOG_TYPE_VERSION_UPDATED
+    changelog['changelog_index'] = self.current_max_changelog_index + 1
+    changelog['value_previous']  = self.version_current.to_s
+    changelog['value_applied']   = new_version
+    changelog.save!
+    self['version_current']      = new_version
+    self.save!
+    changelog
+  end
+
+  # @param [RuuubyRelease] ruuuby_release
+  # @param [RuuubyFeature] ruuuby_feature
+  # @param [String]        new_version
+  #
+  # @return [RuuubyChangelog]
+  def spawn_version_initial(ruuuby_release, ruuuby_feature, new_version)
+    # "add gem{`#{self.name}`} w/ version{`#{new_version}`}"
+    changelog                    = ::RuuubyChangelog.spawn(ruuuby_release, ruuuby_feature, '')
+    changelog['applies_to']      = ::RuuubyGem.orm_Ⓣ_🐍
+    changelog['applies_to_uid']  = self.name
+    changelog['metadata_flag']    = ::RuuubyGem::EnumFlags::CHANGELOG_TYPE_CREATED
+    changelog['changelog_index'] = 0
+    changelog['value_previous']  = 'N/A'
+    changelog['value_applied']   = new_version
+    changelog.save!
+    self['version_current']      = new_version
+    self.save!
+    changelog
+  end
+
+  # @return [Integer]
+  def current_max_changelog_index; ::RuuubyChangelog.where('applies_to = ? AND applies_to_uid = ?', ::RuuubyGem.orm_Ⓣ_🐍, self.name).maximum('changelog_index'); end
 
   # _________________________________________________________________________________________________________________
   #   __   __   ___  __       ___  __   __   __
   #  /  \ |__) |__  |__)  /\   |  /  \ |__) /__`
   #  \__/ |    |___ |  \ /~~\  |  \__/ |  \ .__/
   # ________________________________________________________________________________________________________________ */
-
 
   #  __   ___        __        ___     ___  __   __            __            ___          ___
   # |__) |__   |\/| /  \ \  / |__     |__  |__) /  \  |\/|    |__) |  | |\ |  |  |  |\/| |__
@@ -93,6 +143,25 @@ class RuuubyGem < ApplicationRecord
       source += "#{initial_spacing}end # end: {for gem{#{self.name}}}\n\n"
       source
     end
+  end
+
+  def all_version_updates
+    ::RuuubyChangelog.where('applies_to = ? AND applies_to_uid = ?', ::RuuubyGem.orm_Ⓣ_🐍, self.name)
+  end
+
+  # @return [RuuubyChangelog]
+  def last_version_update
+    ::RuuubyChangelog.where('applies_to = ? AND applies_to_uid = ? AND changelog_index = ?', ::RuuubyGem.orm_Ⓣ_🐍, self.name, self.current_max_changelog_index).first
+  end
+
+  # @param  [RuuubyChangelog, NilClass] previous_version
+  #
+  # @return [String]
+  def source_for_changelog(previous_version=nil)
+    if previous_version.nil?
+      version_previous = self.last_version_update
+    end
+    "| `#{self.name}` | `#{version_previous.value_previous}` | `#{version_previous.value_applied}` |\n"
   end
 
   def source_for_readme

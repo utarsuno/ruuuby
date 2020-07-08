@@ -4,43 +4,6 @@ RSpec.describe 'module' do
 
   context 'extends class[Module]' do
 
-    context 'adding needed functions' do
-
-      context 'function{⨍_add_aliases}' do
-        context 'handles needed scenarios' do
-          context 'cases: negative' do
-            it 'bad args' do
-              expect{
-                module FakeModule
-                  def fake_func;end
-                  ⨍_add_aliases(:fake_func, nil)
-                end
-              }.to raise_error(ArgumentError)
-
-              expect{
-                ⨍_add_aliases(:fake_func, nil)
-              }.to raise_error(RSpec::Core::ExampleGroup::WrongScopeError)
-
-              expect{
-                module FakeModule
-                  def fake_func;end
-                  ⨍_add_aliases(nil, [:aaa])
-                end
-              }.to raise_error(TypeError)
-
-              expect{
-                module FakeModule
-                  def fake_func;end
-                  ⨍_add_aliases(:fake_func, [])
-                end
-              }.to raise_error(ArgumentError)
-            end
-          end
-        end
-      end
-
-    end
-
     context 'by adding function{∃⨍_alias?}' do
       context 'handling needed scenarios' do
         it 'cases: true-positive' do

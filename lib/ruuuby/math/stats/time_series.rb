@@ -32,7 +32,7 @@ module ::Math
         if n + 1 > len_data || n <= 1
           🛑 ::ArgumentError.new("| m{Math::Stats::TimeSeries}-> m{exponential_moving_average} got bad args, n{#{n.to_s}} is (<= 1) or longer than (len-1):{#{(data.length-1).to_s}} provided |")
         else
-          ema_prev = ::Math::Stats.arithmetic_mean(*(data[0, n]))
+          ema_prev = ::Math::Stats.μ(*(data[0, n]))
           ema_data = [ema_prev]
           k_const  = smoothing_constant / (n + 1.0)
           index    = n
@@ -94,7 +94,7 @@ module ::Math
           while index < len_data + 1
             delta     = index - n
             nodes     = data[delta, index - delta.abs]
-            local_sma = ::Math::Stats.arithmetic_mean(*nodes)
+            local_sma = ::Math::Stats.μ(*nodes)
             sma_data << local_sma
             index += 1
           end

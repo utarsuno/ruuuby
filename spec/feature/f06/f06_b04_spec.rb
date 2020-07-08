@@ -75,7 +75,7 @@ RSpec.describe 'f06_b04' do
   end # end: {functionality}
 
   context 'audit', :audit do
-    context 'feature{f06}:behavior{b00} passes audits' do
+    context 'feature{f06}:behavior{b04} passes audits' do
       context 'funcs provided are defined in correct location' do
         it 'for m{ObjectF06}' do
           expect_∃⨍(:🛑flt❓, ::Ruuuby::Feature::Includable::ObjectF06)

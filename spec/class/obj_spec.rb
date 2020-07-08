@@ -31,29 +31,6 @@ RSpec.describe 'Object' do
 
   context 'extends class[Object]' do
 
-    context 'by adding function{🛑bool❓}' do
-      context 'handles needed input scenarios' do
-        context 'cases: positive' do
-          it 'w/ single param' do
-            expect{🛑bool❓('0', false)}.to_not raise_error
-          end
-          it 'w/ many params' do
-            expect{🛑bool❓($PRM_MANY, [true, false])}.to_not raise_error
-          end
-        end
-        context 'cases: negative' do
-          it 'w/ single param' do
-            expect{🛑bool❓('0', nil)}.to raise_error(ArgumentError)
-          end
-          it 'w/ many params' do
-            expect{🛑bool❓($PRM_MANY, [true, nil])}.to raise_error(ArgumentError)
-            expect{🛑bool❓($PRM_MANY, [nil, false])}.to raise_error(ArgumentError)
-            expect{🛑bool❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
-          end
-        end
-      end
-    end
-
     context 'by adding function{🛑θ❓}' do
       context 'handles needed input scenarios' do
         context 'cases: positive' do
@@ -66,67 +43,6 @@ RSpec.describe 'Object' do
           it 'w/ single param' do
             expect{🛑θ❓(:θ, nil)}.to raise_error(ArgumentError)
             expect{🛑θ❓(:θ, 360.0)}.to raise_error(ArgumentError)
-          end
-        end
-      end
-    end
-
-    context 'by adding function{🛑sym❓}' do
-      context 'handles needed input scenarios' do
-        context 'cases: positive' do
-          context 'w/ normalization{:∈^}' do
-            it 'w/ single param' do
-              expect{🛑sym❓('0', :⁸, :'∈^')}.to_not raise_error
-            end
-            it 'w/ many params' do
-              expect{🛑sym❓($PRM_MANY, [:⁸, :⁻⁴], :'∈^')}.to_not raise_error
-            end
-          end
-          context 'w/o normalization' do
-            it 'w/ single param' do
-              expect{🛑sym❓('0', :symbol_fake)}.to_not raise_error
-            end
-            it 'w/ many params' do
-              expect{🛑sym❓($PRM_MANY, [:symbol_fake_other, :symbol_fake])}.to_not raise_error
-            end
-          end
-        end
-        context 'cases: negative' do
-          context 'w/ bad normalization' do
-            it 'w/ single param' do
-              expect{🛑sym❓('0', :a, :'∈^')}.to raise_error(ArgumentError)
-            end
-            it 'w/ many params' do
-              expect{🛑sym❓($PRM_MANY, ['5', :a], :'∈^')}.to raise_error(ArgumentError)
-              expect{🛑sym❓($PRM_MANY, [:a, 1337], :'∈^')}.to raise_error(ArgumentError)
-              expect{🛑sym❓($PRM_MANY, [nil, :a], :'∈^')}.to raise_error(ArgumentError)
-            end
-          end
-          context 'w/o normalization' do
-            it 'w/ single param' do
-              expect{🛑sym❓('0', nil)}.to raise_error(ArgumentError)
-            end
-            it 'w/ many params' do
-              expect{🛑sym❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
-              expect{🛑sym❓($PRM_MANY, [5, 1337])}.to raise_error(ArgumentError)
-              expect{🛑sym❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
-            end
-          end
-        end
-      end
-    end
-
-    context 'by adding function{bool?}' do
-      context 'handling needed scenarios' do
-        it 'cases: positive' do
-          [true, false, 1 == 1, 1 != 2].∀{|n|expect(n.bool?).to eq(true)}
-        end
-        context 'cases: negative' do
-          it 'without effecting TrueClass instance or FalseClass instance' do
-            [TrueClass, FalseClass, MockTrue, MockFalse].∀{|scenario| expect(scenario.bool?).to eq(false)}
-          end
-          it 'normal data types checks' do
-            [Class, Object, NilClass, '', 'true', 'False', -1, 1, 0, [], {}, [false], [true]].∀{|n|expect(n.bool?).to eq(false)}
           end
         end
       end
@@ -154,118 +70,12 @@ RSpec.describe 'Object' do
       end
     end
 
-    context 'by adding function{hsh?}' do
-      it 'without effecting Integer instance' do
-        expect(Hash.hsh?).to eq(false)
-      end
-      context 'handles needed input scenarios' do
-        it 'returns correct value{true}' do
-          [{}, {'a' => 5}, {a: {}}, {nil: nil}, {[] => nil}].∀{|h|expect(h.hsh?).to eq(true)}
-        end
-        it 'returns correct value{false}' do
-          [nil, '', '{}', [], [{}], 1337].∀{|h|expect(h.hsh?).to eq(false)}
-        end
-      end
-    end
-
-    context 'by adding function{sym?}' do
-      context 'w/ normalizer(:∈^)' do
-        context 'handles needed scenarios' do
-          context 'cases: positive' do
-            it 'regular exponents' do
-              expect(:⁴.sym?(:'∈^')).to eq(4)
-              expect(:².sym?(:'∈^')).to eq(2)
-              expect(:⁰.sym?(:'∈^')).to eq(0)
-              expect(:⁻².sym?(:'∈^')).to eq(-2)
-              expect(:⁻⁴.sym?(:'∈^')).to eq(-4)
-            end
-            it '± inf' do
-              expect(:∞.sym?(:'∈^')).to eq(::Float::INFINITY)
-              expect(:'-∞'.sym?(:'∈^')).to eq(::Float::INFINITY_NEGATIVE)
-            end
-            it 'complex inf' do
-              expect(:∞ℂ.sym?(:'∈^')).to eq(::Float::INFINITY_COMPLEX)
-            end
-          end
-          context 'cases: negative' do
-            it 'invalid inf' do
-              expect(:∞∞.sym?(:'∈^')).to eq(false)
-              expect(:'--∞'.sym?(:'∈^')).to eq(false)
-            end
-            it 'complex inf' do
-              expect(:ℂ∞ℂ.sym?(:'∈^')).to eq(false)
-            end
-            it 'invalid exponent' do
-              expect(:²²².sym?(:'∈^')).to eq(false)
-              expect(:₂.sym?(:'∈^')).to eq(false)
-              expect(:a.sym?(:'∈^')).to eq(false)
-            end
-          end
-        end
-      end # end: {w/ normalizer(:'∈^')}
-
-      context 'w/o any normalizer' do
-        context 'handles needed scenarios' do
-          it 'cases: positive' do
-            [:test, :hello, :²²², :₂].∀{|n|expect(n.sym?).to eq(true)}
-          end
-          it 'cases: negative' do
-            [Symbol, nil, 1337, 'test', ':test', :test.to_s].∀{|n|expect(n.sym?).to eq(false)}
-          end
-        end
-      end # end: {w/o any normalizer}
-    end # end: {by adding function{sym?}}
   end
 
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
   # |    |___ |  \ |    \__/ |  \  |  | /~~\ | \| \__, |___
   context 'performance', :performance do
-
-    context 'func{sym?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{:sym.sym?}.to perform_extremely_quickly
-      end
-      it 'for cases: false' do
-        expect{'sym'.sym?}.to perform_extremely_quickly
-      end
-    end
-
-    context 'func{bool?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{true.bool?}.to perform_extremely_quickly
-        expect{false.bool?}.to perform_extremely_quickly
-      end
-      it 'for cases: false' do
-        expect{0.bool?}.to perform_extremely_quickly
-      end
-    end
-
-    context 'func{hsh?}: performs extremely quickly' do
-      it 'for cases: true' do
-        expect{{}.hsh?}.to perform_extremely_quickly
-      end
-      it 'for cases: false' do
-        expect{5.hsh?}.to perform_extremely_quickly
-      end
-    end
-
-    context 'func{🛑bool❓}: performs extremely quickly' do
-      it 'cases[positive]' do
-        expect{🛑bool❓('0', false)}.to perform_extremely_quickly
-      end
-    end
-
-    context 'funcs{🛑sym❓}: performs extremely quickly' do
-      context 'cases: positive' do
-        it 'w/ single param' do
-          expect{🛑sym❓('0', :symbol_fake)}.to perform_extremely_quickly
-        end
-        it 'w/ many params' do
-          expect{🛑sym❓($PRM_MANY, [:symbol_fake_other, :symbol_fake])}.to perform_extremely_quickly
-        end
-      end
-    end
 
     context 'function{🛑θ❓}: performs extremely quickly' do
       context 'for needed scenarios' do

@@ -28,7 +28,7 @@ RSpec.describe 'f06_b01' do
               expect{🛑str❓('0', "\n", :∉∅)}.to_not raise_error
             end
             it 'w/ many params' do
-              expect{🛑str❓($PRM_MANY, %w(a bb), :∉∅)}.to_not raise_error
+              expect{🛑strs❓(%w(a bb), :∉∅)}.to_not raise_error
             end
           end
           context 'w/o extra normalization' do
@@ -38,7 +38,7 @@ RSpec.describe 'f06_b01' do
               expect{🛑str❓('0', "\n")}.to_not raise_error
             end
             it 'w/ many params' do
-              expect{🛑str❓($PRM_MANY, %w(a bb))}.to_not raise_error
+              expect{🛑strs❓(%w(a bb))}.to_not raise_error
             end
           end
         end
@@ -56,7 +56,7 @@ RSpec.describe 'f06_b01' do
               expect{🛑str❓('0', '', :∉∅)}.to raise_error(ArgumentError)
             end
             it 'w/ many params' do
-              expect{🛑str❓($PRM_MANY, ['a', '', 'bb'], :∉∅)}.to raise_error(ArgumentError)
+              expect{🛑strs❓(['a', '', 'bb'], :∉∅)}.to raise_error(ArgumentError)
             end
           end
           context 'w/o extra normalization' do
@@ -64,9 +64,9 @@ RSpec.describe 'f06_b01' do
               expect{🛑str❓('0', nil)}.to raise_error(ArgumentError)
             end
             it 'w/ many params' do
-              expect{🛑str❓($PRM_MANY, ['5', nil])}.to raise_error(ArgumentError)
-              expect{🛑str❓($PRM_MANY, [5, '5'])}.to raise_error(ArgumentError)
-              expect{🛑str❓($PRM_MANY, [nil, nil])}.to raise_error(ArgumentError)
+              expect{🛑strs❓(['5', nil])}.to raise_error(ArgumentError)
+              expect{🛑strs❓([5, '5'])}.to raise_error(ArgumentError)
+              expect{🛑strs❓([nil, nil])}.to raise_error(ArgumentError)
             end
           end
         end
@@ -76,7 +76,7 @@ RSpec.describe 'f06_b01' do
   end # end: {functionality}
 
   context 'audit', :audit do
-    context 'feature{f06}:behavior{b00} passes audits' do
+    context 'feature{f06}:behavior{b01} passes audits' do
       context 'funcs provided are defined in correct location' do
         it 'for m{ObjectF06}' do
           expect_∃⨍(:🛑str❓, ::Ruuuby::Feature::Includable::ObjectF06)

@@ -14,7 +14,9 @@ class ::Integer
   # ∀ x ∈ Rℤ --> x ∈ ℤ
   #
   # ∴ ⨍(`infinite?`) will always return `false`
-  ⨍_add_aliases(:infinite?, [:∞?, :∞ℂ?, :nan?])
+  alias_method :∞?, :infinite?
+  alias_method :∞ℂ?, :infinite?
+  alias_method :nan?, :infinite?
 
   # | ------------------------------------------------------------------------------------------------------------------
 

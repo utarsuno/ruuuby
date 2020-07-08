@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 dir_base                   = ::RuuubyDir.spawn(💎.engine.path_base, 'ruuuby', false)
 @dir_ext                   = dir_base.spawn_dir('ext/', 'ext', false)
@@ -6,13 +6,13 @@ dir_base                   = ::RuuubyDir.spawn(💎.engine.path_base, 'ruuuby', 
 @dir_db                    = dir_base.spawn_dir('db/', 'db', false)
 @dir_seeds                 = @dir_db.spawn_dir('seeds/', 'seeds', false)
 @dir_seeds_ruuuby_releases = @dir_seeds.spawn_dir('ruuuby_releases/', 'ruuuby_releases', false)
-
-@ruuuby_file_version =  dir_base.spawn_file('.ruby-version', 'ruby-version', '', false)
+@ruuuby_file_version        = dir_base.spawn_file('.ruby-version', 'ruby-version', '.ruby-version', false)
 dir_base.spawn_file('.gitignore', 'gitignore', '', false)
-@ruuuby_gemspec = dir_base.spawn_file('ruuuby.gemspec', 'ruuuby', '.gemspec', false)
+dir_base.spawn_file('.gitattributes', 'gitattributes', '', false)
+@ruuuby_gemspec            = dir_base.spawn_file('ruuuby.gemspec', 'ruuuby', '.gemspec', false)
 dir_base.spawn_file('Rakefile', 'Rakefile', '', false)
 dir_base.spawn_file('Gemfile', 'Gemfile', '', false)
-@ruuuby_readme = dir_base.spawn_file('README.md', 'README', '.md', false)
+@ruuuby_readme             = dir_base.spawn_file('README.md', 'README', '.md', false)
 
 @ruuuby_gemspec.define_singleton_method(:generate_source) do
   spacing          = "\t"
@@ -31,7 +31,7 @@ dir_base.spawn_file('Gemfile', 'Gemfile', '', false)
       while gem_misc.length < needed_len - 3
         gem_misc += ' '
       end
-      gem_misc += "#║\n"
+      gem_misc  += "#║\n"
       gems_misc += gem_misc
     end
     if g.is_development
@@ -47,16 +47,16 @@ dir_base.spawn_file('Gemfile', 'Gemfile', '', false)
       while gem_runtime.length < needed_len - 3
         gem_runtime += ' '
       end
-      gem_runtime += "#║\n"
+      gem_runtime  += "#║\n"
       gems_runtime += gem_runtime
     end
   end
-  output  += gems_development
-  output  += divider
-  output  += gems_runtime
-  output  += divider
-  output  += gems_misc
-  output  += "#{spacing}# ╚═════════════════════════════════════════════════════════════════════════════╝\n"
+  output += gems_development
+  output += divider
+  output += gems_runtime
+  output += divider
+  output += gems_misc
+  output += "#{spacing}# ╚═════════════════════════════════════════════════════════════════════════════╝\n"
   output
 end
 

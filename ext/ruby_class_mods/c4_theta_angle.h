@@ -77,6 +77,8 @@ typedef struct ThetaAngles {
 typedef struct ThetaAngles * ptr_theta_angle;
 #define ptrθ ptr_theta_angle
 
+#define TA_FLAGS_ZERO_POSITIVE_NORMAL 0x7
+
 #define FLAGS_NON_CONST_ZERO 0x7
 #define FLAGS_NON_CONST_POSITIVE_NORMAL 0x6
 #define FLAGS_NON_CONST_POSITIVE_NOT_NORMAL 0x2
@@ -86,68 +88,84 @@ typedef struct ThetaAngles * ptr_theta_angle;
 #define FLAGS_NORMAL 0x4
 #define FLAGS_ZERO_OR_PERIGON 0x41
 
-#define SET_FLAGS(the_data, the_flags) the_data->flags_meta_data.generic_byte = the_flags;
+#define TA_SET_FLAGS(the_data, the_flags) the_data->flags_meta_data.generic_byte = the_flags;
+#define TA_FLAGS_ON(the_data, the_flags) the_data->flags_meta_data.generic_byte |= the_flags;
 #define NO_MATCH_FOR_θ(the_data, the_flags) (the_data->flags_meta_data.generic_byte & the_flags) == 0
 #define ANY_MATCH_FOR_FLAGS(the_data, the_flags) (the_data->flags_meta_data.generic_byte & the_flags) != 0
 #define NO_MATCH_FOR_ANY_θ(the_data, the_flags) (the_data->flags_meta_data.generic_byte & the_flags) == 0
 
-static inline void ptrθ_flag_set_coerce(const ptrθ data);
-static inline void ptrθ_flag_clr_coerce(const ptrθ data);
-static inline int ptrθ_flag_is_coerce(const ptrθ data);
+#define ptrθ_flags_val_is_zero(data){\
+    ptrθ_flag_set_is_zero(data);\
+    ptrθ_flag_set_is_positive(data);\
+    ptrθ_flag_set_is_normal(data);\
+    ptrθ_flag_clr_perigon(data);\
+}
 
-static inline void ptrθ_flag_set_is_zero(const ptrθ data);
-static inline void ptrθ_flag_clr_is_zero(const ptrθ data);
-static inline int ptrθ_flag_is_zero(const ptrθ data);
+#define ptrθ_flags_val_is_perigon(data, as_positive_perigon){\
+    ptrθ_flag_clr_is_zero(data);\
+    ptrθ_flag_set_is_normal(data);\
+    ptrθ_flag_set_perigon(data);\
+    if (as_positive_perigon){\
+        ptrθ_flag_set_is_positive(data);\
+    } else {\
+        ptrθ_flag_clr_is_positive(data);\
+    }\
+}
 
-static inline void ptrθ_flag_set_is_normal(const ptrθ data);
-static inline void ptrθ_flag_clr_is_normal(const ptrθ data);
-static inline int ptrθ_flag_is_normal(const ptrθ data);
+#define ptrθ_flags_val_is_below_perigon(data, as_positive_perigon){\
+    ptrθ_flag_clr_is_zero(data);\
+    ptrθ_flag_set_is_normal(data);\
+    ptrθ_flag_clr_perigon(data);\
+    if (as_positive_perigon){\
+        ptrθ_flag_set_is_positive(data);\
+    } else {\
+        ptrθ_flag_clr_is_positive(data);\
+    }\
+}
 
-static inline void ptrθ_flag_set_constant(const ptrθ data);
-static inline void ptrθ_flag_clr_constant(const ptrθ data);
-static inline int ptrθ_flag_is_constant(const ptrθ data);
-
-static inline void ptrθ_flag_set_cache_synced(const ptrθ data);
-static inline void ptrθ_flag_clr_cache_synced(const ptrθ data);
-static inline int ptrθ_flag_is_cache_synced(const ptrθ data);
-
-static inline void ptrθ_flag_set_is_positive(const ptrθ data);
-static inline void ptrθ_flag_clr_is_positive(const ptrθ data);
-static inline int ptrθ_flag_is_positive(const ptrθ data);
-
-static inline void ptrθ_flag_set_perigon(const ptrθ data);
-static inline void ptrθ_flag_clr_perigon(const ptrθ data);
-static inline int ptrθ_flag_is_perigon(const ptrθ data);
+#define ptrθ_flags_val_is_beyond_perigon(data, as_positive_perigon){\
+    ptrθ_flag_clr_is_zero(data);\
+    ptrθ_flag_clr_is_normal(data);\
+    ptrθ_flag_clr_perigon(data);\
+    if (as_positive_perigon){\
+        ptrθ_flag_set_is_positive(data);\
+    } else {\
+        ptrθ_flag_clr_is_positive(data);\
+    }\
+}
 
 // -------------------------
 
-static inline void ptrθ_flag_set_is_normal(const ptrθ data){data->flags_meta_data.b.b2 = FLAG_TRUE;}
-static inline void ptrθ_flag_clr_is_normal(const ptrθ data){data->flags_meta_data.b.b2 = FLAG_FALSE;}
-static inline int ptrθ_flag_is_normal(const ptrθ data){return data->flags_meta_data.b.b2 == FLAG_TRUE;}
+#define CREATE_FLAG_TA_FUNC_SETTER(func_name, expr, flag_value) static inline void func_name(ptrθ data);static inline void func_name(ptrθ data){expr = flag_value;}
+#define CREATE_FLAG_TA_FUNC_GETTER(func_name, expr) static inline int func_name(ptrθ data);static inline int func_name(ptrθ data){return expr == FLAG_TRUE;}
 
-static inline void ptrθ_flag_set_is_zero(const ptrθ data){data->flags_meta_data.b.b0 = FLAG_TRUE;}
-static inline void ptrθ_flag_clr_is_zero(const ptrθ data){data->flags_meta_data.b.b0 = FLAG_FALSE;}
-static inline int ptrθ_flag_is_zero(const ptrθ data){return data->flags_meta_data.b.b0 == FLAG_TRUE;}
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_set_is_zero, data->flags_meta_data.b.b0, FLAG_TRUE)
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_clr_is_zero, data->flags_meta_data.b.b0, FLAG_FALSE)
+CREATE_FLAG_TA_FUNC_GETTER(ptrθ_flag_is_zero, data->flags_meta_data.b.b0)
 
-static inline void ptrθ_flag_set_is_positive(const ptrθ data){data->flags_meta_data.b.b1 = FLAG_TRUE;}
-static inline void ptrθ_flag_clr_is_positive(const ptrθ data){data->flags_meta_data.b.b1 = FLAG_FALSE;}
-static inline int ptrθ_flag_is_positive(const ptrθ data){return data->flags_meta_data.b.b1 == FLAG_TRUE;}
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_set_is_positive, data->flags_meta_data.b.b1, FLAG_TRUE)
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_clr_is_positive, data->flags_meta_data.b.b1, FLAG_FALSE)
+CREATE_FLAG_TA_FUNC_GETTER(ptrθ_flag_is_positive, data->flags_meta_data.b.b1)
 
-static inline void ptrθ_flag_set_constant(const ptrθ data){data->flags_meta_data.b.b3 = FLAG_TRUE;}
-static inline void ptrθ_flag_clr_constant(const ptrθ data){data->flags_meta_data.b.b3 = FLAG_FALSE;}
-static inline int ptrθ_flag_is_constant(const ptrθ data){return data->flags_meta_data.b.b3 == FLAG_TRUE;}
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_set_is_normal, data->flags_meta_data.b.b2, FLAG_TRUE)
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_clr_is_normal, data->flags_meta_data.b.b2, FLAG_FALSE)
+CREATE_FLAG_TA_FUNC_GETTER(ptrθ_flag_is_normal, data->flags_meta_data.b.b2)
 
-static inline void ptrθ_flag_set_coerce(const ptrθ data){data->flags_meta_data.b.b4 = FLAG_TRUE;}
-static inline void ptrθ_flag_clr_coerce(const ptrθ data){data->flags_meta_data.b.b4 = FLAG_FALSE;}
-static inline int ptrθ_flag_is_coerce(const ptrθ data){return data->flags_meta_data.b.b4 == FLAG_TRUE;}
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_set_constant, data->flags_meta_data.b.b3, FLAG_TRUE)
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_clr_constant, data->flags_meta_data.b.b3, FLAG_FALSE)
+CREATE_FLAG_TA_FUNC_GETTER(ptrθ_flag_is_constant, data->flags_meta_data.b.b3)
 
-static inline void ptrθ_flag_set_cache_synced(const ptrθ data){data->flags_meta_data.b.b5 = FLAG_TRUE;}
-static inline void ptrθ_flag_clr_cache_synced(const ptrθ data){data->flags_meta_data.b.b5 = FLAG_FALSE;}
-static inline int ptrθ_flag_is_cache_synced(const ptrθ data){return data->flags_meta_data.b.b5 == FLAG_TRUE;}
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_set_coerce, data->flags_meta_data.b.b4, FLAG_TRUE)
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_clr_coerce, data->flags_meta_data.b.b4, FLAG_FALSE)
+CREATE_FLAG_TA_FUNC_GETTER(ptrθ_flag_is_coerce, data->flags_meta_data.b.b4)
 
-static inline void ptrθ_flag_set_perigon(const ptrθ data){data->flags_meta_data.b.b7 = FLAG_TRUE;}
-static inline void ptrθ_flag_clr_perigon(const ptrθ data){data->flags_meta_data.b.b7 = FLAG_FALSE;}
-static inline int ptrθ_flag_is_perigon(const ptrθ data){return data->flags_meta_data.b.b7 == FLAG_TRUE;}
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_set_cache_synced, data->flags_meta_data.b.b5, FLAG_TRUE)
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_clr_cache_synced, data->flags_meta_data.b.b5, FLAG_FALSE)
+CREATE_FLAG_TA_FUNC_GETTER(ptrθ_flag_is_cache_synced, data->flags_meta_data.b.b5)
+
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_set_perigon, data->flags_meta_data.b.b7, FLAG_TRUE)
+CREATE_FLAG_TA_FUNC_SETTER(ptrθ_flag_clr_perigon, data->flags_meta_data.b.b7, FLAG_FALSE)
+CREATE_FLAG_TA_FUNC_GETTER(ptrθ_flag_is_perigon, data->flags_meta_data.b.b7)
 
 static double vocab_value_perigon_negative(const unsigned char angle_mode);
 static double vocab_value_perigon(const unsigned char angle_mode);
@@ -209,13 +227,12 @@ static VALUE θ_new(const double angle, const VALUE sym_mode) {
     return obj;
 }
 
-static VALUE θ_new_constant(const double angle, const VALUE sym_mode);
-static VALUE θ_new_constant(const double angle, const VALUE sym_mode) {
+static VALUE θ_new_constant(const double angle, const VALUE sym_mode, const unsigned char initial_flags);
+static VALUE θ_new_constant(const double angle, const VALUE sym_mode, const unsigned char initial_flags) {
     VALUE obj = θ_new(angle, sym_mode);
     ptrθ data; 💎parse_ptrθ(obj, data);
-    VALUE the_val = DBL2NUM(data->angle_value);
-    rb_iv_set(obj, "@real", the_val);
-    ptrθ_flag_set_constant(data);
+    rb_iv_set(obj, "@real", DBL2NUM(data->angle_value));
+    TA_SET_FLAGS(data, initial_flags);
     RB_OBJ_FREEZE(obj);
     return obj;
 }
@@ -257,7 +274,7 @@ static VALUE θVAL_equals_θVAL(const VALUE a, const VALUE b);
 static VALUE θVAL_equals_NUM(const VALUE a, const VALUE b);
 static VALUE θVAL_equals_NUM(const VALUE a, const VALUE b) {
     ptrθ data_a; 💎parse_ptrθ(a, data_a);
-   re_as_bool(data_a->angle_value == NUM2DBL(b))
+    re_as_bool(data_a->angle_value == NUM2DBL(b))
 }
 
 // ---------------------------------------

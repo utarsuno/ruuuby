@@ -48,7 +48,7 @@ class GitCommit < ApplicationRecord
   #
   # @return [GitCommit]
   def self.spawn(commit_msg, release_timestamp, commit_hash, release_tag, ruuuby_release)
-    🛑str❓($PRM_MANY, [commit_msg, release_timestamp, commit_hash])
+    🛑strs❓([commit_msg, release_timestamp, commit_hash])
     🛑 ArgumentError.new("c{GitCommit}-> m{spawn} got arg(commit_hash){#{commit_hash.to_s}} of type{#{commit_hash.Ⓣ}} which is not valid type or format for a commit hash") unless commit_hash.match?(::GitCommit.syntax_commit_hash)
     🛑 ArgumentError.new("c{GitCommit}-> m{spawn} got arg(release_timestamp){#{release_timestamp.to_s}} of type{#{release_timestamp.Ⓣ}} which is not valid type or format for a commit timestamp") unless release_timestamp.match?(::String.syntax_iso8601_normalizable)
     if release_tag.∅?

@@ -19,8 +19,6 @@ static inline void startup_step4_load_needed_ruuuby_files(void);
 static inline void startup_step5_protect_against_gc(void);
 static void internal_only_prepare_f16(void);
 
-static int internal_only_compare_func_4_object_id(const void * l , const void * r);
-
 /*____________________________________________________________________________________________________________________________________________________________________
             __   __   __   __       __   __   ___     __   __   __   __   ___  __   __          __
  |\/|  /\  /  ` |__) /  \ /__` .   |__) |__) |__  __ |__) |__) /  \ /  ` |__  /__` /__` | |\ | / _`
@@ -66,8 +64,8 @@ ________________________________________________________________________________
 #define 💎add_func_alias(kclass, name_alias, name_original)  rb_define_alias(kclass, name_alias, name_original);
 #define 💎add_const_under(kclass, const_name, const_value)   rb_define_const(kclass, const_name, const_value);
 #define 💎add_const_flt(const_name, const_as_c_double)        💎add_const_under(R_FLT, const_name, DBL2NUM(const_as_c_double))
-#define 💎add_const_theta_angle(const_name, dbl_angle, mode_angle, ref) {\
-    ref = θ_new_constant(dbl_angle, mode_angle);\
+#define 💎add_const_theta_angle(const_name, dbl_angle, mode_angle, ref, initial_flags) {\
+    ref = θ_new_constant(dbl_angle, mode_angle, initial_flags);\
     rb_define_const(R_MATH, const_name, ref);\
     rb_global_variable(& ref);\
 }
@@ -137,16 +135,14 @@ ________________________________________________________________________________
     rb_gc_register_mark_object(the_var);\
 }
 
-#define 💎PROCEDURE_01(the_var, ary_of_code_points) unsigned long the_var = NUM2ULONG(rb_obj_id(rb_to_symbol(rb_funcall(ary_of_code_points, rb_intern_pack, 1, pack_as_utf8))));
+#define 💎PROCEDURE_01(the_var, ary_of_code_points) ID the_var = rb_sym2id(rb_to_symbol(rb_funcall(ary_of_code_points, rb_intern_pack, 1, pack_as_utf8)));
 
 #define 💎PROCEDURE_02(el_index, the_var, val_to_set) {\
     el_index = bsearch_power(the_var);\
     exponential_indexes[bsearch_power_position(el_index)] = val_to_set;\
 }
 
-//static inline __attribute__ ((__always_inline__)) VALUE is_finite_num(const VALUE arg);
 static VALUE is_finite_num(const VALUE arg);
-//static inline __attribute__ ((__always_inline__)) VALUE has_smell_of_int(const VALUE arg);
 static VALUE has_smell_of_int(const VALUE arg);
 
 static VALUE is_finite_num(const VALUE arg) {return rb_funcall(arg, cached_rb_intern_is_finite, 0);}

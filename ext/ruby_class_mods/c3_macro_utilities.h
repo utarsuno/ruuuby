@@ -7,6 +7,11 @@
 #ifndef CRUUUBY_H3_MACRO_UTILITIES
 #define CRUUUBY_H3_MACRO_UTILITIES "defined(CRUUUBY_H3_MACRO_UTILITIES)"
 
+// macros for internal pre-processing generators
+
+#define CREATE_FLAG_FUNC_SETTER(func_name, ptr_type, expr, flag_value) static inline void func_name(ptr_type data);static inline void func_name(ptr_type data){expr = flag_value;}
+#define CREATE_FLAG_FUNC_GETTER(func_name, ptr_type, expr) static inline int func_name(ptr_type data);static inline int func_name(ptr_type data){return expr == FLAG_TRUE;}
+
 /*____________________________________________________________________________________________________________________________________________________________________
             __   __   __   __       __   __   ___     __   __   __   __   ___  __   __          __
  |\/|  /\  /  ` |__) /  \ /__` .   |__) |__) |__  __ |__) |__) /  \ /  ` |__  /__` /__` | |\ | / _`
@@ -15,15 +20,6 @@ ________________________________________________________________________________
 
 #define 💎set_field(var_name, var_var) rb_iv_set(self, var_name, var_var);
 #define 💎get_field(var_name)          rb_iv_get(self, var_name);
-
-#define ensure_file_loaded(path) if (rb_require(path) != Qtrue){printf("path already loaded {%s}\n", path);};
-/*__attribute__ ((access (read_only, 1))) static void ensure_file_loaded(const char * path);
-__attribute__ ((access (read_only, 1))) static void ensure_file_loaded(const char * path) {
-    if (rb_require(path) != Qtrue) {
-        printf("path already loaded {%s}\n", path);
-        rb_sys_fail("path was already loaded\n");
-    };
-}*/
 
 #define ensure_loaded_ruuuby(path)               ensure_file_loaded("ruuuby/" #path)
 #define ensure_loaded_io(path)                   ensure_file_loaded("ruuuby/class/io/" #path)

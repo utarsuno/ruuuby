@@ -1,36 +1,40 @@
-#### (upcoming patches) 
-
-##### v?.?.?
- * `automatic differentiation`
- * `dual-numbers` (for before `automatic differentiation`)
-
-##### v0.3.0
- * `Quaternions`
-
-##### v0.2.0
- * clear `tech debt` and all `feature abstracts`
-   * adding `automatic differentiation` should involve near `0% (of time allocation)` towards `version-relating documentation & audits`
- * enormous section of missing `ORM` tests & utilization of a `physical/server DB` w/ `migrations`
- * add formal build process, add `NGINX` service at minimum
-
-##### v0.1.0
- * resolve needed feature coverage w/ `trigonometry`, `geometry`, and `ThetaAngle`
-
-##### v0.0.33-50
- * formalize angles, both notation and implementation
-   * (`steradians`, `degree`, `radian`, `gon`, `turns`)
-   * `rectangular-form`/`polar-form`
-   * `complex-number-plane`/`complex-angles`
-   * angular rotation vs angular velocity
-   * dimensions vs units
-
 ---
 
 ### ⚠️: atm documentation & tests synchronization % is too low
 
 ---
 
-# v0.0.44
+# `v0.0.45`
+
+ * apply iterative upgrade to `Ruuuby Engine`
+   * **ex:** track `GIT attributes` w/ `💎.engine.api_git`
+ * fix various edge-case bugs w/ `ThetaAngle` <em>bitwise flags</em>; apply same design to `TimeSeriesData`; start creation of re-usable base code for `Bitwise Flags` in general
+ * `ORM`: apply start of refactors for proper support of `RuuubyChangelog` and other automation-functionality; design still `wip`
+   * and thus full `DB TDD` & `documentation` is still withheld
+ * <em>**remove:**</em> global{`$PRM_MANY`}, update funcs in{`f06`} as needed and slightly increase testing coverage
+ * move various math functions to better suited locations; more to be done
+
+| gem updated | version previous | version current |
+| ----: | :---: | :---- |
+| `bundler` | `2.1.4` | `2.2.0.rc.1` |
+
+| path added | reference | notes | feature(s) |
+| ----: | ---- | ---- | ---- |
+| `lib/ruuuby/class/bitwise_flag.rb` | `Ruuuby::BitwiseFlag` | utility/helper, non-core class | `f10` |
+| `.gitattributes` |  |  | `f22` |
+| `lib/ruuuby/math/geometry/shape/sphere.rb` | `Math::Geometry::Sphere` | not currently utilized, just file added early | `f35` |
+
+| context | method(s) added | feature(s) |
+| ---: | :--- | ---: |
+| `ApplicationRecord` | `orm_Ⓣ_🐍`, `empty?` | `f15` |
+| `Ruuuby::MetaData::RuuubyEngine` | `num_cpu_cores`, `current_user`, `get_compiled_code` | `f22` |
+| `💎.engine.api_git` | `validate_attribute` | `f31` |
+| `Math::Stats::Descriptive` | `percentage_error` | `f36` |
+| `TimeSeriesData` | `ρ`, `flags`, `mape`, `normalize!`, `print_debugging`, `first`, `last`, `λ`, `Λ`, `has_zero?`, `has_negative?`, `normalized?`, `even?`, `strictly_increasing?`, `strictly_decreasing?`, `all_same?` | `f36` |
+
+---
+
+# `v0.0.44`
 
  * enable `non-core feature code` to be included/excluded during `pre-processing` as opposed to during `start-up` and/or `runtime`
  * (`wip`) track `OpenCL` & `OpenGL` through `locale RSpecs` (and eventually the `'Ruuuby Engine'`)
@@ -58,7 +62,7 @@
 
 ---
 
-# v0.0.43
+# `v0.0.43`
  * add{`f06_b04`} to provide normalizer{`∈𝕌`} for funcs{`flt?`, `🛑flt❓`}
  * start adding textual parsing for `ThetaAngle` via `Refinement` in{`ThetaAngle::ContextStrParsing`}
  * increase scope tested in some db_audit funcs
@@ -79,7 +83,7 @@
 
 ---
 
-# v0.0.42
+# `v0.0.42`
  * change normalizer from{!∅} to{∉∅}; add{f06_b03} to provide this normalizer for funcs{ary?, 🛑ary❓}
  * provide function aliases{`wma`, `ema`} to `Math::Stats::TimeSeries`
 
@@ -91,7 +95,7 @@
 
 ---
 
-# v0.0.41
+# `v0.0.41`
  * iterative upgrade for `💎.engine`'s `JIT`, `CLI`, and `logging`
    * (further track stats like memory, cpu, and other OS specifics)
  * apply clean-ups to{`ThetaAngle`}
@@ -131,7 +135,7 @@
 
 ---
 
-# v0.0.40
+# `v0.0.40`
  * track `Just-In-Time Compiler` feature through `locale RSpecs` (and eventually the `'Ruuuby Engine'`)
  * add first usage of Ruby `Refinements` w/ `using Math::NumberTheory::ℤ³` for func{`≡`} w/ Class{`Integer`}
  * move func{`gcd`} to `Math::NumberTheory::ℤ²`, core-implementation moved to `C-ext`
@@ -139,6 +143,7 @@
  * start preparing extension code for large scale refactorings to `ThetaAngle`; (also remove func{`to_a`}, no use-case identified)
  * switch `Ruuuby Engine Logging` to utilize the same loading & setup w/ `environment variables` as `ORM-Features` do
  * add/track `gem 'rubygems-update', '~> 3.1.4'`
+   * update version from{`3.1.2`} to{`3.1.4`}
 
 | context | method(s) added | feature(s) |
 | --- | --- | --- |
@@ -151,7 +156,7 @@
 
 ---
 
-# v0.0.39
+# `v0.0.39`
  * update to Ruby version{`2.7.1`} from{`2.7.0`}
  * update gem(`activerecord`) version from{`5.2.4.1`} to{`5.2.4.3`}
  * add `RSpec` sections: `integration` & `tech_debt`
@@ -174,7 +179,7 @@
 
 ---
 
-# v0.0.38
+# `v0.0.38`
  * (`f98`) replace all usages of c-ext-func{`rb_eval_string`} and others that were significantly slowing down `startup/initial-load time`
  * (`f18`) moved to {`f98_b02`}, `f18` will now cover the math module `Space`
  * remove funcs{`class?`, `module?`, `singleton?`} from Class(`Object`); (functionality covered by `🧬`)
@@ -197,7 +202,7 @@
 
 ---
 
-# v0.0.37
+# `v0.0.37`
  * have `ORM`: `RuuubyRelease` and `GitCommit` include `Comparable`; replacing redundant funcs{`>`, `<`} to the single func{`<=>`}
  * remove `♾️`, `¿` from all sources, textual parsing, code aliases, etc; (too redundant)
  * remove func{∞?} from Class(`String`)
@@ -222,7 +227,7 @@
 
 ---
 
-# v0.0.36
+# `v0.0.36`
  * remove func{`get_prime_factors`} from `Integer`, newly created module{`Math::NumberTheory`} now offers that functionality
  * local git-config settings are now enforced with newly created `💎.api_git`, version-automation refactorings started
 
@@ -241,7 +246,7 @@
 
 ---
 
-# v0.0.35
+# `v0.0.35`
  * add `gem 'rugged', '~> 1.0.0'`
  * apply general clean-ups, next few versions to have similar target
  * (`f98`): remove many function calls and variables that didn't need to be executed or exist; start adding extra checks via{`mkmf`} which will halt/fail even before the compilations step
@@ -270,7 +275,7 @@
 | `Rational` | `μ?` | `f10` |
 | `String` | `to_🐫⬇`, `to_🐍⬆` | `f24` |
 
-# v0.0.34
+# `v0.0.34`
  * increase precision of various funcs (ex: `sin²` and `cos²`), by performing calculations in `long double` instead of `double`
  * add `𝞽` as a 'global-const' which is a ThetaAngle representing a single complete turn
  * adjust parameter style of class-functions for `Math` to use named params
@@ -313,7 +318,7 @@
 
 ---
 
-# v0.0.33
+# `v0.0.33`
  * (`f98`): create new Class(`ThetaAngle`) which is essentially a wrapper over a `C-struct`
  * modify global-funcs `sin`, `cos`, `tan`, etc to utilize the `ThetaAngle` class
  * add empty code file(`lib/ruuuby/class/method/math_function.rb`) for future versions
@@ -341,7 +346,7 @@
 
 ---
 
-# v0.0.32
+# `v0.0.32`
  * (`f98`) add flags to the compilation and linker steps (`wip`); replace locations in `C-extensions` that were previously accessing pointers not intended to be used beyond its internal scope (internal to `Ruby`)
  * global-func(`φ`) removed, reference replaced with(`𝚽`), a `Kernel` constant; also add the golden-angle constant(`Ⴔ`)
  * start utilizing more generic math notation where possible, ex-func(`∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎`), very useful as this automatically applies (for example) to both regular objects like `Array` and also `ORM` objects like `RuuubyRelease` while still applicable to both
@@ -359,7 +364,7 @@
 
 ---
 
-# v0.0.31
+# `v0.0.31`
  * remove constants needed previous for supporting exponential operations from m(`Numeric`), needed values are now dynamically generated by `C-extensions` instead of relying on pre-existing constants (created specifically for just this purpose)
  * (`f98`): lots of misc edits/clean-ups in `C-extensions`
  * remove various un-used or now deprecated Modules such as `Ruuuby::MetaData::Vocabulary` (was a temporary location for `normalizers`)
@@ -387,7 +392,7 @@
 
 ---
 
-# v0.0.30
+# `v0.0.30`
  * add normalizers to `sym?`
  * continued ORM cleanups started in `v0.0.29`
  * add `f26` as continued step in enabling textual parsing for more useful code-file automations
@@ -406,7 +411,7 @@
 
 ---
 
-# v0.0.29
+# `v0.0.29`
  * misc cleanup for `ORM`, example: remove un-needed m(`ApplicationRecord::ORMAttributeCache`)
  * general cleanup for `QA`/`RSpecs`, especially w/ file loading order
  * add initial start of `ORM` schemas `RuuubyFiles` and `RuuubyDirs`
@@ -433,7 +438,7 @@
 
 ---
 
-# v0.0.28
+# `v0.0.28`
  * (`f15`): updating contents of `db/seeds/git_commits.rb` is now automated (starting point, LOTs of TODOs to guard against any edge case scenarios and future functionality requirements)
  * (`f06`, `f98`): move funcs `class?`, `module?`, `nucleotide?` into `C-extensions` (also add `char?`)
  * add `f24` as continued step in enabling textual parsing for more useful code-file automations
@@ -459,7 +464,7 @@
 
 ---
 
-# v0.0.27
+# `v0.0.27`
  * contents in `db/seed.rb` split across files in newly created dir: `db/seeds/`; also add new `ORM: GitCommit`, (one `RuuubyRelease` to many `GitCommits`)
  * performing update of version number for `README.md` and `lib/ruuuby/version.rb` is now automated
  * (`f98`): m{`Module`}'s func{`⨍_add_aliases`} converted to alias the func{`f_add_aliases`} created from `C-extensions`
@@ -484,7 +489,7 @@
 
 ---
 
-# v0.0.26
+# `v0.0.26`
  * cleanup creation of function aliases (remove redundant declarations, move needed ones into `ide_helper`, and use new func{`⨍_add_aliases`} where possible)
  * `DRY`: attribute-module(`Cardinality`) now auto-assigns the alias `𝔠`
  * reduce number of locations requiring manual edits/checks when releasing version updates
@@ -512,7 +517,7 @@
 
 ---
 
-# v0.0.25
+# `v0.0.25`
  * start dividing (`f98`)/`C-code` across multiple header files, lots of small misc changes (ex: moved various constants definitions from `Ruuuby's` `Float`)
  * re-structure `Feature` <---> `Module` mapping, add `audit` tests to verify pattern is present/consistent
  * move certain funcs out of `Kernel` and directly add them to `TOPLEVEL_BINDING` to avoid polluting other classes
@@ -542,7 +547,7 @@
 
 ---
 
-# v0.0.24
+# `v0.0.24`
  * ensure `Ruby` data created from `C-extensions` gets guarded against `garbage-collection`
  * start utilizing configs for `Ruuuby`, especially for debugging information
 
@@ -552,7 +557,7 @@
 
 ---
 
-# v0.0.23
+# `v0.0.23`
  * (starting-point) add support for representing `Complex Infinity`; (for now) via Symbol(`∞ℂ`)
  * add Feature(`f03`) and Attribute(`SubscriptIndexing`) to Class(`Symbol`)
  * add missing tests and fix bugs (missing scenario coverage) for c(`Object`)'s funcs `🛑ℤ❓` and `🛑𝕌❓`
@@ -569,7 +574,7 @@
 
 ---
 
-# v0.0.22
+# `v0.0.22`
  * continued (minor) improvements to catching bad parameters & throwing needed errors
  * (`f98`) add func(`err_to_num`) to class(`String`) as a utility function for throwing errors
  * start organizing groups of functions into modules labeled by their `Feature` or `Attribute` (`includable` or `extendable`)
@@ -596,7 +601,7 @@
 
 ---
 
-# v0.0.21
+# `v0.0.21`
  * add const `NUCLEOTIDES` to `Ruuuby::VirtualTypes`
  * add missing scenarios & tests for `spec/helpers/static_test_data.rb`
  * rename m(`Module`)'s func(`∃func?`) to(`∃⨍?`)
@@ -622,7 +627,7 @@
 
 ---
 
-# v0.0.20
+# `v0.0.20`
  * (`f98`) add consts `RATIO_DEGREES_TO_RADIAN` and `RATIO_RADIANS_TO_DEGREE` into module `Math`
  * power-operations for `Integer` and `Float` given support for raising from `-1` to `-9` via superscripts(`⁻¹` to `⁻⁹`)
 
@@ -645,7 +650,7 @@
 
 ---
 
-# v0.0.19
+# `v0.0.19`
  * add some data-type/db-validation for `ORM`, still lots of TODOs here
  * purge `ruuuby/version.rb` of all content except `constant String`: `VERSION` (as `ORM` functionality will cover prior needed use-cases)
  * add missing test cases for power-operations and `Object's` funcs(`flt?`, `num?`)
@@ -665,7 +670,7 @@
 
 ---
 
-# v0.0.18
+# `v0.0.18`
  * ⚠️ intermediate patch (full testing coverage of this patch to be concluded within `0.0.19`-`0.0.30`)
  * renaming existing func(`🛑str_or_ary❓`) to(`🛑countable❓`); it now checks for `Set` as well
  * add `gem 'sqlite3', '~> 1.4.2'`
@@ -698,7 +703,7 @@
 
 ---
 
-# 0.0.17
+# `0.0.17`
 
 #### Abstract
  * (`f15`): start general, wide-scale, re-structuring to manage changes into categorized `features`
@@ -726,7 +731,7 @@
 
 ---
 
-# 0.0.16
+# `v0.0.16`
  * modify various functions to not allocate un-necessary memory (ex: call `.reverse_each` instead of `reverse.each`)
  * continued audit on number classes (see notes from v`0.0.15`), add domain checks for `𝕌?`, `𝔹?`
  * add first multi-step audit test against project file structure (will require better solution, just a starting point)
@@ -746,7 +751,7 @@
 
 ---
 
-# 0.0.15
+# `v0.0.15`
  * add directory `ruuuby/class/enumerable`, move `ary.rb`, `hsh.rb` and newly created `set.rb` into it
  * add files: `ruuuby/module/enumerable.rb` and `ruuuby/class/nums/numeric.rb`
  * move various existing functions/aliases from sub-classes into common parent modules and/or classes where possible, ex: `∌?` out of `Array` and into `enumerable` to share common features w/ others like `Set`
@@ -763,7 +768,7 @@
 
 ---
 
-# 0.0.14
+# `v0.0.14`
  * add gem `'tty-command', '~> 0.9.0'` to group `runtime`
  * for use by `audit RSpecs`: start various means of tracking internal versions, configs, etc; will help form dynamically generated audits and reports
  * temporarily remove `.travis.yml` (auto-generated at project creation but would be useful to utilize)
@@ -774,7 +779,7 @@
 
 ---
 
-# 0.0.13
+# `v0.0.13`
  * move utility functionality from `spec_helper.rb` and others into newly created Directory: `spec/helpers/`
  * remove param:`use_partial_fill_in` from `String`'s funcs `ensure_start!` and `ensure_ending!`
  * heavily adjust usage/style for throwing param errors via `Ruuuby::Err` now(`Ruuuby::ParamErr`)
@@ -797,7 +802,7 @@
 
 ---
 
-# 0.0.12
+# `v0.0.12`
  * organize `ruuuby/version.rb` into major, minor, & tiny versions
  * add string generating macros for `rb_require` in `ruby_class_mods.c`
  * remove certain helper funcs from `spec_helper.rb` as core language adds similar wrappers
@@ -814,7 +819,7 @@
 
 ---
 
-# 0.0.11
+# `v0.0.11`
  * add more organization to `extconf.rb`
  * add `bin/audit_quick` for faster iterative development
  * add missing section in performance testing tiers and general cleanup to some RSpec structure
@@ -831,7 +836,7 @@
 
 ---
 
-# 0.0.10
+# `v0.0.10`
  * move various `require` statements from `ruuuby.rb` to `ruby_class_mods.c`
  * remove all `Ruuuby::Enum`'s and relating references
  * add/update minor details to `README.md`
@@ -848,7 +853,7 @@
 
 ---
 
-# 0.0.9
+# `v0.0.9`
  * add example usage in `README.md`
  * add various aliases and functions for additional set math operations
  
@@ -859,7 +864,7 @@
  
 ---
 
-# 0.0.8
+# `v0.0.8`
  * mark various files with `UTF-8` encoding: `# -*- encoding : utf-8 -*-`
  * add `help` directory to contain troubleshooting documentation
  * for now, remove `gem`: `simplecov` and temporarily stop tracking LOCs coverage until JRuby extensions are added in
@@ -892,7 +897,7 @@
 
 ---
 
-# 0.0.7
+# `v0.0.7`
  * add gem `'rake-compiler', '~> 1.1.0'` to group `development`
  * adjust `bin/audit`, `ruuuby.gemspec`, `Rakefile`, etc to support native C-extensions
  * added section `project layout` and update formatting to `README.md`
@@ -905,7 +910,7 @@
 
 ---
 
-# 0.0.6
+# `v0.0.6`
  * add {`Ruuuby::Enum::Text`}
  * minor changes/functions-added to DRY some code
  * add `Gemfile.lock` to `.gitignore`
@@ -919,7 +924,7 @@
 
 ---
 
-# 0.0.5
+# `v0.0.5`
  * for time being, remove ruby `v2.7` requirement
  * `freeze` various constants and modules
  * slightly clean-up (with helper functions) and expand RSpec scenario coverage
@@ -930,7 +935,7 @@
 
 ---
 
-# 0.0.4
+# `v0.0.4`
  * add gem `'rspec-benchmark', '~> 0.5.1'`
  * remove file `.rpsec`, add rspec configurations through code
  * add performance tests along with a few missed ones
@@ -945,7 +950,7 @@
 
 ---
 
-# v0.0.3
+# `v0.0.3`
  * modify `Ruuuby::Enum::Emoji` from `Strings` to `Symbols`
  * fix gemspec to reflect correct git URLs
 
@@ -963,14 +968,14 @@
 
 ---
 
-# v0.0.2
+# `v0.0.2`
 | class | method(s) added | feature(s) |
 | --- | --- | --- |
 | `Object` | `bool?` | `f06` |
 
 ---
 
-# v0.0.1
+# `v0.0.1`
 
 | added path | reference | notes | feature(s) |
 | ---: | --- | --- | --- |
@@ -985,7 +990,7 @@
 
 ---
 
-# v0.0.0
+# `v0.0.0`
  * initial project creation
 
 ---

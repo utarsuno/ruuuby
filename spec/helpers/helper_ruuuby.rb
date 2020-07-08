@@ -11,6 +11,7 @@ RSpec.shared_context 'shared_context_language_deltas' do
 
 end
 
+
 RSpec.shared_context 'shared_context_f34' do
 
   def expect_sum_of_interior_angles(the_shape, expected_number_of_sides)
@@ -73,6 +74,9 @@ RSpec.shared_context 'shared_context_f27' do
   let(:as_gons){θᵍ(400)}
   let(:as_turns){θ𝞽(1)}
 
+  # @param [ThetaAngle]     obj
+  # @param [Integer]        expected_type
+  # @param [Integer, Float] expected_value
   def expect_theta_angle(obj, expected_type, expected_value)
     expect(obj.ⓣ).to eq(::ThetaAngle)
     expect(obj.real).to eq(expected_value)
@@ -83,9 +87,20 @@ RSpec.shared_context 'shared_context_f27' do
     expect(obj.ᵍ?).to eq(expected_type == 6)
   end
 
+  # @param [ThetaAngle]     obj
+  # @param [Integer, Float] expected_value
   def expect_theta_angle_rad(obj, expected_value); expect_theta_angle(obj, 3, expected_value); end
+
+  # @param [ThetaAngle]     obj
+  # @param [Integer, Float] expected_value
   def expect_theta_angle_dgr(obj, expected_value); expect_theta_angle(obj, 4, expected_value); end
+
+  # @param [ThetaAngle]     obj
+  # @param [Integer, Float] expected_value
   def expect_theta_angle_trn(obj, expected_value); expect_theta_angle(obj, 5, expected_value); end
+
+  # @param [ThetaAngle]     obj
+  # @param [Integer, Float] expected_value
   def expect_theta_angle_gon(obj, expected_value); expect_theta_angle(obj, 6, expected_value); end
 
 end

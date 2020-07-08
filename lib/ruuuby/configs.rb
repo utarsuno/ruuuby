@@ -77,9 +77,9 @@ BEGIN {
 
   # TODO: temporary code & design
 
-  f10_configs = ENV['RUUUBY_F10_CONFIGS']
-  f12_configs = ENV['RUUUBY_F12_CONFIGS']
-  f26_configs = ENV['RUUUBY_F26_CONFIGS']
+  f10_configs = ENV['RUUUBY_F10']
+  f12_configs = ENV['RUUUBY_F12']
+  f26_configs = ENV['RUUUBY_F26']
 
   unless f10_configs.∅?
     if f10_configs.include?('b03')

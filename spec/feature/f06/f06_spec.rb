@@ -15,10 +15,7 @@ RSpec.describe 'f06' do
         context 'for' do
           it 'm{ObjectF06}' do
             expect_∃⨍(:θ?, ::Ruuuby::Feature::Includable::ObjectF06)
-
             expect_∃⨍(:🛑θ❓, ::Ruuuby::Feature::Includable::ObjectF06)
-            expect_∃⨍(:🛑bool❓, ::Ruuuby::Feature::Includable::ObjectF06)
-            expect_∃⨍(:🛑sym❓, ::Ruuuby::Feature::Includable::ObjectF06)
           end
         end
       end

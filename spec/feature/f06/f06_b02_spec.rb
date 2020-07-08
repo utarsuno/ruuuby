@@ -53,7 +53,7 @@ RSpec.describe 'f06_b02' do
                 expect{🛑int❓(:arg, 5, :∈ℕ)}.to_not raise_error
               end
               it 'w/ many params' do
-                expect{🛑int❓($PRM_MANY, [1, 3, 1337], :∈ℕ)}.to_not raise_error
+                expect{🛑ints❓([1, 3, 1337], :∈ℕ)}.to_not raise_error
               end
             end
             context 'w/o extra normalization' do
@@ -61,7 +61,7 @@ RSpec.describe 'f06_b02' do
                 expect{🛑int❓(:arg, 5)}.to_not raise_error
               end
               it 'w/ many params' do
-                expect{🛑int❓($PRM_MANY, [-1, 0, 1])}.to_not raise_error
+                expect{🛑ints❓([-1, 0, 1])}.to_not raise_error
               end
             end
           end
@@ -79,7 +79,7 @@ RSpec.describe 'f06_b02' do
                 expect{🛑int❓(:arg, -1337, :∈ℕ)}.to raise_error(ArgumentError)
               end
               it 'w/ many params' do
-                expect{🛑int❓($PRM_MANY, [-1, 0, 1], :∈ℕ)}.to raise_error(ArgumentError)
+                expect{🛑ints❓([-1, 0, 1], :∈ℕ)}.to raise_error(ArgumentError)
               end
             end
             context 'w/o extra normalization' do
@@ -87,10 +87,10 @@ RSpec.describe 'f06_b02' do
                 expect{🛑int❓(:arg, '5')}.to raise_error(ArgumentError)
               end
               it 'w/ many params' do
-                expect{🛑int❓($PRM_MANY, [-1, 0, nil])}.to raise_error(ArgumentError)
-                expect{🛑int❓($PRM_MANY, [-1, '1', 1])}.to raise_error(ArgumentError)
-                expect{🛑int❓($PRM_MANY, [[], 0, 1])}.to raise_error(ArgumentError)
-                expect{🛑int❓($PRM_MANY, [nil, nil, nil])}.to raise_error(ArgumentError)
+                expect{🛑ints❓([-1, 0, nil])}.to raise_error(ArgumentError)
+                expect{🛑ints❓([-1, '1', 1])}.to raise_error(ArgumentError)
+                expect{🛑ints❓([[], 0, 1])}.to raise_error(ArgumentError)
+                expect{🛑ints❓([nil, nil, nil])}.to raise_error(ArgumentError)
               end
             end
           end
@@ -101,7 +101,7 @@ RSpec.describe 'f06_b02' do
   end # end: {functionality}
 
   context 'audit', :audit do
-    context 'feature{f06}:behavior{b00} passes audits' do
+    context 'feature{f06}:behavior{b02} passes audits' do
       context 'funcs provided are defined in correct location' do
         it 'for m{ObjectF06}' do
           expect_∃⨍(:🛑int❓, ::Ruuuby::Feature::Includable::ObjectF06)

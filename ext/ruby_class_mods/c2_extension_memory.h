@@ -36,13 +36,10 @@ static VALUE ⓜruuuby_metadata;
 static VALUE ⓜruuuby_engine;
 static VALUE ⓜruuuby_engine_jit;
 static VALUE ⓜruuuby_engine_gc;
-static VALUE ⓜruuuby_engine_singleton;
 
 static VALUE ⓜnumber_theory;
 static VALUE ⓜcombinatorics;
 static VALUE ⓜtrigonometry;
-
-static VALUE cached_global_sym_many_args;
 
 static VALUE Ⓒbig_decimal;
 static VALUE Ⓒset;
@@ -64,9 +61,7 @@ static ID cached_rb_intern_is_empty;
 \__, /~~\ \__, |  | |___ .   \__,
 _____________________________________________________________________________________________________________________ */
 
-static unsigned long exponential_ids[NUM_EXPONENTS];
-static int           exponential_indexes[NUM_EXPONENTS];
-
-
+static ID  exponential_ids[NUM_EXPONENTS];
+static int exponential_indexes[NUM_EXPONENTS];
 
 #endif

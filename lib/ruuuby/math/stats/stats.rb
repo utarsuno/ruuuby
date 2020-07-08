@@ -28,5 +28,10 @@ module ::Math
       (sorted[(len - 1) / 2] + sorted[len / 2]) / 2.0
     end
 
+    class << self
+      alias_method :μ, :arithmetic_mean
+      alias_method :x̃, :median
+    end
+
   end
 end

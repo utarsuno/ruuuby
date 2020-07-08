@@ -34,7 +34,7 @@ class RuuubyFile < ApplicationRecord
   #
   def self.spawn(full_path, name, extensions, as_virtual, ruuuby_directory)
     🛑str❓(:full_path, full_path)
-    🛑bool❓(:as_virtual, as_virtual)
+    🛑bool❓('is_virtual', as_virtual)
     ruuuby_file = RuuubyFile.create!(path_full: full_path, name: name, extensions: extensions, is_virtual: as_virtual, ruuuby_dir_id: ruuuby_directory)
     ruuuby_file.save!
     ruuuby_file

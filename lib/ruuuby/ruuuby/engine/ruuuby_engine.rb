@@ -34,9 +34,9 @@ module ::Ruuuby
       include ::Ruuuby::Attribute::Includable::SyntaxCache
       include ::Singleton
 
-      attr_reader :logger, :state_flag, :logging_level, :logging_mode, :api, :api_git, :api_brew, :api_docker, :path_base
+      attr_reader :logger, :state_flag, :logging_level, :logging_mode, :api, :api_git, :api_brew, :api_docker, :api_locale, :path_base
 
-      attr_reader :gc, :jit
+      attr_reader :gc, :jit, :source, :os
 
       attr_accessor :ext_mem_stats, :ext_compiler_stats, :ext_timer_stats, :cached_info
 
@@ -60,15 +60,17 @@ module ::Ruuuby
         @echo_to_stdout = false
         @logging_mode   = nil
         @logging_level  = ::Logger::DEBUG
-        @api            = ::Ruuuby::MetaData::RuuubyAPI.new(self)
         @api_git        = ::Ruuuby::MetaData::GitAPI.new(self)
         @api_brew       = ::Ruuuby::MetaData::BrewAPI.new(self)
+        @api            = ::Ruuuby::MetaData::RuuubyAPI.new(self, @api_brew)
         @api_docker     = ::Ruuuby::MetaData::DockerAPI.new(self)
         @api_locale     = ::Ruuuby::MetaData::LocaleAPI.new(self)
         @orm            = nil
 
-        @gc  = ::Ruuuby::MetaData::RuuubyEngine::F22B00
-        @jit = ::Ruuuby::MetaData::RuuubyEngine::F22B01
+        @gc     = ::Ruuuby::MetaData::RuuubyEngine::F22B00
+        @jit    = ::Ruuuby::MetaData::RuuubyEngine::F22B01
+        @os     = ::Ruuuby::MetaData::RuuubyEngine::F22B05
+        @source = ::Ruuuby::MetaData::RuuubyEngine::F22B06
       end
 
       # @raise [RuntimeError] if called more than once
@@ -134,7 +136,6 @@ module ::Ruuuby
       #  * https://www.speedshop.co/2017/03/09/a-guide-to-gc-stat.html
       #  # https://bugs.ruby-lang.org/projects/ruby-master/wiki/RGenGC
       #  # https://medium.com/@zanker/the-ruby-vm-and-how-apps-break-part-2-e8b4620ad50d
-      #  # https://www.speedshop.co/2017/03/09/a-guide-to-gc-stat.html
       #  # https://github.com/ruby/ruby/blob/v2_7_0/gc.c#L258
       #
       # @see https://ruby-doc.org/core-2.7.1/GC.html
@@ -162,6 +163,7 @@ module ::Ruuuby
       # ==extension_functions
       #  - mem_usage_peak | returns Integer
       module F22B00
+
         # @return [Hash] the result from func{verify_compaction_references}
         def self.verify
           ::GC.verify_internal_consistency
@@ -242,13 +244,39 @@ module ::Ruuuby
 
       # @see https://ruby-doc.org/core-2.7.0/RubyVM/MJIT.html
       module F22B01
+
         # @return [Boolean]
         def self.enabled?; ::RubyVM::MJIT.enabled?; end
+
         # @return [Boolean]
         def self.pause; ::RubyVM::MJIT.pause; end
+
         # @return [Boolean]
         def self.resume; ::RubyVM::MJIT.resume; end
       end # end: {F22B01}
+
+      module F22B05
+
+        # @param [String]
+        def self.current_user; ::Etc.getlogin; end
+
+        # @return [Integer] the number of CPUs available to `Ruuuby`, not necessarily the number that exists in hardware
+        def self.num_cpu_cores; ::Etc.nprocessors; end
+
+      end # end: {F22B05}
+
+      module F22B06
+
+        # @param [String] ruby_code
+        #
+        # @raise [ArgumentError]
+        #
+        # @return [String]
+        def self.get_compiled_code(ruby_code)
+          🛑str❓(:ruby_code_str, ruby_code)
+          ::RubyVM::InstructionSequence.compile(ruby_code).disassemble
+        end
+      end # end: {F22B06}
 
       🙈
 
@@ -259,7 +287,7 @@ module ::Ruuuby
             if logging_modes.length == 1
               self._create_default_logger_and_level
             else
-              🛑 RuntimeError.new("| RuuubyEngine got multiple mode settings for ENV_VAR{RUUUBY_F01}, val{#{logging_modes.to_s}}, when mode(none){b00} was applied |")
+              🛑 ::RuntimeError.new("| RuuubyEngine got multiple mode settings for ENV_VAR{RUUUBY_F01}, val{#{logging_modes.to_s}}, when mode(none){b00} was applied |")
             end
           else
             flag_b04 = logging_modes.find{|i| i.∋?('b04')}
@@ -270,7 +298,7 @@ module ::Ruuuby
             flag_b02 = logging_modes.∋?('b02')
             flag_b03 = logging_modes.∋?('b03')
             if flag_b01 && flag_b02
-              🛑 RuntimeError.new("| RuuubyEngine got multiple mode settings for ENV_VAR{RUUUBY_F01}, val{#{logging_modes.to_s}}, when mode(none){b00} was applied |")
+              🛑 ::RuntimeError.new("| RuuubyEngine got multiple mode settings for ENV_VAR{RUUUBY_F01}, val{#{logging_modes.to_s}}, when mode(none){b00} was applied |")
             elsif flag_b01 && flag_b03
               @echo_to_stdout = true
               self._create_logger('b03')
@@ -282,7 +310,7 @@ module ::Ruuuby
             elsif flag_b03
               self._create_logger('b03')
             else
-              🛑 RuntimeError.new("| RuuubyEngine; investigate unexpected-scenario |")
+              🛑 ::RuntimeError.new("| RuuubyEngine; investigate unexpected-scenario |")
             end
           end
         else
@@ -353,7 +381,7 @@ module ::Ruuuby
             puts content if @echo_to_stdout
           end
         else
-          🛑 RuntimeError.new("| RuuubyEngine got invalid @logging_mode{#{@logging_mode.to_s}} w/ type{#{@logging_mode.class.to_s} for func{_create_logger} |")
+          🛑 ::RuntimeError.new("| RuuubyEngine got invalid @logging_mode{#{@logging_mode.to_s}} w/ type{#{@logging_mode.class.to_s} for func{_create_logger} |")
         end
         unless @logger.nil?
           @logger.level = @logging_level

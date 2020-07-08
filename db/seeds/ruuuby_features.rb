@@ -6,7 +6,7 @@ flag_todo        = ::RuuubyFeature::EnumFlagState::STATE_NULL
 flag_stable      = ::RuuubyFeature::EnumFlagState::STATE_STABLE
 
 @f00 = ::RuuubyFeature.spawn(0, "`η̂` to alias concept of `normalization` (offered in any applicable context)", flag_wip, %w())
-@f01 = ::RuuubyFeature.spawn(1, 'simplify debugging state & logging through the `RuuubyEngine`', flag_wip, %w())
+@f01 = ::RuuubyFeature.spawn(1, 'simplify debugging state & logging through the `RuuubyEngine`', flag_wip, %w(ruuuby engine logging logs log))
 @f02 = ::RuuubyFeature.spawn(2, 'augment working with other `API` sets, be it a small `CLI script` to larger `domain-driven/micro-services` representations', flag_wip, %w(ruuuby engine cli))
 @f03 = ::RuuubyFeature.spawn(3, "`𝔠` to alias concept of `cardinality`", flag_wip, %w())
 @f04 = ::RuuubyFeature.spawn(4, '`∅` to alias concept of `empty`', flag_wip, %w())
@@ -42,7 +42,6 @@ flag_stable      = ::RuuubyFeature::EnumFlagState::STATE_STABLE
 @f34 = ::RuuubyFeature.spawn(34, 'abstract `Geometry`; offering static math functions; esp. those for `Shapes`', flag_wip, %w(math geometry))
 @f35 = ::RuuubyFeature.spawn(35, 'abstract `Statistics`; offering static math functions', flag_wip, %w(math statistics stats))
 @f36 = ::RuuubyFeature.spawn(36, 'add new class (`TimeSeriesData`) for easier operations involving multi-sample based stats', flag_wip, %w(math stats time-series data))
-
 
 @f95 = ::RuuubyFeature.spawn(95, 'enable pure a `Ruby` only build', flag_todo, %w(builds))
 @f96 = ::RuuubyFeature.spawn(96, 'painlessly support multiple Operation Systems (ex: Alpine Linux, macOS, etc)', flag_todo, %w(OS docker kubernetes))

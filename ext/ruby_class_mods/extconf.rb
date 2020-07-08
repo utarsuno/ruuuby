@@ -24,10 +24,10 @@ else
       flag_opencl   = (env_f98 & 4) != 0
       flag_compiler = (env_f98 & 8) != 0
     else
-      raise "not compiling w/ valid ENV{RUUUBY_F98}, expected digit between val{0-15}, got{#{env_f98.to_s}}"
+      raise "not compiling w/ valid ENV{RUUUBY_F98}, expected int between val{0-15}, got{#{env_f98.to_s}}"
     end
   rescue
-    raise "not compiling w/ valid ENV{RUUUBY_F98}, expected digit between val{0-15}, got{#{env_f98.to_s}}"
+    raise "not compiling w/ valid ENV{RUUUBY_F98}, expected int between val{0-15}, got{#{env_f98.to_s}}"
   end
 end
 
@@ -91,7 +91,7 @@ headers += %w(ruby ruby/assert ruby/debug ruby/defines ruby/encoding ruby/intern
 headers += %w(c0_constants c1_typed_checks c2_extension_memory c3_macro_utilities c4_theta_angle c5_internal_structs c6_feature_macros c7_time_series_data ruby_class_mods)
 
 # for c
-headers += %w(stdio stdlib sys/types string float math tgmath complex inttypes locale sys/resource)
+headers += %w(stdio stdlib sys/types string float tgmath inttypes locale sys/resource) # tgmath includes {math, complex}
 
 if flag_timer
   headers += %w(time sys/time)
@@ -128,6 +128,6 @@ if env_f98 == 15
   abort("Unable to find const{ℤ0} in header{c0_constants.h}") unless have_const("ℤ0", 'c0_constants.h')
 end
 
-abort("missing macro{M_SQRT2}") unless have_macro('M_SQRT2')
+#abort("missing macro{M_SQRT2}") unless have_macro('M_SQRT2')
 
 create_makefile('ruby_class_mods')

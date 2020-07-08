@@ -20,7 +20,10 @@
         'offer funcs{str?, 🛑str❓, 🛑strs❓} w/ normalizers{∉∅}',
         'offer funcs{int?, 🛑int❓, 🛑ints❓} w/ normalizers{∈ℕ, ∈𝕎, ∈ℤ, ∈𝕌}',
         'offer funcs{ary?, 🛑ary❓, 🛑arys❓} w/ normalizers{∉∅}',
-        'offer funcs{flt?, 🛑flt❓} w/ normalizers{∈𝕌}'
+        'offer funcs{flt?, 🛑flt❓, 🛑flts❓} w/ normalizers{∈𝕌}',
+        'offer funcs{bool?, 🛑bool❓, 🛑bools❓}',
+        'offer funcs{sym?, 🛑sym❓, 🛑syms❓}',
+        'offer funcs{hsh?, 🛑hsh❓, 🛑hshs❓'
     ]
 )
 
@@ -45,7 +48,9 @@
         'offers a light layer over `JIT`',
         'offers a light layer over `OpenCL`',
         'offers a light layer over `OpenGL`',
-        'offers a light layer over `GCC`'
+        'offers a light layer over `GCC`',
+        'offers a light layer of utilities to get-set various OS related information and values',
+        'offers a light layer for comparing compiled `Ruby` code'
     ]
 )
 
@@ -58,7 +63,11 @@
     ]
 )
 
-@f26.spawn_behaviors(['offer Class aliases: {`📅` -> `Date`}, {`🕒` -> `Time`}, {`📅🕒` -> `DateTime`}'])
+@f26.spawn_behaviors(
+    [
+        'offer Class aliases: {`📅` -> `Date`}, {`🕒` -> `Time`}, {`📅🕒` -> `DateTime`}|{OPTIONAL}'
+    ]
+)
 
 @f27.spawn_behaviors(
     [
@@ -67,7 +76,11 @@
         'each ThetaAngle representation has a corresponding static function which calls the needed constructor',
         'vocabulary functions involving 2 ThetaAngle are provided in module {ThetaAngle::Pair}',
         'vocabulary functions involving 1 ThetaAngle are provided as funcs',
-        'offer `Refinement` w/ module{ThetaAngle::ContextStrParsing} for parsing `String` objs into `ThetaAngleAngle` objs'
+        'offer `Refinement` w/ module{ThetaAngle::ContextStrParsing} for parsing `String` objs into `ThetaAngleAngle` objs',
+        'implements `Comparable`',
+        'offers functionality for `normalization`',
+        'offers unary operators',
+        'offers math operators'
     ]
 )
 
@@ -133,6 +146,17 @@
         'offer categorical abstractions w/ module{`Probability`}',
         'offer categorical abstractions w/ module{`StatisticalLearning`}',
         'offer categorical abstractions w/ module{`TimeSeries`}',
+    ]
+)
+
+@f36.spawn_behaviors(
+    [
+        'offer functionality for array-like data access',
+        'offer functionality for controlling and monitoring memory usage',
+        'offer functionality for providing cached values for any simple stats',
+        'offer functionality for time-series calculations',
+        'offer functionality for health-checks w/ `bitwise meta-data flags`',
+        'offer functionality for various styles of `normalization`',
     ]
 )
 

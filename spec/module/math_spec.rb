@@ -1,35 +1,10 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'module/math.rb' do
-
-  let(:val_a){360.0}
-  let(:val_b){359.99999}
-  let(:val_c){359.999}
 
   context 'extends module{Math}' do
 
     context 'by adding needed functions & aliases' do
-
-      context 'adds function{relative_Δ}' do
-        context 'handling needed scenarios' do
-          it 'cases: positive' do
-            expect(Math.relative_Δ(a: val_a, b: val_c)).to eq(Math.relative_Δ(a: val_c, b: val_a))
-
-            expect(Math.relative_Δ(a: val_a, b: val_b)).to eq(Math.relative_Δ(a: val_b, b: val_a))
-            expect(Math.relative_Δ(a: val_a, b: val_b) < 0.00001).to eq(true)
-          end
-          it 'cases: negative' do
-            expect(Math.relative_Δ(a: val_a, b: val_c) < 0.00001).to eq(false)
-          end
-          it 'cases: bad args' do
-            expect{Math.relative_Δ(1, a: 2, b: 3)}.to raise_error(ArgumentError)
-            expect{Math.relative_Δ(a: nil, b: val_b)}.to raise_error(ArgumentError)
-            expect{Math.relative_Δ(a: val_a, b: nil)}.to raise_error(ArgumentError)
-            expect{Math.relative_Δ(a: nil, b: nil)}.to raise_error(ArgumentError)
-            expect{Math.relative_Δ(1, a: nil, b: nil)}.to raise_error(ArgumentError)
-          end
-        end
-      end # end: adds functions{relative_Δ}
 
       context 'func{τ²_in_golden_ratio?}' do
         context 'handles needed scenarios' do

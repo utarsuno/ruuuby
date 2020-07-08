@@ -29,6 +29,9 @@ ________________________________________________________________________________
 #define 𝞽      (2.0 * π)
 //#define M_SQRT2 1.41421356237309504880168872420969808
 
+#define GENERIC_DECIMAL_VAL_MAX 1.7976931348623157e+100
+#define GENERIC_DECIMAL_VAL_MIN 1.7976931348623157e-100
+
 #define FLAG_FALSE 0u
 #define FLAG_TRUE  1u
 
@@ -63,9 +66,10 @@ ________________________________________________________________________________
 #define θTRNL2LGON(arg)                 (arg * 400.0L)
 
 //#define M_FLT_MIN_NORMAL 2.2250738585072014e-308
-#define M_FLT_MAX            1.7976931348623157e+308
-#define M_FLT_EPSILON        2.220446049250313e-16
-#define M_FLT_RELATIVE_ERROR 0.1 // 2 // 0.00001
+#define M_FLT_MAX                  1.7976931348623157e+308
+#define M_FLT_EPSILON              2.220446049250313e-16
+#define M_FLT_RELATIVE_ERR         0.1 // 2 // 0.00001
+#define M_FLT_RELATIVE_ERR_RELAXED 2 // 2 // 0.00001
 
 #define THETA_DGR_UNIT             (1.0 / 360.0)
 #define THETA_GON_UNIT             (1.0 / 400.0)

@@ -14,31 +14,19 @@ module ::Ruuuby
     # `💎.engine.api`
     class RuuubyAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
 
-      def initialize(engine)
+      def initialize(engine, api_brew)
         super(engine)
         @path_openssl = nil
         @gem_tty      = nil
+        @api_brew     = api_brew
       end
 
       def path_openssl
         require 'openssl'
         if @path_openssl.nil?
-          @path_openssl = self.run_cmd!('brew --prefix openssl@1.1')
+          @path_openssl = @api_brew.execute_cmd_prefix_of('openssl@1.1')
         end
         @path_openssl
-      end
-
-      # TODO: move into ORM part of engine
-      def info_release_state
-        release_current = 💎.engine.api_git.remote_release_current
-        #release_previous = 💎.engine.api_git.remote_release_previous
-
-        puts "the last released version was{#{release_current.to_s}}"
-      end
-
-      # TODO: create/utilize brew API layer
-      def local_dev_health_check
-        self.run_cmd!('brew doctor')
       end
 
       def run_cmd(cmd)
@@ -46,6 +34,19 @@ module ::Ruuuby
         return out, err
       end
 
+      # @see http://www.tldp.org/LDP/abs/html/exitcodes.html
+      #
+      # | error code | description                |
+      # | ---------- | -------------------------- |
+      # | 1          | general error              |
+      # | 2          | mis-used shell built-ins   |
+      # | 126        | cmd invoked cannot execute |
+      # | 127        | cmd not found              |
+      # | 128        | invalid argument to exit   |
+      # | 128 + n    | fatal error signal `n`     |
+      # | 130        | terminated w/ Control-C    |
+      # | 255\*      | exit status out of range   |
+      #
       # TODO: useful cmd: ps -lww -p <PID>
       def run_cmd!(cmd)
         out, err = self.get_tty.run(cmd, timeout: 6, pty: false)

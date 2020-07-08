@@ -17,8 +17,20 @@ module ::Ruuuby
         super(engine)
       end
 
+      def execute_cmd_doctor
+        self.run_cmd!('brew doctor')
+      end
+
+      # @param [String] package_name
+      #
+      # @raise [ArgumentError]
+      def execute_cmd_prefix_of(package_name)
+        🛑str❓(:package_name, package_name)
+        @engine.api.run_cmd!("brew --prefix #{package_name}")
+      end
+
       def _calculate_version
-        💎.engine.api.run_cmd!('brew --version')
+        @engine.api.run_cmd!('brew --version')
       end
 
       # TODO:

@@ -77,7 +77,54 @@ RSpec.describe 'f31_b00' do
       end
 
     end # end: {behavior{b00}}
+  end
 
+  context 'git_locale', :locale do
+    context 'gem{Rugged} has needed configs' do
+      it 'expected features' do
+        expect≈≈(::Rugged.features, [:threads, :https, :ssh])
+      end
+    end
+    # for more info, see: {https://git-scm.com/docs/gitattributes}
+    context 'preferred {git-attributes} are set' do
+      it 'for binary-like files' do
+        %w(*.jpg *.jpeg *.png *.pdf *.bundle *.o).∀{|scenario| expect(💎.engine.api_git.validate_attribute(scenario, {'diff' => false, 'text' => false})).to eq(true)}
+      end
+      it 'for{Ruby}' do
+        %w(*.rb *.gemspec).∀{|scenario| expect(💎.engine.api_git.validate_attribute(scenario, {'diff' => 'ruby', 'text' => 'ruby', 'eol' => 'lf'})).to eq(true)}
+      end
+      it 'for{C}' do
+        %w(*.c *.h).∀{|scenario| expect(💎.engine.api_git.validate_attribute(scenario, {'diff' => 'cpp', 'text' => 'cpp', 'eol' => 'lf'})).to eq(true)}
+      end
+      it 'for{Web-related}' do
+        expect(💎.engine.api_git.validate_attribute('*.html', {'diff' => 'html', 'text' => 'html', 'eol' => 'lf'})).to eq(true)
+        expect(💎.engine.api_git.validate_attribute('*.css', {'diff' => 'css', 'text' => 'css', 'eol' => 'lf'})).to eq(true)
+        expect(💎.engine.api_git.validate_attribute('*.md', {'diff' => 'markdown', 'text' => 'markdown', 'eol' => 'lf'})).to eq(true)
+      end
+      it 'for{Java}' do
+        expect(💎.engine.api_git.validate_attribute('*.java', {'diff' => 'java', 'text' => 'java', 'eol' => 'lf'})).to eq(true)
+      end
+      it 'for{Python}' do
+        expect(💎.engine.api_git.validate_attribute('*.py', {'diff' => 'python', 'text' => 'python', 'eol' => 'lf'})).to eq(true)
+      end
+      it 'for{PHP}' do
+        expect(💎.engine.api_git.validate_attribute('*.php', {'diff' => 'php', 'text' => 'php', 'eol' => 'lf'})).to eq(true)
+      end
+      it 'for{plain-text}' do
+        %w(*.txt *.text *.log).∀{|scenario| expect(💎.engine.api_git.validate_attribute(scenario, {'diff' => 'text', 'text' => 'text', 'eol' => 'lf'})).to eq(true)}
+      end
+    end
+  end
+
+  context 'additional tests possible w/ gem{Rugged}', :audit do
+    it '.gitignore' do
+      expect(::Rugged.dotgit_ignore?('.gitignore')).to eq(true)
+      expect(::Rugged.dotgit_ignore?('.gitattributes')).to eq(false)
+    end
+    it '.gitattributes' do
+      expect(::Rugged.dotgit_attributes?('.gitignore')).to eq(false)
+      expect(::Rugged.dotgit_attributes?('.gitattributes')).to eq(true)
+    end
   end
 
 end

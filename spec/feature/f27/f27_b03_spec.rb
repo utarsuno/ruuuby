@@ -79,4 +79,20 @@ RSpec.describe 'f27_b03' do
 
   end
 
+  context 'audits', :audit do
+    context '{f27_b03}' do
+      it 'creates module{`Pair`} within class{`ThetaAngle`}' do
+        expect_∃ᵐ(:Pair, ::ThetaAngle)
+      end
+      context 'class{ThetaAngle} is defined as needed' do
+        it 'w/ needed funcs' do
+          expect_∃⨍_static(:explementary?, ::ThetaAngle::Pair)
+          expect_∃⨍_static(:complementary?, ::ThetaAngle::Pair)
+          expect_∃⨍_static(:supplementary?, ::ThetaAngle::Pair)
+          expect_∃⨍_static(:golden?, ::ThetaAngle::Pair)
+        end
+      end
+    end
+  end # end: {audits}
+
 end

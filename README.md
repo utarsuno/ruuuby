@@ -4,7 +4,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.44'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.45'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -78,10 +78,10 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 | context | example | `performance penalties` compared to operator{`**`} |
 | ----------:| ------- |----- |
-| `Integer`  | `1337^²` | `<= 115% slower`<br/>coexisting w/ `bitwise XOR` functionality |
-| `Float`    | `1337.1337^²` | `<= 115% slower` |
-| `Rational` | `3/4r^²`  | `<= 95% slower` |
-| `Complex`  | `1337i^²` | `<= 85% slower` |
+| `Integer`  | `1337^²` | <ul><li>`<= 95% slower`</li><li>coexisting w/ `Integer's bitwise XOR`</li></ul> |
+| `Float`    | `1337.1337^²` | `<= 95% slower` |
+| `Rational` | `3/4r^²`  | `<= 90% slower` |
+| `Complex`  | `1337i^²` | `<= 75% slower` |
 | `BigDecimal` | `inc` | `inc` | `inc` |
 | `ThetaAngle` | `inc` | `inc` | outputs to unit: `steradian` (depending on input) |
 | `Quaternion` | `inc` | `inc` | |
@@ -91,80 +91,70 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 | func(s) added | notes |
 | ---: | :--- |
-| `℮`, `logₑ`, `log₂`, `log₁₀`<br/>`√`, `∛`, `π`, `Ⴔ`<br/>`¼`, `½`, `¾`, `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒`<br/>`∞`, `∞ℂ`, `γ` | |
+| `℮`, `logₑ`, `log₂`, `log₁₀`, `√`, `∛`<br/>`¼`, `½`, `¾`, `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒`<br/>`π`, `Ⴔ`, `∞`, `∞ℂ`, `γ` | |
 | `📁`, `🗄️` | `File`, `Dir` |
 | `📅`, `🕒`, `📅🕒` | `Date`, `Time`, `DateTime` |
 | `θ°`, `θʳ`, `θᵍ`, `θ𝞽` | `ThetaAngle` |
 
-### Module Modifications:
-
-| module    | func(s) added     |
-| --------: | :---------------- |
-| `Kernel`  | `∃module?`, `∃class?`, `∃⨍_alias?`, `∃⨍?` |
-| `Module`  | `⨍_add_aliases` |
-| `Math`    | `relative_Δ`, `τ²_in_golden_ratio?`, `τ²_in_super_golden_ratio?` |
-
 #### Math Modules:
 
-| module(s) | sub-module | func(s) added     | obj fields added |
-| :------- | :---: | :----------------: | ------------------------: |
+| module(s) | sub-module | func(s) added |
+| ------: | :----: | :---------------- |
+| `Math` | | `τ²_in_golden_ratio?`, `τ²_in_super_golden_ratio?` |
 | `Trig` | | `cot²`, `cos²`, `sin²`, `tan²`, `sec²`, `csc²` |
-| `Trig` | `ℕ³` | `pythagorean?` | |
-| `NumberTheory` | | `semiprime?` | |
+| `Trig` | `ℕ³` | `pythagorean?` |
+| `NumberTheory` | | `semiprime?` |
 | `NumberTheory` | `ℕ¹` | `prime_factors`, `divisors`, `proper_divisors`, `aliquot_sum`, `perfect?`, `almost_perfect?`, `abundant?`, `abundance`, `abundancy_index`, `deficient?`, `deficiency`, `composite?` |
-| `NumberTheory` | `𝕎¹` |  `nᵗʰ_euler_totient`, `nᵗʰ_cototient`, `digit_sum`, `digital_root`, `additive_persistence` | `seq_pronic`, `seq_fibonacci`, `seq_lucas`, `seq_square`, `seq_triangle`, `seq_hexagonal` |
+| `NumberTheory` | `𝕎¹` |  `nᵗʰ_euler_totient`, `nᵗʰ_cototient`, `digit_sum`, `digital_root`, `additive_persistence` |
 | `NumberTheory` | `ℕ²` | `coprime?`, `friendly?` |
 | `NumberTheory` | `ℤ³` | `congruent?` |
 | `Combinatorics` | `𝕎¹` | `len_powerset` |
 | `Combinatorics` | `𝕎²` | `n_choose_k`, `permutations`, `len_ordered_with_replacement` |
-| `Stats` | | `arithmetic_mean`, `median` | |
-| `Stats` | `TimeSeries` | `simple_moving_average`, `weighted_moving_average`, `exponential_moving_average`, `aroon_up`, `aroon_down`, `aroon_oscillator` | |
-| `Stats` | `Probability` | | |
-| `Stats` | `StatisticalLearning` | | |
+| `Stats` | | `μ`⟶`arithmetic_mean`, `x̃`⟶`median` |
+| `Stats` | `TimeSeries` | `simple_moving_average`, `weighted_moving_average`, `exponential_moving_average`, `aroon_up`, `aroon_down`, `aroon_oscillator` |
+| `Stats` | `Probability` | |
+| `Stats` | `Descriptive` | `𝛿`⟶`percentage_error`, `relative_difference` |
+| `Stats` | `StatisticalLearning` | |
 
 #### Custom Math Classes:
 
-| context        | class        | notes |
-| -------------: | :----------- | ----- |
-| `Trigonometry` | `ThetaAngle` |       |
-| `Statistics`   | `TimeSeries` |       |
+| context        | context      | sample functionality |
+| -------------: | :----------: | :------ |
+| `Trigonometry` | <em>class:</em> `ThetaAngle` | <ul><li>`°?`⟶`degrees?`, `°`⟶`as_degree`, `ʳ?`⟶`radians?`, `ʳ`⟶`as_radian`</li><li>`∅?`⟶`zero?`, `⦜?`⟶`right?`, `○?`⟶`perigon?`</li><li>`η̂?`⟶`normal?`, `η̂!`⟶`normalize!`</li></ul> |
+| `Statistics`   | <em>class:</em> `TimeSeries` | <ul><li>`μ`⟶`mean`, `x̃`⟶`median`, `σ`⟶`std_dev`, `σ²`⟶`variance`,</li><li>`ρ`⟶`pearson_correlation_coefficient`, `mse`⟶`mean_square_of_errors`, `mape`⟶`mean_absolute_percentage_error`</li><li>`λ`⟶`scale_by_addition?`, `Λ`⟶`scale_by_multiplication`</li><li>`η̂?`⟶`normalized?`, `η̂!`⟶`normalize!`</li><li>`mem_size`, `free_memory`</li></ul> |
+| `NumberTheory::𝕎¹` | <em>singleton-objs of class:</em> `Math::Expr::Sequence` | <ul><li>`seq_pronic`, `seq_fibonacci`, `seq_lucas`, `seq_square`, `seq_triangle`, `seq_hexagonal`</li></ul> |
 
 ### Class Modifications:
 
-| class(es)              | func(s) added                       | notes |
-| ---------------------: | :---------------------------------: | :------------------------: |
-| `File`, `Dir`          | `∃?`                                | |
+| class(es)              | func(s) added                       |
+| ---------------------: | :---------------------------------- |
+| `File`, `Dir`          | `∃?`                                |
+| `Module`               | `∃⨍_alias?`, `∃⨍?`                  |
 | `File`                 | `dirname²`, `replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` |
-| `Dir`                  | `η̂_paths`                           | |
-| `File`, `Dir`, `ENV`   | `∅?`                                | |
-| `Object`               | `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?` | |
-| `Object`               | `Ⓣ`<br/>`🛑bool❓`, `🛑int❓`, `🛑num❓`, `🛑nums❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑θ❓` | |
-| `Array`, `Set`         | `remove_empty!`                     | |
-| `String`               | `♻️⟵`, `♻️⟶`, `♻️⟶∞`<br/>`downcase?`{`⬇?`}, `upcase?`{`⬆?`}, `downcase!`{`⬇!`}, `upcase!`{`⬆!`} | |
-| `String`               | `🐫?`, `🐫⬇?`, `to_🐫`<br/>`🐍⬆?`, `🐍?`, `to_🐍` | |
-| `String`               | `digit?`, `to_num`, `to_num?`, `palindrome?`<br/>`as_utf8`, `iso8601?`, `to_iso8601`, `as_iso8601`<br/>`∋?`, `∌?`, `∈?`, `∉?` | |
-| `Array`, `String`      | `η̂!`                               | |
-| `Array`                | [`disjunctive_union`, `⊕`], `∖`    | |
-| `Enumerable`           | `∌?`, `∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎`              | |
-| `Array`, `String`      | `>>`                               | |
-| `Array`                | `end_with?`, `start_with?`         | |
-| `String`, `Array`      | `ensure_start!`, `ensure_ending!`  | |
-| `NilClass`             | `empty?`                           | ⚠️: philosophically debatable |
-| `Integer`              | `finite?`, `infinite?`               | |
-| `Numeric`              | `∞?`                               | |
-| `Float`                | `≈≈`, `∞ℂ?`                        | |
+| `Dir`                  | `η̂_paths`                           |
+| `File`, `Dir`, `ENV`, `NilClass` | `∅?`                      |
+| `Object`               | <ul><li>`Ⓣ`, `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?`</li><li>`🛑bool❓`, `🛑int❓`, `🛑flt❓`, `🛑num❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑θ❓`</li></ul> |
+| `Array`, `Set`         | `remove_empty!`                     |
+| `String`               | <ul><li>`♻️⟵`, `♻️⟶`, `♻️⟶∞`</li><li>`⬇?`⟶`downcase?`, `⬆?`⟶`upcase?`, `⬇!`⟶`downcase!`, `⬆!`⟶`upcase!`</li><li>`🐫?`, `🐫⬇?`, `to_🐫`<br/>`🐍⬆?`, `🐍?`, `to_🐍`</li><li>`digit?`, `to_num`, `to_num?`, `palindrome?`</li><li>`as_utf8`, `iso8601?`, `to_iso8601`, `as_iso8601`</li><li>`∋?`, `∌?`, `∈?`, `∉?`</li></ul> |
+| `Array`, `String`      | `η̂!`                               |
+| `Array`                | <ul><li>`⊕`⟶`disjunctive_union`, `∖`</li><li>`end_with?`, `start_with?`</li></ul> |
+| `Enumerable`           | `∌?`, `∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎`              |
+| `Array`, `String`      | `>>`                               |
+| `String`, `Array`      | `ensure_start!`, `ensure_ending!`  |
+| `Integer`              | `finite?`, `infinite?`               |
+| `Numeric`              | `∞?`                               |
+| `Float`                | `≈≈`, `∞ℂ?`                        |
 
-#### Aliases:
+#### Common Aliases:
 
 | for                    | base method(s) reference(s)               | alias(es)                  |
 | ---------------------: | ----------------------------------------- | -------------------------- |
-| `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲`                 |
-| `Object`               | `object_id`, `class`, `freeze`, `frozen?` | `🆔`, `ⓣ`, [`❄️`, `❄`], [`❄️?`, `❄?`] |
+| `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲`                |
+| `Object`               | `object_id`, `class`, `freeze`, `frozen?` | `🆔`, `ⓣ`, `❄️`, `❄️?`   |
+| `Module`               | `private`, `protected`, `const_defined?`, `private_method_defined?`, `protected_method_defined?` | `🙈`, `🛡️`, `∃const?`, `∃🙈⨍`, `∃🛡️⨍?` |
 | `Class`                | `new`                                     | `🆕`                       |
-| `Array`, `Set`         | `remove_empty!`                           | `♻️∅!`                     |    
 | `String`, `Symbol`     | `upcase`, `downcase`                      | `⬆`, `⬇`                  |
 | `Array`                | `tally`, `↩∀`                             | `📊`, `reverse_each`       |
-| `Module`               | `private`, `protected`, `const_defined?`, `private_method_defined?`, `protected_method_defined?` | `🙈`, `🛡️`, `∃const?`, `∃🙈⨍`, `∃🛡️⨍?` |
 | `Array`, `Hash`, `Set` | `each`                                    | `∀`                        |
 | `Array`, `String`      | `reverse`, `reverse!`                     | `↩`, `↩!`                  |
 | `Enumerable`           | `map`, `each_with_index`                  | `⨍`, `∀ₓᵢ`                 |
@@ -177,12 +167,12 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Code Base Statistics:
 | category    | attribute       | value(s)         | # of  |
 | ----------: | :-------------: | ---------------: | :---- |
-| `QA`        | `unit`          | `1218`           | tests (for core functionality) |
-| `QA`        | `integration`   | `18`             | tests (for state/functionality checks on grouped features/components) |
-| `QA`        | `performance`   | `141`:`85`       | tests{`non_numeric`,`numeric`} (for runtime performance) |
-| `QA`        | `DB`            | `238`            | tests (for `DB` & `ORM`) |
-| `CI`        | `audit`         | `128`            | tests (for anything non-functionality based) |
-| `CI`        | `locale`        | `61`:`12`        | local config tests{`core`:`excessive_checks`} |
+| `QA`        | `unit`          | `1254`           | tests (for core functionality) |
+| `QA`        | `integration`   | `19`             | tests (for state/functionality checks on grouped features/components) |
+| `QA`        | `performance`   | `142`:`85`       | tests{`non_numeric`,`numeric`} (for runtime performance) |
+| `QA`        | `DB`            | `262`            | tests (for `DB` & `ORM`) |
+| `CI`        | `audit`         | `151`            | tests (for anything non-functionality based) |
+| `CI`        | `locale`        | `72`:`16`        | local config tests{`core`:`excessive_checks`} |
 | `tech-debt` | `coverage`      | `9`              | tests (for tracking missing functionality) |
 | `structure` | `features`      | `0`:`29`:`9`:`4` | features{`stable`:`wip`:`⚠️`:`todo`} |
 | `coverage`  | `LOCs`          | `???`            | `wip` |
@@ -198,7 +188,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `tty-command` | [`0.9.0`](https://rubygems.org/gems/tty-command) | ✅, ✅ | `CLI` |
 | `rugged` | [`1.0.1`](https://rubygems.org/gems/rugged) | ✅, ❌ | `GIT` |
 | `rdoc` | [`6.2.1`](https://rubygems.org/gems/rdoc) | ✅, ❌ | `DOC` |
-| `bundler` | [`2.1.4`](https://rubygems.org/gems/bundler) | ✅, ❌ | `CI` |
+| `bundler` | [`2.2.0.rc.1`](https://rubygems.org/gems/bundler) | ✅, ❌ | `CI` |
 | `rubygems-update` | [`3.1.4`](https://rubygems.org/gems/rubygems-update) | ✅, ❌ | `CI` |
 | `rspec` | [`3.9.0`](https://rubygems.org/gems/rspec) | ✅, ❌ | `QA` |
 | `rspec-benchmark` | [`0.6.0`](https://rubygems.org/gems/rspec-benchmark) | ✅, ❌ | `QA` |

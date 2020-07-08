@@ -22,6 +22,21 @@ class ::ApplicationRecord < ActiveRecord::Base
   # @return [Integer]
   def self.num_where(*sql_query); self.where(*sql_query).count; end
 
+  # @return [String]
+  def self.orm_Ⓣ_🐍
+    if @orm_Ⓣ_🐍.nil?
+      @orm_Ⓣ_🐍 = self.name.to_🐍
+    end
+    @orm_Ⓣ_🐍
+  end
+
+  # @return [Boolean]
+  def self.empty?; self.count == 0; end
+
+  class << self
+    alias_method :∅?, :empty?
+  end
+
   #    ___                      __                          ___                                              __
   #  /'___\                    /\ \                        /\_ \                                            /\ \__
   # /\ \__/  ___   _ __        \_\ \     __   __  __     __\//\ \     ___   _____     ___ ___      __    ___\ \ ,_\

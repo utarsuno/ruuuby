@@ -11,7 +11,7 @@ module Ruuuby
     # `💎.engine.orm`
     class RuuubyORM < ::Ruuuby::MetaData::RuuubyAPIComponent
 
-      attr_accessor :ruuuby_file_version, :state_flag, :expected_tables
+      attr_accessor :ruuuby_file_version, :state_flag, :expected_tables, :ruuuby_release_obj_curr
 
       # state_flag
       # | 0 | no db libs |
@@ -28,6 +28,13 @@ module Ruuuby
             orm: %w(ruuuby_releases ruuuby_gems ruuuby_features ruuuby_feature_behaviors ruuuby_changelogs git_commits ruuuby_dirs ruuuby_files),
             application_record: %w(ar_internal_metadata)
         }
+      end
+
+      def info_release_state
+        release_current = @engine.api_git.remote_release_current
+        #release_previous = 💎.engine.api_git.remote_release_previous
+
+        puts "the last released version was{#{release_current.to_s}}"
       end
 
       # ----------------------------------------------------------------------------------------------------------------
@@ -129,12 +136,8 @@ module Ruuuby
         end
       end
 
-      def get_upcoming_changelog
-        orm_version = ::RuuubyRelease.get_version_next
-        orm_version.docs_changelog.∀ do |l|
-          puts l
-        end
-      end
+      # wip
+      def get_upcoming_changelog; @ruuuby_release_obj_curr.get_docs2.∀{|content| puts content}; end
 
       # @return [String]
       def print_info_readme_feat_types

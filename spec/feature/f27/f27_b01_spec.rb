@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f27_b01' do
 
@@ -82,10 +82,64 @@ RSpec.describe 'f27_b01' do
           expect(the_angle).to eq(::Math::ANGLE_TAU)
         end
 
+        it 'w/ 512 operations' do
+          the_angle = θ°(0)
+          (0..127).each do |index|
+            the_angle += θ°(0.703125)
+            the_angle += θʳ(π / 256.0)
+            the_angle += θᵍ(0.78125)
+            the_angle += θ𝞽(1.0 / 512)
+          end
+          expect(the_angle).to eq(::Math::ANGLE_TAU)
+        end
+
+        it 'w/ 1024 operations' do
+          the_angle = θ°(0)
+          (0..255).each do |index|
+            the_angle += θ°(0.3515625)
+            the_angle += θʳ(π / 512.0)
+            the_angle += θᵍ(0.390625)
+            the_angle += θ𝞽(1.0 / 1024)
+          end
+          expect(the_angle).to eq(::Math::ANGLE_TAU)
+        end
+
+        it 'w/ 2048 operations' do
+          the_angle = θ°(0)
+          (0..511).each do |index|
+            the_angle += θ°(0.17578125)
+            the_angle += θʳ(π / 1024.0)
+            the_angle += θᵍ(0.1953125)
+            the_angle += θ𝞽(1.0 / 2048)
+          end
+          expect(the_angle).to eq(::Math::ANGLE_TAU)
+        end
+
+        it 'w/ 4096 operations' do
+          the_angle = θ°(0)
+          (0..1023).each do |index|
+            the_angle += θ°(0.087890625)
+            the_angle += θʳ(π / 2048.0)
+            the_angle += θᵍ(0.09765625)
+            the_angle += θ𝞽(1.0 / 4096)
+          end
+          expect(the_angle).to eq(::Math::ANGLE_TAU)
+        end
+
+        it 'w/ 8192 operations' do
+          the_angle = θ°(0)
+          (0..2047).each do |index|
+            the_angle += θ°(0.0439453125)
+            the_angle += θʳ(π / 4096.0)
+            the_angle += θᵍ(0.048828125)
+            the_angle += θ𝞽(1.0 / 8192)
+          end
+          expect(the_angle).to eq(::Math::ANGLE_TAU)
+        end
+
       end
 
     end
-
 
   end
 

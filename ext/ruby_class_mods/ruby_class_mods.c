@@ -6,9 +6,12 @@
  |___ | |__) |  \ /~~\ |  \  |     |  |  | |    \__/ |  \  |  .__/
 ____________________________________________________________________________________________________________________________________________________________________ */
 
+#include "ruby/config.h"
+
 #ifndef GENERIC_BUILD
     //#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.0.h"
     //#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
+
     #include "/Users/utarsuno/.rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
 
     #include <ruby/defines.h>
@@ -24,12 +27,12 @@ ________________________________________________________________________________
     #include <sys/stat.h>
 
     #include <unistd.h>
-    #include <math.h>
+    //#include <math.h>
     #include <inttypes.h>
 
     #include <float.h>
     #include <tgmath.h>
-    #include <complex.h>
+    //#include <complex.h>
 
     #ifdef RUUUBY_F98_DEBUG
         #ifdef RUUUBY_F98_TIMER
@@ -48,7 +51,6 @@ ________________________________________________________________________________
     #include "ruby/encoding.h"
     #include <locale.h>
     #include <ruby.h>
-    #include "ruby/config.h"
     #include "ruby/ruby.h"
 
     #include <ruby/defines.h>
@@ -81,32 +83,20 @@ ________________________________________________________________________________
                                                                                                \ \_\
                                                                                                 \/_/ */
 
+#define bsearch_power(val_to_find)         (ID *) bsearch (&val_to_find, exponential_ids, NUM_EXPONENTS, sizeof(ID), _compare_func_4_object_id);
+#define bsearch_power_position(arg_index) ((int)(((int)arg_index - (int)exponential_ids) / sizeof(ID)))
 
-static VALUE time_series_get_percentile(const VALUE self, const VALUE percentile) {
-    if (is_fixnum(percentile)) {
-        💎self_to_ptr_time_series
-        const int as_int = FIX2INT(percentile);
-        if (as_int >= 0 && as_int < 101) {
-            return DBL2NUM(data->vals[as_int]);
-        } else {
-            rb_raise(R_ERR_ARG, "| c{TimeSeriesData}-> m{percentile} got arg out-of-bounds w/ value{%"PRIsVALUE"}-type{%s} |", percentile, rb_obj_classname(percentile));
-        }
-    } else if (is_float(percentile)) {
-        💎self_to_ptr_time_series
-        const double as_flt = NUM2DBL(percentile);
-        if (isfinite(as_flt) && as_flt >= 0.0 && as_flt <= 100.0) {
-            return DBL2NUM(data->vals[(int) (round(data->leeen * as_flt))]);
-        } else {
-            rb_raise(R_ERR_ARG, "| c{TimeSeriesData}-> m{percentile} got arg out-of-bounds w/ value{%"PRIsVALUE"}-type{%s} |", percentile, rb_obj_classname(percentile));
-        }
+static inline int bsearch_result(ID * the_result) {return exponential_indexes[bsearch_power_position(the_result)];}
+
+static inline int bsearch_operation(const VALUE them) {
+    const ID id_to_find = rb_sym2id(them);
+    ID * the_result    = bsearch_power(id_to_find);
+    if (the_result != NULL) {
+        return bsearch_result(the_result);
     } else {
-        rb_raise(R_ERR_ARG, "| c{TimeSeriesData}-> m{percentile} got did get type{Fixnum, Float} for arg(index){%"PRIsVALUE"} but type{%s} |", percentile, rb_obj_classname(percentile));
+        return -1337;
     }
 }
-
-
-#define bsearch_power(val_to_find)         (unsigned long *) bsearch (&val_to_find, exponential_ids, NUM_EXPONENTS, sizeof(unsigned long), internal_only_compare_func_4_object_id);
-#define bsearch_power_position(arg_index) ((int)(((int)arg_index - (int)exponential_ids) / sizeof(unsigned long)))
 
 static inline int is_num(const VALUE arg) {
     switch(TYPE(arg)){
@@ -161,33 +151,31 @@ static void internal_only_prepare_f16(void) {
 
     rb_ary_modify(code_points);
 
-    rb_ary_store(code_points, 0l, INT2FIX(8712));
-    rb_ary_store(code_points, 1l, INT2FIX(8469));
+    r_ary_set_p0_p1(code_points, INT2FIX(8712), INT2FIX(8469))
     💎PROCEDURE_00(🅽_natural)
 
-    rb_ary_store(code_points, 1l, INT2FIX(120142));
+    r_ary_set_p1(code_points, INT2FIX(120142))
     💎PROCEDURE_00(🅽_whole)
 
-    rb_ary_store(code_points, 1l, INT2FIX(8484));
+    r_ary_set_p1(code_points, INT2FIX(8484))
     💎PROCEDURE_00(🅽_integer)
 
-    rb_ary_store(code_points, 1l, INT2FIX(120140));
+    r_ary_set_p1(code_points, INT2FIX(120140))
     💎PROCEDURE_00(🅽_universal)
 
-    rb_ary_store(code_points, 1l, INT2FIX(94));
+    r_ary_set_p1(code_points, INT2FIX(94))
     💎PROCEDURE_00(🅽_superscripts)
 
-    rb_ary_store(code_points, 1l, INT2FIX(8469));
-    rb_ary_push(code_points, INT2FIX(120138));
+    r_ary_set_p1_p2(code_points, INT2FIX(8469), INT2FIX(120138))
     💎PROCEDURE_00(🅽_natural_w_str_allowed)
 
-    rb_ary_store(code_points, 1l, INT2FIX(120142));
+    r_ary_set_p1(code_points, INT2FIX(120142))
     💎PROCEDURE_00(🅽_whole_w_str_allowed)
 
-    rb_ary_store(code_points, 1l, INT2FIX(8484));
+    r_ary_set_p1(code_points, INT2FIX(8484))
     💎PROCEDURE_00(🅽_integer_w_str_allowed)
 
-    rb_ary_store(code_points, 1l, INT2FIX(120140));
+    r_ary_set_p1(code_points, INT2FIX(120140))
     💎PROCEDURE_00(🅽_universal_w_str_allowed)
 
     rb_ary_free(code_points);
@@ -198,72 +186,71 @@ static void internal_only_prepare_f16(void) {
 
     rb_ary_modify(code_points2);
 
-    rb_ary_store(code_points2, 1l, INT2FIX(8312));
+    r_ary_set_p1(code_points2, INT2FIX(8312))
     💎PROCEDURE_01(obj_id_n8, code_points2)
 
-    rb_ary_store(code_points2, 1l, INT2FIX(8311));
+    r_ary_set_p1(code_points2, INT2FIX(8311))
     💎PROCEDURE_01(obj_id_n7, code_points2)
 
-    rb_ary_store(code_points2, 1l, INT2FIX(8310));
+    r_ary_set_p1(code_points2, INT2FIX(8310))
     💎PROCEDURE_01(obj_id_n6, code_points2)
 
-    rb_ary_store(code_points2, 1l, INT2FIX(8309));
+    r_ary_set_p1(code_points2, INT2FIX(8309))
     💎PROCEDURE_01(obj_id_n5, code_points2)
 
-    rb_ary_store(code_points2, 1l, INT2FIX(8308));
+    r_ary_set_p1(code_points2, INT2FIX(8308))
     💎PROCEDURE_01(obj_id_n4, code_points2)
 
-    rb_ary_store(code_points2, 1l, INT2FIX(179));
+    r_ary_set_p1(code_points2, INT2FIX(179))
     💎PROCEDURE_01(obj_id_n3, code_points2)
 
-    rb_ary_store(code_points2, 1l, INT2FIX(178));
+    r_ary_set_p1(code_points2, INT2FIX(178))
     💎PROCEDURE_01(obj_id_n2, code_points2)
 
-    rb_ary_store(code_points2, 1l, INT2FIX(185));
+    r_ary_set_p1(code_points2, INT2FIX(185))
     💎PROCEDURE_01(obj_id_n1, code_points2)
 
-    rb_ary_store(code_points2, 0l, INT2FIX(8734));
-    rb_ary_store(code_points2, 1l, INT2FIX(8450));
+    r_ary_set_p0_p1(code_points2, INT2FIX(8734), INT2FIX(8450))
     💎PROCEDURE_01(obj_id_inf_complex, code_points2)
 
     rb_ary_pop(code_points2);
-    rb_ary_store(code_points2, 0l, INT2FIX(8304));
+    r_ary_set_p0(code_points2, INT2FIX(8304))
     💎PROCEDURE_01(obj_id_0, code_points2)
 
-    rb_ary_store(code_points2, 0l, INT2FIX(8313));
+    r_ary_set_p0(code_points2, INT2FIX(8313))
     💎PROCEDURE_01(obj_id_9, code_points2)
 
-    rb_ary_store(code_points2, 0l, INT2NUM(8312));
+    r_ary_set_p0(code_points2, INT2FIX(8312))
     💎PROCEDURE_01(obj_id_8, code_points2)
 
-    rb_ary_store(code_points2, 0l, INT2FIX(8311));
+    r_ary_set_p0(code_points2, INT2FIX(8311))
     💎PROCEDURE_01(obj_id_7, code_points2)
 
-    rb_ary_store(code_points2, 0l, INT2FIX(8310));
+    r_ary_set_p0(code_points2, INT2FIX(8310))
     💎PROCEDURE_01(obj_id_6, code_points2)
 
-    rb_ary_store(code_points2, 0l, INT2FIX(8309));
+    r_ary_set_p0(code_points2, INT2FIX(8309))
     💎PROCEDURE_01(obj_id_5, code_points2)
 
-    rb_ary_store(code_points2, 0l, INT2FIX(8308));
+    r_ary_set_p0(code_points2, INT2FIX(8308))
     💎PROCEDURE_01(obj_id_4, code_points2)
 
-    rb_ary_store(code_points2, 0l, INT2FIX(179));
+    r_ary_set_p0(code_points2, INT2FIX(179))
     💎PROCEDURE_01(obj_id_3, code_points2)
 
-    rb_ary_store(code_points2, 0l, INT2FIX(178));
+    r_ary_set_p0(code_points2, INT2FIX(178))
     💎PROCEDURE_01(obj_id_2, code_points2)
 
-    rb_ary_store(code_points2, 0l, INT2FIX(185));
+    r_ary_set_p0(code_points2, INT2FIX(185))
     💎PROCEDURE_01(obj_id_1, code_points2)
 
-    rb_ary_store(code_points2, 0l, INT2FIX(8734));
+    r_ary_set_p0(code_points2, INT2FIX(8734))
     💎PROCEDURE_01(obj_id_inf, code_points2)
 
     rb_ary_free(code_points2);
     rb_str_free(pack_as_utf8);
 
-    unsigned long obj_id_inf_negative = NUM2ULONG(rb_obj_id(rb_const_get_at(R_NUM, rb_intern("EXPONENTIAL_NEGATIVE_INF"))));
+    ID obj_id_inf_negative = rb_sym2id(rb_const_get_at(R_NUM, rb_intern("EXPONENTIAL_NEGATIVE_INF")));
 
     exponential_ids[0]  = obj_id_n9;
     exponential_ids[1]  = obj_id_n8;
@@ -288,7 +275,7 @@ static void internal_only_prepare_f16(void) {
     exponential_ids[20] = obj_id_inf_negative;
     exponential_ids[21] = obj_id_inf_complex;
 
-    qsort(exponential_ids, NUM_EXPONENTS, sizeof(unsigned long), internal_only_compare_func_4_object_id);
+    qsort(exponential_ids, NUM_EXPONENTS, sizeof(ID), _compare_func_4_object_id);
 
     unsigned long * the_index;
     💎PROCEDURE_02(the_index, obj_id_n9, -9);
@@ -319,18 +306,23 @@ static void internal_only_prepare_f16(void) {
 
 static inline void startup_step5_protect_against_gc(void) {
     rb_gc_register_address(& Ⓒset);
-    rb_gc_register_address(& Ⓒtheta_angle);
-    rb_gc_register_address(& Ⓒtime_series_data);
     rb_gc_register_address(& Ⓒbig_decimal);
-    rb_gc_register_address(& cached_global_sym_many_args);
-    //rb_global_variable(& cached_global_sym_many_args);
     //rb_global_variable(& cached_module_param_err);
     rb_gc_verify_internal_consistency();
 }
 
+#ifdef RUUUBY_F98_DEBUG
+    #define ensure_file_loaded(path) if (rb_require(path) != Qtrue){printf("path already loaded {%s}\n", path);};
+#else
+    #define ensure_file_loaded(path) rb_require(path);
+#endif
+
 static inline void startup_step4_load_needed_ruuuby_files(void) {
-    ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine_component)\
-    ensure_loaded_ruuuby(ruuuby/engine/ruuuby_api_component)\
+
+    ensure_loaded_class(bitwise_flag)
+
+    ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine_component)
+    ensure_loaded_ruuuby(ruuuby/engine/ruuuby_api_component)
 
     ensure_loaded_ruuuby(virtual/f10)
 
@@ -377,13 +369,6 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
     ensure_loaded_math(geometry/shape/triangle)
 }
 
-// original source modified from: https://stackoverflow.com/questions/36681906/c-qsort-doesnt-seem-to-work-with-unsigned-long
-static int internal_only_compare_func_4_object_id(const void * l, const void * r) {
-    const unsigned long ai = *(const unsigned long *)(l);
-    const unsigned long bi = *(const unsigned long *)(r);
-    if (ai < bi) {return -1;} else if(ai > bi) {return 1;} else {return 0;}
-}
-
 /*____________________________________________________________________________________________________________________________________________________________________
   ___            __   __       __   ___  __             __       ___    __        __                      __        ___        ___      ___      ___    __        __
  |__  |  | |\ | /  ` /__` .   |  \ |__  /  ` |     /\  |__)  /\   |  | /  \ |\ | /__`    __|__   |  |\/| |__) |    |__   |\/| |__  |\ |  |   /\   |  | /  \ |\ | /__`
@@ -427,12 +412,10 @@ ________________________________________________________________________________
     💎parse_kargs_with_normalizer("sym?", re_as_bool(is_sym(self)),
     if (them == 🅽_superscripts) {
         if (is_sym(self)) {
-            const unsigned long id_to_find  = NUM2ULONG(rb_obj_id(self));
-            unsigned long *     the_result = bsearch_power(id_to_find);
-            if (the_result != NULL) {
-                const int power_to_raise_to = exponential_indexes[bsearch_power_position(the_result)];
+            const int power_to_raise_to = bsearch_operation(self);
+            if (power_to_raise_to != -1337) {
                 if (power_to_raise_to < 10) {
-                    return INT2NUM(power_to_raise_to);
+                    return INT2FIX(power_to_raise_to);
                 } else if (power_to_raise_to > 1336 && power_to_raise_to < 1400) {
                     if (power_to_raise_to == CACHE_INDEX_INF) {
                         re_inf
@@ -507,12 +490,9 @@ static VALUE m_int_is_not_finite(const VALUE self){re_no}
         return INT2FIX(FIX2INT(self) ^ FIX2INT(them));
     } else if (is_bignum(them)) {
         return rb_big_xor(self, them);
-    } else {
-        const unsigned long id_to_find = NUM2ULONG(rb_obj_id(them));
-        unsigned long * the_result    = bsearch_power(id_to_find)
-        if (the_result != NULL) {
-            const int power_to_raise_to = exponential_indexes[bsearch_power_position(the_result)];
-
+    } else if (is_sym(them)) {
+        const int power_to_raise_to = bsearch_operation(them);
+        if (power_to_raise_to != -1337) {
             if (power_to_raise_to < 2) {
                 switch(power_to_raise_to) {
                 case -9: re_me_func_1args(ID_OF_POW, ℤn9)
@@ -528,7 +508,6 @@ static VALUE m_int_is_not_finite(const VALUE self){re_no}
                 default: re_me
                 }
             } else if (power_to_raise_to < 10) {
-                //const int val_self = NUM2INT(self);
                 switch(power_to_raise_to) {
                 case 2:  re_me_func_1args(ID_OF_POW, ℤ2)
                 case 3:  re_me_func_1args(ID_OF_POW, ℤ3)
@@ -564,10 +543,8 @@ static VALUE m_int_is_not_finite(const VALUE self){re_no}
                     re_negative_inf
                 }
             }
-        } else {
-            ERR_c_self_arg_err__print_self_them("| c{Integer}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |")
-        }
-    }
+        } else {ERR_c_self_arg_err__print_self_them("| c{Integer}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |")}
+    } else {ERR_c_self_arg_err__print_self_them("| c{Integer}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |")}
 )
 
 /*___________________________________________________________________________________________________________________
@@ -600,12 +577,12 @@ ________________________________________________________________________________
             const double diff   = fabs(val_self - val_them);
             const double summed = abs_a + abs_b;
             if (val_self == 0.0 || val_them == 0.0 || (summed < M_FLT_EPSILON)) {
-                re_as_bool(diff < (M_FLT_RELATIVE_ERROR * M_FLT_EPSILON))
+                re_as_bool(diff < (M_FLT_RELATIVE_ERR_RELAXED * M_FLT_EPSILON))
             } else {
                 if (summed <= M_FLT_MAX) {
                     re_as_bool((diff / summed) < M_FLT_EPSILON)
                 } else {
-                    re_as_bool((diff / M_FLT_MAX) < M_FLT_RELATIVE_ERROR)
+                    re_as_bool((diff / M_FLT_MAX) < M_FLT_RELATIVE_ERR)
                 }
             }
         }
@@ -615,14 +592,12 @@ ________________________________________________________________________________
 // | func{^} |
 ⓡ𝑓_self_them(m_flt_patch_for_exponentials,
     if (is_sym(them)) {
-        const unsigned long id_to_find = NUM2ULONG(rb_obj_id(them));
-        unsigned long * the_result    = bsearch_power(id_to_find);
-        if (the_result != NULL) {
+        const int power_to_raise_to = bsearch_operation(them);
+        if (power_to_raise_to != -1337) {
             const double val_self = NUM2DBL(self);
             if (isnan(val_self)) {
                 raise_err_runtime("c{Float}-> m{^} self{%"PRIsVALUE"} may not be raised to an exponential power |", self)
             }
-            const int power_to_raise_to = exponential_indexes[bsearch_power_position(the_result)];
             if (val_self == 0.0 && power_to_raise_to < 0) {
                 raise_err_zero_division("c{Float}-> m{^} self{%"PRIsVALUE"} may not be raised to the negative power{%d} |", self, power_to_raise_to)
             }
@@ -685,9 +660,7 @@ ________________________________________________________________________________
                 }
             }
         } else {ERR_c_self_arg_err__print_self_them("| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |")}
-    } else {
-        ERR_c_self_arg_err__print_self_them("| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |")
-    }
+    } else {ERR_c_self_arg_err__print_self_them("| c{Float}-> m{^} self(%"PRIsVALUE") unable to match exponential(%"PRIsVALUE") |")}
 )
 
 /*___________________________________________________________________________________________________________________
@@ -741,7 +714,7 @@ ________________________________________________________________________________
     int delete_node = 0;
     VALUE v;
     for (i = 0; i < len_me;) {
-        v = r_ary_get(self, i)
+        v = r_ary_get(self, i);
         if (is_nil(v)) {
             r_ary_del(self, i);
             --len_me;
@@ -788,52 +761,24 @@ ________________________________________________________________________________
             VALUE output = 💎new_ary(len_me + len_them);
             if (len_me >= len_them) {
                 for (; i < len_them; i++) {
-                    n = r_ary_get(them, i) if(!r_ary_has(self, n)){r_ary_add(output, n)}
-                    n = r_ary_get(self, i) if(!r_ary_has(them, n)){r_ary_add(output, n)}
+                    n = r_ary_get(them, i); if(!r_ary_has(self, n)){r_ary_add(output, n)}
+                    n = r_ary_get(self, i); if(!r_ary_has(them, n)){r_ary_add(output, n)}
                 }
                 for (; i < len_me; i++) {
-                    n = r_ary_get(self, i) if(!r_ary_has(them, n)){r_ary_add(output, n)}
+                    n = r_ary_get(self, i); if(!r_ary_has(them, n)){r_ary_add(output, n)}
                 }
             } else {
                 for (; i < len_me; i++) {
-                    n = r_ary_get(self, i) if(!r_ary_has(them, n)){r_ary_add(output, n)}
-                    n = r_ary_get(them, i) if(!r_ary_has(self, n)){r_ary_add(output, n)}
+                    n = r_ary_get(self, i); if(!r_ary_has(them, n)){r_ary_add(output, n)}
+                    n = r_ary_get(them, i); if(!r_ary_has(self, n)){r_ary_add(output, n)}
                 }
                 for (; i < len_them; i++) {
-                    n = r_ary_get(them, i) if(!r_ary_has(self, n)){r_ary_add(output, n)}
+                    n = r_ary_get(them, i); if(!r_ary_has(self, n)){r_ary_add(output, n)}
                 }
             }
             return output;
         }
     } else {ERR_c_self_got_non_ary_param("disjunctive_union", them)}
-)
-
-/*___________________________________________________________________________________________________________________
-      __   __             ___
-|\/| /  \ |  \ |  | |    |__
-|  | \__/ |__/ \__/ |___ |___
-_____________________________________________________________________________________________________________________ */
-
-// | func(⨍_add_aliases} |
-ⓡ𝑓_self_a_b(m_module_add_aliases,
-    if (is_ary(param_b)) {
-        const long len_them = r_ary_len(param_b);
-        if (len_them == 0) {raise_err_arg("| module-function{f_add_aliases} for self{%"PRIsVALUE"} of type{%s} received an empty array |", self, rb_obj_classname(self))}
-        long i;
-        VALUE v;
-        ID old_id = rb_check_id(& param_a);
-        for (i = 0; i < len_them; i++) {
-            v = r_ary_get(param_b, i)
-            if (is_sym(v)) {
-                rb_alias(self, rb_to_id(v), old_id);
-            } else {
-                raise_err_arg("| module-function{f_add_aliases} for self{%"PRIsVALUE"} of type{%s} received a non-symbol{%s} as one of the array-arg's elements |", self, rb_obj_classname(self), rb_obj_classname(v))
-            }
-        }
-        //rb_gc_force_recycle(param_b);
-        rb_ary_free(param_b);
-        re_me
-    } else {ERR_m_param_type("Module", "f_add_aliases", "func_aliases", param_b, "Array")}
 )
 
 /*____________________________________________________________________________________________________________________
@@ -849,37 +794,24 @@ static void θ_set_value(const ptrθ data, const double value) {
         data->angle_value = value;
         ptrθ_flag_clr_cache_synced(data);
         if (value == 0.0) {
-            ptrθ_flag_set_is_zero(data);
-            ptrθ_flag_set_is_positive(data);
-            ptrθ_flag_set_is_normal(data);
-            ptrθ_flag_clr_perigon(data);
+            ptrθ_flags_val_is_zero(data);
         } else if (value > 0.0) {
-            ptrθ_flag_set_is_positive(data);
-            ptrθ_flag_clr_is_zero(data);
             const double max_value = vocab_value_perigon(data->angle_mode);
             if (value == max_value) {
-                ptrθ_flag_set_is_normal(data);
-                ptrθ_flag_set_perigon(data);
+                ptrθ_flags_val_is_perigon(data, FLAG_TRUE);
             } else if (value < max_value) {
-                ptrθ_flag_set_is_normal(data);
-                ptrθ_flag_clr_perigon(data);
+                ptrθ_flags_val_is_below_perigon(data, FLAG_TRUE);
             } else {
-                ptrθ_flag_clr_is_normal(data);
-                ptrθ_flag_clr_perigon(data);
+                ptrθ_flags_val_is_beyond_perigon(data, FLAG_TRUE);
             }
         } else {
-            ptrθ_flag_clr_is_positive(data);
-            ptrθ_flag_clr_is_zero(data);
-            const double max_value = vocab_value_perigon(data->angle_mode);
+            const double max_value = vocab_value_perigon_negative(data->angle_mode);
             if (value == max_value) {
-                ptrθ_flag_set_is_normal(data);
-                ptrθ_flag_set_perigon(data);
+                ptrθ_flags_val_is_perigon(data, FLAG_FALSE);
             } else if (value > max_value) {
-                ptrθ_flag_set_is_normal(data);
-                ptrθ_flag_clr_perigon(data);
+                ptrθ_flags_val_is_below_perigon(data, FLAG_FALSE);
             } else {
-                ptrθ_flag_clr_is_normal(data);
-                ptrθ_flag_clr_perigon(data);
+                ptrθ_flags_val_is_beyond_perigon(data, FLAG_FALSE);
             }
         }
     } else {
@@ -1281,25 +1213,7 @@ static VALUE θ_m_initialize(VALUE self, const VALUE angle, const VALUE angle_mo
     } else {
         rb_raise(R_ERR_ARG, "| c{ThetaAngle}-> m{new} unable to parse 2nd arg(angle_mode){%"PRIsVALUE"} w/ type{%s} |", angle_mode, rb_obj_classname(angle_mode));
     }
-    const double the_value = NUM2DBL(angle);
-    data->angle_value = the_value;
-    if (the_value == 0.0) {
-        SET_FLAGS(data, FLAGS_NON_CONST_ZERO)
-    } else if (the_value > 0.0) {
-        const double max_normal = vocab_value_perigon(data->angle_mode);
-        if (the_value <= max_normal) {
-            SET_FLAGS(data, FLAGS_NON_CONST_POSITIVE_NORMAL)
-        } else {
-            SET_FLAGS(data, FLAGS_NON_CONST_POSITIVE_NOT_NORMAL)
-        }
-    } else {
-        const double max_normal = vocab_value_perigon_negative(data->angle_mode);
-        if (the_value >= max_normal) {
-            SET_FLAGS(data, FLAGS_NON_CONST_NEGATIVE_NORMAL)
-        } else {
-            SET_FLAGS(data, FLAGS_NON_CONST_NEGATIVE_NOT_NORMAL)
-        }
-    }
+    θ_set_value(data, NUM2DBL(angle));
     re_me
 }
 
@@ -1471,10 +1385,16 @@ ptrθ_func(θ_m_is_straight,
 )
 
 ptrθ_func(θ_m_is_perigon,
-    if (NO_MATCH_FOR_θ(data, FLAGS_NORMAL)) {
-        re_as_bool(θ_get_normalized_value(data->angle_value, data->angle_mode) == 0.0)
+    if (ptrθ_flag_is_perigon(data)) {
+        re_ye
+    } else if (ptrθ_flag_is_zero(data) || ptrθ_flag_is_normal(data)) {
+        re_no
     } else {
-        re_as_bool(data->angle_value == vocab_value_perigon(data->angle_mode))
+        if (θ_get_normalized_value(data->angle_value, data->angle_mode) == 0.0) {
+            ptrθ_flag_set_perigon(data);
+            re_ye
+        } else {re_no}
+        re_as_bool(θ_get_normalized_value(data->angle_value, data->angle_mode) == 0.0)
     }
 )
 
@@ -1700,8 +1620,8 @@ static VALUE m_square_root(const VALUE self, const VALUE val) {
 
 // source solution credit: https://www.geeksforgeeks.org/check-whether-number-semiprime-not/
 ⓡ𝑓_self_them(m_number_theory_is_semiprime,
-    if (is_int(them)) {
-        int num                    = NUM2INT(them);
+    if (is_fixnum(them)) {
+        int num                    = FIX2INT(them);
         int num_primes_encountered = 0;
         for (int i = 2; num_primes_encountered < 2 && i * i <= num; ++i) {
             while (num % i == 0) {
@@ -1710,10 +1630,13 @@ static VALUE m_square_root(const VALUE self, const VALUE val) {
             }
         }
         // a remaining value of > 1 will be a prime number
-        if (num > 1) {++num_primes_encountered;}
-        re_as_bool(num_primes_encountered == 2)
+        if (num > 1) {
+            re_as_bool(num_primes_encountered == 1)
+        } else {
+            re_as_bool(num_primes_encountered == 2)
+        }
     } else {
-        rb_raise(R_ERR_ARG, "| m{NumberTheory}-> sf{semiprime?} did not receive type{Integer} for either arg(n){%"PRIsVALUE"} but type{%s} |", them, rb_obj_classname(them));
+        rb_raise(R_ERR_ARG, "| m{NumberTheory}-> sf{semiprime?} did not receive type{Fixnum} for either arg(n){%"PRIsVALUE"} but type{%s} |", them, rb_obj_classname(them));
     }
 )
 
@@ -1790,8 +1713,6 @@ static inline void startup_step1_before_loading_extension(void) {
     ⓜruuuby_engine_jit = 💎add_module_under(ⓜruuuby_engine, "F22B01")
     ⓜruuuby_engine_gc  = 💎add_module_under(ⓜruuuby_engine, "F22B00")
 
-    ⓜruuuby_engine_singleton = rb_singleton_class(ⓜruuuby_engine);
-
     💎add_module_under(ⓜruuuby, "Attribute")
     💎add_module_under(ⓜruuuby, "Includable")
     💎add_module_under(ⓜruuuby, "Extendable")
@@ -1813,9 +1734,6 @@ static inline void startup_step1_before_loading_extension(void) {
 }
 
 static void startup_step2_add_ruuuby_c_extensions(void) {
-    cached_global_sym_many_args = ID2SYM(rb_intern("*args"));
-    rb_define_readonly_variable("$PRM_MANY", &cached_global_sym_many_args);
-
     init_f06()
 
     💎add_public_func_0args_to(R_INT, "finite?"  , m_int_is_finite)
@@ -1838,8 +1756,6 @@ static void startup_step2_add_ruuuby_c_extensions(void) {
     💎add_public_func_0args_to(R_ARY, "remove_empty!"    , m_ary_remove_empty)
     💎add_public_func_1args_to(R_ARY, "disjunctive_union", m_ary_disjunctive_union)
 
-    💎add_public_func_2args_to(R_MODULE, "f_add_aliases", m_module_add_aliases)
-
     init_f27()
 
 #ifdef RUUUBY_F28_B09
@@ -1849,10 +1765,10 @@ static void startup_step2_add_ruuuby_c_extensions(void) {
     init_f36()
 
     rb_gc_adjust_memory_usage((size_t) (56 * 4));
-    💎add_const_theta_angle("ANGLE_GOLDEN",   Ⴔ_RAD, THETA_MODE_RAD, cached_const_angle_golden)
-    💎add_const_theta_angle("ANGLE_TAU",      𝞽, THETA_MODE_RAD, cached_const_angle_tau)
-    💎add_const_theta_angle("ANGLE_RIGHT",    (π / 2.0), THETA_MODE_RAD, cached_const_angle_right)
-    💎add_const_theta_angle("ANGLE_STRAIGHT", (π), THETA_MODE_RAD, cached_const_angle_straight)
+    💎add_const_theta_angle("ANGLE_GOLDEN",   Ⴔ_RAD, THETA_MODE_RAD, cached_const_angle_golden, 0x7)
+    💎add_const_theta_angle("ANGLE_TAU",      𝞽, THETA_MODE_RAD, cached_const_angle_tau, 0xE)
+    💎add_const_theta_angle("ANGLE_RIGHT",    (π / 2.0), THETA_MODE_RAD, cached_const_angle_right, 0x7)
+    💎add_const_theta_angle("ANGLE_STRAIGHT", (π), THETA_MODE_RAD, cached_const_angle_straight, 0x7)
 
     💎add_const_flt("CONST_EULER_MASCHERONI",  γ)
 

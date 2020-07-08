@@ -9,7 +9,7 @@ RSpec.describe 'f35' do
       context 'feature{f35}, behaviors{b00, b03}' do
         it '{simple_moving_average} matches data provided from {arithmetic_mean}' do
           data = [1337, (🎲(1337) + 1), (🎲(1337) + 1), (🎲(1337) + 1), (🎲(1337) + 1)]
-          expect(::Math::Stats.arithmetic_mean(*data)).to eq(::Math::Stats::TimeSeries.simple_moving_average(data, data.length)[0])
+          expect(::Math::Stats.μ(*data)).to eq(::Math::Stats::TimeSeries.simple_moving_average(data, data.length)[0])
         end
       end # end: {feature{f35}, behaviors{b00, b03}}
 

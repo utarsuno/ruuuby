@@ -24,6 +24,18 @@ class RuuubyFeatureBehavior < ApplicationRecord
   include ::Ruuuby::ORMAttribute::Includable::UID
 
   # _________________________________________________________________________________________________________________
+  #  __  ___      ___    __      ___            __   __
+  # /__`  |   /\   |  | /  `    |__  |  | |\ | /  ` /__`
+  # .__/  |  /~~\  |  | \__,    |    \__/ | \| \__, .__/
+  # ________________________________________________________________________________________________________________ */
+
+  # @return [Integer]
+  def self.num_optional; self.num_where('is_optional = ?', true); end
+
+  # @return [Integer]
+  def self.num_required; self.num_where('is_optional = ?', false); end
+
+  # _________________________________________________________________________________________________________________
   #  __   __
   # /  \ |__)  |\/|
   # \__/ |  \  |  |
@@ -34,7 +46,12 @@ class RuuubyFeatureBehavior < ApplicationRecord
 
   # @return [RuuubyFeatureBehavior]
   def self.spawn(id_num, description, feature)
-    feature_behavior = RuuubyFeatureBehavior.create!(id_num: id_num, description: description)
+    if description.end_with?('|{OPTIONAL}')
+      description      = description.♻️⟵('|{OPTIONAL}')
+      feature_behavior = RuuubyFeatureBehavior.create!(id_num: id_num, description: description, is_optional: true)
+    else
+      feature_behavior = RuuubyFeatureBehavior.create!(id_num: id_num, description: description, is_optional: false)
+    end
     feature_behavior.save!
     feature.ruuuby_feature_behaviors << feature_behavior
     feature.save!

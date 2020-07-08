@@ -277,86 +277,86 @@ RSpec.describe 'rational.rb' do
 
     context 'roughly preserves original pre-extension-performance' do
 
-      context 'performance hit for following funcs, are under 105%' do
+      context 'performance hit for following funcs, are under 90%' do
         it '`^⁻⁹` (compared to `** -9`)' do
-          expect {data_rational_3^⁻⁹}.to perform_slower_than {data_rational_3 ** -9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
-          expect {data_rational_3 ** -9}.to perform_faster_than {data_rational_3^⁻⁹}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁻⁹}.to perform_slower_than {data_rational_3 ** -9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
+          expect {data_rational_3 ** -9}.to perform_faster_than {data_rational_3^⁻⁹}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁻⁸` (compared to `** -8`)' do
-          expect {data_rational_3^⁻⁸}.to perform_slower_than {data_rational_3 ** -8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁻⁸}.to perform_slower_than {data_rational_3 ** -8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁻⁷` (compared to `** -7`)' do
-          expect {data_rational_3^⁻⁷}.to perform_slower_than {data_rational_3 ** -7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁻⁷}.to perform_slower_than {data_rational_3 ** -7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁻⁶` (compared to `** -6`)' do
-          expect {data_rational_3^⁻⁶}.to perform_slower_than {data_rational_3 ** -6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁻⁶}.to perform_slower_than {data_rational_3 ** -6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁻⁵` (compared to `** -5`)' do
-          expect {data_rational_3^⁻⁵}.to perform_slower_than {data_rational_3 ** -5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁻⁵}.to perform_slower_than {data_rational_3 ** -5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁻⁴` (compared to `** -4`)' do
-          expect {data_rational_3^⁻⁴}.to perform_slower_than {data_rational_3 ** -4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁻⁴}.to perform_slower_than {data_rational_3 ** -4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁻³` (compared to `** -3`)' do
-          expect {data_rational_3^⁻³}.to perform_slower_than {data_rational_3 ** -3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁻³}.to perform_slower_than {data_rational_3 ** -3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁻²` (compared to `** -2`)' do
-          expect {data_rational_3^⁻²}.to perform_slower_than {data_rational_3 ** -2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁻²}.to perform_slower_than {data_rational_3 ** -2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁻¹` (compared to `** -1`)' do
-          expect {data_rational_3^⁻¹}.to perform_slower_than {data_rational_3 ** -1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁻¹}.to perform_slower_than {data_rational_3 ** -1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁰` (compared to `** 0`)' do
-          expect {data_rational_3^⁰}.to perform_slower_than {data_rational_3 ** 0}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁰}.to perform_slower_than {data_rational_3 ** 0}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^¹` (compared to `** 1`)' do
-          expect {data_rational_3^¹}.to perform_slower_than {data_rational_3 ** 1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^¹}.to perform_slower_than {data_rational_3 ** 1}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^²` (compared to `** 2`)' do
-          expect {data_rational_3^²}.to perform_slower_than {data_rational_3 ** 2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^²}.to perform_slower_than {data_rational_3 ** 2}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^³` (compared to `** 3`)' do
-          expect {data_rational_3^³}.to perform_slower_than {data_rational_3 ** 3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^³}.to perform_slower_than {data_rational_3 ** 3}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁴` (compared to `** 4`)' do
-          expect {data_rational_3^⁴}.to perform_slower_than {data_rational_3 ** 4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁴}.to perform_slower_than {data_rational_3 ** 4}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁵` (compared to `** 5`)' do
-          expect {data_rational_3^⁵}.to perform_slower_than {data_rational_3 ** 5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁵}.to perform_slower_than {data_rational_3 ** 5}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁶` (compared to `** 6`)' do
-          expect {data_rational_3^⁶}.to perform_slower_than {data_rational_3 ** 6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁶}.to perform_slower_than {data_rational_3 ** 6}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁷` (compared to `** 7`)' do
-          expect {data_rational_3^⁷}.to perform_slower_than {data_rational_3 ** 7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁷}.to perform_slower_than {data_rational_3 ** 7}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁸` (compared to `** 8`)' do
-          expect {data_rational_3^⁸}.to perform_slower_than {data_rational_3 ** 8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁸}.to perform_slower_than {data_rational_3 ** 8}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
 
         it '`^⁹` (compared to `** 9`)' do
-          expect {data_rational_3^⁹}.to perform_slower_than {data_rational_3 ** 9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_95)
+          expect {data_rational_3^⁹}.to perform_slower_than {data_rational_3 ** 9}.within(tΔ_within).warmup(tΔ_warmup).at_most(pΔ_90)
         end
       end
 
     end
-
   end
+
 end

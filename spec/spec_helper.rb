@@ -61,7 +61,11 @@ end
 module HelpersGeneral
 
   def expect≈≈(scenario, expected_value)
-    expect(scenario.≈≈(expected_value)).to eq(true)
+    result = scenario.≈≈(expected_value)
+    if !result
+      puts "scenarios{#{scenario.to_s}} did not match {#{expected_value.to_s}}"
+    end
+    expect(result).to eq(true)
   end
 
   def expect_regular_int(val_scenario, val_expected)
@@ -78,6 +82,17 @@ module HelpersGeneral
     expect(owner.∃⨍?(the_func)).to eq(expected_result)
   end
 
+  def expect_∃⨍_with_alias(the_func, aliases, owner, expected_result=true)
+    expect(owner.∃⨍?(the_func)).to eq(expected_result)
+    if aliases.ary?
+      aliases.each do |a|
+        expect(owner.∃⨍_alias?(the_func, a)).to eq(expected_result)
+      end
+    else
+      expect(owner.∃⨍_alias?(the_func, aliases)).to eq(expected_result)
+    end
+  end
+
   def expect_∃const_w_type(the_const, const_type, owner, expected_result=true)
     expect(owner.const_defined?(the_const)).to eq(expected_result)
     expect(owner.const_get(the_const).ⓣ).to eq(const_type)
@@ -87,7 +102,7 @@ module HelpersGeneral
     expect(owner.const_defined?(the_const)).to eq(expected_result)
   end
 
-  def expect_∃static⨍(the_func, owner, expected_result=true)
+  def expect_∃⨍_static(the_func, owner, expected_result=true)
     if owner == ::Kernel
       expect(owner.instance_methods(false).∋?(the_func)).to eq(expected_result)
     else
@@ -97,7 +112,7 @@ module HelpersGeneral
 
   # @param [Symbol] kmodule
   # @param [Class]  owner
-  def expect_∃ᶜ(kmodule, owner)
+  def expect_∃ᶜ(kmodule, owner=::Kernel)
     expect(🧬.∃ᶜ?(kmodule, owner)).to eq(true)
   end
 

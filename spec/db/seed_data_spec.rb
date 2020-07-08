@@ -10,7 +10,7 @@ RSpec.describe 'db/seed.rb' do
         it 'there exists a gem for{rubygems-update}' do
           the_gem = ::RuuubyGem.find_by_name('rubygems-update')
           expect(the_gem.ⓣ).to eq(::RuuubyGem)
-          expect(the_gem.ruuuby_release.uid).to eq('v0.0.40')
+          expect(the_gem.ruuuby_release.uid).to eq('v0.0.39')
         end
         context 'expected number per mode types' do
           it 'for none there is{0}' do
@@ -271,13 +271,13 @@ RSpec.describe 'db/seed.rb' do
 
         context 'v0.0.39' do
           it 'as expected' do
-            audit_version(v0_0_39, 'v0.0.39', 0)
+            audit_version(v0_0_39, 'v0.0.39', 1)
           end
         end
 
         context 'v0.0.40' do
           it 'as expected' do
-            audit_version(v0_0_40, 'v0.0.40', 1)
+            audit_version(v0_0_40, 'v0.0.40', 0)
           end
         end
 
@@ -299,9 +299,15 @@ RSpec.describe 'db/seed.rb' do
           end
         end
 
-        #context 'v0.0.44' do
+        context 'v0.0.44' do
+          it 'as expected' do
+            audit_version(v0_0_44, 'v0.0.44', 0)
+          end
+        end
+
+        #context 'v0.0.45' do
         #  it 'as expected' do
-        #    audit_version(v0_0_44, 'v0.0.44', 0)
+        #    audit_version(v0_0_45, 'v0.0.45', 0)
         #  end
         #end
 

@@ -49,12 +49,26 @@ ________________________________________________________________________________
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
 
+// rb_gc_register_address(& cached_field);
+#define 💎define_new_ruby_class_as_wrapper_over_c_struct(cached_field, name_of_class, alloc_func){\
+    cached_field = rb_define_class(name_of_class, rb_cData);\
+    rb_define_alloc_func(cached_field, alloc_func);\
+}
+
+static inline double relative_error_dbl(const double dbl_predicted, const double dbl_actual);
+static inline double relative_error_dbl(const double dbl_predicted, const double dbl_actual) {
+    return fabs((dbl_actual - dbl_predicted) / dbl_actual);
+}
+
 #define LDBL_IS_ZERO(arg) ((arg + 0.0L) == 0.0L)
 #define LDBL_CBRT(arg)    cbrtl(arg)
 #define LDBL_SQRT(arg)    sqrtl(arg)
 
-static long double LDBL_POW2(const long double n);
-static long double LDBL_POW2(const long double n){return powl(n, 2.0L);}
+static inline double DBL_POW2(const double n);
+static inline double DBL_POW2(const double n){return pow(n, 2.0);}
+
+static inline long double LDBL_POW2(const long double n);
+static inline long double LDBL_POW2(const long double n){return powl(n, 2.0L);}
 
 #define SWAP_INTS(arg_a, arg_b) {\
     arg_a += arg_b;\
@@ -64,6 +78,8 @@ static long double LDBL_POW2(const long double n){return powl(n, 2.0L);}
 
 static inline VALUE 💎new_ary(const long known_max_size);
 #define 💎new_ary_size2(arg_a, arg_b) rb_assoc_new(arg_a, arg_b);
+
+#define 💎create_ptr_dbls(num_nodes) ALLOC_N(double, (size_t) num_nodes)
 
 #define is_class(arg)             (TYPE(arg) == T_CLASS)
 #define is_module(arg)            (TYPE(arg) == T_MODULE)
@@ -85,14 +101,26 @@ static inline VALUE 💎new_ary(const long known_max_size);
 #define r_hsh_len(arg)      RHASH_SIZE(arg)
 #define r_hsh_is_empty(arg) RHASH_EMPTY_P(arg)
 
-#define r_ary_len(arg)           RARRAY_LEN(arg)
-#define r_ary_is_empty(arg)      r_ary_len(arg) == 0
-#define r_ary_get(ary, index)    rb_ary_entry(ary, index);
-#define r_ary_del(ary, index)    rb_ary_delete_at(ary, index);
-#define r_ary_add(ary, elem)     rb_ary_push(ary, elem);
-#define r_ary_has(ary, elem)     rb_ary_includes(ary, elem)
-#define r_ary_pre_modify(arg)    rb_ary_modify(arg);
-#define r_ary_prepend(arg, elem) rb_ary_unshift(arg, elem);
+#define r_ary_len(arg)             RARRAY_LEN(arg)
+#define r_ary_is_empty(arg)        r_ary_len(arg) == 0
+#define r_ary_get(ary, index)      rb_ary_entry(ary, index)
+#define r_ary_get_first(ary)        rb_ary_entry(ary, 0L)
+#define r_ary_del(ary, index)      rb_ary_delete_at(ary, index);
+#define r_ary_add(ary, elem)       rb_ary_push(ary, elem);
+#define r_ary_has(ary, elem)       rb_ary_includes(ary, elem)
+#define r_ary_pre_modify(arg)      rb_ary_modify(arg);
+#define r_ary_prepend(arg, elem)   rb_ary_unshift(arg, elem);
+#define r_ary_set_p0(ary, elem) rb_ary_store(ary, 0l, elem);
+#define r_ary_set_p1(ary, elem) rb_ary_store(ary, 1l, elem);
+#define r_ary_set_p2(ary, elem) rb_ary_store(ary, 2l, elem);
+#define r_ary_set_p0_p1(ary, elem_0, elem_1){\
+    r_ary_set_p0(ary, elem_0);\
+    r_ary_set_p1(ary, elem_1);\
+}
+#define r_ary_set_p1_p2(ary, elem_0, elem_1){\
+    r_ary_set_p1(ary, elem_0);\
+    r_ary_set_p2(ary, elem_1);\
+}
 
 #define c_str_to_r_str(arg)             rb_str_new_cstr(arg)
 #define c_str_to_frozen_r_str(the_cstr) rb_str_new_frozen(c_str_to_r_str(the_cstr))
@@ -200,5 +228,19 @@ static inline int is_int_or_flt(const VALUE arg){
             return 0;
     }
 }
+
+// ----------------------------------------------------------------------------------------------------------------
+
+static int _compare_func_4_object_id(const void * l , const void * r);
+
+// original source modified from: https://stackoverflow.com/questions/36681906/c-qsort-doesnt-seem-to-work-with-unsigned-long
+static int _compare_func_4_object_id(const void * l, const void * r) {
+    const ID ai = *(const ID *)(l);
+    const ID bi = *(const ID *)(r);
+    if (ai < bi) {return -1;} else if(ai > bi) {return 1;} else {return 0;}
+}
+
+static inline int bsearch_result(ID * the_result);
+static inline int bsearch_operation(const VALUE them);
 
 #endif

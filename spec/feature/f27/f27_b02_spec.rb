@@ -164,10 +164,10 @@ RSpec.describe 'f27_b02' do
           expect_∃⨍(:θ𝞽, ::Ruuuby::Feature::Extendable::MainF28)
         end
         it 'for class{ThetaAngle}' do
-          expect_∃static⨍(:new_radian, ::ThetaAngle)
-          expect_∃static⨍(:new_degree, ::ThetaAngle)
-          expect_∃static⨍(:new_gon, ::ThetaAngle)
-          expect_∃static⨍(:new_turn, ::ThetaAngle)
+          expect_∃⨍_static(:new_radian, ::ThetaAngle)
+          expect_∃⨍_static(:new_degree, ::ThetaAngle)
+          expect_∃⨍_static(:new_gon, ::ThetaAngle)
+          expect_∃⨍_static(:new_turn, ::ThetaAngle)
         end
       end
     end

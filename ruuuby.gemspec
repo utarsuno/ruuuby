@@ -36,7 +36,7 @@ Gem::Specification.new do |gem|
   # ╔═════════════════════════════════════════════════════════════════════════════╗
   # ║ 0x0) ./bin/console_db  ║ 0x1) puts @ruuuby_gemspec.generate_source          ║
   # ╠═════════════════════════════════════════════════════════════════════════════╣
-  gem.add_development_dependency(:bundler, '~> 2.1.4')                           #║
+  gem.add_development_dependency(:bundler, '~> 2.2.0.rc.1')                      #║
   gem.add_development_dependency(:rake, '~> 13.0.1')                             #║
   gem.add_development_dependency(:rspec, '~> 3.9.0')                             #║
   gem.add_development_dependency(:rdoc, '~> 6.2.1')                              #║

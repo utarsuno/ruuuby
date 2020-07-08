@@ -8,8 +8,13 @@ RSpec.describe 'f31_b01' do
 
         context 'all health checks' do
 
-          it 'passes health checks' do
-            expect(💎.engine.api_git.healthy?).to eq(true)
+          context 'passes health checks' do
+            it 'standard' do
+              expect(💎.engine.api_git.healthy?).to eq(true)
+            end
+            it 'full' do
+              expect(💎.engine.api_git.healthy?(true)).to eq(true)
+            end
           end
 
           it 'has correct repo path' do

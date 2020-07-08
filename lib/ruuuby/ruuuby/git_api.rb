@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
@@ -31,19 +31,25 @@ module ::Ruuuby
     #  - `origin/master` vs `origin master`: https://stackoverflow.com/questions/18137175/in-git-what-is-the-difference-between-origin-master-vs-origin-master
     #
     # helpful CLI commands:
-    #  - `git log --pretty=format:"%H|%ad|%s" --date=iso`
+    #  | scenario | cmd |
+    #  | -------- |
+    #  | human readable view of staging    | `git diff --cached --stat`                       |
+    #  | human readable view of commits    | `git log --pretty=format:"%H|%ad|%s" --date=iso` |
+    #  | for script: get num files w/ diffs | `git diff --cached --numstat | wc -l`            |
+    #  | alternative for `git status`      | `git status --porcelain=v2 -b`                   |
     #
     # ----------------------------------
     #
     # `💎.engine.api_git`
     class GitAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
 
-      attr_reader :repo, :last_commit, :configs
+      attr_reader :repo
 
       def initialize(engine)
         super(engine)
         @repo         = ::Rugged::Repository.new(@engine.path_base)
         # cached fields
+        @index        = @repo.index
         @branch_names = []
         @release_tags = []
       end
@@ -57,6 +63,28 @@ module ::Ruuuby
       # @return [Rugged::Config]
       def configs; @repo.config; end
 
+      # @param [String] attribute_key
+      # @param [Hash]   expected_key_val_pairs
+      def validate_attribute(attribute_key, expected_key_val_pairs)
+        🛑str❓('attribute_key', attribute_key)
+        🛑hsh❓('expected_key_val_pairs', expected_key_val_pairs)
+        result = @repo.fetch_attributes(attribute_key)
+        if result.length == expected_key_val_pairs.length
+          expected_key_val_pairs.∀ do |key, value|
+            if result.∃🔑?(key)
+              if result[key] != value
+                return false
+              end
+            else
+              return false
+            end
+          end
+          true
+        else
+          false
+        end
+      end
+
       # @see https://github.com/desktop/desktop/issues/5057
       #  - "usually the `UNBORN HEAD` error happens when you are attempting to publish a branch that has no commits"
       #
@@ -66,9 +94,15 @@ module ::Ruuuby
       # @see https://www.git-tower.com/learn/git/faq/detached-head-when-checkout-commit
       #  - "when a specific commit is checkout out instead of a branch : `detached head`"
       #
+      # @param [Boolean] perform_full_check
+      #
+      # @raise [ArgumentError]
+      #
       # @return [Boolean]
-      def healthy?
-        (!@repo.bare?) && (!@repo.empty?) && (!@repo.head_unborn?) && (!@repo.head_detached?)
+      def healthy?(perform_full_check=false)
+        🛑bool❓('perform_full_check', perform_full_check)
+        is_healthy = (!@repo.bare?) && (!@repo.empty?) && (!@repo.head_unborn?) && (!@repo.head_detached?) && (!@repo.shallow?)
+        perform_full_check ? is_healthy && !@index.conflicts? : is_healthy
       end
 
       # @param [String] sha | the SHA to search for

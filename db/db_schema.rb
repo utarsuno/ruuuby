@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 ActiveRecord::Schema.define do
 
@@ -68,11 +68,14 @@ ActiveRecord::Schema.define do
     # optional
     t.string :description, :null => true
 
+    #t.string :comments, :null => true
+
     t.integer :vmajor, limit: 1, :null => false
     t.integer :vminor, limit: 1, :null => false
     t.integer :vtiny, limit: 1, :null => false
 
     t.integer :git_commits_count
+    t.integer :ruuuby_changelogs_count
 
     # 'cached calculations'
     t.integer :num_gems_added, :null => false, :default => 0
@@ -83,7 +86,9 @@ ActiveRecord::Schema.define do
 
   create_table :ruuuby_features, force: true do |t|
     t.integer :id_num, :null => false
-    t.string :description, :null => false
+    t.string :description, :null => false, :unique => true
+
+    t.integer :ruuuby_changelogs_count
 
     # | 0 | empty, to be added in future versions |
     # | 1 | needs to be removed/merged            |
@@ -98,15 +103,26 @@ ActiveRecord::Schema.define do
 
   create_table :ruuuby_feature_behaviors, force: true do |t|
     t.integer :id_num, :null => false
-    t.string :description, :null => false
+    t.string :description, :null => false, :unique => true
+
+    t.boolean :is_optional, :default => false, :null => false
 
     t.references :ruuuby_feature, index: true, foreign_key: { references: :ruuuby_features}
   end
 
   create_table :ruuuby_changelogs, force: true do |t|
-    t.integer :ruuuby_version_id, :null => false
-    t.integer :ruuuby_feature_id, :null => false
-    t.string  :description, :null => false
+    t.string  :description, :null => false, :unique => false
+
+    t.string :applies_to, :null => true, :unique => false
+    t.string :applies_to_uid, :null => true, :unique => false
+    t.integer :metadata_flag, limit: 1, :null => true, :unique => false
+    t.integer :changelog_index, :null => false, :unique => true, :default => 0
+
+    t.string :value_previous, :null => true, :unique => false
+    t.string :value_applied, :null => true, :unique => false
+
+    t.references :ruuuby_release, index: true, foreign_key: { references: :ruuuby_releases }
+    t.references :ruuuby_feature, index: true, foreign_key: { references: :ruuuby_features }
   end
 
   create_table :git_commits, force: true do |t|

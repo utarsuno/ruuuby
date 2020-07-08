@@ -5,7 +5,7 @@ RSpec.describe 'f22_db_orm' do
   context 'db_orm', :db do
     context 'defines f22' do
       it 'passes ORM audit' do
-        audit_feature(f22, 'f22', 5, 'add a light abstraction to working w/ the built-in `GC` & `JIT` utilities')
+        audit_feature(f22, 'f22', 7, 'add a light abstraction to working w/ the built-in `GC` & `JIT` utilities')
       end
 
       context 'defines behaviors' do
@@ -27,6 +27,14 @@ RSpec.describe 'f22_db_orm' do
 
         it 'has{b04}' do
           audit_feature_behavior(f22, f22_b04, 'b04', 'offers a light layer over `GCC`')
+        end
+
+        it 'has{b05}' do
+          audit_feature_behavior(f22, f22_b05, 'b05', 'offers a light layer of utilities to get-set various OS related information and values')
+        end
+
+        it 'has{b06}' do
+          audit_feature_behavior(f22, f22_b06, 'b06', 'offers a light layer for comparing compiled `Ruby` code')
         end
       end
 

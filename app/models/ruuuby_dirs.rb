@@ -20,8 +20,8 @@ class RuuubyDir < ApplicationRecord
   belongs_to :parent_dir, class_name: 'RuuubyDir', optional: true
 
   def self.spawn(path_full, name, is_virtual)
-    🛑str❓($PRM_MANY, [path_full, name])
-    🛑bool❓(:is_virtual, is_virtual)
+    🛑strs❓([path_full, name])
+    🛑bool❓('is_virtual', is_virtual)
     if ::Dir.∃?(path_full)
       ruuuby_dir = RuuubyDir.create!(
           path_full: path_full,

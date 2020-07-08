@@ -254,6 +254,68 @@ RSpec.describe 'f27_b04' do
       end # end: {handles needed scenarios}
     end # end: {func{reflex?}}
 
+    context 'func{windings}' do
+      context 'handles needed scenarios' do
+        it 'cases: positive direction' do
+          expect(θ°(0).windings).to eq(0)
+          expect(θ°(1).windings).to eq(0)
+          expect(θ°(359).windings).to eq(0)
+          expect(θ°(360).windings).to eq(1)
+          expect(θ°(361).windings).to eq(1)
+          expect(θ°(719).windings).to eq(1)
+          expect(θ°(720).windings).to eq(2)
+          expect(θ°(721).windings).to eq(2)
+          expect(θ𝞽(2.25).windings).to eq(2)
+          expect(θᵍ(1337).windings).to eq(3)
+          expect(θʳ(π * 3).windings).to eq(1)
+          expect(θ°(0.0).windings).to eq(0)
+          expect(θ°(90).windings).to eq(0)
+          expect(θ°((360 * 5) + 90).windings).to eq(5)
+          expect(θʳ(π * 5).windings).to eq(2)
+          expect(θᵍ(900).windings).to eq(2)
+          expect(θ𝞽(4.6).windings).to eq(4)
+        end
+        it 'cases: negative direction' do
+          expect(θ°(0).windings).to eq(0)
+          expect(θ°(-1).windings).to eq(0)
+          expect(θ°(-359).windings).to eq(0)
+          expect(θ°(-360).windings).to eq(-1)
+          expect(θ°(-361).windings).to eq(-1)
+          expect(θ°(-719).windings).to eq(-1)
+          expect(θ°(-720).windings).to eq(-2)
+          expect(θ°(-721).windings).to eq(-2)
+          expect(θ𝞽(-2.25).windings).to eq(-2)
+          expect(θᵍ(-1337).windings).to eq(-3)
+          expect(θʳ(π * -3).windings).to eq(-1)
+          expect(θ°(-2).windings).to eq(0)
+          expect(θ°(-90).windings).to eq(0)
+          expect(θ°((-360 * 5) - 90).windings).to eq(-5)
+          expect(θʳ(π * -5).windings).to eq(-2)
+          expect(θᵍ(-900).windings).to eq(-2)
+          expect(θ𝞽(-4.6).windings).to eq(-4)
+        end
+      end
+    end # end: {func{windings}}
+
   end
+
+  context 'audits', :audit do
+    context '{f27_b04}' do
+      it 'creates class{`ThetaAngle`}' do
+        expect_∃ᶜ(:ThetaAngle)
+      end
+      context 'class{TimeSeriesData} is defined as needed' do
+        it 'w/ needed funcs' do
+          expect_∃⨍_with_alias(:right?, :⦜?, ::ThetaAngle)
+          expect_∃⨍_with_alias(:obtuse?, :⦦?, ::ThetaAngle)
+          expect_∃⨍_with_alias(:acute?, :⦟?, ::ThetaAngle)
+          expect_∃⨍_with_alias(:straight?, :_?, ::ThetaAngle)
+          expect_∃⨍_with_alias(:perigon?, :○?, ::ThetaAngle)
+          expect_∃⨍_with_alias(:sextant?, :𝟞𝟘°?, ::ThetaAngle)
+          expect_∃⨍_with_alias(:octant?, :𝟜𝟝°?, ::ThetaAngle)
+        end
+      end
+    end
+  end # end: {audits}
 
 end

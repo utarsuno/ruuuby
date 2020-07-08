@@ -5,6 +5,7 @@
 class ::RuuubyFeature < ::ApplicationRecord
 
   has_many :ruuuby_feature_behaviors, class_name: 'RuuubyFeatureBehavior'
+  has_many :ruuuby_changelogs, class_name: 'RuuubyChangelog'
 
   module EnumFlagState
     # @type [Integer]
@@ -15,6 +16,11 @@ class ::RuuubyFeature < ::ApplicationRecord
     STATE_WIP         = 2
     # @type [Integer]
     STATE_STABLE      = 4
+  end
+
+  module EnumFlags
+    # @type [Integer]
+    CHANGELOG_TYPE_KCLASS_METHOD_ADDED = 0
   end
 
   # @return [Integer]
@@ -65,6 +71,34 @@ class ::RuuubyFeature < ::ApplicationRecord
     end
   end
 
+  # @param [RuuubyRelease] ruuuby_release
+  # @param [String]        method_name
+  # @param [String]        kclass
+  #
+  # @return [RuuubyChangelog]
+  def spawn_kclass_method(ruuuby_release, method_name, kclass)
+    changelog                   = ::RuuubyChangelog.spawn(ruuuby_release, self, "+m{#{method_name}}->c{#{kclass}}")
+    changelog['applies_to']     = ::RuuubyFeature.orm_Ⓣ_🐍
+    changelog['metadata_flag']   = ::RuuubyFeature::EnumFlags::CHANGELOG_TYPE_KCLASS_METHOD_ADDED
+    changelog['value_previous'] = method_name
+    changelog['value_applied']  = kclass
+    changelog.save!
+    self.save!
+    ruuuby_release.save!
+    changelog
+  end
+
+  # @param [RuuubyRelease] ruuuby_release
+  # @param [String]        kclass
+  # @param [Array]         method_names
+  #
+  # @return [RuuubyChangelog]
+  def spawn_kclass_methods(ruuuby_release, kclass, method_names)
+    method_names.∀ do |method_name|
+      self.spawn_kclass_method(ruuuby_release, method_name, kclass)
+    end
+  end
+
   # @param [Array] ary_of_strings
   def spawn_behaviors(ary_of_strings)
     ary_of_strings.∀ₓᵢ do |x, i|
@@ -84,13 +118,6 @@ class ::RuuubyFeature < ::ApplicationRecord
   #  /  \ |__) |__  |__)  /\   |  /  \ |__) /__`
   #  \__/ |    |___ |  \ /~~\  |  \__/ |  \ .__/
   # ________________________________________________________________________________________________________________ */
-
-  def audits ; @audits ||= [] ; end
-
-  # @return [String]
-  def docs_feature_mapping
-    "| #{self.uid} | #{self.description} |"
-  end
 
   # @param [String] raw_uid the version UID of the RuuubyRelease with or without the starting 'v'
   #
