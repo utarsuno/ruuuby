@@ -26,7 +26,7 @@ RSpec.describe 'module' do
     context 'by adding function{∃⨍?}' do
       context 'handling needed scenarios' do
         it 'cases: true-positive' do
-          expect(::Array.∃⨍?(:⊕)).to eq(true)
+          expect(::Array.∃⨍?(:⨁)).to eq(true)
           expect(::Array.∃⨍?(:disjunctive_union)).to eq(true)
         end
         it 'cases: false-positive' do
@@ -65,7 +65,7 @@ RSpec.describe 'module' do
 
         context 'func{∃⨍?} for cases:' do
           it 'positive' do
-            expect{::Array.∃⨍?(:⊕)}.to perform_very_quickly
+            expect{::Array.∃⨍?(:⨁)}.to perform_very_quickly
             expect{::Array.∃⨍?(:disjunctive_union)}.to perform_very_quickly
           end
           it 'negative' do

@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 module ::Ruuuby
 
@@ -8,24 +8,7 @@ module ::Ruuuby
     # `💎.engine`
     class RuuubyEngine
 
-      class << self
-        def get_mem_stats(val_a, val_b)
-          💎.engine.ext_mem_stats = {before: val_a, after: val_b}
-        end
-
-        # @param [String] the_version_flag
-        def set_compiler_version(the_version_flag)
-          💎.engine.ext_compiler_stats = the_version_flag
-        end
-
-        def set_timer_stats(val)
-          💎.engine.ext_timer_stats = val
-        end
-
-        def print_ext_stats
-          💎.engine.print_ext_stats
-        end
-      end
+      class << self; def _get_engine; 💎.engine; end; end
 
       module Syntax
         FEATURE_BEHAVIOR = 'b\d\d({\w+})?'
@@ -38,21 +21,20 @@ module ::Ruuuby
 
       attr_reader :gc, :jit, :source, :os
 
-      attr_accessor :ext_mem_stats, :ext_compiler_stats, :ext_timer_stats, :cached_info
+      attr_reader :stats_ext_timer, :stats_ext_compiler, :stats_ext, :stats_ext_mem_pre_load, :stats_ext_mem_post_load
 
       def print_ext_stats
-        delta_ms              = self.ext_timer_stats / 1000.0
-        mem_start             = self.ext_mem_stats[:before].to_f / 1024.0
-        mem_end               = self.ext_mem_stats[:after].to_f / 1024.0
-        💎.engine.cached_info = "extensions w/ compiler{#{self.ext_compiler_stats}}, loaded in{#{delta_ms.to_s} ms}, w/ the following pre/post-memory benchmarks: {#{mem_start.to_s} MB -> #{mem_end.to_s} MB}"
-        puts 💎.engine.cached_info
+        delta_ms   = @stats_ext_timer / 1000.0
+        mem_start  = @stats_ext_mem_pre_load.to_f / 1024.0
+        mem_end    = @stats_ext_mem_post_load.to_f / 1024.0
+        @stats_ext = "extensions w/ compiler{#{@stats_ext_compiler}}, loaded in{#{delta_ms.to_s} ms}, w/ following pre/post-loaded-memory: {#{mem_start.to_s} MB -> #{mem_end.to_s} MB}"
+        💎.engine.info(@stats_ext)
       end
 
       # state flags
       # | 0 | not started |
       # | 1 | engine started |
       # | 2 | engined stopped |
-
       def initialize
         @path_base      = "#{::File.dirname(::File.dirname(::File.dirname(::File.dirname(::File.dirname(__FILE__)))))}/"
         @state_flag      = 0
@@ -63,7 +45,7 @@ module ::Ruuuby
         @api_git        = ::Ruuuby::MetaData::GitAPI.new(self)
         @api_brew       = ::Ruuuby::MetaData::BrewAPI.new(self)
         @api            = ::Ruuuby::MetaData::RuuubyAPI.new(self, @api_brew)
-        @api_docker     = ::Ruuuby::MetaData::DockerAPI.new(self)
+        @api_docker     = ::Ruuuby::MetaData::DockerAPI.new(self, '1.40')
         @api_locale     = ::Ruuuby::MetaData::LocaleAPI.new(self)
         @orm            = nil
 
@@ -150,7 +132,7 @@ module ::Ruuuby
       #    ‣ un-protected | missing `write-barrier`; un-safe access from `C-extension` | not promotable but can be remembered
       #
       #  ‣ `pages` in `heap` either belong in `eden` or `tomb`
-      #    ‣ `eden`      | has pages with live objects
+      #    ‣ `eden`      | has pages w/ live objects
       #    ‣ `tomb`      | has pages w/o any objects
       #    ‣ `ruby_heap` | `tomb` + `eden`
       #
@@ -158,7 +140,7 @@ module ::Ruuuby
       #    ‣ object slot       | 40-bytes
       #    ‣ # of object slots | 408 (per 16kb memory page)
       #
-      #  ‣ an object that does not fit into this 40 byte slot will get assigned both a slot an heap-space (usually allocated via standard `malloc` route)
+      #  ‣ an object that does not fit into this 40 byte slot will get assigned both a slot and heap-space (usually allocated via standard `malloc` route)
       #
       # ==extension_functions
       #  - mem_usage_peak | returns Integer

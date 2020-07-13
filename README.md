@@ -4,7 +4,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.45'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.46'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -44,7 +44,7 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 [ℕ.∋?(-5), ℤ.∋?(7.0), ℝ.∋?(∞), ℚ.∋?(Rational(2, 3))]
 
 # [1, 4, 2]
-[1, 2, 3].⊕ [3, 4]
+[1, 2, 3].⨁ [3, 4]
 
 # [4]
 [2, 3, 4].∖ [1, 2, 3] 
@@ -80,7 +80,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | ----------:| ------- |----- |
 | `Integer`  | `1337^²` | <ul><li>`<= 95% slower`</li><li>coexisting w/ `Integer's bitwise XOR`</li></ul> |
 | `Float`    | `1337.1337^²` | `<= 95% slower` |
-| `Rational` | `3/4r^²`  | `<= 90% slower` |
+| `Rational` | `3/4r^²`  | `<= 95% slower` |
 | `Complex`  | `1337i^²` | `<= 75% slower` |
 | `BigDecimal` | `inc` | `inc` | `inc` |
 | `ThetaAngle` | `inc` | `inc` | outputs to unit: `steradian` (depending on input) |
@@ -113,7 +113,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Stats` | | `μ`⟶`arithmetic_mean`, `x̃`⟶`median` |
 | `Stats` | `TimeSeries` | `simple_moving_average`, `weighted_moving_average`, `exponential_moving_average`, `aroon_up`, `aroon_down`, `aroon_oscillator` |
 | `Stats` | `Probability` | |
-| `Stats` | `Descriptive` | `𝛿`⟶`percentage_error`, `relative_difference` |
+| `Stats` | `Descriptive` | `𝛿`⟶`percentage_error`, `relative_diff` |
 | `Stats` | `StatisticalLearning` | |
 
 #### Custom Math Classes:
@@ -121,8 +121,10 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | context        | context      | sample functionality |
 | -------------: | :----------: | :------ |
 | `Trigonometry` | <em>class:</em> `ThetaAngle` | <ul><li>`°?`⟶`degrees?`, `°`⟶`as_degree`, `ʳ?`⟶`radians?`, `ʳ`⟶`as_radian`</li><li>`∅?`⟶`zero?`, `⦜?`⟶`right?`, `○?`⟶`perigon?`</li><li>`η̂?`⟶`normal?`, `η̂!`⟶`normalize!`</li></ul> |
-| `Statistics`   | <em>class:</em> `TimeSeries` | <ul><li>`μ`⟶`mean`, `x̃`⟶`median`, `σ`⟶`std_dev`, `σ²`⟶`variance`,</li><li>`ρ`⟶`pearson_correlation_coefficient`, `mse`⟶`mean_square_of_errors`, `mape`⟶`mean_absolute_percentage_error`</li><li>`λ`⟶`scale_by_addition?`, `Λ`⟶`scale_by_multiplication`</li><li>`η̂?`⟶`normalized?`, `η̂!`⟶`normalize!`</li><li>`mem_size`, `free_memory`</li></ul> |
+| `Statistics`   | <em>class:</em> `TimeSeriesData` | <ul><li>`μ`⟶`mean`, `x̃`⟶`median`, `σ`⟶`std_dev`, `σ²`⟶`variance`,</li><li>`ρ`⟶`pearson_correlation_coefficient`, `mse`⟶`mean_square_of_errors`, `mape`⟶`mean_absolute_percentage_error`</li><li>`λ`⟶`scale_by_addition`, `Λ`⟶`scale_by_multiplication`</li><li>`η̂?`⟶`normalized?`, `η̂!`⟶`normalize!`</li><li>`mem_size`, `free_memory`</li></ul> |
 | `NumberTheory::𝕎¹` | <em>singleton-objs of class:</em> `Math::Expr::Sequence` | <ul><li>`seq_pronic`, `seq_fibonacci`, `seq_lucas`, `seq_square`, `seq_triangle`, `seq_hexagonal`</li></ul> |
+| `Forex`        | <em>class: `CurrencyMatrix`</em> | |
+| `GraphTheory`  | <em>class:</em> `PseudoGraph` | |
 
 ### Class Modifications:
 
@@ -132,18 +134,19 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Module`               | `∃⨍_alias?`, `∃⨍?`                  |
 | `File`                 | `dirname²`, `replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` |
 | `Dir`                  | `η̂_paths`                           |
-| `File`, `Dir`, `ENV`, `NilClass` | `∅?`                      |
-| `Object`               | <ul><li>`Ⓣ`, `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?`</li><li>`🛑bool❓`, `🛑int❓`, `🛑flt❓`, `🛑num❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑θ❓`</li></ul> |
+| `File`, `Dir`, `ENV`, `NilClass`, `Vector` | `∅?`            |
+| `Object`               | <ul><li>`Ⓣ`, `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?`, `matrix?`, `vec?`</li><li>`🛑bool❓`, `🛑int❓`, `🛑flt❓`, `🛑num❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑θ❓`</li></ul> |
 | `Array`, `Set`         | `remove_empty!`                     |
 | `String`               | <ul><li>`♻️⟵`, `♻️⟶`, `♻️⟶∞`</li><li>`⬇?`⟶`downcase?`, `⬆?`⟶`upcase?`, `⬇!`⟶`downcase!`, `⬆!`⟶`upcase!`</li><li>`🐫?`, `🐫⬇?`, `to_🐫`<br/>`🐍⬆?`, `🐍?`, `to_🐍`</li><li>`digit?`, `to_num`, `to_num?`, `palindrome?`</li><li>`as_utf8`, `iso8601?`, `to_iso8601`, `as_iso8601`</li><li>`∋?`, `∌?`, `∈?`, `∉?`</li></ul> |
 | `Array`, `String`      | `η̂!`                               |
-| `Array`                | <ul><li>`⊕`⟶`disjunctive_union`, `∖`</li><li>`end_with?`, `start_with?`</li></ul> |
+| `Array`                | <ul><li>`⨁`⟶`disjunctive_union`, `∖`</li><li>`end_with?`, `start_with?`</li></ul> |
 | `Enumerable`           | `∌?`, `∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎`              |
 | `Array`, `String`      | `>>`                               |
 | `String`, `Array`      | `ensure_start!`, `ensure_ending!`  |
 | `Integer`              | `finite?`, `infinite?`               |
 | `Numeric`              | `∞?`                               |
 | `Float`                | `≈≈`, `∞ℂ?`                        |
+| `Matrix`               |  `∀ₓ↘`, `∀ₓᵢ↘`, `↘_to_a`, `∀ₓᵢⱼ`   |
 
 #### Common Aliases:
 
@@ -160,21 +163,22 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Enumerable`           | `map`, `each_with_index`                  | `⨍`, `∀ₓᵢ`                 |
 | `Hash`                 | `key?`                                    | `∃🔑?`                     |
 | `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                       |
-| `String`, `Array`, `Set`, `Hash`, `Proc` | `length` (`arity` for `Proc`) *| `𝔠` |
+| `String`, `Array`, `Set`, `Hash`, `Proc` | `length` (`arity` for `Proc`) * | `𝔠` |
+| `Matrix`               | `square?`, `row_count`, `column_count`    | `▣?`, `num_rows`, `num_cols` |
 
 ---
 
 ### Code Base Statistics:
 | category    | attribute       | value(s)         | # of  |
 | ----------: | :-------------: | ---------------: | :---- |
-| `QA`        | `unit`          | `1254`           | tests (for core functionality) |
-| `QA`        | `integration`   | `19`             | tests (for state/functionality checks on grouped features/components) |
-| `QA`        | `performance`   | `142`:`85`       | tests{`non_numeric`,`numeric`} (for runtime performance) |
-| `QA`        | `DB`            | `262`            | tests (for `DB` & `ORM`) |
-| `CI`        | `audit`         | `151`            | tests (for anything non-functionality based) |
-| `CI`        | `locale`        | `72`:`16`        | local config tests{`core`:`excessive_checks`} |
-| `tech-debt` | `coverage`      | `9`              | tests (for tracking missing functionality) |
-| `structure` | `features`      | `0`:`29`:`9`:`4` | features{`stable`:`wip`:`⚠️`:`todo`} |
+| `QA`        | `unit`          | `1301`           | tests (for core functionality) |
+| `QA`        | `integration`   | `23`             | tests (for state/functionality checks on grouped features/components) |
+| `QA`        | `performance`   | `147`:`85`       | tests{`non_numeric`,`numeric`} (for runtime performance) |
+| `QA`        | `DB`            | `274`            | tests (for `DB` & `ORM`) |
+| `CI`        | `audit`         | `161`            | tests (for anything non-functionality based) |
+| `CI`        | `locale`        | `75`:`19`        | local config tests{`core`:`excessive_checks`} |
+| `tech-debt` | `coverage`      | `13`             | tests (for tracking missing functionality) |
+| `structure` | `features`      | `1`:`31`:`9`:`4` | features{`stable`:`wip`:`⚠️`:`todo`} |
 | `coverage`  | `LOCs`          | `???`            | `wip` |
 | `coverage`  | `runtime`       | `???`            | `wip` |
 | `coverage`  | `documentation` | `???`            | `wip` |

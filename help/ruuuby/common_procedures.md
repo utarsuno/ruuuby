@@ -1,4 +1,11 @@
 
+## Before Version Release
+
+#### preparing documentation)
+ | for  | script  | cmd |
+ | ---- | ---- | --- |
+ | `CHANGELOG.md` | `./bin/console_db` | `$ruuuby.engine.orm.get_upcoming_changelog` |
+
 ### Version Release
 
 | step | perform | notes|

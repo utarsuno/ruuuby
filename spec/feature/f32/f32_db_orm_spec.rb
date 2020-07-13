@@ -56,7 +56,7 @@ RSpec.describe 'f32_db_orm' do
 
       end # end: {defines behaviors}
 
-    end # end: {defines{f30}}
+    end # end: {defines{f32}}
 
   end
 

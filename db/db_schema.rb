@@ -79,7 +79,8 @@ ActiveRecord::Schema.define do
 
     # 'cached calculations'
     t.integer :num_gems_added, :null => false, :default => 0
-    t.boolean :released, :default => false, :null => false
+    t.integer :num_gems_updated, :null => false, :default => 0
+    t.boolean :released, :null => false, :default => false
 
     t.index [:vmajor, :vminor, :vtiny], unique: true
   end
@@ -90,10 +91,12 @@ ActiveRecord::Schema.define do
 
     t.integer :ruuuby_changelogs_count
 
-    # | 0 | empty, to be added in future versions |
-    # | 1 | needs to be removed/merged            |
-    # | 2 | wip    |
-    # | 4 | stable |
+    # | flag bitwise position | description        |
+    # | -------------------- | ------------------ |
+    # | 0                    | empty, to be added in future versions |
+    # | 1                    | needs to be removed/merged            |
+    # | 2                    | wip                                   |
+    # | 4                    | stable                                |
     t.integer :flag_state, :null => false, :default => 0
 
     t.string :tags, :null => true

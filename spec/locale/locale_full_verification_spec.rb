@@ -1,30 +1,46 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'ruby' do
 
   context 'locale', :locale do
     let(:build_configs){::RbConfig::CONFIG}
 
-    context 'OpenSSL is built as needed' do
-      it 'w/ needed ENV_VARs' do
-        expect(ENV["RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=#{💎.engine.api.path_openssl}\""])
-      end
-      context 'w/ needed globals' do
-        before :all do
-          @version_openssl = 💎.engine.api.run_cmd!("#{💎.engine.api.path_openssl}/bin/openssl version")
-        end
-        after :all do
-          @version_openssl = nil
-        end
-        it 'matching compiled version' do
-          expect(::OpenSSL::OPENSSL_VERSION).to eq(@version_openssl)
-        end
-        it 'matching loaded version' do
-          expect(::OpenSSL::OPENSSL_LIBRARY_VERSION).to eq(@version_openssl)
-        end
+    context 'web protocol' do
 
+      context 'OpenSSL is built as needed' do
+        it 'w/ needed ENV_VARs' do
+          expect(ENV["RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=#{💎.engine.api.path_openssl}\""])
+        end
+        context 'w/ needed globals' do
+          before :all do
+            @version_openssl = 💎.engine.api.run_cmd!("#{💎.engine.api.path_openssl}/bin/openssl version")
+          end
+          after :all do
+            @version_openssl = nil
+          end
+          it 'matching compiled version' do
+            expect(::OpenSSL::OPENSSL_VERSION).to eq(@version_openssl)
+          end
+          it 'matching loaded version' do
+            expect(::OpenSSL::OPENSSL_LIBRARY_VERSION).to eq(@version_openssl)
+          end
+        end
+      end # end: {OpenSSL is built as needed}
+
+      context 'lib{zlib} utilized w/ protocol{HTTP} is built as needed' do
+        context '{zlib}' do
+          it 'found w/ ::Net::HTTP' do
+            expect(::Net::HTTP::HAVE_ZLIB).to eq(true)
+          end
+          context 'found locally' do
+            it 'for lib{zlib} version{11.14.0_1}' do
+              expect(💎.engine.api_locale.∃_brew_h_file?('11.14.0_1', 'zlib.h'))
+            end
+          end
+        end
       end
-    end # end: {OpenSSL is built as needed}
+
+    end # end: {web protocol}
 
     context 'recommended configs' do
 
@@ -43,13 +59,13 @@ RSpec.describe 'ruby' do
       context 'needed libs for GCC can be found' do
         context 'brew based, see lib{ruby-build}' do
           it 'for lib{gmp.h} version{6.2.0}' do
-            expect(💎.engine.api_locale.can_find_needed_brew_h_file?('6.2.0', 'gmp.h'))
+            expect(💎.engine.api_locale.∃_brew_h_file?('6.2.0', 'gmp.h'))
           end
           it 'for lib{mpfr.h} version{4.0.2}' do
-            expect(💎.engine.api_locale.can_find_needed_brew_h_file?('4.0.2', 'mpfr.h'))
+            expect(💎.engine.api_locale.∃_brew_h_file?('4.0.2', 'mpfr.h'))
           end
           it 'for lib{mpc.h} version{1.1.0}' do
-            expect(💎.engine.api_locale.can_find_needed_brew_h_file?('1.1.0', 'mpc.h'))
+            expect(💎.engine.api_locale.∃_brew_h_file?('1.1.0', 'mpc.h'))
           end
         end
       end
@@ -61,10 +77,15 @@ RSpec.describe 'ruby' do
             expect(result).to eq('ruby-build 20200520')
           end
           it 'for{brew}' do
-            expect(💎.engine.api_brew.get_version).to eq(["Homebrew 2.4.2-14-gdb99886", "Homebrew/homebrew-core (git revision 3e5b8; last commit 2020-06-26)", "Homebrew/homebrew-cask (git revision 65947; last commit 2020-06-26)"])
+            expect(💎.engine.api_brew.get_version).to eq(["Homebrew 2.4.4-34-geee17fd", "Homebrew/homebrew-core (git revision 0d18f; last commit 2020-07-08)", "Homebrew/homebrew-cask (git revision 8e5bb; last commit 2020-07-09)"])
           end
-          it 'for{docker}' do
-            expect(💎.engine.api_docker.get_version).to eq('Docker version 19.03.8, build afacb8b')
+          context 'for{docker}' do
+            it 'has needed version' do
+              expect(💎.engine.api_docker.get_version).to eq('Docker version 19.03.8, build afacb8b')
+            end
+            it 'has needed ENV{DOCKER_API_VERSION}' do
+              expect(💎.engine.api_docker.expected_docker_api_version).to eq(ENV['DOCKER_API_VERSION'])
+            end
           end
           it 'for{git}' do
             expect(💎.engine.api_git.get_version).to eq('git version 2.24.3 (Apple Git-128)')

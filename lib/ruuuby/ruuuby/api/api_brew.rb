@@ -21,6 +21,9 @@ module ::Ruuuby
         self.run_cmd!('brew doctor')
       end
 
+      # `wip`
+      def execute_cmd_cleanup; self.run_cmd!('brew cleanup --verbose'); end
+
       # @param [String] package_name
       #
       # @raise [ArgumentError]

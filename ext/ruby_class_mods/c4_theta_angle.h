@@ -42,7 +42,7 @@ typedef struct generic_bits {
 typedef union generic_bitwise_8_flags {
 	unsigned char generic_byte;
 	GENERIC_BITS b;
-} GENERIC_BITWISE_8_FLAGS;
+} BITWISE_FLAGS_8;
 
 #define θFLAG_IS_ZERO 0
 // 0 for negative, 1 for positive
@@ -68,10 +68,10 @@ typedef union generic_bitwise_8_flags {
 #define θFLAG_VOCAB_IS_REFLEX 5
 
 typedef struct ThetaAngles {
-    double                  angle_value;
-    unsigned char           angle_mode;
-    GENERIC_BITWISE_8_FLAGS flags_meta_data;
-    //GENERIC_BITWISE_8_FLAGS flags_vocab;
+    double          angle_value;
+    unsigned char   angle_mode;
+    BITWISE_FLAGS_8 flags_meta_data;
+    //BITWISE_FLAGS_8 flags_vocab;
 } ThetaAngle;
 
 typedef struct ThetaAngles * ptr_theta_angle;
@@ -194,7 +194,7 @@ static void θ_free(void * data) {
 
 static size_t θ_size(const void * data) {return sizeof(ThetaAngle);}
 
-static const rb_data_type_t θ_type = {
+static const rb_data_type_t type_θ = {
     .data             = NULL,
     .flags             = RUBY_TYPED_FREE_IMMEDIATELY,
     .wrap_struct_name = "theta_angle",
@@ -205,7 +205,7 @@ static const rb_data_type_t θ_type = {
     },
 };
 
-#define 💎parse_ptrθ(the_data, the_ptr) TypedData_Get_Struct(the_data, ThetaAngle, & θ_type, the_ptr)
+#define 💎parse_ptrθ(the_data, the_ptr) TypedData_Get_Struct(the_data, ThetaAngle, & type_θ, the_ptr)
 #define 💎self_to_ptrθ_data ptrθ data;  💎parse_ptrθ(self, data);
 
 static size_t θ_size(const void * data);
@@ -213,7 +213,7 @@ static size_t θ_size(const void * data);
 static VALUE θ_alloc(VALUE self);
 static VALUE θ_alloc(VALUE self) {
     ptrθ data;
-    return TypedData_Make_Struct(self, ThetaAngle, & θ_type, data);
+    return TypedData_Make_Struct(self, ThetaAngle, & type_θ, data);
 }
 
 static VALUE θ_m_initialize(VALUE self, const VALUE angle, const VALUE angle_mode);
@@ -222,7 +222,7 @@ static VALUE θ_new(const double angle, const VALUE sym_mode);
 static VALUE θ_new(const double angle, const VALUE sym_mode) {
     ptrθ data;
     VALUE argv[2] = {DBL2NUM(angle), sym_mode};
-    VALUE obj     = TypedData_Make_Struct(Ⓒtheta_angle, ThetaAngle, & θ_type, data);
+    VALUE obj     = TypedData_Make_Struct(Ⓒtheta_angle, ThetaAngle, & type_θ, data);
     rb_obj_call_init(obj, 2, argv);
     return obj;
 }
@@ -231,7 +231,7 @@ static VALUE θ_new_constant(const double angle, const VALUE sym_mode, const uns
 static VALUE θ_new_constant(const double angle, const VALUE sym_mode, const unsigned char initial_flags) {
     VALUE obj = θ_new(angle, sym_mode);
     ptrθ data; 💎parse_ptrθ(obj, data);
-    rb_iv_set(obj, "@real", DBL2NUM(data->angle_value));
+    💎set_instance_field(obj,DBL2NUM(data->angle_value),real)
     TA_SET_FLAGS(data, initial_flags);
     RB_OBJ_FREEZE(obj);
     return obj;

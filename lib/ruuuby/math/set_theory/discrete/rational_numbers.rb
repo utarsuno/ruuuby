@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # mathematics related code
 module ::Math
@@ -19,32 +19,28 @@ module ::Math
         @superset_of = [:𝔹, :ℕ, :𝕎, :ℤ]
       end
 
-      # @return [Boolean]
+      # @return [Boolean, NilClass]
       def _∋?(n)
         case(n)
-        when Integer
+        when ::Integer
           true
-        when Float
+        when ::Float
           if ℝ.∋?(n)
             if ℤ.∋?(n)
               true
             else
-              if ::Numeric.known_irrational?(n)
-                false
-              else
-                nil
-              end
+              nil
             end
           else
             false
           end
-        when BigDecimal
+        when ::BigDecimal
           return false unless n.finite?
           return true if ℤ.∋?(n)
           nil
-        when Complex
+        when ::Complex
           n.imaginary == 0 && ℚ.∋?(n.real)
-        when Rational
+        when ::Rational
           (ℤ.∋?(n.numerator) && ℤ.∋?(n.denominator)) ? true : nil
         else
           false

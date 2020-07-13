@@ -18,8 +18,7 @@ module ::Ruuuby
         # @return [String]
         def Ⓣ; self.class.to_s; end
 
-        # @return [Boolean] true, if this object is an instance of `ThetaAngle`
-        def θ?; self.is_a?(::ThetaAngle); end
+        alias_method :θ?, :theta_angle?
 
         # @param [String, Symbol] arg_name
         # @param [*]              arg
@@ -262,6 +261,22 @@ module ::Ruuuby
               🛑 ::Ruuuby::ParamErr::throw(self.class, caller_locations(1, 1).first.base_label.to_s, "[#{i.to_s}]{#{x.to_s}}", ::Array, x) unless x.ary?
             end
           end
+        end
+
+        # @param [String] arg_name
+        # @param [*]      arg
+        #
+        # @raise [WrongParamType]
+        def 🛑matrix❓(arg_name, arg)
+          🛑 ::Ruuuby::ParamErr::throw(self.class, caller_locations(1, 1).first.base_label.to_s, arg_name.to_s, ::Matrix, arg) unless arg.matrix?
+        end
+
+        # @param [String] arg_name
+        # @param [*]      arg
+        #
+        # @raise [WrongParamType]
+        def 🛑vec❓(arg_name, arg)
+          🛑 ::Ruuuby::ParamErr::throw(self.class, caller_locations(1, 1).first.base_label.to_s, arg_name.to_s, ::Vector, arg) unless arg.vec?
         end
 
       end # end: f06

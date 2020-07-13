@@ -44,6 +44,9 @@ ________________________________________________________________________________
             #define GL_SILENCE_DEPRECATION
             #include <OpenCL/cl.h>
         #endif
+        #ifdef RUUUBY_F98_OPENMP
+            #include <omp.h>
+        #endif
     #endif
 
 #else
@@ -82,6 +85,11 @@ ________________________________________________________________________________
      \/_/\/_/\/_/\/__/\/____/ \/_/  \/_/\/_/\/__/\/_/\/____/    \/___/  \/____/ \/__/ \/___/  \ \ \/
                                                                                                \ \_\
                                                                                                 \/_/ */
+
+static inline VALUE is_a_matrix(const VALUE arg);
+static inline VALUE is_a_vector(const VALUE arg);
+static inline VALUE is_a_matrix(const VALUE arg){return rb_obj_is_instance_of(arg, Ⓒmatrix);}
+static inline VALUE is_a_vector(const VALUE arg){return rb_obj_is_instance_of(arg, Ⓒvector);}
 
 #define bsearch_power(val_to_find)         (ID *) bsearch (&val_to_find, exponential_ids, NUM_EXPONENTS, sizeof(ID), _compare_func_4_object_id);
 #define bsearch_power_position(arg_index) ((int)(((int)arg_index - (int)exponential_ids) / sizeof(ID)))
@@ -247,10 +255,10 @@ static void internal_only_prepare_f16(void) {
     r_ary_set_p0(code_points2, INT2FIX(8734))
     💎PROCEDURE_01(obj_id_inf, code_points2)
 
+    r_ary_set_p0_p1(code_points2, INT2FIX(45), INT2FIX(8734))
+    const ID obj_id_inf_negative = rb_sym2id(rb_to_symbol(rb_funcall(code_points2, rb_intern_pack, 1, pack_as_utf8)));
     rb_ary_free(code_points2);
     rb_str_free(pack_as_utf8);
-
-    ID obj_id_inf_negative = rb_sym2id(rb_const_get_at(R_NUM, rb_intern("EXPONENTIAL_NEGATIVE_INF")));
 
     exponential_ids[0]  = obj_id_n9;
     exponential_ids[1]  = obj_id_n8;
@@ -277,7 +285,7 @@ static void internal_only_prepare_f16(void) {
 
     qsort(exponential_ids, NUM_EXPONENTS, sizeof(ID), _compare_func_4_object_id);
 
-    unsigned long * the_index;
+    ID * the_index;
     💎PROCEDURE_02(the_index, obj_id_n9, -9);
     💎PROCEDURE_02(the_index, obj_id_n8, -8);
     💎PROCEDURE_02(the_index, obj_id_n7, -7);
@@ -307,7 +315,7 @@ static void internal_only_prepare_f16(void) {
 static inline void startup_step5_protect_against_gc(void) {
     rb_gc_register_address(& Ⓒset);
     rb_gc_register_address(& Ⓒbig_decimal);
-    //rb_global_variable(& cached_module_param_err);
+    //rb_global_variable(& ⓜparam_err);
     rb_gc_verify_internal_consistency();
 }
 
@@ -354,15 +362,16 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
     ensure_all_loaded_for_math_space()
 
     ensure_all_loaded_for_math_expressions()
-
+    ensure_all_loaded_for_tropical_algebra()
     ensure_loaded_math(number_theory/number_theory) // must be after{expression/sequence/recursive_sequence}
     ensure_all_loaded_for_statistics()
     ensure_all_loaded_for_geometry()
 
     // [⚠️] : excluding: alternative files are loading these already:
-    //          * ensure_loaded_ruuuby(ruuuby/metadata/ruuuby_metadata_constants)
     //          * ensure_loaded_ruuuby(version)
     // [⚠️] : reminder, do not load "ruuuby/ruuuby_orm" here
+
+    ensure_loaded_ruuuby(protocol/unix_socket)
 
     ensure_all_loaded_for_ruuuby()
 
@@ -1702,6 +1711,8 @@ static VALUE m_square_root(const VALUE self, const VALUE val) {
 static inline void startup_step1_before_loading_extension(void) {
     Ⓒbig_decimal = rb_const_get(rb_cObject, rb_intern("BigDecimal"));
     Ⓒset         = rb_const_get(rb_cObject, rb_intern("Set"));
+    Ⓒmatrix      = rb_const_get(rb_cObject, rb_intern("Matrix"));
+    Ⓒvector      = rb_const_get(rb_cObject, rb_intern("Vector"));
 
     cached_rb_intern_smells_like_int = rb_intern("smells_like_int?");
     cached_rb_intern_is_finite        = rb_intern("finite?");
@@ -1709,22 +1720,24 @@ static inline void startup_step1_before_loading_extension(void) {
 
     ⓜruuuby            = 💎add_global_module("Ruuuby")
     ⓜruuuby_metadata   = 💎add_module_under(ⓜruuuby, "MetaData")
-    ⓜruuuby_engine     = 💎add_class_under(ⓜruuuby_metadata, rb_cObject, "RuuubyEngine")
+    ⓜruuuby_engine     = 💎add_class_under(ⓜruuuby_metadata, R_OBJ, "RuuubyEngine")
     ⓜruuuby_engine_jit = 💎add_module_under(ⓜruuuby_engine, "F22B01")
     ⓜruuuby_engine_gc  = 💎add_module_under(ⓜruuuby_engine, "F22B00")
 
     💎add_module_under(ⓜruuuby, "Attribute")
     💎add_module_under(ⓜruuuby, "Includable")
     💎add_module_under(ⓜruuuby, "Extendable")
-    cached_module_param_err = 💎add_module_under(ⓜruuuby, "ParamErr")
+    ⓜparam_err = 💎add_module_under(ⓜruuuby, "ParamErr")
 
     ⓜcombinatorics = 💎add_module_under(R_MATH, "Combinatorics")
     ⓜtrigonometry  = 💎add_module_under(R_MATH, "Trig")
     ⓜnumber_theory = 💎add_module_under(R_MATH, "NumberTheory")
+    ⓜgraph_theory  = 💎add_module_under(R_MATH, "GraphTheory")
+
     💎add_singleton_func_1args_to(ⓜnumber_theory, "nth_euler_totient", m_number_theory_eulers_totient_func)
     💎add_singleton_func_1args_to(ⓜnumber_theory, "semiprime?", m_number_theory_is_semiprime)
 
-    💎add_class_under(cached_module_param_err, R_ERR_ARG, "WrongParamType")
+    💎add_class_under(ⓜparam_err, R_ERR_ARG, "WrongParamType")
 
     ℤd1 = DBL2NUM(1.0);
     rb_gc_register_address(& ℤd1);
@@ -1763,19 +1776,15 @@ static void startup_step2_add_ruuuby_c_extensions(void) {
 #endif
 
     init_f36()
+    init_f36_add_constants()
+    init_f37()
 
-    rb_gc_adjust_memory_usage((size_t) (56 * 4));
-    💎add_const_theta_angle("ANGLE_GOLDEN",   Ⴔ_RAD, THETA_MODE_RAD, cached_const_angle_golden, 0x7)
-    💎add_const_theta_angle("ANGLE_TAU",      𝞽, THETA_MODE_RAD, cached_const_angle_tau, 0xE)
-    💎add_const_theta_angle("ANGLE_RIGHT",    (π / 2.0), THETA_MODE_RAD, cached_const_angle_right, 0x7)
-    💎add_const_theta_angle("ANGLE_STRAIGHT", (π), THETA_MODE_RAD, cached_const_angle_straight, 0x7)
+    💎add_const_flt("CONST_EULER_MASCHERONI", γ)
 
-    💎add_const_flt("CONST_EULER_MASCHERONI",  γ)
-
-    💎add_const_flt("RATIO_GOLDEN",            𝚽)
-    💎add_const_flt("RATIO_GOLDEN_SUPER",      Ψ)
-    💎add_const_flt("RATIO_PLASTIC",           ρ)
-    💎add_const_flt("RATIO_SILVER",            δ)
+    💎add_const_flt("RATIO_GOLDEN",           𝚽)
+    💎add_const_flt("RATIO_GOLDEN_SUPER",     Ψ)
+    💎add_const_flt("RATIO_PLASTIC",          ρ)
+    💎add_const_flt("RATIO_SILVER",           δ)
 
     💎add_singleton_func_2args_to(ⓜcombinatorics, "permutations", m_combinatorics_permutations)
     💎add_singleton_func_2args_to(ⓜcombinatorics, "n_choose_k", m_combinatorics_n_choose_k)
@@ -1926,23 +1935,26 @@ typedef struct Ruuuby_Engine_Stats {
 
     static void engine_start_up_finished(RuuubyEngineStats * engine);
     static void engine_start_up_finished(RuuubyEngineStats * engine) {
+        Ⓒruuuby_engine = rb_funcall(ⓜruuuby_engine, rb_intern("_get_engine"), 0);
+
         #ifdef RUUUBY_F98_COMPILER
             engine->runtime_compiler_version = establish_compiler_version();
-            rb_funcall(ⓜruuuby_engine, STATS_FUNC_ID_COMPILER, 1, compiler_version_to_s(engine->runtime_compiler_version));
+            💎set_instance_field(Ⓒruuuby_engine,compiler_version_to_s(engine->runtime_compiler_version),stats_ext_compiler)
         #endif
         #ifdef RUUUBY_F98_MEMORY
             engine->max_memory_after_extensions_loaded = memory_peak_this_runtime();
-            rb_funcall(ⓜruuuby_engine, STATS_FUNC_ID_MEMORY, 2, DBL2NUM(engine->max_memory_before_extensions_loaded), DBL2NUM(engine->max_memory_after_extensions_loaded));
+            💎set_instance_field(Ⓒruuuby_engine,DBL2NUM(engine->max_memory_before_extensions_loaded),stats_ext_mem_pre_load)
+            💎set_instance_field(Ⓒruuuby_engine,DBL2NUM(engine->max_memory_after_extensions_loaded),stats_ext_mem_post_load)
         #endif
         #ifdef RUUUBY_F98_TIMER
             simple_timer_end(& (engine->simple_timer));
 
-            const uint64_t delta_us = (engine->simple_timer.time_end.tv_sec - engine->simple_timer.time_start.tv_sec) * 1000000 + (engine->simple_timer.time_end.tv_nsec - engine->simple_timer.time_start.tv_nsec) / 1000;
+            const uint64_t delta_us         = (engine->simple_timer.time_end.tv_sec - engine->simple_timer.time_start.tv_sec) * 1000000 + (engine->simple_timer.time_end.tv_nsec - engine->simple_timer.time_start.tv_nsec) / 1000;
             const unsigned int delta_us_int = (unsigned int) delta_us;
-            rb_funcall(ⓜruuuby_engine, STATS_FUNC_ID_TIMER, 1, UINT2NUM(delta_us_int));
+            💎set_instance_field(Ⓒruuuby_engine,UINT2NUM(delta_us_int),stats_ext_timer)
         #endif
 
-        rb_funcall(ⓜruuuby_engine, STATS_FUNC_ID_PRINT, 0);
+        rb_funcall(Ⓒruuuby_engine, rb_intern("print_ext_stats"), 0);
     }
 #endif // end: {RUUUBY_F98_DEBUG}
 
@@ -1979,4 +1991,5 @@ void Init_ruby_class_mods(void) {
 
         engine_start_up_finished(& ruuuby_engine);
     #endif
+
 }

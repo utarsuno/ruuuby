@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 # frozen-string-literal: false
 
 require_relative '../../lib/ruuuby/version'
@@ -23,11 +23,13 @@ else
       flag_memory   = (env_f98 & 2) != 0
       flag_opencl   = (env_f98 & 4) != 0
       flag_compiler = (env_f98 & 8) != 0
+      flag_openmp   = (env_f98 & 16) != 0
+      flag_opengl   = (env_f98 & 32) != 0
     else
-      raise "not compiling w/ valid ENV{RUUUBY_F98}, expected int between val{0-15}, got{#{env_f98.to_s}}"
+      raise "not compiling w/ valid ENV{RUUUBY_F98}, expected int between val{0-63}, got{#{env_f98.to_s}}"
     end
   rescue
-    raise "not compiling w/ valid ENV{RUUUBY_F98}, expected int between val{0-15}, got{#{env_f98.to_s}}"
+    raise "not compiling w/ valid ENV{RUUUBY_F98}, expected int between val{0-63}, got{#{env_f98.to_s}}"
   end
 end
 
@@ -59,11 +61,18 @@ the_flags += %w(fextended-identifiers finput-charset=UTF-8)
 # extra_checks
 the_flags += %w(ftarget-variant-availability-checks funroll-loops)
 
+# OpenMP
+#the_flags += %w(Xpreprocessor fopenmp) #lomp
+#the_flags += %w(DCMAKE_C_COMPILER=clang DOpenMP_libomp_LIBRARY DLIBOMP_ARCH=x86_64 DCMAKE_BUILD_TYPE=Debug DCMAKE_SHARED_LINKER_FLAGS)
+#the_flags += %w(DOpenMP_libomp_LIBRARY DCMAKE_SHARED_LINKER_FLAGS)
+
 the_flags += ["DRUUUBY_F98_DEBUG=#{env_f98.to_s}"] if flag_debug
 the_flags += %w(DRUUUBY_F98_TIMER) if flag_timer
 the_flags += %w(DRUUUBY_F98_MEMORY) if flag_memory
 the_flags += %w(DRUUUBY_F98_OPENCL) if flag_opencl
 the_flags += %w(DRUUUBY_F98_COMPILER) if flag_compiler
+the_flags += %w(DRUUUBY_F98_OPENMP) if flag_openmp
+the_flags += %w(DRUUUBY_F98_OPENGL) if flag_opengl
 
 the_flags += %w(DRUUUBY_F28_B09) if flag_f28_b09
 
@@ -80,6 +89,18 @@ if flag_opencl
   abort('no OpenCL') unless have_framework('OpenCL')
 end
 
+if flag_opengl
+  append_ldflags('-L/System/Library/Frameworks/OpenGL.framework')
+  append_ldflags('-framework OpenGL')
+  abort('no OpenGL') unless have_framework('OpenGL')
+end
+
+#if flag_openmp
+#  append_ldflags('-L/usr/local/opt/libomp/lib')
+#  abort('no OpenMP') unless have_framework('OpenMP')
+#  headers += %w(omp)
+#end
+
 dir_config('ruby_class_mods', [::RbConfig::CONFIG['includedir']], [::RbConfig::CONFIG['libdir']])
 
 headers = []
@@ -88,7 +109,7 @@ headers = []
 headers += %w(ruby ruby/assert ruby/debug ruby/defines ruby/encoding ruby/intern ruby/version ruby/missing)
 
 # for ruuuby
-headers += %w(c0_constants c1_typed_checks c2_extension_memory c3_macro_utilities c4_theta_angle c5_internal_structs c6_feature_macros c7_time_series_data ruby_class_mods)
+headers += %w(c0_constants c1_typed_checks c2_extension_memory c3_macro_utilities c4_theta_angle c5_internal_structs c6_feature_macros c7_time_series_data c8_graphs ruby_class_mods)
 
 # for c
 headers += %w(stdio stdlib sys/types string float tgmath inttypes locale sys/resource) # tgmath includes {math, complex}
@@ -97,12 +118,10 @@ if flag_timer
   headers += %w(time sys/time)
 end
 
-headers.each do |h|
-  abort("Unable to find header{#{h}.h}") unless find_header("#{h}.h")
-end
+headers.each{|header_file| abort("Unable to find header{#{header_file}.h}") unless find_header("#{header_file}.h")}
 
 #if env_f98 != 0
-if env_f98 == 15
+if env_f98 >= 15
   ({
       char: 1,
       'unsigned char': 1,

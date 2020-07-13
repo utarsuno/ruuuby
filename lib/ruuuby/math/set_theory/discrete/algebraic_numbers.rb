@@ -18,13 +18,13 @@ module ::Math
       # @return [Boolean]
       def _∋?(n)
         case(n)
-        when Integer
+        when ::Integer
           true
-        when Float
+        when ::Float
           𝔸ᵣ.∋?(n)
-        when BigDecimal
+        when ::BigDecimal
           𝔸ᵣ.∋?(n.to_f)
-        when Complex, Rational
+        when ::Complex, Rational
           𝔸ᵣ.∋?(n)
         else
           false

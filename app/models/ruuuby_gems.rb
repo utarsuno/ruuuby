@@ -164,14 +164,16 @@ class ::RuuubyGem < ::ApplicationRecord
     "| `#{self.name}` | `#{version_previous.value_previous}` | `#{version_previous.value_applied}` |\n"
   end
 
+  # @return [String]
   def source_for_readme
-    gem_modes = ''
     if self.is_development && self.is_runtime
       gem_modes = "✅, ✅"
     elsif self.is_development
       gem_modes = "✅, ❌"
     elsif self.is_runtime
       gem_modes = "❌, ✅"
+    else
+      raise "unexpected condition at path{#{__FILE__ }} line{#{__LINE__ }}"
     end
     "| `#{self.name}` | [`#{self.version_current}`](#{self.url_gem}) | #{gem_modes} | `#{self.tags[2..self.tags.length-3]}` |\n"
   end

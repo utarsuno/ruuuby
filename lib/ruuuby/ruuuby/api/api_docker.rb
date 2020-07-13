@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
@@ -18,10 +18,16 @@ module ::Ruuuby
     # `💎.engine.api_docker`
     class DockerAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
 
-      attr_reader :repo, :last_commit, :configs
+      attr_reader :repo, :last_commit, :configs, :expected_docker_api_version
 
-      def initialize(engine)
+      # @param [Object] engine
+      # @param [String] expected_docker_api_version
+      def initialize(engine, expected_docker_api_version)
         super(engine)
+        @expected_docker_api_version = expected_docker_api_version
+
+        # TODO: flag to track if Docker daemon is currently running
+        #  * unix:///var/run/docker.sock
       end
 
       def _calculate_version
@@ -31,5 +37,8 @@ module ::Ruuuby
     end # end: Class{DockerAPI}
   end
 end
+
+# TODO: https://docs.docker.com/engine/api/v1.24/
+# TODO: https://docs.docker.com/engine/api/v1.40/
 
 # -------------------------------------------- ⚠️ --------------------------------------------

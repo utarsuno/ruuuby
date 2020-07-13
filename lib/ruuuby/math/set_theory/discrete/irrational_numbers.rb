@@ -7,8 +7,6 @@ module ::Math
     class IrrationalNumbers < ::Math::SetTheory::NumberSet
       include ::Singleton
 
-      KNOWN_IRRATIONALS = [::Math::PI.🆔, ::Math::E.🆔, ::Float::RATIO_GOLDEN.🆔, ::Float::RATIO_GOLDEN_SUPER.🆔, ::Float::RATIO_PLASTIC.🆔]
-
       def initialize
         super(:𝕀, ::Math::SetTheory::NumberSet::AlephNumbers::ONE)
         @subset_of = [:𝕌, :ℂ, :ℝ]

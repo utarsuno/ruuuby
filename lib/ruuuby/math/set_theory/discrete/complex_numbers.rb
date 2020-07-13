@@ -25,7 +25,7 @@ module ::Math
       # @return [Boolean]
       def _∋?(n)
         case(n)
-        when Integer
+        when ::Integer
           true
           #when Float
           #if ℝ.∋?(n)
@@ -41,14 +41,14 @@ module ::Math
           #else
           #  return false
           #end
-        when BigDecimal, Complex, Float
+        when ::BigDecimal, ::Complex, ::Float
           n.finite?
           #return false unless n.finite?
           #return true if ℤ.∋?(n)
           #nil
           #when Complex
           #  n.imaginary == 0 && ℚ.∋?(n.real)
-        when Rational
+        when ::Rational
           ℂ.∋?(n.numerator) && ℂ.∋?(n.denominator)
           #if ℤ.∋?(n.numerator) && ℤ.∋?(n.denominator)
           #  true

@@ -29,7 +29,7 @@ static VALUE cached_flt_inf;
 static VALUE cached_flt_negative_inf;
 static VALUE cached_flt_inf_complex;
 
-static VALUE cached_module_param_err;
+static VALUE ⓜparam_err;
 
 static VALUE ⓜruuuby;
 static VALUE ⓜruuuby_metadata;
@@ -38,13 +38,18 @@ static VALUE ⓜruuuby_engine_jit;
 static VALUE ⓜruuuby_engine_gc;
 
 static VALUE ⓜnumber_theory;
+static VALUE ⓜgraph_theory;
 static VALUE ⓜcombinatorics;
 static VALUE ⓜtrigonometry;
 
 static VALUE Ⓒbig_decimal;
 static VALUE Ⓒset;
+static VALUE Ⓒmatrix;
+static VALUE Ⓒvector;
 static VALUE Ⓒtheta_angle;
 static VALUE Ⓒtime_series_data;
+static VALUE Ⓒpseudo_graph;
+static VALUE Ⓒruuuby_engine;
 
 static VALUE cached_const_angle_golden;
 static VALUE cached_const_angle_tau;

@@ -1,10 +1,10 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # mathematics related code
 module ::Math
   module SetTheory
 
-    # also called: +counting-numbers+
+    # also called: `counting-numbers`
     class WholeNumbers < ::Math::SetTheory::NumberSet
       include ::Singleton
       def initialize
@@ -23,22 +23,22 @@ module ::Math
           true
         else
           case(n)
-          when Integer
+          when ::Integer
             n > 0
-          when Float
+          when ::Float
             (!(n.∞? || n.negative?)) && (n.zero? || ((n % 1) == 0))
-          when BigDecimal
+          when ::BigDecimal
             case n.sign
-            when BigDecimal::SIGN_NaN, BigDecimal::SIGN_POSITIVE_INFINITE, BigDecimal::SIGN_NEGATIVE_INFINITE, BigDecimal::SIGN_NEGATIVE_FINITE
+            when ::BigDecimal::SIGN_NaN, ::BigDecimal::SIGN_POSITIVE_INFINITE, ::BigDecimal::SIGN_NEGATIVE_INFINITE, ::BigDecimal::SIGN_NEGATIVE_FINITE
               false
-            when BigDecimal::SIGN_POSITIVE_ZERO, BigDecimal::SIGN_NEGATIVE_ZERO
+            when ::BigDecimal::SIGN_POSITIVE_ZERO, ::BigDecimal::SIGN_NEGATIVE_ZERO
               true
             else
               n.smells_like_int?
             end
-          when Rational
+          when ::Rational
             𝕎.∋?(n.numerator) && 𝕎.∋?(n.denominator)
-          when Complex
+          when ::Complex
             n.imaginary == 0 && 𝕎.∋?(n.real)
           else
             false

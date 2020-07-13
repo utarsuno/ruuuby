@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # mathematics related code
 module ::Math
@@ -7,8 +7,6 @@ module ::Math
     # includes all the +measuring-numbers+
     class RealNumbers < ::Math::SetTheory::NumberSet
       include ::Singleton
-
-      #KNOWN_TRANSCENDENTALS = [::Math::PI.🆔, ::Math::E.🆔, ::Float::CONST_OMEGA.🆔]
 
       def initialize
         super(:ℝ, ::Math::SetTheory::NumberSet::AlephNumbers::ONE, {
@@ -26,10 +24,10 @@ module ::Math
       # @return [Boolean]
       def _∋?(n)
         case(n)
-        when Integer;           true
-        when Float, BigDecimal; n.to_f.finite?
-        when Complex;           n.imaginary == 0 && ℝ.∋?(n.real)
-        when Rational;          ℝ.∋?(n.numerator) && ℝ.∋?(n.denominator)
+        when ::Integer;           true
+        when ::Float, BigDecimal; n.to_f.finite?
+        when ::Complex;           n.imaginary == 0 && ℝ.∋?(n.real)
+        when ::Rational;          ℝ.∋?(n.numerator) && ℝ.∋?(n.denominator)
         else;                   false
         end
       end

@@ -21,6 +21,9 @@ ________________________________________________________________________________
     ensure_loaded_default(time)\
     ensure_loaded_default(prime)\
     ensure_loaded_default(benchmark)\
+    ensure_loaded_default(matrix)\
+    ensure_loaded_default(net/http)\
+    ensure_loaded_default(socket)\
 }
 
 #define startup_step0_load_f98_b02_3rd_party(){\
@@ -55,16 +58,19 @@ ________________________________________________________________________________
      \/_/   \/___/  \/___/ */
 
 #define init_f06(){\
-    💎add_public_func_0args_to(R_OBJ, "bool?" , m_obj_is_bool)\
-    💎add_public_func_0args_to(R_OBJ, "hsh?"  , m_obj_is_hash)\
-    💎add_public_func_0args_to(R_OBJ, "chr?"  , m_obj_is_chr)\
-    💎add_public_func_0args_to(R_OBJ, "set?"  , m_obj_is_set)\
-    💎add_public_func_kargs_to(R_OBJ, "ary?"  , m_obj_is_ary)\
-    💎add_public_func_kargs_to(R_OBJ, "int?"  , m_obj_is_int)\
-    💎add_public_func_kargs_to(R_OBJ, "flt?"   , m_obj_is_flt)\
-    💎add_public_func_kargs_to(R_OBJ, "sym?"  , m_obj_is_sym)\
-    💎add_public_func_kargs_to(R_OBJ, "str?"  , m_obj_is_str)\
-    💎add_public_func_kargs_to(R_OBJ, "num?"  , m_obj_is_num)\
+    💎add_public_func_0args_to(R_OBJ, "bool?",        m_obj_is_bool)\
+    💎add_public_func_0args_to(R_OBJ, "hsh?",         m_obj_is_hash)\
+    💎add_public_func_0args_to(R_OBJ, "chr?",         m_obj_is_chr)\
+    💎add_public_func_0args_to(R_OBJ, "set?",         m_obj_is_set)\
+    💎add_public_func_0args_to(R_OBJ, "theta_angle?", is_theta_angle)\
+    💎add_public_func_0args_to(R_OBJ, "matrix?",      is_a_matrix)\
+    💎add_public_func_0args_to(R_OBJ, "vec?",         is_a_vector)\
+    💎add_public_func_kargs_to(R_OBJ, "ary?",         m_obj_is_ary)\
+    💎add_public_func_kargs_to(R_OBJ, "int?",         m_obj_is_int)\
+    💎add_public_func_kargs_to(R_OBJ, "flt?" ,         m_obj_is_flt)\
+    💎add_public_func_kargs_to(R_OBJ, "sym?",         m_obj_is_sym)\
+    💎add_public_func_kargs_to(R_OBJ, "str?",         m_obj_is_str)\
+    💎add_public_func_kargs_to(R_OBJ, "num?",         m_obj_is_num)\
 }
 
 /*   ___    ___    ________
@@ -77,7 +83,7 @@ ________________________________________________________________________________
 
 #define init_f27(){\
     💎define_new_ruby_class_as_wrapper_over_c_struct(Ⓒtheta_angle, "ThetaAngle", θ_alloc)\
-    rb_define_private_method(Ⓒtheta_angle, "initialize" , θ_m_initialize, 2);\
+    rb_define_private_method(Ⓒtheta_angle, "initialize", θ_m_initialize, 2);\
     rb_define_attr(Ⓒtheta_angle, "real", 0, 0);\
     rb_define_attr(Ⓒtheta_angle, "repr", 0, 0);\
     💎add_public_func_0args_to(Ⓒtheta_angle, "flags",               θ_m_get_flags)\
@@ -208,6 +214,26 @@ ________________________________________________________________________________
     💎add_public_func_1args_to(Ⓒtime_series_data, "percentile", time_series_get_percentile)\
     💎add_public_func_1args_to(Ⓒtime_series_data, "scale_by_addition", time_series_self_scale_by_addition)\
     💎add_public_func_1args_to(Ⓒtime_series_data, "scale_by_multiplication", time_series_self_scale_by_multiplication)\
+}
+
+#define init_f36_add_constants(){\
+    rb_gc_adjust_memory_usage((size_t) (56 * 4));\
+    💎add_const_theta_angle("ANGLE_GOLDEN",   Ⴔ_RAD, THETA_MODE_RAD, cached_const_angle_golden, 0x7)\
+    💎add_const_theta_angle("ANGLE_TAU",      𝞽, THETA_MODE_RAD, cached_const_angle_tau, 0xE)\
+    💎add_const_theta_angle("ANGLE_RIGHT",    (π / 2.0), THETA_MODE_RAD, cached_const_angle_right, 0x7)\
+    💎add_const_theta_angle("ANGLE_STRAIGHT", (π), THETA_MODE_RAD, cached_const_angle_straight, 0x7)\
+}
+
+/*   ___    __    ________
+   /'___\ /'__`\ /\_____  \
+  /\ \__//\_\L\ \\/___//'/'
+  \ \ ,__\/_/_\_<_   /' /'
+   \ \ \_/ /\ \L\ \/' /'
+    \ \_\  \ \____/\_/
+     \/_/   \/___/\//      */
+
+#define init_f37(){\
+    💎define_new_ruby_class_as_wrapper_over_c_struct(Ⓒpseudo_graph, "PseudoGraph", pseudo_graph_alloc)\
 }
 
 #endif

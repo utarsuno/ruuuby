@@ -7,10 +7,8 @@ require 'bundler/setup'
 require 'ruuuby'
 
 $ruuuby = 💎
-
-class << ::Rugged
-  remove_method :libgit2_version
-end
+using ::Math::Algebra::Tropical::ContextNumeric
+using ::Math::Algebra::Tropical::ContextMatrix
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.

@@ -22,7 +22,7 @@
 # VOLUME     |
 #
 # LAGGING | simple_moving_average, moving_average_convergence_divergence(MACD) | bollinger_bands, average_true_range, standard_deviation | volume_rate_of_change
-# LEADING | parabolic_stop_and_reverse(parabolic SAR) | stochastic_oascillator, commodity_channel_index(CCI), relative_strength_index(RSI) | chaikin_oscillator, on_balance_volume(OBV)
+# LEADING | parabolic_stop_and_reverse(parabolic SAR) | stochastic_oscillator, commodity_channel_index(CCI), relative_strength_index(RSI) | chaikin_oscillator, on_balance_volume(OBV)
 #
 class ::TimeSeriesData
 

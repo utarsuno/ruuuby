@@ -40,10 +40,10 @@ RSpec.describe 'ruby' do
               expect(__ENCODING__).to eq(::Encoding::UTF_8)
             end
             it 'w/ Encoding.default_external' do
-              expect(Encoding.default_external).to eq(::Encoding::UTF_8)
+              expect(::Encoding.default_external).to eq(::Encoding::UTF_8)
             end
             it 'w/ Encoding.default_internal' do
-              expect(Encoding.default_internal).to eq(nil)
+              expect(::Encoding.default_internal).to eq(nil)
             end
           end
         end

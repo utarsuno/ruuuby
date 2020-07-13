@@ -34,12 +34,6 @@ ________________________________________________________________________________
     \/_/   \/___/  \/___/  \/___/   \/___/  `/___/> \   \/____/\/_/\/_/\/___L\ \/_/\/_/\/_/\/____/
                                                /\___/                    /\____/
                                                \/__/                     \_/__/*/
-
-#define STATS_FUNC_ID_COMPILER rb_intern("set_compiler_version")
-#define STATS_FUNC_ID_MEMORY   rb_intern("get_mem_stats")
-#define STATS_FUNC_ID_TIMER    rb_intern("set_timer_stats")
-#define STATS_FUNC_ID_PRINT    rb_intern("print_ext_stats")
-
 #define 💎parse_compiler_version_to_string(arg){\
     switch(compiler_version) {\
         case FLAG_RUNTIME_VERSION_C_89:\

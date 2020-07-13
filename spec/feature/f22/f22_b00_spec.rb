@@ -34,9 +34,9 @@ RSpec.describe 'f22_b00' do
             sum_c = ::GC.stat(:total_allocated_objects) - ::GC.stat(:total_freed_objects)
 
             # TODO: try disabling the GC to test impact on measurement accuracy
-            expect(::Math::Stats::Descriptive.relative_difference(sum_a.to_f, sum_b.to_f) < 0.10).to eq(true)
-            expect(::Math::Stats::Descriptive.relative_difference(sum_a.to_f, sum_c.to_f) < 0.10).to eq(true)
-            expect(::Math::Stats::Descriptive.relative_difference(sum_b.to_f, sum_c.to_f) < 0.10).to eq(true)
+            expect(::Math::Stats::Descriptive.relative_diff(sum_a.to_f, sum_b.to_f) < 0.10).to eq(true)
+            expect(::Math::Stats::Descriptive.relative_diff(sum_a.to_f, sum_c.to_f) < 0.10).to eq(true)
+            expect(::Math::Stats::Descriptive.relative_diff(sum_b.to_f, sum_c.to_f) < 0.10).to eq(true)
           end
 
           context 'has expected ENV_VARs for{RUBY_GC}' do

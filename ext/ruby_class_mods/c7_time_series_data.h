@@ -41,23 +41,24 @@
 #define TS_SET_FLAGS(the_data, the_flags) the_data->flags_meta_data.generic_byte = the_flags;
 
 typedef struct Time_Series_Data {
-    double * vals;
-    unsigned long len;
-    double leeen;
-    long double leeeeeen;
-    unsigned long mem_allocated;
-    unsigned long n;
-    GENERIC_BITWISE_8_FLAGS flags_meta_data;
-    double cached_mean;
-    double cached_median;
-    double cached_max;
-    double cached_min;
-    double cached_range;
-    double cached_variance;
-    double cached_std_dev;
-    double cached_sum;
-    double cached_pearson_correlation_coefficient;
+    double *        vals;
+    unsigned long   len;
+    double          leeen;
+    long double     leeeeeen;
+    unsigned long   mem_allocated;
+    unsigned long   n;
+    BITWISE_FLAGS_8 flags_meta_data;
+    double          cached_mean;
+    double          cached_median;
+    double          cached_max;
+    double          cached_min;
+    double          cached_range;
+    double          cached_variance;
+    double          cached_std_dev;
+    double          cached_sum;
+    double          cached_pearson_correlation_coefficient;
     // TODO: spawn-able chunks/segments
+    // TODO: ^ hold off on above shortly, w8 on relating Classes (ex: Monte Carlo simulations, need to determine % ownership between the two on which should handle splitting the data into properly isolated time-segments {ex: `walk forward analysis})
 } TimeSeriesData;
 
 typedef struct Time_Series_Data * ptr_time_series_data;
@@ -171,7 +172,7 @@ static size_t ptr_time_series_size(const ptr_time_series data) {
     else                    {return sizeof(TimeSeriesData);}
 }
 
-static const rb_data_type_t time_series_type = {
+static const rb_data_type_t type_time_series = {
     .data             = NULL,
     .flags             = RUBY_TYPED_PROMOTED1,
     .wrap_struct_name = "time_series_data",
@@ -184,10 +185,10 @@ static const rb_data_type_t time_series_type = {
 
 static VALUE time_series_alloc(VALUE self) {
     ptr_time_series data;
-    return TypedData_Make_Struct(self, TimeSeriesData, & time_series_type, data);
+    return TypedData_Make_Struct(self, TimeSeriesData, & type_time_series, data);
 }
 
-#define 💎parse_ptr_time_series(the_data, the_ptr) TypedData_Get_Struct(the_data, TimeSeriesData, & time_series_type, the_ptr)
+#define 💎parse_ptr_time_series(the_data, the_ptr) TypedData_Get_Struct(the_data, TimeSeriesData, & type_time_series, the_ptr)
 #define 💎self_to_ptr_time_series ptr_time_series data; 💎parse_ptr_time_series(self, data);
 
 static VALUE time_series_m_free(const VALUE self) {
@@ -663,7 +664,6 @@ static VALUE time_series_is_all_same(const VALUE self);
 ⓡ𝑓_ptr_time_series_getter_dbl(get_cached_median, data->cached_median)
 ⓡ𝑓_ptr_time_series(get_cached_max, return ptr_time_series_get_max(data);)
 ⓡ𝑓_ptr_time_series(get_cached_min, return ptr_time_series_get_min(data);)
-
 
 /*                          __
                            /\ \          __

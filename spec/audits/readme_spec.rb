@@ -1,4 +1,4 @@
-# coding: utf-8
+# encoding: UTF-8
 
 RSpec.describe 'README.md' do
 
@@ -38,7 +38,7 @@ RSpec.describe 'README.md' do
 
         expect([ℕ.∋?(-5), ℤ.∋?(7.0), ℝ.∋?(∞), ℚ.∋?(Rational(2, 3))]).to eq([false, true, false, true])
 
-        expect([1, 2, 3].⊕ [3, 4]).to eq([1, 4, 2])
+        expect([1, 2, 3].⨁ [3, 4]).to eq([1, 4, 2])
 
         expect([2, 3, 4].∖ [1, 2, 3]).to eq([4])
       end
@@ -46,7 +46,7 @@ RSpec.describe 'README.md' do
       it 'alternative version works too' do
         expect(𝚽).to eq(1 + Rational(1, 𝚽))
 
-        result_a = [1, 2, 3].⊕ [3, 4]
+        result_a = [1, 2, 3].⨁ [3, 4]
         expect(result_a).to eq([1, 4, 2])
 
         result_b = [2, 3, 4].∖ [1, 2, 3]

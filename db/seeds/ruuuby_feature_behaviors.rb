@@ -23,7 +23,9 @@
         'offer funcs{flt?, 🛑flt❓, 🛑flts❓} w/ normalizers{∈𝕌}',
         'offer funcs{bool?, 🛑bool❓, 🛑bools❓}',
         'offer funcs{sym?, 🛑sym❓, 🛑syms❓}',
-        'offer funcs{hsh?, 🛑hsh❓, 🛑hshs❓'
+        'offer funcs{hsh?, 🛑hsh❓, 🛑hshs❓}',
+        'offer funcs{matrix?, 🛑matrix❓, 🛑matrices❓}',
+        'offer funcs{vec?, 🛑vec❓, 🛑vectors❓}'
     ]
 )
 
@@ -157,6 +159,22 @@
         'offer functionality for time-series calculations',
         'offer functionality for health-checks w/ `bitwise meta-data flags`',
         'offer functionality for various styles of `normalization`',
+    ]
+)
+
+@f37.spawn_behaviors(
+    [
+        'create class `PseudoGraph`',
+        'offer `Graph` classes the ability to transform to/from a `Matrix` representations',
+    ]
+)
+
+@f38.spawn_behaviors(
+    [
+        'offer `Refinement` w/ module{Math::Algebra::Tropical::ContextMatrix} for class{`Matrix`}',
+        'offer `Refinement` w/ module{Math::Algebra::Tropical::ContextNumeric} for `Numerics`',
+        'support `Tropical Algebra` w/ any additionally needed methods in class{`Matrix`}',
+        'create class `CurrencyMatrix` under module{`Math::Forex`}'
     ]
 )
 

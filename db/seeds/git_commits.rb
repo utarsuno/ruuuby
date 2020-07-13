@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 @v0_0_00.spawn_git_commit('v0.0.0 release', '2019-12-31T18:03:39-0600', '43d3e4d52c4b12f97b0c94976dc9417c511e7f34', 'refs/tags/v0.0.0')
 @v0_0_01.spawn_git_commit('v0.0.1 release', '2019-12-31T19:08:54-0600', 'a53e6f6983a6fa0d087c4841985dcbf9ee34ebd6', 'refs/tags/v0.0.1')
@@ -52,4 +52,5 @@
 @v0_0_42.spawn_git_commit('v0.0.42 release', '2020-06-20T16:36:05-0500', 'dec5d7b9ab886a6b0f7f20dbb18a2d27813662bc', 'refs/tags/v0.0.42')
 @v0_0_43.spawn_git_commit('v0.0.43 release', '2020-06-22T20:59:37-0500', '7ebc7d29b918a293acdc51dadf50e68c88f89688', 'refs/tags/v0.0.43')
 @v0_0_44.spawn_git_commit('v0.0.44 release', '2020-06-26T21:07:19-0500', '80d44fc1456e9570a0a11adac595596fea9f3e69', 'refs/tags/v0.0.44')
+@v0_0_45.spawn_git_commit('v0.0.45 release', '2020-07-08T06:50:08-0500', '9bdf77ac860089899bf03533fc3418fa8aefa65d', 'refs/tags/v0.0.45')
 #NEXT_VERSION_HERE

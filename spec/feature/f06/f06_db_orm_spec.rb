@@ -1,11 +1,11 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f06_db_orm' do
 
   context 'db_orm', :db do
     context 'feature{f06}' do
       it 'passes ORM audit' do
-        audit_feature(f06, 'f06', 8, 'enable quick type checks against any object (ex: `variable.int?`)')
+        audit_feature(f06, 'f06', 10, 'offer easy to use type-check funcs for common/core Classes (ex: `variable.int?`)')
       end
     end
 
@@ -39,7 +39,15 @@ RSpec.describe 'f06_db_orm' do
       end
 
       it 'defines{b07}' do
-        audit_feature_behavior(f06, f06_b07, 'b07', 'offer funcs{hsh?, 🛑hsh❓, 🛑hshs❓')
+        audit_feature_behavior(f06, f06_b07, 'b07', 'offer funcs{hsh?, 🛑hsh❓, 🛑hshs❓}')
+      end
+
+      it 'defines{b08}' do
+        audit_feature_behavior(f06, f06_b08, 'b08', 'offer funcs{matrix?, 🛑matrix❓, 🛑matrices❓}')
+      end
+
+      it 'defines{b09}' do
+        audit_feature_behavior(f06, f06_b09, 'b09', 'offer funcs{vec?, 🛑vec❓, 🛑vectors❓}')
       end
     end # end: {defines behaviors}
 

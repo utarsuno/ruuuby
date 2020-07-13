@@ -1,4 +1,4 @@
-// encoding: utf-8
+// encoding: UTF-8
 
 #ifndef CRUUUBY_H2_EXTENSION_MEMORY
 #include "c2_extension_memory.h"
@@ -20,6 +20,9 @@ ________________________________________________________________________________
 
 #define 💎set_field(var_name, var_var) rb_iv_set(self, var_name, var_var);
 #define 💎get_field(var_name)          rb_iv_get(self, var_name);
+
+#define _set_instance_field(kclass, the_val, field_name)  rb_iv_set(kclass, field_name, the_val);
+#define 💎set_instance_field(kclass, the_val, field_name) _set_instance_field(kclass, the_val, "@" #field_name)
 
 #define ensure_loaded_ruuuby(path)               ensure_file_loaded("ruuuby/" #path)
 #define ensure_loaded_io(path)                   ensure_file_loaded("ruuuby/class/io/" #path)
@@ -66,6 +69,16 @@ ________________________________________________________________________________
 #define ensure_all_loaded_for_math_expressions(){\
     ensure_loaded_math(expr/seq/sequence)\
     ensure_loaded_math(expr/seq/recursive)\
+}
+
+#define ensure_all_loaded_for_tropical_algebra(){\
+    ensure_loaded_math(algebra/tropical/tropical)\
+    ensure_loaded_math(algebra/tropical/context_numeric)\
+    ensure_loaded_math(algebra/tropical/context_matrix)\
+    ensure_loaded_math(graph_theory/graph_theory)\
+    ensure_loaded_nums(matrix)\
+    ensure_loaded_nums(vector)\
+    ensure_loaded_math(forex/currency_matrix)\
 }
 
 #define ensure_all_loaded_for_geometry(){\

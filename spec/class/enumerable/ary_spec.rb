@@ -85,26 +85,26 @@ RSpec.describe 'ary' do
       end
     end
 
-    context 'by adding function{disjunctive_union} (symmetric difference), (alias: ⊕)' do
+    context 'by adding function{disjunctive_union} (symmetric difference), (alias: ⨁)' do
       context 'handles needed scenarios' do
         it 'for cases: one side is empty' do
-          expect(([].⊕ [])).to eq([])
-          expect(([1, 2, 3].⊕ [])).to eq([1, 2, 3])
-          expect(([].⊕ [1, 2, 3])).to eq([1, 2, 3])
+          expect(([].⨁ [])).to eq([])
+          expect(([1, 2, 3].⨁ [])).to eq([1, 2, 3])
+          expect(([].⨁ [1, 2, 3])).to eq([1, 2, 3])
         end
         it 'for cases: positive' do
-          expect(([1, 2, 3].⊕([3, 4])).≈≈([1, 2, 4])).to eq(true)
-          expect(([1, 2, 3, 1, 1].⊕([3, 4])).≈≈([1, 2, 4, 1, 1])).to eq(true)
-          expect([3, 4].⊕([1, 2, 3]).≈≈([1, 2, 4])).to eq(true)
+          expect(([1, 2, 3].⨁([3, 4])).≈≈([1, 2, 4])).to eq(true)
+          expect(([1, 2, 3, 1, 1].⨁([3, 4])).≈≈([1, 2, 4, 1, 1])).to eq(true)
+          expect([3, 4].⨁([1, 2, 3]).≈≈([1, 2, 4])).to eq(true)
         end
         it 'for matching output of: (self - ary) | (ary - self)' do
           ary_a  = [1337, 8, 2, 9, 3, 56, 1337]
           ary_b  = [9, 2, 1337, 929645, 0]
           result = ((ary_a - ary_b) | (ary_b - ary_a))
-          expect((ary_a.⊕(ary_b)).≈≈(result)).to eq(true)
+          expect((ary_a.⨁(ary_b)).≈≈(result)).to eq(true)
         end
         it 'for cases: bad param' do
-          expect{%w().⊕ nil}.to raise_exception(ArgumentError)
+          expect{%w().⨁ nil}.to raise_exception(ArgumentError)
         end
       end
     end
@@ -306,8 +306,8 @@ RSpec.describe 'ary' do
     it 'func{≈≈} runs fast enough' do
       expect{[1, 'a', nil, [], 1].≈≈([1, nil, 'a', 1, []])}.to perform_very_quickly
     end
-    it 'func{⊕} runs fast enough' do
-      expect{[1, 2, 3].⊕ [3, 4]}.to perform_very_quickly
+    it 'func{⨁} runs fast enough' do
+      expect{[1, 2, 3].⨁ [3, 4]}.to perform_very_quickly
     end
     it 'func{∖} runs fast enough' do
       expect{[1, 2, 3].∖ [2, 3, 4]}.to perform_quickly

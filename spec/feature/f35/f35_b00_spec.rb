@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f35_b00' do
 
@@ -19,21 +19,21 @@ RSpec.describe 'f35_b00' do
           end
         end
 
-        context 'func{relative_difference}' do
+        context 'func{relative_diff}' do
           context 'handles needed scenarios' do
             it 'cases: positive' do
-              expect(::Math::Stats::Descriptive.relative_difference(359.999, 360.000)).to eq(::Math::Stats::Descriptive.relative_difference(360.000, 359.999))
-              expect(::Math::Stats::Descriptive.relative_difference(359.99999, 360.000)).to eq(::Math::Stats::Descriptive.relative_difference(360.000, 359.99999))
-              expect(::Math::Stats::Descriptive.relative_difference(360.000, 359.99999) < 0.00001).to eq(true)
+              expect(::Math::Stats::Descriptive.relative_diff(359.999, 360.000)).to eq(::Math::Stats::Descriptive.relative_diff(360.000, 359.999))
+              expect(::Math::Stats::Descriptive.relative_diff(359.99999, 360.000)).to eq(::Math::Stats::Descriptive.relative_diff(360.000, 359.99999))
+              expect(::Math::Stats::Descriptive.relative_diff(360.000, 359.99999) < 0.00001).to eq(true)
             end
             it 'cases: negative' do
-              expect(::Math::Stats::Descriptive.relative_difference(360.000, 359.999) < 0.00001).to eq(false)
+              expect(::Math::Stats::Descriptive.relative_diff(360.000, 359.999) < 0.00001).to eq(false)
             end
             it 'cases: error' do
-              expect{::Math::Stats::Descriptive.relative_difference(nil, 1.0)}.to raise_error(::ArgumentError)
-              expect{::Math::Stats::Descriptive.relative_difference(1.0, nil)}.to raise_error(::ArgumentError)
-              expect{::Math::Stats::Descriptive.relative_difference(1337.0, 1.0, 1337)}.to raise_error(::ArgumentError)
-              expect{::Math::Stats::Descriptive.relative_difference(1337.1337, ::Float::INFINITY)}.to raise_error(::ArgumentError)
+              expect{::Math::Stats::Descriptive.relative_diff(nil, 1.0)}.to raise_error(::ArgumentError)
+              expect{::Math::Stats::Descriptive.relative_diff(1.0, nil)}.to raise_error(::ArgumentError)
+              expect{::Math::Stats::Descriptive.relative_diff(1337.0, 1.0, 1337)}.to raise_error(::ArgumentError)
+              expect{::Math::Stats::Descriptive.relative_diff(1337.1337, ::Float::INFINITY)}.to raise_error(::ArgumentError)
             end
           end
         end

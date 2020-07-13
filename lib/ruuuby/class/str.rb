@@ -144,7 +144,7 @@ module ::Ruuuby
         # @return [Boolean] true, if this string instance contains the provided str
         def ∌?(them); 🛑str❓(:them, them) ; not self.include?(them); end
 
-        # @param [String|Array|Set] them
+        # @param [String, Array, Set] them
         #
         # @raise [WrongParamType]
         #
@@ -154,7 +154,7 @@ module ::Ruuuby
           them.∌?(self)
         end
 
-        # @param [String|Array|Set] them
+        # @param [String, Array, Set] them
         #
         # @raise [WrongParamType]
         #
@@ -276,7 +276,9 @@ module ::Ruuuby
             chars
           elsif self.🐍?
             self
-          else; 🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "which is not in one of the formats: [🐫, 🐫⬇, 🐍⬆, 🐍]"); end
+          else
+            🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "which is not in one of the formats: [🐫, 🐫⬇, 🐍⬆, 🐍]")
+          end
         end
 
         # @raise [Ruuuby::DescriptiveStandardError]

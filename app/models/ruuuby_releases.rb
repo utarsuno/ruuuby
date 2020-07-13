@@ -280,7 +280,7 @@ class ::RuuubyRelease < ApplicationRecord
     content = []
     content << "| gem updated | version previous | version current |\n"
     content << "| ----: | :---: | :---- |\n"
-    results      = ::RuuubyChangelog.where('ruuuby_release_id = ? AND applies_to = ?', self.id, ::RuuubyGem.orm_Ⓣ_🐍)
+    results = ::RuuubyChangelog.where('ruuuby_release_id = ? AND applies_to = ?', self.id, ::RuuubyGem.orm_Ⓣ_🐍)
     results.each do |gem_change|
       gem_name = gem_change.applies_to_uid
       the_gem  = ::RuuubyGem.find_by_name(gem_name)
@@ -291,8 +291,9 @@ class ::RuuubyRelease < ApplicationRecord
   end
 
   def on_before_save
-    self.num_gems_added = self.ruuuby_gems.length
-    is_released         = self.released?
+    self.num_gems_added   = self.ruuuby_gems.length
+    self.num_gems_updated = ::RuuubyChangelog.num_where('ruuuby_release_id = ? AND applies_to = ? AND metadata_flag = ?', self.id, ::RuuubyGem.orm_Ⓣ_🐍, ::RuuubyGem::EnumFlags::CHANGELOG_TYPE_VERSION_UPDATED)
+    is_released           = self.released?
     if is_released == nil || !is_released
       if self.has_release_tag?
         self.released = true

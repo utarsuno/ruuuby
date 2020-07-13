@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'ruuuby_releases.rb' do
 
@@ -38,7 +38,7 @@ RSpec.describe 'ruuuby_releases.rb' do
 
       context 'adds func{get_version_next}' do
         it 'works' do
-          expect(RuuubyRelease.get_version_next).to eq(v0_0_45)
+          expect(RuuubyRelease.get_version_next).to eq(v0_0_46)
         end
       end
 

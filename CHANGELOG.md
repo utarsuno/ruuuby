@@ -4,6 +4,37 @@
 
 ---
 
+# `v0.0.46`
+
+ * add initial support for `Tropical Algebra`
+ * `wip`: track `OpenMP` in same style as w/ `OpenGL` & `OpenCL`
+ * ⚠️: greatly increase scope of upcoming wide-scale refactors
+   > tech-debt will out-pace rate of implementation/testing for at least a few versions, then more effective code clean-up will be enabled and performed
+
+| path added | reference | notes | feature(s) |
+| ----: | ---- | ---- | ---- |
+| `lib/ruuuby/math/physics/physics.rb` | `Math::Physics` | not currently utilized, just file added early | `f10` |
+| `lib/ruuuby/math/physics/wave.rb` | `Math::Physics::Wave` | same as above desc. | `f10` |
+| `lib/ruuuby/math/physics/harmonic_analysis.rb` | `Math::Physics::HarmonicAnalysis` | same as above desc. | `f10` |
+| `lib/ruuuby/math/forex/forex.rb` | `Math::Forex` | same as above desc. | `f10` |
+| `lib/ruuuby/math/forex/currency_matrix.rb` | `Math::Forex::CurrencyMatrix` | `wip` | `f10` |
+| `lib/ruuuby/class/nums/vector.rb` | `Vector` | `Ruby` built-in Class (now loaded in) | `f10` |
+| `lib/ruuuby/class/nums/matrix.rb` | `Matrix` | `Ruby` built-in Class (now loaded in) | `f37` |
+| `lib/ruuuby/math/algebra/tropical.rb` | `Math::Algebra::Tropical` |  | `f38` |
+| `ext/ruby_class_mods/c8_graphs.h` | `PseudoGraph` | same creation style as `ThetaAngle` & `TimeSeriesData` | `f38` |
+| `lib/ruuuby/protocol/unix_socket.rb` | `UNIXSocket` | `Ruby` built-in Class (now loaded in) | `f39` |
+| `help/extensions/c/open_mp.md` |  | `wip` | `f98` |
+
+| context | method(s) added | feature(s) |
+| ---: | :--- | ---: |
+| `Vector` | `∅?` | `f11` |
+| `Matrix` | `▣?`, `∀ₓ↘`, `∀ₓᵢ↘`, `↘_to_a`, `∀ₓᵢⱼ`, `num_rows`, `num_cols` | `f38` |
+| `Math::Forex::CurrencyMatrix` | `η̂!`,`algo_🌴_arbitrage`, `karps_algorithm` | `f38` |
+| `Math::Algebra::Tropical::ContextNumeric` | `⨁`, `⨂` | `f38` |
+| `Math::Algebra::Tropical::ContextMatrix` | `⨁`, `⨁!`, `⨂`, `⨂ⁿ` | `f38` |
+
+---
+
 # `v0.0.45`
 
  * apply iterative upgrade to `Ruuuby Engine`

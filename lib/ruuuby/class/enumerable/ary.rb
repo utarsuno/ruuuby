@@ -151,7 +151,7 @@ class ::Array
   # @raise [ArgumentError]
   #
   # @return [Array] a new Array instance containing the symmetric difference between this array and the one provided
-  alias_method :⊕, :disjunctive_union
+  alias_method :⨁, :disjunctive_union
 
   # ---------------------------------------------------------------------------------------------------------- | *f04* |
   alias_method :∅?, :empty?
@@ -162,5 +162,10 @@ class ::Array
   alias_method :↩∀, :reverse_each
 
   # | ------------------------------------------------------------------------------------------------------------------
+
+  # @see source credit to: https://stackoverflow.com/questions/2149802/in-ruby-what-is-the-cleanest-way-of-obtaining-the-index-of-the-largest-value-in
+  #
+  # @return [Integer]
+  def maxᵢ; each_with_index.max[1]; end
 
 end

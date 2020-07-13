@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-# add various aliases & functions to existing Class(+Integer+)
+# `Ruuuby` aliases & function additions to existing Class{+Integer+}
 class ::Integer
 
   # @return [Boolean]

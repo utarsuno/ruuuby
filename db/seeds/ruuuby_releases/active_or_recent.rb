@@ -82,7 +82,7 @@
 
 @v0_0_44 = ::RuuubyRelease.spawn(0, 0, 44)
 @v0_0_44.path_added('lib/ruuuby/math/stats/time_series_data.rb', '', '', @f34)
-@v0_0_44.path_added('ext/ruby_class_mods/c7_times_series_data.rb', '', '', @f35)
+@v0_0_44.path_added('ext/ruby_class_mods/c7_times_series_data.h', '', '', @f35)
 @v0_0_44.path_added('lib/ruuuby/ruuuby/engine/ruuuby_api_component.rb', '', '', @f97)
 @v0_0_44.update_gem(::RuuubyGem.find_by_name('rugged'), '1.0.1')
 @v0_0_44.update_gem(::RuuubyGem.find_by_name('rspec-benchmark'), '0.6.0')
@@ -122,6 +122,31 @@
 @v0_0_45.spawn_kclass_method(@f31, 'validate_attribute', '💎.engine.api_git')
 @v0_0_45.spawn_kclass_method(@f35, 'percentage_error', 'Math::Stats::Descriptive')
 @v0_0_45.spawn_kclass_methods(@f35, 'TimeSeriesData', %w(ρ flags mape normalize! print_debugging first last λ Λ has_zero? has_negative? normalized? even? strictly_increasing? strictly_decreasing? all_same?))
-@v0_0_45.save!
 
-💎.engine.orm.ruuuby_release_obj_curr = @v0_0_45
+@v0_0_46 = ::RuuubyRelease.spawn(0, 0, 46)
+@v0_0_46.path_added('lib/ruuuby/math/physics/physics.rb', 'Math::Physics', 'not currently utilized, just file added early', @f10)
+@v0_0_46.path_added('lib/ruuuby/math/physics/wave.rb', 'Math::Physics::Wave', 'same as above desc.', @f10)
+@v0_0_46.path_added('lib/ruuuby/math/physics/harmonic_analysis.rb', 'Math::Physics::HarmonicAnalysis', 'same as above desc.', @f10)
+@v0_0_46.path_added('lib/ruuuby/math/forex/forex.rb', 'Math::Forex', 'same as above desc.', @f10)
+@v0_0_46.path_added('lib/ruuuby/math/forex/currency_matrix.rb', 'Math::Forex::CurrencyMatrix', '`wip`', @f10)
+@v0_0_46.path_added('lib/ruuuby/class/nums/vector.rb', 'Vector', '`Ruby` built-in Class (now loaded in)', @f10)
+@v0_0_46.path_added('lib/ruuuby/class/nums/matrix.rb', 'Matrix', '`Ruby` built-in Class (now loaded in)', @f37)
+@v0_0_46.path_added('lib/ruuuby/math/algebra/tropical.rb', 'Math::Algebra::Tropical', '', @f38)
+@v0_0_44.path_added('ext/ruby_class_mods/c8_graphs.h', 'PseudoGraph', 'same creation style as `ThetaAngle` & `TimeSeriesData`', @f38)
+@v0_0_44.path_added('lib/ruuuby/protocol/unix_socket.rb', 'UNIXSocket', '`Ruby` built-in Class (now loaded in)', @f39)
+@v0_0_46.path_added('help/extensions/c/open_mp.md', '', '`wip`', @f98)
+@v0_0_46.add_comments(
+    [
+        'add support for `Tropical Algebra`',
+        "`wip`: track `OpenMP` in same style as w/ `OpenGL` & `OpenCL`",
+        '⚠️: start of wide-scale refactoring to general structure; tech-debt will out-pace rate of implementation/testing for at least a few versions, then more effective code clean-up will be enabled and performed',
+    ]
+)
+@v0_0_46.spawn_kclass_methods(@f10, 'Vector', %w(∅?))
+@v0_0_46.spawn_kclass_methods(@f37, 'Matrix', %w(▣? num_rows num_cols ∀ₓ↘ ∀ₓᵢ↘ ↘_to_a ∀ₓᵢⱼ))
+@v0_0_46.spawn_kclass_methods(@f37, 'Math::Forex::CurrencyMatrix', %w(η̂! algo_🌴_arbitrage karps_algorithm))
+# (Refinements)
+@v0_0_46.spawn_kclass_methods(@f37, 'Math::Algebra::Tropical::ContextNumeric', %w(⨁ ⨂))
+@v0_0_46.spawn_kclass_methods(@f37, 'Math::Algebra::Tropical::ContextMatrix', %w(⨁ ⨁! ⨂ ⨂ⁿ))
+@v0_0_46.save!
+💎.engine.orm.ruuuby_release_obj_curr = @v0_0_46

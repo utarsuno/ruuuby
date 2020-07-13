@@ -24,16 +24,16 @@ class ::RuuubyFeature < ::ApplicationRecord
   end
 
   # @return [Integer]
-  def self.num_stable; num_where(*['flag_state = ?', EnumFlagState::STATE_STABLE]); end
+  def self.num_stable; num_where('flag_state = ?', EnumFlagState::STATE_STABLE); end
 
   # @return [Integer]
-  def self.num_wip; num_where(*['flag_state = ?', EnumFlagState::STATE_WIP]); end
+  def self.num_wip; num_where('flag_state = ?', EnumFlagState::STATE_WIP); end
 
   # @return [Integer]
-  def self.num_todo; num_where(*['flag_state = ?', EnumFlagState::STATE_NULL]); end
+  def self.num_todo; num_where('flag_state = ?', EnumFlagState::STATE_NULL); end
 
   # @return [Integer]
-  def self.num_needing_merge; num_where(*['flag_state = ?', EnumFlagState::STATE_NEEDS_MERGE]); end
+  def self.num_needing_merge; num_where('flag_state = ?', EnumFlagState::STATE_NEEDS_MERGE); end
 
   # _________________________________________________________________________________________________________________
   #      ___ ___  __     __       ___  ___  __

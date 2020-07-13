@@ -31,14 +31,14 @@ module ::Ruuuby
     #  - `origin/master` vs `origin master`: https://stackoverflow.com/questions/18137175/in-git-what-is-the-difference-between-origin-master-vs-origin-master
     #
     # helpful CLI commands:
-    #  | scenario | cmd |
-    #  | -------- |
+    #  | scenario                          | cmd                                              |
+    #  | --------------------------------- | ------------------------------------------------ |
     #  | human readable view of staging    | `git diff --cached --stat`                       |
     #  | human readable view of commits    | `git log --pretty=format:"%H|%ad|%s" --date=iso` |
     #  | for script: get num files w/ diffs | `git diff --cached --numstat | wc -l`            |
     #  | alternative for `git status`      | `git status --porcelain=v2 -b`                   |
     #
-    # ----------------------------------
+    # -----------------------------------------------------------------------------------------------------------------
     #
     # `💎.engine.api_git`
     class GitAPI < ::Ruuuby::MetaData::RuuubyAPIComponent

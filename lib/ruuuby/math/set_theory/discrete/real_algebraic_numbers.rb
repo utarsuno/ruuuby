@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # mathematics related code
 module ::Math
@@ -6,10 +6,6 @@ module ::Math
 
     class RealAlgebraicNumbers < ::Math::SetTheory::NumberSet
       include ::Singleton
-
-      #KNOWN_REAL_ALGEBRAIC = [::Float::CONST_PYTHAGORAS.🆔, ::Float::RATIO_GOLDEN.🆔]
-
-      KNOWN_REAL_ALGEBRAIC = [::Float::RATIO_GOLDEN.🆔]
 
       def initialize
         super(:𝔸ᵣ, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO, {dense: true})
@@ -22,33 +18,25 @@ module ::Math
       # @return [Boolean]
       def _∋?(n)
         case(n)
-        when Integer
+        when ::Integer
           true
-        when Float
+        when ::Float
           if ℝ.∋?(n)
             if ℤ.∋?(n)
               true
             else
-              #if ::Numeric.known_transcendental?(n)
-              #  false
-              #else
-                if ::Numeric.known_real_algebraic?(n)
-                  return true
-                else
-                  nil
-                end
-              #end
+              nil
             end
           else
             false
           end
-        when BigDecimal
+        when ::BigDecimal
           return false unless n.finite?
           return true if ℤ.∋?(n)
           nil
-        when Complex
+        when ::Complex
           n.imaginary == 0 && ℚ.∋?(n.real)
-        when Rational
+        when ::Rational
           (ℤ.∋?(n.numerator) && ℤ.∋?(n.denominator)) ? true : nil
         else
           false

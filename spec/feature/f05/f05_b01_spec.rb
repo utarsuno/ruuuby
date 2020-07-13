@@ -3,11 +3,9 @@
 RSpec.describe 'f05_b00' do
 
   context 'functionality' do
-
     context 'extends class{String}' do
-
-      context 'by adding func{>>} (prepend operation)' do
-        context 'handles needed scenarios' do
+      context 'by adding func{>>}' do
+        context 'handling needed scenarios' do
           context 'cases: positive' do
             it 'simple data' do
               [['', ''], %w(a a), %w(ab ab), [" abcde 101 \n", " abcde 101 \n"]].∀{|a|expect('' >> a[0]).to eq(a[1])}
@@ -50,10 +48,18 @@ RSpec.describe 'f05_b00' do
           end
         end
       end
-
     end
-
   end
+
+  context 'audit', :audit do
+    context '{f05_b00} passes audits' do
+      context 'needed funcs are defined in expected location' do
+        it 'for c{Array}' do
+          expect_∃⨍(:>>, ::String)
+        end
+      end
+    end
+  end # end: {audit}
 
   #  __   ___  __   ___  __   __                   __   ___
   # |__) |__  |__) |__  /  \ |__)  |\/|  /\  |\ | /  ` |__
@@ -61,7 +67,7 @@ RSpec.describe 'f05_b00' do
   context 'performance', :performance do
     let(:a_str){'any54wyv45hv'}
 
-    context 'the following run fast enough' do
+    context 'following scenarios passed required benchmarks' do
       it 'func{>>}' do
         expect{''.>> ''}.to perform_extremely_quickly
         expect{''.>> 'bASDVASb5t4t'}.to perform_very_quickly
