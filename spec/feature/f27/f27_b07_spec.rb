@@ -1,4 +1,6 @@
-# coding: UTF-8
+# encoding: UTF-8
+
+using ::ThetaAngle::ContextRuuuby
 
 RSpec.describe 'f27_b07' do
 

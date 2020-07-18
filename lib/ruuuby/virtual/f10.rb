@@ -83,15 +83,26 @@ module ::Kernel
   # @type [Float]
   𝚽 = ::Float::RATIO_GOLDEN
 
-  # ‣ the only real solution to: x³ = x² + 1
-  #
-  # @type [Float]
-  Ψ = ::Float::RATIO_GOLDEN_SUPER
-
   # ‣ let `a+b = circumference of a circle`, (a+b)/a = a/b; (a->longer_arc, b->smaller_arc)
   #
   # @type [ThetaAngle]
   Ⴔ = ::Math::ANGLE_GOLDEN
+
+  # @return [Float]
+  def π; ::Math::PI; end
+
+  # @return [Float]
+  def ℮; ::Math::E; end
+
+  # @return [Float] Float::INFINITY
+  def ∞; ::Float::INFINITY; end
+
+  #          __   __
+  #  |\/| | /__` /  `
+  #  |  | | .__/ \__,
+
+  # @return [Symbol] 'complex-infinity'
+  def ∞ℂ; ::Float::INFINITY_COMPLEX; end
 
   # -----------------------------------------------------------------------------------------------------------------
 end

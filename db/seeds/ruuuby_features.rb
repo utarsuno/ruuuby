@@ -22,7 +22,7 @@
 @f09 = ::RuuubyFeature.spawn(9, 'add math `notation & operations` for both `set`(ex: `Set`) and `multiset`(ex: `Array`)', 1, %w(math set multiset enumerables set-theory))
 @f10 = ::RuuubyFeature.spawn(10, 'offer special character aliases for natural ease of readability', 2, %w())
 @f11 = ::RuuubyFeature.spawn(11, 'abstract `SetTheory` and offer discrete singleton objs which reference various groups of numbers', 2, %w(math set-theory))
-@f12 = ::RuuubyFeature.spawn(12, 'enable more simple `file/directory io`', 2, %w())
+@f12 = ::RuuubyFeature.spawn(12, 'enable more simple `file/directory io`', 2, %w(io))
 @f13 = ::RuuubyFeature.spawn(13, '`∃` to alias concept of `does this(arg) exist?` and `∄` to mean inverse: `does this(arg) not exist?`', 2, %w())
 @f14 = ::RuuubyFeature.spawn(14, 'enable easier catching and throwing of parameter type errors', 2, %w())
 @f15 = ::RuuubyFeature.spawn(15, 'enable quicker tracking and auditing of features across versions', 2, %w())

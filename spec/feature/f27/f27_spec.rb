@@ -1,4 +1,6 @@
-# coding: UTF-8
+# encoding: UTF-8
+
+using ::ThetaAngle::ContextRuuuby
 
 RSpec.describe 'f27' do
 
@@ -34,7 +36,7 @@ RSpec.describe 'f27' do
   end
 
   context 'audit', :audit do
-    context 'feature(f27) passes audits (tests not relating to observed functionality)' do
+    context 'feature(f27) passes audits' do
       it 'module is defined in correct location' do
         expect(🧬.∃ᶜ?(:ThetaAngle)).to eq(true)
       end
@@ -50,7 +52,7 @@ RSpec.describe 'f27' do
           end
         end
       end # end: {funcs provided are}
-    end # end: {feature(f27) passes audits (tests not relating to observed functionality)}
+    end # end: {feature(f27) passes audits}
   end
 
 end

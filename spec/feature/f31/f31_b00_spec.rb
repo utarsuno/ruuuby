@@ -88,30 +88,30 @@ RSpec.describe 'f31_b00' do
     # for more info, see: {https://git-scm.com/docs/gitattributes}
     context 'preferred {git-attributes} are set' do
       it 'for binary-like files' do
-        %w(*.jpg *.jpeg *.png *.pdf *.bundle *.o).∀{|scenario| expect(💎.engine.api_git.validate_attribute(scenario, {'diff' => false, 'text' => false})).to eq(true)}
+        %w(*.jpg *.jpeg *.png *.pdf *.bundle *.o).∀{|scenario| expect(💎.engine.api_git.∃attribute?(scenario, {'diff' => false, 'text' => false})).to eq(true)}
       end
       it 'for{Ruby}' do
-        %w(*.rb *.gemspec).∀{|scenario| expect(💎.engine.api_git.validate_attribute(scenario, {'diff' => 'ruby', 'text' => 'ruby', 'eol' => 'lf'})).to eq(true)}
+        %w(*.rb *.gemspec).∀{|scenario| expect(💎.engine.api_git.∃attribute?(scenario, {'diff' => 'ruby', 'text' => 'ruby', 'eol' => 'lf'})).to eq(true)}
       end
       it 'for{C}' do
-        %w(*.c *.h).∀{|scenario| expect(💎.engine.api_git.validate_attribute(scenario, {'diff' => 'cpp', 'text' => 'cpp', 'eol' => 'lf'})).to eq(true)}
+        %w(*.c *.h).∀{|scenario| expect(💎.engine.api_git.∃attribute?(scenario, {'diff' => 'cpp', 'text' => 'cpp', 'eol' => 'lf'})).to eq(true)}
       end
       it 'for{Web-related}' do
-        expect(💎.engine.api_git.validate_attribute('*.html', {'diff' => 'html', 'text' => 'html', 'eol' => 'lf'})).to eq(true)
-        expect(💎.engine.api_git.validate_attribute('*.css', {'diff' => 'css', 'text' => 'css', 'eol' => 'lf'})).to eq(true)
-        expect(💎.engine.api_git.validate_attribute('*.md', {'diff' => 'markdown', 'text' => 'markdown', 'eol' => 'lf'})).to eq(true)
+        expect(💎.engine.api_git.∃attribute?('*.html', {'diff' => 'html', 'text' => 'html', 'eol' => 'lf'})).to eq(true)
+        expect(💎.engine.api_git.∃attribute?('*.css', {'diff' => 'css', 'text' => 'css', 'eol' => 'lf'})).to eq(true)
+        expect(💎.engine.api_git.∃attribute?('*.md', {'diff' => 'markdown', 'text' => 'markdown', 'eol' => 'lf'})).to eq(true)
       end
       it 'for{Java}' do
-        expect(💎.engine.api_git.validate_attribute('*.java', {'diff' => 'java', 'text' => 'java', 'eol' => 'lf'})).to eq(true)
+        expect(💎.engine.api_git.∃attribute?('*.java', {'diff' => 'java', 'text' => 'java', 'eol' => 'lf'})).to eq(true)
       end
       it 'for{Python}' do
-        expect(💎.engine.api_git.validate_attribute('*.py', {'diff' => 'python', 'text' => 'python', 'eol' => 'lf'})).to eq(true)
+        expect(💎.engine.api_git.∃attribute?('*.py', {'diff' => 'python', 'text' => 'python', 'eol' => 'lf'})).to eq(true)
       end
       it 'for{PHP}' do
-        expect(💎.engine.api_git.validate_attribute('*.php', {'diff' => 'php', 'text' => 'php', 'eol' => 'lf'})).to eq(true)
+        expect(💎.engine.api_git.∃attribute?('*.php', {'diff' => 'php', 'text' => 'php', 'eol' => 'lf'})).to eq(true)
       end
       it 'for{plain-text}' do
-        %w(*.txt *.text *.log).∀{|scenario| expect(💎.engine.api_git.validate_attribute(scenario, {'diff' => 'text', 'text' => 'text', 'eol' => 'lf'})).to eq(true)}
+        %w(*.txt *.text *.log *.csv).∀{|scenario| expect(💎.engine.api_git.∃attribute?(scenario, {'diff' => 'text', 'text' => 'text', 'eol' => 'lf'})).to eq(true)}
       end
     end
   end

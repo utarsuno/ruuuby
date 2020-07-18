@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+using ::ThetaAngle::ContextRuuuby
+
 RSpec.describe 'f27_b01' do
 
   context 'functionality' do

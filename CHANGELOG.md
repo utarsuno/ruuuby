@@ -4,6 +4,31 @@
 
 ---
 
+# `v0.0.47`
+
+ * add T e C h D e B t ♪~ ᕕ(ᐛ)ᕗ
+
+| gem updated | version previous | version current |
+| ----: | :---: | :---- |
+| `rake-compiler` | `1.1.0` | `1.1.1` |
+| `rubygems-update` | `3.1.4` | `3.2.0.rc.1` |
+
+| path added | reference | notes | feature(s) |
+| ----: | ---- | ---- | ---- |
+| `lib/ruuuby/math/finance/benchmarks.rb` |  | not currently utilized, just file added early | `f10` |
+| `lib/ruuuby/heuristics/heuristics.rb` | `Ruuuby::Heuristics` | same as above description | `f10` |
+
+| context | method(s) added | feature(s) |
+| ---: | :--- | ---: |
+| `Matrix` | `ᵀ` | `f10` |
+| `File::CSV` | `read` | `f12` |
+| `💎.engine.api` | `pid_terminate` | `f22` |
+| `💎.engine.api_locale` | `iconv_version`, `iconv_supported_encodings` | `f22` |
+| `PseudoGraph` | `[]`, `set_edge`, `set_edge_inverse`, `num_nodes`, `empty?`, `free_memory`, `print_debugging` | `f37` |
+| `TimeSeriesData` | `Q₁`, `Q₃`, `IQR`, `outliers_lower`, `outliers_upper`, `boundary_outliers_min`, `boundary_outliers_max`, `sum_squared`, `sum_of_squares`, `sum_weighted`, `mean_weighted`, `mean_geometric`, `nᵗʰ_percent_rank`, `healthy?` | `f38` |
+
+---
+
 # `v0.0.46`
 
  * add initial support for `Tropical Algebra`

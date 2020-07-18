@@ -111,6 +111,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:v0_0_44){::RuuubyRelease.find_by_uid(0, 0, 44)}
   let(:v0_0_45){::RuuubyRelease.find_by_uid(0, 0, 45)}
   let(:v0_0_46){::RuuubyRelease.find_by_uid(0, 0, 46)}
+  let(:v0_0_47){::RuuubyRelease.find_by_uid(0, 0, 47)}
 
   let(:f00){::RuuubyFeature.find_by_uid(0)}
   let(:f00_b00){f00.ruuuby_feature_behaviors[0]}
@@ -126,7 +127,11 @@ RSpec.shared_context 'shared_context_db' do
 
   let(:f02){::RuuubyFeature.find_by_uid(2)}
   let(:f03){::RuuubyFeature.find_by_uid(3)}
+
   let(:f04){::RuuubyFeature.find_by_uid(4)}
+  let(:f04_b00){f04.ruuuby_feature_behaviors[0]}
+  let(:f04_b01){f04.ruuuby_feature_behaviors[1]}
+  let(:f04_b02){f04.ruuuby_feature_behaviors[2]}
 
   let(:f05){::RuuubyFeature.find_by_uid(5)}
   let(:f05_b00){f05.ruuuby_feature_behaviors[0]}
@@ -155,6 +160,9 @@ RSpec.shared_context 'shared_context_db' do
   let(:f10_b03){f10.ruuuby_feature_behaviors[3]}
   let(:f10_b04){f10.ruuuby_feature_behaviors[4]}
   let(:f10_b05){f10.ruuuby_feature_behaviors[5]}
+  let(:f10_b06){f10.ruuuby_feature_behaviors[6]}
+  let(:f10_b07){f10.ruuuby_feature_behaviors[7]}
+  let(:f10_b08){f10.ruuuby_feature_behaviors[8]}
 
   let(:f11){::RuuubyFeature.find_by_uid(11)}
   let(:f11_b00){f11.ruuuby_feature_behaviors[0]}
@@ -163,6 +171,7 @@ RSpec.shared_context 'shared_context_db' do
 
   let(:f12){::RuuubyFeature.find_by_uid(12)}
   let(:f12_b00){f12.ruuuby_feature_behaviors[0]}
+  let(:f12_b01){f12.ruuuby_feature_behaviors[1]}
 
   let(:f13){::RuuubyFeature.find_by_uid(13)}
   let(:f15){::RuuubyFeature.find_by_uid(15)}
@@ -206,6 +215,7 @@ RSpec.shared_context 'shared_context_db' do
   let(:f27_b07){f27.ruuuby_feature_behaviors[7]}
   let(:f27_b08){f27.ruuuby_feature_behaviors[8]}
   let(:f27_b09){f27.ruuuby_feature_behaviors[9]}
+  let(:f27_b10){f27.ruuuby_feature_behaviors[10]}
 
   let(:f28){::RuuubyFeature.find_by_uid(28)}
   let(:f28_b00){f28.ruuuby_feature_behaviors[0]}
@@ -270,10 +280,13 @@ RSpec.shared_context 'shared_context_db' do
   let(:f36_b03){f36.ruuuby_feature_behaviors[3]}
   let(:f36_b04){f36.ruuuby_feature_behaviors[4]}
   let(:f36_b05){f36.ruuuby_feature_behaviors[5]}
+  let(:f36_b06){f36.ruuuby_feature_behaviors[6]}
+  let(:f36_b07){f36.ruuuby_feature_behaviors[7]}
 
   let(:f37){::RuuubyFeature.find_by_uid(37)}
   let(:f37_b00){f37.ruuuby_feature_behaviors[0]}
   let(:f37_b01){f37.ruuuby_feature_behaviors[1]}
+  let(:f37_b02){f37.ruuuby_feature_behaviors[2]}
 
   let(:f38){::RuuubyFeature.find_by_uid(38)}
   let(:f38_b00){f38.ruuuby_feature_behaviors[0]}

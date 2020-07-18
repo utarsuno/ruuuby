@@ -48,17 +48,44 @@ typedef struct Time_Series_Data {
     unsigned long   mem_allocated;
     unsigned long   n;
     BITWISE_FLAGS_8 flags_meta_data;
+
+    /* __        __        ___                   ___  __       __        __   ___
+      /  `  /\  /  ` |__| |__     |     /\  \ / |__  |__) .   |__)  /\  /__` |__
+      \__, /~~\ \__, |  | |___    |___ /~~\  |  |___ |  \ .   |__) /~~\ .__/ |___ */
     double          cached_mean;
-    double          cached_median;
+    double          cached_mean_weighted;
+    double          cached_mean_geometric;
+    double          cached_q1;
+    double          cached_median; // the same value as the second quartile Q2
+    double          cached_q3;
+    double          cached_iqr; // the `Interquartile Range`
     double          cached_max;
     double          cached_min;
     double          cached_range;
     double          cached_variance;
     double          cached_std_dev;
     double          cached_sum;
+    double          cached_sum_weighted;
+    double          cached_product;
+    double          cached_sum_squared;
+    double          cached_sum_of_squares;
     double          cached_pearson_correlation_coefficient;
     // TODO: spawn-able chunks/segments
-    // TODO: ^ hold off on above shortly, w8 on relating Classes (ex: Monte Carlo simulations, need to determine % ownership between the two on which should handle splitting the data into properly isolated time-segments {ex: `walk forward analysis})
+    // TODO: ^ hold off on above shortly, w8 on relating Classes (ex: Monte Carlo simulations, need to determine % ownership between the two on which should handle splitting the data into properly isolated time-segments {ex: `walk forward analysis`})
+
+    /* __        __        ___                   ___  __       __   ___  __          ___  __
+      /  `  /\  /  ` |__| |__     |     /\  \ / |__  |__) .   |  \ |__  |__) | \  / |__  |  \
+      \__, /~~\ \__, |  | |___    |___ /~~\  |  |___ |  \ .   |__/ |___ |  \ |  \/  |___ |__/ */
+    // TODO: consider caching, the % difference noticed between the `mean` and the `geometric mean`
+
+    double cached_boundary_outliers_min;
+    double cached_boundary_outliers_max;
+
+    /*___  ___        __   __   __        __                  __        ___        ___      ___      ___    __
+       |  |__   |\/| |__) /  \ |__)  /\  |__) \ /    |  |\/| |__) |    |__   |\/| |__  |\ |  |   /\   |  | /  \ |\ |
+       |  |___  |  | |    \__/ |  \ /~~\ |  \  |     |  |  | |    |___ |___  |  | |___ | \|  |  /~~\  |  | \__/ | \| */
+    // the default value will be{1.0} as default weight utilized is: `1.0 / len_data`cached_sum_weights
+    double cached_sum_weights;
 } TimeSeriesData;
 
 typedef struct Time_Series_Data * ptr_time_series_data;
@@ -140,18 +167,18 @@ static inline void ptr_time_series_set_length(ptr_time_series data, const unsign
                                                     /\___/
                                                     \/__/                                            */
 
-static void   ptr_time_series_free_content(ptr_time_series data);
+static void   ptr_time_series_free(ptr_time_series data);
 static void   _time_series_free(void * data);
 static size_t _time_series_size(const void * data);
 static size_t ptr_time_series_size(const ptr_time_series data);
 static VALUE  time_series_alloc(VALUE self);
 static VALUE  time_series_m_free(const VALUE self);
 
-static void ptr_time_series_free_content(ptr_time_series data) {
+static void ptr_time_series_free(ptr_time_series data) {
     if (data != NULL) {
-        if (data->vals != NULL) {
-            free(data->vals);
-            data->vals = NULL;
+        if (data->vals != NULL && data->len != 0) {
+            xfree(data->vals);
+            //data->vals = NULL;
             ptr_time_series_set_length(data, 0.0L);
             data->n = 0L;
         }
@@ -160,7 +187,7 @@ static void ptr_time_series_free_content(ptr_time_series data) {
 
 static void _time_series_free(void * data) {
     if (data != NULL) {
-        ptr_time_series_free_content(data);
+        ptr_time_series_free(data);
         xfree(data);
     }
 }
@@ -193,7 +220,7 @@ static VALUE time_series_alloc(VALUE self) {
 
 static VALUE time_series_m_free(const VALUE self) {
     💎self_to_ptr_time_series
-    ptr_time_series_free_content(data);
+    ptr_time_series_free(data);
     return Qnil;
 }
 
@@ -207,16 +234,21 @@ static VALUE time_series_m_free(const VALUE self) {
                                                                                             /\___/
                                                                                             \/__/ */
 
+static inline double ptr_time_series_get_first(ptr_time_series data);
+static inline double ptr_time_series_get_last(ptr_time_series data);
+
 static VALUE time_series_m_initialize(VALUE self, VALUE data_points, const VALUE n);
 static VALUE time_series_m_get_size(const VALUE self);
-static VALUE get_val_at_index(const VALUE self, const VALUE index);
+static VALUE time_series_m_get_val_at_index(const VALUE self, const VALUE index);
 static VALUE time_series_calculate_mean_square_of_errors(const VALUE self, const VALUE them);
-//static VALUE time_series_data_generate_simple_moving_average(const VALUE self, const VALUE n);
 
 static double ptr_time_series_calculate_variance(ptr_time_series data);
 static double ptr_time_series_calculate_median(ptr_time_series data);
+static double ptr_time_series_calculate_q1(ptr_time_series data);
+static double ptr_time_series_calculate_q3(ptr_time_series data);
 
 static VALUE time_series_get_percentile(const VALUE self, const VALUE percentile);
+static VALUE time_series_get_nth_percent_rank(const VALUE self, const VALUE index);
 
 static inline VALUE ptr_time_series_get_max(ptr_time_series data);
 static inline VALUE ptr_time_series_get_min(ptr_time_series data);
@@ -224,6 +256,8 @@ static void ptr_time_series_calculate_standard_cache(ptr_time_series data);
 static inline void ptr_time_series_sync_curr(ptr_time_series data, const double val_added);
 static inline void ptr_time_series_sync_last(ptr_time_series data, const double val_added);
 static void ptr_time_series_calculate_cached_pearson_correlation_coefficient(ptr_time_series data);
+static double ptr_time_series_get_percentile_from_dbl(ptr_time_series data, const double the_percentile);
+static double ptr_time_series_get_nth_percent_rank(ptr_time_series data, const unsigned long index);
 
 static VALUE time_series_m_get_flags(const VALUE self);
 static VALUE time_series_m_get_flags(const VALUE self) {
@@ -239,13 +273,23 @@ static double ptr_time_series_calculate_median(ptr_time_series data) {
     }
 }
 
+// TODO: Q1 & Q3 CALCULATION SHOULD ONLY BE PERFORMED IF THE DATA IS SORTED!!
+static double ptr_time_series_calculate_q1(ptr_time_series data) {
+    return ptr_time_series_get_percentile_from_dbl(data, 0.25);
+}
+
+// TODO: Q1 & Q3 CALCULATION SHOULD ONLY BE PERFORMED IF THE DATA IS SORTED!!
+static double ptr_time_series_calculate_q3(ptr_time_series data) {
+    return ptr_time_series_get_percentile_from_dbl(data, 0.75);
+}
+
 static double ptr_time_series_calculate_variance(ptr_time_series data) {
     double * end       = data->vals + data->len;
     double * iter      = data->vals;
     double _total      = 0.0;
     const double _mean = data->cached_mean;
     while(iter < end) {
-        _total += DBL_POW2((*iter) - _mean);
+        _total += DBL_POW_2((*iter) - _mean);
         iter++;
     }
     return _total / (data->leeen - 1.0);
@@ -267,9 +311,13 @@ static inline void ptr_time_series_set_cached_pearson_correlation_coefficient(pt
 static inline void ptr_time_series_set_cached_mean(ptr_time_series data) {
     const double new_mean = data->cached_sum / data->leeen;
     if (new_mean < 1.0e-12) {
-        data->cached_mean = 0.0;
+        data->cached_mean           = 0.0;
+        data->cached_mean_geometric = 0.0;
+        data->cached_mean_weighted  = 0.0;
     } else {
-        data->cached_mean = new_mean;
+        data->cached_mean           = new_mean;
+        data->cached_mean_geometric = DBL_POW_N(data->cached_product, 1.0 / data->leeen);
+        data->cached_mean_weighted  = data->cached_sum_weighted / data->cached_sum_weights;
     }
 }
 
@@ -284,8 +332,8 @@ static void ptr_time_series_calculate_cached_pearson_correlation_coefficient(ptr
     while(iter < end) {
         const double curr = (*iter);
         numerator     += (i_dbl - mean_x) * (curr - data->cached_mean);
-        denominator_x += DBL_POW2(i_dbl - mean_x);
-        denominator_y += DBL_POW2(curr - data->cached_mean);
+        denominator_x += DBL_POW_2(i_dbl - mean_x);
+        denominator_y += DBL_POW_2(curr - data->cached_mean);
         iter++;
         ++i_dbl;
     }
@@ -297,40 +345,77 @@ static void ptr_time_series_calculate_cached_pearson_correlation_coefficient(ptr
     }
 }
 
+static double ptr_time_series_get_nth_percent_rank(ptr_time_series data, const unsigned long index) {
+   return ((100.0 / data->leeen) * ((index + 1) - 0.5)) / 100.0;
+}
+
+static VALUE time_series_get_nth_percent_rank(const VALUE self, const VALUE index) {
+    💎self_to_ptr_time_series
+    🛑_is_fixnum("TimeSeriesData", "percent_rank", "index", index)
+    const unsigned long val_index = FIX2ULONG(index);
+    if (val_index >= data->len) {
+        🛑_time_series_oob("percent_rank", index)
+    } else {
+        return DBL2NUM(ptr_time_series_get_nth_percent_rank(data, val_index));
+    }
+}
+
+static double ptr_time_series_get_percentile_from_dbl(ptr_time_series data, const double the_percentile);
+static double ptr_time_series_get_percentile_from_dbl(ptr_time_series data, const double the_percentile) {
+    if (the_percentile == 1.0) {
+        return data->cached_max;
+    } else if (the_percentile == 0.0) {
+        return data->cached_min;
+    } else if (isfinite(the_percentile) && the_percentile > 0.0 && the_percentile < 1.0) {
+        unsigned long rank_index = 0UL;
+        double percent_rank_curr = ptr_time_series_get_nth_percent_rank(data, rank_index);
+        if (the_percentile <= percent_rank_curr) {
+            return ptr_time_series_get_first(data);
+        } else if (the_percentile >= ptr_time_series_get_nth_percent_rank(data, data->len - 1UL)) {
+            return ptr_time_series_get_last(data);
+        } else {
+            double integral;
+            const double calculated_index = the_percentile * (data->leeen - 1.0);
+            const double index_floor       = floor(calculated_index);
+            const double index_ceil       = ceil(calculated_index);
+            double fractional             = modf(calculated_index, & integral);
+            const double _val_curr = data->vals[(size_t) index_floor];
+            if (index_floor == index_ceil) {
+                return _val_curr;
+            } else {
+                const double _val_next = data->vals[(size_t) index_ceil];
+                return _val_curr + fractional * (_val_next - _val_curr);
+            }
+            printf("\nerror scenario!!!!\n");
+            return -1337.0;
+        }
+    } else {
+        VALUE as_value = DBL2NUM(the_percentile);
+        🛑_time_series_oob("the_percentile", as_value)
+    }
+}
+
 static VALUE time_series_get_percentile(const VALUE self, const VALUE param_val) {
     if (is_float(param_val)) {
         💎self_to_ptr_time_series
-        double val_them = NUM2DBL(param_val);
-        if (val_them == 1.0) {
-            return ptr_time_series_get_max(data);
-        } else if (val_them == 0.0) {
-            return ptr_time_series_get_min(data);
-        } else if (isfinite(val_them) && val_them > 0.0 && val_them < 1.0) {
-            double the_index = val_them * data->leeen;
-            long final_index  = (long) (floor(the_index));
-            return DBL2NUM(data->vals[final_index]);
-        } else {🛑_time_series_oob("percentile", param_val)}
+        return DBL2NUM(ptr_time_series_get_percentile_from_dbl(data, NUM2DBL(param_val)));
     } else if (is_fixnum(param_val)) {
         💎self_to_ptr_time_series
-        int val_them = FIX2INT(param_val);
-        if (val_them == 100) {
-            return ptr_time_series_get_max(data);
-        } else if (val_them == 0) {
-            return ptr_time_series_get_min(data);
-        } else if (val_them > 0 && val_them < 100) {
-            double the_index = (((double) val_them) / 100.0) * data->leeen;
-            long final_index  = (long) (floor(the_index));
-            return DBL2NUM(data->vals[final_index]);
-        } else {🛑_time_series_oob("percentile", param_val)}
+        return DBL2NUM(ptr_time_series_get_percentile_from_dbl(data, ((double) (FIX2INT(param_val))) / 100.0));
     } else {🛑_time_series_requires_fixnum_or_float_arg("percentile", "index", param_val)}
 }
 
 static void ptr_time_series_calculate_standard_cache(ptr_time_series data) {
     ptr_time_series_set_cached_mean(data);
-    data->cached_range    = data->cached_max - data->cached_min;
-    data->cached_median   = ptr_time_series_calculate_median(data);
-    data->cached_variance = ptr_time_series_calculate_variance(data);
-    data->cached_std_dev  = sqrt(data->cached_variance);
+    data->cached_range                 = data->cached_max - data->cached_min;
+    data->cached_median                = ptr_time_series_calculate_median(data);
+    data->cached_q1                    = ptr_time_series_calculate_q1(data);
+    data->cached_q3                    = ptr_time_series_calculate_q3(data);
+    data->cached_iqr                   = data->cached_q3 - data->cached_q1;
+    data->cached_boundary_outliers_min = data->cached_q3 - (1.5 * (data->cached_iqr));
+    data->cached_boundary_outliers_max = data->cached_q3 + (1.5 * (data->cached_iqr));
+    data->cached_variance              = ptr_time_series_calculate_variance(data);
+    data->cached_std_dev               = sqrt(data->cached_variance);
     ptr_time_series_calculate_cached_pearson_correlation_coefficient(data);
 }
 
@@ -339,9 +424,13 @@ static inline void ptr_time_series_sync_min_max(ptr_time_series data, const doub
 
 static inline void ptr_time_series_sync_pre(ptr_time_series data);
 static inline void ptr_time_series_sync_pre(ptr_time_series data) {
-    data->cached_min = GENERIC_DECIMAL_VAL_MAX;
-    data->cached_max = GENERIC_DECIMAL_VAL_MIN;
-    data->cached_sum = 0.0;
+    data->cached_min            = GENERIC_DECIMAL_VAL_MAX;
+    data->cached_max            = GENERIC_DECIMAL_VAL_MIN;
+    data->cached_sum            = 0.0;
+    data->cached_sum_weighted   = 0.0;
+    data->cached_product        = 1.0;
+    data->cached_sum_squared    = 0.0;
+    data->cached_sum_of_squares = 0.0;
 }
 
 static inline void ptr_time_series_sync_min_max(ptr_time_series data, const double val_added) {
@@ -360,9 +449,14 @@ static inline void ptr_time_series_sync_curr(ptr_time_series data, const double 
         ptr_ts_flag_set_contains_zero(data);
     } else if (val_added < 0.0) {
         ptr_ts_flag_set_contains_negative(data);
+        data->cached_product *= val_added;
+    } else {
+        data->cached_product *= val_added;
     }
     ptr_time_series_sync_min_max(data, val_added);
-    data->cached_sum += val_added;
+    data->cached_sum            += val_added;
+    data->cached_sum_weighted   += val_added * (1.0 / data->leeen);
+    data->cached_sum_of_squares += DBL_POW_2(val_added);
 }
 
 static inline void ptr_time_series_sync_last(ptr_time_series data, const double val_added) {
@@ -371,6 +465,7 @@ static inline void ptr_time_series_sync_last(ptr_time_series data, const double 
         if (ptr_ts_flag_is_strictly_increasing(data)) {ptr_ts_flag_clr_strictly_increasing(data);}
         if (ptr_ts_flag_is_strictly_decreasing(data)) {ptr_ts_flag_clr_strictly_decreasing(data);}
     }
+    data->cached_sum_squared = DBL_POW_2(data->cached_sum);
 }
 
 static inline void ptr_time_series_update_val_at_position(ptr_time_series data, const double new_value, const unsigned long position);
@@ -390,14 +485,15 @@ static VALUE time_series_m_initialize(VALUE self, VALUE data_points, const VALUE
         rb_raise(R_ERR_ARG, "| c{TimeSeriesData}-> m{new} expects args of type{Array, Fixnum}, received{%s, %s} of vals{%"PRIsVALUE", %"PRIsVALUE"} |", rb_obj_classname(data_points), rb_obj_classname(n), data_points, n);
     }
     const unsigned long len_data_points = (unsigned long) r_ary_len(data_points);
-    if (len_data_points <= 2l) {
-        rb_raise(R_ERR_ARG, "| c{TimeSeriesData}-> m{new} expects arg(data_points} to have at least{3} vals, not the provided{%ld} |", len_data_points);
+    if (len_data_points < (unsigned long) TIME_SERIES_DATA_MIN_LEN) {
+        rb_raise(R_ERR_ARG, "| c{TimeSeriesData}-> m{new} expects arg(data_points} to have at least{%d} vals, not the provided{%ld} |", TIME_SERIES_DATA_MIN_LEN, len_data_points);
     }
     💎self_to_ptr_time_series
     TS_SET_FLAGS(data, 0x0)
     ptr_time_series_set_length(data, (unsigned long) r_ary_len(data_points));
-    data->n    = FIX2INT(n);
-    data->vals = 💎create_ptr_dbls(data->len);
+    data->cached_sum_weights = 1.0;
+    data->n                  = FIX2INT(n);
+    data->vals               = 💎create_ptr_dbls(data->len);
     unsigned long i;
     ptr_ts_flag_set_strictly_increasing(data);
     ptr_ts_flag_set_strictly_decreasing(data);
@@ -425,15 +521,14 @@ static VALUE time_series_m_initialize(VALUE self, VALUE data_points, const VALUE
 
 static VALUE time_series_m_get_size(const VALUE self){re_me_mem_size}
 
-static VALUE get_val_at_index(const VALUE self, const VALUE index) {
-    if (is_fixnum(index)) {
-        💎self_to_ptr_time_series
-        const int i = NUM2INT(index);
-        if (i < 0 || (unsigned long) i >= data->len) {
-            rb_raise(R_ERR_ARG, "| c{TimeSeriesData}-> m{[]} for arg(index){%"PRIsVALUE"} which is < 0 or >= data->len{%ld} |", index, data->len);
-        }
-        return DBL2NUM(data->vals[i]);
-    } else {🛑_time_series_requires_fixnum_arg("[]", "index", index)}
+static VALUE time_series_m_get_val_at_index(const VALUE self, const VALUE index) {
+    🛑_is_fixnum("TimeSeriesData", "mse", "index", index)
+    💎self_to_ptr_time_series
+    const int i = NUM2INT(index);
+    if (i < 0 || (unsigned long) i >= data->len) {
+        rb_raise(R_ERR_ARG, "| c{TimeSeriesData}-> m{[]} for arg(index){%"PRIsVALUE"} which is < 0 or >= data->len{%ld} |", index, data->len);
+    }
+    return DBL2NUM(data->vals[i]);
 }
 
 static VALUE time_series_print_debugging(const VALUE self);
@@ -551,9 +646,7 @@ static VALUE time_series_self_scale_by_multiplication(const VALUE self, const VA
 }
 
 static VALUE time_series_calculate_mean_square_of_errors(const VALUE self, const VALUE them) {
-    if (!is_ary(them)) {
-        rb_raise(R_ERR_ARG, "| c{TimeSeriesData}-> m{mse} expects arg(data_points} to be an ary, not{%"PRIsVALUE"} of type{%s} |", them, rb_obj_classname(them));
-    }
+    🛑_is_ary("TimeSeriesData", "mse", "data_points", them)
     💎self_to_ptr_time_series
     const unsigned long len_them = r_ary_len(them);
     if (len_them != data->len) {
@@ -572,13 +665,8 @@ static VALUE time_series_calculate_mean_square_of_errors(const VALUE self, const
     return DBL2NUM(_total / (data->leeen - 1.0));
 }
 
-//static VALUE time_series_data_generate_simple_moving_average(const VALUE self, const VALUE n) {
-//}
-
 static VALUE time_series_calculate_mean_absolute_percentage_error(const VALUE self, const VALUE them) {
-    if (!is_ary(them)) {
-        rb_raise(R_ERR_ARG, "| c{TimeSeriesData}-> m{mape} expects arg(data_points} to be an ary, not{%"PRIsVALUE"} of type{%s} |", them, rb_obj_classname(them));
-    }
+    🛑_is_ary("TimeSeriesData", "mape", "data_points", them)
     💎self_to_ptr_time_series
     const unsigned long len_them = r_ary_len(them);
     if (len_them != data->len) {
@@ -602,10 +690,6 @@ static VALUE time_series_calculate_mean_absolute_percentage_error(const VALUE se
 /*      ___       __   ___  __      __   ___ ___ ___  ___  __   __
   |__| |__  |    |__) |__  |__)    / _` |__   |   |  |__  |__) /__`
   |  | |___ |___ |    |___ |  \    \__> |___  |   |  |___ |  \ .__/ */
-
-static inline double ptr_time_series_get_first(ptr_time_series data);
-static inline double ptr_time_series_get_last(ptr_time_series data);
-
 static inline double ptr_time_series_get_first(ptr_time_series data){return data->vals[0];}
 static inline double ptr_time_series_get_last(ptr_time_series data){return data->vals[data->len - 1];}
 
@@ -624,15 +708,26 @@ static inline VALUE ptr_time_series_get_min(ptr_time_series data) {return DBL2NU
 #define ⓡ𝑓_ptr_time_series_getter(func_name, expr)     static VALUE func_name(const VALUE self){💎self_to_ptr_time_series; return expr;}
 #define ⓡ𝑓_ptr_time_series_getter_dbl(func_name, expr) static VALUE func_name(const VALUE self){💎self_to_ptr_time_series; return DBL2NUM(expr);}
 
-static VALUE get_cached_pearson_correlation_coefficient(const VALUE self);
-static VALUE get_cached_variance(const VALUE self);
-static VALUE get_cached_std_dev(const VALUE self);
-static VALUE get_cached_range(const VALUE self);
-static VALUE get_cached_mean(const VALUE self);
-static VALUE get_cached_median(const VALUE self);
-static VALUE get_cached_max(const VALUE self);
-static VALUE get_cached_min(const VALUE self);
-static VALUE get_cached_sum(const VALUE self);
+static VALUE time_series_get_cached_pearson_correlation_coefficient(const VALUE self);
+static VALUE time_series_get_cached_variance(const VALUE self);
+static VALUE time_series_get_cached_std_dev(const VALUE self);
+static VALUE time_series_get_cached_range(const VALUE self);
+static VALUE time_series_get_cached_mean(const VALUE self);
+static VALUE time_series_get_cached_mean_weighted(const VALUE self);
+static VALUE time_series_get_cached_mean_geometric(const VALUE self);
+static VALUE time_series_get_cached_median(const VALUE self);
+static VALUE time_series_get_cached_q1(const VALUE self);
+static VALUE time_series_get_cached_q3(const VALUE self);
+static VALUE time_series_get_cached_iqr(const VALUE self);
+static VALUE time_series_get_cached_boundary_outliers_max(const VALUE self);
+static VALUE time_series_get_cached_boundary_outliers_min(const VALUE self);
+static VALUE time_series_get_cached_max(const VALUE self);
+static VALUE time_series_get_cached_min(const VALUE self);
+static VALUE time_series_get_cached_sum(const VALUE self);
+static VALUE time_series_get_cached_sum_weighted(const VALUE self);
+static VALUE time_series_get_cached_product(const VALUE self);
+static VALUE time_series_get_cached_sum_squared(const VALUE self);
+static VALUE time_series_get_cached_sum_of_squares(const VALUE self);
 static VALUE time_series_get_len(const VALUE self);
 static VALUE time_series_get_first(const VALUE self);
 static VALUE time_series_get_last(const VALUE self);
@@ -654,16 +749,28 @@ static VALUE time_series_is_all_same(const VALUE self);
 ⓡ𝑓_ptr_time_series_getter(time_series_get_len, ULONG2NUM(data->len))
 ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_first, ptr_time_series_get_first(data))
 ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_last, ptr_time_series_get_last(data))
-ⓡ𝑓_ptr_time_series_getter_dbl(get_cached_sum, data->cached_sum)
-ⓡ𝑓_ptr_time_series_getter_dbl(get_cached_pearson_correlation_coefficient, data->cached_pearson_correlation_coefficient)
-ⓡ𝑓_ptr_time_series_getter_dbl(get_cached_variance, data->cached_variance)
-ⓡ𝑓_ptr_time_series_getter_dbl(get_cached_std_dev, data->cached_std_dev)
-ⓡ𝑓_ptr_time_series_getter_dbl(get_cached_range, data->cached_range)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_sum, data->cached_sum)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_sum_weighted, data->cached_sum_weighted)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_product, data->cached_product)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_sum_squared, data->cached_sum_squared)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_sum_of_squares, data->cached_sum_of_squares)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_pearson_correlation_coefficient, data->cached_pearson_correlation_coefficient)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_variance, data->cached_variance)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_std_dev, data->cached_std_dev)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_range, data->cached_range)
 
-ⓡ𝑓_ptr_time_series_getter_dbl(get_cached_mean, data->cached_mean)
-ⓡ𝑓_ptr_time_series_getter_dbl(get_cached_median, data->cached_median)
-ⓡ𝑓_ptr_time_series(get_cached_max, return ptr_time_series_get_max(data);)
-ⓡ𝑓_ptr_time_series(get_cached_min, return ptr_time_series_get_min(data);)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_boundary_outliers_min, data->cached_boundary_outliers_min)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_boundary_outliers_max, data->cached_boundary_outliers_max)
+
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_mean, data->cached_mean)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_mean_weighted, data->cached_mean_weighted)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_mean_geometric, data->cached_mean_geometric)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_median, data->cached_median)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_q1, data->cached_q1)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_q3, data->cached_q3)
+ⓡ𝑓_ptr_time_series_getter_dbl(time_series_get_cached_iqr, data->cached_iqr)
+ⓡ𝑓_ptr_time_series(time_series_get_cached_max, return ptr_time_series_get_max(data);)
+ⓡ𝑓_ptr_time_series(time_series_get_cached_min, return ptr_time_series_get_min(data);)
 
 /*                          __
                            /\ \          __

@@ -17,7 +17,7 @@ RSpec.describe 'f12' do
 
   context 'audit', :audit do
 
-    context 'feature(f12) passes audits (tests not relating to observed functionality)' do
+    context 'feature(f12) passes audits' do
       context 'funcs provided are defined in correct location' do
         context 'for c{File}' do
           it 'static functions' do

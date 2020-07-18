@@ -29,8 +29,6 @@ static VALUE cached_flt_inf;
 static VALUE cached_flt_negative_inf;
 static VALUE cached_flt_inf_complex;
 
-static VALUE ⓜparam_err;
-
 static VALUE ⓜruuuby;
 static VALUE ⓜruuuby_metadata;
 static VALUE ⓜruuuby_engine;

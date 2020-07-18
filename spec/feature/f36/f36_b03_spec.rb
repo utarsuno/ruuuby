@@ -1,6 +1,6 @@
-# coding: UTF-8
+# encoding: UTF-8
 
-RSpec.describe 'f36' do
+RSpec.describe 'f36_b03' do
 
   before :all do
     @data_all_same  = ::TimeSeriesData.new([10, 10, 10, 10, 10, 10, 10, 10, 10, 10], 8)
@@ -11,10 +11,10 @@ RSpec.describe 'f36' do
   end
 
   after :all do
-    expect{@data_all_same.free_memory}.to_not raise_error
-    expect{@data.free_memory}.to_not raise_error
-    expect{@data_leet.free_memory}.to_not raise_error
-    expect{@data_simple.free_memory}.to_not raise_error
+    expect{@data_all_same.♻️}.to_not raise_error
+    expect{@data.♻️}.to_not raise_error
+    expect{@data_leet.♻️}.to_not raise_error
+    expect{@data_simple.♻️}.to_not raise_error
   end
 
   context 'functionality' do

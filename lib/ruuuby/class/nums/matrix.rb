@@ -7,6 +7,7 @@ using ::Math::Algebra::Tropical::ContextMatrix
 class ::Matrix
 
   alias_method :▣?, :square?
+  alias_method :ᵀ, :transpose
   alias_method :num_rows, :row_count
   alias_method :num_cols, :column_count
 

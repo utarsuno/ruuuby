@@ -6,13 +6,14 @@ module ::Math
   # | ---------------------- | -------------------------------------------------------------------- | ------ |
   # | `volatility`           | the measure of `uncertainty` & `fluctuation`                          | `0x0`  |
   # | `financial derivatives` | a `security` deriving its value from some other underling `security` | `0x0`  |
-  module Forex
+  # | `P/E`                  | `price` to `earnings` ratio                                          |        |
+  module Finance
 
     # @see https://en.wikipedia.org/wiki/List_of_circulating_currencies
     #
     # "relative values of currencies are generally expressed to four decimal places"
     #
-    # ‣ | `tick` | the change in price that a `commodity` receives after a set of transaction | ex: `EUR/USD` has `> 100 ticks per minute` during timings in the day w/ high liquidity |
+    # ‣ | `tick` | the change in price that a `commodity` receives after a set of transaction(s) | ex: `EUR/USD` has `> 100 ticks per minute` during timings in the day w/ high liquidity |
     #
     # ‣ conditionally observable 'feature'/`dimension` (conditional as presence of comparable data allows for normalization and thus easier to extract meaning):
     #   ‣ in general: inverse relationship between `bid-ask spread` and `liquidity`
@@ -22,12 +23,16 @@ module ::Math
     #     ‣ `➚ liquidity` : `certainty ➚`
     #     ‣ `↘ liquidity` : `liquidity ↘`
     #
+    # ‣ in general: a relatively direct relationship between `P/E` and `expected growth rate`
+    #   ‣ `➚ P/E` : `expected growth rate ➚`
+    #   ‣ `↘ P/E` : `expected growth rate ↘`
+    #
     # ‣ w/ `n` currencies there exists `n² - n` exchange rates
     #
     # ‣ helpful resources from `National Futures Association (NFA)`:
     # @see https://www.nfa.futures.org/investors/investor-resources/index.html
     #
-    module Currencies
+    module Forex
 
 =begin
       module Fiat
@@ -70,8 +75,6 @@ module ::Math
     end
   end
 end
-
-# TODO: https://www.bankrate.com/rates/interest-rates/libor.aspx
 
 #         __    __               __               __
 #        /\ \__/\ \__         __/\ \             /\ \__  __

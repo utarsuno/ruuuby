@@ -41,17 +41,17 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency(:rspec, '~> 3.9.0')                             #║
   gem.add_development_dependency(:rdoc, '~> 6.2.1')                              #║
   gem.add_development_dependency(:'rspec-benchmark', '~> 0.6.0')                 #║
-  gem.add_development_dependency(:'rake-compiler', '~> 1.1.0')                   #║
+  gem.add_development_dependency(:'rake-compiler', '~> 1.1.1')                   #║
   gem.add_development_dependency(:'tty-command', '~> 0.9.0')                     #║
   gem.add_development_dependency(:sqlite3, '~> 1.4.2')                           #║
   gem.add_development_dependency(:activerecord, '~> 5.2.4.3')                    #║
   gem.add_development_dependency(:schema_plus_foreign_keys, '~> 0.1.8')          #║
   gem.add_development_dependency(:rugged, '~> 1.0.1')                            #║
-  gem.add_development_dependency(:'rubygems-update', '~> 3.1.4')                 #║
+  gem.add_development_dependency(:'rubygems-update', '~> 3.2.0.rc.1')            #║
   # ╠═════════════════════════════════════════════════════════════════════════════╣
   gem.add_runtime_dependency(:'tty-command', '~> 0.9.0')                         #║
   # ╠═════════════════════════════════════════════════════════════════════════════╣
-  gem.installed_by_version = '3.1.4'                                             #║
+  gem.installed_by_version = '3.2.0.rc.1'                                        #║
   # ╚═════════════════════════════════════════════════════════════════════════════╝
 
 end

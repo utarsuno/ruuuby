@@ -13,7 +13,7 @@ RSpec.describe 'f38' do
           context 'w/ smaller data sets' do
             it 'w/ normalization performed' do
               # @see attribution{0x0} at bottom of this source file for source of data scenario:
-              data = ::Math::Forex::CurrencyMatrix.new(
+              data = ::Math::Finance::CurrencyMatrix.new(
                   %w(USD EUR JPY),
                   ::Matrix[[1.0,0.5,100.0],[2.0,1.0,133.0+(1.0/3.0)],[0.01,0.0075,1.0]]
               )
@@ -35,7 +35,7 @@ RSpec.describe 'f38' do
             end
             it 'w/o normalization needed' do
               mi   = ::Float::INFINITY_NEGATIVE
-              data = ::Math::Forex::CurrencyMatrix.new(
+              data = ::Math::Finance::CurrencyMatrix.new(
                   %w(CURRENCY_A CURRENCY_B CURRENCY_C CURRENCY_D),
                   ::Matrix[[mi,1.0,2.25,1.5],[3.0,mi,2.0,mi],[mi,mi,mi,-4.0],[3.0,mi,mi,mi]]
               )
@@ -54,7 +54,7 @@ RSpec.describe 'f38' do
 
             it 'first scenario test passes' do
               # @see attribution{0x0} at bottom of this source file for source of data scenario:
-              data = ::Math::Forex::CurrencyMatrix.new(
+              data = ::Math::Finance::CurrencyMatrix.new(
                   %w(USD EUR GBP JPY CAD),
                   ::Matrix[
                       [0.0,-0.085627,-0.198195,4.64651,0.28835],
@@ -82,7 +82,7 @@ RSpec.describe 'f38' do
 
             it 'scenario w/ 5 trades > 3 trades' do
               # @see attribution{0x0} at bottom of this source file for source of data scenario:
-              data = ::Math::Forex::CurrencyMatrix.new(
+              data = ::Math::Finance::CurrencyMatrix.new(
                   %w(USD EUR GBP JPY CAD),
                   ::Matrix[
                       [0.0,-0.08538,-0.197944,4.646478,0.288486],

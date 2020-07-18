@@ -1,4 +1,6 @@
-# coding: UTF-8
+# encoding: UTF-8
+
+using ::ThetaAngle::ContextRuuuby
 
 RSpec.describe 'f28_b11' do
   let(:pi2){π * 2.0}

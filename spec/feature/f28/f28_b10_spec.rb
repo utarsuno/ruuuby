@@ -1,4 +1,6 @@
-# coding: UTF-8
+# encoding: UTF-8
+
+using ::ThetaAngle::ContextRuuuby
 
 RSpec.describe 'f28_b10' do
   context 'functionality' do

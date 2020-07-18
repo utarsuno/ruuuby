@@ -1,4 +1,6 @@
-# coding: UTF-8
+# encoding: UTF-8
+
+using ::ThetaAngle::ContextRuuuby
 
 RSpec.describe 'f27_b02' do
 
@@ -157,12 +159,6 @@ RSpec.describe 'f27_b02' do
   context 'audit', :audit do
     context 'static functions provided are' do
       context 'defined in correct location' do
-        it 'for module{Kernel}' do
-          expect_∃⨍(:θ°, ::Ruuuby::Feature::Extendable::MainF28)
-          expect_∃⨍(:θʳ, ::Ruuuby::Feature::Extendable::MainF28)
-          expect_∃⨍(:θᵍ, ::Ruuuby::Feature::Extendable::MainF28)
-          expect_∃⨍(:θ𝞽, ::Ruuuby::Feature::Extendable::MainF28)
-        end
         it 'for class{ThetaAngle}' do
           expect_∃⨍_static(:new_radian, ::ThetaAngle)
           expect_∃⨍_static(:new_degree, ::ThetaAngle)

@@ -5,6 +5,8 @@ class ::UNIXSocket < ::UNIXSocket.superclass
 end
 
 # TODO: Docker daemon at unix:///var/run/docker.sock
+#  * https://medium.com/better-programming/about-var-run-docker-sock-3bfd276e12fd
+#  * https://docs.docker.com/engine/api/v1.27/#section/Errors
 
 # TODO: https://ruby-doc.org/stdlib-2.6.5/libdoc/net/http/rdoc/Net/HTTP.html
 

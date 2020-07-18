@@ -12,7 +12,7 @@ class ::File
 
   # @param [String] path (to a non-directory file)
   #
-  # @raise [WrongParamType]
+  # @raise [ArgumentError]
   #
   # @return [Boolean] true, if provided path exists and is a file
   def self.∃?(path)
@@ -23,7 +23,7 @@ class ::File
 
   # @param [String] path
   #
-  # @raise [WrongParamType]
+  # @raise [ArgumentError]
   #
   # @return [String]
   def self.dirname²(path)
@@ -108,10 +108,25 @@ class ::File
   def self.replace_expr_with!(the_path, expression, replacement, num_matches)
     num_matched = ::File.replace_expr_with(the_path, expression, replacement, num_matches)
     if num_matched == 0
-      🛑 RuntimeError.🆕("| c{File}-> m{replace_expr_with!} did not end up replacing any content |")
+      🛑 ::RuntimeError.🆕("| c{File}-> m{replace_expr_with!} did not end up replacing any content |")
     else
       num_matched
     end
+  end
+
+  # @see https://ruby-doc.org/stdlib-2.6.1/libdoc/csv/rdoc/CSV.html
+  module CSV
+
+    # @param [String] path
+    #
+    # @raise [ArgumentError]
+    #
+    # @return [Array]
+    def self.read(path)
+      🛑str❓('path', path)
+      ::CSV.read(path, {skip_blanks: true, headers: true, col_sep: ',', row_sep: "\n"})
+    end
+
   end
 
 end

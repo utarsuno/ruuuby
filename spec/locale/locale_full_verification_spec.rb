@@ -45,12 +45,19 @@ RSpec.describe 'ruby' do
     context 'recommended configs' do
 
       context 'for gem{rubygems-update}' do
-        it 'has correct version{3.1.4}' do
-          expect(::Gem.rubygems_version.to_s).to eq('3.1.4')
+        it 'has correct version{3.2.0.rc.1}' do
+          expect(::Gem.rubygems_version.to_s).to eq('3.2.0.rc.1')
         end
         it 'matching output of cmd{gem -v}' do
           expect(::Gem.rubygems_version.to_s).to eq(💎.engine.api.run_cmd!('gem -v'))
         end
+
+        context 'has needed configs' do
+          it 'w/ expected path for{Gemfile}' do
+            expect(ENV['BUNDLE_GEMFILE']).to eq("#{💎.engine.path_base}Gemfile")
+          end
+        end
+
       end # end: {for gem{rubygems-update}}
 
     end # end: {recommended configs}
@@ -81,10 +88,10 @@ RSpec.describe 'ruby' do
           end
           context 'for{docker}' do
             it 'has needed version' do
-              expect(💎.engine.api_docker.get_version).to eq('Docker version 19.03.8, build afacb8b')
+              expect(💎.engine.api_locale.api_docker.get_version).to eq('Docker version 19.03.8, build afacb8b')
             end
             it 'has needed ENV{DOCKER_API_VERSION}' do
-              expect(💎.engine.api_docker.expected_docker_api_version).to eq(ENV['DOCKER_API_VERSION'])
+              expect(💎.engine.api_locale.api_docker.expected_docker_api_version).to eq(ENV['DOCKER_API_VERSION'])
             end
           end
           it 'for{git}' do
@@ -97,7 +104,7 @@ RSpec.describe 'ruby' do
           end
           # TODO: test having #{gcc -v} match too
         end # end: {correct version tests from CLI-APIs}
-      end # end: {optional tets}
+      end # end: {optional tests}
     end
 
     context 'current user' do
@@ -118,6 +125,21 @@ RSpec.describe 'ruby' do
     context 'needed settings for{ZSH}' do
       it 'expected version{5.7.1} matches' do
         expect(💎.engine.api.run_cmd!('zsh --version')).to eq('zsh 5.8 (x86_64-apple-darwin18.7.0)')
+      end
+    end
+
+    context '(thus far) recommended settings for {iconv}' do
+      it 'has needed version{1.11}' do
+        expect(💎.engine.api_locale.iconv_version?('1.11')).to eq(true)
+      end
+      it 'supports needed encoding{UTF-8}' do
+        expect(💎.engine.api_locale.iconv_∃_encoding?('UTF-8')).to eq(true)
+      end
+    end
+
+    context 'misc configs are as needed' do
+      it '$PATH separator is defined as{:}' do
+        expect(build_configs['PATH_SEPARATOR']).to eq(':')
       end
     end
 

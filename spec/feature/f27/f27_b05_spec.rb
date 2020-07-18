@@ -1,4 +1,6 @@
-# coding: UTF-8
+# encoding: UTF-8
+
+using ::ThetaAngle::ContextRuuuby
 
 RSpec.describe 'f27_b05' do
 
@@ -365,8 +367,8 @@ RSpec.describe 'f27_b05' do
   context 'audit', :audit do
     context 'static functions provided are' do
       context 'defined in correct location' do
-        it 'for module{ContextStrParsing}' do
-          expect_∃ᵐ(:ContextStrParsing, ::ThetaAngle)
+        it 'for module{ContextStr}' do
+          expect_∃ᵐ(:ContextStr, ::ThetaAngle)
         end
       end
     end

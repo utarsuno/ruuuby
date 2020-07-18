@@ -121,7 +121,7 @@ class ::RuuubyFeature < ::ApplicationRecord
 
   # @param [String] raw_uid the version UID of the RuuubyRelease with or without the starting 'v'
   #
-  # @raise [WrongParamType]
+  # @raise [ArgumentError]
   #
   # @return [Array] new array with one element ∈ ℕ
   def self.parse_uid_str(raw_uid)

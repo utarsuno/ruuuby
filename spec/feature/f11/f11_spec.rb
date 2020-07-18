@@ -287,7 +287,7 @@ RSpec.describe 'f11' do
               expect(𝕌.∋?(0.0)).to eq(true)
               expect(𝕌.∋?(1.0)).to eq(true)
               expect(𝕌.∋?(-1.0)).to eq(true)
-              [π, ℮, 𝚽, Ψ, ρ].∀{|n| expect(𝕌.∋?(n)).to eq(true)}
+              [π, ℮, 𝚽].∀{|n| expect(𝕌.∋?(n)).to eq(true)}
             end
             it 'w/ big decimal' do
               expect(𝕌.∋?(data_big_decimal_leet_kinda)).to eq(true)
@@ -388,7 +388,7 @@ RSpec.describe 'f11' do
           end
           context 'converted cases to tech_debt', :tech_debt do
             it 'for floats w/ symbolic-like traits' do
-              [π, ℮, 𝚽, Ψ, ρ].∀{|n| expect(ℚ.∋?(n)).to eq(nil)}
+              [π, ℮, 𝚽].∀{|n| expect(ℚ.∋?(n)).to eq(nil)}
             end
           end
         end

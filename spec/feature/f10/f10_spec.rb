@@ -3,7 +3,27 @@
 RSpec.describe 'f10' do
 
   context 'functionality' do
-    context '{b04}' do
+    context '{b02}' do
+      it 'adds alias{🆔} to func{object_id}' do
+        expect(::Object.respond_to?(:🆔)).to eq(true)
+        leet = 1337
+        expect(leet.object_id == leet.🆔).to eq(true)
+        expect(leet.🆔.ⓣ).to eq(::Integer)
+      end
+      it 'adds alias{❄️} to func{freeze}' do
+        leet = [999999, 'a']
+        expect(leet.frozen?).to eq(false)
+        leet.❄️
+        expect(leet.frozen?).to eq(true)
+      end
+      it 'adds alias{❄️?} to func{frozen?}' do
+        leet = [999999, 'a']
+        expect(leet.❄️?).to eq(false)
+        leet.freeze
+        expect(leet.❄️?).to eq(true)
+      end
+    end
+    context '{b07}' do
       context 'adds func{√}' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
@@ -38,22 +58,39 @@ RSpec.describe 'f10' do
   end
 
   context 'audit', :audit do
-    context 'feature(f10) passes audits (tests not relating to observed functionality)' do
+    context 'feature(f10) passes audits' do
       context 'funcs provided are defined in correct location' do
-        it 'for{b02}' do
+        it 'for{b00}' do
+          #expect_∃⨍_with_alias(:private, :🙈, ::Module)
+          #expect_∃⨍_with_alias(:protected, :🛡️, ::Module)
+        end
+        it 'for{b01}' do
           expect_∃⨍(:🆕, ::Class)
         end
+        it 'for{b02}' do
+          #expect_∃⨍_with_alias(:object_id, :🆔, ::Object)
+          #expect_∃⨍_with_alias(:freeze, :❄️, ::Object)
+          #expect_∃⨍_with_alias(:frozen?, :❄️?, ::Object)
+        end
+        it 'for{b03}' do
+          #expect_∃⨍_with_alias(:class, :ⓣ, ::Object)
+          #expect_∃⨍(:Ⓣ, ::Object)
+        end
         it 'for{b04}' do
+          expect_∃⨍_with_alias(:source_location, :🏠, ::Method)
+        end
+        it 'for{b05}' do
+          #expect_∃⨍_with_alias(:rand, :🎲, ::Kernel)
+          #expect_∃⨍_with_alias(:raise, :🛑, ::Kernel)
+        end
+        it 'for{b06}' do
           expect_∃⨍(:√, ::Kernel)
           expect_∃⨍(:∛, ::Kernel)
         end
-        it 'for{b05}' do
+        it 'for{b07}' do
           expect_∃⨍(:logₑ, ::Kernel)
           expect_∃⨍(:log₂, ::Kernel)
           expect_∃⨍(:log₁₀, ::Kernel)
-        end
-        it 'for c{Range}' do
-          expect_∃⨍(:∀, ::Range)
         end
       end
     end

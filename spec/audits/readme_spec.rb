@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+using ::ThetaAngle::ContextRuuuby
+
 RSpec.describe 'README.md' do
 
   #                   __          ___     __
@@ -37,6 +39,8 @@ RSpec.describe 'README.md' do
         expect(elements_a == elements_b).to eq(false)
 
         expect([ℕ.∋?(-5), ℤ.∋?(7.0), ℝ.∋?(∞), ℚ.∋?(Rational(2, 3))]).to eq([false, true, false, true])
+
+        expect(::Matrix[[1,3,5],[2,4,6]].ᵀ).to eq(::Matrix[[1,2],[3,4],[5,6]])
 
         expect([1, 2, 3].⨁ [3, 4]).to eq([1, 4, 2])
 

@@ -9,9 +9,6 @@ module ::Math
     class NumberSpace < ::Math::Space::TypesSpaceⓣ¹
 
       # @type [Array]
-      ALL_NUMS                   = [::Integer, ::Float, ::Complex, ::Rational, ::BigDecimal].❄️
-
-      # @type [Array]
       NORMALIZERS_ALL_NUMS_W_STR = [:∈ℕ, :∈𝕎, :∈ℤ, :∈ℕ𝕊, :∈𝕎𝕊, :∈ℤ𝕊].❄️
 
       def initialize

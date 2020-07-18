@@ -1,18 +1,20 @@
+# encoding: UTF-8
 
-RSpec.shared_context 'shared_context_language_deltas' do
+using ::ThetaAngle::ContextRuuuby
 
-  def expect_added_method_aliases(the_class, the_configs)
-    the_configs[:aliases].∀{|base_func, aliased_name| expect(the_class.∃⨍_alias?(base_func, aliased_name)).to eq(true)}
-  end
+::RSpec.shared_context 'shared_context_f38' do
 
-  def throw_wrong_param_type(the_class, the_method, arg_name, received_type, expected_types)
-    raise_error(ArgumentError, Ruuuby::ParamErr::generate_error_text(the_class, the_method, arg_name, received_type, expected_types))
+  # @param [PseudoGraph] graph
+  # @param [Integer]     num_nodes
+  def expect_pseudo_graph(graph, num_nodes)
+    expect(graph.ⓣ).to eq(::PseudoGraph)
+    expect(graph.num_nodes.ⓣ).to eq(::Integer)
+    expect(graph.num_nodes).to eq(num_nodes)
   end
 
 end
 
-
-RSpec.shared_context 'shared_context_f34' do
+::RSpec.shared_context 'shared_context_f34' do
 
   def expect_sum_of_interior_angles(the_shape, expected_number_of_sides)
     result = the_shape.sum_of_interior_angles
@@ -29,7 +31,7 @@ RSpec.shared_context 'shared_context_f34' do
 
 end
 
-RSpec.shared_context 'shared_context_f32' do
+::RSpec.shared_context 'shared_context_f32' do
   let(:f𝕎¹_error_scenarios){[10.1, 0.1, -1, nil, '1']}
   let(:fℕ¹_error_scenarios){[10.1, 0.1, 0, -0.0, 0.0, -1, nil, '1']}
 
@@ -56,7 +58,7 @@ RSpec.shared_context 'shared_context_f32' do
 
 end
 
-RSpec.shared_context 'shared_context_f30' do
+::RSpec.shared_context 'shared_context_f30' do
 
   def expect_feature_behavior_as_needed(the_ref, kclass)
     the_id  = the_ref.🆔
@@ -67,7 +69,7 @@ RSpec.shared_context 'shared_context_f30' do
 
 end
 
-RSpec.shared_context 'shared_context_f27' do
+::RSpec.shared_context 'shared_context_f27' do
 
   let(:as_degrees){θ°(360)}
   let(:as_radians){θʳ(π * 2)}
@@ -105,7 +107,7 @@ RSpec.shared_context 'shared_context_f27' do
 
 end
 
-RSpec.shared_context 'shared_context_f24' do
+::RSpec.shared_context 'shared_context_f24' do
   let(:data_syntax_case_camel){%w(HelloWorld NotSnakeCase AnExcellentTestCase)}
   let(:data_syntax_case_camel_nums){%w(HelloToday1337 Hello1337World)}
 
@@ -119,7 +121,7 @@ RSpec.shared_context 'shared_context_f24' do
   let(:data_syntax_case_snake_capital_nums){%w(AA1337 UPPER_SNAKE_CASE1337 AA_1337)}
 end
 
-RSpec.shared_context 'shared_context_general' do
+::RSpec.shared_context 'shared_context_general' do
   let(:data_big_decimal_nan){BigDecimal('NaN')}
   let(:data_big_decimal_inf){BigDecimal('Infinity')}
   let(:data_big_decimal_negative_inf){BigDecimal('-Infinity')}

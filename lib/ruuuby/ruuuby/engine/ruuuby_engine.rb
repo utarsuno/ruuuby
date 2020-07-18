@@ -17,7 +17,7 @@ module ::Ruuuby
       include ::Ruuuby::Attribute::Includable::SyntaxCache
       include ::Singleton
 
-      attr_reader :logger, :state_flag, :logging_level, :logging_mode, :api, :api_git, :api_brew, :api_docker, :api_locale, :path_base
+      attr_reader :logger, :state_flag, :logging_level, :logging_mode, :api, :api_git, :api_brew, :api_locale, :path_base
 
       attr_reader :gc, :jit, :source, :os
 
@@ -44,8 +44,7 @@ module ::Ruuuby
         @logging_level  = ::Logger::DEBUG
         @api_git        = ::Ruuuby::MetaData::GitAPI.new(self)
         @api_brew       = ::Ruuuby::MetaData::BrewAPI.new(self)
-        @api            = ::Ruuuby::MetaData::RuuubyAPI.new(self, @api_brew)
-        @api_docker     = ::Ruuuby::MetaData::DockerAPI.new(self, '1.40')
+        @api            = ::Ruuuby::MetaData::RuuubyAPI.new(self, @api_brew, 6)
         @api_locale     = ::Ruuuby::MetaData::LocaleAPI.new(self)
         @orm            = nil
 
@@ -93,15 +92,6 @@ module ::Ruuuby
           🛑 RuntimeError.new("| RuuubyEngine w/ func{cool_down} tried to move to state{2} when currently in state{#{@state_flag.to_s}} |")
         end
       end
-
-      #    ___    __      _
-      #  /'___\ /'__`\  /' \
-      # /\ \__//\ \/\ \/\_, \
-      # \ \ ,__\ \ \ \ \/_/\ \
-      #  \ \ \_/\ \ \_\ \ \ \ \
-      #   \ \_\  \ \____/  \ \_\
-      #    \/_/   \/___/    \/_/
-      #
 
       #    ___    ___       ___
       #  /'___\ /'___`\   /'___`\
@@ -160,7 +150,7 @@ module ::Ruuuby
           # command from: https://stackoverflow.com/questions/7220896/get-current-ruby-process-memory-usage
           out    = 💎.engine.api.run_cmd!("ps ax -o pid,rss | grep -E \"^[[:space:]]*#{$$}\"")
           mem_kb = out.♻️⟶(' ').strip.to_i
-          mem_mb = (just_memory / 1024.0)
+          mem_mb = (mem_kb / 1024.0)
           💎.engine.info("pid{#{$$.to_s}} #{message} w/ memory-usage currently at{#{mem_kb.to_s}} KB, equivalently: {#{mem_mb.to_s}} MB")
           mem_kb
         end
@@ -261,6 +251,15 @@ module ::Ruuuby
       end # end: {F22B06}
 
       🙈
+
+      #    ___    __      _
+      #  /'___\ /'__`\  /' \
+      # /\ \__//\ \/\ \/\_, \
+      # \ \ ,__\ \ \ \ \/_/\ \
+      #  \ \ \_/\ \ \_\ \ \ \ \
+      #   \ \_\  \ \____/  \ \_\
+      #    \/_/   \/___/    \/_/
+      #
 
       def setup_logger
         if ENV.∃🔑?('RUUUBY_F01')

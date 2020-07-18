@@ -21,7 +21,7 @@ RSpec.describe 'f38_b03' do
                 [-4.646478,-4.732008,-4.844532,0.0,-4.358143],
                 [-0.288486,-0.374006,-0.486533,4.358142,0.0]
             ]
-            data = ::Math::Forex::CurrencyMatrix.new(the_labels, raw_data)
+            data = ::Math::Finance::CurrencyMatrix.new(the_labels, raw_data)
             expect(data.labels).to eq(the_labels)
             expect(data.data).to eq(raw_data)
           end
@@ -35,8 +35,8 @@ RSpec.describe 'f38_b03' do
   context 'audits', :audit do
     context '{f38} passes audits' do
       it 'by finding needed Modules' do
-        expect(🧬.∃ᵐ?(:Forex, ::Math)).to eq(true)
-        expect(🧬.∃ᶜ?(:CurrencyMatrix, ::Math::Forex)).to eq(true)
+        expect(🧬.∃ᵐ?(:Finance, ::Math)).to eq(true)
+        expect(🧬.∃ᶜ?(:CurrencyMatrix, ::Math::Finance)).to eq(true)
         expect(🧬.∃ᶜ?(:Matrix)).to eq(true)
       end
     end

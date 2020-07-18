@@ -10,8 +10,13 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
       context 'by having correct configs' do
 
         context 'for gem{bundler}' do
-          it 'has correct version{2.2.0.rc.1}' do
-            expect(::Bundler::VERSION).to eq('2.2.0.rc.1')
+          context 'has correct version{2.2.0.rc.1}' do
+            it 'as defined by {Bundler}' do
+              expect(::Bundler::VERSION).to eq('2.2.0.rc.1')
+            end
+            it 'as defined by {Gem}' do
+              expect(Gem::BundlerVersionFinder.bundler_version.to_s).to eq(::Bundler::VERSION)
+            end
           end
           it 'does not requires sudo' do
             expect(::Bundler.requires_sudo?).to eq(false)

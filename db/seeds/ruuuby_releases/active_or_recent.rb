@@ -119,7 +119,7 @@
 @v0_0_45.spawn_kclass_method(@f15, 'spawn_version_update', 'RuuubyGem')
 @v0_0_45.spawn_kclass_methods(@f15, 'ApplicationRecord', %w(orm_Ⓣ_🐍 empty?))
 @v0_0_45.spawn_kclass_methods(@f22, 'Ruuuby::MetaData::RuuubyEngine', %w(num_cpu_cores current_user get_compiled_code))
-@v0_0_45.spawn_kclass_method(@f31, 'validate_attribute', '💎.engine.api_git')
+@v0_0_45.spawn_kclass_method(@f31, '∃attribute?', '💎.engine.api_git')
 @v0_0_45.spawn_kclass_method(@f35, 'percentage_error', 'Math::Stats::Descriptive')
 @v0_0_45.spawn_kclass_methods(@f35, 'TimeSeriesData', %w(ρ flags mape normalize! print_debugging first last λ Λ has_zero? has_negative? normalized? even? strictly_increasing? strictly_decreasing? all_same?))
 
@@ -148,5 +148,22 @@
 # (Refinements)
 @v0_0_46.spawn_kclass_methods(@f37, 'Math::Algebra::Tropical::ContextNumeric', %w(⨁ ⨂))
 @v0_0_46.spawn_kclass_methods(@f37, 'Math::Algebra::Tropical::ContextMatrix', %w(⨁ ⨁! ⨂ ⨂ⁿ))
-@v0_0_46.save!
-💎.engine.orm.ruuuby_release_obj_curr = @v0_0_46
+
+@v0_0_47 = ::RuuubyRelease.spawn(0, 0, 47)
+@v0_0_47.path_added('lib/ruuuby/math/finance/benchmarks', '', 'not currently utilized, just file added early', @f10)
+@v0_0_47.path_added('lib/ruuuby/heuristics', 'Ruuuby::', 'same as above description', @f10)
+@v0_0_47.update_gem(::RuuubyGem.find_by_name('rake-compiler'), '1.1.1')
+@v0_0_47.update_gem(::RuuubyGem.find_by_name('rubygems-update'), '3.2.0.rc.1')
+@v0_0_47.add_comments(
+    [
+        'add T e C h D e B t ♪~ ᕕ(ᐛ)ᕗ',
+    ]
+)
+@v0_0_47.spawn_kclass_methods(@f10, 'Matrix', %w(ᵀ))
+@v0_0_47.spawn_kclass_methods(@f12, 'File::CSV', %w(read))
+@v0_0_47.spawn_kclass_methods(@f22, '💎.engine.api', %w(pid_terminate))
+@v0_0_47.spawn_kclass_methods(@f22, '💎.engine.api_locale', %w(iconv_version iconv_supported_encodings))
+@v0_0_47.spawn_kclass_methods(@f38, 'TimeSeriesData', %w(Q₁ Q₃ IQR outliers_lower outliers_upper boundary_outliers_min boundary_outliers_max sum_squared sum_of_squares sum_weighted mean_weighted mean_geometric nᵗʰ_percent_rank healthy?))
+@v0_0_47.spawn_kclass_methods(@f38, 'PseudoGraph', %w([] set_edge set_edge_inverse num_nodes empty? free_memory print_debugging))
+@v0_0_47.save!
+💎.engine.orm.ruuuby_release_obj_curr = @v0_0_47

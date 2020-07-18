@@ -9,6 +9,8 @@ require 'ruuuby'
 $ruuuby = 💎
 using ::Math::Algebra::Tropical::ContextNumeric
 using ::Math::Algebra::Tropical::ContextMatrix
+using ::ThetaAngle::ContextRuuuby
+using ::ThetaAngle::ContextParamCheck
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.

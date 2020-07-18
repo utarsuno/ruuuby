@@ -1,3 +1,8 @@
+# encoding: UTF-8
+
+class MockString < ::String; end # :nodoc:
+class MockTrue < ::TrueClass; end # :nodoc:
+class MockFalse < ::FalseClass; end # :nodoc:
 
 # utilized for setting up additional, clearer, test scenarios
 class QAClass

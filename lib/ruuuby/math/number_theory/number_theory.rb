@@ -6,14 +6,14 @@ module ::Math
     module ℤ³
       refine ::Integer do
         # @param [Integer, Numeric] b
-        # @param [Integer, Numeric] mod (must not be 0)
+        # @param [Integer]          mod (must not be 0)
         #
-        # @raise [ArgumentError] if b is not ∈ ℤ or mod is not ∈ ℤ
+        # @raise [ArgumentError, DescriptiveStandardError]
         #
         # @return [Boolean] true, if `self ≡ b (mod c)`
         def ≡(b: ∞, mod: ∞)
           🛑num❓(:b, b, :∈ℤ)
-          🛑 ::Ruuuby::ParamErr::throw('Integer', 'congruent?', 'mod', ::Integer, mod) unless (mod.int? && mod != 0)
+          🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "provided param mod{#{mod.to_s}} was either non-int or equal to val{0}") unless (mod.int? && mod != 0)
           (self.modulo(mod)) == (b.modulo(mod))
         end
       end

@@ -38,8 +38,8 @@ RSpec.describe 'ary' do
         end
       end
       it 'detects bad param' do
-        expect{%w().≈≈ nil}.to raise_exception(ArgumentError, "| c{Array}-> m{≈≈} got arg(them) w/ type{NilClass}, required-type{Array} |")
-        expect{[1, nil, 'abc'].≈≈({})}.to raise_exception(ArgumentError, "| c{Array}-> m{≈≈} got arg(them) w/ type{Hash}, required-type{Array} |")
+        expect{%w().≈≈ nil}.to raise_exception(::Ruuuby::PrmErrAry, "| c{Array}-> m{≈≈} got arg(them) w/ type{NilClass}, required-type{Array} |")
+        expect{[1, nil, 'abc'].≈≈({})}.to raise_exception(::Ruuuby::PrmErrAry, "| c{Array}-> m{≈≈} got arg(them) w/ type{Hash}, required-type{Array} |")
       end
     end
 

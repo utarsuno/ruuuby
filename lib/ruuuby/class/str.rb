@@ -39,7 +39,7 @@ module ::Ruuuby
         # @param [String]         stop_at
         # @param [Integer, Float] num_matches (default: 1), use value{-1} or{∞} to have no limit on matches
         #
-        # @raise [WrongParamType, RuntimeError] thrown when arg(terminating_pattern) was not found in self
+        # @raise [ArgumentError, RuntimeError] thrown when arg(terminating_pattern) was not found in self
         #
         # @return [String] self, with all content (leading up to arg{terminating_pattern}) removed
         def remove_until(stop_at, num_matches=1)
@@ -73,7 +73,7 @@ module ::Ruuuby
         # @param [String]         stop_at
         # @param [Integer, Float] num_matches (default: 1), use value{-1} or{∞} to have no limit on matches
         #
-        # @raise [WrongParamType, RuntimeError]
+        # @raise [ArgumentError, RuntimeError]
         #
         # @return [String] self, with all content (leading up to arg{stop_at}) removed, searched from reversed order and then returned back in original order
         def ♻️⟵(stop_at, num_matches=1)
@@ -83,14 +83,14 @@ module ::Ruuuby
 
         # @param [String]
         #
-        # @raise [WrongParamType, RuntimeError] thrown when arg(terminating_pattern) was not found in self
+        # @raise [ArgumentError, RuntimeError] thrown when arg(terminating_pattern) was not found in self
         #
         # @return [String] self, with all content (leading up to arg{terminating_pattern}) removed
         def remove_until_last(stop_at) ; self.remove_until(stop_at, -1) ; end
 
         # @param [String]  start the text that this string start with
         #
-        # @raise [WrongParamType]
+        # @raise [ArgumentError]
         #
         # @return [String] the original string with the starting text added if at least partially missing prior
         def ensure_start!(start)
@@ -109,7 +109,7 @@ module ::Ruuuby
 
         # @param [String] ending the text that this string should end with
         #
-        # @raise [WrongParamType]
+        # @raise [ArgumentError]
         #
         # @return [String] the original string with ending-string added if missing prior
         def ensure_ending!(ending)
@@ -132,21 +132,21 @@ module ::Ruuuby
       module StringF09
         # @param [String] them
         #
-        # @raise [WrongParamType]
+        # @raise [ArgumentError]
         #
         # @return [Boolean] true, if this string instance contains the provided str
         def ∋?(them); 🛑str❓(:them, them) ; self.include?(them); end
 
         # @param [String] them
         #
-        # @raise [WrongParamType]
+        # @raise [ArgumentError]
         #
         # @return [Boolean] true, if this string instance contains the provided str
         def ∌?(them); 🛑str❓(:them, them) ; not self.include?(them); end
 
         # @param [String, Array, Set] them
         #
-        # @raise [WrongParamType]
+        # @raise [ArgumentError]
         #
         # @return [Boolean] true, if this string instance is not contained in the provided str (or array/set)
         def ∉?(them)
@@ -156,7 +156,7 @@ module ::Ruuuby
 
         # @param [String, Array, Set] them
         #
-        # @raise [WrongParamType]
+        # @raise [ArgumentError]
         #
         # @return [Boolean] true, if this string instance is contained in the provided str (or array/set)
         def ∈?(them)
@@ -179,7 +179,7 @@ module ::Ruuuby
           false
         end
 
-        # @raise [WrongParamType]
+        # @raise [ArgumentError]
         #
         # @return [Numeric, Symbol, ThetaAngle]
         def to_num
@@ -207,7 +207,6 @@ module ::Ruuuby
             when '+', '-'
               if self.₁.digit?   ; return Integer(self)
               elsif self.₁?('π') ; return (self.₀?('-')) ? (-::Math::PI) : (::Math::PI)
-              elsif self.₁?('γ') ; return (self.₀?('-')) ? (-::Float::CONST_EULER_MASCHERONI) : (::Float::CONST_EULER_MASCHERONI)
               else               ;  🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
               end
             else

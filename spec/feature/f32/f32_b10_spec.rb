@@ -69,9 +69,9 @@ RSpec.describe 'f32_b10' do
             end
           end
           it 'cases: error' do
-            expect{fℤ².gcd(18, 30.1)}.to raise_error(ArgumentError)
-            expect{fℤ².gcd(18.2, 30)}.to raise_error(ArgumentError)
-            expect{fℤ².gcd(nil, nil)}.to raise_error(ArgumentError)
+            expect{fℤ².gcd(18, 30.1)}.to raise_error(::ArgumentError)
+            expect{fℤ².gcd(18.2, 30)}.to raise_error(::ArgumentError)
+            expect{fℤ².gcd(nil, nil)}.to raise_error(::ArgumentError)
           end
 
         end

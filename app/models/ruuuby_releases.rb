@@ -32,8 +32,8 @@ class ::RuuubyRelease < ApplicationRecord
 
   def self.spawn(major, minor, tiny, description=nil); ::RuuubyRelease.create!(vmajor: major, vminor: minor, vtiny: tiny, description: description); end
 
-  def add_gem(gem_name, gem_version, for_development, for_runtime, tags, ref_source, ref_version)
-    the_gem = ::RuuubyGem.spawn(gem_name, gem_version, for_development, for_runtime, tags, ref_source, ref_version,self)
+  def add_gem(gem_name, gem_version, flag_metadata, tags, ref_source, ref_version)
+    the_gem = ::RuuubyGem.spawn(gem_name, gem_version, flag_metadata, tags, ref_source, ref_version, self)
     unless self.ruuuby_gems.include?(the_gem)
       self.ruuuby_gems << the_gem
     end
@@ -206,7 +206,7 @@ class ::RuuubyRelease < ApplicationRecord
 
   # @param [String] version_str the version UID of the RuuubyRelease with or without the starting 'v'
   #
-  # @raise [WrongParamType]
+  # @raise [ArgumentError]
   #
   # @return [Array] new array with 3 elements for each corresponding version identifying component
   def self.parse_uid_str(version_str)

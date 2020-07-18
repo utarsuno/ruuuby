@@ -7,7 +7,6 @@ BEGIN {
   # add these methods onto the `main` object (similar to adding methods to `Kernel`, but of smaller scope to avoid polluting other Classes)
   class << self
     include(
-        ::Ruuuby::Feature::Extendable::MainF28,
         ::Math::Trig
     )
 

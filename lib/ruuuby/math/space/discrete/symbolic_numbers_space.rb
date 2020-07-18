@@ -8,7 +8,7 @@ module ::Math
 
     class SymbolicNumbersSpace < ::Math::Space::TypesSpaceⓣ¹
 
-      module ContextStrParsing
+      module ContextStr
         refine ::String do
 
           def symbolic?
@@ -40,12 +40,8 @@ module ::Math
             π: ::Math::PI,
             ℮: ::Math::E,
             𝚽: ::Float::RATIO_GOLDEN,
-            Ψ: ::Float::RATIO_GOLDEN_SUPER,
-            ρ: ::Float::RATIO_PLASTIC,
-            δ: ::Float::RATIO_SILVER,
             Ⴔ: ::Math::ANGLE_GOLDEN,
             𝞽: ::Math::ANGLE_TAU,
-            γ: ::Float::CONST_EULER_MASCHERONI,
             Ω: ::Float::CONST_OMEGA,
             ½: ::Float::ONE_HALF,
             ⅓: ::Float::ONE_THIRD,
@@ -71,12 +67,8 @@ module ::Math
             π: ::Math::PI,
             ℮: ::Math::E,
             𝚽: ::Float::RATIO_GOLDEN,
-            Ψ: ::Float::RATIO_GOLDEN_SUPER,
-            ρ: ::Float::RATIO_PLASTIC,
-            δ: ::Float::RATIO_SILVER,
             Ⴔ: ::Math::ANGLE_GOLDEN,
             𝞽: ::Math::ANGLE_TAU,
-            γ: ::Float::CONST_EULER_MASCHERONI,
             Ω: ::Float::CONST_OMEGA
         }
       end

@@ -27,8 +27,6 @@ RSpec.describe 'f30_b02' do
             it 'for sub-classes' do
               expect(🧬.∃ᶜ?(:InnerClassDepth1, QAClass)).to eq(true)
               expect(🧬.∃ᶜ?(:InnerClassDepth1, QAModule)).to eq(true)
-
-              expect(🧬.∃ᶜ?(:WrongParamType, ::Ruuuby::ParamErr)).to eq(true)
             end
           end
           context 'cases: negative' do
@@ -54,8 +52,8 @@ RSpec.describe 'f30_b02' do
               expect{🧬.∃ᶜ?(5)}.to raise_error(ArgumentError)
             end
             it 'second arg: module_owner' do
-              expect{🧬.∃ᶜ?(:VERSION, 5)}.to raise_error(ArgumentError)
-              expect{🧬.∃ᶜ?(:VERSION, {})}.to raise_error(ArgumentError)
+              expect{🧬.∃ᶜ?(:VERSION, 5)}.to raise_error(::Ruuuby::DescriptiveStandardError)
+              expect{🧬.∃ᶜ?(:VERSION, {})}.to raise_error(::Ruuuby::DescriptiveStandardError)
             end
           end
         end
@@ -85,7 +83,6 @@ RSpec.describe 'f30_b02' do
               expect(🧬.∃ᵐ?(:QAModule)).to eq(true)
             end
             it 'for sub-modules' do
-              expect(🧬.∃ᵐ?(:ParamErr, ::Ruuuby)).to eq(true)
               expect(🧬.∃ᵐ?(:InnerModuleDepth1, QAClass)).to eq(true)
               expect(🧬.∃ᵐ?(:InnerModuleDepth1, QAModule)).to eq(true)
             end
@@ -123,8 +120,8 @@ RSpec.describe 'f30_b02' do
               expect{🧬.∃ᵐ?(5)}.to raise_error(ArgumentError)
             end
             it 'second arg: module_owner' do
-              expect{🧬.∃ᵐ?(:VERSION, nil)}.to raise_error(ArgumentError)
-              expect{🧬.∃ᵐ?(:VERSION, 5)}.to raise_error(ArgumentError)
+              expect{🧬.∃ᵐ?(:VERSION, nil)}.to raise_error(::Ruuuby::DescriptiveStandardError)
+              expect{🧬.∃ᵐ?(:VERSION, 5)}.to raise_error(::Ruuuby::DescriptiveStandardError)
             end
           end
         end
@@ -147,7 +144,7 @@ RSpec.describe 'f30_b02' do
           it 'for sub-classes' do
             expect{🧬.∃ᶜ?(:InnerClassDepth1, QAClass)}.to perform_very_quickly
             expect{🧬.∃ᶜ?(:InnerClassDepth1, QAModule)}.to perform_very_quickly
-            expect{🧬.∃ᶜ?(:WrongParamType, ::Ruuuby::ParamErr)}.to perform_very_quickly
+            expect{🧬.∃ᶜ?(:CurrencyMatrix, ::Math::Finance)}.to perform_very_quickly
           end
         end
         context 'cases: negative' do
@@ -174,7 +171,6 @@ RSpec.describe 'f30_b02' do
             expect{🧬.∃ᵐ?(:QAModule)}.to perform_very_quickly
           end
           it 'for sub-modules' do
-            expect{🧬.∃ᵐ?(:ParamErr, ::Ruuuby)}.to perform_very_quickly
             expect{🧬.∃ᵐ?(:InnerModuleDepth1, QAClass)}.to perform_very_quickly
             expect{🧬.∃ᵐ?(:InnerModuleDepth1, QAModule)}.to perform_very_quickly
           end

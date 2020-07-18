@@ -1,10 +1,12 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # modify the Ruby-'singleton' `ENV`
 class << ENV
 
+  # @return [Enumerator]
   def ∀(*args); self.each(*args); end
 
+  # @return [Enumerator]
   def ∀🔑(*args); self.each_key(*args); end
 
   # @return [Integer] the number of ENV_VARs (keys) found
@@ -25,9 +27,9 @@ class << ENV
 
   # @param [*] env_key_then_opts
   #
-  # @raise [RuntimeError]   when provided 1 arg and the key DNE
-  # @raise [WrongParamType] when a non-string type is provided for the first argument
-  # @raise [ArgumentError]  when no arguments, or too many were provided
+  # @raise [RuntimeError]  when provided 1 arg and the key DNE
+  # @raise [ArgumentError] when a non-string type is provided for the first argument
+  # @raise [ArgumentError] when no arguments, or too many were provided
   #
   # @return [String, *] the value found or (w/ 2 args) the default value provided
   def fetch🔑(*env_key_then_opts)

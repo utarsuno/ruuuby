@@ -14,11 +14,16 @@ module ::Ruuuby
     # `💎.engine.api`
     class RuuubyAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
 
-      def initialize(engine, api_brew)
+      # @param [*] engine
+      # @param [*] api_brew
+      # @param [Integer] default_timeout
+      def initialize(engine, api_brew, default_timeout)
+        🛑int❓('default_timeout', default_timeout, :∈ℕ)
         super(engine)
-        @path_openssl = nil
-        @gem_tty      = nil
-        @api_brew     = api_brew
+        @path_openssl    = nil
+        @gem_tty         = nil
+        @api_brew        = api_brew
+        @default_timeout = default_timeout
       end
 
       def path_openssl
@@ -30,7 +35,7 @@ module ::Ruuuby
       end
 
       def run_cmd(cmd)
-        out, err = self.get_tty.run(cmd, timeout: 6, pty: false)
+        out, err = self.get_tty.run(cmd, timeout: @default_timeout, pty: false)
         return out, err
       end
 
@@ -49,7 +54,7 @@ module ::Ruuuby
       #
       # TODO: useful cmd: ps -lww -p <PID>
       def run_cmd!(cmd)
-        out, err = self.get_tty.run(cmd, timeout: 6, pty: false)
+        out, err = self.get_tty.run(cmd, timeout: @default_timeout, pty: false)
         unless err.empty?
           raise "cmd{#{cmd.to_s}} encountered error{#{err.to_s}}"
         end
@@ -70,6 +75,14 @@ module ::Ruuuby
         else
           out
         end
+      end
+
+      # @param [Integer] pid_id
+      #
+      # @raise [ArgumentError]
+      def pid_terminate(pid_id)
+        🛑int❓('pid_id', pid_id, :∈ℕ)
+        self.run_cmd!("pkill -9 #{pid_id}")
       end
 
       def _calculate_version; 1337; end

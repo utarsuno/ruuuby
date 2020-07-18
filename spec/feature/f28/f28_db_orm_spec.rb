@@ -27,19 +27,19 @@ RSpec.describe 'f28_db_orm' do
             audit_feature_behavior(f28, f28_b00, 'b00', 'create float constant{𝚽}, golden-angle')
           end
           it 'has b01' do
-            audit_feature_behavior(f28, f28_b01, 'b01', 'create float constant{Ψ}, super-golden-ratio')
+            audit_feature_behavior(f28, f28_b01, 'b01', 'create float constant{RATIO_GOLDEN_SUPER}')
           end
           it 'has b05' do
-            audit_feature_behavior(f28, f28_b05, 'b05', 'create float constant{δ}, silver-ratio')
+            audit_feature_behavior(f28, f28_b05, 'b05', 'create float constant{RATIO_SILVER}')
           end
           it 'has b06' do
-            audit_feature_behavior(f28, f28_b06, 'b06', 'create float constant{ρ}, plastic-ratio')
+            audit_feature_behavior(f28, f28_b06, 'b06', 'create float constant{RATIO_PLASTIC}')
           end
           it 'has b007' do
             audit_feature_behavior(f28, f28_b07, 'b07', 'create float constant{Ω}, omega-constant')
           end
           it 'has b08' do
-            audit_feature_behavior(f28, f28_b08, 'b08', 'create float constant{γ}, euler mascheroni constant')
+            audit_feature_behavior(f28, f28_b08, 'b08', 'create float constant{CONST_EULER_MASCHERONI}')
           end
           it 'has b09' do
             audit_feature_behavior(f28, f28_b09, 'b09', 'create float constants for unicode characters representing rationals')

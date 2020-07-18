@@ -36,7 +36,7 @@ RSpec.describe 'f25' do
   end # end: {functionality}
 
   context 'audit', :audit do
-    context 'feature(f25) passes audits (tests not relating to observed functionality)' do
+    context 'feature(f25) passes audits' do
       context 'funcs provided are' do
         it 'defined in correct location' do
           expect_∃⨍_static(:engine, 💎)
@@ -47,6 +47,6 @@ RSpec.describe 'f25' do
           expect_∃⨍_static(:💎, ::Kernel)
         end
       end
-    end # end: {feature(f25) passes audits (tests not relating to observed functionality)}
+    end # end: {feature(f25) passes audits}
   end # end: {audit}
 end

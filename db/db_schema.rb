@@ -46,14 +46,11 @@ ActiveRecord::Schema.define do
     t.string :version_current, :null => false, unique: false
     t.string :version_latest, :null => true, unique: false
 
-    t.boolean :is_development, :null => false, unique: false
-    t.boolean :is_runtime, :null => false, unique: false
-
-    # | 0 | none |
-    # | 1 | development-only |
-    # | 2 | runtime-only |
+    # | 0 | none                    |
+    # | 1 | development-only        |
+    # | 2 | runtime-only            |
     # | 3 | development and runtime |
-    t.integer :flag_dependency_type, :null => true, unique: false
+    t.integer :flag_dependency_type, limit: 1, :null => true, unique: false
 
     t.string :ref_source, :null => true, unique: false
     t.string :ref_version, :null => true, unique: false

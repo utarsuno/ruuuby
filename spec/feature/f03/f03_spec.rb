@@ -24,7 +24,7 @@ RSpec.describe 'f03' do
   end
 
   context 'audit', :audit do
-    context 'feature(f03) passes audits (tests not relating to observed functionality)' do
+    context 'feature(f03) passes audits' do
       context 'funcs provided are defined in correct location' do
         it 'for c{Proc}' do
           expect_∃⨍(:𝔠, ::Proc)

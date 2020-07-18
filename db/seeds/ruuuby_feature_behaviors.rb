@@ -12,6 +12,14 @@
     ]
 )
 
+@f04.spawn_behaviors(
+    [
+        'Enumerable classes{ex: `Array`, `Set`, `String` have func{`∅?`}',
+        "'class' ENV and class{NilClass} have func{`∅?`}",
+        'classes: `File` & `Dir` have func{`∅?`}' # TODO: create a way to mark this behavior as hybrid/relating to feature 12
+    ]
+)
+
 @f05.spawn_behaviors(['offer func{>>} to class(`Array`)', 'offer func{>>} to class(`String`)'])
 
 @f06.spawn_behaviors(
@@ -31,18 +39,24 @@
 
 @f10.spawn_behaviors(
     [
-        '`🙈` to alias `private`',
-        '`🛡️` to alias `protected`',
-        '`🆕` to alias `new`',
+        'for class{`Module`}, alias func{`private`} as `🙈` & func{`protected`} as{`🛡️`}',
+        '`🆕` to alias `new` for class{`Class`}',
+        'part I/II  | for class{`Object`}, alias func{`object_id`} as{`🆔`}, func{`frozen`} as{`❄️`}, func{`frozen?`} as{`❄️?`}',
+        'part II/II | for class{`Object`}, alias func{`class`} as{`ⓣ`} & provide utility func{`Ⓣ`} to get self-class as a String',
         '`🏠` to alias `source_location` for `::Method`',
-        'alias `Math` funcs{`sqrt`, `cbrt`} w/ {`√`, `∛`}',
-        'alias `Math` funcs{`log_e`, `log2`, `log10`} w/ {`logₑ`, `log₂`, `log₁₀`}'
+        'part I/III   | for class{`Kernel`}, alias func{`rand`} as{`🎲`} & func{`raise`} as{`🛑`}',
+        'part II/III  | for class{`Kernel`}, alias `Math` funcs{`sqrt`, `cbrt`} w/ {`√`, `∛`}',
+        'part III/III | for class{`Kernel`}, alias `Math` funcs{`log_e`, `log2`, `log10`} w/ {`logₑ`, `log₂`, `log₁₀`}'
     ]
 )
 
 @f11.spawn_behaviors(['create module{SetTheory}', 'create class{Closure}', 'create class{NumberSet}'])
 
-@f12.spawn_behaviors(['offer Class aliases: {`📁` -> `File`}, {`🗄️` -> `Dir`}'])
+@f12.spawn_behaviors([
+                         'offer Class aliases: {`📁` -> `File`}, {`🗄️` -> `Dir`}',
+                         "offer a light layer over `Ruby's` loadable `CSV` data parsing"
+                     ]
+)
 
 @f22.spawn_behaviors(
     [
@@ -78,25 +92,26 @@
         'each ThetaAngle representation has a corresponding static function which calls the needed constructor',
         'vocabulary functions involving 2 ThetaAngle are provided in module {ThetaAngle::Pair}',
         'vocabulary functions involving 1 ThetaAngle are provided as funcs',
-        'offer `Refinement` w/ module{ThetaAngle::ContextStrParsing} for parsing `String` objs into `ThetaAngleAngle` objs',
+        'offer `Refinement` w/ module{ThetaAngle::ContextStr} for parsing `String` objs into `ThetaAngleAngle` objs',
         'implements `Comparable`',
         'offers functionality for `normalization`',
         'offers unary operators',
-        'offers math operators'
+        'offers math operators',
+        'offer `Refinement` w/ module{`ThetaAngle::ContextParamCheck`} for providing `f06` but for context of this feature'
     ]
 )
 
 @f28.spawn_behaviors(
     [
         'create float constant{𝚽}, golden-angle',
-        'create float constant{Ψ}, super-golden-ratio',
+        'create float constant{RATIO_GOLDEN_SUPER}',
         'alias float constant{℮}',
         'alias float constant{π}, pie',
         'alias float constant{∞}, infinity',
-        'create float constant{δ}, silver-ratio',
-        'create float constant{ρ}, plastic-ratio',
+        'create float constant{RATIO_SILVER}',
+        'create float constant{RATIO_PLASTIC}',
         'create float constant{Ω}, omega-constant',
-        'create float constant{γ}, euler mascheroni constant',
+        'create float constant{CONST_EULER_MASCHERONI}',
         'create float constants for unicode characters representing rationals',
         'create ThetaAngle constant{𝞽}, tau',
         'create ThetaAngle constant{Ⴔ}, golden angle',
@@ -159,6 +174,8 @@
         'offer functionality for time-series calculations',
         'offer functionality for health-checks w/ `bitwise meta-data flags`',
         'offer functionality for various styles of `normalization`',
+        'offer functionality for `IQR`/`quartile` based calculations, such as one of the many equations utilized to find `outliers`',
+        'detect if data consists of only `Integers` which thus allows for various optimizations'
     ]
 )
 
@@ -166,6 +183,7 @@
     [
         'create class `PseudoGraph`',
         'offer `Graph` classes the ability to transform to/from a `Matrix` representations',
+        'offer functionality for tracking various `Graph statistics`, especially those that can help determine which algorithm to use depending on the properties on the data-set'
     ]
 )
 

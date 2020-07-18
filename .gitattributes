@@ -26,3 +26,4 @@
 *.txt diff=text text=text eol=lf
 *.text diff=text text=text eol=lf
 *.log diff=text text=text eol=lf
+*.csv diff=text text=text eol=lf

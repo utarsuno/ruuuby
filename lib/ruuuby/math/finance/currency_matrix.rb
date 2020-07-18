@@ -7,9 +7,11 @@ using ::Math::Algebra::Tropical::ContextMatrix
 
 module ::Math
 
-  module Forex
+  module Finance
 
     # @note: temporary implementation
+    #
+    # ‣ w/ `n` currencies there exists `n² - n` exchange rates
     class CurrencyMatrix
 
       attr_reader :labels, :data, :cached_stats

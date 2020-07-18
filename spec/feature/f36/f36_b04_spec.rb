@@ -11,10 +11,10 @@ RSpec.describe 'f36_b04' do
   end
 
   after :all do
-    expect{@data_all_same.free_memory}.to_not raise_error
-    expect{@data.free_memory}.to_not raise_error
-    expect{@data_leet.free_memory}.to_not raise_error
-    expect{@data_simple.free_memory}.to_not raise_error
+    expect{@data_all_same.♻️}.to_not raise_error
+    expect{@data.♻️}.to_not raise_error
+    expect{@data_leet.♻️}.to_not raise_error
+    expect{@data_simple.♻️}.to_not raise_error
     @data_predicted = nil
   end
 
@@ -72,13 +72,26 @@ RSpec.describe 'f36_b04' do
               expect(data.normalized?).to eq(false)
               data.normalize!
               expect(data.normalized?).to eq(true)
-              expect{data.free_memory}.to_not raise_error
+              expect{data.♻️}.to_not raise_error
             end
             it 'cases: negative' do
               expect(@data_simple.normalized?).to eq(false)
               expect(@data.normalized?).to eq(false)
               expect(@data_all_same.normalized?).to eq(false)
               expect(@data_leet.normalized?).to eq(false)
+            end
+          end
+        end # end: {func{normalized?}}
+
+        context 'func{healthy?}' do
+          context 'handles needed scenarios' do
+            it 'cases: positive' do
+              expect(@data_simple.healthy?).to eq(true)
+              expect(@data.healthy?).to eq(true)
+            end
+            it 'cases: negative' do
+              expect(@data_all_same.healthy?).to eq(false)
+              expect(@data_leet.healthy?).to eq(false)
             end
           end
         end
@@ -99,6 +112,7 @@ RSpec.describe 'f36_b04' do
           expect_∃⨍(:strictly_decreasing?, ::TimeSeriesData)
           expect_∃⨍(:all_same?, ::TimeSeriesData)
           expect_∃⨍_with_alias(:normalized?, :η̂?, ::TimeSeriesData)
+          expect_∃⨍(:healthy?, ::TimeSeriesData)
         end
       end
     end

@@ -65,7 +65,11 @@ module ::Ruuuby
 
       # @param [String] attribute_key
       # @param [Hash]   expected_key_val_pairs
-      def validate_attribute(attribute_key, expected_key_val_pairs)
+      #
+      # @raise [ArgumentError]
+      #
+      # @return [Boolean]
+      def ∃attribute?(attribute_key, expected_key_val_pairs)
         🛑str❓('attribute_key', attribute_key)
         🛑hsh❓('expected_key_val_pairs', expected_key_val_pairs)
         result = @repo.fetch_attributes(attribute_key)

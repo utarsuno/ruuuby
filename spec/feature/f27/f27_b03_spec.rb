@@ -1,4 +1,7 @@
-# coding: UTF-8
+# encoding: UTF-8
+
+using ::ThetaAngle::ContextRuuuby
+using ::ThetaAngle::ContextParamCheck
 
 RSpec.describe 'f27_b03' do
 

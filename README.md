@@ -4,13 +4,13 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.46'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.47'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
 | `JIT` testing | ```RUBYOPT="--jit --jit-warnings --jit-wait --jit-max-cache=1337 --jit-verbose=2 --jit-debug -w" ./bin/console``` |
 
-### Example
+### Examples
 
 ```ruby
 # true, true
@@ -42,6 +42,9 @@ elements_b = [nil, 2, 2, 'a', 1, []]
 
 # [false, true, false, true]
 [ℕ.∋?(-5), ℤ.∋?(7.0), ℝ.∋?(∞), ℚ.∋?(Rational(2, 3))]
+
+# true
+Matrix[[1,3,5],[2,4,6]].ᵀ == Matrix[[1,2],[3,4],[5,6]]
 
 # [1, 4, 2]
 [1, 2, 3].⨁ [3, 4]
@@ -84,23 +87,34 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Complex`  | `1337i^²` | `<= 75% slower` |
 | `BigDecimal` | `inc` | `inc` | `inc` |
 | `ThetaAngle` | `inc` | `inc` | outputs to unit: `steradian` (depending on input) |
+| `Matrix`     | `inc` | `inc` | |
 | `Quaternion` | `inc` | `inc` | |
 | `℮` | `inc` | `inc` |
+
+### Refinements:
+
+| Base Context | added under | applies to | funcs/aliases added            |
+| ------------ | ----------- | -----------| ------------------------------ |
+| `ThetaAngle` | `ContextStr`        | `String`   | ex: `ʳ?`, `ᵍ?`, `ʳ`, `ᵍ`       |
+| `ThetaAngle` | `ContextRuuuby`     | `Object`   | <ul><li><em>ex:</em> `θ°`, `θʳ`, `θᵍ`, `θ𝞽`</li><li><em>global-const: `𝞽`</em></li></ul> |
+| `ThetaAngle` | `ContextParamCheck` | `Object`   | `θ?`, `🛑θ❓`, `🛑θs❓`       |
+| `Math::Algebra::Tropical` | `ContextNumeric` | `Numeric` | `⨁`, `⨂`              |
+| `Math::Algebra::Tropical` | `ContextMatrix`  | `Matrix`  | `⨁`, `⨁!`, `⨂`, `⨂ⁿ` |
+| `Math::NumberTheory`      | `ℤ³`             | `Integer` | `≡` |
 
 ### TOPLEVEL_BINDING Modifications:
 
 | func(s) added | notes |
 | ---: | :--- |
-| `℮`, `logₑ`, `log₂`, `log₁₀`, `√`, `∛`<br/>`¼`, `½`, `¾`, `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒`<br/>`π`, `Ⴔ`, `∞`, `∞ℂ`, `γ` | |
+| `℮`, `logₑ`, `log₂`, `log₁₀`, `√`, `∛`<br/>`¼`, `½`, `¾`, `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒`<br/>`π`, `Ⴔ`, `∞`, `∞ℂ` | |
 | `📁`, `🗄️` | `File`, `Dir` |
 | `📅`, `🕒`, `📅🕒` | `Date`, `Time`, `DateTime` |
-| `θ°`, `θʳ`, `θᵍ`, `θ𝞽` | `ThetaAngle` |
 
 #### Math Modules:
 
 | module(s) | sub-module | func(s) added |
 | ------: | :----: | :---------------- |
-| `Math` | | `τ²_in_golden_ratio?`, `τ²_in_super_golden_ratio?` |
+| `Math` | `Ratio` | `golden?`, `super_golden?` |
 | `Trig` | | `cot²`, `cos²`, `sin²`, `tan²`, `sec²`, `csc²` |
 | `Trig` | `ℕ³` | `pythagorean?` |
 | `NumberTheory` | | `semiprime?` |
@@ -121,7 +135,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | context        | context      | sample functionality |
 | -------------: | :----------: | :------ |
 | `Trigonometry` | <em>class:</em> `ThetaAngle` | <ul><li>`°?`⟶`degrees?`, `°`⟶`as_degree`, `ʳ?`⟶`radians?`, `ʳ`⟶`as_radian`</li><li>`∅?`⟶`zero?`, `⦜?`⟶`right?`, `○?`⟶`perigon?`</li><li>`η̂?`⟶`normal?`, `η̂!`⟶`normalize!`</li></ul> |
-| `Statistics`   | <em>class:</em> `TimeSeriesData` | <ul><li>`μ`⟶`mean`, `x̃`⟶`median`, `σ`⟶`std_dev`, `σ²`⟶`variance`,</li><li>`ρ`⟶`pearson_correlation_coefficient`, `mse`⟶`mean_square_of_errors`, `mape`⟶`mean_absolute_percentage_error`</li><li>`λ`⟶`scale_by_addition`, `Λ`⟶`scale_by_multiplication`</li><li>`η̂?`⟶`normalized?`, `η̂!`⟶`normalize!`</li><li>`mem_size`, `free_memory`</li></ul> |
+| `Statistics`   | <em>class:</em> `TimeSeriesData` | <ul><li>`μ`⟶`mean`, `x̃`⟶`median`, `σ`⟶`std_dev`, `σ²`⟶`variance`,</li><li>`ρ`⟶`pearson_correlation_coefficient`, `mse`⟶`mean_square_of_errors`, `mape`⟶`mean_absolute_percentage_error`</li><li>`λ`⟶`scale_by_addition`, `Λ`⟶`scale_by_multiplication`</li><li>`η̂?`⟶`normalized?`, `η̂!`⟶`normalize!`</li><li>`mem_size`, `free_memory`</li><li>`Q₁`, `Q₂`, `Q₃`, `IQR`, `outliers_lower`, `outliers_upper`</li></ul> |
 | `NumberTheory::𝕎¹` | <em>singleton-objs of class:</em> `Math::Expr::Sequence` | <ul><li>`seq_pronic`, `seq_fibonacci`, `seq_lucas`, `seq_square`, `seq_triangle`, `seq_hexagonal`</li></ul> |
 | `Forex`        | <em>class: `CurrencyMatrix`</em> | |
 | `GraphTheory`  | <em>class:</em> `PseudoGraph` | |
@@ -135,7 +149,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `File`                 | `dirname²`, `replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` |
 | `Dir`                  | `η̂_paths`                           |
 | `File`, `Dir`, `ENV`, `NilClass`, `Vector` | `∅?`            |
-| `Object`               | <ul><li>`Ⓣ`, `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `θ?`, `matrix?`, `vec?`</li><li>`🛑bool❓`, `🛑int❓`, `🛑flt❓`, `🛑num❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`, `🛑θ❓`</li></ul> |
+| `Object`               | <ul><li>`Ⓣ`, `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `matrix?`, `vec?`</li><li>`🛑bool❓`, `🛑int❓`, `🛑flt❓`, `🛑num❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`</li></ul> |
 | `Array`, `Set`         | `remove_empty!`                     |
 | `String`               | <ul><li>`♻️⟵`, `♻️⟶`, `♻️⟶∞`</li><li>`⬇?`⟶`downcase?`, `⬆?`⟶`upcase?`, `⬇!`⟶`downcase!`, `⬆!`⟶`upcase!`</li><li>`🐫?`, `🐫⬇?`, `to_🐫`<br/>`🐍⬆?`, `🐍?`, `to_🐍`</li><li>`digit?`, `to_num`, `to_num?`, `palindrome?`</li><li>`as_utf8`, `iso8601?`, `to_iso8601`, `as_iso8601`</li><li>`∋?`, `∌?`, `∈?`, `∉?`</li></ul> |
 | `Array`, `String`      | `η̂!`                               |
@@ -150,33 +164,33 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 #### Common Aliases:
 
-| for                    | base method(s) reference(s)               | alias(es)                  |
-| ---------------------: | ----------------------------------------- | -------------------------- |
-| `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲`                |
-| `Object`               | `object_id`, `class`, `freeze`, `frozen?` | `🆔`, `ⓣ`, `❄️`, `❄️?`   |
+| for                    | base method(s) reference(s)               | alias(es)                |
+| ---------------------: | ----------------------------------------- | ------------------------ |
+| `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲` |
+| `Object`               | `object_id`, `class`, `freeze`, `frozen?` | `🆔`, `ⓣ`, `❄️`, `❄️?` |
 | `Module`               | `private`, `protected`, `const_defined?`, `private_method_defined?`, `protected_method_defined?` | `🙈`, `🛡️`, `∃const?`, `∃🙈⨍`, `∃🛡️⨍?` |
-| `Class`                | `new`                                     | `🆕`                       |
-| `String`, `Symbol`     | `upcase`, `downcase`                      | `⬆`, `⬇`                  |
-| `Array`                | `tally`, `↩∀`                             | `📊`, `reverse_each`       |
-| `Array`, `Hash`, `Set` | `each`                                    | `∀`                        |
-| `Array`, `String`      | `reverse`, `reverse!`                     | `↩`, `↩!`                  |
-| `Enumerable`           | `map`, `each_with_index`                  | `⨍`, `∀ₓᵢ`                 |
-| `Hash`                 | `key?`                                    | `∃🔑?`                     |
-| `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`                       |
+| `Class`                | `new`                                     | `🆕` |
+| `String`, `Symbol`     | `upcase`, `downcase`                      | `⬆`, `⬇` |
+| `Array`                | `tally`, `↩∀`                             | `📊`, `reverse_each`|
+| `Array`, `Hash`, `Set` | `each`                                    | `∀` |
+| `Array`, `String`      | `reverse`, `reverse!`                     | `↩`, `↩!` |
+| `Enumerable`           | `map`, `each_with_index`                  | `⨍`, `∀ₓᵢ` |
+| `Hash`                 | `key?`                                    | `∃🔑?` |
+| `NilClass`, `Hash`, `Array`, `String`, `Set` | `empty?`            | `∅?`|
 | `String`, `Array`, `Set`, `Hash`, `Proc` | `length` (`arity` for `Proc`) * | `𝔠` |
-| `Matrix`               | `square?`, `row_count`, `column_count`    | `▣?`, `num_rows`, `num_cols` |
+| `Matrix`               | `square?`, `tranpose`, `row_count`, `column_count` | `▣?`, `ᵀ`, `num_rows`, `num_cols` |
 
 ---
 
 ### Code Base Statistics:
 | category    | attribute       | value(s)         | # of  |
 | ----------: | :-------------: | ---------------: | :---- |
-| `QA`        | `unit`          | `1301`           | tests (for core functionality) |
+| `QA`        | `unit`          | `1326`           | tests (for core functionality) |
 | `QA`        | `integration`   | `23`             | tests (for state/functionality checks on grouped features/components) |
 | `QA`        | `performance`   | `147`:`85`       | tests{`non_numeric`,`numeric`} (for runtime performance) |
-| `QA`        | `DB`            | `274`            | tests (for `DB` & `ORM`) |
-| `CI`        | `audit`         | `161`            | tests (for anything non-functionality based) |
-| `CI`        | `locale`        | `75`:`19`        | local config tests{`core`:`excessive_checks`} |
+| `QA`        | `DB`            | `285`            | tests (for `DB` & `ORM`) |
+| `CI`        | `audit`         | `168`            | tests (for anything non-functionality based) |
+| `CI`        | `locale`        | `76`:`23`        | local config tests{`core`:`excessive_checks`} |
 | `tech-debt` | `coverage`      | `13`             | tests (for tracking missing functionality) |
 | `structure` | `features`      | `1`:`31`:`9`:`4` | features{`stable`:`wip`:`⚠️`:`todo`} |
 | `coverage`  | `LOCs`          | `???`            | `wip` |
@@ -193,11 +207,11 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `rugged` | [`1.0.1`](https://rubygems.org/gems/rugged) | ✅, ❌ | `GIT` |
 | `rdoc` | [`6.2.1`](https://rubygems.org/gems/rdoc) | ✅, ❌ | `DOC` |
 | `bundler` | [`2.2.0.rc.1`](https://rubygems.org/gems/bundler) | ✅, ❌ | `CI` |
-| `rubygems-update` | [`3.1.4`](https://rubygems.org/gems/rubygems-update) | ✅, ❌ | `CI` |
+| `rubygems-update` | [`3.2.0.rc.1`](https://rubygems.org/gems/rubygems-update) | ✅, ❌ | `CI` |
 | `rspec` | [`3.9.0`](https://rubygems.org/gems/rspec) | ✅, ❌ | `QA` |
 | `rspec-benchmark` | [`0.6.0`](https://rubygems.org/gems/rspec-benchmark) | ✅, ❌ | `QA` |
 | `rake` | [`13.0.1`](https://rubygems.org/gems/rake) | ✅, ❌ | `EXT` |
-| `rake-compiler` | [`1.1.0`](https://rubygems.org/gems/rake-compiler) | ✅, ❌ | `EXT` |
+| `rake-compiler` | [`1.1.1`](https://rubygems.org/gems/rake-compiler) | ✅, ❌ | `EXT` |
 | `sqlite3` | [`1.4.2`](https://rubygems.org/gems/sqlite3) | ✅, ❌ | `DB` |
 | `activerecord` | [`5.2.4.3`](https://rubygems.org/gems/activerecord) | ✅, ❌ | `DB` |
 | `schema_plus_foreign_keys` | [`0.1.8`](https://rubygems.org/gems/schema_plus_foreign_keys) | ✅, ❌ | `DB` |

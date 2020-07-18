@@ -1,34 +1,41 @@
 # encoding: UTF-8
 
+using ::ThetaAngle::ContextRuuuby
+using ::ThetaAngle::ContextParamCheck
+
 RSpec.describe 'module/math.rb' do
 
   context 'extends module{Math}' do
 
     context 'by adding needed functions & aliases' do
 
-      context 'func{τ²_in_golden_ratio?}' do
-        context 'handles needed scenarios' do
-          context 'cases: positive' do
-            it 'w/ regular data' do
-              expect(::Math.τ²_in_golden_ratio?(a: 1 + √(5), b: 2)).to eq(true)
+      context 'module{Math::Ratio}' do
+
+        context 'func{golden?}' do
+          context 'handles needed scenarios' do
+            context 'cases: positive' do
+              it 'w/ regular data' do
+                expect(::Math::Ratio.golden?(a: 1 + √(5), b: 2)).to eq(true)
+              end
+              it 'w/ ThetaAngles' do
+                expect(::Math::Ratio.golden?(a: θ°(360.0).° - Ⴔ.°, b: Ⴔ.°)).to eq(true)
+              end
             end
-            it 'w/ ThetaAngles' do
-              expect(::Math.τ²_in_golden_ratio?(a: θ°(360.0) - Ⴔ, b: Ⴔ)).to eq(true)
+            context 'cases: negative' do
+              it 'bad params' do
+                expect{::Math::Ratio.golden?(1, 2, 3)}.to raise_error(ArgumentError)
+                expect{::Math::Ratio.golden?(a: 1, b: 2, c: nil)}.to raise_error(ArgumentError)
+                expect{::Math::Ratio.golden?(1, a: 1, b: 2)}.to raise_error(ArgumentError)
+              end
+              it 'not τ² golden-ratio tuples' do
+                expect(::Math::Ratio.golden?(a: 1, b: 2)).to eq(false)
+                expect(::Math::Ratio.golden?(a: 1, b: 2.0)).to eq(false)
+              end
             end
           end
-          context 'cases: negative' do
-            it 'bad params' do
-              expect{::Math.τ²_in_golden_ratio?(1, 2, 3)}.to raise_error(ArgumentError)
-              expect{::Math.τ²_in_golden_ratio?(a: 1, b: 2, c: nil)}.to raise_error(ArgumentError)
-              expect{::Math.τ²_in_golden_ratio?(1, a: 1, b: 2)}.to raise_error(ArgumentError)
-            end
-            it 'not τ² golden-ratio tuples' do
-              expect(::Math.τ²_in_golden_ratio?(a: 1, b: 2)).to eq(false)
-              expect(::Math.τ²_in_golden_ratio?(a: 1, b: 2.0)).to eq(false)
-            end
-          end
-        end
-      end # end: {func{τ²_in_golden_ratio?}}
+        end # end: {func{golden?}}
+
+      end # end: {module{Math::Ratio}}
 
       context 'func{pythagorean??}' do
         context 'handles needed scenarios' do

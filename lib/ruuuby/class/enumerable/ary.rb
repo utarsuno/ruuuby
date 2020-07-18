@@ -105,7 +105,7 @@ module ::Ruuuby
         #
         # @param [Array] them
         #
-        # @raise [WrongParamType]
+        # @raise [ArgumentError]
         #
         # @return [Array] a new Array instance containing the relative complement between this array and the one provided
         def ∖(them); 🛑ary❓(:them, them); self - them; end

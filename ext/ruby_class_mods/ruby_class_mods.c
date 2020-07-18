@@ -315,7 +315,6 @@ static void internal_only_prepare_f16(void) {
 static inline void startup_step5_protect_against_gc(void) {
     rb_gc_register_address(& Ⓒset);
     rb_gc_register_address(& Ⓒbig_decimal);
-    //rb_global_variable(& ⓜparam_err);
     rb_gc_verify_internal_consistency();
 }
 
@@ -605,10 +604,10 @@ ________________________________________________________________________________
         if (power_to_raise_to != -1337) {
             const double val_self = NUM2DBL(self);
             if (isnan(val_self)) {
-                raise_err_runtime("c{Float}-> m{^} self{%"PRIsVALUE"} may not be raised to an exponential power |", self)
+                raise_err_runtime("| c{Float}-> m{^} self{%"PRIsVALUE"} may not be raised to an exponential power |", self)
             }
             if (val_self == 0.0 && power_to_raise_to < 0) {
-                raise_err_zero_division("c{Float}-> m{^} self{%"PRIsVALUE"} may not be raised to the negative power{%d} |", self, power_to_raise_to)
+                raise_err_zero_division("| c{Float}-> m{^} self{%"PRIsVALUE"} may not be raised to the negative power{%d} |", self, power_to_raise_to)
             }
             if (power_to_raise_to < 10) {
                 switch(power_to_raise_to) {
@@ -1727,7 +1726,6 @@ static inline void startup_step1_before_loading_extension(void) {
     💎add_module_under(ⓜruuuby, "Attribute")
     💎add_module_under(ⓜruuuby, "Includable")
     💎add_module_under(ⓜruuuby, "Extendable")
-    ⓜparam_err = 💎add_module_under(ⓜruuuby, "ParamErr")
 
     ⓜcombinatorics = 💎add_module_under(R_MATH, "Combinatorics")
     ⓜtrigonometry  = 💎add_module_under(R_MATH, "Trig")
@@ -1736,8 +1734,6 @@ static inline void startup_step1_before_loading_extension(void) {
 
     💎add_singleton_func_1args_to(ⓜnumber_theory, "nth_euler_totient", m_number_theory_eulers_totient_func)
     💎add_singleton_func_1args_to(ⓜnumber_theory, "semiprime?", m_number_theory_is_semiprime)
-
-    💎add_class_under(ⓜparam_err, R_ERR_ARG, "WrongParamType")
 
     ℤd1 = DBL2NUM(1.0);
     rb_gc_register_address(& ℤd1);
@@ -1775,8 +1771,16 @@ static void startup_step2_add_ruuuby_c_extensions(void) {
     init_f28_b09();
 #endif
 
+    init_f27_add_constants()
+
     init_f36()
-    init_f36_add_constants()
+    init_f36_b00()
+    init_f36_b01()
+    init_f36_b02()
+    init_f36_b03()
+    init_f36_b04()
+    init_f36_b05()
+    init_f36_b06()
     init_f37()
 
     💎add_const_flt("CONST_EULER_MASCHERONI", γ)
@@ -1948,16 +1952,17 @@ typedef struct Ruuuby_Engine_Stats {
         #endif
         #ifdef RUUUBY_F98_TIMER
             simple_timer_end(& (engine->simple_timer));
-
-            const uint64_t delta_us         = (engine->simple_timer.time_end.tv_sec - engine->simple_timer.time_start.tv_sec) * 1000000 + (engine->simple_timer.time_end.tv_nsec - engine->simple_timer.time_start.tv_nsec) / 1000;
-            const unsigned int delta_us_int = (unsigned int) delta_us;
-            💎set_instance_field(Ⓒruuuby_engine,UINT2NUM(delta_us_int),stats_ext_timer)
+            //const uint64_t delta_us         = (engine->simple_timer.time_end.tv_sec - engine->simple_timer.time_start.tv_sec) * 1000000 + (engine->simple_timer.time_end.tv_nsec - engine->simple_timer.time_start.tv_nsec) / 1000;
+            //const unsigned int delta_us_int = (unsigned int) delta_us;
+            //💎set_instance_field(Ⓒruuuby_engine,UINT2NUM(delta_us_int),stats_ext_timer)
+            💎set_instance_field(Ⓒruuuby_engine,UINT2NUM((unsigned int) ((engine->simple_timer.time_end.tv_sec - engine->simple_timer.time_start.tv_sec) * 1000000 + (engine->simple_timer.time_end.tv_nsec - engine->simple_timer.time_start.tv_nsec) / 1000)),stats_ext_timer)
         #endif
 
         rb_funcall(Ⓒruuuby_engine, rb_intern("print_ext_stats"), 0);
     }
 #endif // end: {RUUUBY_F98_DEBUG}
 
+// the `main function`, executes once on startup setting up `Ruuuby`
 void Init_ruby_class_mods(void) {
     RuuubyEngineStats ruuuby_engine;
 
@@ -1991,5 +1996,4 @@ void Init_ruby_class_mods(void) {
 
         engine_start_up_finished(& ruuuby_engine);
     #endif
-
 }

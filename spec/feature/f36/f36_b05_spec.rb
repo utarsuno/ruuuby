@@ -12,11 +12,11 @@ RSpec.describe 'f36_b05' do
   end
 
   after :all do
-    expect{@data_all_same.free_memory}.to_not raise_error
-    expect{@data.free_memory}.to_not raise_error
-    expect{@data_leet.free_memory}.to_not raise_error
-    expect{@data_leet_alt_order.free_memory}.to_not raise_error
-    expect{@data_normalized.free_memory}.to_not raise_error
+    expect{@data_all_same.♻️}.to_not raise_error
+    expect{@data.♻️}.to_not raise_error
+    expect{@data_leet.♻️}.to_not raise_error
+    expect{@data_leet_alt_order.♻️}.to_not raise_error
+    expect{@data_normalized.♻️}.to_not raise_error
   end
 
   context 'functionality' do
@@ -32,6 +32,8 @@ RSpec.describe 'f36_b05' do
             expect≈≈(@data.σ², 841.6666666666666)
             expect≈≈(@data.ρ, 1.0)
             expect≈≈(@data.sum, 4950.0)
+            expect≈≈(@data.sum², @data.sum ** 2)
+            expect≈≈(@data.sum_of_squares, 328350)
             expect≈≈(@data.min, 0.0)
             expect≈≈(@data.max, 99.0)
             expect≈≈(@data.range, 99.0)
@@ -45,6 +47,8 @@ RSpec.describe 'f36_b05' do
             expect≈≈(@data.σ², 1.0)
             expect≈≈(@data.ρ, 1.0)
             expect≈≈(@data.sum, 4.440892098500626e-15)
+            expect≈≈(@data.sum², @data.sum ** 2)
+            expect≈≈(@data.sum_of_squares, 98.99999999999999)
             expect≈≈(@data.min, -1.7062204191756356)
             expect≈≈(@data.max, 1.7062204191756356)
             expect≈≈(@data.range, 3.412440838351271)
@@ -57,6 +61,8 @@ RSpec.describe 'f36_b05' do
             expect≈≈(@data_leet.σ², 0.4545454545454546)
             expect≈≈(@data_leet.ρ, 0.7602631123499285)
             expect≈≈(@data_leet.sum, 14711.0)
+            expect≈≈(@data_leet.sum², 14711 ** 2)
+            expect≈≈(@data_leet.sum_of_squares, 19673961)
             expect≈≈(@data_leet.min, 1337.0)
             expect≈≈(@data_leet.max, 1339.0)
             expect≈≈(@data_leet.range, 2.0)
@@ -70,6 +76,8 @@ RSpec.describe 'f36_b05' do
             expect≈≈(@data_leet.σ², 1.0)
             expect≈≈(@data_leet.ρ, 0.7602631123499285)
             expect≈≈(@data_leet.sum, 1.6853185513809876e-12)
+            expect≈≈(@data_leet.sum², @data_leet.sum² ** 2)
+            expect≈≈(@data_leet.sum_of_squares, 10.0)
             expect≈≈(@data_leet.min, -0.5393598899704404)
             expect≈≈(@data_leet.max, 2.4271195048678247)
             expect≈≈(@data_leet.range, 2.966479394838265)
@@ -82,6 +90,8 @@ RSpec.describe 'f36_b05' do
             expect≈≈(@data_leet_alt_order.σ², 0.4545454545454546)
             expect≈≈(@data_leet_alt_order.ρ, -0.13416407864998736)
             expect≈≈(@data_leet_alt_order.sum, 14711.0)
+            expect≈≈(@data_leet_alt_order.sum², @data_leet_alt_order.sum ** 2)
+            expect≈≈(@data_leet_alt_order.sum_of_squares, 19673961)
             expect≈≈(@data_leet_alt_order.min, 1337.0)
             expect≈≈(@data_leet_alt_order.max, 1339.0)
             expect≈≈(@data_leet_alt_order.range, 2.0)
@@ -95,6 +105,8 @@ RSpec.describe 'f36_b05' do
             expect≈≈(@data_leet_alt_order.σ², 1.0)
             expect≈≈(@data_leet_alt_order.ρ, -0.13416407864998744)
             expect≈≈(@data_leet_alt_order.sum, 1.6859846851957627e-12)
+            expect≈≈(@data_leet_alt_order.sum², @data_leet_alt_order.sum² ** 2)
+            expect≈≈(@data_leet_alt_order.sum_of_squares, 10.0)
             expect≈≈(@data_leet_alt_order.min, -0.5393598899704404)
             expect≈≈(@data_leet_alt_order.max, 2.4271195048678247)
             expect≈≈(@data_leet_alt_order.range, 2.966479394838265)
@@ -115,19 +127,19 @@ RSpec.describe 'f36_b05' do
       context 'handles needed scenarios' do
         context 'cases: positive' do
           it 'w/ fixnum' do
-            data          = ::TimeSeriesData.new((0..9).to_a, 3)
-            prev_range    = data.range
-            prev_min      = data.min
-            prev_max      = data.max
-            prev_sum      = data.sum
-            prev_mean     = data.mean
-            prev_median   = data.median
-            prev_variance = data.variance
-            prev_std_dev  = data.std_dev
-            prev_ρ        = data.ρ
-            prev_flags     = data.flags
-            prev_len      = data.len
-            prev_even     = data.even?
+            data                = ::TimeSeriesData.new((0..9).to_a, 3)
+            prev_range          = data.range
+            prev_min            = data.min
+            prev_max            = data.max
+            prev_sum            = data.sum
+            prev_mean           = data.mean
+            prev_median         = data.median
+            prev_variance       = data.variance
+            prev_std_dev        = data.std_dev
+            prev_ρ              = data.ρ
+            prev_flags           = data.flags
+            prev_len            = data.len
+            prev_even           = data.even?
             expect(data.flags).to eq(data_flags_ts.combined_val('has_zero?', 'strictly_increasing?', 'even?'))
             data.λ(1337)
             expect(data.len).to eq(prev_len)
@@ -136,6 +148,8 @@ RSpec.describe 'f36_b05' do
             expect(data.min).to eq(prev_min + 1337)
             expect(data.max).to eq(prev_max + 1337)
             expect(data.sum).to eq(prev_sum + data.len * 1337)
+            expect(data.sum²).to eq(179962225.0)
+            expect(data.sum_of_squares).to eq(17996305.0)
             expect(data.variance).to eq(prev_variance)
             expect(data.std_dev).to eq(prev_std_dev)
             expect(data.ρ).to eq(prev_ρ)
@@ -143,7 +157,7 @@ RSpec.describe 'f36_b05' do
 
             expect(data.mean).to_not eq(prev_mean)
             expect(data.median).to_not eq(prev_median)
-            expect{data.free_memory}.to_not raise_error
+            expect{data.♻️}.to_not raise_error
           end
           it 'w/ float' do
             data          = ::TimeSeriesData.new((0..9).to_a, 3)
@@ -167,6 +181,8 @@ RSpec.describe 'f36_b05' do
             expect(data.min).to eq(prev_min + 1337)
             expect(data.max).to eq(prev_max + 1337)
             expect(data.sum).to eq(prev_sum + data.len * 1337)
+            expect(data.sum²).to eq(179962225.0)
+            expect(data.sum_of_squares).to eq(17996305.0)
             expect(data.variance).to eq(prev_variance)
             expect(data.std_dev).to eq(prev_std_dev)
             expect(data.ρ).to eq(prev_ρ)
@@ -174,7 +190,7 @@ RSpec.describe 'f36_b05' do
 
             expect(data.mean).to_not eq(prev_mean)
             expect(data.median).to_not eq(prev_median)
-            expect{data.free_memory}.to_not raise_error
+            expect{data.♻️}.to_not raise_error
           end
         end
         context 'cases: negative' do
@@ -200,6 +216,8 @@ RSpec.describe 'f36_b05' do
             prev_range    = data.range
             prev_min      = data.min
             prev_max      = data.max
+            prev_sum      = data.sum
+            prev_sum²     = data.sum²
             prev_mean     = data.mean
             prev_median   = data.median
             prev_variance = data.variance
@@ -214,6 +232,9 @@ RSpec.describe 'f36_b05' do
             expect(data.even?).to eq(prev_even)
             expect(data.min).to eq(prev_min)
             expect(data.max).to eq(prev_max * 2)
+            expect(data.sum).to eq(prev_sum * 2)
+            expect(data.sum²).to eq(prev_sum² * (2 ** 2))
+            expect(data.sum_of_squares).to eq(1140.0)
             expect(data.std_dev).to eq(prev_std_dev * 2)
             expect(data.ρ).to eq(prev_ρ)
             expect(data.flags).to eq(prev_flags)
@@ -221,13 +242,15 @@ RSpec.describe 'f36_b05' do
             expect(data.range).to_not eq(prev_range)
             expect(data.mean).to_not eq(prev_mean)
             expect(data.median).to_not eq(prev_median)
-            expect{data.free_memory}.to_not raise_error
+            expect{data.♻️}.to_not raise_error
           end
           it 'w/ float' do
             data          = ::TimeSeriesData.new((0..9).to_a, 3)
             prev_range    = data.range
             prev_min      = data.min
             prev_max      = data.max
+            prev_sum      = data.sum
+            prev_sum²     = data.sum²
             prev_mean     = data.mean
             prev_median   = data.median
             prev_variance = data.variance
@@ -242,15 +265,17 @@ RSpec.describe 'f36_b05' do
             expect(data.even?).to eq(prev_even)
             expect(data.min).to eq(prev_min)
             expect(data.max).to eq(prev_max * 2)
+            expect(data.sum).to eq(prev_sum * 2)
+            expect(data.sum²).to eq(prev_sum² * (2 ** 2))
+            expect(data.sum_of_squares).to eq(1140.0)
             expect(data.std_dev).to eq(prev_std_dev * 2)
             expect(data.ρ).to eq(prev_ρ)
             expect(data.flags).to eq(prev_flags)
-
             expect(data.variance).to_not eq(prev_variance)
             expect(data.range).to_not eq(prev_range)
             expect(data.mean).to_not eq(prev_mean)
             expect(data.median).to_not eq(prev_median)
-            expect{data.free_memory}.to_not raise_error
+            expect{data.♻️}.to_not raise_error
           end
         end
         context 'cases: negative' do

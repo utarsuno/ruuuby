@@ -23,7 +23,7 @@ ________________________________________________________________________________
     ensure_loaded_default(benchmark)\
     ensure_loaded_default(matrix)\
     ensure_loaded_default(net/http)\
-    ensure_loaded_default(socket)\
+    ensure_loaded_default(csv)\
 }
 
 #define startup_step0_load_f98_b02_3rd_party(){\
@@ -141,6 +141,14 @@ ________________________________________________________________________________
     💎add_singleton_func_1args_to(Ⓒtheta_angle, "new_turn", θ_m_init_as_trn)\
 }
 
+#define init_f27_add_constants(){\
+    rb_gc_adjust_memory_usage((size_t) (56 * 4));\
+    💎add_const_theta_angle("ANGLE_GOLDEN",   Ⴔ_RAD, THETA_MODE_RAD, cached_const_angle_golden, 0x7)\
+    💎add_const_theta_angle("ANGLE_TAU",      𝞽, THETA_MODE_RAD, cached_const_angle_tau, 0xE)\
+    💎add_const_theta_angle("ANGLE_RIGHT",    (π / 2.0), THETA_MODE_RAD, cached_const_angle_right, 0x7)\
+    💎add_const_theta_angle("ANGLE_STRAIGHT", π, THETA_MODE_RAD, cached_const_angle_straight, 0x7)\
+}
+
 /*   ___    ___       __           ____        __      __
    /'___\ /'___`\   /'_ `\        /\  _`\    /'__`\  /'_ `\
   /\ \__//\_\ /\ \ /\ \L\ \       \ \ \L\ \ /\ \/\ \/\ \L\ \
@@ -184,44 +192,69 @@ ________________________________________________________________________________
 #define init_f36(){\
     💎define_new_ruby_class_as_wrapper_over_c_struct(Ⓒtime_series_data, "TimeSeriesData", time_series_alloc)\
     rb_define_private_method(Ⓒtime_series_data, "initialize" , time_series_m_initialize, 2);\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "mem_size", time_series_m_get_size)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "print_debugging", time_series_print_debugging)\
+}
+
+#define init_f36_b00(){\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "len",              time_series_get_len)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "first",             time_series_get_first)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "last",             time_series_get_last)\
+    💎add_public_func_1args_to(Ⓒtime_series_data, "[]",               time_series_m_get_val_at_index)\
+    💎add_public_func_1args_to(Ⓒtime_series_data, "percentile",       time_series_get_percentile)\
+    💎add_public_func_1args_to(Ⓒtime_series_data, "nth_percent_rank", time_series_get_nth_percent_rank)\
+}
+
+#define init_f36_b01(){\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "mem_size",    time_series_m_get_size)\
     💎add_public_func_0args_to(Ⓒtime_series_data, "free_memory", time_series_m_free)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "flags", time_series_m_get_flags)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "len", time_series_get_len)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "first", time_series_get_first)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "last", time_series_get_last)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "mean", get_cached_mean)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "sum", get_cached_sum)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "max", get_cached_max)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "min", get_cached_min)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "median", get_cached_median)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "range", get_cached_range)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "variance", get_cached_variance)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "pearson_correlation_coefficient", get_cached_pearson_correlation_coefficient)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "std_dev", get_cached_std_dev)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "normalize!", time_series_self_normalize)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "has_zero?", time_series_has_zero)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "has_negative?", time_series_has_negative)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "normalized?", time_series_is_normalized)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "even?", time_series_is_even)\
+}
+
+#define init_f36_b02(){\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "pearson_correlation_coefficient", time_series_get_cached_pearson_correlation_coefficient)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "std_dev",                        time_series_get_cached_std_dev)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "range",                          time_series_get_cached_range)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "variance",                       time_series_get_cached_variance)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "mean",                           time_series_get_cached_mean)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "mean_weighted",                  time_series_get_cached_mean_weighted)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "mean_geometric",                 time_series_get_cached_mean_geometric)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "sum",                            time_series_get_cached_sum)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "sum_weighted",                   time_series_get_cached_sum_weighted)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "product",                        time_series_get_cached_product)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "sum_squared",                    time_series_get_cached_sum_squared)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "sum_of_squares",                 time_series_get_cached_sum_of_squares)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "max",                            time_series_get_cached_max)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "min",                            time_series_get_cached_min)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "median",                         time_series_get_cached_median)\
+}
+
+#define init_f36_b03(){\
+    💎add_public_func_1args_to(Ⓒtime_series_data, "mse",  time_series_calculate_mean_square_of_errors)\
+    💎add_public_func_1args_to(Ⓒtime_series_data, "mape", time_series_calculate_mean_absolute_percentage_error)\
+}
+
+#define init_f36_b04(){\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "flags",                 time_series_m_get_flags)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "has_zero?",            time_series_has_zero)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "has_negative?",        time_series_has_negative)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "normalized?",          time_series_is_normalized)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "even?",                time_series_is_even)\
     💎add_public_func_0args_to(Ⓒtime_series_data, "strictly_increasing?", time_series_is_strictly_increasing)\
     💎add_public_func_0args_to(Ⓒtime_series_data, "strictly_decreasing?", time_series_is_strictly_decreasing)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "all_same?", time_series_is_all_same)\
-    💎add_public_func_0args_to(Ⓒtime_series_data, "print_debugging", time_series_print_debugging)\
-    💎add_public_func_1args_to(Ⓒtime_series_data, "mse", time_series_calculate_mean_square_of_errors)\
-    💎add_public_func_1args_to(Ⓒtime_series_data, "mape", time_series_calculate_mean_absolute_percentage_error)\
-    💎add_public_func_1args_to(Ⓒtime_series_data, "[]", get_val_at_index)\
-    💎add_public_func_1args_to(Ⓒtime_series_data, "percentile", time_series_get_percentile)\
-    💎add_public_func_1args_to(Ⓒtime_series_data, "scale_by_addition", time_series_self_scale_by_addition)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "all_same?",            time_series_is_all_same)\
+}
+
+#define init_f36_b05(){\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "normalize!",              time_series_self_normalize)\
+    💎add_public_func_1args_to(Ⓒtime_series_data, "scale_by_addition",       time_series_self_scale_by_addition)\
     💎add_public_func_1args_to(Ⓒtime_series_data, "scale_by_multiplication", time_series_self_scale_by_multiplication)\
 }
 
-#define init_f36_add_constants(){\
-    rb_gc_adjust_memory_usage((size_t) (56 * 4));\
-    💎add_const_theta_angle("ANGLE_GOLDEN",   Ⴔ_RAD, THETA_MODE_RAD, cached_const_angle_golden, 0x7)\
-    💎add_const_theta_angle("ANGLE_TAU",      𝞽, THETA_MODE_RAD, cached_const_angle_tau, 0xE)\
-    💎add_const_theta_angle("ANGLE_RIGHT",    (π / 2.0), THETA_MODE_RAD, cached_const_angle_right, 0x7)\
-    💎add_const_theta_angle("ANGLE_STRAIGHT", (π), THETA_MODE_RAD, cached_const_angle_straight, 0x7)\
+#define init_f36_b06(){\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "q1",                    time_series_get_cached_q1)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "q3",                    time_series_get_cached_q3)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "IQR",                   time_series_get_cached_iqr)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "boundary_outliers_min", time_series_get_cached_boundary_outliers_min)\
+    💎add_public_func_0args_to(Ⓒtime_series_data, "boundary_outliers_max", time_series_get_cached_boundary_outliers_max)\
 }
 
 /*   ___    __    ________
@@ -234,6 +267,14 @@ ________________________________________________________________________________
 
 #define init_f37(){\
     💎define_new_ruby_class_as_wrapper_over_c_struct(Ⓒpseudo_graph, "PseudoGraph", pseudo_graph_alloc)\
+    rb_define_private_method(Ⓒpseudo_graph, "initialize",          pseudo_graph_m_initialize, 1);\
+    💎add_public_func_0args_to(Ⓒpseudo_graph, "print_debugging",  pseudo_graph_m_print_debugging)\
+    💎add_public_func_0args_to(Ⓒpseudo_graph, "num_nodes",        pseudo_graph_m_get_num_nodes)\
+    💎add_public_func_0args_to(Ⓒpseudo_graph, "empty?",           pseudo_graph_m_get_is_empty)\
+    💎add_public_func_0args_to(Ⓒpseudo_graph, "free_memory",      pseudo_graph_m_free)\
+    💎add_public_func_2args_to(Ⓒpseudo_graph, "[]",               pseudo_graph_m_get_edge)\
+    💎add_public_func_3args_to(Ⓒpseudo_graph, "set_edge",         pseudo_graph_m_set_edge)\
+    💎add_public_func_3args_to(Ⓒpseudo_graph, "set_edge_inverse", pseudo_graph_m_set_edge_inverse)\
 }
 
 #endif

@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
+using ::ThetaAngle::ContextRuuuby
+
 RSpec.describe 'str' do
-  let(:data_empty){''}
-  let(:wrong_param_type){Ruuuby::ParamErr::WrongParamType}
   let(:syntax_str){::String::Syntax}
 
   let(:scenarios_iso8601_full){%w(2020-04-04T00:00:00Z 2020-04-04T00:00:00-1200 1920-04-04T00:00:01-12:00
@@ -446,12 +446,6 @@ RSpec.describe 'str' do
             it 'golden-ratio(𝚽)' do
               expect('𝚽'.to_num).to eq(𝚽)
             end
-            it 'super-golden-ratio(ψ)' do
-              expect('Ψ'.to_num).to eq(Ψ)
-            end
-            it 'plastic-ratio{ρ}' do
-              expect('ρ'.to_num).to eq(ρ)
-            end
             it 'golden-angle(Ⴔ)' do
               expect('Ⴔ'.to_num).to eq(Ⴔ)
             end
@@ -461,11 +455,6 @@ RSpec.describe 'str' do
             it 'omega-constant{Ω}' do
               expect('Ω'.to_num).to eq(Ω)
             end
-            it 'euler-mascheroni-constant(γ)' do
-              expect('γ'.to_num).to eq(γ)
-              expect('+γ'.to_num).to eq(γ)
-              expect('-γ'.to_num).to eq(-γ)
-            end
             it 'NaN' do
               expect('nan'.to_num.nan?).to eq(true)
               expect('NaN'.to_num.nan?).to eq(true)
@@ -473,7 +462,7 @@ RSpec.describe 'str' do
             end
             context 'for func{to_num?}' do
               it 'same-cases' do
-                %w(∞ +∞ -∞ ∞ℂ π +π -π Ⴔ Ω Ψ ρ 𝞽 𝚽 γ +γ -γ).∀{|scenario| expect(scenario.to_num?).to eq(true)}
+                %w(∞ +∞ -∞ ∞ℂ π +π -π Ⴔ Ω 𝞽 𝚽).∀{|scenario| expect(scenario.to_num?).to eq(true)}
               end
             end
           end
@@ -784,7 +773,7 @@ RSpec.describe 'str' do
             expect('abc'.∋? 'd').to eq(false)
           end
           it 'cases: error' do
-            expect{'b'.∋?(nil)}.to throw_wrong_param_type('String', '∋?', 'them', NilClass, String)
+            expect{'b'.∋?(nil)}.to raise_error(ArgumentError)
           end
         end
       end
@@ -832,17 +821,6 @@ RSpec.describe 'str' do
             expect{'b'.∉? nil}.to raise_exception(ArgumentError)
             expect{'b'.∉? 1337}.to raise_exception(ArgumentError)
           end
-        end
-      end
-    end
-
-    context 'func{∅?}' do
-      context 'handles needed scenarios' do
-        it 'cases: positive' do
-          expect(''.∅?).to eq(true)
-        end
-        it 'cases: negative' do
-          expect(' '.∅?).to eq(false)
         end
       end
     end
@@ -1049,18 +1027,6 @@ RSpec.describe 'str' do
       end
       it 'func[ensure_start!]' do
         [%w(hello ?a), ['', big_str], [big_str, '']].∀{|a|expect{a[0].ensure_start!(a[1])}.to perform_quickly}
-      end
-    end
-
-    context 'func{∅?}' do
-      # TODO: ADD TEST CASES TO MEASURE BIG-O NOTATION
-      context 'handles needed scenarios very quickly' do
-        it 'cases: positive' do
-          expect{''.∅?}.to perform_very_quickly
-        end
-        it 'cases: negative' do
-          expect{' '.∅?}.to perform_very_quickly
-        end
       end
     end
 

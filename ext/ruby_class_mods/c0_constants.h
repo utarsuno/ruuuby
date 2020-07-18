@@ -8,19 +8,42 @@
  /  ` /  \ |\ | /__`  |   /\  |\ |  |     \  /  /\  |    |  | |__  /__`
  \__, \__/ | \| .__/  |  /~~\ | \|  |      \/  /~~\ |___ \__/ |___ .__/
 ____________________________________________________________________________________________________________________________________________________________________ */
+
+#define CACHE_VAL_NOT_SET (-1337)
+
+/*
+ * ‣ `limiting` difference between the `harmonic series` and the `natural logarithm`
+ */
 #define γ      0.5772156649015329
 #define γL     0.5772156649015329L
+
 #define π      3.14159265358979323846264338327950288  // double      pi  = acos(-1);
 #define πL     3.14159265358979323846264338327950288L // long double pie = acosl(-1);
 #define 𝚽      1.618033988749895 // more accurate version --> 1.61803398874989484820458683436
 #define Ω      0.5671432904097838
 #define ΩL     0.567143290409783872999968662210L
+
+/*
+ * ‣ only real solution to: x³ = x² + 1
+ */
 #define Ψ      1.46557123187676802665673122521993910  // less accurate version --> 1.4655712318767682
 #define ΨL     1.46557123187676802665673122521993910L
+
+/*
+ * ‣ only real solution to: x³ = x + 1
+ */
 #define ρ      1.324717957244746                      // more accurate version --> 1.1.3247179572447460259609088544780973407344040569017333
 #define ρL     1.324717957244746L
+
+/*
+ * ‣ a∶b = (2a+b)∶a  ≡ δ
+ * ‣ a∶b = (2+b/a)∶1 ≡ δ
+ *
+ * ‣ δ = 2 + 1/δ
+ */
 #define δ      2.414213562373095
 #define δL     2.414213562373095L
+
 #define Ⴔ_DGR  137.507764050037854
 #define ႴL_DGR 137.507764050037854L
 #define Ⴔ_RAD  2.399963229728653
@@ -116,6 +139,8 @@ ________________________________________________________________________________
 #define THETA_MODE_ID_DGR (unsigned char) 4
 #define THETA_MODE_ID_TRN (unsigned char) 5
 #define THETA_MODE_ID_GON (unsigned char) 6
+
+#define TIME_SERIES_DATA_MIN_LEN 4
 
 // superscripts: -9 to +9
 #define NUM_EXPONENTS 22 // 19 vs 22

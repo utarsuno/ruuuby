@@ -15,7 +15,7 @@ class ::Module
   # @param [Symbol] func_name
   # @param [Symbol] alias_name
   #
-  # @raise [WrongParamType]
+  # @raise [ArgumentError]
   #
   # @return [Boolean] true, if this instance of Module has a function with provided name and alias
   def ∃⨍_alias?(func_name, alias_name)
@@ -25,7 +25,7 @@ class ::Module
 
   # @param [Symbol] func_name
   #
-  # @raise [WrongParamType]
+  # @raise [ArgumentError]
   #
   # @return [Boolean] true, if this object's Class has either a public or private method with matching func_name
   def ∃⨍?(func_name)

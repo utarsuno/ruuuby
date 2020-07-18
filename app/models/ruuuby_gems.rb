@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
@@ -44,26 +44,26 @@ class ::RuuubyGem < ::ApplicationRecord
   # @return [ActiveRecord::Relation]
   def self.fetch_by_type(is_dev, is_runtime)
     🛑bools❓([is_dev, is_runtime])
-    ::RuuubyGem.where('is_development = ? AND is_runtime = ?', is_dev, is_runtime).all
+    flag_val = 0
+    flag_val += 1 if is_dev
+    flag_val += 2 if is_runtime
+    ::RuuubyGem.where('flag_dependency_type = ?', flag_val).all
   end
 
   # @param [String]        gem_name
   # @param [String]        gem_version
-  # @param [Boolean]       for_development
-  # @param [Boolean]       for_runtime
+  # @param [Integer]       flag_dependency_type
   # @param [Array]         tags
   # @param [String]        ref_source
   # @param [String]        ref_version
   # @param [RuuubyRelease] ruuuby_release
   #
   # @return [RuuubyGem]
-  def self.spawn(gem_name, gem_version, for_development, for_runtime, tags, ref_source, ref_version, ruuuby_release)
-    🛑bools❓([for_development, for_runtime])
+  def self.spawn(gem_name, gem_version, flag_dependency_type, tags, ref_source, ref_version, ruuuby_release)
     the_ruuuby_gem = ::RuuubyGem.create!(
         name: gem_name,
         version_current: gem_version,
-        is_development: for_development,
-        is_runtime: for_runtime,
+        flag_dependency_type: flag_dependency_type,
         tags: tags,
         ruuuby_release_id: ruuuby_release.id,
         ref_source: ref_source,
@@ -116,6 +116,12 @@ class ::RuuubyGem < ::ApplicationRecord
 
   # @return [Integer]
   def current_max_changelog_index; ::RuuubyChangelog.where('applies_to = ? AND applies_to_uid = ?', ::RuuubyGem.orm_Ⓣ_🐍, self.name).maximum('changelog_index'); end
+
+  # @return [Boolean]
+  def is_runtime; (self.flag_dependency_type & 2) != 0; end
+
+  # @return [Boolean]
+  def is_development; (self.flag_dependency_type & 1) != 0; end
 
   # _________________________________________________________________________________________________________________
   #   __   __   ___  __       ___  __   __   __
@@ -173,7 +179,7 @@ class ::RuuubyGem < ::ApplicationRecord
     elsif self.is_runtime
       gem_modes = "❌, ✅"
     else
-      raise "unexpected condition at path{#{__FILE__ }} line{#{__LINE__ }}"
+      raise "unexpected condition at path{#{__FILE__}} line{#{__LINE__}}"
     end
     "| `#{self.name}` | [`#{self.version_current}`](#{self.url_gem}) | #{gem_modes} | `#{self.tags[2..self.tags.length-3]}` |\n"
   end

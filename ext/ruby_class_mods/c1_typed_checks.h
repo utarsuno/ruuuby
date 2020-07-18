@@ -64,8 +64,14 @@ static inline double relative_error_dbl(const double dbl_predicted, const double
 #define LDBL_CBRT(arg)    cbrtl(arg)
 #define LDBL_SQRT(arg)    sqrtl(arg)
 
-static inline double DBL_POW2(const double n);
-static inline double DBL_POW2(const double n){return pow(n, 2.0);}
+static inline double DBL_SQRT(const double n);
+static inline double DBL_SQRT(const double n){return sqrt(n);}
+
+static inline double DBL_POW_2(const double n);
+static inline double DBL_POW_2(const double n){return pow(n, 2.0);}
+
+static inline double DBL_POW_N(const double n, const double power_to_raise_to);
+static inline double DBL_POW_N(const double n, const double power_to_raise_to){return pow(n, power_to_raise_to);}
 
 static inline long double LDBL_POW2(const long double n);
 static inline long double LDBL_POW2(const long double n){return powl(n, 2.0L);}

@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # (`f14`)
 module ::Ruuuby
@@ -12,39 +12,139 @@ module ::Ruuuby
     end
   end
 
-  # +ParamErr+ is used for providing utilities to catching and raising parameter errors
-  module ParamErr
-
-    # utility function to generate exception(WrongParamType)
-    #
-    # @param [Symbol, String] name_class
-    # @param [Symbol, String] the_method
-    # @param [Symbol, String] name_arg
-    # @param [Class, Array]   arg_types_needed
-    # @param [*]              arg_received
-    #
-    # @return [String]
-    def self.throw(name_class, name_method, name_arg, arg_types_needed, arg_received)
-      ParamErr::WrongParamType.🆕(self.generate_error_text(name_class, name_method, name_arg, arg_received.ⓣ, arg_types_needed))
-    end
-
-    # utility function to generate error message for the exception(WrongParamType)
-    #
-    # @param [Symbol, String] name_class
-    # @param [Symbol, String] the_method
-    # @param [Symbol, String] arg_name
-    # @param [Class]          received_type
-    # @param [Class, Array]   required_types
-    #
-    # @return [String]
-    def self.generate_error_text(the_class, the_method, arg_name, received_type, required_types)
+  class PrmErr < ::ArgumentError
+    # @param [*]             the_self
+    # @param [String]        arg_name
+    # @param [String, Array] required_types
+    # @param [*]             received_type
+    def initialize(the_self, arg_name, required_types, received_type)
       arg_name = '0' if arg_name == nil
       if required_types.ary?
-        "| c{#{the_class}}-> m{#{the_method.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.to_s}}, allowed-types[#{required_types.join(', ')}] |"
+        super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(2, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.to_s}}, allowed-types[#{required_types.join(', ')}] |")
       else
-        "| c{#{the_class}}-> m{#{the_method.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.to_s}}, required-type{#{required_types.to_s}} |"
+        super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(2, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.to_s}}, required-type{#{required_types.to_s}} |")
       end
     end
-  end
+  end # end definition of class{PrmErr}
+
+  class PrmErrBool < ::ArgumentError
+    # @param [*]             the_self
+    # @param [String]        arg_name
+    # @param [*]             received_type
+    def initialize(the_self, arg_name, received_type)
+      arg_name = '0' if arg_name == nil
+      super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(3, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.to_s}}, allowed-types{FalseClass, TrueClass} |")
+    end
+  end # end definition of class{PrmErrBool}
+
+  class PrmErrSym < ::ArgumentError
+    # @param [*]             the_self
+    # @param [String]        arg_name
+    # @param [*]             received_type
+    def initialize(the_self, arg_name, received_type)
+      arg_name = '0' if arg_name == nil
+      super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(3, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.to_s}}, required-type{Symbol} |")
+    end
+  end # end definition of class{PrmErrSym}
+
+  class PrmErrSet < ::ArgumentError
+    # @param [*]             the_self
+    # @param [String]        arg_name
+    # @param [*]             received_type
+    def initialize(the_self, arg_name, received_type)
+      arg_name = '0' if arg_name == nil
+      super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(3, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.to_s}}, required-type{Set} |")
+    end
+  end # end definition of class{PrmErrSym}
+
+  class PrmErrStr < ::ArgumentError
+    # @param [*]             the_self
+    # @param [String]        arg_name
+    # @param [*]             received_type
+    def initialize(the_self, arg_name, received_type)
+      arg_name = '0' if arg_name == nil
+      super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(3, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.Ⓣ}}, required-type{String} |")
+    end
+  end # end definition of class{PrmErrStr}
+
+  class PrmErrHsh < ::ArgumentError
+    # @param [*]             the_self
+    # @param [String]        arg_name
+    # @param [*]             received_type
+    def initialize(the_self, arg_name, received_type)
+      arg_name = '0' if arg_name == nil
+      super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(3, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.Ⓣ}}, required-type{Hash} |")
+    end
+  end # end definition of class{PrmErrHsh}
+
+  class PrmErrAry < ::ArgumentError
+    # @param [*]             the_self
+    # @param [String]        arg_name
+    # @param [*]             received_type
+    def initialize(the_self, arg_name, received_type)
+      arg_name = '0' if arg_name == nil
+      super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(3, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.Ⓣ}}, required-type{Array} |")
+    end
+  end # end definition of class{PrmErrHsh}
+
+  class PrmErrInt < ::ArgumentError
+    # @param [*]             the_self
+    # @param [String]        arg_name
+    # @param [*]             received_type
+    def initialize(the_self, arg_name, received_type)
+      arg_name = '0' if arg_name == nil
+      super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(3, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.Ⓣ}}, required-type{Integer} |")
+    end
+  end # end definition of class{PrmErrInt}
+
+  class PrmErrFlt < ::ArgumentError
+    # @param [*]             the_self
+    # @param [String]        arg_name
+    # @param [*]             received_type
+    def initialize(the_self, arg_name, received_type)
+      arg_name = '0' if arg_name == nil
+      super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(3, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.Ⓣ}}, required-type{Float} |")
+    end
+  end # end definition of class{PrmErrFlt}
+
+  class PrmErrThetaAngle < ::ArgumentError
+    # @param [*]             the_self
+    # @param [String]        arg_name
+    # @param [*]             received_type
+    def initialize(the_self, arg_name, received_type)
+      arg_name = '0' if arg_name == nil
+      super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(3, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.Ⓣ}}, required-type{ThetaAngle} |")
+    end
+  end # end definition of class{PrmErrThetaAngle}
+
+  class PrmErrMatrix < ::ArgumentError
+    # @param [*]             the_self
+    # @param [String]        arg_name
+    # @param [*]             received_type
+    def initialize(the_self, arg_name, received_type)
+      arg_name = '0' if arg_name == nil
+      super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(3, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.Ⓣ}}, required-type{Matrix} |")
+    end
+  end # end definition of class{PrmErrMatrix}
+
+  class PrmErrVec < ::ArgumentError
+    # @param [*]             the_self
+    # @param [String]        arg_name
+    # @param [*]             received_type
+    def initialize(the_self, arg_name, received_type)
+      arg_name = '0' if arg_name == nil
+      super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(3, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.Ⓣ}}, required-type{Vector} |")
+    end
+  end # end definition of class{PrmErrVec}
+
+  class PrmErrNum < ::ArgumentError
+    # @param [*]             the_self
+    # @param [String]        arg_name
+    # @param [*]             received_type
+    def initialize(the_self, arg_name, received_type)
+      arg_name = '0' if arg_name == nil
+      super("| c{#{the_self.Ⓣ}}-> m{#{caller_locations(3, 1).first.base_label.to_s}} got arg(#{arg_name.to_s}) w/ type{#{received_type.Ⓣ}}, allowed-types{FalseClass, TrueClass} |")
+    end
+  end # end definition of class{PrmErrVec}
 
 end

@@ -59,7 +59,7 @@ RSpec.describe 'f32_b09' do
             expect(fℤ³.congruent?(8, 4, 16)).to eq(false)
           end
           it 'cases: error' do
-            expect{fℤ³.congruent?(0, 0, 0)}.to raise_error(ArgumentError)
+            expect{fℤ³.congruent?(0, 0, 0)}.to raise_error(::Ruuuby::DescriptiveStandardError)
           end
         end
       end # end: {Sequence{seq_triangle}}

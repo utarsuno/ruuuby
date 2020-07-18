@@ -4,10 +4,10 @@
 @v0_0_00.add_comments('initial project creation')
 
 @v0_0_01 = ::RuuubyRelease.spawn(0, 0, 1)
-@v0_0_01.add_gem('bundler', '2.1.4', true, false, %w(CI), '::Bundler', '::VERSION')
-@v0_0_01.add_gem('rake', '13.0.1', true, false, %w(EXT), '::Rake', '::VERSION')
-@v0_0_01.add_gem('rspec', '3.9.0', true, false, %w(QA), '::RSpec', '::Version::STRING')
-@v0_0_01.add_gem('rdoc', '6.2.1', true, false, %w(DOC), '::RDoc', '::VERSION')
+@v0_0_01.add_gem('bundler', '2.1.4', 1, %w(CI), '::Bundler', '::VERSION')
+@v0_0_01.add_gem('rake', '13.0.1', 1, %w(EXT), '::Rake', '::VERSION')
+@v0_0_01.add_gem('rspec', '3.9.0', 1, %w(QA), '::RSpec', '::Version::STRING')
+@v0_0_01.add_gem('rdoc', '6.2.1', 1, %w(DOC), '::RDoc', '::VERSION')
 
 @v0_0_01.path_added('CHANGELOG.md', '', '', @f15)
 @v0_0_01.path_added('lib/ruuuby/class/nil.rb', 'NilClass', '', @f04)
@@ -31,14 +31,14 @@
 @v0_0_03.spawn_kclass_method(@f07, 'remove_empty!', 'Array')
 
 @v0_0_04 = ::RuuubyRelease.spawn(0, 0, 4)
-@v0_0_04.add_gem('rspec-benchmark', '0.5.1', true, false, %w(QA), '::RSpec::Benchmark', '::VERSION')
+@v0_0_04.add_gem('rspec-benchmark', '0.5.1', 1, %w(QA), '::RSpec::Benchmark', '::VERSION')
 #v0_0_04.add_comments('update `ruuuby.gemspec` to require ruby `2.7.0`')
 
 @v0_0_05 = ::RuuubyRelease.spawn(0, 0, 5)
 @v0_0_06 = ::RuuubyRelease.spawn(0, 0, 6)
 
 @v0_0_07 = ::RuuubyRelease.spawn(0, 0, 7)
-@v0_0_07.add_gem('rake-compiler', '1.1.0', true, false, %w(EXT), nil, nil)
+@v0_0_07.add_gem('rake-compiler', '1.1.0', 1, %w(EXT), nil, nil)
 
 @v0_0_08 = ::RuuubyRelease.spawn(0, 0, 8)
 @v0_0_09 = ::RuuubyRelease.spawn(0, 0, 9)
@@ -48,7 +48,7 @@
 @v0_0_13 = ::RuuubyRelease.spawn(0, 0, 13)
 
 @v0_0_14 = ::RuuubyRelease.spawn(0, 0, 14)
-@v0_0_14.add_gem('tty-command', '0.9.0', true, true, %W(CLI), '::TTY::Command', '::VERSION')
+@v0_0_14.add_gem('tty-command', '0.9.0', 3, %W(CLI), '::TTY::Command', '::VERSION')
 
 @v0_0_15 = ::RuuubyRelease.spawn(0, 0, 15)
 @v0_0_16 = ::RuuubyRelease.spawn(0, 0, 16)
@@ -73,9 +73,9 @@
 @v0_0_18.path_added('db/db.rb', '', '', @f15)
 @v0_0_18.path_added('db/seed.rb', '', '', @f15)
 
-@v0_0_18.add_gem('sqlite3', '1.4.2', true, false, %W(DB), '::SQLite3', '::VERSION')
+@v0_0_18.add_gem('sqlite3', '1.4.2', 1, %W(DB), '::SQLite3', '::VERSION')
 
-@v0_0_18.add_gem('activerecord', '5.2.4.1', true, false, %W(DB), '::ActiveRecord', '::VERSION::STRING')
+@v0_0_18.add_gem('activerecord', '5.2.4.1', 1, %W(DB), '::ActiveRecord', '::VERSION::STRING')
 @v0_0_18.spawn_kclass_methods(@f06, 'Object', %w(flt? num?))
 @v0_0_18.spawn_kclass_method(@f10, '♾️?', 'Integer')
 @v0_0_18.spawn_kclass_method(@f10, '♾️?', 'Numeric')
@@ -223,7 +223,7 @@
 @v0_0_26.spawn_kclass_methods(@f15, 'RuuubyRelease', %w(< > get_next_version_uid get_latest_version_uid))
 
 @v0_0_27 = ::RuuubyRelease.spawn(0, 0, 27)
-@v0_0_27.add_gem('schema_plus_foreign_keys', '0.1.8', true, false, %W(DB), nil, nil)
+@v0_0_27.add_gem('schema_plus_foreign_keys', '0.1.8', 1, %W(DB), nil, nil)
 @v0_0_27.path_added('db/seeds/git_commits.rb', '', '', @f15)
 @v0_0_27.path_added('db/seeds/ruuuby_features.rb', '', '', @f15)
 @v0_0_27.path_added('db/seeds/ruuuby_releases.rb', '', '', @f15)
@@ -403,7 +403,7 @@
 #
 
 @v0_0_35 = ::RuuubyRelease.spawn(0, 0, 35)
-@v0_0_35.add_gem('rugged', '1.0.0', true, false, %W(GIT), '::Rugged', '::VERSION')
+@v0_0_35.add_gem('rugged', '1.0.0', 1, %W(GIT), '::Rugged', '::VERSION')
 @v0_0_35.path_added('lib/math/expression/expression.rb', '', 'not currently in use', @f10)
 @v0_0_35.path_added('lib/math/expression/formula.rb', '', 'not currently in use', @f10)
 @v0_0_35.path_added('lib/math/space/tuple_space.rb', '', '', @f30)
@@ -488,7 +488,7 @@
 @v0_0_39.path_added('lib/ruuuby/math/expr/seq/arithmetic', 'Math::Expr::ArithmeticSequence', '(`Ruby` version{`2.7.1`} just added `Enumerator::ArithmeticSequence`; the timing! Will be investigating before further expanding this Class)', @f10)
 @v0_0_39.path_added('lib/ruuuby/math/expr/seq/geometric', 'Math::Expr::GeometricSequence', '', @f10)
 @v0_0_39.path_added('lib/ruuuby/math/expr/seq/recursive', 'Math::Expr::RecursiveSequence', '', @f10)
-@v0_0_39.add_gem('rubygems-update', '3.1.2', true, false, %W(CI), '::Gem', '.rubygems_version.to_s')
+@v0_0_39.add_gem('rubygems-update', '3.1.2', 1, %W(CI), '::Gem', '.rubygems_version.to_s')
 @v0_0_39.update_gem(::RuuubyGem.find_by_name('rubygems-update'), '3.1.4')
 @v0_0_39.update_gem(::RuuubyGem.find_by_name('activerecord'), '5.2.4.3')
 @v0_0_39.add_comments(
