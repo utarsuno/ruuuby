@@ -1,3 +1,6 @@
+# encoding: UTF-8
+#
+# useful resource, @see: https://stackoverflow.com/questions/9976986/force-lf-eol-in-git-repo-and-working-copy
 
 # binary
 *.png -text -diff
@@ -6,24 +9,31 @@
 *.pdf -text -diff
 *.bundle -text -diff
 *.o -text -diff
+*.so -text -diff
 # web
-*.md diff=markdown text=markdown eol=lf
-*.html diff=html text=html eol=lf
-*.css diff=css text=css eol=lf
+*.md      diff=markdown text=markdown eol=lf whitespace=blank-at-eof
+*.html    diff=html text=html eol=lf whitespace=blank-at-eof
+*.css     diff=css text=css eol=lf whitespace=blank-at-eof
+*.js      diff=text text=text eol=lf whitespace=blank-at-eof
 # c
-*.h diff=cpp text=cpp eol=lf
-*.c diff=cpp text=cpp eol=lf
+*.h       diff=cpp text=cpp eol=lf whitespace=blank-at-eof
+*.c       diff=cpp text=cpp eol=lf whitespace=blank-at-eof
 # ruby
-*.rb diff=ruby text=ruby eol=lf
-*.gemspec diff=ruby text=ruby eol=lf
+*.rb      diff=ruby text=ruby eol=lf whitespace=blank-at-eof
+*.gemspec diff=ruby text=ruby eol=lf whitespace=blank-at-eof
 # java
-*.java diff=java text=java eol=lf
+*.java    diff=java text=java eol=lf whitespace=blank-at-eof
 # python
-*.py diff=python text=python eol=lf
+*.py      diff=python text=python eol=lf whitespace=blank-at-eof
 # php
-*.php diff=php text=php eol=lf
+*.php     diff=php text=php eol=lf whitespace=blank-at-eof
 # text
-*.txt diff=text text=text eol=lf
-*.text diff=text text=text eol=lf
-*.log diff=text text=text eol=lf
-*.csv diff=text text=text eol=lf
+*.txt     diff=text text=text eol=lf whitespace=blank-at-eof
+*.text    diff=text text=text eol=lf whitespace=blank-at-eof
+*.log     diff=text text=text eol=lf whitespace=blank-at-eof
+*.csv     diff=text text=text eol=lf whitespace=blank-at-eof
+*.yml     diff=text text=text eol=lf whitespace=blank-at-eof
+*.yaml    diff=text text=text eol=lf whitespace=blank-at-eof
+*.nginx   diff=text text=text eol=lf whitespace=blank-at-eof
+*.sh      diff=text text=text eol=lf whitespace=blank-at-eof
+*.sql     diff=text text=text eol=lf whitespace=blank-at-eof

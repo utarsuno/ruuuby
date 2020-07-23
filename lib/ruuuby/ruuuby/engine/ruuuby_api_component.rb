@@ -11,10 +11,8 @@ module ::Ruuuby
         @cached_version = ''
       end
 
-      def get_version
-        if @cached_version == ''
-          @cached_version = self._calculate_version
-        end
+      def version
+        @cached_version = self._calculate_version if @cached_version.∅?
         @cached_version
       end
 

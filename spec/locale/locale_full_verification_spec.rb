@@ -84,18 +84,18 @@ RSpec.describe 'ruby' do
             expect(result).to eq('ruby-build 20200520')
           end
           it 'for{brew}' do
-            expect(💎.engine.api_brew.get_version).to eq(["Homebrew 2.4.4-34-geee17fd", "Homebrew/homebrew-core (git revision 0d18f; last commit 2020-07-08)", "Homebrew/homebrew-cask (git revision 8e5bb; last commit 2020-07-09)"])
+            expect(💎.engine.api_brew.version).to eq(["Homebrew 2.4.8-48-gee648ef", "Homebrew/homebrew-core (git revision 0dc26; last commit 2020-07-21)", "Homebrew/homebrew-cask (git revision 80899; last commit 2020-07-22)"])
           end
           context 'for{docker}' do
             it 'has needed version' do
-              expect(💎.engine.api_locale.api_docker.get_version).to eq('Docker version 19.03.8, build afacb8b')
+              expect(💎.engine.api_locale.api_docker.version).to eq('Docker version 19.03.8, build afacb8b')
             end
-            it 'has needed ENV{DOCKER_API_VERSION}' do
-              expect(💎.engine.api_locale.api_docker.expected_docker_api_version).to eq(ENV['DOCKER_API_VERSION'])
+            it 'has needed version for{docker-compose}' do
+              expect(💎.engine.api_locale.api_docker.version_compose).to eq('docker-compose version 1.25.5, build 8a1c60f6')
             end
           end
           it 'for{git}' do
-            expect(💎.engine.api_git.get_version).to eq('git version 2.24.3 (Apple Git-128)')
+            expect(💎.engine.api_git.version).to eq('git version 2.24.3 (Apple Git-128)')
           end
           it '${clang --version} matches ${cc --version}' do
             result_a = 💎.engine.api.run_cmd!('clang --version')
@@ -108,19 +108,29 @@ RSpec.describe 'ruby' do
     end
 
     context 'current user' do
-
-      it 'ENV{USER} matches reported user' do
-        expect(ENV['USER']).to eq(💎.engine.os.current_user)
-        expect(::Etc.getlogin).to eq(💎.engine.os.current_user)
+      context 'is correctly identified' do
+        it 'w/ ENV{USER}' do
+          expect(💎.engine.os.current_user).to eq(ENV['USER'])
+        end
+        it 'w/ external libs' do
+          expect(💎.engine.os.current_user).to eq(::Etc.getlogin)
+        end
+        context 'w/ freshly executed terminal cmds' do
+          it 'id -u -n' do
+            expect(💎.engine.os.current_user).to eq(💎.engine.api.run_cmd!('id -u -n'))
+          end
+          it 'whoami' do
+            expect(💎.engine.os.current_user).to eq(💎.engine.api.run_cmd!('whoami'))
+          end
+        end
       end
-
       context 'w/ expected local specs' do
         it 'number of CPUs' do
           expect(ENV['RUUUBY_NUM_CPU']).to eq(💎.engine.os.num_cpu_cores.to_s)
           expect(::Etc.nprocessors).to eq(💎.engine.os.num_cpu_cores)
         end
       end
-    end
+    end # end: {current user}
 
     context 'needed settings for{ZSH}' do
       it 'expected version{5.7.1} matches' do

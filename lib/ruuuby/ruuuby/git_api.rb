@@ -31,14 +31,15 @@ module ::Ruuuby
     #  - `origin/master` vs `origin master`: https://stackoverflow.com/questions/18137175/in-git-what-is-the-difference-between-origin-master-vs-origin-master
     #
     # helpful CLI commands:
-    #  | scenario                          | cmd                                              |
-    #  | --------------------------------- | ------------------------------------------------ |
-    #  | human readable view of staging    | `git diff --cached --stat`                       |
-    #  | human readable view of commits    | `git log --pretty=format:"%H|%ad|%s" --date=iso` |
-    #  | for script: get num files w/ diffs | `git diff --cached --numstat | wc -l`            |
-    #  | alternative for `git status`      | `git status --porcelain=v2 -b`                   |
-    #
-    # -----------------------------------------------------------------------------------------------------------------
+    #  -------------------------------------------------------------------------------------------------------
+    #  | scenario                                         | command/template                                 |
+    #  | ------------------------------------------------ | ------------------------------------------------ |
+    #  | human readable view of staging                   | `git diff --cached --stat`                       |
+    #  | human readable view of commits                   | `git log --pretty=format:"%H|%ad|%s" --date=iso` |
+    #  | for script: get num files w/ diffs                | `git diff --cached --numstat | wc -l`            |
+    #  | alternative for `git status`                     | `git status --porcelain=v2 -b`                   |
+    #  | clone only latest data, save time & network-data | `git clone --depth 1 <git_url>`                  |
+    #  -------------------------------------------------------------------------------------------------------
     #
     # `💎.engine.api_git`
     class GitAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
@@ -164,7 +165,7 @@ module ::Ruuuby
       # ____________________________________________________________
 
       def _calculate_version
-        💎.engine.api.run_cmd!('git --version')
+        @engine.api.run_cmd!('git --version')
       end
 
       # @return [Array]
@@ -179,7 +180,7 @@ module ::Ruuuby
                 if third_target.ⓣ == ::Rugged::Commit
                   @release_tags << [ref.name.to_s.♻️⟶('v').split('.').map(&:to_i), third_target.oid]
                 else
-                  🛑 RuntimeError.new("unexpected Class{#{second_target.Ⓣ}}, func{release_tags}, 3rd-obj{#{third_target.to_s}}")
+                  🛑 RuntimeError.new("unexpected Class{#{second_target.Ⓣ}}, func{release_tags}, 3ʳᵈ-obj{#{third_target.to_s}}")
                 end
               else
                 🛑 RuntimeError.new("unexpected Class{#{second_target.Ⓣ}}, func{release_tags}, 2nd-obj{#{second_target.to_s}}")

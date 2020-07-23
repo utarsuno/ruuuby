@@ -18,8 +18,15 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
               expect(Gem::BundlerVersionFinder.bundler_version.to_s).to eq(::Bundler::VERSION)
             end
           end
-          it 'does not requires sudo' do
-            expect(::Bundler.requires_sudo?).to eq(false)
+          it 'does not requires sudo (depending on OS)' do
+            if 💎.engine.os.mac?
+              expect(::Bundler.requires_sudo?).to eq(false)
+            elsif 💎.engine.os.unix
+              # currently, only Alpine-Linux is supported/expected, which will run w/ user{`root`}
+              expect(::Bundler.requires_sudo?).to eq(true)
+            else
+              # ¯\_(ツ)_/¯
+            end
           end
         end # end: {for gem{bundler}}
 

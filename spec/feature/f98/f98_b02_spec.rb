@@ -29,6 +29,15 @@ RSpec.describe 'f98_b02' do
           it 'logger' do
             expect(require('logger')).to eq(false)
           end
+          it 'pretty print' do
+            expect(require('pp')).to eq(false)
+          end
+          it 'csv' do
+            expect(require('csv')).to eq(false)
+          end
+          it 'yaml' do
+            expect(require('yaml')).to eq(false)
+          end
         end
         context 'math related' do
           it 'bigdecimal' do
@@ -42,14 +51,17 @@ RSpec.describe 'f98_b02' do
           end
         end
       end # end: {loads needed Ruby libraries}
-      context 'loads needed 3rd party libraries' do
+      context 'loads needed 3ʳᵈ party libraries' do
         it 'tty-command' do
           expect(require('tty-command')).to eq(false)
         end
         it 'rugged' do
           expect(require('rugged')).to eq(false)
         end
-      end # end: {loads needed 3rd party libraries}
+        it 'docker' do
+          expect(require('docker')).to eq(false)
+        end
+      end # end: {loads needed 3ʳᵈ party libraries}
     end
   end
 end

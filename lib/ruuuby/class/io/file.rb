@@ -70,7 +70,7 @@ class ::File
 
     # TODO: NEED TO OPEN THE FILES WITH ENCODING SPECIFIED
 
-    Tempfile.open(".#{::File.basename(the_path)}", ::File.dirname(the_path)) do |temp_file|
+    ::Tempfile.open(".#{::File.basename(the_path)}", ::File.dirname(the_path)) do |temp_file|
       ::File.open(the_path).each do |line|
         if num_matched < num_matches
           if line.∋?(expression)
@@ -86,10 +86,10 @@ class ::File
       temp_file.fdatasync
       temp_file.close
       if num_matched > 0
-        stats = File.stat(the_path)
-        FileUtils.chown(stats.uid, stats.gid, temp_file.path)
-        FileUtils.chmod(stats.mode, temp_file.path)
-        FileUtils.mv(temp_file.path, the_path)
+        stats = ::File.stat(the_path)
+        ::FileUtils.chown(stats.uid, stats.gid, temp_file.path)
+        ::FileUtils.chmod(stats.mode, temp_file.path)
+        ::FileUtils.mv(temp_file.path, the_path)
       else
         temp_file.delete
       end
@@ -114,6 +114,8 @@ class ::File
     end
   end
 
+
+
   # @see https://ruby-doc.org/stdlib-2.6.1/libdoc/csv/rdoc/CSV.html
   module CSV
 
@@ -127,7 +129,22 @@ class ::File
       ::CSV.read(path, {skip_blanks: true, headers: true, col_sep: ',', row_sep: "\n"})
     end
 
-  end
+  end # end: {CSV}
+
+  # @see https://ruby-doc.org/stdlib-2.7.1/libdoc/yaml/rdoc/YAML.html
+  module YAML
+
+    # @param [String] path
+    #
+    # @raise [ArgumentError]
+    #
+    # @return [Array] Hash
+    def self.read(path)
+      🛑str❓('path', path)
+      ::YAML.load_file(path)
+    end
+
+  end # end: {YAML}
 
 end
 

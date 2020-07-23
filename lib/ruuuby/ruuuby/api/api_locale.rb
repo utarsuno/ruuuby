@@ -8,7 +8,7 @@ module ::Ruuuby
   # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
 
-    # TODO: take note, unlike other gems, updating `rubygems-update` can be performed w/ `gem update --system 3.2.0.rc.1`
+    # TODO: automate searching for a file ex: 'find /path -name "file_name"'
     #
     # `💎.engine.api_locale`
     class LocaleAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
@@ -17,7 +17,22 @@ module ::Ruuuby
 
       def initialize(engine)
         super(engine)
-        @api_docker = ::Ruuuby::MetaData::DockerAPI.new(engine, '1.40')
+        @api_docker    = ::Ruuuby::MetaData::DockerAPI.new(engine)
+        @cached_configs = nil
+      end
+
+      # @return [ActiveRecord::TimeZone]
+      def timezone
+        💎.engine.orm
+        #💎.engine.enable_orm
+        @cached_timezone = ::ActiveSupport::TimeZone.new('Central Time (US & Canada)') if @cached_timezone == nil
+        @cached_timezone
+      end
+
+      # @return [Hash]
+      def cached_configs
+        @cached_configs = ::File::YAML.read("#{@engine.path_base}configs_local/configs.yml") if @cached_configs.∅?
+        @cached_configs
       end
 
       # @param [String] required_version

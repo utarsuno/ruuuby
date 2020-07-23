@@ -4,7 +4,7 @@
 #### preparing documentation)
  | for  | script  | cmd |
  | ---- | ---- | --- |
- | `CHANGELOG.md` | `./bin/console_db` | `$ruuuby.engine.orm.get_upcoming_changelog` |
+ | `CHANGELOG.md` | `./bin/console_db` | `print_latest_changelogs` |
 
 ### Version Release
 

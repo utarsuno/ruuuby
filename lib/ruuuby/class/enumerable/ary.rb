@@ -108,7 +108,7 @@ module ::Ruuuby
         # @raise [ArgumentError]
         #
         # @return [Array] a new Array instance containing the relative complement between this array and the one provided
-        def ∖(them); 🛑ary❓(:them, them); self - them; end
+        def ∖(them); 🛑ary❓('them', them); self - them; end
 
       end # end: {ArrayF09}
     end # end: {Includable}
@@ -136,12 +136,11 @@ class ::Array
   #
   # @return [Boolean] true, if both arrays are matching in contents, supports multiple types and without order mattering.
   def ≈≈(them)
-    🛑ary❓(:them, them)
+    🛑ary❓('them', them)
     self.📊 == them.📊
   end
 
   alias_method :📊, :tally
-
 
   # TODO: organize later but Set and Array classes will perform this differently
   # Performs the symmetric difference (or disjunctive union) of these two arrays, operation order/side does not matter.
@@ -167,5 +166,11 @@ class ::Array
   #
   # @return [Integer]
   def maxᵢ; each_with_index.max[1]; end
+
+  # @raise [RuntimeError]
+  def ∀𝚡λ𝑓🖨️
+    🛑 ::RuntimeError.new('| c{Array}-> m{∀𝚡λ𝑓🖨️} called when self has a length of{0} |') if self.∅?
+    self.∀{|content| puts content}
+  end
 
 end

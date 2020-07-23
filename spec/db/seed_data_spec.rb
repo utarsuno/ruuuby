@@ -19,8 +19,8 @@ RSpec.describe 'db/seed.rb' do
           it 'for{runtime} there is{0}' do
             expect(::RuuubyGem.fetch_by_type(false, true).length).to eq(0)
           end
-          it 'for{development} there is{11}' do
-            expect(::RuuubyGem.fetch_by_type(true, false).length).to eq(11)
+          it 'for{development} there is{13}' do
+            expect(::RuuubyGem.fetch_by_type(true, false).length).to eq(13)
           end
           it 'for{development & runtime} there is{1}' do
             expect(::RuuubyGem.fetch_by_type(true, true).length).to eq(1)
@@ -317,9 +317,15 @@ RSpec.describe 'db/seed.rb' do
           end
         end
 
-        #context 'v0.0.47' do
+        context 'v0.0.47' do
+          it 'as expected' do
+            audit_version(v0_0_47, 'v0.0.47', 0, 2, true)
+          end
+        end
+
+        #context 'v0.0.48' do
         #  it 'as expected' do
-        #    audit_version(v0_0_47, 'v0.0.47', 0, 2, true)
+        #    audit_version(v0_0_48, 'v0.0.48', 2, 0, true)
         #  end
         #end
 

@@ -4,6 +4,38 @@
 
 ---
 
+# `v0.0.48`
+
+ * add initial `Docker services:` {`nginx`, `postgresql`, `pgadmin4`} all `wip` w/ others inc
+   * just for development utilities, not anything to be required by gem or for runtime
+ * designate feature support/expansion for `WebGL` based derivatives to fully precede over `OpenGL` for `> 95.0% of scenarios`
+ * add `RSpec categories:` {`system`}
+   * `system tests` for now will act as a combination of `acceptance-testing`, `system-tests`, and `chaos-monkey-testing`
+ * apply initial steps for cross-OS compatibility, process of doing so is revealing lots of code areas requiring adjustments, some addressed this version
+ * indeterminate hiatus to provide time for math/theory studies to avoid adding tech-debt that would otherwise get created over the next 10+ versions
+
+| gem added | version previous | version current | notes |
+| ----: | :---: | :---- | :-----: |
+| `pg` | `N/A` | `1.2.3` | comparing (apples & oranges) use-cases against `ActiveRecord` |
+| `docker-api` | `N/A` | `1.34.2` | offers tons of functionality, way more to be utilized |
+
+| path(s) added | reference | notes | feature(s) |
+| ----: | ---- | ---- | ---- |
+| `services/nginx/includes/*.nginx` | (multiple files & directories) | | `f39` |
+| `services/web_assets/Dockerfile` | | file added early, will be utilizing various `JS` libs/environments | `f39` |
+| `services/web_assets/ruuuby.html` | | same as above | `f39` |
+| `services/web_assets/ruuuby.js` | | same as above | `f39` |
+
+| context | method(s) added | feature(s) |
+| ----: | :---- | ----: |
+| `Array` | `∀𝚡λ𝑓🖨️` | `f10` |
+| `Hash` | `λ𝑓∀🔑：₍🔑∉₎`, `λ𝑓∀🔑：₍🔑∉₎!` | `f10` |
+| `File::YAML` | `read` | `f12` |
+| `💎.engine.os` | `windows?`, `unix?`, `mac?`, `linux?` | `f22` |
+| `🐋`/`💎.engine.api_locale.api_docker` | `healthy?`, `∃🌐?`, `∃🐋?`, `find_🌐_by_name`, `find_🐋_by_name`, `find_🐋_by_id`, `♻️_🌐_by_name` | `f40` |
+
+---
+
 # `v0.0.47`
 
  * add T e C h D e B t ♪~ ᕕ(ᐛ)ᕗ

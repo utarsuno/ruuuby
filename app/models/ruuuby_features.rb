@@ -35,6 +35,15 @@ class ::RuuubyFeature < ::ApplicationRecord
   # @return [Integer]
   def self.num_needing_merge; num_where('flag_state = ?', EnumFlagState::STATE_NEEDS_MERGE); end
 
+  # @return [String]
+  def self.source_readme_feat_types
+    feats_stable        = ::RuuubyFeature.num_stable
+    feats_wip           = ::RuuubyFeature.num_wip
+    feats_todo          = ::RuuubyFeature.num_todo
+    feats_needing_merge = ::RuuubyFeature.num_needing_merge
+    "`#{feats_stable.to_s}`:`#{feats_wip.to_s}`:`#{feats_needing_merge.to_s}`:`#{feats_todo.to_s}`"
+  end
+
   # _________________________________________________________________________________________________________________
   #      ___ ___  __     __       ___  ___  __
   #  /\   |   |  |__) | |__) |  |  |  |__  /__`

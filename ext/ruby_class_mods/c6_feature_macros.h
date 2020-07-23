@@ -19,16 +19,20 @@ ________________________________________________________________________________
     ensure_loaded_default(singleton)\
     ensure_loaded_default(logger)\
     ensure_loaded_default(time)\
+    ensure_loaded_default(tzinfo)\
     ensure_loaded_default(prime)\
     ensure_loaded_default(benchmark)\
     ensure_loaded_default(matrix)\
     ensure_loaded_default(net/http)\
     ensure_loaded_default(csv)\
+    ensure_loaded_default(yaml)\
+    ensure_loaded_default(pp)\
 }
 
 #define startup_step0_load_f98_b02_3rd_party(){\
     ensure_loaded_default(tty-command)\
     ensure_loaded_default(rugged)\
+    ensure_loaded_default(docker)\
 }
 
 #define startup_step0_load_f98(){\

@@ -7,6 +7,7 @@ require 'bundler/setup'
 require 'ruuuby'
 
 $ruuuby = 💎
+🐋      = 💎.engine.api_locale.api_docker
 using ::Math::Algebra::Tropical::ContextNumeric
 using ::Math::Algebra::Tropical::ContextMatrix
 using ::ThetaAngle::ContextRuuuby

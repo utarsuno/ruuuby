@@ -58,7 +58,10 @@ module ::Ruuuby
       def warm_up
         if @state_flag == 0
           self.setup_logger
-          self.gc.total_memory_usage_current('starting-up') if @logging_level == ::Logger::INFO
+          if @logging_level == ::Logger::INFO
+            mem_kb = self.gc.total_memory_usage_current
+            self.info("pid{#{$$.to_s}} starting-up w/ memory-usage currently at{#{mem_kb.to_s}} KB, equivalently: {#{(mem_kb / 1024).to_s}} MB")
+          end
           @state_flag += 1
         else
           🛑 ::RuntimeError.new("| RuuubyEngine should only be warmed up once |")
@@ -83,9 +86,15 @@ module ::Ruuuby
       def cool_down
         if @state_flag == 1
           unless @logger == nil
-            self.gc.total_memory_usage_current('terminating') if @logging_level == ::Logger::INFO
-            💎.engine.debug('closing logger!')
+            if @logging_level == ::Logger::INFO
+              mem_kb = self.gc.total_memory_usage_current
+              self.info("pid{#{$$.to_s}} terminating w/ memory-usage currently at{#{mem_kb.to_s}} KB, equivalently: {#{(mem_kb / 1024).to_s}} MB")
+            end
+            self.debug('closing logger!')
             @logger.close
+          end
+          unless @orm.nil?
+
           end
           @state_flag += 1
         else
@@ -146,13 +155,10 @@ module ::Ruuuby
         end
 
         # @return [Integer]
-        def self.total_memory_usage_current(message)
+        def self.total_memory_usage_current  #(message)
           # command from: https://stackoverflow.com/questions/7220896/get-current-ruby-process-memory-usage
-          out    = 💎.engine.api.run_cmd!("ps ax -o pid,rss | grep -E \"^[[:space:]]*#{$$}\"")
-          mem_kb = out.♻️⟶(' ').strip.to_i
-          mem_mb = (mem_kb / 1024.0)
-          💎.engine.info("pid{#{$$.to_s}} #{message} w/ memory-usage currently at{#{mem_kb.to_s}} KB, equivalently: {#{mem_mb.to_s}} MB")
-          mem_kb
+          result = 💎.engine.api.run_cmd!("ps ax -o pid,rss | grep -E \"^[[:space:]]*#{$$}\"")
+          result.♻️⟶(' ').strip.to_f
         end
 
         def self.perform_full; ::GC.start(full_mark: true, immediate_sweep: true); end
@@ -227,10 +233,38 @@ module ::Ruuuby
         def self.resume; ::RubyVM::MJIT.resume; end
       end # end: {F22B01}
 
+      # helpful CLI commands: @see https://unix.stackexchange.com/questions/252980/is-there-a-whoami-to-find-the-current-group-im-logged-in-as
+      #
+      #  | scenario           | cmd        |
+      #  | ------------------ | ---------- |
+      #  | current group ID   | `id -g`    |
+      #  | current group name | `id -g -n` |
+      #  | current user ID    | `id -u`    |
+      #  | current user name  | `id -u -n` |
+      #
+      # `💎.engine.os`
       module F22B05
 
         # @param [String]
         def self.current_user; ::Etc.getlogin; end
+
+        # @param [Boolean]
+        def self.windows?; ::TTY::Command.windows?; end
+
+        # @see source credit: https://stackoverflow.com/questions/170956/how-can-i-find-which-operating-system-my-ruby-program-is-running-on
+        #
+        # @param [Boolean]
+        def self.unix?; !self.windows?; end
+
+        # @see source credit: https://stackoverflow.com/questions/170956/how-can-i-find-which-operating-system-my-ruby-program-is-running-on
+        #
+        # @param [Boolean]
+        def self.mac?; (/darwin/ =~ RUBY_PLATFORM) != nil; end
+
+        # @see source credit: https://stackoverflow.com/questions/170956/how-can-i-find-which-operating-system-my-ruby-program-is-running-on
+        #
+        # @param [Boolean]
+        def self.linux?; self.unix && !self.mac?; end
 
         # @return [Integer] the number of CPUs available to `Ruuuby`, not necessarily the number that exists in hardware
         def self.num_cpu_cores; ::Etc.nprocessors; end
@@ -362,7 +396,7 @@ module ::Ruuuby
             puts content if @echo_to_stdout
           end
         else
-          🛑 ::RuntimeError.new("| RuuubyEngine got invalid @logging_mode{#{@logging_mode.to_s}} w/ type{#{@logging_mode.class.to_s} for func{_create_logger} |")
+          🛑 ::RuntimeError.new("| RuuubyEngine got invalid @logging_mode{#{@logging_mode.to_s}} w/ type{#{@logging_mode.Ⓣ} for func{_create_logger} |")
         end
         unless @logger.nil?
           @logger.level = @logging_level

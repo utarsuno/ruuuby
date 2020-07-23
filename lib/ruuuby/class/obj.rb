@@ -316,10 +316,10 @@ class ::Object
   include Ruuuby::Feature::Includable::ObjectF06
   # ---------------------------------------------------------------------------------------------------------- | *f10* |
 
-  # @return [Class]
+  # func{ⓣ} returns [Class]
   alias_method :ⓣ, :class
 
-  # @return [String]
+  # @return [String] this particular object's Class as a String
   def Ⓣ; self.class.to_s; end
 
   # ---------------------------------------------------------------------------------------------------------- | *f16* |

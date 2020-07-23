@@ -6,7 +6,6 @@
 require 'bundler/setup'
 
 require 'ruuuby'
-💎.engine.enable_orm
 require_relative '../db/seed'
 
 $ruuuby = 💎
@@ -17,6 +16,10 @@ $ruuuby = 💎
 # (If you use this, don't forget to add pry to your Gemfile!)
 # require "pry"
 # Pry.start
+
+def print_latest_changelogs
+  $ruuuby_release_obj_curr.get_docs2.∀𝚡λ𝑓🖨️
+end
 
 require 'irb'
 IRB.start(__FILE__)

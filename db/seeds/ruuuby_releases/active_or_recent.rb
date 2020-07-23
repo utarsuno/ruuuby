@@ -165,5 +165,36 @@
 @v0_0_47.spawn_kclass_methods(@f22, '💎.engine.api_locale', %w(iconv_version iconv_supported_encodings))
 @v0_0_47.spawn_kclass_methods(@f38, 'TimeSeriesData', %w(Q₁ Q₃ IQR outliers_lower outliers_upper boundary_outliers_min boundary_outliers_max sum_squared sum_of_squares sum_weighted mean_weighted mean_geometric nᵗʰ_percent_rank healthy?))
 @v0_0_47.spawn_kclass_methods(@f38, 'PseudoGraph', %w([] set_edge set_edge_inverse num_nodes empty? free_memory print_debugging))
-@v0_0_47.save!
-💎.engine.orm.ruuuby_release_obj_curr = @v0_0_47
+
+@v0_0_48 = ::RuuubyRelease.spawn(0, 0, 48)
+@v0_0_48.path_added('lib/ruuuby/protocol/http_request.rb', '', "starting w/ approach of re-inventing the wheel for learning opportunity of up-close testing against `NGINX`, no design locks against replacement w/ any `HTTP gem` in future versions", @f10)
+@v0_0_48.path_added('db/queries/migration_test.sql', '', 'for learning purposes (recommended online as well), migrations for PostgreSQL will be created/executed w/ raw SQL statements', @f15)
+@v0_0_48.path_added('db/helpers/db_connection.rb', '', 'testing design', @f39)
+@v0_0_48.path_added('services/nginx/includes/*.nginx (many files)', '', '', @f39)
+@v0_0_48.path_added('services/web_assets/Dockerfile', '', 'file added early, to be completed <= version{`0.0.50`}; to be eventually divided into 2 separate container types, handles JS/CSS/HTML parsing w/ `Node.JS`', @f39)
+@v0_0_48.path_added('services/web_assets/ruuuby.html', '', 'same as above', @f39)
+@v0_0_48.path_added('services/web_assets/ruuuby.js', '', 'same as above', @f39)
+@v0_0_48.add_gem('pg', '1.2.3', 1, %w(DB), '::PG', '::VERSION')
+@v0_0_48.add_gem('docker-api', '1.34.2', 1, %w(Docker), '::Docker', '::VERSION')
+@v0_0_48.add_comments(
+    [
+        'add initial `Docker services:` {`nginx`, `postgresql`, `pgadmin4`} all `wip` w/ others inc but just as development-utils atm, not to be required by gem/runtime)',
+        'designate feature support/expansion for `WebGL` based derivatives to fully precede over `OpenGL` in `99.9% of scenarios`',
+        'add `RSpec categories:` {`service`, `system`}',
+        '-> `system tests` for now will act as a combination of `acceptance-testing`, `system-tests`, and `chaos-monkey-testing`',
+        '-> `service tests` are not yet utilized, but will be for future `Service objects`, (w/ context of `ORM`/`Onion Architecture`, not `Docker`/`microservices`)',
+        'apply initial steps for cross-OS compatibility, process of doing so is helping reveal previously un-noticed design redundancies and/or gaps, a few fixed in this version',
+        'indeterminate hiatus for math/theory studies to avoid adding tech-debt that would otherwise get created within the next 10+ versions',
+    ]
+)
+@v0_0_48.spawn_kclass_methods(@f10, 'Net::HTTPHeader', %w(cache_warmup ∃ᴴ?))
+@v0_0_48.spawn_kclass_methods(@f10, 'Array', %w(∀𝚡λ𝑓🖨️))
+@v0_0_48.spawn_kclass_methods(@f10, 'Hash', %w(λ𝑓∀🔑：₍🔑∉₎ λ𝑓∀🔑：₍🔑∉₎!))
+@v0_0_48.spawn_kclass_methods(@f10, 'File::YAML', %w(read))
+@v0_0_48.spawn_kclass_methods(@f10, 'Ruuuby::Protocols::RequestHTTP', %w(execute!))
+@v0_0_48.spawn_kclass_methods(@f22, '`💎.engine.os`', %w(windows? unix? mac? linux?))
+@v0_0_48.spawn_kclass_methods(@f39, '`🐋`/`💎.engine.api_locale.api_docker`', %w(healthy? ∃🌐? ∃🐋? find_🌐_by_name find_🐋_by_name find_🐋_by_id ♻️_🌐_by_name))
+@v0_0_48.save!
+
+$ruuuby_release_obj_curr = @v0_0_48
+

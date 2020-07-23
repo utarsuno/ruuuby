@@ -129,7 +129,12 @@
     ]
 )
 
-@f31.spawn_behaviors(['offers an abstraction over the `Rugged` gem', 'offers health checks for current local dev state'])
+@f31.spawn_behaviors(
+    [
+        'offers an abstraction over the `Rugged` gem',
+        'offers health checks for current local dev state'
+    ]
+)
 
 @f32.spawn_behaviors(
     [
@@ -193,6 +198,13 @@
         'offer `Refinement` w/ module{Math::Algebra::Tropical::ContextNumeric} for `Numerics`',
         'support `Tropical Algebra` w/ any additionally needed methods in class{`Matrix`}',
         'create class `CurrencyMatrix` under module{`Math::Forex`}'
+    ]
+)
+
+@f40.spawn_behaviors(
+    [
+        'offers an abstraction over the `docker-api` gem',
+        'offers health checks for current local dev state'
     ]
 )
 

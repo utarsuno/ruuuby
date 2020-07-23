@@ -25,3 +25,5 @@ Gemfile.lock
 # extension files
 lib/ruby_class_mods.bundle
 lib/ruby_class_mods.so
+
+/configs_local/

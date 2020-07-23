@@ -4,6 +4,21 @@ RSpec.describe 'ary' do
 
   context 'extends class{Array}' do
 
+    context 'by adding the following' do
+      context 'func{∀𝚡λ𝑓🖨️}' do
+        context 'handles needed scenarios' do
+          it 'for cases: positive' do
+            expect{[0].∀𝚡λ𝑓🖨️}.to output("0\n").to_stdout
+            expect{[1,2,3].∀𝚡λ𝑓🖨️}.to output("1\n2\n3\n").to_stdout
+            expect{['1337', nil, []].∀𝚡λ𝑓🖨️}.to output("1337\n\n").to_stdout
+          end
+          it 'for cases: negative' do
+            expect{[].∀𝚡λ𝑓🖨️}.to raise_error(::RuntimeError, '| c{Array}-> m{∀𝚡λ𝑓🖨️} called when self has a length of{0} |')
+          end
+        end
+      end
+    end
+
     context 'by adding function{≈≈} (equal_contents?)' do
       context 'handles needed scenarios' do
         context 'for cases: positive' do

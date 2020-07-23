@@ -4,6 +4,8 @@
 require_relative '../../lib/ruuuby/version'
 require 'mkmf'
 
+os = ENV['RUUUBY_OS_CURRENT']
+
 env_f28 = ENV['RUUUBY_F28']
 if env_f28.nil?
   flag_f28_b09 = false
@@ -17,7 +19,7 @@ if env_f98.nil?
 else
   begin
     env_f98 = env_f98.to_i
-    if env_f98 >= 0 && env_f98 <= 15
+    if env_f98 >= 0 && env_f98 <= 63
       flag_debug    = env_f98 != 0
       flag_timer    = env_f98.odd?
       flag_memory   = (env_f98 & 2) != 0
@@ -41,30 +43,32 @@ $DEBUG = true
 the_flags = []
 
 # optimization
-the_flags += %w(O3 fgnu89-inline fforce-emit-vtables fstrict-enums flto fwhole-program-vtables mpie-copy-relocations ftree-vectorize fvectorize fzvector)
-
-# configs
-the_flags += %w(fmacro-backtrace-limit=0 fconstexpr-backtrace-limit=0)
+the_flags += %w(O3 fgnu89-inline fstrict-enums flto ftree-vectorize fvectorize fzvector)
 
 # etc
-the_flags += %w(Wall Wformat nostdinc++ fexceptions pipe std=gnu11) #std=gnu11  #std=c17
+the_flags += %w(Wall Wformat fexceptions pipe std=gnu11) #std=gnu11  #std=c17
 
 # x86_64
 the_flags += %w(fPIC malign-double)
 
-# apple
-the_flags += %w(fapinotes fapple-pragma-pack fblocks)
+# flags for MacOS only
+if os == 'mac'
+  the_flags += %w(fapinotes fapple-pragma-pack fblocks ftarget-variant-availability-checks fmacro-backtrace-limit=0 fconstexpr-backtrace-limit=0 nostdinc++ fforce-emit-vtables fwhole-program-vtables mpie-copy-relocations)
+  the_flags += %w(DRUUUBY_OS_IS_MAC)
+
+  # OpenMP
+  #the_flags += %w(Xpreprocessor fopenmp) #lomp
+  #the_flags += %w(DCMAKE_C_COMPILER=clang DOpenMP_libomp_LIBRARY DLIBOMP_ARCH=x86_64 DCMAKE_BUILD_TYPE=Debug DCMAKE_SHARED_LINKER_FLAGS)
+  #the_flags += %w(DOpenMP_libomp_LIBRARY DCMAKE_SHARED_LINKER_FLAGS)
+else
+  the_flags += %w(DRUUUBY_OS_IS_UNIX)
+end
 
 # utf-8
 the_flags += %w(fextended-identifiers finput-charset=UTF-8)
 
 # extra_checks
-the_flags += %w(ftarget-variant-availability-checks funroll-loops)
-
-# OpenMP
-#the_flags += %w(Xpreprocessor fopenmp) #lomp
-#the_flags += %w(DCMAKE_C_COMPILER=clang DOpenMP_libomp_LIBRARY DLIBOMP_ARCH=x86_64 DCMAKE_BUILD_TYPE=Debug DCMAKE_SHARED_LINKER_FLAGS)
-#the_flags += %w(DOpenMP_libomp_LIBRARY DCMAKE_SHARED_LINKER_FLAGS)
+the_flags += %w(funroll-loops)
 
 the_flags += ["DRUUUBY_F98_DEBUG=#{env_f98.to_s}"] if flag_debug
 the_flags += %w(DRUUUBY_F98_TIMER) if flag_timer
@@ -83,23 +87,23 @@ Wpointer-sign Wparentheses Winit-self Wmissing-include-dirs Wno-switch-bool Wswi
 
 append_cflags(the_flags.map!{|f| " -#{f}"})
 
-if flag_opencl
-  append_ldflags('-L/System/Library/Frameworks/OpenCL.framework')
-  append_ldflags('-framework OpenCL')
-  abort('no OpenCL') unless have_framework('OpenCL')
+if os == 'mac'
+  if flag_opencl
+    append_ldflags('-L/System/Library/Frameworks/OpenCL.framework')
+    append_ldflags('-framework OpenCL')
+    abort('no OpenCL') unless have_framework('OpenCL')
+  end
+  if flag_opengl
+    append_ldflags('-L/System/Library/Frameworks/OpenGL.framework')
+    append_ldflags('-framework OpenGL')
+    abort('no OpenGL') unless have_framework('OpenGL')
+  end
+  #if `flag_openmp
+  #  append_ldflags('-L/usr/local/opt/libomp/lib')
+  #  abort('no OpenMP') unless have_framework('OpenMP')
+  #  headers += %w(omp)
+  #end`
 end
-
-if flag_opengl
-  append_ldflags('-L/System/Library/Frameworks/OpenGL.framework')
-  append_ldflags('-framework OpenGL')
-  abort('no OpenGL') unless have_framework('OpenGL')
-end
-
-#if flag_openmp
-#  append_ldflags('-L/usr/local/opt/libomp/lib')
-#  abort('no OpenMP') unless have_framework('OpenMP')
-#  headers += %w(omp)
-#end
 
 dir_config('ruby_class_mods', [::RbConfig::CONFIG['includedir']], [::RbConfig::CONFIG['libdir']])
 

@@ -1,19 +1,56 @@
-# {'Compose file format': '3.7', 'Docker Engine release': '18.06.0*'}
-version: '3.7'
+# {'Compose file format': '3.8', 'Docker Engine release': '19.03.0+'}; utilized API-Version: `1.40`
+version: '3.8'
 
 services:
 
-  #ruuuby:
-  #  build:
-  #    context: .
-  #    dockerfile: ./Dockerfile
-  #  environment:
-  #    SERVICE_NAME: "ruuuby"
-  #  tty: false
-  #  # TODO: don't utilize this setup style
-  #  volumes:
-  #    - ./:/ruuuby
+  service_nginx:
+    build:
+      context: .
+      dockerfile: ./services/nginx/Dockerfile
+    environment:
+      SERVICE_NAME: "service_nginx"
+    volumes:
+      - './services/nginx/ruuuby.nginx:/etc/nginx/nginx.conf'
+      - 'ruuuby_nginx_data:/v'
+    ports:
+      - 80:80
+      - 443:443
+      - 1337:1337
+    depends_on:
+      - service_postgres
+      - service_pgadmin
 
-  #postgres:
+  service_postgres:
+    image: "postgres"
+    restart: always
+    environment:
+      SERVICE_NAME: "service_postgres"
+      POSTGRES_DB: "mydb"
+      POSTGRES_USER: "myuser"
+      POSTGRES_PASSWORD: "mypassword"
+    volumes:
+      - "ruuuby_db_data/:/var/lib/postgresql/data/"
+    #ports:
+    #  - 5432:5432
+    #ports:
+    #  - "${SERVICE_00_FIELD_03}:${SERVICE_00_FIELD_04}"
 
-#volumes:
+  service_pgadmin:
+    image: "dpage/pgadmin4"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'pgadmin4@pgadmin.org'
+      PGADMIN_DEFAULT_PASSWORD: 'admin'
+      PGADMIN_ADMIN_PORT: '1337'
+      PGADMIN_LISTEN_ADDRESS: '0.0.0.0'
+    volumes:
+      - "ruuuby_pgadmin_data/:/var/lib/pgadmin/"
+
+networks:
+  default:
+    external:
+      name: ruuuby_network
+
+volumes:
+  ruuuby_db_data:
+  ruuuby_nginx_data:
+  ruuuby_pgadmin_data:

@@ -8,69 +8,69 @@ ________________________________________________________________________________
 
 #include "ruby/config.h"
 
-#ifndef GENERIC_BUILD
-    //#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.0.h"
-    //#include "ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
-
+#ifdef RUUUBY_OS_IS_MAC
     #include "/Users/utarsuno/.rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
-
-    #include <ruby/defines.h>
-    #include <ruby/version.h>
-    #include <ruby/vm.h>
-
-    #include <fcntl.h>
-    #include <stdio.h>
-    #include <stdlib.h>
-
-    #include <sys/resource.h>
-    #include <sys/types.h>
-    #include <sys/stat.h>
-
-    #include <unistd.h>
-    //#include <math.h>
-    #include <inttypes.h>
-
-    #include <float.h>
-    #include <tgmath.h>
-    //#include <complex.h>
-
-    #ifdef RUUUBY_F98_DEBUG
-        #ifdef RUUUBY_F98_TIMER
-            #include <time.h>
-            #include <sys/time.h>
-        #endif
-        #ifdef RUUUBY_F98_OPENCL
-            #define CL_SILENCE_DEPRECATION
-            #define GL_SILENCE_DEPRECATION
-            #include <OpenCL/cl.h>
-        #endif
-        #ifdef RUUUBY_F98_OPENMP
-            #include <omp.h>
-        #endif
-    #endif
-
-#else
-    /*
-    #include "ruby/encoding.h"
-    #include <locale.h>
-    #include <ruby.h>
-    #include "ruby/ruby.h"
-
-    #include <ruby/defines.h>
-    #include <ruby/intern.h>
-    #include <ruby/debug.h>
-    #include <ruby/assert.h>
-    #include <ruby/missing.h>
-    #include <ruby/re.h>
-    #include <ruby/regex.h>
-    #include <ruby/ruby.h>
-    #include <ruby/st.h>
-    #include <ruby/subst.h>
-    #include <ruby/util.h>
-    #include <ruby/version.h>
-    #include <ruby/vm.h>
-    */
 #endif
+
+#ifdef RUUUBY_OS_IS_UNIX
+    #include "/usr/local/rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-linux-musl/rb_mjit_min_header-2.7.1.h"
+#endif
+
+#include <ruby/defines.h>
+#include <ruby/version.h>
+#include <ruby/vm.h>
+
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <sys/resource.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#include <unistd.h>
+//#include <math.h>
+#include <inttypes.h>
+
+#include <float.h>
+//#include <tgmath.h>
+//#include <complex.h>
+
+#ifdef RUUUBY_F98_DEBUG
+    #ifdef RUUUBY_F98_TIMER
+        #include <time.h>
+        #include <sys/time.h>
+    #endif
+    #ifdef RUUUBY_F98_OPENCL
+        #define CL_SILENCE_DEPRECATION
+        #define GL_SILENCE_DEPRECATION
+        #include <OpenCL/cl.h>
+    #endif
+    #ifdef RUUUBY_F98_OPENMP
+        #include <omp.h>
+    #endif
+#endif
+
+/*
+#include "ruby/encoding.h"
+#include <locale.h>
+#include <ruby.h>
+#include "ruby/ruby.h"
+
+#include <ruby/defines.h>
+#include <ruby/intern.h>
+#include <ruby/debug.h>
+#include <ruby/assert.h>
+#include <ruby/missing.h>
+#include <ruby/re.h>
+#include <ruby/regex.h>
+#include <ruby/ruby.h>
+#include <ruby/st.h>
+#include <ruby/subst.h>
+#include <ruby/util.h>
+#include <ruby/version.h>
+#include <ruby/vm.h>
+*/
 
 #ifndef CRUUUBY_H
 #include "ruby_class_mods.h"
@@ -371,6 +371,7 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
     // [⚠️] : reminder, do not load "ruuuby/ruuuby_orm" here
 
     ensure_loaded_ruuuby(protocol/unix_socket)
+    ensure_loaded_ruuuby(protocol/http_request)
 
     ensure_all_loaded_for_ruuuby()
 

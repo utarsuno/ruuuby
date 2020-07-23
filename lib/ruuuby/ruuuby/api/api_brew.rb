@@ -11,8 +11,6 @@ module ::Ruuuby
     # TODO: https://github.com/Homebrew/brew/releases
     class BrewAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
 
-      attr_reader :repo, :last_commit, :configs
-
       def initialize(engine)
         super(engine)
       end

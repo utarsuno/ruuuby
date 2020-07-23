@@ -2,6 +2,8 @@
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
+require_relative '../../../db/helpers/db_connection'
+
 # `💎`
 module Ruuuby
 
@@ -11,16 +13,17 @@ module Ruuuby
     # `💎.engine.orm`
     class RuuubyORM < ::Ruuuby::MetaData::RuuubyAPIComponent
 
-      attr_accessor :ruuuby_file_version, :state_flag, :expected_tables, :ruuuby_release_obj_curr
+      attr_accessor :ruuuby_file_version, :state_flag, :expected_tables
+
+      attr_reader :db_orm
 
       # state_flag
-      # | 0 | no db libs |
-      # | 1 | db libs loaded |
-      # | 2 | schema loaded |
-      # | 3 | db connected to |
+      # | 0 | no db libs       |
+      # | 1 | db libs loaded   |
+      # | 2 | schema loaded    |
+      # | 3 | db connected to  |
       # | 4 | db tables loaded |
-      # | 5 | db seeds loaded |
-
+      # | 5 | db seeds loaded  |
       def initialize(engine)
         super(engine)
         @state_flag       = 0
@@ -28,6 +31,12 @@ module Ruuuby
             orm: %w(ruuuby_releases ruuuby_gems ruuuby_features ruuuby_feature_behaviors ruuuby_changelogs git_commits ruuuby_dirs ruuuby_files),
             application_record: %w(ar_internal_metadata)
         }
+        @db_orm          = ::Ruuuby::DBConnectionMemorySQLite3.new
+      end
+
+      # TODO: temp design / implementation
+      def on_engine_exit
+        @db_orm.♻️_connection!
       end
 
       def info_release_state
@@ -38,25 +47,17 @@ module Ruuuby
       end
 
       # ----------------------------------------------------------------------------------------------------------------
-
-      def execute_raw_sql(sql); self.get_connection_base.execute(sql); end
-
-      def get_connection_schema; ::ActiveRecord::Schema.connection; end
-
-      def get_connection_base; ::ActiveRecord::Base.connection; end
-
+      #def get_connection_schema; ::ActiveRecord::Schema.connection; end
+      #def get_connection_base; ::ActiveRecord::Base.connection; end
       # ----------------------------------------------------------------------------------------------------------------
 
       # @return [Boolean] true, if the db-connection had not yet been loaded and did so this function-call
       def ensure_loaded_db_connection
         if @state_flag == 2
-          adapter = 'sqlite3'
-          db      = ':memory:'
-          ::ActiveRecord::Base.establish_connection(adapter: adapter, database: db)
-          @engine.info("Connected to db of type{#{adapter.to_s}} with connection to/type{#{db.to_s}}")
+          @db_orm.obtain_connection
           @state_flag += 1
         else
-          🛑 RuntimeError.new("| RuuubyEngine w/ func{ensure_loaded_db_connection} tried to move to state{3} when currently in state{#{@state_flag.to_s}} |")
+          🛑 ::RuntimeError.new("| RuuubyEngine w/ func{ensure_loaded_db_connection} tried to move to state{3} when currently in state{#{@state_flag.to_s}} |")
         end
       end
 
@@ -66,7 +67,7 @@ module Ruuuby
           @engine.info('loaded db tables')
           @state_flag += 1
         else
-          🛑 RuntimeError.new("| RuuubyEngine w/ func{ensure_loaded_db_tables} tried to move to state{3} when currently in state{#{@state_flag.to_s}} |")
+          🛑 ::RuntimeError.new("| RuuubyEngine w/ func{ensure_loaded_db_tables} tried to move to state{4} when currently in state{#{@state_flag.to_s}} |")
         end
       end
 
@@ -92,6 +93,7 @@ module Ruuuby
         if @state_flag == 0
           require 'sqlite3'
           require 'active_record'
+          require 'pg'
           @engine.info('loaded db libs')
           @state_flag += 1
         else
@@ -134,18 +136,6 @@ module Ruuuby
         else
           @engine.debug("file{#{path}} does not match{#{ruuuby}}")
         end
-      end
-
-      # wip
-      def get_upcoming_changelog; @ruuuby_release_obj_curr.get_docs2.∀{|content| puts content}; end
-
-      # @return [String]
-      def print_info_readme_feat_types
-        feats_stable        = ::RuuubyFeature.num_stable
-        feats_wip           = ::RuuubyFeature.num_wip
-        feats_todo          = ::RuuubyFeature.num_todo
-        feats_needing_merge = ::RuuubyFeature.num_needing_merge
-        "`#{feats_stable.to_s}`:`#{feats_wip.to_s}`:`#{feats_needing_merge.to_s}`:`#{feats_todo.to_s}`"
       end
 
       🙈

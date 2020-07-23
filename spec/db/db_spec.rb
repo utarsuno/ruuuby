@@ -3,14 +3,12 @@
 RSpec.describe 'db/db.rb' do
 
   context 'db', :db do
-
     context 'defines expected schemas' do
 
       context 'tables found are as defined' do
-        let(:db_tables){💎.engine.orm.get_connection_base.tables}
+        let(:db_tables){💎.engine.orm.db_orm.connection.tables}
 
         it 'for needed tables' do
-          expect(💎.engine.orm.get_connection_schema.tables).to eq(💎.engine.orm.get_connection_base.tables)
           💎.engine.orm.expected_tables[:orm].∀{|table_name| expect(db_tables.∋?(table_name)).to eq(true)}
         end
 
@@ -24,15 +22,8 @@ RSpec.describe 'db/db.rb' do
           expect(num_tables_generated_by_external_libs).to eq(1)
           expect(db_tables.length - num_tables_generated_by_external_libs).to eq(num_tables_generated_by_orm)
         end
-
       end
 
     end
-
-    #context 'db_locale', :locale do
-
-    #end
-
   end
-
 end

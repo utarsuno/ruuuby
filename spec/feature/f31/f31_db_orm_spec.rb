@@ -1,12 +1,11 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f31_db_orm' do
-
   context 'db_orm', :db do
 
     context 'defines{f31}' do
       it 'passes ORM audit' do
-        audit_feature(f31, 'f31', 2, 'provide a `GIT API`')
+        audit_feature(f31, 'f31', 2, 'provide an `API` for `GIT` operations w/ a light layer over gem{`rugged`}')
       end
 
       context 'defines behaviors' do
@@ -23,7 +22,5 @@ RSpec.describe 'f31_db_orm' do
       end # end: {defines behaviors}
 
     end # end: {defines{f31}}
-
   end
-
 end

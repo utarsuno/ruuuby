@@ -4,7 +4,7 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.47'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.48'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
@@ -185,14 +185,15 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Code Base Statistics:
 | category    | attribute       | value(s)         | # of  |
 | ----------: | :-------------: | ---------------: | :---- |
-| `QA`        | `unit`          | `1326`           | tests (for core functionality) |
+| `QA`        | `unit`          | `1340`           | tests (for core functionality) |
 | `QA`        | `integration`   | `23`             | tests (for state/functionality checks on grouped features/components) |
 | `QA`        | `performance`   | `147`:`85`       | tests{`non_numeric`,`numeric`} (for runtime performance) |
-| `QA`        | `DB`            | `285`            | tests (for `DB` & `ORM`) |
+| `QA`        | `DB`            | `289`            | tests (for currently combined categories of `DB`, `ORM`, & `Service`) |
+| `QA`        | `system`        | `2`              | tests (compare to `integration` but vastly larger scale w/ randomness involved to help encounter niche error-states) |
 | `CI`        | `audit`         | `168`            | tests (for anything non-functionality based) |
-| `CI`        | `locale`        | `76`:`23`        | local config tests{`core`:`excessive_checks`} |
+| `CI`        | `locale`        | `86`:`26`        | local config tests{`core`:`excessive_checks`} |
 | `tech-debt` | `coverage`      | `13`             | tests (for tracking missing functionality) |
-| `structure` | `features`      | `1`:`31`:`9`:`4` | features{`stable`:`wip`:`⚠️`:`todo`} |
+| `structure` | `features`      | `1`:`31`:`9`:`5` | features{`stable`:`wip`:`⚠️`:`todo`} |
 | `coverage`  | `LOCs`          | `???`            | `wip` |
 | `coverage`  | `runtime`       | `???`            | `wip` |
 | `coverage`  | `documentation` | `???`            | `wip` |
@@ -204,7 +205,8 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | gem | version | :development, :runtime | category |
 | ---: | :--- | :---: | ---: |
 | `tty-command` | [`0.9.0`](https://rubygems.org/gems/tty-command) | ✅, ✅ | `CLI` |
-| `rugged` | [`1.0.1`](https://rubygems.org/gems/rugged) | ✅, ❌ | `GIT` |
+| `docker-api` | [`1.34.2`](https://rubygems.org/gems/docker-api) | ✅, ❌ | `CLI` |
+| `rugged` | [`1.0.1`](https://rubygems.org/gems/rugged) | ✅, ❌ | `CLI` |
 | `rdoc` | [`6.2.1`](https://rubygems.org/gems/rdoc) | ✅, ❌ | `DOC` |
 | `bundler` | [`2.2.0.rc.1`](https://rubygems.org/gems/bundler) | ✅, ❌ | `CI` |
 | `rubygems-update` | [`3.2.0.rc.1`](https://rubygems.org/gems/rubygems-update) | ✅, ❌ | `CI` |
@@ -212,6 +214,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `rspec-benchmark` | [`0.6.0`](https://rubygems.org/gems/rspec-benchmark) | ✅, ❌ | `QA` |
 | `rake` | [`13.0.1`](https://rubygems.org/gems/rake) | ✅, ❌ | `EXT` |
 | `rake-compiler` | [`1.1.1`](https://rubygems.org/gems/rake-compiler) | ✅, ❌ | `EXT` |
+| `pg` | [`1.2.3`](https://rubygems.org/gems/pg) | ✅, ❌ | `DB` |
 | `sqlite3` | [`1.4.2`](https://rubygems.org/gems/sqlite3) | ✅, ❌ | `DB` |
 | `activerecord` | [`5.2.4.3`](https://rubygems.org/gems/activerecord) | ✅, ❌ | `DB` |
 | `schema_plus_foreign_keys` | [`0.1.8`](https://rubygems.org/gems/schema_plus_foreign_keys) | ✅, ❌ | `DB` |
