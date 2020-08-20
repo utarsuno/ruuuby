@@ -1,6 +1,6 @@
-# coding: UTF-8
+# encoding: UTF-8
 
-Gem::Specification.new do |gem|
+::Gem::Specification.new do |gem|
   require_relative 'lib/ruuuby/version'
 
   gem.name                  = 'ruuuby'
@@ -10,8 +10,8 @@ Gem::Specification.new do |gem|
   gem.authors               = ["Uladzislau Tarsunou"]
   gem.homepage              = 'https://github.com/utarsuno/ruuuby'
   gem.license               = 'MIT'
-  gem.required_ruby_version = Gem::Requirement.new(">= #{RUBY_VERSION}")
-  gem.platform              = Gem::Platform.local
+  gem.required_ruby_version = ::Gem::Requirement.new(">= #{RUBY_VERSION}")
+  gem.platform              = ::Gem::Platform.local
   gem.post_install_message  = "Gem{ruuuby, v#{::Ruuuby::VERSION.to_s}} has just been installed, cheers!"
   _md                       = gem.metadata
   _md['homepage_uri']       = gem.homepage
@@ -25,12 +25,12 @@ Gem::Specification.new do |gem|
   #  `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   #end
   gem.bindir        = 'bin'
-  gem.executables   = gem.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  gem.executables   = gem.files.grep(%r{^bin/}) {|f| ::File.basename(f)}
   #gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   #gem.test_files    = Dir.glob('spec/**/*.rb')
   gem.require_paths = %w(lib ext)
   gem.rdoc_options  = %w(-x ext --main README.rdoc)
-  gem.files          = Dir.glob('ext/**/*.{c,rb,h}') + Dir.glob('lib/**/*.rb')
+  gem.files          = ::Dir.glob('ext/**/*.{c,rb,h}') + ::Dir.glob('lib/**/*.rb')
   gem.extensions << 'ext/ruby_class_mods/extconf.rb'
 
   # ╔═════════════════════════════════════════════════════════════════════════════╗
@@ -40,7 +40,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency(:rake, '~> 13.0.1')                             #║
   gem.add_development_dependency(:rspec, '~> 3.9.0')                             #║
   gem.add_development_dependency(:rdoc, '~> 6.2.1')                              #║
-  gem.add_development_dependency(:'docker-api', '~> 1.34.2')                     #║
+  gem.add_development_dependency(:'docker-api', '~> 2.0.0.pre.1')                #║
   gem.add_development_dependency(:'rspec-benchmark', '~> 0.6.0')                 #║
   gem.add_development_dependency(:'rake-compiler', '~> 1.1.1')                   #║
   gem.add_development_dependency(:'tty-command', '~> 0.9.0')                     #║
@@ -56,4 +56,8 @@ Gem::Specification.new do |gem|
   gem.installed_by_version = '3.2.0.rc.1'                                        #║
   # ╚═════════════════════════════════════════════════════════════════════════════╝
 
+  # TODO: future gems to look into
+  #   * ActiveJob
+  #   * Adequate Record
+  #   * Web Console
 end

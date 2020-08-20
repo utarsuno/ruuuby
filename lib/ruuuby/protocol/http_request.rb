@@ -1,5 +1,13 @@
 # encoding: UTF-8
 
+class Net::HTTPResponse
+
+  def time_received; ::Time.parse(self.cache_warmup['date']); end
+
+  # @return [Integer]
+  def content_length; self.cache_warmup['content-length'].to_i; end
+end
+
 module Net::HTTPHeader
 
   alias_method :∀ᴴ, :each_header
@@ -44,30 +52,81 @@ module ::Ruuuby
   module Protocols
 
     # @see https://ruby-doc.org/stdlib-2.7.0/libdoc/net/http/rdoc/Net/HTTP.html
+    # @see https://yukimotopress.github.io/http
     module RequestHTTP
+
+      # @param [String, URI] uri
+      # @param [Hash]        params
+      #
+      # @raise [ArgumentError]
+      #
+      # @return [Net::HTTPResponse]
+      def self.execute(uri, params={})
+        the_uri  = self.parse_uri(uri, params)
+        response = nil
+        ::Net::HTTP.start(the_uri.host, the_uri.port) do |http|
+          request  = Net::HTTP::Get.new(the_uri)
+          response = http.request(request)
+        end
+        return response
+      end
 
       # TODO: add full testing coverage
       #
+      # @param [String, URI] uri
+      # @param [Hash]        params
+      #
+      # @raise [ArgumentError, RuntimeError]
+      #
+      # @return [Net::HTTPResponse]
+      def self.execute!(uri, params={})
+        the_uri  = self.parse_uri(uri, params)
+        response = nil
+        ::Net::HTTP.start(the_uri.host, the_uri.port) do |http|
+          request  = Net::HTTP::Get.new(the_uri)
+          response = http.request(request)
+        end
+        🛑 ::RuntimeError.new("| c{RequestHTTP}-> m{execute!} got non-200 response{#{response.code.to_s}} for uri{#{uri.to_s}}|") unless response.code == '200'
+        return response
+      end
+
       # @param [String, URI] uri
       #
       # @raise [ArgumentError, RuntimeError]
       #
       # @return [Net::HTTPResponse]
-      def self.execute!(uri)
+      def self.execute_timed!(uri)
+        time_start = ::Time.now
+        response   = self.execute!(uri)
+        time_delta = time_start - response.time_received
+        return response, time_delta
+      end
+
+      🙈
+
+      # @see https://stackoverflow.com/questions/7785793/add-parameter-to-url/26867426
+      #
+      # @param [String, URI] uri
+      # @param [Hash]        params
+      #
+      # @raise [ArgumentError]
+      #
+      # @return [URI, URI::HTTP]
+      def self.parse_uri(uri, params)
         if uri.str?
-          the_uri = URI(uri)
-        elsif uri.ⓣ == URI
-          the_uri = uri
-        else
-          🛑 ::ArgumentError.new("| c{RequestHTTP}-> m{execute!} got invalid type{#{uri.Ⓣ}} for arg(uri)|")
+          uri = URI(uri)
+        elsif uri.ⓣ != URI && uri.ⓣ != URI::HTTP
+          🛑 ::ArgumentError.new("| c{RequestHTTP}-> m{execute!} got invalid type{#{uri.Ⓣ}} for arg(uri) |")
         end
-        response = nil
-        ::Net::HTTP.start(the_uri.host, the_uri.port) do |http|
-          request  = Net::HTTP::Get.new(uri)
-          response = http.request(request)
+        unless params.empty?
+          if uri.query == nil
+            uri.query = URI.encode_www_form(params)
+          else
+            params    = Hash[URI.decode_www_form(uri.query || '')].merge(params)
+            uri.query = URI.encode_www_form(params)
+          end
         end
-        🛑 ::RuntimeError.new("| c{RequestHTTP}-> m{execute!} got non-200 response{#{response.code.to_s}} for uri{#{uri.to_s}}|") unless response.code == '200'
-        return response
+        uri
       end
 
     end

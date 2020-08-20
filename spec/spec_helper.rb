@@ -60,6 +60,15 @@ end
 
 module HelpersGeneral
 
+  def expect_needed_version(subject, version_expected, validate_matching_value=nil)
+    expect(subject.∃version?).to eq(true)
+    expect(subject.version_expected).to eq(version_expected)
+    expect(subject.version_current).to eq(version_expected)
+    unless validate_matching_value.nil?
+      expect(subject.version_current).to eq(validate_matching_value)
+    end
+  end
+
   def expect≈≈(scenario, expected_value)
     result = scenario.≈≈(expected_value)
     if !result
@@ -169,6 +178,7 @@ RSpec.configure do |config|
   config.include_context 'shared_context_f32'
   config.include_context 'shared_context_f34'
   config.include_context 'shared_context_f38'
+  config.include_context 'shared_context_f40'
 
   config.include HelpersGeneral
   config.include HelpersFeature16

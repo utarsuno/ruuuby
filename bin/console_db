@@ -1,24 +1,18 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-#export RUBYOPT='-W:no-deprecated -W:no-experimental'
-
 require 'bundler/setup'
 
 require 'ruuuby'
 require_relative '../db/seed'
 
+require_relative '../app/context/source_generation'
+using ::RuuubyGem::ContextSourceGeneration
+
 $ruuuby = 💎
 
-# You can add fixtures and/or initialization code here to make experimenting
-# with your gem easier. You can also use a different console, if you like.
-
-# (If you use this, don't forget to add pry to your Gemfile!)
-# require "pry"
-# Pry.start
-
 def print_latest_changelogs
-  $ruuuby_release_obj_curr.get_docs2.∀𝚡λ𝑓🖨️
+  $ruuuby_release_obj_curr.get_docs.∀𝚡λ𝑓🖨️
 end
 
 require 'irb'

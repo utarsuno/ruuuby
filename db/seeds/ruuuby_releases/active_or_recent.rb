@@ -194,7 +194,39 @@
 @v0_0_48.spawn_kclass_methods(@f10, 'Ruuuby::Protocols::RequestHTTP', %w(execute!))
 @v0_0_48.spawn_kclass_methods(@f22, '`💎.engine.os`', %w(windows? unix? mac? linux?))
 @v0_0_48.spawn_kclass_methods(@f39, '`🐋`/`💎.engine.api_locale.api_docker`', %w(healthy? ∃🌐? ∃🐋? find_🌐_by_name find_🐋_by_name find_🐋_by_id ♻️_🌐_by_name))
-@v0_0_48.save!
 
-$ruuuby_release_obj_curr = @v0_0_48
+@v0_0_49 = ::RuuubyRelease.spawn(0, 0, 49)
+@v0_0_49.path_added('lib/ruuuby/module/bundler.rb', '', '', @f10)
+@v0_0_49.path_added('lib/ruuuby/module/gem.rb', '', '', @f10)
+@v0_0_49.path_added('services/web_assets/*', 'multiple files & dirs', 'code not directly relating to `ruuuby engine` will not normally be documented (until pending `DB` overhaul)', @f10)
+@v0_0_49.path_added('lib/ruuuby/api/docker/docker_service.rb', 'RuuubyService', 'temp util', @f39)
+@v0_0_49.path_added('lib/ruuuby/api/docker/docker_service_set.rb', 'RuuubyServiceSet', 'temp util', @f39)
+@v0_0_49.path_added('bin/console_docker', 'RuuubyServiceSetDev', 'offers funcs like: `build_web_assets`, `build_js`, `build_html`, `build_css`, `run_dev`', @f39)
+@v0_0_49.update_gem(::RuuubyGem.find_by_name('docker-api'), '2.0.0.pre.1')
+@v0_0_49.add_comments(
+    [
+        '⚠️: overall code (esp. `math`/`DB` related) still `on-hold`, intermediate version release for organization (ex: many `Classes`/`functions` added are temporary, intentionally created with later removal planned)',
+        'add `Docker`{`service_js`}, add `multi-stage-builds` to existing services, add `zsh` to `development containers`',
+        '-> create `node.js server`, add first `REST end-point` offering minification of `HTML` and `CSS` files',
+        'apply some organization/expansion to various utility APIs: `git`, `docker`, `zsh`, `brew`, etc',
+        '(iterative) further enable `lazy-loading`, lots more to be done (has very significant impact on the \'engine\')',
+        'for `mac-os`, start utilizing `osascript` (enables niche automation areas, silly ex: compiling w/ voice commands)'
+    ]
+)
+@v0_0_49.spawn_kclass_methods(@f10, 'Object', %w(attribute_versionable))
+@v0_0_49.spawn_kclass_methods(@f10, 'ENV', %w(∀🔑∃_value?))
+@v0_0_49.spawn_kclass_methods(@f10, 'Hash', %w(∄🔑? ∀🔑∃_value?))
+@v0_0_49.spawn_kclass_methods(@f10, 'Array', %w(convert_to_json))
+@v0_0_49.spawn_kclass_methods(@f10, 'String', %w(clean!))
+@v0_0_49.spawn_kclass_methods(@f10, 'Heuristics', %w(clean))
+@v0_0_49.spawn_kclass_methods(@f10, 'Net::HTTPResponse', %w(time_received content_length))
+@v0_0_49.spawn_kclass_methods(@f10, '💎.engine.api_zsh', %w(run_script))
+@v0_0_49.spawn_kclass_methods(@f10, '💎.engine', %w(run_apple_script! curl_get))
+@v0_0_49.spawn_kclass_methods(@f10, '💎.engine.api_locale', %w(healthy? healthy_encoding?))
+@v0_0_49.spawn_kclass_methods(@f10, '🍺', %w(healthy? analytics? analytics_disabled? analytics_set_on analytics_set_off doctor cleanup))
+@v0_0_49.spawn_kclass_methods(@f31, '💎.engine.api_git', %w(∃index_conflicts? ∃fixable_syntax_errors?))
+@v0_0_49.spawn_kclass_methods(@f39, '`🐋`/`💎.engine.api_locale.api_docker`', %w(∀🐋 connected? connect connect! disconnect disconnect! version_compose))
+@v0_0_49.spawn_kclass_methods(@f39, 'Docker::Container', %w(alpine? debian? dev? prod? healthy? env os os_version linux_kernel_version os_architecture mounts ∃mount? env_vars file_create cmd!))
 
+@v0_0_49.save!
+$ruuuby_release_obj_curr = @v0_0_49

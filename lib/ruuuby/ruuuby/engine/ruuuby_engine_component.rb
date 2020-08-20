@@ -14,6 +14,9 @@ module ::Ruuuby
         @versionable = versionable
       end
 
+      # @return [Boolean]
+      def ∅?; false; end
+
     end
   end
 end

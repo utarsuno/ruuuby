@@ -4,6 +4,56 @@
 
 ---
 
+# `v0.0.49`
+
+> abstract:
+ * ⚠️: overall code (esp. `math`/`DB` related) still `on-hold`, intermediate version release for organizational purposes
+   * (ex: many `Classes`/`functions` added are temporary, intentionally created with later removal planned)
+
+> discrete:
+ * add `Docker`{`service_js`}
+   * create `node.js server`, add first `REST end-point` offering `minification` of `HTML` and `CSS` files
+ * add `multi-stage-builds` to existing services
+   * add `zsh` to `development-environment` based `images`
+
+> iterative:
+ * further organize/upgrade various utility APIs: `git`, `docker`, `zsh`, `brew`, etc
+ * further enable `lazy-loading`, lots more to be done
+ * for `mac-os`, start utilizing `osascript`
+   * (enables niche automation areas, silly ex: compiling w/ voice commands)
+
+| gem updated | version previous | version current |
+| ----: | :---: | :---- |
+| `docker-api` | `1.34.2` | `2.0.0.pre.1` |
+
+| path added | reference | notes | feature(s) |
+| ----: | ---- | ---- | ---- |
+| `lib/ruuuby/module/bundler.rb` | `Bundler` |  | `f10` |
+| `lib/ruuuby/module/gem.rb` | `Gem` |  | `f10` |
+| `services/web_assets/*` | `multiple files & dirs` | code not directly relating to `ruuuby engine` will not normally be documented (until pending `DB` overhaul) | `f10` |
+| `lib/ruuuby/api/docker/docker_service.rb` | `RuuubyService` | temp util | `f39` |
+| `lib/ruuuby/api/docker/docker_service_set.rb` | `RuuubyServiceSet` | temp util | `f39` |
+| `bin/console_docker` | `RuuubyServiceSetDev` | offers funcs like: `build_web_assets`, `build_js`, `build_html`, `build_css`, `run_dev` | `f39` |
+
+| context | method(s) added | feature(s) |
+| ---: | :--- | ---: |
+| `Object` | `attribute_versionable` | `f10` |
+| `ENV` | `∀🔑∃_value?` | `f10` |
+| `Hash` | `∄🔑?`, `∀🔑∃_value?` | `f10` |
+| `Array` | `convert_to_json` | `f10` |
+| `String` | `clean!` | `f10` |
+| `Heuristics` | `clean` | `f10` |
+| `Net::HTTPResponse` | `time_received`, `content_length` | `f10` |
+| `💎.engine.api_zsh` | `run_script` | `f10` |
+| `💎.engine` | `run_apple_script!`, `curl_get` | `f10` |
+| `💎.engine.api_locale` | `healthy?`, `healthy_encoding?` | `f10` |
+| `🍺` | `doctor`, `cleanup`, `healthy?`, `analytics?`, `analytics_disabled?`, `analytics_set_on`, `analytics_set_off` | `f10` |
+| `💎.engine.api_git` | `∃index_conflicts?`, `∃fixable_syntax_errors?` | `f31` |
+| ``🐋`/`💎.engine.api_locale.api_docker`` | `∀🐋`, `connected?`, `connect`, `connect!`, `disconnect`, `disconnect!`, `version_compose` | `f40` |
+| `Docker::Container` | `alpine?`, `debian?`, `dev?`, `prod?`, `healthy?`, `env_vars`, `os`, `os_version`, `linux_kernel_version`, `os_architecture`, `mounts`, `∃mount?`, `file_create`, `cmd!` | `f40` |
+
+---
+
 # `v0.0.48`
 
  * add initial `Docker services:` {`nginx`, `postgresql`, `pgadmin4`} all `wip` w/ others inc

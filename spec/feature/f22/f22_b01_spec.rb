@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f22_b01' do
 
@@ -20,7 +20,7 @@ RSpec.describe 'f22_b01' do
           expect(build_configs['MJIT_SUPPORT']).to eq('yes')
         end
         it 'built w/ correct path for{clang}' do
-          expect(build_configs['MJIT_CC']).to eq(💎.engine.api.run_cmd!('which clang'))
+          expect(build_configs['MJIT_CC']).to eq(💻('which clang'))
         end
       end
     end # end: {Just-In_Time compiler{JIT} is supported}

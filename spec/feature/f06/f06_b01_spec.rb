@@ -25,7 +25,7 @@ RSpec.describe 'f06_b01' do
             it 'w/ single param' do
               expect{🛑str❓('0', '5', :∉∅)}.to_not raise_error
               expect{🛑str❓('0', ' ', :∉∅)}.to_not raise_error
-              expect{🛑str❓('0', "\n", :∉∅)}.to_not raise_error
+              expect{🛑str❓('0', $/, :∉∅)}.to_not raise_error
             end
             it 'w/ many params' do
               expect{🛑strs❓(%w(a bb), :∉∅)}.to_not raise_error
@@ -35,7 +35,7 @@ RSpec.describe 'f06_b01' do
             it 'w/ single param' do
               expect{🛑str❓('0', '5')}.to_not raise_error
               expect{🛑str❓('0', ' ')}.to_not raise_error
-              expect{🛑str❓('0', "\n")}.to_not raise_error
+              expect{🛑str❓('0', $/)}.to_not raise_error
             end
             it 'w/ many params' do
               expect{🛑strs❓(%w(a bb))}.to_not raise_error

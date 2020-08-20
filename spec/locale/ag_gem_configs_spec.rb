@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # wip
 RSpec.describe '[AutomaticGeneration]: gem configs' do
@@ -8,27 +8,6 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
     context 'all gems are healthy' do
 
       context 'by having correct configs' do
-
-        context 'for gem{bundler}' do
-          context 'has correct version{2.2.0.rc.1}' do
-            it 'as defined by {Bundler}' do
-              expect(::Bundler::VERSION).to eq('2.2.0.rc.1')
-            end
-            it 'as defined by {Gem}' do
-              expect(Gem::BundlerVersionFinder.bundler_version.to_s).to eq(::Bundler::VERSION)
-            end
-          end
-          it 'does not requires sudo (depending on OS)' do
-            if 💎.engine.os.mac?
-              expect(::Bundler.requires_sudo?).to eq(false)
-            elsif 💎.engine.os.unix
-              # currently, only Alpine-Linux is supported/expected, which will run w/ user{`root`}
-              expect(::Bundler.requires_sudo?).to eq(true)
-            else
-              # ¯\_(ツ)_/¯
-            end
-          end
-        end # end: {for gem{bundler}}
 
         context 'for gem{rdoc}' do
           it 'has correct version{6.2.1}' do
@@ -56,19 +35,25 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
 
         context 'for gem{tty-command}' do
           it 'has correct version{0.9.0}' do
-            expect(::TTY::Command::VERSION).to eq('0.9.0')
+            expect_needed_version(::TTY::Command, '0.9.0', ::TTY::Command::VERSION)
           end
           context 'reports expected config values' do
-            it 'for func{record_separator}' do
-              expect(::TTY::Command.record_separator).to eq("\n")
-            end
-            it 'for func{windows?}' do
-              expect(::TTY::Command.windows?).to eq(false)
+            context 'for health checks' do
+              it 'for func{record_separator}' do
+                expect(::TTY::Command.record_separator).to eq($/)
+              end
+              it 'for func{windows?}' do
+                expect(::TTY::Command.windows?).to eq(false)
+              end
+              it 'thus passing all checks' do
+                expect(::TTY::Command.healthy?).to eq(true)
+              end
             end
             it 'helpful ENV_VARs are set' do
-              path_to_ruby = ::File.join(::RbConfig::CONFIG['bindir'], ::RbConfig::CONFIG['ruby_install_name'] + ::RbConfig::CONFIG['EXEEXT'])
+              path_to_ruby = "/Users/#{💎.engine.os.current_user}/.rbenv/versions/2.7.1/bin/ruby"
               expect(ENV['RUBY']).to eq(path_to_ruby)
               expect(::RbConfig.ruby).to eq(path_to_ruby)
+              expect(💎.engine.path_ruby).to eq(path_to_ruby)
             end
           end
         end # end: {for gem{tty-command}}
@@ -84,12 +69,6 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
             expect(::ActiveRecord::VERSION::STRING).to eq('5.2.4.3')
           end
         end # end: {for gem{activerecord}}
-
-        context 'for gem{rugged}' do
-          it 'has correct version{1.0.1}' do
-            expect(::Rugged::VERSION).to eq('1.0.1')
-          end
-        end # end: {for gem{rugged}}
 
       end # end: {by having correct configs}
 

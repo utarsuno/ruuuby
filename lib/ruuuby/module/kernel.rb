@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # add various aliases & functions to existing module(+Kernel+)
 module ::Kernel
@@ -9,6 +9,22 @@ module ::Kernel
 
   # @return [::Ruuuby::MetaData]
   def 💎; ::Ruuuby::MetaData; end
+
+  # @return [::Ruuuby::MetaData::DockerAPI]
+  def 🐋; ::Ruuuby::MetaData.engine.api_locale.api_docker; end
+
+  # @return [::Ruuuby::MetaData::BrewAPI]
+  def 🍺; ::Ruuuby::MetaData.engine.api_locale.api_brew; end
+
+  # @param [String] cmd
+  #
+  # @raise [ArgumentError]
+  #
+  # @return [Array, String]
+  def 💻(cmd)
+    🛑str❓('cmd', cmd)
+    ::Ruuuby::MetaData.engine.api.run_cmd!(cmd)
+  end
 
   # | ------------------------------------------------------------------------------------------------------------------
 end

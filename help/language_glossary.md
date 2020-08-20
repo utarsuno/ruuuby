@@ -6,5 +6,5 @@
 
  - `⌈x⌉ = min{n ∈ ℤ | n >= x}`
    - ceiling: `⌈x⌉ = n`
- - `⌊x⌋ = max{m ∈ ℤ | m <= x}`
+ - `⌊x⌋ = max{n ∈ ℤ | n <= x}`
    - floor: `⌊x⌋ = n`

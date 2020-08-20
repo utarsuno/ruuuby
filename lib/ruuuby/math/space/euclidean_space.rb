@@ -1,11 +1,16 @@
-# coding: UTF-8
+# encoding: UTF-8
+
+# -------------------------------------------- ⚠️ --------------------------------------------
+
+=begin
 
 # mathematics related code
 module ::Math
-
   # math related code that can be categorized under +Space+
   module Space
 
+    # @see https://en.wikipedia.org/wiki/Affine_space#Affine_coordinates
+    #
     # - elements are ordered n-paired numbers
     # - a space without a coordinate system (thus less structured than a +CartesianSpace+)
     class EuclideanSpace < AbstractSpace
@@ -28,7 +33,8 @@ module ::Math
     end
 
   end
-
 end
 
-# TODO: https://en.wikipedia.org/wiki/Affine_space#Affine_coordinates
+=end
+
+# -------------------------------------------- ⚠️ --------------------------------------------

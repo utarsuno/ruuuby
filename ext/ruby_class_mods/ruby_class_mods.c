@@ -330,6 +330,7 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
 
     ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine_component)
     ensure_loaded_ruuuby(ruuuby/engine/ruuuby_api_component)
+    ensure_loaded_ruuuby(ruuuby/engine/cli_api_component)
 
     ensure_loaded_ruuuby(virtual/f10)
 
@@ -342,21 +343,25 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
     ensure_loaded_enumerable(ary)
     ensure_loaded_enumerable(hsh) // must be after{ary}
 
+    ensure_loaded_module(gem)
+    ensure_loaded_module(bundler)
+
     ensure_all_loaded_for_nums()
 
     ensure_loaded_enumerable(set)
 
     ensure_loaded_attribute_extendable(syntax_cache)
 
-    ensure_all_loaded_for_set_theory()
+    ensure_loaded_class(str/context_case_syntax)
+    ensure_all_loaded_for_set_theory() // must be after{str/context_case_syntax}
 
-    ensure_loaded_class(sym) // must be after{attribute_cardinality}
+    ensure_loaded_class(sym)           // must be after{attribute_cardinality}
 
-    ensure_loaded_class(str) // must be after{attribute_syntax_cache, attribute_cardinality}
-    ensure_loaded_io(file)    // must be after{attribute_syntax_cache}
-    ensure_loaded_io(dir)    // must be after{attribute_syntax_cache}
+    ensure_loaded_class(str/str)       // must be after{attribute_syntax_cache, attribute_cardinality}
+    ensure_loaded_io(file)              // must be after{attribute_syntax_cache}
+    ensure_loaded_io(dir)              // must be after{attribute_syntax_cache}
 
-    internal_only_prepare_f16(); // must be after{ruuuby/types, ruuuby/class/str}
+    internal_only_prepare_f16();       // must be after{ruuuby/types, ruuuby/class/str}
 
     ensure_all_loaded_for_math_space()
 
@@ -366,6 +371,8 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
     ensure_all_loaded_for_statistics()
     ensure_all_loaded_for_geometry()
 
+    ensure_loaded_ruuuby(heuristics/heuristics)
+
     // [⚠️] : excluding: alternative files are loading these already:
     //          * ensure_loaded_ruuuby(version)
     // [⚠️] : reminder, do not load "ruuuby/ruuuby_orm" here
@@ -374,6 +381,19 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
     ensure_loaded_ruuuby(protocol/http_request)
 
     ensure_all_loaded_for_ruuuby()
+
+    #ifdef RUUUBY_F22_B00
+        ensure_loaded_ruuuby(ruuuby/engine/f22_b00)
+    #endif
+    #ifdef RUUUBY_F22_B01
+        ensure_loaded_ruuuby(ruuuby/engine/f22_b01)
+    #endif
+    #ifdef RUUUBY_F22_B05
+        ensure_loaded_ruuuby(ruuuby/engine/f22_b05)
+    #endif
+    #ifdef RUUUBY_F22_B06
+        ensure_loaded_ruuuby(ruuuby/engine/f22_b06)
+    #endif
 
     ensure_loaded_math(geometry/shape/triangle)
 }
@@ -1721,7 +1741,9 @@ static inline void startup_step1_before_loading_extension(void) {
     ⓜruuuby            = 💎add_global_module("Ruuuby")
     ⓜruuuby_metadata   = 💎add_module_under(ⓜruuuby, "MetaData")
     ⓜruuuby_engine     = 💎add_class_under(ⓜruuuby_metadata, R_OBJ, "RuuubyEngine")
-    ⓜruuuby_engine_jit = 💎add_module_under(ⓜruuuby_engine, "F22B01")
+    #ifdef RUUUBY_F22_B01
+        ⓜruuuby_engine_jit = 💎add_module_under(ⓜruuuby_engine, "F22B01")
+    #endif
     ⓜruuuby_engine_gc  = 💎add_module_under(ⓜruuuby_engine, "F22B00")
 
     💎add_module_under(ⓜruuuby, "Attribute")

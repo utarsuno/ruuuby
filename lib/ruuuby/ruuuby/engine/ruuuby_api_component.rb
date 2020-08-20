@@ -11,6 +11,7 @@ module ::Ruuuby
         @cached_version = ''
       end
 
+      # @return [String]
       def version
         @cached_version = self._calculate_version if @cached_version.∅?
         @cached_version

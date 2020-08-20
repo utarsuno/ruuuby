@@ -1,4 +1,6 @@
-# coding: UTF-8
+# encoding: UTF-8
+
+using ::Ruuuby::Heuristics::ContextParsingCommandOutput
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
@@ -14,24 +16,13 @@ module ::Ruuuby
     # `💎.engine.api`
     class RuuubyAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
 
-      # @param [*] engine
-      # @param [*] api_brew
+      # @param [*]       engine
       # @param [Integer] default_timeout
-      def initialize(engine, api_brew, default_timeout)
+      def initialize(engine, default_timeout)
         🛑int❓('default_timeout', default_timeout, :∈ℕ)
         super(engine)
-        @path_openssl    = nil
         @gem_tty         = nil
-        @api_brew        = api_brew
         @default_timeout = default_timeout
-      end
-
-      def path_openssl
-        require 'openssl'
-        if @path_openssl.nil?
-          @path_openssl = @api_brew.execute_cmd_prefix_of('openssl@1.1')
-        end
-        @path_openssl
       end
 
       def run_cmd(cmd)
@@ -58,23 +49,21 @@ module ::Ruuuby
         unless err.empty?
           raise "cmd{#{cmd.to_s}} encountered error{#{err.to_s}}"
         end
-        out = out.to_s.strip.split("\n")
-        if out.ary? && out.length == 1
-          out = out[0].to_s
-          if out.include?("\n")
-            return out.gsub!("\n", '')
-          else
-            return out
-          end
-        elsif out.str?
-          if out.include?("\n")
-            return out.gsub!("\n", '')
-          else
-            return out
-          end
+        if cmd.str? || cmd.ary?
+          out.clean
         else
           out
         end
+      end
+
+      # @param [String] cmd
+      #
+      # @raise [ArgumentError]
+      #
+      # @return [String, Array]
+      def run_apple_script!(cmd)
+        🛑str❓('cmd', cmd)
+        self.run_cmd!("osascript -e '#{cmd}'")
       end
 
       # @param [Integer] pid_id
@@ -86,6 +75,26 @@ module ::Ruuuby
       end
 
       def _calculate_version; 1337; end
+
+      # ----------------------------------------------------------------------------------------
+      # ___  ___        __           __   __       ___    __            __        __
+      #  |  |__   |\/| |__)    |    /  \ /  `  /\   |  | /  \ |\ | .   /  ` |  | |__) |
+      #  |  |___  |  | |       |___ \__/ \__, /~~\  |  | \__/ | \| .   \__, \__/ |  \ |___
+      #
+      # ----------------------------------------------------------------------------------------
+
+      # @see https://www.cyberciti.biz/faq/download-a-file-with-curl-on-linux-unix-command-line/
+      #
+      # @param [String] url_resource
+      # @param [String] optional_save_as_path
+      def curl_get(url_resource, optional_save_as_path='')
+        🛑strs❓([url_resource, optional_save_as_path])
+        if optional_save_as_path.∅?
+          self.run_cmd("curl -L -O #{url_resource}")
+        else
+          self.run_cmd("curl -L #{url_resource} --output #{optional_save_as_path}")
+        end
+      end
 
       🙈
 

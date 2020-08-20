@@ -14,6 +14,49 @@ using ::ThetaAngle::ContextRuuuby
 
 end
 
+::RSpec.shared_context 'shared_context_f40' do
+
+  # @param [String]  container_name
+  # @param [Boolean] expect_tty
+  # @param [String]  expected_os
+  # @param [String]  expected_os_version
+  #
+  # @return [Docker::Container]
+  def audit_container(container_name, expect_tty, expected_os, expected_os_version)
+    container = 🐋.find_🐋(container_name, false)
+    expect(container.ⓣ).to eq(::Docker::Container)
+    expect(container.id.ⓣ).to eq(::String)
+
+    container_by_id = 🐋.find_🐋_by_id(container.id)
+    expect(container_by_id.ⓣ).to eq(::Docker::Container)
+    expect(container_by_id.id.ⓣ).to eq(::String)
+
+    # different Ruby objects that are representing the same `Docker Container`
+    expect(container.id).to     eq(container_by_id.id)
+    expect(container.🆔).to_not eq(container_by_id.🆔)
+
+    expect(container.env_vars).to eq(container_by_id.env_vars)
+
+    expect(container.env_vars['SERVICE_NAME']).to eq(container_name)
+    expect(container.healthy_os?).to eq(true)
+    expect(container.healthy?).to eq(true)
+
+    if expected_os == 'alpine'
+      expect(container.alpine?).to eq(true)
+      expect(container.debian?).to eq(false)
+    else
+      expect(container.alpine?).to eq(false)
+      expect(container.debian?).to eq(true)
+    end
+    expect(container.os_version).to eq(expected_os_version)
+
+    expect(container.tty?).to eq(expect_tty)
+
+    return container
+  end
+
+end
+
 ::RSpec.shared_context 'shared_context_f34' do
 
   def expect_sum_of_interior_angles(the_shape, expected_number_of_sides)

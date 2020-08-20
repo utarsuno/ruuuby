@@ -1,4 +1,8 @@
 
+### Future Version Changes to be Expected
+
+ * $SAFE will become a normal global variable in Ruby 3.0
+
 ### ENVs (TODO)
 
 ```
@@ -9,16 +13,6 @@ RUBYOPT="--jit"
 --jit-max-cache
 --jit-save-temps
 ```
-
-### Commands
-
-| cmd | use-cases | see more |
-| --- | --- | --- |
-| bundle clean (--dry-run) (--force) | "cleans up unused gems in your bundler directory" | https://bundler.io/man/bundle-clean.1.html |
-| gem install bundler:2.2.0.rc.1 | install specific version of bundler | |
-| gem outdated | | |
-| gem environment | | |
-| gem help commands | | |
 
 ### Operator Precedence Table
 

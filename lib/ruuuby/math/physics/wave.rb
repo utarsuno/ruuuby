@@ -4,7 +4,7 @@ module ::Math
 
   module Physics
 
-    # `information`/`disturbance`/`variation` traveling w/ a `oscillating` pattern
+    # `information`/`disturbance`/`variation` traveling w/ an `oscillating` pattern
     #
     # | sub-type            | details                                                                                                           |
     # | ------------------- | ----------------------------------------------------------------------------------------------------------------- |

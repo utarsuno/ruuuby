@@ -20,25 +20,25 @@ RSpec.describe 'ruuuby_releases.rb' do
 
       context 'adds func{get_version_prev}' do
         it 'works' do
-          expect(RuuubyRelease.get_version_prev.uid_components).to eq(💎.engine.api_git.remote_release_previous[0])
+          expect(RuuubyRelease.get_version_prev.uid_components).to eq(💎.engine.api_locale.api_git.remote_release_previous[0])
         end
         it 'correctly matching against the get_release_commit' do
-          expect(RuuubyRelease.get_version_prev.get_release_commit.commit_hash).to eq(💎.engine.api_git.remote_release_previous[1])
+          expect(RuuubyRelease.get_version_prev.get_release_commit.commit_hash).to eq(💎.engine.api_locale.api_git.remote_release_previous[1])
         end
       end
 
       context 'adds func{get_version_curr}' do
         it 'works' do
-          expect(RuuubyRelease.get_version_curr.uid_components).to eq(💎.engine.api_git.remote_release_current[0])
+          expect(RuuubyRelease.get_version_curr.uid_components).to eq(💎.engine.api_locale.api_git.remote_release_current[0])
         end
         it 'correctly matching against the get_release_commit' do
-          expect(RuuubyRelease.get_version_curr.get_release_commit.commit_hash).to eq(💎.engine.api_git.remote_release_current[1])
+          expect(RuuubyRelease.get_version_curr.get_release_commit.commit_hash).to eq(💎.engine.api_locale.api_git.remote_release_current[1])
         end
       end
 
       context 'adds func{get_version_next}' do
         it 'works' do
-          expect(RuuubyRelease.get_version_next).to eq(v0_0_48)
+          expect(RuuubyRelease.get_version_next).to eq(v0_0_49)
         end
       end
 

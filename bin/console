@@ -7,11 +7,12 @@ require 'bundler/setup'
 require 'ruuuby'
 
 $ruuuby = 💎
-🐋      = 💎.engine.api_locale.api_docker
 using ::Math::Algebra::Tropical::ContextNumeric
 using ::Math::Algebra::Tropical::ContextMatrix
 using ::ThetaAngle::ContextRuuuby
 using ::ThetaAngle::ContextParamCheck
+using ::String::ContextF24
+using ::Ruuuby::Heuristics::ContextParsingCommandOutput
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.

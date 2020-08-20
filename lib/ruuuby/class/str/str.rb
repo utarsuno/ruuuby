@@ -1,4 +1,6 @@
-# coding: UTF-8
+# encoding: UTF-8
+
+using ::String::ContextF24
 
 # `Ruuuby` modifications to c(`String`)
 module ::Ruuuby
@@ -135,14 +137,14 @@ module ::Ruuuby
         # @raise [ArgumentError]
         #
         # @return [Boolean] true, if this string instance contains the provided str
-        def ∋?(them); 🛑str❓(:them, them) ; self.include?(them); end
+        def ∋?(them); 🛑str❓(:them, them); self.include?(them); end
 
         # @param [String] them
         #
         # @raise [ArgumentError]
         #
         # @return [Boolean] true, if this string instance contains the provided str
-        def ∌?(them); 🛑str❓(:them, them) ; not self.include?(them); end
+        def ∌?(them); 🛑str❓(:them, them); not self.include?(them); end
 
         # @param [String, Array, Set] them
         #
@@ -230,94 +232,8 @@ module ::Ruuuby
 
       end
       # defines the operations needed to support Feature(`f24`) that are applied to Class(`String`)
-      module StringF24
-        # @return [Boolean] true, if this String's content's syntax match camel-case
-        def 🐫?; self.match?(::String.syntax_case_camel); end
-
-        # @return [Boolean] true, if this String's content's syntax match camel-case-lower
-        def 🐫⬇?; self.match?(::String.syntax_case_lower_camel); end
-
-        # @return [Boolean] true, if this String's content's syntax match snake-case-upper
-        def 🐍⬆?; self.match?(::String.syntax_case_upper_snake); end
-
-        # @return [Boolean] true, if this String's content's syntax match snake-case
-        def 🐍?; self.match?(::String.syntax_case_snake); end
-
-        # @raise [Ruuuby::DescriptiveStandardError]
-        #
-        # @return [String]
-        def to_🐫⬇; as_camel = self.to_🐫; as_camel[0].⬇ + as_camel[1...as_camel.length]; end
-
-        # @raise [Ruuuby::DescriptiveStandardError]
-        #
-        # @return [String]
-        def to_🐍⬆; self.to_🐍.⬆; end
-
-        # @raise [Ruuuby::DescriptiveStandardError]
-        #
-        # @return [String]
-        def to_🐍
-          if self.🐍⬆?
-            self.⬇
-          elsif self.🐫? || self.🐫⬇?
-            chars = ''
-            self.each_char do |c|
-              if c.⬆?
-                if chars.∅?
-                  chars << "#{c.⬇}"
-                else
-                  chars << "_#{c.⬇}"
-                end
-              else
-                chars << c
-              end
-            end
-            chars
-          elsif self.🐍?
-            self
-          else
-            🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "which is not in one of the formats: [🐫, 🐫⬇, 🐍⬆, 🐍]")
-          end
-        end
-
-        # @raise [Ruuuby::DescriptiveStandardError]
-        #
-        # @return [String]
-        def to_🐫
-          chars = ''
-          mark  = true
-          if self.🐍⬆?
-            self.each_char do |c|
-              if c == '_'
-                mark = true
-              elsif mark
-                chars << c
-                mark = false
-              else
-                chars << c.downcase
-              end
-            end
-            chars
-          elsif self.🐍?
-            self.each_char do |c|
-              if c == '_'
-                mark = true
-              elsif mark
-                mark = false
-                chars << c.upcase
-              else
-                chars << c
-              end
-            end
-            chars
-          elsif self.🐫?
-            self
-          elsif self.🐫⬇?
-            self[0].upcase + self[1...self.𝔠]
-          else; 🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "which is not in one of the formats: [🐫, 🐫⬇, 🐍⬆, 🐍]"); end
-        end
-
-      end # end: {f24}
+      #module StringF24
+      #end # end: {f24}
 
       # defines the operations needed to support Feature(`f26`) that are applied to Class(`String`)
       module StringF26
@@ -370,7 +286,7 @@ module ::Ruuuby
   end # end: {Feature}
 end # end: {Ruuuby}
 
-# add various aliases & functions to existing Class(+String+)
+# `Ruuuby` modifications to existing Class{+String+}
 class ::String
 
   # common expressions or any sub-components needed for creating them (ex: for `Regular Expressions`)
@@ -473,10 +389,7 @@ class ::String
   # ---------------------------------------------------------------------------------------------------------- | *f09* |
   include ::Ruuuby::Feature::Includable::StringF09
   # ---------------------------------------------------------------------------------------------------------- | *f21* |
-
   include ::Ruuuby::Feature::Includable::StringF21
-  # ---------------------------------------------------------------------------------------------------------- | *f24* |
-  include ::Ruuuby::Feature::Includable::StringF24
   # ---------------------------------------------------------------------------------------------------------- | *f26* |
   include ::Ruuuby::Feature::Includable::StringF26
   # ---------------------------------------------------------------------------------------------------------- | *f04* |
@@ -485,6 +398,10 @@ class ::String
 
   alias_method :⬆?, :upcase?
   alias_method :⬇?, :downcase?
+
+  def clean!
+    self.gsub!($/, '')
+  end
 
   # TODO: not finalized design
   #

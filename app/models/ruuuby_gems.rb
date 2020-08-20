@@ -134,23 +134,6 @@ class ::RuuubyGem < ::ApplicationRecord
   # |  \ |___  |  | \__/  \/  |___    |    |  \ \__/  |  |    |  \ \__/ | \|  |  |  |  | |___
   #
 
-  # @example `RuuubyGem.all.last.source_for_version_test`
-  #
-  # @return [String]
-  def source_for_version_test
-    initial_spacing = '      '
-    source = ''
-    if self.ref_source.str? && self.ref_version.str?
-      full_ref = "#{self.ref_source}#{self.ref_version}"
-      source += "#{initial_spacing}context 'for gem{#{self.name}}' do\n"
-      source += "#{initial_spacing}  it 'has correct version{#{self.version_current}}' do\n"
-      source += "#{initial_spacing}    expect(#{full_ref}).to eq('#{self.version_current}')\n"
-      source += "#{initial_spacing}  end\n"
-      source += "#{initial_spacing}end # end: {for gem{#{self.name}}}\n\n"
-      source
-    end
-  end
-
   def all_version_updates
     ::RuuubyChangelog.where('applies_to = ? AND applies_to_uid = ?', ::RuuubyGem.orm_Ⓣ_🐍, self.name)
   end
@@ -168,20 +151,6 @@ class ::RuuubyGem < ::ApplicationRecord
       version_previous = self.last_version_update
     end
     "| `#{self.name}` | `#{version_previous.value_previous}` | `#{version_previous.value_applied}` |\n"
-  end
-
-  # @return [String]
-  def source_for_readme
-    if self.is_development && self.is_runtime
-      gem_modes = "✅, ✅"
-    elsif self.is_development
-      gem_modes = "✅, ❌"
-    elsif self.is_runtime
-      gem_modes = "❌, ✅"
-    else
-      raise "unexpected condition at path{#{__FILE__}} line{#{__LINE__}}"
-    end
-    "| `#{self.name}` | [`#{self.version_current}`](#{self.url_gem}) | #{gem_modes} | `#{self.tags[2..self.tags.length-3]}` |\n"
   end
 
 end

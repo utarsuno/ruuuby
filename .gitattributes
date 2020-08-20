@@ -1,39 +1,238 @@
 # encoding: UTF-8
-#
-# useful resource, @see: https://stackoverflow.com/questions/9976986/force-lf-eol-in-git-repo-and-working-copy
 
-# binary
-*.png -text -diff
-*.jpg -text -diff
-*.jpeg -text -diff
-*.pdf -text -diff
-*.bundle -text -diff
-*.o -text -diff
-*.so -text -diff
-# web
-*.md      diff=markdown text=markdown eol=lf whitespace=blank-at-eof
-*.html    diff=html text=html eol=lf whitespace=blank-at-eof
-*.css     diff=css text=css eol=lf whitespace=blank-at-eof
-*.js      diff=text text=text eol=lf whitespace=blank-at-eof
+# | for info on                   | resource url                                                                             |
+# | ----------------------------- | ---------------------------------------------------------------------------------------- |
+# | git config                     | https://stackoverflow.com/questions/9976986/force-lf-eol-in-git-repo-and-working-copy     |
+# | format web specs              | https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Containers                    |
+# | image formats                 | https://blog.filestack.com/thoughts-and-knowledge/complete-image-file-extension-list/#indd |
+# | audio formats                 | https://docstore.mik.ua/orelly/web2/wdesign/ch24_05.htm                                  |
+# | archiving formats             | https://en.wikipedia.org/wiki/List_of_archive_formats                                    |
+# | microsoft office suite formats | https://en.wikipedia.org/wiki/List_of_Microsoft_Office_filename_extensions                 |
+
+# | section | title               | description                                                                 |
+# | ------- | ------------------- | --------------------------------------------------------------------------- |
+# | 0x0     | web development     | front-end                                                                   |
+# | 0x1     | git provided filters | section contains programming languages that git has default filter types for |
+# | 0x2     | read as text        | TODO: document after checking on impact of file encoding for this category   |
+# | 0x3     | read as binary      | do not read as text                                                         |
+
+# 0x0) -----------------------------------------------------------------------------------------------------------------
+#                    __              __                          ___                                              __
+#                   /\ \            /\ \                        /\_ \                                            /\ \__
+#  __  __  __     __\ \ \____       \_\ \     __   __  __     __\//\ \     ___   _____     ___ ___      __    ___\ \ ,_\
+# /\ \/\ \/\ \  /'__`\ \ '__`\      /'_` \  /'__`\/\ \/\ \  /'__`\\ \ \   / __`\/\ '__`\ /' __` __`\  /'__`\/' _ `\ \ \/
+# \ \ \_/ \_/ \/\  __/\ \ \L\ \    /\ \L\ \/\  __/\ \ \_/ |/\  __/ \_\ \_/\ \L\ \ \ \L\ \/\ \/\ \/\ \/\  __//\ \/\ \ \ \_
+#  \ \___x___/'\ \____\\ \_,__/    \ \___,_\ \____\\ \___/ \ \____\/\____\ \____/\ \ ,__/\ \_\ \_\ \_\ \____\ \_\ \_\ \__\
+#   \/__//__/   \/____/ \/___/      \/__,_ /\/____/ \/__/   \/____/\/____/\/___/  \ \ \/  \/_/\/_/\/_/\/____/\/_/\/_/\/__/
+#                                                                                  \ \_\
+#                                                                                   \/_/
+# ----------------------------------------------------------------------------------------------------------------------
+
+*.html    diff=html text=html eol=lf whitespace=blank-at-eof,blank-at-eol
+*.css     diff=css text=css eol=lf whitespace=blank-at-eof,blank-at-eol
+*.md      diff=markdown text=markdown eol=lf whitespace=blank-at-eof,blank-at-eol
+
+# shaders (being read as text)
+*.tesc    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.tese    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.geom    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.frag    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.vert    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.comp    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.glsl    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+
+# 0x1) -----------------------------------------------------------------------------------------------------------------
+#           __                                              __             __         ___      ___    __
+#        __/\ \__                                    __    /\ \           /\ \      /'___\ __ /\_ \  /\ \__
+#    __ /\_\ \ ,_\      _____   _ __   ___   __  __ /\_\   \_\ \     __   \_\ \    /\ \__//\_\\//\ \ \ \ ,_\    __   _ __   ____
+#  /'_ `\/\ \ \ \/     /\ '__`\/\`'__\/ __`\/\ \/\ \\/\ \  /'_` \  /'__`\ /'_` \   \ \ ,__\/\ \ \ \ \ \ \ \/  /'__`\/\`'__\/',__\
+# /\ \L\ \ \ \ \ \_    \ \ \L\ \ \ \//\ \L\ \ \ \_/ |\ \ \/\ \L\ \/\  __//\ \L\ \   \ \ \_/\ \ \ \_\ \_\ \ \_/\  __/\ \ \//\__, `\
+# \ \____ \ \_\ \__\    \ \ ,__/\ \_\\ \____/\ \___/  \ \_\ \___,_\ \____\ \___,_\   \ \_\  \ \_\/\____\\ \__\ \____\\ \_\\/\____/
+#  \/___L\ \/_/\/__/     \ \ \/  \/_/ \/___/  \/__/    \/_/\/__,_ /\/____/\/__,_ /    \/_/   \/_/\/____/ \/__/\/____/ \/_/ \/___/
+#    /\____/              \ \_\
+#    \_/__/                \/_/
+# ----------------------------------------------------------------------------------------------------------------------
+
 # c
-*.h       diff=cpp text=cpp eol=lf whitespace=blank-at-eof
-*.c       diff=cpp text=cpp eol=lf whitespace=blank-at-eof
+*.h       diff=cpp text=cpp eol=lf whitespace=blank-at-eof,blank-at-eol
+*.c       diff=cpp text=cpp eol=lf whitespace=blank-at-eof,blank-at-eol
+
 # ruby
-*.rb      diff=ruby text=ruby eol=lf whitespace=blank-at-eof
-*.gemspec diff=ruby text=ruby eol=lf whitespace=blank-at-eof
+*.rb      diff=ruby text=ruby eol=lf whitespace=blank-at-eof,blank-at-eol
+*.gemspec diff=ruby text=ruby eol=lf whitespace=blank-at-eof,blank-at-eol
+
 # java
-*.java    diff=java text=java eol=lf whitespace=blank-at-eof
+*.java    diff=java text=java eol=lf whitespace=blank-at-eof,blank-at-eol
+
 # python
-*.py      diff=python text=python eol=lf whitespace=blank-at-eof
+*.py      diff=python text=python eol=lf whitespace=blank-at-eof,blank-at-eol
+
 # php
-*.php     diff=php text=php eol=lf whitespace=blank-at-eof
-# text
-*.txt     diff=text text=text eol=lf whitespace=blank-at-eof
-*.text    diff=text text=text eol=lf whitespace=blank-at-eof
-*.log     diff=text text=text eol=lf whitespace=blank-at-eof
-*.csv     diff=text text=text eol=lf whitespace=blank-at-eof
-*.yml     diff=text text=text eol=lf whitespace=blank-at-eof
-*.yaml    diff=text text=text eol=lf whitespace=blank-at-eof
-*.nginx   diff=text text=text eol=lf whitespace=blank-at-eof
-*.sh      diff=text text=text eol=lf whitespace=blank-at-eof
-*.sql     diff=text text=text eol=lf whitespace=blank-at-eof
+*.php     diff=php text=php eol=lf whitespace=blank-at-eof,blank-at-eol
+
+# 0x2) -----------------------------------------------------------------------------------------------------------------
+#                         __                           __                   __
+#                        /\ \                         /\ \__               /\ \__
+#  _ __    __     __     \_\ \         __      ____   \ \ ,_\    __   __  _\ \ ,_\
+# /\`'__\/'__`\ /'__`\   /'_` \      /'__`\   /',__\   \ \ \/  /'__`\/\ \/'\\ \ \/
+# \ \ \//\  __//\ \L\.\_/\ \L\ \    /\ \L\.\_/\__, `\   \ \ \_/\  __/\/>  </ \ \ \_
+#  \ \_\\ \____\ \__/.\_\ \___,_\   \ \__/.\_\/\____/    \ \__\ \____\/\_/\_\ \ \__\
+#   \/_/ \/____/\/__/\/_/\/__,_ /    \/__/\/_/\/___/      \/__/\/____/\//\/_/  \/__/
+# ----------------------------------------------------------------------------------------------------------------------
+
+*.txt     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.text    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.log     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.csv     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.yml     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.yaml    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.nginx   diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.sh      diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.sql     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.scpt    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.json    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.js      diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.cjs     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.mjs     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+
+# 0x3) -----------------------------------------------------------------------------------------------------------------
+#                         __                           __
+#                        /\ \                         /\ \      __
+#  _ __    __     __     \_\ \         __      ____   \ \ \____/\_\    ___      __     _ __   __  __
+# /\`'__\/'__`\ /'__`\   /'_` \      /'__`\   /',__\   \ \ '__`\/\ \ /' _ `\  /'__`\  /\`'__\/\ \/\ \
+# \ \ \//\  __//\ \L\.\_/\ \L\ \    /\ \L\.\_/\__, `\   \ \ \L\ \ \ \/\ \/\ \/\ \L\.\_\ \ \/ \ \ \_\ \
+#  \ \_\\ \____\ \__/.\_\ \___,_\   \ \__/.\_\/\____/    \ \_,__/\ \_\ \_\ \_\ \__/.\_\\ \_\  \/`____ \
+#   \/_/ \/____/\/__/\/_/\/__,_ /    \/__/\/_/\/___/      \/___/  \/_/\/_/\/_/\/__/\/_/ \/_/   `/___/> \
+#                                                                                                 /\___/
+#                                                                                                 \/__/
+# ----------------------------------------------------------------------------------------------------------------------
+
+# image formats
+*.png    -text -diff
+*.jpg    -text -diff
+*.jpeg   -text -diff
+*.jp2    -text -diff
+*.j2k    -text -diff
+*.jpf    -text -diff
+*.gif    -text -diff
+*.webp   -text -diff
+*.tif    -text -diff
+*.tiff   -text -diff
+*.psd    -text -diff
+*.bmp    -text -diff
+*.heif   -text -diff
+*.heic   -text -diff
+*.svg    -text -diff
+*.svgz   -text -diff
+*.ai     -text -diff
+*.eps    -text -diff
+
+# audio formats
+*.wav    -text -diff
+*.aif    -text -diff
+*.aiff   -text -diff
+*.mp3    -text -diff
+*.mov    -text -diff
+*.mid    -text -diff
+*.rm     -text -diff
+*.ra     -text -diff
+*.wma    -text -diff
+*.asf    -text -diff
+*.swf    -text -diff
+*.dcr    -text -diff
+*.rmf    -text -diff
+
+# compiling/build artifacts
+*.o      -text -diff
+*.so     -text -diff
+*.bundle -text -diff
+*.name   -text -diff
+*.deb    -text -diff
+*.pkg    -text -diff
+*.mpkg   -text -diff
+*.rpm    -text -diff
+*.msi    -text -diff
+*.jar    -text -diff
+*.crx    -text -diff
+*.tgz    -text -diff
+
+# compression/archiving formats
+*.tar    -text -diff
+*.gz     -text -diff
+*.bz2    -text -diff
+*.lz     -text -diff
+*.lz4    -text -diff
+*.lzh    -text -diff
+*.lzma   -text -diff
+*.lzo    -text -diff
+*.rz     -text -diff
+*.sfark  -text -diff
+*.sz     -text -diff
+*.xz     -text -diff
+*.z      -text -diff
+*.zst    -text -diff
+*.a      -text -diff
+*.ar     -text -diff
+*.cpio   -text -diff
+*.shar   -text -diff
+*.LBR    -text -diff
+*.iso    -text -diff
+*.lbr    -text -diff
+*.mar    -text -diff
+*.sbx    -text -diff
+*.tar    -text -diff
+*.zip    -text -diff
+*.zipx   -text -diff
+*.xp3    -text -diff
+*.xar    -text -diff
+*.wim    -text -diff
+*.war    -text -diff
+*.sqx    -text -diff
+*.rar    -text -diff
+*.dmg    -text -diff
+*.dar    -text -diff
+*.apk    -text -diff
+*.afa    -text -diff
+*.arc    -text -diff
+
+# important misc formats
+*.pdf    -text -diff
+
+# office suite formats
+*.doc    -text -diff
+*.dot    -text -diff
+*.wbk    -text -diff
+*.docx   -text -diff
+*.docm   -text -diff
+*.dotx   -text -diff
+*.dotm   -text -diff
+*.docb   -text -diff
+
+*.xls    -text -diff
+*.xlt    -text -diff
+*.xlm    -text -diff
+*.xlsx   -text -diff
+*.xlsm   -text -diff
+*.xltx   -text -diff
+*.xltm   -text -diff
+*.xlsb   -text -diff
+*.xla    -text -diff
+*.xlam   -text -diff
+*.xll    -text -diff
+*.xlw    -text -diff
+
+*.ppt    -text -diff
+*.pot    -text -diff
+*.pps    -text -diff
+*.pptx   -text -diff
+*.pptm   -text -diff
+*.potx   -text -diff
+*.potm   -text -diff
+*.ppam   -text -diff
+*.ppsx   -text -diff
+*.ppsm   -text -diff
+*.sldx   -text -diff
+*.sldm   -text -diff
+
+# misc formats
+*.raw    -text -diff

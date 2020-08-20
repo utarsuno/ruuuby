@@ -12,13 +12,13 @@ RSpec.describe 'f32_b10' do
           context 'cases: positive' do
             it 'same value as self' do
               (-9..9).∀ do |i|
-                a = (🎲(i.to_i).to_i + 1)
+                a = (🎲(i)).to_i + 1
                 expect(fℤ².gcd(a, a)).to eq(a.abs)
               end
             end
             it 'paired w/ 0' do
               (-9..9).∀ do |i|
-                a = (🎲(i.to_i).to_i + 1)
+                a = (🎲(i)).to_i + 1
                 expect(fℤ².gcd(a, 0)).to eq(a.abs)
                 expect(fℤ².gcd(0, a)).to eq(a.abs)
               end

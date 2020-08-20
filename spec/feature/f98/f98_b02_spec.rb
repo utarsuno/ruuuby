@@ -55,12 +55,6 @@ RSpec.describe 'f98_b02' do
         it 'tty-command' do
           expect(require('tty-command')).to eq(false)
         end
-        it 'rugged' do
-          expect(require('rugged')).to eq(false)
-        end
-        it 'docker' do
-          expect(require('docker')).to eq(false)
-        end
       end # end: {loads needed 3ʳᵈ party libraries}
     end
   end

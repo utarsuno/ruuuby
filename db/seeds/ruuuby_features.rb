@@ -52,6 +52,7 @@
 @f39 = ::RuuubyFeature.spawn(39, "offer a light wrapper over `Ruby's` default web-based-protocol requests", 2, %w(web http socket https websocket))
 @f40 = ::RuuubyFeature.spawn(40, 'provide an `API` for `Docker` operations w/ a light layer over gem{`docker-api`}')
 
+@f94 = ::RuuubyFeature.spawn(94, 'enable a `WebAssembly` based build (for `JS`/`WebGL`)', 0, %w(builds))
 @f95 = ::RuuubyFeature.spawn(95, 'enable pure a `Ruby` only build', 0, %w(builds))
 @f96 = ::RuuubyFeature.spawn(96, 'painlessly support multiple Operation Systems (ex: Alpine Linux, macOS, etc)', 0, %w(OS docker kubernetes))
 @f97 = ::RuuubyFeature.spawn(97, 'offer custom builds of `Ruuuby` to support only the needed/wanted unicode/symbols/emojis etc', 2, %w(builds))

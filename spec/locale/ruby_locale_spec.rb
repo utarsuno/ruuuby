@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'ruby' do
 
@@ -66,25 +66,27 @@ RSpec.describe 'ruby' do
           it 'as defined through global{RUBY_PLATFORM}' do
             expect(RUBY_PLATFORM).to eq('x86_64-darwin18')
           end
-          it 'as defined through module{Etc}' do
+          it 'platform' do
+            expect(::Gem::Platform.local.os).to eq('darwin')
             expect(::Etc.uname[:sysname]).to eq('Darwin')
+          end
+          it 'cpu' do
             expect(::Etc.uname[:machine]).to eq('x86_64')
+            expect(::Gem::Platform.local.cpu).to eq('x86_64')
+            expect(build_configs.∀🔑∃_value?(%w(target_cpu host_cpu build_cpu), 'x86_64')).to eq(true)
           end
           it 'as defined through build-settings{::RbConfig}' do
             expect(build_configs['host_os']).to eq('darwin18.7.0')
             expect(build_configs['host_vendor']).to eq('apple')
             expect(build_configs['target']).to eq('x86_64-apple-darwin18')
             expect(build_configs['build']).to eq('x86_64-apple-darwin18.7.0')
-            %w(target_cpu host_cpu build_cpu).∀{|config| expect(build_configs[config]).to eq('x86_64')}
           end
           it 'needed ENV_VARs are set' do
             expect(ENV['ARCHFLAGS']).to eq('-arch x86_64')
           end
           it 'as defined through{Gem}' do
             expect(::Gem.java_platform?).to eq(false)
-            expect(::Gem::Platform.local.os).to eq('darwin')
             expect(::Gem::Platform.local.version).to eq('18')
-            expect(::Gem::Platform.local.cpu).to eq('x86_64')
           end
         end
       end # end: {architecture build configs are as expected{mac, 64-bit}'}
@@ -101,6 +103,7 @@ RSpec.describe 'ruby' do
         end
         it 'has needed ENV_VARs' do
           expect(ENV['LANG']).to eq('en_US.UTF-8')
+          expect(ENV['LANGUAGE']).to eq('en_US.UTF-8')
           expect(ENV['LC_CTYPE']).to eq('en_US.UTF-8')
           expect(ENV['LC_MESSAGES']).to eq('en_US.UTF-8')
           expect(ENV['LC_ALL']).to eq('en_US.UTF-8')

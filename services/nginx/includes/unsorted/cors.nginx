@@ -1,7 +1,7 @@
 # Thanks to original author: https://gist.github.com/Stanback/7145487
 
 set $cors '';
-if ($http_origin ~ '^https?://(localhost|www\.nexuslocal\.com|www\.quasarsource\.com)') {
+if ($http_origin ~ '^https?://(localhost|www\.nexuslocal\.com|www\.quasarsource\.com|www\.ruuuby\.com)') {
     set $cors 'true';
 }
 
@@ -15,7 +15,7 @@ if ($cors = 'true') {
 }
 
 if ($request_method = 'OPTIONS') {
-    # Tell client that this pre-flight info is valid for 20 days
+    # tell client that this pre-flight info is valid for 20 days
     add_header 'Access-Control-Max-Age' 1728000;
     add_header 'Content-Type'           'text/plain charset=UTF-8';
     add_header 'Content-Length'         0;

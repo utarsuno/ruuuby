@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # mathematics related code
 module ::Math
@@ -7,8 +7,6 @@ module ::Math
   module Space
 
     class NucleotideSpace < ::Math::Space::TypesSpaceⓣ¹
-
-      ALL_NUCLEOTIDES = [::Module, ::Class].❄️
 
       def initialize
         @space_type     = 'types'
@@ -58,7 +56,5 @@ module ::Math
       include ::Singleton
 
     end
-
   end
-
 end

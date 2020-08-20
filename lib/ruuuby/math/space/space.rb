@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # mathematics related code
 module ::Math
@@ -20,5 +20,4 @@ module ::Math
     end
 
   end
-
 end

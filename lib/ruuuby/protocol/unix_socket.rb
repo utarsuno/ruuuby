@@ -16,3 +16,7 @@ end
 #  * https://www.ietf.org/rfc/rfc2617.txt
 
 # TODO: automate this URL: https://rubygems.org/gems/ruuuby/versions.atom
+
+# TODO: document WebRTC (compare with WebSockets)
+#  > https://en.wikipedia.org/wiki/WebRTC
+#  > https://webrtc.org/

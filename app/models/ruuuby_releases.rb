@@ -47,7 +47,7 @@ class ::RuuubyRelease < ApplicationRecord
   end
 
   # @return [Array]
-  def get_docs2
+  def get_docs
     the_docs = []
     the_docs << "\n---\n\n# `#{self.uid}`\n\n"
 
@@ -55,7 +55,7 @@ class ::RuuubyRelease < ApplicationRecord
       self.comments.∀ do |comment|
         the_docs << " * #{comment}\n"
       end
-      the_docs << "\n"
+      the_docs << $/
     end
 
     gem_changes = self._get_changelog_for_ruuuby_gems
@@ -70,7 +70,7 @@ class ::RuuubyRelease < ApplicationRecord
         c1 = c[1].empty? ? '' : "`#{c[1]}`"
         the_docs << "| #{c[0]} | #{c1} | #{c[2]} | #{c[3]} |\n"
       end
-      the_docs << "\n"
+      the_docs << $/
     end
 
     unless self.paths_removed.empty?
@@ -80,7 +80,7 @@ class ::RuuubyRelease < ApplicationRecord
         c1 = c[1].empty? ? '' : "`#{c[1]}`"
         the_docs << "| #{c[0]} | #{c1} | #{c[2]} | #{c[3]} |\n"
       end
-      the_docs << "\n"
+      the_docs << $/
     end
 
     the_docs << "| context | method(s) added | feature(s) |\n"
@@ -276,6 +276,7 @@ class ::RuuubyRelease < ApplicationRecord
 
   🙈
 
+  # TODO: NEEDS TO BE UPDATED!
   def _get_changelog_for_ruuuby_gems
     content = []
     content << "| gem updated | version previous | version current |\n"
@@ -286,7 +287,7 @@ class ::RuuubyRelease < ApplicationRecord
       the_gem  = ::RuuubyGem.find_by_name(gem_name)
       content << the_gem.source_for_changelog
     end
-    content << "\n" unless content.∅?
+    content << $/ unless content.∅?
     content
   end
 

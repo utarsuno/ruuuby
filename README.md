@@ -4,13 +4,23 @@
 
 | for           | use                                                         |
 | ------------: | :---------------------------------------------------------- |
-| `Gemfile`      | `gem 'ruuuby', '~> 0.0.48'`                                 |
+| `Gemfile`      | `gem 'ruuuby', '~> 0.0.49'`                                 |
 | ruby scripts  | `require 'ruuuby'`                                          |
 | gem url       | https://rubygems.org/gems/ruuuby                            |
 | changelog     | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md |
 | `JIT` testing | ```RUBYOPT="--jit --jit-warnings --jit-wait --jit-max-cache=1337 --jit-verbose=2 --jit-debug -w" ./bin/console``` |
 
 ### Examples
+
+> Development & Utilities
+
+```ruby
+# run node.js tests on live container{A}, transfer results as file to container{B}
+qa_results = 🐋.find_🐋('service_js').cmd!(%w(npm test --check-leaks)).join.as_utf8
+🐋.find_🐋('service_nginx').📁_create('/v/js_qa_results.txt', qa_results)
+```
+
+> Ruuuby
 
 ```ruby
 # true, true
@@ -101,6 +111,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Math::Algebra::Tropical` | `ContextNumeric` | `Numeric` | `⨁`, `⨂`              |
 | `Math::Algebra::Tropical` | `ContextMatrix`  | `Matrix`  | `⨁`, `⨁!`, `⨂`, `⨂ⁿ` |
 | `Math::NumberTheory`      | `ℤ³`             | `Integer` | `≡` |
+| `Heuristics` | `ContextParsingCommandOutput` | <ul><li>`String`</li><li>`Array`</li></ul> | `clean` |
 
 ### TOPLEVEL_BINDING Modifications:
 
@@ -132,7 +143,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 #### Custom Math Classes:
 
-| context        | context      | sample functionality |
+| base-context   | sub-context  | sample functionality |
 | -------------: | :----------: | :------ |
 | `Trigonometry` | <em>class:</em> `ThetaAngle` | <ul><li>`°?`⟶`degrees?`, `°`⟶`as_degree`, `ʳ?`⟶`radians?`, `ʳ`⟶`as_radian`</li><li>`∅?`⟶`zero?`, `⦜?`⟶`right?`, `○?`⟶`perigon?`</li><li>`η̂?`⟶`normal?`, `η̂!`⟶`normalize!`</li></ul> |
 | `Statistics`   | <em>class:</em> `TimeSeriesData` | <ul><li>`μ`⟶`mean`, `x̃`⟶`median`, `σ`⟶`std_dev`, `σ²`⟶`variance`,</li><li>`ρ`⟶`pearson_correlation_coefficient`, `mse`⟶`mean_square_of_errors`, `mape`⟶`mean_absolute_percentage_error`</li><li>`λ`⟶`scale_by_addition`, `Λ`⟶`scale_by_multiplication`</li><li>`η̂?`⟶`normalized?`, `η̂!`⟶`normalize!`</li><li>`mem_size`, `free_memory`</li><li>`Q₁`, `Q₂`, `Q₃`, `IQR`, `outliers_lower`, `outliers_upper`</li></ul> |
@@ -146,7 +157,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | ---------------------: | :---------------------------------- |
 | `File`, `Dir`          | `∃?`                                |
 | `Module`               | `∃⨍_alias?`, `∃⨍?`                  |
-| `File`                 | `dirname²`, `replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` |
+| `File`                 | `replace_expr_with`, `replace_expr_with!`, `insert_line_before_expr` |
 | `Dir`                  | `η̂_paths`                           |
 | `File`, `Dir`, `ENV`, `NilClass`, `Vector` | `∅?`            |
 | `Object`               | <ul><li>`Ⓣ`, `ary?`, `bool?`, `hsh?`, `int?`, `flt?`, `num?`, `str?`, `chr?`, `sym?`, `matrix?`, `vec?`</li><li>`🛑bool❓`, `🛑int❓`, `🛑flt❓`, `🛑num❓`, `🛑ary❓`, `🛑str❓`, `🛑sym❓`</li></ul> |
@@ -185,15 +196,15 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 ### Code Base Statistics:
 | category    | attribute       | value(s)         | # of  |
 | ----------: | :-------------: | ---------------: | :---- |
-| `QA`        | `unit`          | `1340`           | tests (for core functionality) |
+| `QA`        | `unit`          | `1337`           | tests (for core functionality) |
 | `QA`        | `integration`   | `23`             | tests (for state/functionality checks on grouped features/components) |
 | `QA`        | `performance`   | `147`:`85`       | tests{`non_numeric`,`numeric`} (for runtime performance) |
-| `QA`        | `DB`            | `289`            | tests (for currently combined categories of `DB`, `ORM`, & `Service`) |
-| `QA`        | `system`        | `2`              | tests (compare to `integration` but vastly larger scale w/ randomness involved to help encounter niche error-states) |
-| `CI`        | `audit`         | `168`            | tests (for anything non-functionality based) |
-| `CI`        | `locale`        | `86`:`26`        | local config tests{`core`:`excessive_checks`} |
+| `QA`        | `DB`            | `291`            | tests (for currently combined categories of `DB`, `ORM`, & `Service`) |
+| `QA`        | `system`        | `8`              | tests (compare to `integration` but vastly larger scale w/ randomness involved to help encounter niche error-states) |
+| `CI`        | `audit`         | `166`            | tests (for anything non-functionality based) |
+| `CI`        | `locale`        | `95`:`34`        | local config tests{`core`:`excessive_checks`} |
 | `tech-debt` | `coverage`      | `13`             | tests (for tracking missing functionality) |
-| `structure` | `features`      | `1`:`31`:`9`:`5` | features{`stable`:`wip`:`⚠️`:`todo`} |
+| `structure` | `features`      | `1`:`31`:`9`:`6` | features{`stable`:`wip`:`⚠️`:`todo`} |
 | `coverage`  | `LOCs`          | `???`            | `wip` |
 | `coverage`  | `runtime`       | `???`            | `wip` |
 | `coverage`  | `documentation` | `???`            | `wip` |
@@ -205,7 +216,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | gem | version | :development, :runtime | category |
 | ---: | :--- | :---: | ---: |
 | `tty-command` | [`0.9.0`](https://rubygems.org/gems/tty-command) | ✅, ✅ | `CLI` |
-| `docker-api` | [`1.34.2`](https://rubygems.org/gems/docker-api) | ✅, ❌ | `CLI` |
+| `docker-api` | [`2.0.0.pre.1`](https://rubygems.org/gems/docker-api) | ✅, ❌ | `CLI` |
 | `rugged` | [`1.0.1`](https://rubygems.org/gems/rugged) | ✅, ❌ | `CLI` |
 | `rdoc` | [`6.2.1`](https://rubygems.org/gems/rdoc) | ✅, ❌ | `DOC` |
 | `bundler` | [`2.2.0.rc.1`](https://rubygems.org/gems/bundler) | ✅, ❌ | `CI` |
@@ -221,46 +232,45 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 ---
 
-### Commands
+>#### Commands
+>##### General Tasks:
+>|  preface               | cmd                 | description                                          |
+>| ---------------------: | :-----------------: | :--------------------------------------------------- |
+>| `bundle exec rake`     | `rdoc`              | generate documentation coverage report               |
+>| `bundle exec rake`     | `install`           | install gem onto local machine                       |
+>| `bundle exec rake`     | `compile`           | compile any native C-extensions with code changes    |
+>| `bundle exec rake`     | `release`           | push git version tags and publish gem to Rubygems    |
+>| `bin/`                 | `audit`             | general all-around build & health check              |
+>| `bin/`                 | `audit_db`<br/>`audit_quick`<br/>`audit_all_but_performance`<br/>`audit_functionality`<br/>`audit_locale`<br/>`audit_locale_full` | similar to above but for targeted portions |
+>| `bin/`                 | `setup`             | install dependencies                                 |
+>| `bin/`                 | `console`<br/>`console_db`<br/>`console_jit` | interactive console for easier experimenting |
+>| `bin/manually_execute` | `clean_up`          | delete any temporary/generated content, quick way to force a full re-compile |
+>| `gem`                  | `server`            | host interactive web-page at `http://0.0.0.0:8808` to see documentation for currently installed gems |
 
-#### General Tasks:
-|  preface               | cmd                 | description                                          |
-| ---------------------: | :-----------------: | :--------------------------------------------------- |
-| `bundle exec rake`     | `rdoc`              | generate documentation coverage report               |
-| `bundle exec rake`     | `install`           | install gem onto local machine                       |
-| `bundle exec rake`     | `compile`           | compile any native C-extensions with code changes    |
-| `bundle exec rake`     | `release`           | push git version tags and publish gem to Rubygems    |
-| `bin/`                 | `audit`             | general all-around build & health check              |
-| `bin/`                 | `audit_db`<br/>`audit_quick`<br/>`audit_all_but_performance`<br/>`audit_functionality`<br/>`audit_locale`<br/>`audit_locale_full` | similar to above but for targeted portions |
-| `bin/`                 | `setup`             | install dependencies                                 |
-| `bin/`                 | `console`<br/>`console_db`<br/>`console_jit` | interactive console for easier experimenting |
-| `bin/manually_execute` | `clean_up`          | delete any temporary/generated content, quick way to force a full re-compile |
-| `gem`                  | `server`            | host interactive web-page at `http://0.0.0.0:8808` to see documentation for currently installed gems |
-
-#### Testing Tasks:
-| preface            | cmd                 | description of test contests | w/ warnings?
-| -----------------: | :-----------------: | :---------- | ----------:
-| `bundle exec rake` | `rspec_unit`        | all core expected functionality from `Ruuuby` | ❌ |
-| `bundle exec rake` | `rspec_integration` | expected state & functionality from `Ruuuby` code areas w/ using more than one feature/component | ❌ |
-| `bundle exec rake` | `rspec_db`          | anything relating to the `DB` or `ORM` | ❌ |
-| `bundle exec rake` | `rspec_audit`       | extra-checks for expected code-structure; ensures passing `Ruuuby` functionality tests are not occurring from any artifacts | ❌ |
-| `bundle exec rake` | `rspec_performance` | defines acceptable runtime-performance benchmarks (`TODO: missing Big-O tests`) | ❌ |
-| `bundle exec rake` | `rspec_tech_debt`   | tracks/confirms missing coverage; ∀ resolved-test-case will transfer to a new test-category, lowering the total count of `tech_debt` tests | ❌ |
-| `bundle exec rake` | `rspec_locale`      | extra-checks for properly configured local coding environment (`TODO: need to formalize Ruby build process`) | ❌ |
-| `bundle exec rake` | `rspec_all`         | run all existing tests | ✅ |
+>#### Testing Tasks:
+>| preface            | cmd                 | description of test contests | w/ warnings?
+>| -----------------: | :-----------------: | :---------- | ----------:
+>| `bundle exec rake` | `rspec_unit`        | all core expected functionality from `Ruuuby` | ❌ |
+>| `bundle exec rake` | `rspec_integration` | expected state & functionality from `Ruuuby` code areas w/ using more than one feature/component | ❌ |
+>| `bundle exec rake` | `rspec_db`          | anything relating to the `DB` or `ORM` | ❌ |
+>| `bundle exec rake` | `rspec_audit`       | extra-checks for expected code-structure; ensures passing `Ruuuby` functionality tests are not occurring from any artifacts | ❌ |
+>| `bundle exec rake` | `rspec_performance` | defines acceptable runtime-performance benchmarks (`TODO: missing Big-O tests`) | ❌ |
+>| `bundle exec rake` | `rspec_tech_debt`   | tracks/confirms missing coverage; ∀ resolved-test-case will transfer to a new test-category, lowering the total count of `tech_debt` tests | ❌ |
+>| `bundle exec rake` | `rspec_locale`      | extra-checks for properly configured local coding environment (`TODO: need to formalize Ruby build process`) | ❌ |
+>| `bundle exec rake` | `rspec_all`         | run all existing tests | ✅ |
 
 ---
 
-### Project Layout:
-|  directory     | description of contents                         |
-| -------------: | :---------------------------------------------- |
-| `app`          | currently only holds `ORM` definitions           |
-| `bin`          | `executable` files                               |
-| `db`           | database `schema`, `seed`, and `migrations`     |
-| `ext`          | `C` portion of this Gem's code <br/> (and future location for `JRuby-extensions`) |
-| `help`         | any helpful `documentation & notes`  |
-| `lib`          | `Ruuuby` portion of this `Gem's code`           |
-| `spec`         | `RSpecs` (unit tests + other `QA` and `Audits`) |
+>### Project Layout:
+>|  directory     | description of contents                         |
+>| -------------: | :---------------------------------------------- |
+>| `app`          | currently only holds `ORM` definitions           |
+>| `bin`          | `executable` files                               |
+>| `db`           | database `schema`, `seed`, and `migrations`     |
+>| `ext`          | `C` portion of this Gem's code <br/> (and future location for `JRuby-extensions`) |
+>| `help`         | any helpful `documentation & notes`  |
+>| `lib`          | `Ruuuby` portion of this `Gem's code`           |
+>| `spec`         | `RSpecs` (unit tests + other `QA` and `Audits`) |
 
 ---
 

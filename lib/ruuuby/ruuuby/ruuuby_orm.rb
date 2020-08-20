@@ -40,7 +40,7 @@ module Ruuuby
       end
 
       def info_release_state
-        release_current = @engine.api_git.remote_release_current
+        release_current = @engine.api_locale.api_git.remote_release_current
         #release_previous = 💎.engine.api_git.remote_release_previous
 
         puts "the last released version was{#{release_current.to_s}}"

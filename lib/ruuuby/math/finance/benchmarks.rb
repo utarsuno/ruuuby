@@ -29,6 +29,16 @@ module ::Math
     #   ‣ `book value`                     | literal sum of the parts
     #   ‣ `future-returns/intrinsic-value` | combined w/ `book value` equates a company's fundamental value
     #   ‣ `market-value/market-cap`        | `shares outstanding` * `share price`
+    #   ‣ `option`                         | "marketable security that gives the holder the right, but not the obligation, to buy or sell another security at a specific price by a certain date"
+    #   ‣ `listed options`                 | `options` that trade on a national options exchange like the `Chicago Board Options Exchange (CBOE)`
+    #   ‣ `LEAPs`                          | long-term `options`
+    #   ‣ `FFO`                            | funds from operation
+    #   ‣ `trailing stop`                  | "a stop loss that can increase with stock price rising but will not fall when stock price decreases" | (TODO: source from book Computational Investing pg. 2)
+    #   ‣ `dark pool exchanges`            | trades that are matched internally but still documented to the whole world (in a market market, ex: brokerage)
+    #   ‣ `discount rate`                  | TODO: for later (w/ variants)
+    #   ‣ `crossing the spread`            | "bumping up your bid price to match ask"
+    #   ‣ `market makers`                  | receivers of orders from brokerages TODO: better details
+    #   ‣ `hedge funds`                    | able to rent tack space directly on exchange and monitor order books TODO: better details
     #
     # common equity brackets:
     #   ‣ `large cap` | $10+ billion
@@ -81,8 +91,20 @@ module ::Math
     #
     # ----------------------------------------------------------------------------------------------------------------------------------------------------------------
     #
-    # ‣ | `Capital Asset Pricing Model (CAPM)` | describes relationship between `risk` and `expected return`
-    # ‣ | `Sharpe Ratio`                       |
+    # ‣ | `Capital Asset Pricing Model (CAPM)` | describes relationship between `risk` and `expected return` (TODO: lots todo, just to provide an additional benchmark)
+    # ‣ | `Sharpe Ratio`                       | "measure for calculating risk-adjusted return" | the higher the sharpe ratio the better | "when comparing two assets with each the same return, higher Sharpe ratio gives more return for the same risk" (TODO: source Computational Investing book)
+    # ‣ | `Sortino Ratio`                      |
+    # ‣ | `Jensen's Measure`                   | todo on quote "a risk-adjusted performance measure that represents the averager return on a portfolio over and above that predicated by the capital asset pricing model (CAPM), given the portfolio's beta and the average market return; this is the portfolio's alpha"
+    #
+    # ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    # TODO: also source the original book these terms came from
+    # @see http://www-cs-students.stanford.edu/~maisan/booknotes/randomwalk/chapter1.html
+    #
+    # ‣ | `firm-foundation theory`     | `intrinsic value` approach; given enough data and analysis, any stock's value can be determined  |
+    # ‣ | `castle-in-the-air`         | investing off the overall crowd's trading meta |
+    # ‣ | `new investment technology` | TODO: confirm/research this, "toward the end of the 20th century time spawned a new theory called the new investment technology" |
+    #
+    # ‣ | `random walk` | "a mathematical object, known as a stochastic or random process, that describes a path that consists of a succession of random steps on some mathematical space such as the integers" |
     module Benchmarks
 
       # 4 common main ways of bench-marking time-series based algorithms:
@@ -106,6 +128,7 @@ module ::Math
       #  ‣ `time bound`
       #
       # # TODO: t distribution tests (determine if datasets are statistically different)
+      # # TODO: handle ahead of time, generic algo to handle both stock splits and `deconglomeration`/`synergism` (ex: for both scenarios of market data and/or simulation 'bots')
       #
       # ----------------------------------------------------------------------------------------------------------------------------------------------------------------
       #

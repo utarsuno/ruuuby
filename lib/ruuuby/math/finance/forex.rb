@@ -66,13 +66,20 @@ module ::Math
             MIOTA: %w(IOTA)
         }
       end
+=end
+    end
 
-      module Commodity
-        TEMP_DATA = %w(gold silver oil printer-ink)
-      end
+=begin
+    # | term                   | details                                                                                                               | source |
+    # | ---------------------- | --------------------------------------------------------------------------------------------------------------------- | ------ |
+    # | `actuals`              | reference to `commodities`                                                                                            | |
+    # | `insights`             | means the underlying `commodities` composing a futures contract will be physically delivered                          | |
+    # | `break`                | refers to any natural occurrence which negatively impacts a futures contract such as a tornado or an unseasonal frost | |
+    module Commodities
+      TEMP_DATA = %w(gold silver oil printer-ink)
+    end
 =end
 
-    end
   end
 end
 

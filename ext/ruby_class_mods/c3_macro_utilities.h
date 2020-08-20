@@ -102,9 +102,10 @@ ________________________________________________________________________________
 #define ensure_all_loaded_for_ruuuby(){\
     ensure_loaded_ruuuby(virtual/env)\
     ensure_loaded_ruuuby(ruuuby/ruuuby_api)\
-    ensure_loaded_ruuuby(ruuuby/git_api)\
+    ensure_loaded_ruuuby(ruuuby/api/api_zsh)\
+    ensure_loaded_ruuuby(ruuuby/api/api_git)\
     ensure_loaded_ruuuby(ruuuby/api/api_brew)\
-    ensure_loaded_ruuuby(ruuuby/api/api_docker)\
+    ensure_loaded_ruuuby(ruuuby/api/api_iconv)\
     ensure_loaded_ruuuby(ruuuby/api/api_locale)\
     ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine)\
     ensure_loaded_ruuuby(configs)\

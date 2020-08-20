@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # add various functions to existing module +Enumerable+
 #
@@ -26,10 +26,10 @@ module ::Enumerable
           previous = node
         end
       else
-        🛑 RuntimeError.new("| m{Enumerable}-> m{∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎} received valid block but length of self is{#{self.length.to_s}} |")
+        🛑 ::RuntimeError.new("| m{Enumerable}-> m{∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎} received valid block but length of self is{#{self.length.to_s}} |")
       end
     else
-      🛑 ArgumentError.new("| m{Enumerable}-> m{∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎} must receive a block #{block ? 'with{2} args, not the received{' + block.𝔠.to_s + '}' : ''} |")
+      🛑 ::ArgumentError.new("| m{Enumerable}-> m{∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎} must receive a block #{block ? 'with{2} args, not the received{' + block.𝔠.to_s + '}' : ''} |")
     end
   end
 

@@ -173,4 +173,21 @@ class ::Array
     self.∀{|content| puts content}
   end
 
+  # @raise [RuntimeError]
+  #
+  # @return [Hash]
+  def convert_to_json
+    contents = {}
+    self.∀ do |content|
+      🛑str❓('content', content)
+      if content.∋?('=')
+        parsed              = content.split('=')
+        contents[parsed[0]] = parsed[1]
+      else
+        🛑 ::RuntimeError.new("| c{Array}-> m{convert_to_json} called when content{#{content.to_s}} did not contain char{=} |")
+      end
+    end
+    contents
+  end
+
 end

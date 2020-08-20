@@ -1,4 +1,4 @@
-# coding: utf-8
+# encoding: utf-8
 
 RSpec.describe 'class/io/file.rb' do
   context 'extends class[File]' do
@@ -8,15 +8,6 @@ RSpec.describe 'class/io/file.rb' do
         # positive cases intentionally omitted for time being
         it 'cases: error' do
           expect{::File.∃?(nil)}.to raise_error(ArgumentError)
-        end
-      end
-    end
-
-    context 'by adding "static" function{dirname²}' do
-      context 'handles needed scenarios' do
-        # positive cases intentionally omitted for time being
-        it 'cases: error' do
-          expect{::File.dirname²(nil)}.to raise_error(ArgumentError)
         end
       end
     end

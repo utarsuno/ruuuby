@@ -5,6 +5,17 @@ module ::Ruuuby
   # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
 
+    # TODO: https://unix.stackexchange.com/questions/88644/how-to-check-os-and-version-using-a-linux-command
+    # TODO: https://nodesource.com/blog/an-absolute-beginners-guide-to-using-npm/
+    # TODO: https://webpack.js.org/guides/production/
+    # TODO: https://www.sitepoint.com/unit-test-javascript-mocha-chai/
+    #
+    # TODO: ADD TESTS FOR {dpkg --print-architecture}
+    #
+    # | env_var          | purpose                                    |
+    # | ---------------- | ------------------------------------------ |
+    # | `RUUUBY_NUM_CPU` |  |
+    #
     # `💎.engine`
     class RuuubyEngine
 
@@ -17,9 +28,7 @@ module ::Ruuuby
       include ::Ruuuby::Attribute::Includable::SyntaxCache
       include ::Singleton
 
-      attr_reader :logger, :state_flag, :logging_level, :logging_mode, :api, :api_git, :api_brew, :api_locale, :path_base
-
-      attr_reader :gc, :jit, :source, :os
+      attr_reader :logger, :state_flag, :logging_level, :logging_mode, :api, :api_locale, :path_base, :api_zsh
 
       attr_reader :stats_ext_timer, :stats_ext_compiler, :stats_ext, :stats_ext_mem_pre_load, :stats_ext_mem_post_load
 
@@ -32,26 +41,29 @@ module ::Ruuuby
       end
 
       # state flags
-      # | 0 | not started |
-      # | 1 | engine started |
+      # | 0 | not started     |
+      # | 1 | engine started  |
       # | 2 | engined stopped |
       def initialize
         @path_base      = "#{::File.dirname(::File.dirname(::File.dirname(::File.dirname(::File.dirname(__FILE__)))))}/"
+        @path_ruby      = nil
         @state_flag      = 0
         @logger         = nil
         @echo_to_stdout = false
         @logging_mode   = nil
         @logging_level  = ::Logger::DEBUG
-        @api_git        = ::Ruuuby::MetaData::GitAPI.new(self)
-        @api_brew       = ::Ruuuby::MetaData::BrewAPI.new(self)
-        @api            = ::Ruuuby::MetaData::RuuubyAPI.new(self, @api_brew, 6)
+        @api            = ::Ruuuby::MetaData::RuuubyAPI.new(self, 30)
         @api_locale     = ::Ruuuby::MetaData::LocaleAPI.new(self)
+        @api_zsh        = ::Ruuuby::MetaData::ZshAPI.new(self)
         @orm            = nil
+      end
 
-        @gc     = ::Ruuuby::MetaData::RuuubyEngine::F22B00
-        @jit    = ::Ruuuby::MetaData::RuuubyEngine::F22B01
-        @os     = ::Ruuuby::MetaData::RuuubyEngine::F22B05
-        @source = ::Ruuuby::MetaData::RuuubyEngine::F22B06
+      # @return [String]
+      def path_ruby
+        if @path_ruby.nil?
+          @path_ruby = ::File.join(::RbConfig::CONFIG['bindir'], ::RbConfig::CONFIG['ruby_install_name'] + ::RbConfig::CONFIG['EXEEXT'])
+        end
+        @path_ruby
       end
 
       # @raise [RuntimeError] if called more than once
@@ -102,188 +114,6 @@ module ::Ruuuby
         end
       end
 
-      #    ___    ___       ___
-      #  /'___\ /'___`\   /'___`\
-      # /\ \__//\_\ /\ \ /\_\ /\ \
-      # \ \ ,__\/_/// /__\/_/// /__
-      #  \ \ \_/  // /_\ \  // /_\ \
-      #   \ \_\  /\______/ /\______/
-      #    \/_/  \/_____/  \/_____/
-      #
-      # TODO: implement once needed/more benefit in doing so
-      #  * https://stackoverflow.com/questions/6067139/ruby-garbage-collect
-      #  * https://stackoverflow.com/questions/11912750/ruby-big-array-and-memory
-      #  * https://samsaffron.com/archive/2013/11/22/demystifying-the-ruby-gc
-      #  * https://www.speedshop.co/2017/03/09/a-guide-to-gc-stat.html
-      #  # https://bugs.ruby-lang.org/projects/ruby-master/wiki/RGenGC
-      #  # https://medium.com/@zanker/the-ruby-vm-and-how-apps-break-part-2-e8b4620ad50d
-      #  # https://github.com/ruby/ruby/blob/v2_7_0/gc.c#L258
-      #
-      # @see https://ruby-doc.org/core-2.7.1/GC.html
-      # @see https://ruby-doc.org/core-2.7.1/GC/Profiler.html
-      #
-      # @see following sources for notes marked below:
-      #  - http://tmm1.net/ruby21-rgengc/
-      #  - https://engineering.appfolio.com/appfolio-engineering/2018/1/2/how-ruby-uses-memory
-      #
-      #  ‣ `Ruby` divides the heap into two sections:
-      #    ‣ protected    | `FL_WB_PROTECTED`                                          | promotable to `oldgen`
-      #    ‣ un-protected | missing `write-barrier`; un-safe access from `C-extension` | not promotable but can be remembered
-      #
-      #  ‣ `pages` in `heap` either belong in `eden` or `tomb`
-      #    ‣ `eden`      | has pages w/ live objects
-      #    ‣ `tomb`      | has pages w/o any objects
-      #    ‣ `ruby_heap` | `tomb` + `eden`
-      #
-      #  ‣ expected stats: (⚠️: depends on version and build settings)
-      #    ‣ object slot       | 40-bytes
-      #    ‣ # of object slots | 408 (per 16kb memory page)
-      #
-      #  ‣ an object that does not fit into this 40 byte slot will get assigned both a slot and heap-space (usually allocated via standard `malloc` route)
-      #
-      # ==extension_functions
-      #  - mem_usage_peak | returns Integer
-      module F22B00
-
-        # @return [Hash] the result from func{verify_compaction_references}
-        def self.verify
-          ::GC.verify_internal_consistency
-          ::GC.verify_transient_heap_internal_consistency
-          result = ::GC.verify_compaction_references
-          💎.engine.debug(result.to_s)
-          result
-        end
-
-        # @return [Integer]
-        def self.total_memory_usage_current  #(message)
-          # command from: https://stackoverflow.com/questions/7220896/get-current-ruby-process-memory-usage
-          result = 💎.engine.api.run_cmd!("ps ax -o pid,rss | grep -E \"^[[:space:]]*#{$$}\"")
-          result.♻️⟶(' ').strip.to_f
-        end
-
-        def self.perform_full; ::GC.start(full_mark: true, immediate_sweep: true); end
-
-        def self.perform_quick; ::GC.start(full_mark: false, immediate_sweep: false); end
-
-        # @see source for formula & source credit: https://engineering.appfolio.com/appfolio-engineering/2018/1/2/how-ruby-uses-memory#
-        #
-        # @return [Float] the % of `heap memory` not being efficiently utilized
-        def self.percentage_fragmentation
-          stats              = ::GC.stat
-          ratio_memory_filled = stats[:heap_live_slots].to_f / (stats[:heap_eden_pages] * self.stats_slots_per_heap_page)
-          return 1.0 - ratio_memory_filled
-        end
-
-        # @return [Float] the % of `Ruby Objects` marked as `oldgen` and won't be scanned during a minor mark garbage collection
-        def self.percentage_protected_from_minor_marks(with_remembered_objects_too=false)
-          stats = ::GC.stat
-          if with_remembered_objects_too
-            ((stats[:old_objects] + stats[:remembered_wb_unprotected_objects]) / stats[:heap_live_slots].to_f) * 100.0
-          else
-            (stats[:old_objects] / stats[:heap_live_slots].to_f) * 100.0
-          end
-        end
-
-        # @return [Boolean] true, if the GC has `stress` mode enabled
-        def self.overclocked?; ::GC.stress != false; end
-
-        # @return [Boolean] true, if the GC Profiler is currently enabled
-        def self.profiler?; ::GC::Profiler.enabled?; end
-
-        # ENV_VARs FOR GC
-        #
-        # # TODO: tune these for ex. a quick/short-lived script mode and for a long-process/server mode
-        # # TODO: create ORM for ENV_VARs lol
-        #
-        # | ENV_VAR                          | default value     | notes                   |
-        # | -------------------------------- | ----------------- | ----------------------- |
-        # | GC_HEAP_INIT_SLOTS               | 10000             |                         |
-        # | GC_HEAP_FREE_SLOTS               | 4096              |                         |
-        # | GC_HEAP_GROWTH_FACTOR            | 1.8               |                         |
-        # | GC_HEAP_GROWTH_MAX_SLOTS         | 0                 | 0 disables a max growth |
-        # | GC_HEAP_OLDOBJECT_LIMIT_FACTOR   | 2.0               |                         |
-        # | GC_HEAP_FREE_SLOTS_MIN_RATIO     | 0.20              |                         |
-        # | GC_HEAP_FREE_SLOTS_GOAL_RATIO    | 0.40              |                         |
-        # | GC_HEAP_FREE_SLOTS_MAX_RATIO     | 0.60              |                         |
-        # | GC_MALLOC_LIMIT_MIN              | 16 * 1024 * 1024  | 16MB                    |
-        # | GC_MALLOC_LIMIT_MAX              | 32 * 1024 * 1024  | 32MB                    |
-        # | GC_MALLOC_LIMIT_GROWTH_FACTOR    | 1.4               |                         |
-        # | GC_OLDMALLOC_LIMIT_MIN           | 16 * 1024 * 1024  |                         |
-        # | GC_OLDMALLOC_LIMIT_GROWTH_FACTOR | 1.2               |                         |
-        # | GC_OLDMALLOC_LIMIT_MAX           | 128 * 1024 * 1024 | 128MB                   |
-
-        # @return [Float]
-        def self.stats_bytes_per_object_slot; ::GC::INTERNAL_CONSTANTS[:RVALUE_SIZE].to_f; end
-
-        # @return [Float]
-        def self.stats_slots_per_heap_page; ::GC::INTERNAL_CONSTANTS[:HEAP_PAGE_OBJ_LIMIT].to_f; end
-
-      end
-
-      # @see https://ruby-doc.org/core-2.7.0/RubyVM/MJIT.html
-      module F22B01
-
-        # @return [Boolean]
-        def self.enabled?; ::RubyVM::MJIT.enabled?; end
-
-        # @return [Boolean]
-        def self.pause; ::RubyVM::MJIT.pause; end
-
-        # @return [Boolean]
-        def self.resume; ::RubyVM::MJIT.resume; end
-      end # end: {F22B01}
-
-      # helpful CLI commands: @see https://unix.stackexchange.com/questions/252980/is-there-a-whoami-to-find-the-current-group-im-logged-in-as
-      #
-      #  | scenario           | cmd        |
-      #  | ------------------ | ---------- |
-      #  | current group ID   | `id -g`    |
-      #  | current group name | `id -g -n` |
-      #  | current user ID    | `id -u`    |
-      #  | current user name  | `id -u -n` |
-      #
-      # `💎.engine.os`
-      module F22B05
-
-        # @param [String]
-        def self.current_user; ::Etc.getlogin; end
-
-        # @param [Boolean]
-        def self.windows?; ::TTY::Command.windows?; end
-
-        # @see source credit: https://stackoverflow.com/questions/170956/how-can-i-find-which-operating-system-my-ruby-program-is-running-on
-        #
-        # @param [Boolean]
-        def self.unix?; !self.windows?; end
-
-        # @see source credit: https://stackoverflow.com/questions/170956/how-can-i-find-which-operating-system-my-ruby-program-is-running-on
-        #
-        # @param [Boolean]
-        def self.mac?; (/darwin/ =~ RUBY_PLATFORM) != nil; end
-
-        # @see source credit: https://stackoverflow.com/questions/170956/how-can-i-find-which-operating-system-my-ruby-program-is-running-on
-        #
-        # @param [Boolean]
-        def self.linux?; self.unix && !self.mac?; end
-
-        # @return [Integer] the number of CPUs available to `Ruuuby`, not necessarily the number that exists in hardware
-        def self.num_cpu_cores; ::Etc.nprocessors; end
-
-      end # end: {F22B05}
-
-      module F22B06
-
-        # @param [String] ruby_code
-        #
-        # @raise [ArgumentError]
-        #
-        # @return [String]
-        def self.get_compiled_code(ruby_code)
-          🛑str❓(:ruby_code_str, ruby_code)
-          ::RubyVM::InstructionSequence.compile(ruby_code).disassemble
-        end
-      end # end: {F22B06}
-
       🙈
 
       #    ___    __      _
@@ -296,7 +126,7 @@ module ::Ruuuby
       #
 
       def setup_logger
-        if ENV.∃🔑?('RUUUBY_F01')
+        if ENV.∃?('RUUUBY_F01')
           logging_modes = ENV.parse_feature_behaviors('RUUUBY_F01', 5, 0, 3)
           if logging_modes.∋?('b00')
             if logging_modes.length == 1
@@ -420,3 +250,14 @@ end
 
 # TODO: for later; https://ruby-doc.org/core-2.5.1/Process.html#method-c-setpriority
 # TODO: https://ruby-doc.org/core-2.5.1/Process.html
+
+=begin
+# TODO: https://stackoverflow.com/questions/5902488/uninstall-old-versions-of-ruby-gems
+      # @return [ActiveRecord::TimeZone]
+      #def timezone
+      #  @engine.orm
+        #💎.engine.enable_orm
+      #  @cached_timezone = ::ActiveSupport::TimeZone.new('Central Time (US & Canada)') if @cached_timezone == nil
+      #  @cached_timezone
+      #end
+=end

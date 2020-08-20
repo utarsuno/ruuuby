@@ -2,21 +2,35 @@
 
 RSpec.describe 'f40_b00' do
 
-  context 'feature{f40} functionality for' do
-
+  context 'feature{f40_b00} functionality for' do
   end # end: {functionality}
 
   context 'docker_locale', :locale do
 
-    context 'gem versions' do
-      context 'w/ gem{docker-api}' do
-        it 'has correct version{1.34.2}' do
-          expect(::Docker::VERSION).to eq('1.34.2')
+    context 'local system' do
+      context 'w/ {docker}' do
+        it 'has needed version' do
+          expect(🐋.version).to eq('Docker version 19.03.12, build 48a66213fe')
         end
-      end # end: {for gem{docker-api}}
+        it 'matching what gem{docker-api} reports as well' do
+          expect(🐋.version.♻️⟵(', ').♻️⟶('version ')).to eq(::Docker.version['Version'])
+        end
+      end
+      context 'w/ {docker-compose}' do
+        it 'has needed version' do
+          expect(🐋.version_compose).to eq('docker-compose version 1.26.2, build eefe0d31')
+        end
+      end
     end
 
-    # @see https://docs.docker.com/compose/reference/envvars/
+    context 'gem versions' do
+      context 'w/ gem{docker-api}' do
+        it 'has correct version{2.0.0.pre.1}' do
+          expect(::Docker::VERSION).to eq('2.0.0.pre.1')
+        end
+      end
+    end
+
     context 'local Docker Engine has expected settings' do
       it 'w/ platform' do
         expect(::Docker.version['Platform']['Name']).to eq('Docker Engine - Community')
@@ -27,10 +41,10 @@ RSpec.describe 'f40_b00' do
       end
       context 'w/ version related information' do
         it 'w/ Docker' do
-          expect(::Docker.version['GoVersion']).to eq('go1.12.17')
-          expect(::Docker.version['GitCommit']).to eq('afacb8b')
+          expect(::Docker.version['GoVersion']).to eq('go1.13.10')
+          expect(::Docker.version['GitCommit']).to eq('48a66213fe')
           expect(::Docker.version['MinAPIVersion']).to eq('1.12')
-          expect(::Docker.version['Version']).to eq('19.03.8')
+          expect(::Docker.version['Version']).to eq('19.03.12')
           expect(::Docker.version['ApiVersion']).to eq('1.40')
         end
         it 'experimental mode is currently disabled' do
@@ -46,11 +60,19 @@ RSpec.describe 'f40_b00' do
       it 'w/ {COMPOSE_API_VERSION}' do
         expect(ENV['COMPOSE_API_VERSION']).to eq('1.40')
       end
-      it 'w/ {COMPOSE_CONVERT_WINDOWS_PATHS}' do
-        expect(ENV['COMPOSE_CONVERT_WINDOWS_PATHS']).to eq('1')
+      context 'relating to windows os' do
+        it 'w/ {COMPOSE_CONVERT_WINDOWS_PATHS}' do
+          expect(ENV['COMPOSE_CONVERT_WINDOWS_PATHS']).to eq('1')
+        end
+        it 'w/ {COMPOSE_FORCE_WINDOWS_HOST}' do
+          expect(ENV['COMPOSE_FORCE_WINDOWS_HOST']).to eq('0')
+        end
       end
       it 'w/ {COMPOSE_PATH_SEPARATOR}' do
         expect(ENV['COMPOSE_PATH_SEPARATOR']).to eq(':')
+      end
+      it 'w/ {COMPOSE_PROJECT_NAME}' do
+        expect(ENV['COMPOSE_PROJECT_NAME']).to eq('ruuuby')
       end
     end
 

@@ -9,6 +9,8 @@ class ::Integer
   # @return [Boolean]
   def smells_like_int?; true; end
 
+  alias_method :∀, :times
+
   # ---------------------------------------------------------------------------------------------------------- | *f11* |
 
   # ∀ x ∈ Rℤ --> x ∈ ℤ

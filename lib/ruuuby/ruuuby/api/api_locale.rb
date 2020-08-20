@@ -10,23 +10,51 @@ module ::Ruuuby
 
     # TODO: automate searching for a file ex: 'find /path -name "file_name"'
     #
+    # TODO: document https://gist.github.com/barnes7td/3804534
+    #
+    # TODO: https://www.cyberciti.biz/faq/download-a-file-with-curl-on-linux-unix-command-line/
+    #  * (to provide alternative test verifications) automate downloading w/ curl, ex: `curl <URL> --output <SAVE_TO_PATH>`
+    #
     # `💎.engine.api_locale`
     class LocaleAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
 
-      attr_reader :api_docker
+      EXPECTED_LANG = 'en_US.UTF-8'
 
       def initialize(engine)
         super(engine)
-        @api_docker    = ::Ruuuby::MetaData::DockerAPI.new(engine)
+        @api_docker    = nil
+        @api_brew      = nil
+        @api_iconv     = nil
+        @api_git       = nil
         @cached_configs = nil
       end
 
-      # @return [ActiveRecord::TimeZone]
-      def timezone
-        💎.engine.orm
-        #💎.engine.enable_orm
-        @cached_timezone = ::ActiveSupport::TimeZone.new('Central Time (US & Canada)') if @cached_timezone == nil
-        @cached_timezone
+      # @return [Ruuuby::MetaData::DockerAPI]
+      def api_docker
+        if @api_docker.∅?
+          require 'docker'
+          %w(network container service service_set).∀{|docker_lib| require_relative "docker/docker_#{docker_lib}"}
+          require_relative 'docker/api_docker'
+          @api_docker = ::Ruuuby::MetaData::DockerAPI.new(@engine, 'ruuuby')
+        end
+        @api_docker
+      end
+
+      #def api_docker; @api_docker = ::Ruuuby::MetaData::DockerAPI.new(@engine) if @api_docker.∅?; @api_docker; end
+
+      # @return [Ruuuby::MetaData::BrewAPI]
+      def api_brew; @api_brew = ::Ruuuby::MetaData::BrewAPI.new(@engine) if @api_brew.∅?; @api_brew; end
+
+      # @return [Ruuuby::MetaData::IconvAPI]
+      def api_iconv; @api_iconv = ::Ruuuby::MetaData::IconvAPI.new(@engine) if @api_iconv.∅?; @api_iconv; end
+
+      # @return [Ruuuby::MetaData::GitAPI]
+      def api_git
+        if @api_git.∅?
+          require 'rugged'
+          @api_git = ::Ruuuby::MetaData::GitAPI.new(@engine)
+        end
+        @api_git
       end
 
       # @return [Hash]
@@ -35,66 +63,16 @@ module ::Ruuuby
         @cached_configs
       end
 
-      # @param [String] required_version
-      # @param [String] required_header
-      #
-      # @raise [ArgumentError]
-      #
       # @return [Boolean]
-      def ∃_brew_h_file?(required_version, required_header)
-        🛑strs❓([required_version, required_header])
-        result = @engine.api.run_cmd!("find /usr/local/Cellar -name \"#{required_header}\"")
-        result.∋?(required_version) && result.∋?("include/#{required_header}")
+      def healthy?
+        ::ENV['ARCHFLAGS'] == '-arch x86_64' && self.healthy_encoding?
       end
 
-      #         __         __   __
-      # |    | |__) .   | /  ` /  \ |\ | \  /
-      # |___ | |__) .   | \__, \__/ | \|  \/
-      #
-      # @see https://man7.org/linux/man-pages/man3/iconv.3.html
-      # @see https://en.wikipedia.org/wiki/Iconv
-      # @see https://apple.stackexchange.com/questions/346453/what-the-difference-and-usage-of-encodings-utf-8-and-utf-8-mac-in-iconv
+      🙈
 
-      # @return [String]
-      def iconv_version; @engine.api.run_cmd!('iconv --version'); end
-
-      # @param [String] expected_version
-      #
-      # @raise [ArgumentError]
-      #
-      # @return [String]
-      def iconv_version?(expected_version)
-        results = self.iconv_version
-        if results.ary?
-          results[0].∋?(expected_version)
-        else
-          results.∋?(expected_version)
-        end
-      end
-
-      # @return [Array]
-      def iconv_supported_encodings; @engine.api.run_cmd!('iconv -l'); end
-
-      # @param [String] encoding_to_find
-      #
-      # @raise [ArgumentError]
-      #
-      # @return [Boolean] true, if the specified encoding was found locally
-      def iconv_∃_encoding?(encoding_to_find)
-        🛑str❓('encoding_to_find', encoding_to_find)
-        begin
-          results = @engine.api.run_cmd!("iconv -l | grep \"#{encoding_to_find}\"")
-          if results.ary?
-            results.∀ do |e|
-              return true if e.∋?(encoding_to_find)
-            end
-            false
-          else
-            results.∋?(encoding_to_find)
-          end
-        rescue ::TTY::Command::ExitError
-          false
-        end
+      # @return [Boolean]
+      def healthy_encoding?
+        ::ENV.∀🔑∃_value?(%w(LANG LANGUAGE LC_CTYPE LC_MESSAGES LC_ALL), ::Ruuuby::MetaData::LocaleAPI::EXPECTED_LANG)
       end
 
     end # end: Class{LocaleAPI}

@@ -47,10 +47,15 @@ http {
         server service_pgadmin;
     }
 
+    upstream docker_js {
+        server service_js:8080;
+    }
+
     server {
-        listen      80;
-        listen      1337 reuseport;
-        server_name localhost;
+        listen 80;
+        listen 1337 reuseport;
+
+        server_name localhost ruuuby.com www.ruuuby.com;
 
         #       __
         # |\ | / _` | |\ | \_/
@@ -63,11 +68,13 @@ http {
         #  /\  /__` /__` |__   |  /__`
         # /~~\ .__/ .__/ |___  |  .__/
         location /v/ {
-            include /etc/nginx/ruuuby/unsorted/cors.nginx;
-            include /etc/nginx/ruuuby/caching/disable.nginx;
-            root /;
+            include   /etc/nginx/ruuuby/unsorted/cors.nginx;
+            include   /etc/nginx/ruuuby/caching/disable.nginx;
+            root      /;
+            autoindex on;
         }
 
+        # TODO: move to seperate server?
         #  __   __        __
         # |__) / _`  /\  |  \  |\/| | |\ |
         # |    \__> /~~\ |__/  |  | | | \|
@@ -80,6 +87,28 @@ http {
             proxy_set_header X-Script-Name /pgadmin4;
         }
         # TODO: for when needed: SSL example for pgadmin4: https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html
+    }
+
+    server {
+        listen 8080 reuseport;
+
+        #                      __   __   __     __  ___
+        #    |  /\  \  /  /\  /__` /  ` |__) | |__)  |
+        # \__/ /~~\  \/  /~~\ .__/ \__, |  \ | |     |
+        location /js/ {
+            #resolver 127.0.0.11 valid=30s;
+            #set $upstream_bar foo;
+            #proxy_pass http://$upstream_bar:8080;
+
+            proxy_pass       http://docker_js;
+            include          /etc/nginx/ruuuby/unsorted/proxy_pass.nginx;
+            #include          /etc/nginx/ruuuby/unsorted/docker_dns_fix;
+
+            #add_header       X-Frame-Options "";
+            #proxy_set_header X-Frame-Options "";
+            #proxy_set_header X-Script-Name /js;
+        }
+        # TODO: https://serverfault.com/questions/655067/is-it-possible-to-make-nginx-listen-to-different-ports
     }
 
 }

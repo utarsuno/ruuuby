@@ -1,11 +1,8 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'int.rb' do
 
-  #let(:random_sizes){bench_range(8, 32768)}
-  #let(:random_ints){random_sizes.map{|n| Array.new(n) { 🎲(n) } }}
-
-  context 'extends class[Integer]' do
+  context 'extends class{Integer}' do
 
     context 'by adding function{finite?}' do
       context 'handles needed scenarios' do

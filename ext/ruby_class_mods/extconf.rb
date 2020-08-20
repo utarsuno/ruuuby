@@ -13,6 +13,17 @@ else
   flag_f28_b09 = env_f28.include?('b09')
 end
 
+env_f22 = ENV['RUUUBY_F22']
+if env_f22.nil?
+  flag_f22_b01 = false
+  flag_f22_b05 = false
+  flag_f22_b06 = false
+else
+  flag_f22_b01 = env_f22.include?('b01')
+  flag_f22_b05 = env_f22.include?('b05')
+  flag_f22_b06 = env_f22.include?('b06')
+end
+
 env_f98 = ENV['RUUUBY_F98']
 if env_f98.nil?
   env_f98 = 0
@@ -72,13 +83,19 @@ the_flags += %w(funroll-loops)
 
 the_flags += ["DRUUUBY_F98_DEBUG=#{env_f98.to_s}"] if flag_debug
 the_flags += %w(DRUUUBY_F98_TIMER) if flag_timer
-the_flags += %w(DRUUUBY_F98_MEMORY) if flag_memory
+if flag_memory
+  the_flags += %w(DRUUUBY_F98_MEMORY)
+  the_flags += %w(DRUUUBY_F22_B00)
+end
 the_flags += %w(DRUUUBY_F98_OPENCL) if flag_opencl
 the_flags += %w(DRUUUBY_F98_COMPILER) if flag_compiler
 the_flags += %w(DRUUUBY_F98_OPENMP) if flag_openmp
 the_flags += %w(DRUUUBY_F98_OPENGL) if flag_opengl
 
 the_flags += %w(DRUUUBY_F28_B09) if flag_f28_b09
+the_flags += %w(DRUUUBY_F22_B01) if flag_f22_b01
+the_flags += %w(DRUUUBY_F22_B05) if flag_f22_b05
+the_flags += %w(DRUUUBY_F22_B06) if flag_f22_b06
 
 # warnings
 the_flags += %w(Werror Wshadow Wdouble-promotion Wfloat-conversion Wundef fno-common g3 Wbad-function-cast

@@ -565,7 +565,7 @@ RSpec.describe 'str' do
             expect{'+'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
             expect{'.'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
             expect{'a'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
-            expect{"\n".to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
+            expect{$/.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)
           end
           it 'invalid formats of length 2' do
             expect{'-+'.to_num}.to raise_error(::Ruuuby::DescriptiveStandardError)

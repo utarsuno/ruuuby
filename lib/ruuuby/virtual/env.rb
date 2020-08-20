@@ -3,24 +3,48 @@
 # modify the Ruby-'singleton' `ENV`
 class << ENV
 
-  # @return [Enumerator]
-  def ∀(*args); self.each(*args); end
+  alias :∅? :empty?
+  alias :𝔠 :length
+  alias :∀🔑 :each_key
+  alias :∀ :each
 
-  # @return [Enumerator]
-  def ∀🔑(*args); self.each_key(*args); end
-
-  # @return [Integer] the number of ENV_VARs (keys) found
-  def 𝔠; self.length; end
-
-  # @return [Boolean] true, if there were no ENV_VARs (keys) found
-  def ∅?; self.empty?; end
+  # TODO: MISSING TDD!
+  #
+  # `does each provided key exist w/ the the same provided value?`
+  #
+  # @param [Array] keys_to_find
+  # @param [*]     expected_value
+  #
+  # @return [Boolean]
+  def ∀🔑∃_value?(keys_to_find, expected_value)
+    matched_keys = 0
+    num_to_find   = keys_to_find.length
+    keys_to_find.∀ do |key|
+      if ::ENV.∃?(key)
+        if ::ENV[key] == expected_value
+          if matched_keys + 1 == num_to_find
+            return true
+          else
+            matched_keys += 1
+          end
+        end
+      else
+        return false
+      end
+    end
+    if matched_keys == num_to_find
+      true
+    else
+      🛑 ::RuntimeError.new("| {ENV}-> m{∀🔑∃_value?} called w/ keys_to_find as{#{keys_to_find.to_s}} and expected_value as {#{expected_value.to_s}} which did not match the result length of{#{matched_keys.to_s}} |")
+    end
+  end
 
   # @param [String] the_key
   #
   # @raise [ArgumentError] if the provided arg(the_key) is not of type +String+
   #
   # @return [Boolean] true, if there exists an ENV_VAR w/ matching name
-  def ∃🔑?(the_key)
+  def ∃?(the_key)
     🛑str❓(:the_key, the_key)
     self.has_key?(the_key)
   end
@@ -37,7 +61,7 @@ class << ENV
     when 1
       the_key = env_key_then_opts[0]
       🛑str❓(:the_key, the_key)
-      if self.∃🔑?(the_key)
+      if self.∃?(the_key)
         return self[the_key]
       else
         🛑 RuntimeError.new("c{ENV_VARS}-> m{fetch🔑} did not have the ENV_VAR{#{the_key}}")
@@ -45,7 +69,7 @@ class << ENV
     when 2
       the_key = env_key_then_opts[0]
       🛑str❓(:the_key, the_key)
-      if self.∃🔑?(the_key)
+      if self.∃?(the_key)
         return self[the_key]
       else
         return env_key_then_opts[1]
@@ -65,7 +89,7 @@ class << ENV
   # @return [Array]
   def parse_feature_behaviors(feature_uid, max_uid, min_allowed=-1, max_allowed=-1)
     🛑str❓(:feature_uid, feature_uid)
-    if ∃🔑?(feature_uid)
+    if self.∃?(feature_uid)
       content = ENV[feature_uid]
       if content.∋?('|')
         raw_nodes = content.split('|')

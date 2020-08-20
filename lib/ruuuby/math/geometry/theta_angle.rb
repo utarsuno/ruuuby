@@ -200,46 +200,22 @@ class ::ThetaAngle
       # @param [Float, Int, ThetaAngle, String] arg
       #
       # @return [ThetaAngle]
-      def θ°(arg)
-        if arg.str?
-          ::ThetaAngle.new_degree(arg.°)
-        else
-          ::ThetaAngle.new_degree(arg)
-        end
-      end
+      def θ°(arg); arg.str? ? ::ThetaAngle.new_degree(arg.°) : ::ThetaAngle.new_degree(arg); end
 
       # @param [Float, Int, ThetaAngle, String] arg
       #
       # @return [ThetaAngle]
-      def θʳ(arg)
-        if arg.str?
-          ::ThetaAngle.new_radian(arg.ʳ)
-        else
-          ::ThetaAngle.new_radian(arg)
-        end
-      end
+      def θʳ(arg); arg.str? ? ::ThetaAngle.new_radian(arg.ʳ) : ::ThetaAngle.new_radian(arg); end
 
       # @param [Float, Int, ThetaAngle, String] arg
       #
       # @return [ThetaAngle]
-      def θᵍ(arg)
-        if arg.str?
-          ::ThetaAngle.new_gon(arg.ᵍ)
-        else
-          ::ThetaAngle.new_gon(arg)
-        end
-      end
+      def θᵍ(arg); arg.str? ? ::ThetaAngle.new_gon(arg.ᵍ) : ::ThetaAngle.new_gon(arg); end
 
       # @param [Float, Int, ThetaAngle, String] arg
       #
       # @return [ThetaAngle]
-      def θ𝞽(arg)
-        if arg.str?
-          ::ThetaAngle.new_turn(arg.𝞽)
-        else
-          ::ThetaAngle.new_turn(arg)
-        end
-      end
+      def θ𝞽(arg); arg.str? ? ::ThetaAngle.new_turn(arg.𝞽) : ::ThetaAngle.new_turn(arg); end
     end
   end
 

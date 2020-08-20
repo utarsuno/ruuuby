@@ -19,6 +19,9 @@
 # Mac OS generated file
 .DS_Store
 
+# swap files created from `vim`
+.*.swp
+
 #
 Gemfile.lock
 

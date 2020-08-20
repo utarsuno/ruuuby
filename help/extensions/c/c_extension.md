@@ -1,4 +1,6 @@
 
+// TODO: look into: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/RubyPythonCocoa/Articles/GenerateFrameworkMetadata.html#/
+
 ## Notes
 
  * 🆔 of any positive FIXNUM: `(2 * value) + 1`
@@ -52,6 +54,9 @@ rb_warning (only print warning if $VERBOSE is true)
 ```
 
 ### MacOS C Support
+
+// TODO: look into: https://github.com/jrom/rubyosa
+
 ```
 
 // to fix missing header: sys/statfs.h

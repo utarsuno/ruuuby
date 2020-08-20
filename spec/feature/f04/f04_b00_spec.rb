@@ -18,7 +18,7 @@ RSpec.describe 'f04_b00' do
           it 'w/o alias' do
             expect(' '.empty?).to eq(false)
             expect("\t".empty?).to eq(false)
-            expect("\n".empty?).to eq(false)
+            expect($/.empty?).to eq(false)
             expect("0".empty?).to eq(false)
             expect("∅".empty?).to eq(false)
             expect("❓".empty?).to eq(false)
@@ -26,7 +26,7 @@ RSpec.describe 'f04_b00' do
           it 'w/ alias' do
             expect(' '.∅?).to eq(false)
             expect("\t".∅?).to eq(false)
-            expect("\n".∅?).to eq(false)
+            expect($/.∅?).to eq(false)
             expect("0".∅?).to eq(false)
             expect("∅".∅?).to eq(false)
             expect("❓".∅?).to eq(false)

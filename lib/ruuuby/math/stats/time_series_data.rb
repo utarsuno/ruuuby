@@ -106,3 +106,6 @@ end
 
 # TODO: gradient descent
 # TODO: https://en.wikipedia.org/wiki/Quantile
+# TODO: https://towardsdatascience.com/deep-learning-for-time-series-classification-inceptiontime-245703f422db
+
+# TODO: https://towardsdatascience.com/time-series-machine-learning-regression-framework-9ea33929009a

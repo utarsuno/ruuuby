@@ -13,13 +13,13 @@ ________________________________________________________________________________
 #ifndef CRUUUBY_H6_FEATURE_MACROS
 #define CRUUUBY_H6_FEATURE_MACROS
 
+//ensure_loaded_default(tzinfo)
 #define startup_step0_load_f98_b02_ruby(){\
     ensure_loaded_default(bigdecimal)\
     ensure_loaded_default(tempfile)\
     ensure_loaded_default(singleton)\
     ensure_loaded_default(logger)\
     ensure_loaded_default(time)\
-    ensure_loaded_default(tzinfo)\
     ensure_loaded_default(prime)\
     ensure_loaded_default(benchmark)\
     ensure_loaded_default(matrix)\
@@ -29,10 +29,13 @@ ________________________________________________________________________________
     ensure_loaded_default(pp)\
 }
 
+/*
+ * the following 3rd-party libs are loaded dynamically:
+ *   | docker |
+ *   | rugged |
+ */
 #define startup_step0_load_f98_b02_3rd_party(){\
     ensure_loaded_default(tty-command)\
-    ensure_loaded_default(rugged)\
-    ensure_loaded_default(docker)\
 }
 
 #define startup_step0_load_f98(){\

@@ -5,45 +5,61 @@ services:
 
   service_nginx:
     build:
-      context: .
-      dockerfile: ./services/nginx/Dockerfile
+      context: ./services/nginx
+      dockerfile: ./Dockerfile
+      target: build_env_prod
+    tty: false
     environment:
-      SERVICE_NAME: "service_nginx"
+      SERVICE_ENV: 'prod'
     volumes:
-      - './services/nginx/ruuuby.nginx:/etc/nginx/nginx.conf'
       - 'ruuuby_nginx_data:/v'
     ports:
       - 80:80
       - 443:443
       - 1337:1337
+      - 8080:8080
     depends_on:
       - service_postgres
       - service_pgadmin
+      - service_js
+
+  service_js:
+    build:
+      context: ./services/web_assets
+      dockerfile: ./Dockerfile
+      target: build_env_prod
 
   service_postgres:
-    image: "postgres"
+    image: 'amd64/postgres:13-alpine'
     restart: always
+    tty: false
     environment:
-      SERVICE_NAME: "service_postgres"
-      POSTGRES_DB: "mydb"
-      POSTGRES_USER: "myuser"
-      POSTGRES_PASSWORD: "mypassword"
+      SERVICE_NAME: 'service_postgres'
+      BUILD_ENV: 'prod'
+      SERVICE_ENV: 'prod'
+      SERVICE_OS: 'alpine'
+      SERVICE_OS_VERSION: '3.12.0'
+      POSTGRES_DB: 'mydb'
+      POSTGRES_USER: 'myuser'
+      POSTGRES_PASSWORD: 'mypassword'
     volumes:
       - "ruuuby_db_data/:/var/lib/postgresql/data/"
-    #ports:
-    #  - 5432:5432
-    #ports:
-    #  - "${SERVICE_00_FIELD_03}:${SERVICE_00_FIELD_04}"
 
   service_pgadmin:
-    image: "dpage/pgadmin4"
+    image: 'dpage/pgadmin4'
+    tty: false
     environment:
+      SERVICE_NAME: 'service_pgadmin'
+      BUILD_ENV: 'prod'
+      SERVICE_ENV: 'prod'
+      SERVICE_OS: 'alpine'
+      SERVICE_OS_VERSION: '3.9.4'
       PGADMIN_DEFAULT_EMAIL: 'pgadmin4@pgadmin.org'
       PGADMIN_DEFAULT_PASSWORD: 'admin'
       PGADMIN_ADMIN_PORT: '1337'
       PGADMIN_LISTEN_ADDRESS: '0.0.0.0'
     volumes:
-      - "ruuuby_pgadmin_data/:/var/lib/pgadmin/"
+      - 'ruuuby_pgadmin_data/:/var/lib/pgadmin/'
 
 networks:
   default:
@@ -52,5 +68,8 @@ networks:
 
 volumes:
   ruuuby_db_data:
+    external: true
   ruuuby_nginx_data:
+    external: true
   ruuuby_pgadmin_data:
+    external: true

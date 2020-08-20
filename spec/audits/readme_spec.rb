@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 using ::ThetaAngle::ContextRuuuby
+using ::String::ContextF24
 
 RSpec.describe 'README.md' do
 

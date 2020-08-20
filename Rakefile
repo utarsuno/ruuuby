@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 require 'rake/extensiontask'
 
@@ -80,7 +80,7 @@ add_task_rspec('tech_debt', '', false, true, true)
 add_task_rspec('integration', '', false, true, true)
 add_task_rspec('system', '', false, true, true)
 add_task_rspec('service', '', false, true, true)
-add_task_rspec('all', '', true,  false, false, '**/*_service_nginx_spec.rb', CategoriesQA::Preload::DB_FULL)
+add_task_rspec('all', '', true,  false, false, '**/*_service_spec.rb', CategoriesQA::Preload::DB_FULL)
 
 # ______________________________________________________________________________________________________________________
 #  __       ___       __        __   ___

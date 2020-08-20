@@ -8,6 +8,8 @@ class ::PseudoGraph
 
 end
 
+# TODO: https://en.wikipedia.org/wiki/A*_search_algorithm
+
 # TODO: https://www.gatevidyalay.com/prims-and-kruskal-algorithm-difference/#:~:text=Prim
 #  * https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/
 #  * https://en.wikipedia.org/wiki/Graph_(abstract_data_type)

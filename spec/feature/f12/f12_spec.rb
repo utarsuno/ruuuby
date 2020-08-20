@@ -25,7 +25,6 @@ RSpec.describe 'f12' do
             expect_∃⨍_static(:replace_expr_with, ::File)
             expect_∃⨍_static(:insert_line_before_expr, ::File)
             expect_∃⨍_static(:insert_lines_before_expr, ::File)
-            expect_∃⨍_static(:dirname², ::File)
             expect_∃⨍_static(:∃?, ::File)
           end
           it 'instance functions' do

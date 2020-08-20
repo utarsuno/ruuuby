@@ -1,8 +1,11 @@
-# coding: UTF-8
+# encoding: UTF-8
+
+# -------------------------------------------- ⚠️ --------------------------------------------
+
+=begin
 
 # mathematics related code
 module ::Math
-
   # math related code that can be categorized under +Space+
   module Space
 
@@ -33,5 +36,8 @@ module ::Math
     end
 
   end
-
 end
+
+=end
+
+# -------------------------------------------- ⚠️ --------------------------------------------

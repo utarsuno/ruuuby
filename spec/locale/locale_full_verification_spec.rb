@@ -9,20 +9,14 @@ RSpec.describe 'ruby' do
 
       context 'OpenSSL is built as needed' do
         it 'w/ needed ENV_VARs' do
-          expect(ENV["RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=#{💎.engine.api.path_openssl}\""])
+          expect(ENV["RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=#{🍺.openssl_path}\""])
         end
         context 'w/ needed globals' do
-          before :all do
-            @version_openssl = 💎.engine.api.run_cmd!("#{💎.engine.api.path_openssl}/bin/openssl version")
-          end
-          after :all do
-            @version_openssl = nil
-          end
           it 'matching compiled version' do
-            expect(::OpenSSL::OPENSSL_VERSION).to eq(@version_openssl)
+            expect(::OpenSSL::OPENSSL_VERSION).to eq(🍺.openssl_version)
           end
           it 'matching loaded version' do
-            expect(::OpenSSL::OPENSSL_LIBRARY_VERSION).to eq(@version_openssl)
+            expect(::OpenSSL::OPENSSL_LIBRARY_VERSION).to eq(🍺.openssl_version)
           end
         end
       end # end: {OpenSSL is built as needed}
@@ -34,7 +28,7 @@ RSpec.describe 'ruby' do
           end
           context 'found locally' do
             it 'for lib{zlib} version{11.14.0_1}' do
-              expect(💎.engine.api_locale.∃_brew_h_file?('11.14.0_1', 'zlib.h'))
+              expect(💎.engine.api_locale.api_brew.∃_h_file?('11.14.0_1', 'zlib.h'))
             end
           end
         end
@@ -45,20 +39,40 @@ RSpec.describe 'ruby' do
     context 'recommended configs' do
 
       context 'for gem{rubygems-update}' do
-        it 'has correct version{3.2.0.rc.1}' do
-          expect(::Gem.rubygems_version.to_s).to eq('3.2.0.rc.1')
+        it 'has correct version' do
+          expect_needed_version(::Gem, '3.2.0.rc.1', ::Gem.rubygems_version.to_s)
         end
         it 'matching output of cmd{gem -v}' do
-          expect(::Gem.rubygems_version.to_s).to eq(💎.engine.api.run_cmd!('gem -v'))
+          expect(::Gem.version_current).to eq(💻('gem -v'))
         end
+      end # end: {for gem{rubygems-update}}
 
-        context 'has needed configs' do
-          it 'w/ expected path for{Gemfile}' do
-            expect(ENV['BUNDLE_GEMFILE']).to eq("#{💎.engine.path_base}Gemfile")
+      context 'for gem{bundler}' do
+        it 'passes all health checks' do
+          expect(::Bundler.healthy?).to eq(true)
+        end
+        it 'has correct version' do
+          expect_needed_version(::Bundler, '2.2.0.rc.1', ::Bundler::VERSION)
+        end
+        it 'as defined by {Gem}' do
+          expect(::Gem::BundlerVersionFinder.bundler_version.to_s).to eq(::Bundler.version_current)
+        end
+        it 'w/ needed ENV_VARs' do
+          expected_path = "#{💎.engine.path_base}Gemfile"
+          expect(::ENV['BUNDLE_GEMFILE']).to eq(expected_path)
+          expect(::Bundler.path_gemfile).to eq(expected_path)
+        end
+        it 'does not require sudo (depending on OS)' do
+          if 💎.engine.os.mac?
+            expect(::Bundler.requires_sudo?).to eq(false)
+          elsif 💎.engine.os.unix
+            # currently, only Alpine-Linux is supported/expected, which will run w/ user{`root`}
+            expect(::Bundler.requires_sudo?).to eq(true)
+          else
+            # ¯\_(ツ)_/¯
           end
         end
-
-      end # end: {for gem{rubygems-update}}
+      end # end: {for gem{bundler}}
 
     end # end: {recommended configs}
 
@@ -66,13 +80,13 @@ RSpec.describe 'ruby' do
       context 'needed libs for GCC can be found' do
         context 'brew based, see lib{ruby-build}' do
           it 'for lib{gmp.h} version{6.2.0}' do
-            expect(💎.engine.api_locale.∃_brew_h_file?('6.2.0', 'gmp.h'))
+            expect(💎.engine.api_locale.api_brew.∃_h_file?('6.2.0', 'gmp.h'))
           end
           it 'for lib{mpfr.h} version{4.0.2}' do
-            expect(💎.engine.api_locale.∃_brew_h_file?('4.0.2', 'mpfr.h'))
+            expect(💎.engine.api_locale.api_brew.∃_h_file?('4.0.2', 'mpfr.h'))
           end
           it 'for lib{mpc.h} version{1.1.0}' do
-            expect(💎.engine.api_locale.∃_brew_h_file?('1.1.0', 'mpc.h'))
+            expect(💎.engine.api_locale.api_brew.∃_h_file?('1.1.0', 'mpc.h'))
           end
         end
       end
@@ -80,27 +94,13 @@ RSpec.describe 'ruby' do
       context 'optional tests' do
         context 'correct version tests from CLI-APIs' do
           it 'for{ruby-build}' do
-            result = 💎.engine.api.run_cmd!('ruby-build --version')
-            expect(result).to eq('ruby-build 20200520')
-          end
-          it 'for{brew}' do
-            expect(💎.engine.api_brew.version).to eq(["Homebrew 2.4.8-48-gee648ef", "Homebrew/homebrew-core (git revision 0dc26; last commit 2020-07-21)", "Homebrew/homebrew-cask (git revision 80899; last commit 2020-07-22)"])
-          end
-          context 'for{docker}' do
-            it 'has needed version' do
-              expect(💎.engine.api_locale.api_docker.version).to eq('Docker version 19.03.8, build afacb8b')
-            end
-            it 'has needed version for{docker-compose}' do
-              expect(💎.engine.api_locale.api_docker.version_compose).to eq('docker-compose version 1.25.5, build 8a1c60f6')
-            end
+            expect(💻('ruby-build --version')).to eq('ruby-build 20200520')
           end
           it 'for{git}' do
-            expect(💎.engine.api_git.version).to eq('git version 2.24.3 (Apple Git-128)')
+            expect(💎.engine.api_locale.api_git.version).to eq('git version 2.24.3 (Apple Git-128)')
           end
           it '${clang --version} matches ${cc --version}' do
-            result_a = 💎.engine.api.run_cmd!('clang --version')
-            result_b = 💎.engine.api.run_cmd!('cc --version')
-            expect(result_a).to eq(result_b)
+            expect(💻('clang --version')).to eq(💻('cc --version'))
           end
           # TODO: test having #{gcc -v} match too
         end # end: {correct version tests from CLI-APIs}
@@ -117,39 +117,59 @@ RSpec.describe 'ruby' do
         end
         context 'w/ freshly executed terminal cmds' do
           it 'id -u -n' do
-            expect(💎.engine.os.current_user).to eq(💎.engine.api.run_cmd!('id -u -n'))
+            expect(💎.engine.os.current_user).to eq(💻('id -u -n'))
           end
           it 'whoami' do
-            expect(💎.engine.os.current_user).to eq(💎.engine.api.run_cmd!('whoami'))
+            expect(💎.engine.os.current_user).to eq(💻('whoami'))
           end
         end
       end
       context 'w/ expected local specs' do
         it 'number of CPUs' do
-          expect(ENV['RUUUBY_NUM_CPU']).to eq(💎.engine.os.num_cpu_cores.to_s)
+          expect(::ENV['RUUUBY_NUM_CPU']).to eq(💎.engine.os.num_cpu_cores.to_s)
           expect(::Etc.nprocessors).to eq(💎.engine.os.num_cpu_cores)
         end
       end
     end # end: {current user}
 
-    context 'needed settings for{ZSH}' do
+    context 'recommended settings for{ZSH}' do
       it 'expected version{5.7.1} matches' do
-        expect(💎.engine.api.run_cmd!('zsh --version')).to eq('zsh 5.8 (x86_64-apple-darwin18.7.0)')
+        expect(💎.engine.api_zsh.version).to eq('zsh 5.8 (x86_64-apple-darwin18.7.0)')
       end
-    end
+    end # end: {ZSH}
 
     context '(thus far) recommended settings for {iconv}' do
+      it 'passes all health checks' do
+        expect(💎.engine.api_locale.api_iconv.healthy?).to eq(true)
+        end
       it 'has needed version{1.11}' do
-        expect(💎.engine.api_locale.iconv_version?('1.11')).to eq(true)
+        expect_needed_version(💎.engine.api_locale.api_iconv, 'iconv (GNU libiconv 1.11)')
       end
       it 'supports needed encoding{UTF-8}' do
-        expect(💎.engine.api_locale.iconv_∃_encoding?('UTF-8')).to eq(true)
+        expect(💎.engine.api_locale.api_iconv.∃_encoding?('UTF-8')).to eq(true)
       end
-    end
+    end # end: {iconv}
 
     context 'misc configs are as needed' do
       it '$PATH separator is defined as{:}' do
         expect(build_configs['PATH_SEPARATOR']).to eq(':')
+      end
+    end
+
+    # @see https://stackoverflow.com/questions/17980759/xcode-select-active-developer-directory-error
+    context 'configs for xcode' do
+      context 'xcode-select' do
+        it 'has needed version' do
+          expect(💻('xcode-select --version')).to eq('xcode-select version 2373.')
+        end
+        it 'has needed path' do
+          expect(💻('xcode-select --print-path')).to eq('/Applications/Xcode.app/Contents/Developer')
+        end
+      end
+      context 'xcodebuild' do
+        it 'has needed version' do
+          expect(💻('xcodebuild -version')).to eq(["Xcode 11.6", "Build version 11E708"])
+        end
       end
     end
 

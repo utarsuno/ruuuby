@@ -1,34 +1,31 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # add various aliases/functions to existing class +File+, (aliased globally by +Kernel+'s function{+📁+})
 class ::File
 
+  # TODO: all these characters should be valid for JavaScript: http://www.fileformat.info/info/charset/UTF-16/list.htm
+
+  class << self
+    alias_method :∅?, :empty?
+  end
+
   # ---------------------------------------------------------------------------------------------------------- | *f04* |
 
   # @return [Boolean] true, if this file does not exist or has zero contents
-  def ∅? ; ::File.empty?(self.path) ; end
+  def ∅?; ::File.∅?(self.path); end
 
   # ---------------------------------------------------------------------------------------------------------- | *f12* |
 
-  # @param [String] path (to a non-directory file)
+  # TODO: missing coverage
   #
-  # @raise [ArgumentError]
-  #
-  # @return [Boolean] true, if provided path exists and is a file
-  def self.∃?(path)
-    🛑str❓(:path, path)
-    # TODO: add param(follow_symbolic_links=true)
-    ::File.file?(path)
-  end
-
   # @param [String] path
   #
   # @raise [ArgumentError]
   #
-  # @return [String]
-  def self.dirname²(path)
-    🛑str❓(:path, path)
-    File.dirname(File.dirname(path))
+  # @return [Boolean]
+  def self.∃?(path)
+    🛑str❓('path', path)
+    ::File.file?(path)
   end
 
   # | ------------------------------------------------------------------------------------------------------------------
@@ -46,7 +43,7 @@ class ::File
   # @param [String] expression
   def self.insert_lines_before_expr(the_path, the_lines, expression)
     🛑strs❓([the_path, expression], :∉∅)
-    🛑ary❓(:the_lines, the_lines)
+    🛑ary❓('the_lines', the_lines)
     combined_lines = ''
     the_lines.each do |line|
       combined_lines << "#{line}\n"
@@ -65,7 +62,7 @@ class ::File
   # @return [Integer] -1 if an error occurred, 0 if there were no matches, otherwise n, (a positive int), for number of matches
   def self.replace_expr_with(the_path, expression, replacement, num_matches=1)
     🛑strs❓([the_path, expression, replacement], :∉∅)
-    🛑int❓(:num_matches, num_matches, :∈ℕ)
+    🛑int❓('num_matches', num_matches, :∈ℕ)
     num_matched = 0
 
     # TODO: NEED TO OPEN THE FILES WITH ENCODING SPECIFIED
@@ -114,19 +111,35 @@ class ::File
     end
   end
 
-
-
   # @see https://ruby-doc.org/stdlib-2.6.1/libdoc/csv/rdoc/CSV.html
   module CSV
 
     # @param [String] path
+    # @param [String] row_sep
+    # @param [String] encoding
     #
     # @raise [ArgumentError]
     #
     # @return [Array]
-    def self.read(path)
-      🛑str❓('path', path)
-      ::CSV.read(path, {skip_blanks: true, headers: true, col_sep: ',', row_sep: "\n"})
+    def self.read(path, row_sep=$/, encoding='US_ASCII')
+      🛑strs❓([path, encoding, row_sep])
+      ::CSV.read(path, {skip_blanks: true, headers: true, col_sep: ',', row_sep: row_sep, encoding: encoding})
+    end
+
+    # @param [String] path
+    # @param [String] row_sep
+    # @param [String] encoding
+    #
+    # @raise [ArgumentError]
+    #
+    # @return [Array]
+    def self.read!(path, row_sep=$/, encoding='US_ASCII')
+      🛑strs❓([path, encoding, row_sep])
+      if ::File.∃?(path, true)
+        ::CSV.read(path, {skip_blanks: true, headers: true, col_sep: ',', row_sep: row_sep, encoding: encoding})
+      else
+        🛑 ::ArgumentError.new("| c{File::CSV}-> m{read!} received arg(path) w/ val{#{path}} which is not a valid file reference |")
+      end
     end
 
   end # end: {CSV}
@@ -138,10 +151,27 @@ class ::File
     #
     # @raise [ArgumentError]
     #
-    # @return [Array] Hash
+    # @return [Hash]
     def self.read(path)
       🛑str❓('path', path)
       ::YAML.load_file(path)
+    end
+
+    # @param [String] path
+    # @param [Array]  expected_sections
+    #
+    # @raise [ArgumentError]
+    #
+    # @return [Hash]
+    def self.read!(path, expected_sections)
+      🛑str❓('path', path)
+      🛑ary❓('expected_sections', expected_sections)
+      data = ::YAML.load_file(path)
+      if (data.keys).≈≈(expected_sections)
+        return data
+      else
+        🛑 ::RuntimeError.new("| c{File::YAML}-> m{read!} did not find sections{#{expected_sections.to_s}} at path{#{path.to_s}} |")
+      end
     end
 
   end # end: {YAML}

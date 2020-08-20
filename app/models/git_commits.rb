@@ -65,7 +65,7 @@ class GitCommit < ApplicationRecord
   end
 
   # @return [Integer]
-  def self.num_release_tags; self.num_where(*['release_tag IS NOT ?', nil ]); end
+  def self.num_release_tags; self.num_where(*['release_tag IS NOT ?', nil]); end
 
   # _________________________________________________________________________________________________________________
   #   __   __   ___  __       ___  __   __   __
@@ -102,17 +102,6 @@ class GitCommit < ApplicationRecord
 
   # @return [Boolean]
   def has_release_tag?; !(self.release_tag.∅?); end
-
-  # ----------------
-
-  def source_for_seed
-    release = self.ruuuby_release
-    source  = "@v#{release.vmajor.to_s}_#{release.vminor.to_s}_#{release.vtiny.to_s}"
-    parsed_datetime = (self.commit_author_date.in_time_zone('Central Time (US & Canada)')).to_s.as_iso8601
-    # TODO: INCORPORATE RELEASE_TAG INFO!
-    source += ".spawn_git_commit('#{self.commit_subject}', '#{parsed_datetime}', '#{self.commit_hash}')"
-    source
-  end
 
 end
 
