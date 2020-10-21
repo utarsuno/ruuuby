@@ -10,6 +10,10 @@ module ::Ruuuby
   # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
 
+    # gem install rugged -- --use-system-libraries
+    #
+    # brew install libgit2
+    #
     # TODO: https://github.com/Homebrew/brew/releases
     # TODO: https://www.unixtutorial.org/brew-cask-vs-brew-formula/
     # TODO: https://brew.sh/
@@ -19,7 +23,7 @@ module ::Ruuuby
     # | formula |           |
     # | cask    |           |
     # | tap     |           |
-    class BrewAPI < ::Ruuuby::MetaData::RuuubyAPIComponentCLI
+    class BrewAPI < ::Ruuuby::MetaData::EngineComponentAPICLI
 
       def initialize(engine)
         super(engine, 'brew')

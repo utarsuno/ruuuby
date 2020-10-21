@@ -10,7 +10,7 @@ RSpec.describe 'f40_b00' do
     context 'local system' do
       context 'w/ {docker}' do
         it 'has needed version' do
-          expect(🐋.version).to eq('Docker version 19.03.12, build 48a66213fe')
+          expect(🐋.version).to eq('Docker version 19.03.13, build 4484c46d9d')
         end
         it 'matching what gem{docker-api} reports as well' do
           expect(🐋.version.♻️⟵(', ').♻️⟶('version ')).to eq(::Docker.version['Version'])
@@ -18,15 +18,15 @@ RSpec.describe 'f40_b00' do
       end
       context 'w/ {docker-compose}' do
         it 'has needed version' do
-          expect(🐋.version_compose).to eq('docker-compose version 1.26.2, build eefe0d31')
+          expect(🐋.version_compose).to eq('docker-compose version 1.27.4, build 40524192')
         end
       end
     end
 
     context 'gem versions' do
       context 'w/ gem{docker-api}' do
-        it 'has correct version{2.0.0.pre.1}' do
-          expect(::Docker::VERSION).to eq('2.0.0.pre.1')
+        it 'has correct version{2.0.0}' do
+          expect(::Docker::VERSION).to eq('2.0.0')
         end
       end
     end
@@ -41,10 +41,10 @@ RSpec.describe 'f40_b00' do
       end
       context 'w/ version related information' do
         it 'w/ Docker' do
-          expect(::Docker.version['GoVersion']).to eq('go1.13.10')
-          expect(::Docker.version['GitCommit']).to eq('48a66213fe')
+          expect(::Docker.version['GoVersion']).to eq('go1.13.15')
+          expect(::Docker.version['GitCommit']).to eq('4484c46d9d')
           expect(::Docker.version['MinAPIVersion']).to eq('1.12')
-          expect(::Docker.version['Version']).to eq('19.03.12')
+          expect(::Docker.version['Version']).to eq('19.03.13')
           expect(::Docker.version['ApiVersion']).to eq('1.40')
         end
         it 'experimental mode is currently disabled' do

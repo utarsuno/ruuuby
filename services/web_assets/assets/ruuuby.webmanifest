@@ -1,0 +1,10 @@
+{
+	"lang": "en-US",
+	"name": "ruuuby",
+	"short_name": "ruuuby",
+	"description": "ruuuby",
+	"display": "fullscreen",
+	"orientation": "landscape",
+	"start_url": "http://localhost:1337/v/ruuuby.html",
+    "background_color": "DimGray"
+}

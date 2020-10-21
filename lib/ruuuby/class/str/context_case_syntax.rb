@@ -49,7 +49,7 @@ class ::String
         elsif self.🐍?
           self
         else
-          🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "which is not in one of the formats: [🐫, 🐫⬇, 🐍⬆, 🐍]")
+          🛑 ::Ruuuby::DescriptiveStandardError.new(self, "which is not in one of the formats: [🐫, 🐫⬇, 🐍⬆, 🐍]")
         end
       end
 
@@ -87,7 +87,7 @@ class ::String
           self
         elsif self.🐫⬇?
           self[0].upcase + self[1...self.𝔠]
-        else; 🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "which is not in one of the formats: [🐫, 🐫⬇, 🐍⬆, 🐍]"); end
+        else; 🛑 ::Ruuuby::DescriptiveStandardError.new(self, "which is not in one of the formats: [🐫, 🐫⬇, 🐍⬆, 🐍]"); end
       end
     end
   end

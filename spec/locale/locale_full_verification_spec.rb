@@ -2,21 +2,34 @@
 
 RSpec.describe 'ruby' do
 
+  context 'audits', :audit do
+    context 'RSpec configs' do
+      it 'are as expected' do
+        expect(::RSpec::Support::RubyFeatures::module_refinement_supported?).to eq(true)
+        expect(::RSpec::Support::RubyFeatures::module_prepends_supported?).to eq(true)
+        expect(::RSpec::Support::RubyFeatures::optional_and_splat_args_supported?).to eq(true)
+        expect(::RSpec::Support::RubyFeatures::caller_locations_supported?).to eq(true)
+      end
+    end
+  end
+
   context 'locale', :locale do
     let(:build_configs){::RbConfig::CONFIG}
 
     context 'web protocol' do
 
       context 'OpenSSL is built as needed' do
-        it 'w/ needed ENV_VARs' do
-          expect(ENV["RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=#{🍺.openssl_path}\""])
-        end
+        #it 'w/ needed ENV_VARs' do
+          #expect(ENV["RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=#{🍺.openssl_path}\""])
+        #end
         context 'w/ needed globals' do
           it 'matching compiled version' do
-            expect(::OpenSSL::OPENSSL_VERSION).to eq(🍺.openssl_version)
+            #🍺.openssl_version
+            expect(::OpenSSL::OPENSSL_VERSION).to eq('OpenSSL 1.1.1g  21 Apr 2020')
           end
           it 'matching loaded version' do
-            expect(::OpenSSL::OPENSSL_LIBRARY_VERSION).to eq(🍺.openssl_version)
+            #🍺.openssl_version
+            expect(::OpenSSL::OPENSSL_LIBRARY_VERSION).to eq('OpenSSL 1.1.1h  22 Sep 2020')
           end
         end
       end # end: {OpenSSL is built as needed}
@@ -28,7 +41,7 @@ RSpec.describe 'ruby' do
           end
           context 'found locally' do
             it 'for lib{zlib} version{11.14.0_1}' do
-              expect(💎.engine.api_locale.api_brew.∃_h_file?('11.14.0_1', 'zlib.h'))
+              expect(🍺.∃_h_file?('11.14.0_1', 'zlib.h'))
             end
           end
         end
@@ -40,7 +53,7 @@ RSpec.describe 'ruby' do
 
       context 'for gem{rubygems-update}' do
         it 'has correct version' do
-          expect_needed_version(::Gem, '3.2.0.rc.1', ::Gem.rubygems_version.to_s)
+          expect_needed_version(::Gem, '3.2.0.rc.2', ::Gem.rubygems_version.to_s)
         end
         it 'matching output of cmd{gem -v}' do
           expect(::Gem.version_current).to eq(💻('gem -v'))
@@ -52,7 +65,7 @@ RSpec.describe 'ruby' do
           expect(::Bundler.healthy?).to eq(true)
         end
         it 'has correct version' do
-          expect_needed_version(::Bundler, '2.2.0.rc.1', ::Bundler::VERSION)
+          expect_needed_version(::Bundler, '2.2.0.rc.2', ::Bundler::VERSION)
         end
         it 'as defined by {Gem}' do
           expect(::Gem::BundlerVersionFinder.bundler_version.to_s).to eq(::Bundler.version_current)
@@ -80,13 +93,13 @@ RSpec.describe 'ruby' do
       context 'needed libs for GCC can be found' do
         context 'brew based, see lib{ruby-build}' do
           it 'for lib{gmp.h} version{6.2.0}' do
-            expect(💎.engine.api_locale.api_brew.∃_h_file?('6.2.0', 'gmp.h'))
+            expect(🍺.∃_h_file?('6.2.0', 'gmp.h'))
           end
           it 'for lib{mpfr.h} version{4.0.2}' do
-            expect(💎.engine.api_locale.api_brew.∃_h_file?('4.0.2', 'mpfr.h'))
+            expect(🍺.∃_h_file?('4.0.2', 'mpfr.h'))
           end
           it 'for lib{mpc.h} version{1.1.0}' do
-            expect(💎.engine.api_locale.api_brew.∃_h_file?('1.1.0', 'mpc.h'))
+            expect(🍺.∃_h_file?('1.1.0', 'mpc.h'))
           end
         end
       end
@@ -96,9 +109,9 @@ RSpec.describe 'ruby' do
           it 'for{ruby-build}' do
             expect(💻('ruby-build --version')).to eq('ruby-build 20200520')
           end
-          it 'for{git}' do
-            expect(💎.engine.api_locale.api_git.version).to eq('git version 2.24.3 (Apple Git-128)')
-          end
+          #it 'for{git}' do
+          #  expect($git.version).to eq('git version 2.24.3 (Apple Git-128)')
+          #end
           it '${clang --version} matches ${cc --version}' do
             expect(💻('clang --version')).to eq(💻('cc --version'))
           end
@@ -138,6 +151,19 @@ RSpec.describe 'ruby' do
       end
     end # end: {ZSH}
 
+    context 'recommended settings for lib' do
+      context '{zsh}' do
+        it 'expected version{5.7.1} matches' do
+          expect(💎.engine.api_zsh.version).to eq('zsh 5.8 (x86_64-apple-darwin18.7.0)')
+        end
+      end # end: {ZSH}
+      context '{curl}' do
+        it 'expected version{7.64.1} matches' do
+          expect(💻('curl --version')).to eq(["curl 7.64.1 (x86_64-apple-darwin19.0) libcurl/7.64.1 (SecureTransport) LibreSSL/2.8.3 zlib/1.2.11 nghttp2/1.39.2", "Release-Date: 2019-03-27", "Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp smb smbs smtp smtps telnet tftp ", "Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz MultiSSL NTLM NTLM_WB SPNEGO SSL UnixSockets"])
+        end
+      end # end: {curl}
+    end
+
     context '(thus far) recommended settings for {iconv}' do
       it 'passes all health checks' do
         expect(💎.engine.api_locale.api_iconv.healthy?).to eq(true)
@@ -168,7 +194,7 @@ RSpec.describe 'ruby' do
       end
       context 'xcodebuild' do
         it 'has needed version' do
-          expect(💻('xcodebuild -version')).to eq(["Xcode 11.6", "Build version 11E708"])
+          expect(💻('xcodebuild -version')).to eq(["Xcode 12.0", "Build version 12A7209"])
         end
       end
     end

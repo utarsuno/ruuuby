@@ -6,11 +6,32 @@ require 'mkmf'
 
 os = ENV['RUUUBY_OS_CURRENT']
 
-env_f28 = ENV['RUUUBY_F28']
-if env_f28.nil?
-  flag_f28_b09 = false
-else
-  flag_f28_b09 = env_f28.include?('b09')
+env_f06     = ENV['RUUUBY_F06']
+flag_f06_b08 = false
+flag_f06_b09 = false
+unless env_f06.nil?
+  if env_f06.include?('b08')
+    flag_f06_b08 = true
+  end
+  if env_f06.include?('b09')
+    flag_f06_b09 = true
+  end
+end
+
+env_f10     = ENV['RUUUBY_F10']
+flag_f10_b04 = false
+unless env_f10.nil?
+  if env_f10.include?('b03')
+    flag_f10_b04 = true
+  end
+end
+
+env_f12     = ENV['RUUUBY_F12']
+flag_f12_b00 = false
+unless env_f12.nil?
+  if env_f12.include?('b00')
+    flag_f12_b00 = true
+  end
 end
 
 env_f22 = ENV['RUUUBY_F22']
@@ -18,10 +39,61 @@ if env_f22.nil?
   flag_f22_b01 = false
   flag_f22_b05 = false
   flag_f22_b06 = false
+  flag_f22_b07 = false
 else
   flag_f22_b01 = env_f22.include?('b01')
   flag_f22_b05 = env_f22.include?('b05')
   flag_f22_b06 = env_f22.include?('b06')
+  flag_f22_b07 = env_f22.include?('b07')
+end
+
+env_f26     = ENV['RUUUBY_F26']
+flag_f26_b00 = false
+unless env_f26.nil?
+  if env_f26.include?('b00')
+    flag_f26_b00 = true
+  end
+end
+
+env_f28 = ENV['RUUUBY_F28']
+if env_f28.nil?
+  flag_f28_b09 = false
+else
+  flag_f28_b09 = env_f28.include?('b09')
+end
+
+env_f38 = ENV['RUUUBY_F38']
+flag_f38 = false
+unless env_f38.nil?
+  flag_f38 = true
+end
+
+env_f92     = ENV['RUUUBY_F92']
+flag_f92_b00 = false
+flag_f92_b01 = false
+flag_f92_b02 = false
+flag_f92_b03 = false
+unless env_f92.nil?
+  if env_f92.include?('b00')
+    flag_f92_b00 = true
+  end
+  if env_f92.include?('b01')
+    flag_f92_b01 = true
+  end
+  if env_f92.include?('b02')
+    flag_f92_b02 = true
+  end
+  if env_f92.include?('b02')
+    flag_f92_b03 = true
+  end
+end
+
+env_f93 = ENV['RUUUBY_F93']
+
+if env_f93.nil?
+  flag_f93 = false
+else
+  flag_f93 = true
 end
 
 env_f98 = ENV['RUUUBY_F98']
@@ -92,13 +164,33 @@ the_flags += %w(DRUUUBY_F98_COMPILER) if flag_compiler
 the_flags += %w(DRUUUBY_F98_OPENMP) if flag_openmp
 the_flags += %w(DRUUUBY_F98_OPENGL) if flag_opengl
 
-the_flags += %w(DRUUUBY_F28_B09) if flag_f28_b09
+the_flags += %w(DRUUUBY_F06_B08) if flag_f06_b08
+the_flags += %w(DRUUUBY_F06_B09) if flag_f06_b09
+
+the_flags += %w(DRUUUBY_F10_B04) if flag_f10_b04
+the_flags += %w(DRUUUBY_F12_B00) if flag_f12_b00
+
 the_flags += %w(DRUUUBY_F22_B01) if flag_f22_b01
 the_flags += %w(DRUUUBY_F22_B05) if flag_f22_b05
 the_flags += %w(DRUUUBY_F22_B06) if flag_f22_b06
+the_flags += %w(DRUUUBY_F22_B07) if flag_f22_b07
+
+the_flags += %w(DRUUUBY_F26_B00) if flag_f26_b00
+
+the_flags += %w(DRUUUBY_F28_B09) if flag_f28_b09
+
+the_flags += %w(DRUUUBY_F38) if flag_f38
+
+the_flags += %w(DRUUUBY_F92_B00) if flag_f92_b00
+the_flags += %w(DRUUUBY_F92_B01) if flag_f92_b01
+the_flags += %w(DRUUUBY_F92_B02) if flag_f92_b02
+the_flags += %w(DRUUUBY_F92_B03) if flag_f92_b03
+
+the_flags += %w(DRUUUBY_F93) if flag_f93
 
 # warnings
-the_flags += %w(Werror Wshadow Wdouble-promotion Wfloat-conversion Wundef fno-common g3 Wbad-function-cast
+# Wbad-function-cast
+the_flags += %w(Werror Wshadow Wdouble-promotion Wfloat-conversion Wundef fno-common g3
 Wmissing-declarations Wmissing-prototypes Wold-style-definition Wdeclaration-after-statement
 Wpointer-sign Wparentheses Winit-self Wmissing-include-dirs Wno-switch-bool Wswitch-default Wstrict-aliasing Winit-self)
 

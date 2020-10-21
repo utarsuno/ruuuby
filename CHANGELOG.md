@@ -1,8 +1,26 @@
 ---
 
-### ⚠️: atm documentation & tests synchronization % is too low
+#### ⚠️: documentation & testing synchronization targeted {0.1.0}
 
 ---
+
+# `v0.1.0.pre.0`
+
+> abstract: Kintsugi!
+
+ * upgrade to `Ruby` version{`3.0.0-preview1`}
+   * gems{`tty-command`, `rugged`} require source code modification for compatibility, alternative solutions to be sought towards end of migration to version{`0.1.0`}
+ * better isolate `feature interdependency`, helping `lazy-loading` but also enables setting targeted completion of `Ruuuby Dockerization` for version{`0.1.0`}
+   * ⚠️: following suite, almost all `DB` related code will finally be getting overhauled (`to re-enable versioning & documentation 'automation' but with more micro granularity covered as to enable smaller code pushes w/o changing time spent on dev`)
+ * begin structure overhaul of `commands, tasks, jobs, etc`, functionality designation to be re-balanced amongst `shell scripts`, `Ruby gems`, `Ruuuby scripts`, `RabbitMQ + DB`, etc
+
+> noticeable mentions:
+
+ * add gem{`bunny`} and a `Docker service` to help monitor `RabbitMQ`
+ * add gem{`finite-machine`}, apply some design cleanup (w/ lots more to be done)
+ * for `web-based services`: add `webmanifest` file and `JSON minification` to the existing single `node.js REST end-point`
+   * generating file & directory `checksums` also added (wip) w/ results cross-checked between `JS` and `Ruuuby`
+ * iterative upgrade for being able to set & apply development preferences such as `OS level configurations`
 
 # `v0.0.49`
 

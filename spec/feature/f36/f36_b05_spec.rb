@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f36_b05' do
   let(:data_flags_ts){::TimeSeriesData::BITWISE_FLAGS}

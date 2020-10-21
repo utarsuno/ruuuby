@@ -57,9 +57,9 @@ RSpec.describe 'f06_b07' do
         it 'for c{Object}' do
           expect_∃⨍(:hsh?, ::Object)
         end
-        it 'for m{ObjectF06}' do
-          expect_∃⨍(:🛑hsh❓, ::Ruuuby::Feature::Includable::ObjectF06)
-          expect_∃⨍(:🛑hshs❓, ::Ruuuby::Feature::Includable::ObjectF06)
+        it 'for m{Object}' do
+          expect_∃⨍(:🛑hsh❓, ::Object)
+          expect_∃⨍(:🛑hshs❓, ::Object)
         end
       end
     end

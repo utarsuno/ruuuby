@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+=begin
 RSpec.describe 'db/db.rb' do
 
   context 'db', :db do
@@ -27,3 +28,4 @@ RSpec.describe 'db/db.rb' do
     end
   end
 end
+=end

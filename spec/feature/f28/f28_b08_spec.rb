@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f28_b08' do
   context 'functionality' do

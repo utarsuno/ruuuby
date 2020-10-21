@@ -2,6 +2,7 @@
 
 using ::Math::Algebra::Tropical::ContextNumeric
 using ::Math::Algebra::Tropical::ContextMatrix
+using ::Matrix::ContextParamCheck
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 

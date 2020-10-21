@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f30_db_orm' do
 
@@ -27,7 +27,7 @@ RSpec.describe 'f30_db_orm' do
         end
 
         it 'defines{b04}' do
-          audit_feature_behavior(f30, f30_b04, 'b04', 'create create singleton-Class{SymbolicNumbersSpace}, instanced aliased by{𝕊}')
+          audit_feature_behavior(f30, f30_b04, 'b04', 'create create singleton-Class{SymbolicNumbers}, instanced aliased by{𝕊}')
         end
       end # end: {defines behaviors}
     end # end: {defines{f30}}

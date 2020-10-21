@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f32_b01' do
 
@@ -23,16 +23,13 @@ RSpec.describe 'f32_b01' do
               expect(f𝕎¹.additive_persistence(199)).to eq(3)
             end
           end
-          # ___  ___  __           __   ___  __  ___      /  /  /
-          #  |  |__  /  ` |__|    |  \ |__  |__)  |      /  /  /
-          #  |  |___ \__, |  |    |__/ |___ |__)  |     .  .  .
           context 'tech_debt', :tech_debt do
             it 'support int values beyond FIXNUM' do
-              expect{f𝕎¹.additive_persistence(99999999999999)}.to raise_error(RangeError)
+              expect{f𝕎¹.additive_persistence(99999999999999)}.to raise_error(::RangeError)
             end
           end
           it 'cases: error' do
-            f𝕎¹_error_scenarios.∀{|scenario| expect{f𝕎¹.additive_persistence(scenario)}.to raise_error(ArgumentError)}
+            f𝕎¹_error_scenarios.∀{|scenario| expect{f𝕎¹.additive_persistence(scenario)}.to raise_error(::ArgumentError)}
           end
         end
       end # end: {func{additive_persistence}}
@@ -94,16 +91,13 @@ RSpec.describe 'f32_b01' do
               expect(f𝕎¹.digital_root(65536)).to eq(7)
             end
           end
-          # ___  ___  __           __   ___  __  ___      /  /  /
-          #  |  |__  /  ` |__|    |  \ |__  |__)  |      /  /  /
-          #  |  |___ \__, |  |    |__/ |___ |__)  |     .  .  .
           context 'tech_debt', :tech_debt do
             it 'support int values beyond FIXNUM' do
-              expect{f𝕎¹.digital_root(99999999999999)}.to raise_error(RangeError)
+              expect{f𝕎¹.digital_root(99999999999999)}.to raise_error(::RangeError)
             end
           end
           it 'cases: error' do
-            f𝕎¹_error_scenarios.∀{|scenario| expect{f𝕎¹.digital_root(scenario)}.to raise_error(ArgumentError)}
+            f𝕎¹_error_scenarios.∀{|scenario| expect{f𝕎¹.digital_root(scenario)}.to raise_error(::ArgumentError)}
           end
         end
       end
@@ -137,7 +131,7 @@ RSpec.describe 'f32_b01' do
             end
           end
           it 'cases: error' do
-            f𝕎¹_error_scenarios.∀{|scenario| expect{f𝕎¹.digit_sum(scenario)}.to raise_error(ArgumentError)}
+            f𝕎¹_error_scenarios.∀{|scenario| expect{f𝕎¹.digit_sum(scenario)}.to raise_error(::ArgumentError)}
           end
         end
       end

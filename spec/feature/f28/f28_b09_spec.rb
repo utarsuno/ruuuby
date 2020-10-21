@@ -1,11 +1,11 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f28_b09' do
   context 'functionality' do
     context 'unicode characters representing fractions' do
       context 'has correct values' do
         it 'for all' do
-          if RUUUBY_F28_B09
+          if 💎.engine.stats_ext['F28_B09']
             expect(½).to eq(0.5)
             expect(⅓).to eq(1.0/3)
             expect(⅔).to eq(2.0/3)

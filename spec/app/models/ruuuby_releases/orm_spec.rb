@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'ruuuby_releases.rb' do
 
@@ -18,7 +18,7 @@ RSpec.describe 'ruuuby_releases.rb' do
           RuuubyRelease.spawn(1, 2, 3)
           RuuubyRelease.spawn(1, 2, 3)
         }.to raise_error(ActiveRecord::RecordNotUnique)
-        result = RuuubyRelease.find_by_uid(1, 2, 3)
+        result = RuuubyRelease[1, 2, 3]
         result.♻️!
       end
       it 'prevents negative values being used for version values' do

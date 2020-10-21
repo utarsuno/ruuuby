@@ -128,7 +128,7 @@ module ::Math
       #  ‣ `time bound`
       #
       # # TODO: t distribution tests (determine if datasets are statistically different)
-      # # TODO: handle ahead of time, generic algo to handle both stock splits and `deconglomeration`/`synergism` (ex: for both scenarios of market data and/or simulation 'bots')
+      # # TODO: handle ahead of time, generic algo to handle both stock splits and `deconglomeration`/`synergism` (ex: for both scenarios of market data stock/splits and/or simulation 'bots')
       #
       # ----------------------------------------------------------------------------------------------------------------------------------------------------------------
       #

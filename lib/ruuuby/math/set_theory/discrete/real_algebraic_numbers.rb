@@ -7,8 +7,9 @@ module ::Math
     class RealAlgebraicNumbers < ::Math::SetTheory::NumberSet
       include ::Singleton
 
+      # {dense: true}
       def initialize
-        super(:𝔸ᵣ, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO, {dense: true})
+        super(:𝔸ᵣ, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO)
         @subset_of   = [:𝕌, :ℂ, :ℝ, :𝔸]
         @superset_of = [:𝔹, :ℕ, :𝕎, :ℤ, :ℚ]
       end

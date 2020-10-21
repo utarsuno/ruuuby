@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f10_db_orm' do
 
@@ -14,7 +14,7 @@ RSpec.describe 'f10_db_orm' do
         end
 
         it 'has{b01}' do
-          audit_feature_behavior(f10, f10_b01, 'b01', '`🆕` to alias `new` for class{`Class`}')
+          audit_feature_behavior(f10, f10_b01, 'b01', 'provide global variables for certain ruby engine components (ex: `$git` instead of `💎.engine.api_locale.api_git`)')
         end
 
         it 'has{b02}' do

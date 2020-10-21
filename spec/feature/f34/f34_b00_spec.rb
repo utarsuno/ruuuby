@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f34_b00' do
 
@@ -6,8 +6,6 @@ RSpec.describe 'f34_b00' do
     let(:geo){::Math::Geometry}
 
     context 'class{Shape}' do
-
-
 
     end
 

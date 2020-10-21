@@ -1,6 +1,4 @@
 
-
-
 ## Extensions Notes
 
 #### public abstract class DynamicMethod extends java.lang.Object

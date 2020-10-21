@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # mathematics related code
 module ::Math
@@ -6,7 +6,7 @@ module ::Math
   # math related code that can be categorized under +Space+
   module Space
 
-    class SymbolicNumbersSpace < ::Math::Space::TypesSpaceⓣ¹
+    class SymbolicNumbers < ::Math::Space::TypesSpaceⓣ¹
 
       module ContextStr
         refine ::String do
@@ -34,6 +34,17 @@ module ::Math
         end
       end
 
+      MAPPING = {
+          ∞: ::Float::INFINITY,
+          π: ::Math::PI,
+          ℮: ::Math::E,
+          𝚽: ::Float::RATIO_GOLDEN,
+          Ⴔ: ::Math::ANGLE_GOLDEN,
+          𝞽: ::Math::ANGLE_TAU,
+          Ω: ::Float::CONST_OMEGA
+      }
+
+=begin
       if RUUUBY_F28_B09
         MAPPING = {
             ∞: ::Float::INFINITY,
@@ -72,6 +83,7 @@ module ::Math
             Ω: ::Float::CONST_OMEGA
         }
       end
+=end
 
       def initialize
         @space_type     = 'types'
@@ -101,8 +113,8 @@ module ::Math
       def parse(n)
         if n.length == 1
           as_sym = n.to_sym
-          if SymbolicNumbersSpace::MAPPING.∋?(as_sym)
-            return SymbolicNumbersSpace::MAPPING[as_sym]
+          if SymbolicNumbers::MAPPING.∋?(as_sym)
+            return SymbolicNumbers::MAPPING[as_sym]
           else
             🛑 ArgumentError.new("𝕊 got invalid arg{#{n.to_s}} w/ type{#{b.Ⓣ}} for func{parse}")
           end
@@ -113,11 +125,11 @@ module ::Math
             char = n[0]
             if char == '-' || char == '+'
               as_sym = n[1].to_sym
-              if SymbolicNumbersSpace::MAPPING.∋?(as_sym)
+              if SymbolicNumbers::MAPPING.∋?(as_sym)
                 if char == '-'
-                  return (-1.0 * SymbolicNumbersSpace::MAPPING[as_sym])
+                  return (-1.0 * SymbolicNumbers::MAPPING[as_sym])
                 else
-                  return SymbolicNumbersSpace::MAPPING[as_sym]
+                  return SymbolicNumbers::MAPPING[as_sym]
                 end
               else
                 🛑 ArgumentError.new("𝕊 got invalid arg{#{n.to_s}} w/ type{#{b.Ⓣ}} for func{parse}")

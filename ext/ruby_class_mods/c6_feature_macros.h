@@ -14,28 +14,34 @@ ________________________________________________________________________________
 #define CRUUUBY_H6_FEATURE_MACROS
 
 //ensure_loaded_default(tzinfo)
+
+/*
+ * the following Ruby libs are loaded dynamically (lazy-loaded):
+ *   | csv       |
+ *   | yaml      |
+ *   | digest    |
+ *   | prime     |
+ *   | tempfile   |
+ *   | benchmark |
+ */
 #define startup_step0_load_f98_b02_ruby(){\
     ensure_loaded_default(bigdecimal)\
-    ensure_loaded_default(tempfile)\
     ensure_loaded_default(singleton)\
     ensure_loaded_default(logger)\
     ensure_loaded_default(time)\
-    ensure_loaded_default(prime)\
-    ensure_loaded_default(benchmark)\
-    ensure_loaded_default(matrix)\
-    ensure_loaded_default(net/http)\
-    ensure_loaded_default(csv)\
-    ensure_loaded_default(yaml)\
+    ensure_loaded_default(net/https)\
     ensure_loaded_default(pp)\
+    ensure_loaded_default(json)\
 }
 
 /*
- * the following 3rd-party libs are loaded dynamically:
+ * the following 3rd-party libs are loaded dynamically (lazy-loaded):
  *   | docker |
  *   | rugged |
  */
 #define startup_step0_load_f98_b02_3rd_party(){\
     ensure_loaded_default(tty-command)\
+    ensure_loaded_default(finite_machine)\
 }
 
 #define startup_step0_load_f98(){\
@@ -70,15 +76,31 @@ ________________________________________________________________________________
     💎add_public_func_0args_to(R_OBJ, "chr?",         m_obj_is_chr)\
     💎add_public_func_0args_to(R_OBJ, "set?",         m_obj_is_set)\
     💎add_public_func_0args_to(R_OBJ, "theta_angle?", is_theta_angle)\
-    💎add_public_func_0args_to(R_OBJ, "matrix?",      is_a_matrix)\
-    💎add_public_func_0args_to(R_OBJ, "vec?",         is_a_vector)\
-    💎add_public_func_kargs_to(R_OBJ, "ary?",         m_obj_is_ary)\
+    💎add_public_func_0args_to(R_OBJ, "ary?",         m_obj_is_ary)\
     💎add_public_func_kargs_to(R_OBJ, "int?",         m_obj_is_int)\
     💎add_public_func_kargs_to(R_OBJ, "flt?" ,         m_obj_is_flt)\
     💎add_public_func_kargs_to(R_OBJ, "sym?",         m_obj_is_sym)\
     💎add_public_func_kargs_to(R_OBJ, "str?",         m_obj_is_str)\
     💎add_public_func_kargs_to(R_OBJ, "num?",         m_obj_is_num)\
 }
+
+#define init_f06_b08(){\
+    💎add_public_func_0args_to(R_OBJ, "matrix?", is_a_matrix)\
+}
+
+#define init_f06_b09(){\
+    💎add_public_func_0args_to(R_OBJ, "vec?", is_a_vector)\
+}
+
+/*   ___    ___       __
+   /'___\ /'___`\   /'__`\
+  /\ \__//\_\ /\ \ /\_\L\ \
+  \ \ ,__\/_/// /__\/_/_\_<_
+   \ \ \_/  // /_\ \ /\ \L\ \
+    \ \_\  /\______/ \ \____/
+     \/_/  \/_____/   \/___/ */
+
+#define ENGINE_STAT_SET(the_str, the_val) r_hsh_set(hsh_ruuuby_engine_stats, rb_str_new_cstr(the_str), the_val);
 
 /*   ___    ___    ________
    /'___\ /'___`\ /\_____  \

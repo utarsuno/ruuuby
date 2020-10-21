@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'ruuuby_features.rb' do
   context 'ApplicationRecord{RuuubyFeature}', :db do
@@ -29,7 +29,7 @@ RSpec.describe 'ruuuby_features.rb' do
           RuuubyFeature.spawn(1337, '1337')
         }.to raise_error(ActiveRecord::RecordNotUnique)
 
-        result = RuuubyFeature.find_by_uid(1337)
+        result = RuuubyFeature[1337]
         expect(result.is_a?(::RuuubyFeature)).to eq(true)
         result.♻️!
       end
@@ -68,7 +68,7 @@ RSpec.describe 'ruuuby_features.rb' do
           it 'exists as needed' do
             expect(RuuubyFeature.respond_to?(:syntax_uid)).to eq(true)
             expect(RuuubyFeature.syntax_uid.ⓣ).to eq(Regexp)
-            expect(RuuubyFeature.syntax_uid.source).to eq("\\A#{RuuubyFeature::Syntax::UID}\\z")
+            expect(RuuubyFeature.syntax_uid.source).to eq(RuuubyFeature::Syntax::UID)
           end
         end
       end
@@ -76,26 +76,17 @@ RSpec.describe 'ruuuby_features.rb' do
       context 'with needed constants' do
         context '::RuuubyFeature::Syntax::UID' do
           it 'exists' do
-            expect(RuuubyFeature::Syntax::UID).to eq('(f?)\d\d')
-          end
-          it "can't be changed" do
-            expect{RuuubyFeature::Syntax::UID = 5}.to raise_error(FrozenError)
+            expect(RuuubyFeature::Syntax::UID).to eq('\A(f?)\d\d\z')
           end
         end
         context '::RuuubyFeature::Syntax::SQL_UID' do
           it 'exists' do
             expect(RuuubyFeature::Syntax::SQL_UID).to eq('id_num = ?')
           end
-          it "can't be changed" do
-            expect{RuuubyFeature::Syntax::SQL_UID = 5}.to raise_error(FrozenError)
-          end
         end
         context '::RuuubyFeature::Syntax::DOCS_FEATURE_MAPPING' do
           it 'exists' do
             expect(RuuubyFeature::Syntax::DOCS_FEATURE_MAPPING).to eq('| f\d\d | (.*)? |')
-          end
-          it "can't be changed" do
-            expect{RuuubyFeature::Syntax::DOCS_FEATURE_MAPPING = 5}.to raise_error(FrozenError)
           end
         end
       end

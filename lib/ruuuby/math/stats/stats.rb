@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # mathematics related code
 module ::Math
@@ -11,7 +11,7 @@ module ::Math
     #
     # @return [Float, Numeric] Σ(vals) / vals.length
     def self.arithmetic_mean(*vals)
-      🛑ary❓(:vals, vals, :∉∅)
+      🛑ary❓('vals', vals, :∉∅)
       🛑nums❓(vals, :∈𝕌)
       (vals.sum.to_f) / (vals.length.to_f)
     end
@@ -22,7 +22,7 @@ module ::Math
     #
     # @return [Float, Numeric]
     def self.median(*vals)
-      🛑ary❓(:vals, vals, :∉∅)
+      🛑ary❓('vals', vals, :∉∅)
       🛑nums❓(vals, :∈𝕌)
       sorted = vals.sort
       len    = sorted.length

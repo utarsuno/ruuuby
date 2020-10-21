@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'ary' do
 
@@ -53,8 +53,10 @@ RSpec.describe 'ary' do
         end
       end
       it 'detects bad param' do
-        expect{%w().≈≈ nil}.to raise_exception(::Ruuuby::PrmErrAry, "| c{Array}-> m{≈≈} got arg(them) w/ type{NilClass}, required-type{Array} |")
-        expect{[1, nil, 'abc'].≈≈({})}.to raise_exception(::Ruuuby::PrmErrAry, "| c{Array}-> m{≈≈} got arg(them) w/ type{Hash}, required-type{Array} |")
+        #expect{%w().≈≈ nil}.to raise_exception(::ArgErr, "| c{Array}-> m{≈≈} got arg(them) w/ type{NilClass}, when required type is{Array} |")
+        #expect{[1, nil, 'abc'].≈≈({})}.to raise_exception(::ArgErr, "| c{Array}-> m{≈≈} got arg(them) w/ type{Hash}, when required type is{Array} |")
+        expect{%w().≈≈ nil}.to raise_exception(::ArgErr)
+        expect{[1, nil, 'abc'].≈≈({})}.to raise_exception(::ArgErr)
       end
     end
 
@@ -295,7 +297,7 @@ RSpec.describe 'ary' do
             expect(scenario).to eq([5, 6])
           end
           it 'does not perform deep copy on individual elements' do
-            new_obj   = Object.🆕
+            new_obj   = Object.new
             ary_obj   = %w(a bb c)
             ary_id    = ary_obj.🆔
             scenario  = [ary_obj, [], 1337, nil, new_obj]

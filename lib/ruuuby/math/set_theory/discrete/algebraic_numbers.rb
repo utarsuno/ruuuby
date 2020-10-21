@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # mathematics related code
 module ::Math
@@ -9,8 +9,8 @@ module ::Math
 
       def initialize
         super(:𝔸, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO)
-        @subset_of   = [:𝕌, :ℂ]
-        @superset_of = [:𝔹, :ℕ, :𝕎, :ℤ, :ℚ, :𝔸ᵣ]
+        #@subset_of   = [:𝕌, :ℂ]
+        #@superset_of = [:𝔹, :ℕ, :𝕎, :ℤ, :ℚ, :𝔸ᵣ]
       end
 
       # ⚠️, coverage missing

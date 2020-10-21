@@ -1,6 +1,22 @@
-# coding: UTF-8
+# encoding: UTF-8
+
+using ::Object::ContextSuperscripts
 
 RSpec.describe 'float.rb' do
+
+  context 'locale', :locale do
+    context 'expected configurations for{Float} found for' do
+      it 'MANT_DIG' do
+        expect(::Float::MANT_DIG).to eq(53)
+      end
+      it 'DIG' do
+        expect(::Float::DIG).to eq(15)
+      end
+      it 'supports denormalized numbers' do
+        expect((::Float::MIN.next_float) > ::Float::MIN).to eq(true)
+      end
+    end
+  end
 
   context 'verify func{next_float}' do
     it 'works as expected' do

@@ -18,7 +18,7 @@ module ::Ruuuby
         def upcase?
           case(self.𝔠)
           when 1
-            return self.₀.match?(::String.syntax_char_uppercase)
+            return self[0].match?(::String.syntax_char_uppercase)
           when 0
             return false
           else
@@ -30,7 +30,7 @@ module ::Ruuuby
         def downcase?
           case(self.𝔠)
           when 1
-            return self.₀.match?(::String.syntax_char_lowercase)
+            return self[0].match?(::String.syntax_char_lowercase)
           when 0
             return false
           else
@@ -48,12 +48,12 @@ module ::Ruuuby
           🛑str❓(:stop_at, stop_at, :∉∅)
           🛑int❓(:num_matches, num_matches)
           return '' if self == stop_at
-          🛑 RuntimeError.🆕("| c{String}-> m{remove_until} got arg(stop_at){#{stop_at}} which is not contained in self{#{self}} |") if (self.∅? || self.∌?(stop_at))
-          🛑 ArgumentError.🆕("| c{String}-> m{remove_until} got arg(stop_at){#{stop_at}}-len{#{stop_at.𝔠.to_s}} which is longer than self{#{self}} of len{#{self.𝔠.to_s}} |") if stop_at.𝔠 > self.𝔠
+          🛑 RuntimeError.new("| c{String}-> m{remove_until} got arg(stop_at){#{stop_at}} which is not contained in self{#{self}} |") if (self.∅? || self.∌?(stop_at))
+          🛑 ArgumentError.new("| c{String}-> m{remove_until} got arg(stop_at){#{stop_at}}-len{#{stop_at.𝔠.to_s}} which is longer than self{#{self}} of len{#{self.𝔠.to_s}} |") if stop_at.𝔠 > self.𝔠
           if num_matches == -1 || num_matches == ::Float::INFINITY
-            return self[(self.rindex(stop_at)+stop_at.𝔠)..self.𝔠₋]
+            return self[(self.rindex(stop_at)+stop_at.𝔠)...self.𝔠]
           elsif num_matches == 1
-            return self[(self.index(stop_at)+stop_at.𝔠)..self.𝔠₋]
+            return self[(self.index(stop_at)+stop_at.𝔠)...self.𝔠]
           else
             num_matched = 0
             position    = 0
@@ -68,7 +68,7 @@ module ::Ruuuby
               end
               position += 1
             end
-            🛑 ArgumentError.🆕("| c{String}-> c{remove_until} got arg(num_matches) and self{#{self}} does not have{#{num_matches.to_s}} instances of{#{stop_at}} |")
+            🛑 ArgumentError.new("| c{String}-> c{remove_until} got arg(num_matches) and self{#{self}} does not have{#{num_matches.to_s}} instances of{#{stop_at}} |")
           end
         end
 
@@ -122,10 +122,10 @@ module ::Ruuuby
           delta        = 0
           while delta <= self.𝔠 && delta <= ending.𝔠
             starting_of_end = ending[0..delta]
-            last_matched    = starting_of_end if self[(self.𝔠-1-delta)..(self.𝔠-1)] == starting_of_end
+            last_matched    = starting_of_end if self[(self.𝔠-1-delta)...self.𝔠] == starting_of_end
             delta          += 1
           end
-          self << (last_matched.∅? ? ending : ending[last_matched.𝔠..ending.𝔠-1])
+          self << (last_matched.∅? ? ending : ending[last_matched.𝔠...ending.𝔠])
         end
 
       end
@@ -171,7 +171,7 @@ module ::Ruuuby
       module StringF21
 
         # @return [Boolean] true, if this `String` is length 1 with a it's character being a digit (ascii value between 48 and 57)
-        def digit?; self.𝔠₁? && self.ord < 58 && self.ord > 47; end
+        def digit?; (self.𝔠 == 1) && self.ord < 58 && self.ord > 47; end
 
         # @return [Boolean] true, if this `String` can be converted into a number w/o raising any exception
         def to_num?
@@ -191,41 +191,41 @@ module ::Ruuuby
 
           case(self.length)
           when 0
-            🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
+            🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
           when 1
             if self.digit?
               return self.to_i
             else
-              🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
+              🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
             end
           when 2
-            case(self.₀)
+            case(self[0])
             when '.'
-              if self.₁.digit?
+              if self[1].digit?
                 return Float(self)
               else
-                🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
+                🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
               end
             when '+', '-'
-              if self.₁.digit?   ; return Integer(self)
-              elsif self.₁?('π') ; return (self.₀?('-')) ? (-::Math::PI) : (::Math::PI)
-              else               ;  🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
+              if self[1].digit?       ; return Integer(self)
+              elsif self[1] == ('π') ; return (self[0] == '-') ? (-::Math::PI) : (::Math::PI)
+              else                   ;  🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
               end
             else
-              if self.₀.digit? && self.₁.digit? ; return Integer(self)
-              else                              ; 🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
+              if self[0].digit? && self[1].digit? ; return Integer(self)
+              else                              ; 🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
               end
             end
           when 3
             if self.match?(String.syntax_len_3_as_flt)     ; return Float(self)
             elsif self.match?(String.syntax_len_3_as_int) ; return Integer(self)
             elsif self.downcase == 'nan'                  ; return Float::NAN
-            else                                          ; 🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
+            else                                          ; 🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
             end
           else
             if self.match?(String.syntax_len_any_as_int) ; return Integer(self)
             elsif self.match?(String.syntax_len_any)     ; return Float(self)
-            else                                         ; 🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "can't be parsed as a num")
+            else                                         ; 🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
             end
           end
         end
@@ -295,85 +295,102 @@ class ::String
     # expression referenced from: https://www.regular-expressions.info/dates.html
     #
     # @type [String]
-    TIME_YEAR             = '(19|20)\d\d'.❄️
+    TIME_YEAR             = '(19|20)\d\d'
 
     # expression referenced from: https://www.regular-expressions.info/dates.html
     #
     # @type [String]
-    TIME_MONTH            = '(0[1-9]|1[012])'.❄️
+    TIME_MONTH            = '(0[1-9]|1[012])'
 
     # expression referenced from: https://www.regular-expressions.info/dates.html
     #
     # @type [String]
-    TIME_DAY              = '(0[1-9]|[12][0-9]|3[01])'.❄️
+    TIME_DAY              = '(0[1-9]|[12][0-9]|3[01])'
 
     # @type [String]
-    TIME_HOUR_MIN         = '(([01]\d)|(2[0-3])):[0-5]\d'.❄️
+    TIME_HOUR_MIN         = '(([01]\d)|(2[0-3])):[0-5]\d'
 
     # @type [String]
-    TIME_HOUR_MIN_SEC     = "#{TIME_HOUR_MIN}:[0-5]\\d".❄️
+    TIME_HOUR_MIN_SEC     = "#{TIME_HOUR_MIN}:[0-5]\\d"
 
     # expression referenced from: https://www.regextester.com/99856
     #
     # @type [String]
-    UTC_OFFSETS           = '(([+-]([01]\d|2[0-3])(:?[0-5]\d)?)|Z)'.❄️
+    UTC_OFFSETS           = '(([+-]([01]\d|2[0-3])(:?[0-5]\d)?)|Z)'
 
     # expression referenced from: https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
     #
     # @type [String]
-    ISO8601               = "(#{TIME_YEAR})(-#{TIME_MONTH}(-#{TIME_DAY}(T#{TIME_HOUR_MIN_SEC}(#{UTC_OFFSETS})?)?)?)?".❄️
+    ISO8601               = "(#{TIME_YEAR})(-#{TIME_MONTH}(-#{TIME_DAY}(T#{TIME_HOUR_MIN_SEC}(#{UTC_OFFSETS})?)?)?)?"
 
     # TODO: temporary-design, more flexibility could be added in
     #
     # @type [String]
-    ISO8601_NORMALIZABLE  = "(#{TIME_YEAR})(-#{TIME_MONTH}(-#{TIME_DAY}((T| )#{TIME_HOUR_MIN_SEC}(( )?#{UTC_OFFSETS})?)?)?)?".❄️
+    ISO8601_NORMALIZABLE  = "(#{TIME_YEAR})(-#{TIME_MONTH}(-#{TIME_DAY}((T| )#{TIME_HOUR_MIN_SEC}(( )?#{UTC_OFFSETS})?)?)?)?"
 
     # @type [String]
-    CHAR_UPPERCASE        = ::Regexp::Syntax::CHAR_UPPER
+    CHAR_UPPERCASE        = '[[:upper:]]'
 
     # @type [String]
-    CHAR_LOWERCASE        = ::Regexp::Syntax::CHAR_LOWER
-
-    # expression referenced from: https://stackoverflow.com/questions/1128305/regex-for-pascalcased-words-aka-camelcased-with-leading-uppercase-letter
-    #
-    # @type [String]
-    CASE_CAMEL            = '[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*'.❄️
+    CHAR_LOWERCASE        = '[[:lower:]]'
 
     # expression referenced from: https://stackoverflow.com/questions/1128305/regex-for-pascalcased-words-aka-camelcased-with-leading-uppercase-letter
     #
     # @type [String]
-    CASE_LOWER_CAMEL      = '[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?'.❄️
+    CASE_CAMEL            = '[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*'
+
+    # expression referenced from: https://stackoverflow.com/questions/1128305/regex-for-pascalcased-words-aka-camelcased-with-leading-uppercase-letter
+    #
+    # @type [String]
+    CASE_LOWER_CAMEL      = '[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?'
 
     # @type [String]
-    CASE_UPPER_SNAKE      = '[A-Z]([A-Z0-9]*(_[A-Z0-9]+)?)*'.❄️
+    CASE_UPPER_SNAKE      = '[A-Z]([A-Z0-9]*(_[A-Z0-9]+)?)*'
 
     # @type [String]
-    CASE_SNAKE            = '[a-z]([a-z0-9]*(_[a-z0-9]+)?)*'.❄️
+    CASE_SNAKE            = '[a-z]([a-z0-9]*(_[a-z0-9]+)?)*'
 
     # @type [String]
-    LEN_3_AS_INT          = '(\d\d\d)|([+-]\d\d)'.❄️
+    LEN_3_AS_INT          = '(\d\d\d)|([+-]\d\d)'
 
     # @type [String]
-    LEN_3_AS_FLT          = '([+-]\.\d)|(\d\.\d)|(\.\d\d)|(\de\d)'.❄️
+    LEN_3_AS_FLT          = '([+-]\.\d)|(\d\.\d)|(\.\d\d)|(\de\d)'
 
     # @type [String]
-    LEN_ANY_AS_INT        = '[+-]?\d+'.❄️
+    LEN_ANY_AS_INT        = '[+-]?\d+'
 
     # expression referenced from: https://mentalized.net/journal/2011/04/14/ruby-how-to-check-if-a-string-is-numeric/
     #
     # @type [String]
-    LEN_ANY               = '[+-]?\d+?((\.\d+e?\d*)|(e\d+))?'.❄️
-
-    ❄️
+    LEN_ANY               = '[+-]?\d+?((\.\d+e?\d*)|(e\d+))?'
   end
-
-  include ::Ruuuby::Attribute::Includable::SubscriptIndexing
 
   include ::Ruuuby::Attribute::Includable::SyntaxCache
   # ---------------------------------------------------------------------------------------------------------- | *f03* |
-  include ::Ruuuby::Attribute::Includable::Cardinality
+  alias_method :𝔠, :length
   # ---------------------------------------------------------------------------------------------------------- | *f08* |
   include ::Ruuuby::Feature::Includable::StringF08
+
+  # @return [Boolean]
+  def enclosed_with?(pattern_start, pattern_end)
+    (self.length >= pattern_start.length + pattern_end.length) && self.start_with?(pattern_start) && self.end_with?(pattern_end)
+  end
+
+  def ensure_enclosed_with!(pattern_start, pattern_end)
+    unless self.enclosed_with?(pattern_start, pattern_end)
+      return self.ensure_start!(pattern_start).ensure_ending!(pattern_end)
+    end
+    self
+  end
+
+  # @return [Boolean]
+  def in_quotes?; self.in_quotes_double? || self.in_quotes_single?; end
+
+  # @return [Boolean]
+  def in_quotes_single?; self.enclosed_with?("'", "'"); end
+
+  # @return [Boolean]
+  def in_quotes_double?; self.enclosed_with?('"', '"'); end
 
   alias_method :⬇, :downcase
   alias_method :⬇!, :downcase!

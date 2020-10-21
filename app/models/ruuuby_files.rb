@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
@@ -8,19 +8,8 @@ class RuuubyFile < ApplicationRecord
 
   # useful components for any expression parsing
   module Syntax
-
-    # expression from: https://stackoverflow.com/questions/6416065/c-sharp-regex-for-file-paths-e-g-c-test-test-exe/42036026#42036026
-    #
     # @type [String]
-    UNIX_PATH = '\/$|(^(?=\/)|^\.|^\.\.|^\~|^\~(?=\/))(\/(?=[^/\0])[^/\0]+)*\/?'.❄️
-
-    # @type [String]
-    UID       = UNIX_PATH
-
-    # @type [String]
-    SQL_UID   = 'path_full = ?'.❄️
-
-    ❄️
+    SQL_UID   = 'path_full = ?'
   end
 
   include ::Ruuuby::ORMAttribute::Includable::UID

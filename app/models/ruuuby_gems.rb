@@ -31,8 +31,8 @@ class ::RuuubyGem < ::ApplicationRecord
   validates :version_current, presence: true
   validates :url_gem, presence: true
 
-  def self.find_by_name(gem_name)
-    🛑str❓(:gem_name, gem_name)
+  def self.[](gem_name)
+    🛑str❓('gem_name', gem_name)
     ::RuuubyGem.where('name = ?', [gem_name]).limit(1).first
   end
 

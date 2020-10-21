@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+# encoding: UTF-8
+
+#RUBYOPT='-W:no-deprecated -W:no-experimental'
+RUBYOPT='-Eutf-8 '
+ENV['RUUUBY_F01']="b01|b03|b04{debug}"
+require 'bundler/setup'
+require 'ruuuby'
+
+$ruuuby = 💎
+#using ::Math::Algebra::Tropical::ContextNumeric
+#using ::Math::Algebra::Tropical::ContextMatrix
+using ::ThetaAngle::ContextRuuuby
+using ::ThetaAngle::ContextParamCheck
+using ::String::ContextF24
+using ::Ruuuby::Heuristics::ContextParsingCommandOutput
+
+using ::Object::ContextSuperscripts
+
+require 'irb'
+IRB.start(__FILE__)

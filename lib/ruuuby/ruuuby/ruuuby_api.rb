@@ -14,7 +14,7 @@ module ::Ruuuby
     # | pty | pseudo-teletype | "device entry that acts like a terminal to the process performing I/O, but is managed by something else"
     #
     # `💎.engine.api`
-    class RuuubyAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
+    class RuuubyAPI < ::Ruuuby::MetaData::EngineComponentAPI
 
       # @param [*]       engine
       # @param [Integer] default_timeout
@@ -26,8 +26,14 @@ module ::Ruuuby
       end
 
       def run_cmd(cmd)
-        out, err = self.get_tty.run(cmd, timeout: @default_timeout, pty: false)
+        #out, err = self.get_tty.run(cmd, timeout: @default_timeout, pty: false)
+        out, err = self.get_tty.run(cmd, {timeout: @default_timeout, pty: false})
         return out, err
+      end
+
+      def run_cmd_custom(cmd)
+        #self.get_tty.run!(cmd, timeout: @default_timeout, pty: false)
+        self.get_tty.run!(cmd, {timeout: @default_timeout, pty: false})
       end
 
       # @see http://www.tldp.org/LDP/abs/html/exitcodes.html
@@ -72,28 +78,6 @@ module ::Ruuuby
       def pid_terminate(pid_id)
         🛑int❓('pid_id', pid_id, :∈ℕ)
         self.run_cmd!("pkill -9 #{pid_id}")
-      end
-
-      def _calculate_version; 1337; end
-
-      # ----------------------------------------------------------------------------------------
-      # ___  ___        __           __   __       ___    __            __        __
-      #  |  |__   |\/| |__)    |    /  \ /  `  /\   |  | /  \ |\ | .   /  ` |  | |__) |
-      #  |  |___  |  | |       |___ \__/ \__, /~~\  |  | \__/ | \| .   \__, \__/ |  \ |___
-      #
-      # ----------------------------------------------------------------------------------------
-
-      # @see https://www.cyberciti.biz/faq/download-a-file-with-curl-on-linux-unix-command-line/
-      #
-      # @param [String] url_resource
-      # @param [String] optional_save_as_path
-      def curl_get(url_resource, optional_save_as_path='')
-        🛑strs❓([url_resource, optional_save_as_path])
-        if optional_save_as_path.∅?
-          self.run_cmd("curl -L -O #{url_resource}")
-        else
-          self.run_cmd("curl -L #{url_resource} --output #{optional_save_as_path}")
-        end
       end
 
       🙈

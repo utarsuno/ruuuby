@@ -1,12 +1,19 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f26' do
+  let(:flag_f26_b00){💎.engine.stats_ext['F26_B00']}
 
   context 'functionality' do
     it 'main adds funcs{📅, 🕒, 📅🕒}' do
-      expect(📅).to eq(::Date)
-      expect(🕒).to eq(::Time)
-      expect(📅🕒).to eq(::DateTime)
+      if flag_f26_b00
+        expect(📅).to eq(::Date)
+        expect(🕒).to eq(::Time)
+        expect(📅🕒).to eq(::DateTime)
+      else
+        expect{📅}.to raise_error(::NameError)
+        expect{🕒}.to raise_error(::NameError)
+        expect{📅🕒}.to raise_error(::NameError)
+      end
     end
   end # end: {functionality}
 

@@ -1,11 +1,10 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f11' do
 
   context 'functionality' do
     let(:num_sets_aleph_one){[𝕌, 𝕀, ℂ]}
     let(:num_sets_aleph_zero){[ℕ, 𝕎, ℤ, ℚ, 𝔸, 𝔸ᵣ]}
-    # TODO: add the ℕ𝕌𝕃𝕃 set here
     let(:num_sets_finite){[∅, 𝔹]}
 
     context 'global aliases for all instances of `NumberSet`' do
@@ -71,17 +70,6 @@ RSpec.describe 'f11' do
           end
         end
       end # end: {∅}
-
-      context 'ℕ𝕌𝕃𝕃' do
-        context 'handles needed scenarios' do
-          it 'cases: positive' do
-            [[], Set[], {}, '', nil].∀{|scenario| expect(ℕ𝕌𝕃𝕃.∋?(scenario)).to eq(true)}
-          end
-          it 'cases: negative' do
-            [[1], Set[1], {a: 1}, '1', 1, 1.0, 1i, true, false].∀{|scenario| expect(ℕ𝕌𝕃𝕃.∋?(scenario)).to eq(false)}
-          end
-        end
-      end # end: {ℕ𝕌𝕃𝕃}
 
       context '𝔹' do
         context 'handles needed scenarios' do

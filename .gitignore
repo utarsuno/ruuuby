@@ -22,6 +22,12 @@
 # swap files created from `vim`
 .*.swp
 
+# wip
+services/ruuuby/f93/
+
+# preference based config checks or anything un-related to Ruuuby
+spec/dev_settings/
+
 #
 Gemfile.lock
 

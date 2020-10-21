@@ -4,15 +4,18 @@
 module ::Math
   module SetTheory
 
+    # | "in the natural numbers `ℕ` and all of its supersets(`ℤ`, `ℚ`, `ℝ`, or `ℂ`), the `additive identity` is `0`. Thus for any one of these numbers `n`, `n + 0 = n = 0 + n`" | `5 + 0 = 5 = 0 + 5` |
+    #
     # also called: +counting-numbers+
     class NaturalNumbers < ::Math::SetTheory::NumberSet
       include ::Singleton
 
+      # {
+      #   closed_under_addition: true,
+      #   closed_under_multiplication: true
+      # }
       def initialize
-        super(:ℕ, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO, {
-            closed_under_addition: true,
-            closed_under_multiplication: true
-        })
+        super(:ℕ, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO)
         @subset_of = [:𝕌, :𝔸ᵣ, :𝔸, :ℝ, :ℂ, :ℚ, :ℤ, :𝕎]
       end
 

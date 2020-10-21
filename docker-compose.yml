@@ -22,6 +22,22 @@ services:
       - service_postgres
       - service_pgadmin
       - service_js
+      - service_rabbitmq
+
+  service_rabbitmq:
+    build:
+      context: ./services/rabbitmq
+      dockerfile: ./Dockerfile
+      #target: build_env_prod
+    environment:
+      RABBIT_ERLANG_COOKIE: 'secret string'
+      RABBIT_NODENAME: 'service_rabbitmq'
+    ports:
+      - 5672:5672
+    volumes:
+      - 'ruuuby_rabbitmq_data:/data'
+      - './services/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config'
+      - './services/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json'
 
   service_js:
     build:
@@ -72,4 +88,6 @@ volumes:
   ruuuby_nginx_data:
     external: true
   ruuuby_pgadmin_data:
+    external: true
+  ruuuby_rabbitmq_data:
     external: true

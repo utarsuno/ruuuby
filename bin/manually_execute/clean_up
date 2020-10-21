@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-# encoding: UTF-8
-
-bundle exec rake clobber
-bundle exec rake clean

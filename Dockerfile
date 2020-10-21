@@ -8,7 +8,6 @@ FROM alpine:3.12
 # not currently utilized (in this version) and thus not currently tested
 # -------------------------------------------- ⚠️ --------------------------------------------
 
-
 # | library    | short description                                   | resource link                                                 |
 # | ---------- | --------------------------------------------------- | ------------------------------------------------------------- |
 # | gmp        | arbitrary precision arithmetic                      | https://pkgs.alpinelinux.org/package/edge/main/x86/gmp-dev    |
@@ -23,6 +22,7 @@ FROM alpine:3.12
 # | musl       | "the muscl c library (libc) implementation"         | https://pkgs.alpinelinux.org/package/edge/main/x86/musl       |
 # | dpkg       | "The Debian Package Manager"                        | https://pkgs.alpinelinux.org/package/edge/main/x86/dpkg       |
 
+# TODO: probably doesn't need to be first
 RUN apk add --no-cache gmp-dev
 
 ENV LC_ALL en_US.UTF-8
@@ -42,14 +42,13 @@ ENV RUUUBY_F01 "b01|b03|b04{debug}"
 ENV RUUUBY_F12 "b00"
 ENV RUUUBY_F26 "b00"
 ENV RUUUBY_F98 "11"
-ENV PATH_CLEAN_LOCAL "~/../ruuuby/bin/manually_execute/clean_up"
 ENV RUUUBY_OS_CURRENT "linux"
 
 # TODO: SET GEM VERSIONS AS ENV_VARS
 
 # TODO: try with and without: ccache ccache-doc
 ENV BUILD_COMPILERS clang clang-dev musl-dev gcc cmake make
-ENV BUILD_DBS sqlite sqlite-dev postgresql postgresql-dev libpq
+#ENV BUILD_DBS sqlite sqlite-dev postgresql postgresql-dev libpq
 ENV BUILD_LINUX_CORE linux-headers imagemagick-dev
 #libffi-dev
 
@@ -62,13 +61,19 @@ RUN apk add --update $BUILD_CORE_LIBS && rm -rf /var/cache/apk/*
 # rbenv
 ENV PATH /usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH
 ENV RBENV_ROOT /usr/local/rbenv
+
+# TODO: UPDATE TO 3.0.0
+# https://cache.ruby-lang.org/pub/ruby/3.0/
 ENV RUBY_VERSION 2.7.1
+#ENV GEM_VERSION "3.2.0.rc.1"
+ENV GEM_VERSION "3.2.0.rc.2"
+ENV BUNDLER_VERSION "bundler:2.2.0.rc.2"
 ENV CONFIGURE_OPTS --disable-install-doc
 
+#    apk add $BUILD_DBS &&
 RUN apk update && apk upgrade && \
     apk add --update $BUILD_LINUX_CORE && \
     apk add $BUILD_COMPILERS && \
-    apk add $BUILD_DBS && \
     rm -rf /var/cache/apk/*
 
 RUN git clone --depth 1 git://github.com/sstephenson/rbenv.git ${RBENV_ROOT} \
@@ -77,11 +82,16 @@ RUN git clone --depth 1 git://github.com/sstephenson/rbenv.git ${RBENV_ROOT} \
 
 RUN echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
 
+# rbenv install $RUBY_VERSION -k -v
+# rbenv global $RUBY_VERSION
+# rbenv local $RUBY_VERSION
+# rbenv rehash
+
 RUN set -x CC clang && \
     rbenv install $RUBY_VERSION && \
     rbenv global $RUBY_VERSION && \
-    gem update --system 3.2.0.rc.1 && \
-    gem install bundler:2.2.0.rc.1 && \
+    gem update --system $GEM_VERSION && \
+    gem install $BUNDLER_VERSION && \
     mkdir /ruuuby && \
     rm -rf /var/cache/apk/*
 
@@ -89,7 +99,7 @@ COPY . /ruuuby
 WORKDIR /ruuuby
 
 RUN bundle install --quiet
-RUN ./bin/compilation_modes/build_w_debugging
+RUN ./bin/build/debugging
 
 #  ___                __   __   __   __
 # |__  |\ | \  / .   |__) |__) /  \ |  \
@@ -97,6 +107,9 @@ RUN ./bin/compilation_modes/build_w_debugging
 #
 FROM build_base as build_env_prod
 ENV BUILD_ENV=prod
+
+# TODO: RUN "gem cleanup" HERE!!
+
 CMD ["ruby", "-v"]
 
 #  ___                __   ___
@@ -106,13 +119,16 @@ CMD ["ruby", "-v"]
 FROM build_base as build_env_dev
 ENV BUILD_ENV=dev
 
-RUN apk add --update --no-cache zsh vim dpkg \
+ENV BUID_LIBS_DEV_ONLY zsh vim dpkg mandoc man-pages
+RUN apk add --update --no-cache $BUID_LIBS_DEV_ONLY \
  && sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" \
  && sed -i '1d' /etc/passwd \
  && (echo "root:x:0:0:root:/root:/bin/zsh" && cat /etc/passwd) > /etc/passwd_parsed && mv /etc/passwd_parsed /etc/passwd \
- && echo "alias cd_volume='cd /v/'" >> /root/.zshrc \
  && echo "alias ll='ls -larti'" >> /root/.zshrc \
+ && gem cleanup -V
  && rm -rf /var/cache/apk/*
+
+# TODO: TEST ADDING "gem cleanup" HERE!!
 
 CMD ["ruby", "-v"]
 
@@ -136,3 +152,5 @@ CMD ["ruby", "-v"]
 # | https://github.com/docker-library/ruby/blob/8e49e25b591d4cfa6324b6dada4f16629a1e51ce/2.7/alpine3.12/Dockerfile   |
 # | https://github.com/andrius/alpine-ruby/blob/master/Dockerfile-3.9                                                |
 # | https://github.com/rbenv/ruby-build                                                                             |
+
+# TODO: download from https://www.ruby-lang.org/en/news/2020/09/25/ruby-3-0-0-preview1-released/

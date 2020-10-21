@@ -8,13 +8,19 @@ ________________________________________________________________________________
 
 #include "ruby/config.h"
 
+// TODO: resolve w/ extconf
 #ifdef RUUUBY_OS_IS_MAC
-    #include "/Users/utarsuno/.rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
+    //#include "/Users/utarsuno/.rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
+    #include "/Users/utarsuno/.rbenv/versions/3.0.0-preview1/include/ruby-3.0.0/x86_64-darwin19/rb_mjit_min_header-3.0.0.h"
 #endif
 
+// TODO: resolve w/ extconf
 #ifdef RUUUBY_OS_IS_UNIX
-    #include "/usr/local/rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-linux-musl/rb_mjit_min_header-2.7.1.h"
+    //#include "/usr/local/rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-linux-musl/rb_mjit_min_header-2.7.1.h"
+    #include "/usr/local/rbenv/versions/3.0.0-preview1/include/ruby-3.0.0/x86_64-linux-musl/rb_mjit_min_header-3.0.0.h"
 #endif
+
+//extern enum ruby_value_type;
 
 #include <ruby/defines.h>
 #include <ruby/version.h>
@@ -35,6 +41,11 @@ ________________________________________________________________________________
 #include <float.h>
 //#include <tgmath.h>
 //#include <complex.h>
+
+//#include <sprintf.h>
+
+// TODO: resolve w/ extconf
+#include "/Users/utarsuno/.rbenv/versions/3.0.0-preview1/include/ruby-3.0.0/ruby/internal/intern/sprintf.h"
 
 #ifdef RUUUBY_F98_DEBUG
     #ifdef RUUUBY_F98_TIMER
@@ -76,6 +87,24 @@ ________________________________________________________________________________
 #include "ruby_class_mods.h"
 #endif
 
+/*____________________________________________________________________________________________________________________
+ __        __        ___      __        __
+/  `  /\  /  ` |__| |__  .   |__) |  | |__) \ /
+\__, /~~\ \__, |  | |___ .   |  \ \__/ |__)  |
+_____________________________________________________________________________________________________________________ */
+
+#ifdef RUUUBY_F06_B08
+static VALUE Ⓒmatrix;
+static inline VALUE is_a_matrix(const VALUE arg);
+static inline VALUE is_a_matrix(const VALUE arg){return rb_obj_is_instance_of(arg, Ⓒmatrix);}
+#endif
+
+#ifdef RUUUBY_F06_B09
+static VALUE Ⓒvector;
+static inline VALUE is_a_vector(const VALUE arg);
+static inline VALUE is_a_vector(const VALUE arg){return rb_obj_is_instance_of(arg, Ⓒvector);}
+#endif
+
 /*            __                                   ___                       __
    __        /\ \__                               /\_ \                     /\ \__
   /\_\    ___\ \ ,_\    __   _ __    ___      __  \//\ \         ____     __\ \ ,_\  __  __  _____
@@ -85,11 +114,6 @@ ________________________________________________________________________________
      \/_/\/_/\/_/\/__/\/____/ \/_/  \/_/\/_/\/__/\/_/\/____/    \/___/  \/____/ \/__/ \/___/  \ \ \/
                                                                                                \ \_\
                                                                                                 \/_/ */
-
-static inline VALUE is_a_matrix(const VALUE arg);
-static inline VALUE is_a_vector(const VALUE arg);
-static inline VALUE is_a_matrix(const VALUE arg){return rb_obj_is_instance_of(arg, Ⓒmatrix);}
-static inline VALUE is_a_vector(const VALUE arg){return rb_obj_is_instance_of(arg, Ⓒvector);}
 
 #define bsearch_power(val_to_find)         (ID *) bsearch (&val_to_find, exponential_ids, NUM_EXPONENTS, sizeof(ID), _compare_func_4_object_id);
 #define bsearch_power_position(arg_index) ((int)(((int)arg_index - (int)exponential_ids) / sizeof(ID)))
@@ -145,14 +169,18 @@ static inline VALUE 💎new_ary(const long known_max_size) {
 }
 
 static void internal_only_prepare_f16(void) {
-    //rb_gc_disable();
+    rb_gc_disable();
+
+    // | ∉ | 8713 |
+    // | ∅ | 8709 |
 
     cached_flt_inf          = rb_const_get_at(R_FLT, rb_intern("INFINITY"));
     cached_flt_negative_inf = rb_const_get_at(R_FLT, rb_intern("INFINITY_NEGATIVE"));
     cached_flt_inf_complex  = rb_const_get_at(R_FLT, rb_intern("INFINITY_COMPLEX"));
 
     VALUE pack_as_utf8     = rb_str_new_cstr("U*");
-    VALUE rb_intern_pack   = rb_intern("pack");
+    ID rb_intern_pack      = rb_intern("pack");
+
     VALUE code_points      = 💎new_ary_size2(INT2FIX(8713), INT2FIX(8709));
 
     💎PROCEDURE_00(🅽_no_empty)
@@ -186,7 +214,7 @@ static void internal_only_prepare_f16(void) {
     r_ary_set_p1(code_points, INT2FIX(120140))
     💎PROCEDURE_00(🅽_universal_w_str_allowed)
 
-    rb_ary_free(code_points);
+    //rb_ary_free(code_points);
 
     VALUE code_points2 = 💎new_ary_size2(INT2FIX(8315), INT2FIX(8313));
 
@@ -257,8 +285,8 @@ static void internal_only_prepare_f16(void) {
 
     r_ary_set_p0_p1(code_points2, INT2FIX(45), INT2FIX(8734))
     const ID obj_id_inf_negative = rb_sym2id(rb_to_symbol(rb_funcall(code_points2, rb_intern_pack, 1, pack_as_utf8)));
-    rb_ary_free(code_points2);
-    rb_str_free(pack_as_utf8);
+    //rb_ary_free(code_points2);
+    //rb_str_free(pack_as_utf8);
 
     exponential_ids[0]  = obj_id_n9;
     exponential_ids[1]  = obj_id_n8;
@@ -309,13 +337,17 @@ static void internal_only_prepare_f16(void) {
     💎PROCEDURE_02(the_index, obj_id_inf_negative, CACHE_INDEX_INF_NEGATIVE);
     💎PROCEDURE_02(the_index, obj_id_inf_complex, CACHE_INDEX_INF_COMPLEX);
 
-    //rb_gc_enable();
+    rb_gc_enable();
+
+    rb_ary_free(code_points);
+    rb_ary_free(code_points2);
+    rb_str_free(pack_as_utf8);
 }
 
-static inline void startup_step5_protect_against_gc(void) {
+static void startup_step5_protect_against_gc(void) {
     rb_gc_register_address(& Ⓒset);
     rb_gc_register_address(& Ⓒbig_decimal);
-    rb_gc_verify_internal_consistency();
+    //rb_gc_verify_internal_consistency();
 }
 
 #ifdef RUUUBY_F98_DEBUG
@@ -324,15 +356,11 @@ static inline void startup_step5_protect_against_gc(void) {
     #define ensure_file_loaded(path) rb_require(path);
 #endif
 
-static inline void startup_step4_load_needed_ruuuby_files(void) {
+static void startup_step4_load_needed_ruuuby_files(void) {
 
     ensure_loaded_class(bitwise_flag)
 
-    ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine_component)
-    ensure_loaded_ruuuby(ruuuby/engine/ruuuby_api_component)
-    ensure_loaded_ruuuby(ruuuby/engine/cli_api_component)
-
-    ensure_loaded_ruuuby(virtual/f10)
+    ensure_all_loaded_for_ruuuby_engine()
 
     ensure_all_loaded_for_attribute_includable()
     ensure_all_loaded_for_module()
@@ -343,6 +371,7 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
     ensure_loaded_enumerable(ary)
     ensure_loaded_enumerable(hsh) // must be after{ary}
 
+    // TODO: REMOVE FROM RUNTIME, ONLY NEEDED FOR TESTING CODE
     ensure_loaded_module(gem)
     ensure_loaded_module(bundler)
 
@@ -358,44 +387,88 @@ static inline void startup_step4_load_needed_ruuuby_files(void) {
     ensure_loaded_class(sym)           // must be after{attribute_cardinality}
 
     ensure_loaded_class(str/str)       // must be after{attribute_syntax_cache, attribute_cardinality}
-    ensure_loaded_io(file)              // must be after{attribute_syntax_cache}
-    ensure_loaded_io(dir)              // must be after{attribute_syntax_cache}
+    ensure_all_loaded_for_io()         // must be after{attribute_syntax_cache}
+
+    ensure_loaded_math(cryptography/crypto)
 
     internal_only_prepare_f16();       // must be after{ruuuby/types, ruuuby/class/str}
 
     ensure_all_loaded_for_math_space()
 
     ensure_all_loaded_for_math_expressions()
+#ifdef RUUUBY_F06_B08
+    ensure_loaded_nums(matrix)
+#endif
+#ifdef RUUUBY_F06_B09
+    ensure_loaded_nums(vector)
+#endif
+#ifdef RUUUBY_F38
     ensure_all_loaded_for_tropical_algebra()
+#endif
+
+#ifdef RUUUBY_F38
+    ensure_loaded_math(graph_theory/graph_theory)
+    ensure_loaded_math(finance/currency_matrix)
+    ensure_loaded_math(graph_theory/pseudo_graph)
+#endif
+
+    ensure_loaded_math(finance/forex)
     ensure_loaded_math(number_theory/number_theory) // must be after{expression/sequence/recursive_sequence}
     ensure_all_loaded_for_statistics()
     ensure_all_loaded_for_geometry()
 
     ensure_loaded_ruuuby(heuristics/heuristics)
 
-    // [⚠️] : excluding: alternative files are loading these already:
-    //          * ensure_loaded_ruuuby(version)
-    // [⚠️] : reminder, do not load "ruuuby/ruuuby_orm" here
-
     ensure_loaded_ruuuby(protocol/unix_socket)
     ensure_loaded_ruuuby(protocol/http_request)
 
     ensure_all_loaded_for_ruuuby()
 
-    #ifdef RUUUBY_F22_B00
-        ensure_loaded_ruuuby(ruuuby/engine/f22_b00)
-    #endif
-    #ifdef RUUUBY_F22_B01
-        ensure_loaded_ruuuby(ruuuby/engine/f22_b01)
-    #endif
-    #ifdef RUUUBY_F22_B05
-        ensure_loaded_ruuuby(ruuuby/engine/f22_b05)
-    #endif
-    #ifdef RUUUBY_F22_B06
-        ensure_loaded_ruuuby(ruuuby/engine/f22_b06)
-    #endif
-
+#ifdef RUUUBY_F22_B00
+    ensure_loaded_ruuuby(ruuuby/engine/f22/b00)
+#endif
+#ifdef RUUUBY_F22_B01
+    ensure_loaded_ruuuby(ruuuby/engine/f22/b01)
+#endif
+#ifdef RUUUBY_F22_B05
+    ensure_loaded_ruuuby(ruuuby/engine/f22/b05)
+#endif
+#ifdef RUUUBY_F22_B06
+    ensure_loaded_ruuuby(ruuuby/engine/f22/b06)
+#endif
+#ifdef RUUUBY_F22_B07
+    ensure_loaded_ruuuby(ruuuby/engine/f22/b07)
+#endif
     ensure_loaded_math(geometry/shape/triangle)
+
+#ifdef RUUUBY_F92_B00
+    ensure_loaded_default(sqlite3)
+#endif
+
+#ifdef RUUUBY_F92_B01
+    ensure_loaded_default(active_record)
+    ensure_loaded_db(db_connection)
+    ensure_loaded_ruuuby(ruuuby/ruuuby_orm)
+#endif
+
+#ifdef RUUUBY_F92_B02
+    ensure_loaded_default(pg)
+#endif
+
+#ifdef RUUUBY_F92_B03
+    ensure_loaded_db(db_schema)
+    ensure_loaded_db(model_attributes/extendable/uid)
+    ensure_loaded_db(model_attributes/includable/uid)
+    ensure_loaded_db(model_attributes/application_record)
+#endif
+
+#ifdef RUUUBY_F92_B04
+    ensure_loaded_db(seeds/ruuuby_features)
+    ensure_loaded_db(seeds/ruuuby_feature_behaviors)
+    ensure_loaded_db(seeds/ruuuby_releases/past)
+    ensure_loaded_db(seeds/ruuuby_releases/active_or_recent)
+    ensure_loaded_db(seeds/ruuuby_dirs)
+#endif
 }
 
 /*____________________________________________________________________________________________________________________________________________________________________
@@ -411,14 +484,17 @@ ________________________________________________________________________________
 _____________________________________________________________________________________________________________________ */
 
 // | func{ary?}  |
-ⓡ𝑓_kargs(m_obj_is_ary,
+/*ⓡ𝑓_kargs(m_obj_is_ary,
     💎parse_kargs_with_normalizer("ary?", re_as_bool(is_ary(self)),
     if (them == 🅽_no_empty) {
         if (is_ary(self)) {
             if (r_ary_is_empty(self)) {re_no} else {re_ye}
         } else {re_no}
     } else {🛑normalizer_value("ary?", them)})
-)
+)*/
+
+// | func{ary?} |
+ⓡ𝑓_def(m_obj_is_ary, re_as_bool(is_ary(self)))
 
 // | func{bool?} |
 ⓡ𝑓_def(m_obj_is_bool, re_as_bool(is_bool(self)))
@@ -699,6 +775,8 @@ ________________________________________________________________________________
 _____________________________________________________________________________________________________________________ */
 
 static VALUE m_nil_empty(const VALUE self) {re_ye}
+
+ⓡ𝑓_self_them(m_nil_include,re_no)
 
 /*____________________________________________________________________________________________________________________
  __     ___     __                   __
@@ -1731,24 +1809,26 @@ static VALUE m_square_root(const VALUE self, const VALUE val) {
 static inline void startup_step1_before_loading_extension(void) {
     Ⓒbig_decimal = rb_const_get(rb_cObject, rb_intern("BigDecimal"));
     Ⓒset         = rb_const_get(rb_cObject, rb_intern("Set"));
+#ifdef RUUUBY_F06_B08
     Ⓒmatrix      = rb_const_get(rb_cObject, rb_intern("Matrix"));
+#endif
+#ifdef RUUUBY_F06_B09
     Ⓒvector      = rb_const_get(rb_cObject, rb_intern("Vector"));
+#endif
 
     cached_rb_intern_smells_like_int = rb_intern("smells_like_int?");
     cached_rb_intern_is_finite        = rb_intern("finite?");
     cached_rb_intern_is_empty        = rb_intern("empty?");
 
-    ⓜruuuby            = 💎add_global_module("Ruuuby")
-    ⓜruuuby_metadata   = 💎add_module_under(ⓜruuuby, "MetaData")
-    ⓜruuuby_engine     = 💎add_class_under(ⓜruuuby_metadata, R_OBJ, "RuuubyEngine")
-    #ifdef RUUUBY_F22_B01
-        ⓜruuuby_engine_jit = 💎add_module_under(ⓜruuuby_engine, "F22B01")
-    #endif
-    ⓜruuuby_engine_gc  = 💎add_module_under(ⓜruuuby_engine, "F22B00")
-
-    💎add_module_under(ⓜruuuby, "Attribute")
-    💎add_module_under(ⓜruuuby, "Includable")
-    💎add_module_under(ⓜruuuby, "Extendable")
+    ⓜruuuby          = 💎add_global_module("Ruuuby")
+    ⓜruuuby_metadata = 💎add_module_under(ⓜruuuby, "MetaData")
+    ⓜruuuby_engine   = 💎add_class_under(ⓜruuuby_metadata, R_OBJ, "RuuubyEngine")
+#ifdef RUUUBY_F22_B01
+    // TODO: un-comment once field needs to be kept on extension side
+    //ⓜruuuby_engine_jit = 💎add_module_under(ⓜruuuby_engine, "F22B01")
+    💎add_module_under(ⓜruuuby_engine, "F22B01")
+#endif
+    ⓜruuuby_engine_gc = 💎add_module_under(ⓜruuuby_engine, "F22B00")
 
     ⓜcombinatorics = 💎add_module_under(R_MATH, "Combinatorics")
     ⓜtrigonometry  = 💎add_module_under(R_MATH, "Trig")
@@ -1767,6 +1847,12 @@ static inline void startup_step1_before_loading_extension(void) {
 
 static void startup_step2_add_ruuuby_c_extensions(void) {
     init_f06()
+#ifdef RUUUBY_F06_B08
+    init_f06_b08()
+#endif
+#ifdef RUUUBY_F06_B09
+    init_f06_b09()
+#endif
 
     💎add_public_func_0args_to(R_INT, "finite?"  , m_int_is_finite)
     💎add_public_func_0args_to(R_INT, "infinite?", m_int_is_not_finite)
@@ -1782,6 +1868,7 @@ static void startup_step2_add_ruuuby_c_extensions(void) {
     💎add_public_func_1args_to(R_FLT, "^", m_flt_patch_for_exponentials)
 
     💎add_public_func_0args_to(R_NIL, "empty?", m_nil_empty)
+    💎add_public_func_1args_to(R_NIL, "include?", m_nil_include)
 
     init_f05()
 
@@ -1851,24 +1938,28 @@ static void startup_step2_add_ruuuby_c_extensions(void) {
                                                \/__/                     \_/__/                   */
 
 #ifdef RUUUBY_F98_TIMER
-    typedef struct SimpleTimerStruct {
-        struct timespec time_start;
-        struct timespec time_end;
-    } SimpleTimer;
+typedef struct SimpleTimerStruct {
+    struct timespec time_start;
+    struct timespec time_end;
+} SimpleTimer;
 #endif
 
 typedef struct Ruuuby_Engine_Stats {
-    unsigned char flag_f28_b09;
-    #ifdef RUUUBY_F98_COMPILER
-        unsigned char runtime_compiler_version;
-    #endif
-    #ifdef RUUUBY_F98_MEMORY
-        double max_memory_before_extensions_loaded;
-        double max_memory_after_extensions_loaded;
-    #endif
-    #ifdef RUUUBY_F98_TIMER
-        SimpleTimer simple_timer;
-    #endif
+
+#ifdef RUUUBY_F98_COMPILER
+    unsigned char runtime_compiler_version;
+#endif
+
+#ifdef RUUUBY_F98_MEMORY
+    double max_memory_before_extensions_loaded;
+    double max_memory_after_extensions_loaded;
+    double max_memory_after_gc;
+#endif
+
+#ifdef RUUUBY_F98_TIMER
+    SimpleTimer simple_timer;
+#endif
+
 } RuuubyEngineStats;
 
 #ifdef RUUUBY_F98_DEBUG
@@ -1878,10 +1969,10 @@ typedef struct Ruuuby_Engine_Stats {
         // @see https://pubs.opengroup.org/onlinepubs/009695399/functions/getrusage.html
 
         static double memory_peak_this_runtime(void);
-        static double memory_peak_this_runtime() {
+        static double memory_peak_this_runtime(void) {
             struct rusage r_usage;
             getrusage(RUSAGE_SELF, & r_usage);
-            return ((double) (r_usage.ru_maxrss)) / 1024.0;
+            return (((double) (r_usage.ru_maxrss)) / 1024.0) / 1024.0;
         }
 
         #define stats_memory_track(rusage){\
@@ -1962,61 +2053,152 @@ typedef struct Ruuuby_Engine_Stats {
 
     static void engine_start_up_finished(RuuubyEngineStats * engine);
     static void engine_start_up_finished(RuuubyEngineStats * engine) {
-        Ⓒruuuby_engine = rb_funcall(ⓜruuuby_engine, rb_intern("_get_engine"), 0);
+        Ⓒruuuby_engine         = rb_funcall(ⓜruuuby_engine, rb_intern("_get_engine"), 0);
+        hsh_ruuuby_engine_stats = 💎get_instance_field(Ⓒruuuby_engine,stats_ext);
 
+        #ifdef RUUUBY_F06_B08
+            ENGINE_STAT_SET("F06_B08", Qtrue);
+        #else
+            ENGINE_STAT_SET("F06_B08", Qfalse);
+        #endif
+        #ifdef RUUUBY_F06_B09
+            ENGINE_STAT_SET("F06_B09", Qtrue);
+        #else
+            ENGINE_STAT_SET("F06_B09", Qfalse);
+        #endif
+        #ifdef RUUUBY_F10_B04
+            ENGINE_STAT_SET("F10_B04", Qtrue);
+        #else
+            ENGINE_STAT_SET("F10_B04", Qfalse);
+        #endif
+        #ifdef RUUUBY_F12_B00
+            ENGINE_STAT_SET("F12_B00", Qtrue);
+        #else
+            ENGINE_STAT_SET("F12_B00", Qfalse);
+        #endif
+        #ifdef RUUUBY_F22_B01
+            ENGINE_STAT_SET("F22_B01", Qtrue);
+        #else
+            ENGINE_STAT_SET("F22_B01", Qfalse);
+        #endif
+        #ifdef RUUUBY_F22_B05
+            ENGINE_STAT_SET("F22_B05", Qtrue);
+        #else
+            ENGINE_STAT_SET("F22_B05", Qfalse);
+        #endif
+        #ifdef RUUUBY_F22_B06
+            ENGINE_STAT_SET("F22_B06", Qtrue);
+        #else
+            ENGINE_STAT_SET("F22_B06", Qfalse);
+        #endif
+        #ifdef RUUUBY_F22_B07
+            ENGINE_STAT_SET("F22_B07", Qtrue);
+        #else
+            ENGINE_STAT_SET("F22_B07", Qfalse);
+        #endif
+        #ifdef RUUUBY_F26_B00
+            ENGINE_STAT_SET("F26_B00", Qtrue);
+        #else
+            ENGINE_STAT_SET("F26_B00", Qfalse);
+        #endif
+        #ifdef RUUUBY_F28_B09
+            ENGINE_STAT_SET("F28_B09", Qtrue);
+        #else
+            ENGINE_STAT_SET("F28_B09", Qfalse);
+        #endif
+        #ifdef RUUUBY_F92_B00
+            ENGINE_STAT_SET("F92_B00", Qtrue);
+        #else
+            ENGINE_STAT_SET("F92_B00", Qfalse);
+        #endif
+        #ifdef RUUUBY_F92_B01
+            ENGINE_STAT_SET("F92_B01", Qtrue);
+        #else
+            ENGINE_STAT_SET("F92_B01", Qfalse);
+        #endif
+        #ifdef RUUUBY_F92_B02
+            ENGINE_STAT_SET("F92_B02", Qtrue);
+        #else
+            ENGINE_STAT_SET("F92_B02", Qfalse);
+        #endif
+        #ifdef RUUUBY_F93
+            ENGINE_STAT_SET("F93", Qtrue);
+        #else
+            ENGINE_STAT_SET("F93", Qfalse);
+        #endif
+        #ifdef RUUUBY_F98_DEBUG
+            ENGINE_STAT_SET("F98_DEBUG", Qtrue);
+        #else
+            ENGINE_STAT_SET("F98_DEBUG", Qfalse);
+        #endif
         #ifdef RUUUBY_F98_COMPILER
             engine->runtime_compiler_version = establish_compiler_version();
-            💎set_instance_field(Ⓒruuuby_engine,compiler_version_to_s(engine->runtime_compiler_version),stats_ext_compiler)
+            ENGINE_STAT_SET("compiler", compiler_version_to_s(engine->runtime_compiler_version));
         #endif
         #ifdef RUUUBY_F98_MEMORY
             engine->max_memory_after_extensions_loaded = memory_peak_this_runtime();
-            💎set_instance_field(Ⓒruuuby_engine,DBL2NUM(engine->max_memory_before_extensions_loaded),stats_ext_mem_pre_load)
-            💎set_instance_field(Ⓒruuuby_engine,DBL2NUM(engine->max_memory_after_extensions_loaded),stats_ext_mem_post_load)
+
+            ENGINE_STAT_SET("mem_pre_load", DBL2NUM(engine->max_memory_before_extensions_loaded));
+            ENGINE_STAT_SET("mem_post_load", DBL2NUM(engine->max_memory_after_extensions_loaded));
+
+            rb_gc_enable();
+            rb_gc_verify_internal_consistency();
+
+            rb_funcall(ⓜruuuby_engine_gc, rb_intern("perform_full"), 0);
+
+            rb_gc_verify_internal_consistency();
+
+            engine->max_memory_after_gc = memory_peak_this_runtime();
+
+            ENGINE_STAT_SET("mem_after_gc", DBL2NUM(engine->max_memory_after_gc));
         #endif
         #ifdef RUUUBY_F98_TIMER
             simple_timer_end(& (engine->simple_timer));
-            //const uint64_t delta_us         = (engine->simple_timer.time_end.tv_sec - engine->simple_timer.time_start.tv_sec) * 1000000 + (engine->simple_timer.time_end.tv_nsec - engine->simple_timer.time_start.tv_nsec) / 1000;
-            //const unsigned int delta_us_int = (unsigned int) delta_us;
-            //💎set_instance_field(Ⓒruuuby_engine,UINT2NUM(delta_us_int),stats_ext_timer)
-            💎set_instance_field(Ⓒruuuby_engine,UINT2NUM((unsigned int) ((engine->simple_timer.time_end.tv_sec - engine->simple_timer.time_start.tv_sec) * 1000000 + (engine->simple_timer.time_end.tv_nsec - engine->simple_timer.time_start.tv_nsec) / 1000)),stats_ext_timer)
+            const uint64_t delta_us         = (engine->simple_timer.time_end.tv_sec - engine->simple_timer.time_start.tv_sec) * 1000000 + (engine->simple_timer.time_end.tv_nsec - engine->simple_timer.time_start.tv_nsec) / 1000;
+            const unsigned int delta_us_int = (unsigned int) (delta_us / 1000);
+
+            // microsecond | μs | 10⁻⁶ | 0.000001 | @see https://en.wikipedia.org/wiki/Microsecond
+            ENGINE_STAT_SET("timer", UINT2NUM(delta_us_int));
         #endif
 
-        rb_funcall(Ⓒruuuby_engine, rb_intern("print_ext_stats"), 0);
+        rb_funcall(Ⓒruuuby_engine, rb_intern("log_ext_stats"), 0);
     }
 #endif // end: {RUUUBY_F98_DEBUG}
+
+// TODO: https://stackoverflow.com/questions/20979565/how-can-i-print-the-result-of-sizeof-at-compile-time-in-c/35261673#35261673
 
 // the `main function`, executes once on startup setting up `Ruuuby`
 void Init_ruby_class_mods(void) {
     RuuubyEngineStats ruuuby_engine;
 
-    #ifdef RUUUBY_F28_B09
-        ruuuby_engine.flag_f28_b09 = FLAG_TRUE;
-        rb_define_global_const("RUUUBY_F28_B09", Qtrue);
-    #else
-        ruuuby_engine.flag_f28_b09 = FLAG_FALSE;
-        rb_define_global_const("RUUUBY_F28_B09", Qfalse);
+    //rb_gc_disable();
+
+#ifndef RUUUBY_F98_DEBUG
+    startup_step0_load_f98()
+    #ifdef RUUUBY_F38
+        ensure_loaded_default(matrix)
+    #endif
+    startup_step1_before_loading_extension();
+    startup_step2_add_ruuuby_c_extensions();
+    startup_step4_load_needed_ruuuby_files();
+    startup_step5_protect_against_gc();
+#else
+    engine_start_up(& ruuuby_engine);
+
+    startup_step0_load_f98()
+    #ifdef RUUUBY_F38
+        ensure_loaded_default(matrix)
+    #endif
+    startup_step1_before_loading_extension();
+
+    #ifdef RUUUBY_F98_MEMORY
+        rb_define_module_function(ⓜruuuby_engine_gc, "mem_usage_peak", m_memory_peak_this_runtime, 0);
     #endif
 
-    #ifndef RUUUBY_F98_DEBUG
-        startup_step0_load_f98()
-        startup_step1_before_loading_extension();
-        startup_step2_add_ruuuby_c_extensions();
-        startup_step4_load_needed_ruuuby_files();
-        startup_step5_protect_against_gc();
-    #else
-        engine_start_up(& ruuuby_engine);
+    startup_step2_add_ruuuby_c_extensions();
+    startup_step4_load_needed_ruuuby_files();
+    startup_step5_protect_against_gc();
 
-        startup_step0_load_f98()
-        startup_step1_before_loading_extension();
-
-        #ifdef RUUUBY_F98_MEMORY
-            rb_define_module_function(ⓜruuuby_engine_gc, "mem_usage_peak", m_memory_peak_this_runtime, 0);
-        #endif
-
-        startup_step2_add_ruuuby_c_extensions();
-        startup_step4_load_needed_ruuuby_files();
-        startup_step5_protect_against_gc();
-
-        engine_start_up_finished(& ruuuby_engine);
-    #endif
+    engine_start_up_finished(& ruuuby_engine);
+#endif
 }

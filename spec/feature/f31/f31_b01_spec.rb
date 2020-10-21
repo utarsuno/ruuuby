@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
+=begin
 RSpec.describe 'f31_b01' do
-  let(:git_api){💎.engine.api_locale.api_git}
 
   context 'locale', :locale do
 
@@ -11,20 +11,20 @@ RSpec.describe 'f31_b01' do
 
           context 'passes health checks' do
             it 'standard' do
-              expect(git_api.healthy?).to eq(true)
+              expect($git.healthy?).to eq(true)
             end
             it 'full' do
-              expect(git_api.healthy?(true)).to eq(true)
-              expect(git_api.∃fixable_syntax_errors?).to eq(false)
-              expect(git_api.∃index_conflicts?).to eq(false)
-              expect(git_api.version_libgit2).to eq([1, 0, 1])
+              expect($git.healthy?(true)).to eq(true)
+              expect($git.∃fixable_syntax_errors?).to eq(false)
+              expect($git.∃index_conflicts?).to eq(false)
+              expect(::Rugged.libgit2_version).to eq([1, 0, 1])
               expect(::Rugged::VERSION).to eq('1.0.1')
             end
           end
 
           context 'needed local paths are found' do
             it 'for repo' do
-              expect(git_api.repo.path).to eq("#{💎.engine.path_base}.git/")
+              expect($git.repo.path).to eq("#{💎.engine.path_base}.git/")
             end
             it 'for .gitignore' do
               expect(::File.∃?('.gitignore')).to eq(true)
@@ -41,11 +41,11 @@ RSpec.describe 'f31_b01' do
           end
 
           it 'has correct repo path' do
-            expect(git_api.repo.path).to eq("#{💎.engine.path_base}.git/")
+            expect($git.repo.path).to eq("#{💎.engine.path_base}.git/")
           end
 
           context 'git config values' do
-            let(:cached_configs){git_api.repo.config.to_hash}
+            let(:cached_configs){$git.repo.config.to_hash}
 
             context 'for{protocol}' do
               it '{version}' do
@@ -64,9 +64,14 @@ RSpec.describe 'f31_b01' do
 
             context 'for{core}' do
               it 'cases: true' do
+                # @see https://git.furworks.de/opensourcemirror/git/commit/e92d62253
+                expect(cached_configs['core.checkroundtripencoding']).to eq('SHIFT-JIS')
                 expect(cached_configs['core.precomposeunicode']).to eq('true')
                 expect(cached_configs['core.warnambiguousrefs']).to eq('true')
                 expect(cached_configs['core.filemode']).to eq('true')
+                expect(cached_configs['core.protecthfs']).to eq('true')
+                expect(cached_configs['core.checkstat']).to eq('default')
+                expect(cached_configs['core.eol']).to eq('lf')
               end
               it 'cases: false' do
                 expect(cached_configs['core.autocrlf']).to eq('false')
@@ -82,9 +87,16 @@ RSpec.describe 'f31_b01' do
               end
             end
 
+            context 'for{branch}' do
+              it '{autosetuprebase}' do
+                # @see https://stevenharman.net/git-pull-with-automatic-rebase
+                expect(cached_configs['branch.autosetuprebase']).to eq('always')
+              end
+            end
+
             context 'for{diff}' do
               it '{renames}' do
-                expect(cached_configs['diff.renames']).to eq('true')
+                expect(cached_configs['diff.renames']).to eq('copies')
               end
               it '{algorithm}' do
                 # mini-changelog
@@ -94,6 +106,14 @@ RSpec.describe 'f31_b01' do
                 # | 0.0.49+ | histogram |
                 expect(cached_configs['diff.algorithm']).to eq('histogram')
               end
+
+              context 'with custom config{image}' do
+                it 'has needed settings' do
+                  expect(cached_configs['diff.image.textconv']).to eq('exif')
+                  expect(cached_configs['diff.image.cachetextconv']).to eq('true')
+                end
+              end
+
             end
 
             context 'for{push}' do
@@ -120,3 +140,4 @@ RSpec.describe 'f31_b01' do
   end # end: {locale}
 
 end
+=end

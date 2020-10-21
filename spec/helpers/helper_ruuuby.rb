@@ -23,7 +23,7 @@ end
   #
   # @return [Docker::Container]
   def audit_container(container_name, expect_tty, expected_os, expected_os_version)
-    container = 🐋.find_🐋(container_name, false)
+    container = 🐋[container_name]
     expect(container.ⓣ).to eq(::Docker::Container)
     expect(container.id.ⓣ).to eq(::String)
 
@@ -38,12 +38,20 @@ end
     expect(container.env_vars).to eq(container_by_id.env_vars)
 
     expect(container.env_vars['SERVICE_NAME']).to eq(container_name)
-    expect(container.healthy_os?).to eq(true)
-    expect(container.healthy?).to eq(true)
 
     if expected_os == 'alpine'
       expect(container.alpine?).to eq(true)
       expect(container.debian?).to eq(false)
+
+      os_release = container.os_release
+      expect(os_release['PRETTY_NAME']).to eq("Alpine Linux v#{expected_os_version.♻️⟵('.')}")
+      expect(os_release['NAME']).to eq('Alpine Linux')
+      expect(os_release['VERSION_ID']).to eq("#{expected_os_version}")
+      expect(os_release['ID']).to eq('alpine')
+      expect(os_release['HOME_URL']).to eq('https://alpinelinux.org/')
+      expect(os_release['BUG_REPORT_URL']).to eq('https://bugs.alpinelinux.org/')
+
+      expect(container.os_architecture).to eq('musl-linux-amd64')
     else
       expect(container.alpine?).to eq(false)
       expect(container.debian?).to eq(true)

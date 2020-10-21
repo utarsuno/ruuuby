@@ -53,12 +53,11 @@ class ::RuuubyFeature < ::ApplicationRecord
   # useful components for building `Regular Expressions`
   module Syntax
     # @type [String]
-    UID                  = '(f?)\d\d'.❄️
+    UID                  = '(f?)\d\d'
     # @type [String]
-    SQL_UID              = 'id_num = ?'.❄️
+    SQL_UID              = 'id_num = ?'
     # @type [String]
-    DOCS_FEATURE_MAPPING = '| f\d\d | (.*)? |'.❄️
-    ❄️
+    DOCS_FEATURE_MAPPING = '| f\d\d | (.*)? |'
   end
 
   include ::Ruuuby::ORMAttribute::Includable::UID

@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+using ::Object::ContextSuperscripts
+
 RSpec.describe 'int.rb' do
 
   context 'extends class{Integer}' do

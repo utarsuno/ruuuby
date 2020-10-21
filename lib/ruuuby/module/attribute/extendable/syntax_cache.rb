@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # `Ruuuby` attribute: `SyntaxCache`
 module ::Ruuuby
@@ -35,7 +35,7 @@ module ::Ruuuby
         # @return [*]
         def cache_fetch(cache_key)
           unless self.cached_syntax.∃🔑?(cache_key)
-            #🛑 RuntimeError.🆕("c{#{self.to_s}} has not defined sf{#{self.to_s}.cache_generate}") unless self.respond_to?(:cache_generate)
+            #🛑 RuntimeError.new("c{#{self.to_s}} has not defined sf{#{self.to_s}.cache_generate}") unless self.respond_to?(:cache_generate)
             self.cached_syntax[cache_key] = self.cache_generate(cache_key)
           end
           self.cached_syntax[cache_key]

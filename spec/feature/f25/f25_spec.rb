@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+=begin
 RSpec.describe 'f25' do
 
   context 'functionality' do
@@ -50,3 +51,4 @@ RSpec.describe 'f25' do
     end # end: {feature(f25) passes audits}
   end # end: {audit}
 end
+=end

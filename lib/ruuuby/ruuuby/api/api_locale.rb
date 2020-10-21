@@ -16,31 +16,41 @@ module ::Ruuuby
     #  * (to provide alternative test verifications) automate downloading w/ curl, ex: `curl <URL> --output <SAVE_TO_PATH>`
     #
     # `💎.engine.api_locale`
-    class LocaleAPI < ::Ruuuby::MetaData::RuuubyAPIComponent
+    class LocaleAPI < ::Ruuuby::MetaData::EngineComponentAPI
 
       EXPECTED_LANG = 'en_US.UTF-8'
 
       def initialize(engine)
         super(engine)
-        @api_docker    = nil
-        @api_brew      = nil
-        @api_iconv     = nil
-        @api_git       = nil
-        @cached_configs = nil
+        @api_docker     = nil
+        @api_docker_dev = nil
+        @api_brew       = nil
+        @api_iconv      = nil
+        @api_git        = nil
+        @cached_configs  = nil
       end
 
       # @return [Ruuuby::MetaData::DockerAPI]
       def api_docker
         if @api_docker.∅?
           require 'docker'
-          %w(network container service service_set).∀{|docker_lib| require_relative "docker/docker_#{docker_lib}"}
+          require_relative 'docker/attributes/findable'
+          %w(network volume container service service_set).∀{|docker_lib| require_relative "docker/docker_#{docker_lib}"}
           require_relative 'docker/api_docker'
           @api_docker = ::Ruuuby::MetaData::DockerAPI.new(@engine, 'ruuuby')
         end
         @api_docker
       end
 
-      #def api_docker; @api_docker = ::Ruuuby::MetaData::DockerAPI.new(@engine) if @api_docker.∅?; @api_docker; end
+      # @return [Ruuuby::MetaData::DockerAPI]
+      def api_docker_dev
+        self.api_docker if @api_docker.∅?
+        if @api_docker_dev.∅?
+          require_relative 'docker/conditional/docker_service_set_dev'
+          @api_docker_dev = ::RuuubyServiceSetDev.new('http://localhost')
+        end
+        @api_docker_dev
+      end
 
       # @return [Ruuuby::MetaData::BrewAPI]
       def api_brew; @api_brew = ::Ruuuby::MetaData::BrewAPI.new(@engine) if @api_brew.∅?; @api_brew; end
@@ -51,7 +61,8 @@ module ::Ruuuby
       # @return [Ruuuby::MetaData::GitAPI]
       def api_git
         if @api_git.∅?
-          require 'rugged'
+          #require 'rugged'
+          #require_relative 'git/conditional'
           @api_git = ::Ruuuby::MetaData::GitAPI.new(@engine)
         end
         @api_git

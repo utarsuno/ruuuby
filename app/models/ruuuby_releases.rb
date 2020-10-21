@@ -2,95 +2,67 @@
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
-class ::RuuubyRelease < ApplicationRecord
+class ::RuuubyRelease < ::ApplicationRecord
+
+  module Remote
+
+    # @return [Array] the UID components of the latest released version of Ruuuby
+    def self.curr_uid; $git.release_tags[-1][0]; end
+
+    # @return [Array] the UID components of the latest released version of Ruuuby
+    def self.prev_uid; $git.release_tags[-2][0]; end
+
+  end
+
+  module Version
+
+    def self.wip; self.curr.next; end
+
+    # @return [RuuubyRelease]
+    def self.curr; ::RuuubyRelease.where('released = ?', true).order('vmajor DESC').order('vminor DESC').order('vtiny DESC').limit(1).first; end
+
+    # @return [RuuubyRelease]
+    def self.prev; ::RuuubyRelease.where('released = ?', true).order('vmajor DESC').order('vminor DESC').order('vtiny DESC').limit(2)[1]; end
+
+  end
+
+  # _________________________________________________________________________________________________________________
+  #      ___ ___  __     __       ___  ___  __
+  #  /\   |   |  |__) | |__) |  |  |  |__  /__`
+  # /~~\  |   |  |  \ | |__) \__/  |  |___ .__/
+  # ________________________________________________________________________________________________________________ */
 
   # useful components for syntax parsing
   module Syntax
 
     # @type [String]
-    UID     = '(v?)\d.\d.\d(\d?)( ((version)|(release)))?'.❄️
+    UID     = '(v?)\d.\d.\d(\d?)( ((version)|(release)))?'
 
     # @type [String]
-    SQL_UID = 'vmajor = ? AND vminor = ? AND vtiny = ?'.❄️
+    SQL_UID = 'vmajor = ? AND vminor = ? AND vtiny = ?'
 
-    ❄️
   end
 
   include ::Comparable
   include ::Ruuuby::ORMAttribute::Includable::UID
 
+  # _________________________________________________________________________________________________________________
+  #  __   __
+  # /  \ |__)  |\/|
+  # \__/ |  \  |  |
+  # ________________________________________________________________________________________________________________ */
+
   validates :vmajor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :vminor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :vtiny, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :num_gems_added, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  has_many :git_commits, class_name: 'GitCommit', :dependent => :delete_all
-  has_many :ruuuby_gems, class_name: 'RuuubyGem', :dependent => :delete_all
   has_many :ruuuby_changelogs, class_name: 'RuuubyChangelog', :dependent => :delete_all
 
   before_save :on_before_save
 
-  def self.spawn(major, minor, tiny, description=nil); ::RuuubyRelease.create!(vmajor: major, vminor: minor, vtiny: tiny, description: description); end
-
-  def add_gem(gem_name, gem_version, flag_metadata, tags, ref_source, ref_version)
-    the_gem = ::RuuubyGem.spawn(gem_name, gem_version, flag_metadata, tags, ref_source, ref_version, self)
-    unless self.ruuuby_gems.include?(the_gem)
-      self.ruuuby_gems << the_gem
-    end
-    self.save!
-    ruuuby_changelog = the_gem.spawn_version_initial(self, ::RuuubyFeature.find_by_uid(15), gem_version)
-    unless self.ruuuby_changelogs.include?(ruuuby_changelog)
-      self.ruuuby_changelogs << ruuuby_changelog
-    end
-    self.save!
-    the_gem
-  end
-
-  # @return [Array]
-  def get_docs
-    the_docs = []
-    the_docs << "\n---\n\n# `#{self.uid}`\n\n"
-
-    unless self.comments.empty?
-      self.comments.∀ do |comment|
-        the_docs << " * #{comment}\n"
-      end
-      the_docs << $/
-    end
-
-    gem_changes = self._get_changelog_for_ruuuby_gems
-    gem_changes.∀ do |gem_change|
-      the_docs << gem_change
-    end
-
-    unless self.paths_added.empty?
-      the_docs << "| path added | reference | notes | feature(s) |\n"
-      the_docs << "| ----: | ---- | ---- | ---- |\n"
-      self.paths_added.each do |c|
-        c1 = c[1].empty? ? '' : "`#{c[1]}`"
-        the_docs << "| #{c[0]} | #{c1} | #{c[2]} | #{c[3]} |\n"
-      end
-      the_docs << $/
-    end
-
-    unless self.paths_removed.empty?
-      the_docs << "| path removed | notes |\n"
-      the_docs << "| ----: | ---- |\n"
-      self.paths_added.each do |c|
-        c1 = c[1].empty? ? '' : "`#{c[1]}`"
-        the_docs << "| #{c[0]} | #{c1} | #{c[2]} | #{c[3]} |\n"
-      end
-      the_docs << $/
-    end
-
-    the_docs << "| context | method(s) added | feature(s) |\n"
-    the_docs << "| ---: | :--- | ---: |\n"
-    self.ruuuby_changelogs.each do |ruuuby_changelog|
-      if ruuuby_changelog.applies_to == ::RuuubyFeature.orm_Ⓣ_🐍
-        the_docs << ruuuby_changelog.docs_changelog
-      end
-    end
-    the_docs
+  def self.spawn(major, minor, tiny, description=nil)
+    release = ::RuuubyRelease.create!(vmajor: major, vminor: minor, vtiny: tiny, description: description)
+    release
   end
 
   # @param [RuuubyFeature] ruuuby_feature
@@ -118,17 +90,6 @@ class ::RuuubyRelease < ApplicationRecord
     end
   end
 
-  # @param [RuuubyGem] ruuuby_gem
-  # @param [String]    new_version
-  #
-  # @return [RuuubyChangelog]
-  def update_gem(ruuuby_gem, new_version)
-    ruuuby_changelog = ruuuby_gem.spawn_version_update(self, ::RuuubyFeature.find_by_uid(15), new_version)
-    self.ruuuby_changelogs << ruuuby_changelog unless self.ruuuby_changelogs.include?(ruuuby_changelog)
-    self.save!
-    ruuuby_changelog
-  end
-
   def add_comments(comments)
     if comments.ary?
       comments.each do |c|
@@ -137,12 +98,6 @@ class ::RuuubyRelease < ApplicationRecord
     else
       self.comments << comments
     end
-  end
-
-  # @param [String] path
-  # @param [String] notes
-  def path_removed(path, notes='')
-    self.paths_removed << [path.∅? ? '' : "`#{path.to_s}`", notes]
   end
 
   # @param [String]                       path
@@ -189,20 +144,72 @@ class ::RuuubyRelease < ApplicationRecord
     end
   end
 
-  # @return [RuuubyRelease]
-  def self.get_version_prev; ::RuuubyRelease.where('released = ?', true).order('vmajor DESC').order('vminor DESC').order('vtiny DESC').limit(2)[1]; end
+  # @return [RuuubyRelease, Boolean, NilClass]
+  def prev
+    if @prev == nil
+      @prev = ::RuuubyRelease.where('id < ?', [self.id]).order('id DESC').limit(1).first
+      if @prev == nil
+        @prev = false
+      end
+    end
+    @prev
+  end
 
-  # @return [RuuubyRelease]
-  def self.get_version_curr; ::RuuubyRelease.where('released = ?', true).order('vmajor DESC').order('vminor DESC').order('vtiny DESC').limit(1).first; end
+  # @param [RuuubyRelease] ruuuby_release
+  #
+  # @raise [ArgumentError, RuntimeError]
+  def prev=(ruuuby_release)
+    if @prev == nil
+      🛑 ::ArgumentError.new("| c{RuuubyRelease}-> m{prev=} provided obj of type{#{ruuuby_release.Ⓣ}}, not the required type{RuuubyRelease} |")
+      @prev = ruuuby_release
+      unless @prev.next?
+        @prev.next = self
+      end
+    else
+      🛑 ::RuntimeError.new("| c{RuuubyRelease}-> m{prev=} tried setting ref to previous version as{#{ruuuby_release.uid}} for self{#{self.uid}} when previous is already marked as{#{self.prev.uid}} |")
+    end
+  end
 
-  # @return [RuuubyRelease]
-  def self.get_version_next; ::RuuubyRelease.where('released = ?', false).order('vmajor DESC').order('vminor DESC').order('vtiny DESC').limit(1).first; end
+  # @return [Boolean]
+  def next?; self.next.class == ::RuuubyRelease; end
+
+  # @return [Boolean]
+  def prev?; self.next.class == ::RuuubyRelease; end
+
+  # @return [RuuubyRelease, Boolean, NilClass]
+  def next
+    if @next == nil
+      @next = ::RuuubyRelease.offset(self.id).limit(1).first
+      if @next == nil
+        @next = false
+      end
+    end
+    @next
+  end
+
+
+  # @param [RuuubyRelease] ruuuby_release
+  #
+  # @raise [ArgumentError, RuntimeError]
+  def next=(ruuuby_release)
+    if @next == nil
+      🛑 ::ArgumentError.new("| c{RuuubyRelease}-> m{next=} provided obj of type{#{ruuuby_release.Ⓣ}}, not the required type{RuuubyRelease} |")
+      @next = ruuuby_release
+      unless @next.prev?
+        @next.prev = self
+      end
+    else
+      🛑 ::RuntimeError.new("| c{RuuubyRelease}-> m{next=} tried setting ref to next version as{#{ruuuby_release.uid}} for self{#{self.uid}} when next is already marked as{#{self.prev.uid}} |")
+    end
+  end
+
+
+  def latest_release?
+    self.released?
+  end
 
   # @return [Integer]
   def self.num_released; self.num_where(*['released = ?', true]); end
-
-  # @return [GitCommit]
-  def spawn_git_commit(*args); ::GitCommit.spawn(*args, self); end
 
   # @param [String] version_str the version UID of the RuuubyRelease with or without the starting 'v'
   #
@@ -225,45 +232,12 @@ class ::RuuubyRelease < ApplicationRecord
     ::RuuubyRelease.where(::RuuubyRelease::Syntax::SQL_UID, args[0].to_i, args[1].to_i, args[2].to_i)
   end
 
-  # @return [GitCommit]
-  def get_commit_newest
-    🛑 RuntimeError.new("| c{RuuubyRelease}-> m{get_commit_newest} can't run w/ no git_commits |") if self.git_commits.empty?
-    self.git_commits.order('commit_author_date DESC').limit(1).first
-  end
-
-  # @return [GitCommit]
-  def get_commit_oldest
-    🛑 RuntimeError.new("| c{RuuubyRelease}-> m{get_commit_oldest} can't run w/ no git_commits |") if self.git_commits.empty?
-    self.git_commits.order('commit_author_date ASC').limit(1).first
-  end
-
   # @return [Boolean]
-  def has_release_tag?
-    num_matches = 0
-    self.git_commits.all.each do |gc|
-      if gc.has_release_tag?
-        @the_release_tag = gc
-        num_matches += 1
-      end
-    end
-    if num_matches > 1
-      🛑 RuntimeError.new("| c{RuuubyRelease}-> m{has_release_tag?} self{#{self.to_s}} has{#{num_matches.to_s}} commits w/ release tags |") if self.git_commits.empty?
-    elsif num_matches == 1
-      return true
-    else
-      return false
-    end
-  end
+  def ∃release_tag?; !!($git.∃tag_for_version?(self.uid_components)); end
 
-  def get_release_commit
-    if self.has_release_tag?
-      return @the_release_tag
-    else
-      raise '@the_release_tag not set'
-    end
-  end
+  def release_tag; $git.find_release_tag(self.uid_components); end
 
-  # cached fields
+  def release_commit; $git.find_release_commit(self.uid_components); end
 
   # @return [Array]
   def comments; @comments ||= []; end
@@ -271,36 +245,7 @@ class ::RuuubyRelease < ApplicationRecord
   # @return [Array]
   def paths_added; @paths_added ||= []; end
 
-  # @return [Array]
-  def paths_removed; @paths_removed ||= []; end
-
   🙈
-
-  # TODO: NEEDS TO BE UPDATED!
-  def _get_changelog_for_ruuuby_gems
-    content = []
-    content << "| gem updated | version previous | version current |\n"
-    content << "| ----: | :---: | :---- |\n"
-    results = ::RuuubyChangelog.where('ruuuby_release_id = ? AND applies_to = ?', self.id, ::RuuubyGem.orm_Ⓣ_🐍)
-    results.each do |gem_change|
-      gem_name = gem_change.applies_to_uid
-      the_gem  = ::RuuubyGem.find_by_name(gem_name)
-      content << the_gem.source_for_changelog
-    end
-    content << $/ unless content.∅?
-    content
-  end
-
-  def on_before_save
-    self.num_gems_added   = self.ruuuby_gems.length
-    self.num_gems_updated = ::RuuubyChangelog.num_where('ruuuby_release_id = ? AND applies_to = ? AND metadata_flag = ?', self.id, ::RuuubyGem.orm_Ⓣ_🐍, ::RuuubyGem::EnumFlags::CHANGELOG_TYPE_VERSION_UPDATED)
-    is_released           = self.released?
-    if is_released == nil || !is_released
-      if self.has_release_tag?
-        self.released = true
-      end
-    end
-  end
 
   # @param [Symbol] cache_key
   #

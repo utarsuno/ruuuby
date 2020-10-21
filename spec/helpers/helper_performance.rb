@@ -1,3 +1,4 @@
+# encoding: UTF-8
 
 RSpec.shared_context 'shared_context_performance' do
 

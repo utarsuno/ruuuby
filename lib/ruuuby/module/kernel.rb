@@ -7,13 +7,13 @@ module ::Kernel
   alias_method :🎲, :rand
   alias_method :🛑, :raise
 
-  # @return [::Ruuuby::MetaData]
+  # @return [Ruuuby::MetaData]
   def 💎; ::Ruuuby::MetaData; end
 
-  # @return [::Ruuuby::MetaData::DockerAPI]
+  # @return [Ruuuby::MetaData::DockerAPI]
   def 🐋; ::Ruuuby::MetaData.engine.api_locale.api_docker; end
 
-  # @return [::Ruuuby::MetaData::BrewAPI]
+  # @return [Ruuuby::MetaData::BrewAPI]
   def 🍺; ::Ruuuby::MetaData.engine.api_locale.api_brew; end
 
   # @param [String] cmd
@@ -25,6 +25,9 @@ module ::Kernel
     🛑str❓('cmd', cmd)
     ::Ruuuby::MetaData.engine.api.run_cmd!(cmd)
   end
+
+  # @return [Ruuuby::Protocols::RequestHTTP]
+  def 🌐; ::Ruuuby::Protocols::RequestHTTP; end
 
   # | ------------------------------------------------------------------------------------------------------------------
 end

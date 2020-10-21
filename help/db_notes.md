@@ -5,7 +5,7 @@
 | ------------------------ | --------- | ----- |
 | `database`               | container for storing organized data, usually a set of files | the layer between the `raw data` and the `DBMS` |
 | `table`                  | structured list of data w/ each heaving a specific data type | must be unique, composing of: database name combined w/ table name, some implementations include the db owner as a starting identifier as well |
-| `DBMS`                   | the software responsible for creating and manipulating the database | |
+| `DBMS`                   | the software responsible for creating and manipulating the database |
 | `schema`                 | information describing the metadata of the database and tables (layout, properties, etc) |
 | `column`                 | single table field | the level of `granularity` is an important design decision, w/ `atomicity` often preferred |
 | `field`                   | synonymous to `column` but also `calculated fields` which is just a logical grouping of information units composed of multiple `atomic fields` |

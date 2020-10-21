@@ -29,7 +29,7 @@ class ::Module
   #
   # @return [Boolean] true, if this object's Class has either a public or private method with matching func_name
   def ∃⨍?(func_name)
-    🛑sym❓(:func_name, func_name)
+    🛑sym❓('func_name', func_name)
     self.method_defined?(func_name) ? true : self.∃🙈⨍?(func_name)
   end
 

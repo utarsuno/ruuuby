@@ -9,23 +9,24 @@ RSpec.describe 'ruby' do
 
       context 'version' do
         it 'w/ globals' do
-          expect(RUBY_VERSION).to eq('2.7.1')
-          expect(RUBY_PATCHLEVEL).to eq(83)
-          expect(RUBY_REVISION).to eq('a0c7c23c9cec0d0ffcba012279cd652d28ad5bf3')
+          expect(RUBY_VERSION).to eq('3.0.0')
+          expect(RUBY_PATCHLEVEL).to eq(-1)
+          expect(RUBY_REVISION).to eq('0096d2b895395df5ab8696d3b6d444dc1b7730b6')
         end
         it 'w/ needed ENV_VARs set' do
-          expect(ENV['RBENV_VERSION']).to eq(RUBY_VERSION)
+          #expect(ENV['RBENV_VERSION']).to eq(RUBY_VERSION)
+          expect(ENV['RBENV_VERSION']).to eq('3.0.0-preview1')
         end
         it 'w/ build configs' do
-          expect(build_configs['MAJOR']).to eq('2')
-          expect(build_configs['MINOR']).to eq('7')
-          expect(build_configs['TEENY']).to eq('1')
-          expect(build_configs['RUBY_API_VERSION']).to eq('2.7')
-          expect(build_configs['RUBY_PROGRAM_VERSION']).to eq('2.7.1')
-          expect(build_configs['PATCHLEVEL']).to eq('83')
+          expect(build_configs['MAJOR']).to eq('3')
+          expect(build_configs['MINOR']).to eq('0')
+          expect(build_configs['TEENY']).to eq('0')
+          expect(build_configs['RUBY_API_VERSION']).to eq('3.0')
+          expect(build_configs['RUBY_PROGRAM_VERSION']).to eq('3.0.0')
+          expect(build_configs['PATCHLEVEL']).to eq('-1')
         end
         it 'w/ rubygems' do
-          expect(::Gem.extension_api_version).to eq('2.7.0')
+          expect(::Gem.extension_api_version).to eq('3.0.0-static')
         end
       end # end: {version}
 
@@ -52,7 +53,8 @@ RSpec.describe 'ruby' do
       context 'runtime configs' do
         it 'is currently not using safe mode' do
           # @see https://docs.ruby-lang.org/en/2.6.0/security_rdoc.html#label-24SAFE
-          expect($SAFE).to eq(0)
+          # TODO: change w/ Ruby 3.0
+          expect($SAFE).to eq(nil)
         end
         context 'rubygems' do
           it 'has correct dependency categories{:development, :runtime}' do
@@ -64,7 +66,10 @@ RSpec.describe 'ruby' do
       context 'architecture build configs are as expected{mac, 64-bit}' do
         context 'os, platform, & 64-bit CPU specified' do
           it 'as defined through global{RUBY_PLATFORM}' do
-            expect(RUBY_PLATFORM).to eq('x86_64-darwin18')
+            expect(RUBY_PLATFORM).to eq('x86_64-darwin19')
+          end
+          it 'mri?' do
+            expect(RUBY_ENGINE).to eq('ruby')
           end
           it 'platform' do
             expect(::Gem::Platform.local.os).to eq('darwin')
@@ -76,17 +81,17 @@ RSpec.describe 'ruby' do
             expect(build_configs.∀🔑∃_value?(%w(target_cpu host_cpu build_cpu), 'x86_64')).to eq(true)
           end
           it 'as defined through build-settings{::RbConfig}' do
-            expect(build_configs['host_os']).to eq('darwin18.7.0')
+            expect(build_configs['host_os']).to eq('darwin19.6.0')
             expect(build_configs['host_vendor']).to eq('apple')
-            expect(build_configs['target']).to eq('x86_64-apple-darwin18')
-            expect(build_configs['build']).to eq('x86_64-apple-darwin18.7.0')
+            expect(build_configs['target']).to eq('x86_64-apple-darwin19')
+            expect(build_configs['build']).to eq('x86_64-apple-darwin19.6.0')
           end
           it 'needed ENV_VARs are set' do
             expect(ENV['ARCHFLAGS']).to eq('-arch x86_64')
           end
           it 'as defined through{Gem}' do
             expect(::Gem.java_platform?).to eq(false)
-            expect(::Gem::Platform.local.version).to eq('18')
+            expect(::Gem::Platform.local.version).to eq('19')
           end
         end
       end # end: {architecture build configs are as expected{mac, 64-bit}'}

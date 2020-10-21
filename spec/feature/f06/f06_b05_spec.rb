@@ -59,9 +59,9 @@ RSpec.describe 'f06_b05' do
         it 'for c{Object}' do
           expect_∃⨍(:bool?, ::Object)
         end
-        it 'for m{ObjectF06}' do
-          expect_∃⨍(:🛑bool❓, ::Ruuuby::Feature::Includable::ObjectF06)
-          expect_∃⨍(:🛑bools❓, ::Ruuuby::Feature::Includable::ObjectF06)
+        it 'for c{Object}' do
+          expect_∃⨍(:🛑bool❓, ::Object)
+          expect_∃⨍(:🛑bools❓, ::Object)
         end
       end
     end

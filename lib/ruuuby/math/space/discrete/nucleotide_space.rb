@@ -22,7 +22,7 @@ module ::Math
       # @return [Boolean]
       def ∃ᶜ?(kclass, owner=::Kernel)
         🛑sym❓('kclass', kclass)
-        🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "provided param owner{#{owner.to_s}} must be a module but received type{#{owner.Ⓣ}}") unless owner.is_a?(::Module)
+        🛑 ::Ruuuby::DescriptiveStandardError.new(self, "provided param owner{#{owner.to_s}} must be a module but received type{#{owner.Ⓣ}}") unless owner.is_a?(::Module)
         owner.∃const?(kclass) && owner.const_get(kclass).instance_of?(::Class)
       end
 
@@ -34,7 +34,7 @@ module ::Math
       # @return [Boolean]
       def ∃ᵐ?(kmodule, owner=::Kernel)
         🛑sym❓('kmodule', kmodule)
-        🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "provided param owner{#{owner.to_s}} must be a module but received type{#{owner.Ⓣ}}") unless owner.is_a?(::Module)
+        🛑 ::Ruuuby::DescriptiveStandardError.new(self, "provided param owner{#{owner.to_s}} must be a module but received type{#{owner.Ⓣ}}") unless owner.is_a?(::Module)
         if owner.∃const?(kmodule)
           c = owner.const_get(kmodule)
           (c.instance_of?(::Module) && c.class == ::Module)

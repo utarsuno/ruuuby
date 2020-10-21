@@ -50,25 +50,26 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
               end
             end
             it 'helpful ENV_VARs are set' do
-              path_to_ruby = "/Users/#{💎.engine.os.current_user}/.rbenv/versions/2.7.1/bin/ruby"
+              path_to_ruby    = "/Users/#{💎.engine.os.current_user}/.rbenv/versions/3.0.0-preview1/bin/ruby"
+              alt_calculation = ::File.join(::RbConfig::CONFIG['bindir'], ::RbConfig::CONFIG['ruby_install_name'] + ::RbConfig::CONFIG['EXEEXT'])
               expect(ENV['RUBY']).to eq(path_to_ruby)
               expect(::RbConfig.ruby).to eq(path_to_ruby)
-              expect(💎.engine.path_ruby).to eq(path_to_ruby)
+              expect(alt_calculation).to eq(path_to_ruby)
             end
           end
         end # end: {for gem{tty-command}}
 
-        context 'for gem{sqlite3}' do
-          it 'has correct version{1.4.2}' do
-            expect(::SQLite3::VERSION).to eq('1.4.2')
-          end
-        end # end: {for gem{sqlite3}}
+        #context 'for gem{sqlite3}' do
+        #  it 'has correct version{1.4.2}' do
+        #    expect(::SQLite3::VERSION).to eq('1.4.2')
+        #  end
+        #end # end: {for gem{sqlite3}}
 
-        context 'for gem{activerecord}' do
-          it 'has correct version{5.2.4.3}' do
-            expect(::ActiveRecord::VERSION::STRING).to eq('5.2.4.3')
-          end
-        end # end: {for gem{activerecord}}
+        #context 'for gem{activerecord}' do
+        #  it 'has correct version{5.2.4.3}' do
+        #    expect(::ActiveRecord::VERSION::STRING).to eq('5.2.4.3')
+        #  end
+        #end # end: {for gem{activerecord}}
 
       end # end: {by having correct configs}
 

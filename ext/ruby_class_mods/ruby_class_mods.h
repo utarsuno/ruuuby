@@ -13,10 +13,10 @@
  |    \__/ | \| \__, .__/ .   |__/ |___ \__, |___ /~~\ |  \ /~~\  |  | \__/ | \| .__/
 _____________________________________________________________________________________________________________________ */
 
-static inline void startup_step1_before_loading_extension(void);
+static void startup_step1_before_loading_extension(void);
 static void startup_step2_add_ruuuby_c_extensions(void);
-static inline void startup_step4_load_needed_ruuuby_files(void);
-static inline void startup_step5_protect_against_gc(void);
+static void startup_step4_load_needed_ruuuby_files(void); //__attribute__ ((noreturn))
+static void startup_step5_protect_against_gc(void);
 static void internal_only_prepare_f16(void);
 
 /*____________________________________________________________________________________________________________________________________________________________________
@@ -25,7 +25,7 @@ static void internal_only_prepare_f16(void);
  |  | /~~\ \__, |  \ \__/ .__/ .   |    |  \ |___    |    |  \ \__/ \__, |___ .__/ .__/ | | \| \__>
 ____________________________________________________________________________________________________________________________________________________________________ */
 
-#define ensure_loaded_ruuuby(path) ensure_file_loaded("ruuuby/" #path)
+//#define ensure_loaded_ruuuby(path) ensure_file_loaded("ruuuby/" #path)
 
 #define 💎add_private_func_0args_to(kclass, func_name, the_func) rb_define_private_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 0);
 #define 💎add_private_func_1args_to(kclass, func_name, the_func) rb_define_private_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
@@ -54,7 +54,7 @@ ________________________________________________________________________________
 
 #define ⓡ𝑓_kargs(func_name, expr)     static VALUE func_name(int argc, VALUE * argv, VALUE self);static VALUE func_name(int argc, VALUE * argv, VALUE self){expr}
 #define ⓡ𝑓_self_them(func_name, expr) ⓡ𝑓_def2(func_name, self, them, expr)
-#define ⓡ𝑓_self_a_b(func_name, expr)       ⓡ𝑓_def3(func_name, self, param_a, param_b, expr)
+#define ⓡ𝑓_self_a_b(func_name, expr)  ⓡ𝑓_def3(func_name, self, param_a, param_b, expr)
 
 #define c_func(func_name, expr) declare_func(func_name, expr, void, void)
 
@@ -139,6 +139,12 @@ static inline VALUE r_flt_is_universal(const double flt){
 #define 💎parse_optional_arg_as_them_a_normalizer(func_name, expr) VALUE them; rb_scan_args(argc, argv, ARG_OPTS_ONE_OPTIONAL, & them); if (is_sym(them)) {expr} else {🛑expected_sym(func_name, "normalizer", them)}
 
 #define 💎parse_kargs_with_normalizer(func_name, expr_0args, expr_1arg) if (argc == 0) {expr_0args} else if (argc == 1) {💎parse_optional_arg_as_them(); if (is_sym(them)) {expr_1arg} else {🛑expected_sym(func_name, "normalizer", them)}} else {🛑expected_kargs(func_name, "0 or 1")}
+
+//💎parse_kargs_with_normalizer
+//#define 💎parse_kargs_with_normalizer(func_name, expr_0args, expr_1arg) if (argc == 0) {expr_0args} else if (argc == 1) {💎parse_optional_arg_as_them(); if (is_sym(them)) {expr_1arg} else {🛑expected_sym(func_name, "normalizer", them)}} else {🛑expected_kargs(func_name, "0 or 1")}
+
+
+
 
 //🛑expected_sym(func_name, "did not support the received normalizer", sym)
 

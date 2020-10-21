@@ -5,21 +5,37 @@ module ::Ruuuby
   # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
 
-    # TODO: https://unix.stackexchange.com/questions/88644/how-to-check-os-and-version-using-a-linux-command
-    # TODO: https://nodesource.com/blog/an-absolute-beginners-guide-to-using-npm/
-    # TODO: https://webpack.js.org/guides/production/
-    # TODO: https://www.sitepoint.com/unit-test-javascript-mocha-chai/
+    # TODO: https://linuxcommandlibrary.com/man/ruby.html
     #
-    # TODO: ADD TESTS FOR {dpkg --print-architecture}
+    # @see https://github.com/piotrmurach/finite_machine
     #
     # | env_var          | purpose                                    |
     # | ---------------- | ------------------------------------------ |
     # | `RUUUBY_NUM_CPU` |  |
     #
+    # | for              | utilize                                                                                                        |
+    # | ---------------- | -------------------------------------------------------------------------------------------------------------- |
+    # | path ruby        | ::File.join(::RbConfig::CONFIG['bindir'], ::RbConfig::CONFIG['ruby_install_name'] + ::RbConfig::CONFIG['EXEEXT']) |
+    # | path ruby        | ::RbConfig.ruby                                                                                                 |
+    #
     # `💎.engine`
     class RuuubyEngine
 
-      class << self; def _get_engine; 💎.engine; end; end
+      class << self
+        def _get_engine
+          if 💎.engine.stats_ext == nil
+            default_text        = 'feature_not_set'
+            💎.engine.stats_ext = {
+                'timer'         => default_text,
+                'compiler'      => default_text,
+                'mem_pre_load'  => default_text,
+                'mem_post_load' => default_text,
+                'mem_after_gc'  => default_text
+            }
+          end
+          💎.engine
+        end
+      end
 
       module Syntax
         FEATURE_BEHAVIOR = 'b\d\d({\w+})?'
@@ -28,16 +44,13 @@ module ::Ruuuby
       include ::Ruuuby::Attribute::Includable::SyntaxCache
       include ::Singleton
 
-      attr_reader :logger, :state_flag, :logging_level, :logging_mode, :api, :api_locale, :path_base, :api_zsh
+      attr_reader :logger, :logging_level, :logging_mode, :api, :api_locale, :path_base, :api_zsh, :engine
 
-      attr_reader :stats_ext_timer, :stats_ext_compiler, :stats_ext, :stats_ext_mem_pre_load, :stats_ext_mem_post_load
+      attr_accessor :stats_ext
 
-      def print_ext_stats
-        delta_ms   = @stats_ext_timer / 1000.0
-        mem_start  = @stats_ext_mem_pre_load.to_f / 1024.0
-        mem_end    = @stats_ext_mem_post_load.to_f / 1024.0
-        @stats_ext = "extensions w/ compiler{#{@stats_ext_compiler}}, loaded in{#{delta_ms.to_s} ms}, w/ following pre/post-loaded-memory: {#{mem_start.to_s} MB -> #{mem_end.to_s} MB}"
-        💎.engine.info(@stats_ext)
+      def log_ext_stats
+        💎.engine.info(💎.engine.stats_ext.to_s)
+        require_relative '../../feature_lazy_loader'
       end
 
       # state flags
@@ -46,8 +59,6 @@ module ::Ruuuby
       # | 2 | engined stopped |
       def initialize
         @path_base      = "#{::File.dirname(::File.dirname(::File.dirname(::File.dirname(::File.dirname(__FILE__)))))}/"
-        @path_ruby      = nil
-        @state_flag      = 0
         @logger         = nil
         @echo_to_stdout = false
         @logging_mode   = nil
@@ -56,62 +67,75 @@ module ::Ruuuby
         @api_locale     = ::Ruuuby::MetaData::LocaleAPI.new(self)
         @api_zsh        = ::Ruuuby::MetaData::ZshAPI.new(self)
         @orm            = nil
-      end
 
-      # @return [String]
-      def path_ruby
-        if @path_ruby.nil?
-          @path_ruby = ::File.join(::RbConfig::CONFIG['bindir'], ::RbConfig::CONFIG['ruby_install_name'] + ::RbConfig::CONFIG['EXEEXT'])
+        @running = false
+        @engine  = ::FiniteMachine.new(self, alias_target: :engine) do
+          initial :neutral
+
+          event :start,   :neutral => :running, if: "engine_on?"
+          event :stop,    :running => :neutral, unless: "engine_on?"
+
+          on_before :start do |event|
+            if event.from != :neutral
+              🛑 ::RuntimeError.new("| ruuuby engine may only be started from state{neutral}, current state is{#{self.current}} |")
+            end
+            engine.turn_on
+          end
+
+          on_before :stop do |event|
+            if event.from != :running
+              🛑 ::RuntimeError.new("| ruuuby engine may only be stopped from state{running}, current state is{#{self.current}} |")
+            end
+            engine.turn_off
+          end
+
         end
-        @path_ruby
       end
 
-      # @raise [RuntimeError] if called more than once
-      def warm_up
-        if @state_flag == 0
-          self.setup_logger
+      def engine_on?; @running; end
+
+      def turn_off
+        unless @logger == nil
           if @logging_level == ::Logger::INFO
             mem_kb = self.gc.total_memory_usage_current
-            self.info("pid{#{$$.to_s}} starting-up w/ memory-usage currently at{#{mem_kb.to_s}} KB, equivalently: {#{(mem_kb / 1024).to_s}} MB")
+            self.info("pid{#{$$.to_s}} terminating w/ memory-usage currently at{#{mem_kb.to_s}} KB, equivalently: {#{(mem_kb / 1024).to_s}} MB")
           end
-          @state_flag += 1
-        else
-          🛑 ::RuntimeError.new("| RuuubyEngine should only be warmed up once |")
+          self.debug('closing logger!')
+          @logger.close
         end
+        #unless @orm.nil?
+        #end
+        @running = true
+      end
+
+      def turn_on
+        self.setup_logger
+        if @logging_level == ::Logger::INFO
+          mem_kb = self.gc.total_memory_usage_current
+          self.info("pid{#{$$.to_s}} starting-up w/ memory-usage currently at{#{mem_kb.to_s}} KB, equivalently: {#{(mem_kb / 1024).to_s}} MB")
+        end
+        @running = true
+      end
+
+      def dir(path)
+        ::Dir.new(path.dup.ensure_start!(💎.engine.path_base))
+      end
+
+      def stats
+        {
+            percentage_fragmentation: self.gc.percentage_fragmentation,
+            percentage_protected_from_minor_marks: self.gc.percentage_protected_from_minor_marks,
+            mem_usage_peak: self.gc.mem_usage_peak,
+            mem_usage_current: self.gc.total_memory_usage_current
+        }
       end
 
       # @return [::Ruuuby::MetaData::RuuubyORM]
       def orm
         if @orm.nil?
-          self.enable_orm
+          @orm = ::Ruuuby::MetaData::RuuubyORM.new(self)
         end
         @orm
-      end
-
-      def enable_orm
-        require_relative '../ruuuby_orm'
-        @orm = ::Ruuuby::MetaData::RuuubyORM.new(self)
-        @orm.ensure_loaded_db_libs
-      end
-
-      # @raise [RuntimeError] if called when the engine isn't currently warm
-      def cool_down
-        if @state_flag == 1
-          unless @logger == nil
-            if @logging_level == ::Logger::INFO
-              mem_kb = self.gc.total_memory_usage_current
-              self.info("pid{#{$$.to_s}} terminating w/ memory-usage currently at{#{mem_kb.to_s}} KB, equivalently: {#{(mem_kb / 1024).to_s}} MB")
-            end
-            self.debug('closing logger!')
-            @logger.close
-          end
-          unless @orm.nil?
-
-          end
-          @state_flag += 1
-        else
-          🛑 RuntimeError.new("| RuuubyEngine w/ func{cool_down} tried to move to state{2} when currently in state{#{@state_flag.to_s}} |")
-        end
       end
 
       🙈
@@ -123,8 +147,6 @@ module ::Ruuuby
       #  \ \ \_/\ \ \_\ \ \ \ \
       #   \ \_\  \ \____/  \ \_\
       #    \/_/   \/___/    \/_/
-      #
-
       def setup_logger
         if ENV.∃?('RUUUBY_F01')
           logging_modes = ENV.parse_feature_behaviors('RUUUBY_F01', 5, 0, 3)
@@ -255,8 +277,6 @@ end
 # TODO: https://stackoverflow.com/questions/5902488/uninstall-old-versions-of-ruby-gems
       # @return [ActiveRecord::TimeZone]
       #def timezone
-      #  @engine.orm
-        #💎.engine.enable_orm
       #  @cached_timezone = ::ActiveSupport::TimeZone.new('Central Time (US & Canada)') if @cached_timezone == nil
       #  @cached_timezone
       #end

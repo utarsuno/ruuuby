@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # `Ruuuby` modifications to c(`Array`)
 module ::Ruuuby
@@ -17,7 +17,7 @@ module ::Ruuuby
         # @return [Boolean] true, if this array ends with the provided elements
         def end_with?(*ending)
           return false if (ending.∅? || ending.𝔠 > self.𝔠)
-          return self.last == ending.₀ if ending.𝔠₁?
+          return self.last == ending[0] if (ending.𝔠 == 1)
           self.last(ending.𝔠) == ending
         end
 
@@ -26,7 +26,7 @@ module ::Ruuuby
         # @return [Boolean] true, if this array starts with the provided elements
         def start_with?(*start)
           return false if (start.∅? || start.𝔠 > self.𝔠)
-          return self.first == start.₀ if start.𝔠₁?
+          return self.first == start[0] if (start.𝔠 == 1)
           self.first(start.𝔠) == start
         end
 
@@ -35,18 +35,18 @@ module ::Ruuuby
         # @return [Array] this array instance, modified if not starting with provided starting elements
         def ensure_start!(*start)
           return self if (start.∅? || self.start_with?(*start))
-          return self >> start.₀ if start.𝔠₁?
+          return self >> start[0] if (start.𝔠 == 1)
           delta        = 0
           last_matched = nil
           while delta <= self.𝔠 && delta <= start.𝔠
-            ending_of_start = start[start.𝔠₋(delta)..start.𝔠₋]
+            ending_of_start = start[(start.𝔠 - (1 + delta))...start.𝔠]
             last_matched    = ending_of_start if self[0..delta] == ending_of_start
             delta          += 1
           end
           if last_matched == nil
             start.↩∀{|element| self >> element}
           else
-            start[0..start.𝔠₋(last_matched.𝔠)].↩∀{|element| self >> element}
+            start[0...(start.𝔠 - (last_matched.𝔠))].↩∀{|element| self >> element}
           end
           self
         end
@@ -56,18 +56,18 @@ module ::Ruuuby
         # @return [Array] this array instance, modified if not ending with provided endings elements
         def ensure_ending!(*ending)
           return self if (ending.∅? || self.end_with?(*ending))
-          return self << ending.₀ if ending.𝔠₁?
+          return self << ending[0] if (ending.𝔠 == 1)
           delta        = 0
           last_matched = nil
           while delta <= self.𝔠 && delta <= ending.𝔠
             starting_of_end = ending[0..delta]
-            last_matched    = starting_of_end if self[self.𝔠₋(delta)..self.𝔠₋] == starting_of_end
+            last_matched    = starting_of_end if self[(self.𝔠 - (1 + delta))...self.𝔠] == starting_of_end
             delta          += 1
           end
           if last_matched == nil
             ending.∀{|element| self << element }
           else
-            ending[last_matched.𝔠..ending.𝔠₋].∀{|element| self << element}
+            ending[last_matched.𝔠...ending.𝔠].∀{|element| self << element}
           end
           self
         end
@@ -118,15 +118,15 @@ end # end: {Ruuuby}
 # add various aliases & functions to existing Class(+Array+)
 class ::Array
 
-  include ::Ruuuby::Attribute::Includable::SubscriptIndexing
-
   # ---------------------------------------------------------------------------------------------------------- | *f03* |
-  include ::Ruuuby::Attribute::Includable::Cardinality
+  alias_method :𝔠, :length
   # ---------------------------------------------------------------------------------------------------------- | *f08* |
   include ::Ruuuby::Feature::Includable::ArrayF08
   # ---------------------------------------------------------------------------------------------------------- | *f09* |
   include ::Ruuuby::Feature::Includable::ArrayF09
-  include ::Ruuuby::Attribute::Includable::Notation::SetMathematics
+
+  alias_method(:∀, :each)
+  alias_method(:∋?, :include?)
 
   alias_method :uniq_to_me, :∖
 
@@ -181,8 +181,12 @@ class ::Array
     self.∀ do |content|
       🛑str❓('content', content)
       if content.∋?('=')
-        parsed              = content.split('=')
-        contents[parsed[0]] = parsed[1]
+        parsed      = content.split('=')
+        the_value   = parsed[1]
+        if the_value.in_quotes?
+          the_value = the_value[1...(the_value.length - 1)]
+        end
+        contents[parsed[0]] = the_value
       else
         🛑 ::RuntimeError.new("| c{Array}-> m{convert_to_json} called when content{#{content.to_s}} did not contain char{=} |")
       end

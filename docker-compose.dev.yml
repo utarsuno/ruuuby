@@ -3,6 +3,8 @@ version: '3.8'
 
 services:
 
+  # TODO: ruuuby server
+
   service_nginx:
     build:
       context: ./services/nginx
@@ -14,14 +16,34 @@ services:
     volumes:
       - 'ruuuby_nginx_data:/v'
     ports:
-      - 80:80
-      - 443:443
       - 1337:1337
       - 8080:8080
+    #  - 5672:5672
+      - 15672:15672
+      - 80:80
+    #  #  - 443:443
     depends_on:
       - service_postgres
       - service_pgadmin
       - service_js
+      - service_rabbitmq
+
+  #image: 'rabbitmq:3-management'
+  service_rabbitmq:
+    build:
+      context: ./services/rabbitmq
+      dockerfile: ./Dockerfile
+      #target: build_env_dev
+    environment:
+      RABBIT_ERLANG_COOKIE: 'secret string'
+      RABBIT_NODENAME: 'service_rabbitmq'
+    ports:
+      - 5672:5672
+    #  - 15672:15672
+    volumes:
+      - 'ruuuby_rabbitmq_data:/data'
+      - './services/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config'
+      - './services/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json'
 
   service_js:
     build:
@@ -30,9 +52,9 @@ services:
       target: build_env_dev
     tty: false
     environment:
-      SERVICE_NAME: 'service_js'
       SERVICE_ENV: 'dev'
       SERVICE_PORT: '8080'
+      SERVICE_HOST: 'http://localhost'
 
   service_postgres:
     image: 'amd64/postgres:13-alpine'
@@ -47,6 +69,8 @@ services:
       POSTGRES_DB: 'mydb'
       POSTGRES_USER: 'myuser'
       POSTGRES_PASSWORD: 'mypassword'
+    ports:
+      - 5432:5432
     volumes:
       - 'ruuuby_db_data/:/var/lib/postgresql/data/'
 
@@ -77,4 +101,6 @@ volumes:
   ruuuby_nginx_data:
     external: true
   ruuuby_pgadmin_data:
+    external: true
+  ruuuby_rabbitmq_data:
     external: true

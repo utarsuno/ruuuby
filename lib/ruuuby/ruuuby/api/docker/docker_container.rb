@@ -5,6 +5,23 @@ using ::Ruuuby::Heuristics::ContextParsingCommandOutput
 # 3ʳᵈ_party gem class
 class Docker::Container
 
+  alias_method :♻️, :remove
+
+  # ------------------------------------------------------------------------
+  # @type [String]
+  SEARCH_ARG = 'container_name'
+  extend ::Ruuuby::Attribute::Findable
+  # ------------------------------------------------------------------------
+
+  def name?(partial_match)
+    self.info['Names'].each do |n|
+      if n.include?(partial_match)
+        return true
+      end
+    end
+    false
+  end
+
   # @return [Boolean]
   def alpine?; self.os == 'alpine'; end
 
@@ -28,28 +45,58 @@ class Docker::Container
   # @return [Boolean]
   def os_architecture
     if dev?
+      begin
+        self.cmd!(%w(dpkg --print-architecture))
+      rescue ::RuntimeError
+        self.cmd!(%w(apk add --no-cache dpkg))
+        os_architecture!
+      end
+    else
+      "| production mode does not have lib{dpkg} installed |"
+    end
+  end
+
+  def os_architecture!
+    if self.dev?
       self.cmd!(%w(dpkg --print-architecture))
     else
       🛑 ::RuntimeError.new("| production mode does not have lib{dpkg} installed |")
     end
   end
 
+  # @see https://www.freedesktop.org/software/systemd/man/os-release.html
+  #
+  # @return [Hash]
+  def os_release; self.📁📖('/etc/os-release').clean.convert_to_json; end
+
   # @return [String]
   def os_version; self.env_vars['SERVICE_OS_VERSION']; end
 
+  # @see https://linuxize.com/post/how-to-check-the-kernel-version-in-linux/
+  #
   # @return [String]
-  def linux_kernel_version; self.cmd!(%w(cat /proc/version)); end
+  def linux_kernel_version; self.📁📖('/proc/version'); end
 
   # @return [Boolean]
   def healthy?
     self.env_vars['BUILD_ENV'] == self.env_vars['SERVICE_ENV']
   end
 
-  # @return [Boolean]
-  def healthy_os?; self.linux_kernel_version == 'Linux version 4.19.76-linuxkit (root@4abe09437d05) (gcc version 8.3.0 (Alpine 8.3.0)) #1 SMP Tue May 26 11:42:35 UTC 2020'; end
+  # TODO: health check that config volumes match info['Mounts']
 
   # @return [Hash, NilClass]
-  def volumes; self.info['Volumes']; end
+  def volumes
+    vols = self.info['Volumes']
+    if vols.∅?
+      vols = []
+      self.mounts.each do |m|
+        if m['Type'] == 'volume'
+          vols << [m['Name'], m['Source'], m['Destination']]
+        end
+      end
+    end
+    vols
+  end
 
   # @return [Hash, Array, NilClass]
   def mounts; self.info['Mounts']; end
@@ -99,8 +146,27 @@ class Docker::Container
     self
   end
 
-  alias_method :✏️📁, :file_create
+  # @param [String] path_host_file
+  # @param [String] path_container_output_directory
+  #
+  # @raise [ArgumentError]
+  def copy_host_file(path_host_file, path_container_output_directory)
+    # TODO: add regex checks on path syntax
+    🛑str❓('path_host_file', path_host_file)
+    🛑str❓('path_container_output_directory', path_container_output_directory)
+    file_name                  = ::File.basename(path_host_file)
+    path_container_output_file = "#{path_container_output_directory.ensure_ending!('/')}#{file_name}"
+    if path_host_file.start_with?("#{💎.engine.path_base}")
+      self.file_create(path_container_output_file, ::File.read(path_host_file))
+    else
+      self.file_create(path_container_output_file, ::File.read("#{💎.engine.path_base}#{path_host_file}"))
+    end
+  end
+
+  alias_method :📁✏️, :file_create
   alias_method :📁_create, :file_create
+  alias_method :📁📖, :read_file
+  alias_method :copy_host_📁, :copy_host_file
 
   # @param [Array]   cmd
   # @param [Integer] timeout

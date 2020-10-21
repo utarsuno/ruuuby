@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# encoding: UTF-8
+
+#export RUUUBY_F98="15"
+#export RUUUBY_F98="7"
+export RUUUBY_F98="11"
+
+bundle exec rake manual:clean_all
+
+set -euo pipefail
+IFS=$'\n\t'
+set -vx
+
+bundle exec rake compile

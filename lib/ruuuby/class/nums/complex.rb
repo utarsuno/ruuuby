@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # `Ruuuby` modifications to existing class{+Complex+}
 class ::Complex
@@ -25,9 +25,9 @@ class ::Complex
     if evaluated.int?
       self ** evaluated
     elsif evaluated.flt?
-      🛑 NotImplementedError.🆕("| c{Rational}-> m{^} self(#{self.to_s}) received invalid exponential argument(#{n.to_s}) |")
+      🛑 NotImplementedError.new("| c{Rational}-> m{^} self(#{self.to_s}) received invalid exponential argument(#{n.to_s}) |")
     else
-      🛑 ArgumentError.🆕("| c{Rational}-> m{^} self(#{self.to_s}) received invalid exponential argument(#{n.to_s}) |")
+      🛑 ArgumentError.new("| c{Rational}-> m{^} self(#{self.to_s}) received invalid exponential argument(#{n.to_s}) |")
     end
   end
 

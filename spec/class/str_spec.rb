@@ -21,6 +21,7 @@ RSpec.describe 'str' do
     end
 
     context 'by adding needed functions' do
+
       context 'func{palindrome?}' do
         context 'scenarios not handled correctly?', :tech_debt do
           it 'see char generated from{[770].pack("U*")}' do
@@ -52,6 +53,58 @@ RSpec.describe 'str' do
             expect(' ba a '.palindrome?).to eq(false)
             expect('1b0101'.palindrome?).to eq(false)
             expect('0101b0'.palindrome?).to eq(false)
+          end
+        end
+      end # end: {func{palindrome?}}
+
+      context 'func{in_quotes?}' do
+        context 'handles needed scenarios' do
+          it 'cases: positive' do
+            expect('""'.in_quotes?).to eq(true)
+            expect('\'\''.in_quotes?).to eq(true)
+
+            expect('" "'.in_quotes?).to eq(true)
+            expect('\' \''.in_quotes?).to eq(true)
+
+            expect("\"\n\"".in_quotes?).to eq(true)
+            expect("'\n'".in_quotes?).to eq(true)
+
+            expect('"\'1337\'"'.in_quotes?).to eq(true)
+            expect('\'"1337"\''.in_quotes?).to eq(true)
+
+            expect('" \'1337\' "'.in_quotes?).to eq(true)
+            expect('\' "1337" \''.in_quotes?).to eq(true)
+          end
+          it 'cases: negative' do
+            expect(' '.in_quotes?).to eq(false)
+            expect('|\n"\'\'"'.in_quotes?).to eq(false)
+
+            expect("'".in_quotes?).to eq(false)
+            expect('"'.in_quotes?).to eq(false)
+            expect('"\''.in_quotes?).to eq(false)
+            expect('\'"'.in_quotes?).to eq(false)
+            expect('"\'\''.in_quotes?).to eq(false)
+            expect('\'""'.in_quotes?).to eq(false)
+            expect('""\''.in_quotes?).to eq(false)
+            expect('\'\'"'.in_quotes?).to eq(false)
+            expect('\'\'""'.in_quotes?).to eq(false)
+            expect('""\'\''.in_quotes?).to eq(false)
+
+            expect(" '".in_quotes?).to eq(false)
+            expect('" '.in_quotes?).to eq(false)
+            expect(' "\''.in_quotes?).to eq(false)
+            expect('\' "'.in_quotes?).to eq(false)
+            expect('"\' \''.in_quotes?).to eq(false)
+            expect('\'"" '.in_quotes?).to eq(false)
+            expect('  "  "\''.in_quotes?).to eq(false)
+            expect('\'\'"'.in_quotes?).to eq(false)
+            expect('\' \'" "'.in_quotes?).to eq(false)
+            expect('" "\'\''.in_quotes?).to eq(false)
+
+            expect('"1337"\''.in_quotes?).to eq(false)
+            expect('content "1337"'.in_quotes?).to eq(false)
+            expect('"1337" content'.in_quotes?).to eq(false)
+            expect('content "1337" content'.in_quotes?).to eq(false)
           end
         end
       end

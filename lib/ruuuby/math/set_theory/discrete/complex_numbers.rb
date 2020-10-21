@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # mathematics related code
 module ::Math
@@ -8,16 +8,17 @@ module ::Math
     class ComplexNumbers < ::Math::SetTheory::NumberSet
       include ::Singleton
 
+      # {
+      #   closed_under_addition: true,
+      #   closed_under_multiplication: true,
+      #   closed_under_subtraction: true,
+      #   closed_under_division: true,
+      #   dense: true,
+      #   continuous: true,
+      #   algebraically_closed: true
+      # }
       def initialize
-        super(:ℂ, ::Math::SetTheory::NumberSet::AlephNumbers::ONE, {
-            closed_under_addition: true,
-            closed_under_multiplication: true,
-            closed_under_subtraction: true,
-            closed_under_division: true,
-            dense: true,
-            continuous: true,
-            algebraically_closed: true
-        })
+        super(:ℂ, ::Math::SetTheory::NumberSet::AlephNumbers::ONE)
         @superset_of = [:𝕀, :𝔸ᵣ, :𝔸, :ℚ, :ℤ, :𝕎, :ℕ, :𝔹, :ℝ]
         @subset_of   = [:𝕌]
       end

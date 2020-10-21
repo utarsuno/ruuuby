@@ -1,13 +1,15 @@
 # encoding: UTF-8
 
-# | for info on                   | resource url                                                                             |
-# | ----------------------------- | ---------------------------------------------------------------------------------------- |
-# | git config                     | https://stackoverflow.com/questions/9976986/force-lf-eol-in-git-repo-and-working-copy     |
-# | format web specs              | https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Containers                    |
-# | image formats                 | https://blog.filestack.com/thoughts-and-knowledge/complete-image-file-extension-list/#indd |
-# | audio formats                 | https://docstore.mik.ua/orelly/web2/wdesign/ch24_05.htm                                  |
-# | archiving formats             | https://en.wikipedia.org/wiki/List_of_archive_formats                                    |
-# | microsoft office suite formats | https://en.wikipedia.org/wiki/List_of_Microsoft_Office_filename_extensions                 |
+# | for info on                   | resource url                                                                                |
+# | ----------------------------- | ------------------------------------------------------------------------------------------- |
+# | git config                     | https://stackoverflow.com/questions/9976986/force-lf-eol-in-git-repo-and-working-copy        |
+# | format web specs              | https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Containers                       |
+# | image formats                 | https://blog.filestack.com/thoughts-and-knowledge/complete-image-file-extension-list/#indd    |
+# | audio formats                 | https://docstore.mik.ua/orelly/web2/wdesign/ch24_05.htm                                     |
+# | archiving formats             | https://en.wikipedia.org/wiki/List_of_archive_formats                                       |
+# | microsoft office suite formats | https://en.wikipedia.org/wiki/List_of_Microsoft_Office_filename_extensions                    |
+# | pascal file types              | https://wiki.freepascal.org/file_types                                                       |
+# | git config info                | https://opensource.apple.com/source/Git/Git-19/src/git-htmldocs/gitattributes.txt.auto.html |
 
 # | section | title               | description                                                                 |
 # | ------- | ------------------- | --------------------------------------------------------------------------- |
@@ -15,6 +17,7 @@
 # | 0x1     | git provided filters | section contains programming languages that git has default filter types for |
 # | 0x2     | read as text        | TODO: document after checking on impact of file encoding for this category   |
 # | 0x3     | read as binary      | do not read as text                                                         |
+# | 0x4     | read as image       |                                                                             |
 
 # 0x0) -----------------------------------------------------------------------------------------------------------------
 #                    __              __                          ___                                              __
@@ -28,18 +31,21 @@
 #                                                                                   \/_/
 # ----------------------------------------------------------------------------------------------------------------------
 
-*.html    diff=html text=html eol=lf whitespace=blank-at-eof,blank-at-eol
-*.css     diff=css text=css eol=lf whitespace=blank-at-eof,blank-at-eol
-*.md      diff=markdown text=markdown eol=lf whitespace=blank-at-eof,blank-at-eol
+*.html        diff=html     text=html     eol=lf whitespace=blank-at-eof,blank-at-eol
+*.css         diff=css      text=css      eol=lf whitespace=blank-at-eof,blank-at-eol
+*.md          diff=markdown text=markdown eol=lf whitespace=blank-at-eof,blank-at-eol
+*.webmanifest diff=text     text=text     eol=lf whitespace=blank-at-eof,blank-at-eol
+*.json        diff=text     text=text     eol=lf whitespace=blank-at-eof,blank-at-eol
+*.js          diff=text     text=text     eol=lf whitespace=blank-at-eof,blank-at-eol
 
 # shaders (being read as text)
-*.tesc    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.tese    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.geom    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.frag    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.vert    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.comp    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.glsl    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.tesc diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.tese diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.geom diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.frag diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.vert diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.comp diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.glsl diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
 
 # 0x1) -----------------------------------------------------------------------------------------------------------------
 #           __                                              __             __         ___      ___    __
@@ -53,21 +59,38 @@
 #    \_/__/                \/_/
 # ----------------------------------------------------------------------------------------------------------------------
 
-# c
+# C
 *.h       diff=cpp text=cpp eol=lf whitespace=blank-at-eof,blank-at-eol
 *.c       diff=cpp text=cpp eol=lf whitespace=blank-at-eof,blank-at-eol
 
-# ruby
+# Objective-C
+*.m       diff=objc text=objc eol=lf whitespace=blank-at-eof,blank-at-eol
+
+# Perl
+*.pl      diff=perl text=perl eol=lf whitespace=blank-at-eof,blank-at-eol
+
+# Pascal
+*.pas     diff=pascal text=pascal eol=lf whitespace=blank-at-eof,blank-at-eol
+*.pp      diff=pascal text=pascal eol=lf whitespace=blank-at-eof,blank-at-eol
+
+# Fortran
+*.f90     diff=fortran text=fortran eol=lf whitespace=blank-at-eof,blank-at-eol
+*.f95     diff=fortran text=fortran eol=lf whitespace=blank-at-eof,blank-at-eol
+*.f03     diff=fortran text=fortran eol=lf whitespace=blank-at-eof,blank-at-eol
+*.f       diff=fortran text=fortran eol=lf whitespace=blank-at-eof,blank-at-eol
+*.for     diff=fortran text=fortran eol=lf whitespace=blank-at-eof,blank-at-eol
+
+# Ruby
 *.rb      diff=ruby text=ruby eol=lf whitespace=blank-at-eof,blank-at-eol
 *.gemspec diff=ruby text=ruby eol=lf whitespace=blank-at-eof,blank-at-eol
 
-# java
+# Java
 *.java    diff=java text=java eol=lf whitespace=blank-at-eof,blank-at-eol
 
-# python
+# Python
 *.py      diff=python text=python eol=lf whitespace=blank-at-eof,blank-at-eol
 
-# php
+# PHP
 *.php     diff=php text=php eol=lf whitespace=blank-at-eof,blank-at-eol
 
 # 0x2) -----------------------------------------------------------------------------------------------------------------
@@ -90,8 +113,6 @@
 *.sh      diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
 *.sql     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
 *.scpt    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.json    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.js      diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
 *.cjs     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
 *.mjs     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
 
@@ -106,26 +127,6 @@
 #                                                                                                 /\___/
 #                                                                                                 \/__/
 # ----------------------------------------------------------------------------------------------------------------------
-
-# image formats
-*.png    -text -diff
-*.jpg    -text -diff
-*.jpeg   -text -diff
-*.jp2    -text -diff
-*.j2k    -text -diff
-*.jpf    -text -diff
-*.gif    -text -diff
-*.webp   -text -diff
-*.tif    -text -diff
-*.tiff   -text -diff
-*.psd    -text -diff
-*.bmp    -text -diff
-*.heif   -text -diff
-*.heic   -text -diff
-*.svg    -text -diff
-*.svgz   -text -diff
-*.ai     -text -diff
-*.eps    -text -diff
 
 # audio formats
 *.wav    -text -diff
@@ -157,9 +158,13 @@
 *.tgz    -text -diff
 
 # compression/archiving formats
+# ---------------------
 *.tar    -text -diff
 *.gz     -text -diff
 *.bz2    -text -diff
+*.xz     -text -diff
+*.zip    -text -diff
+# ---------------------
 *.lz     -text -diff
 *.lz4    -text -diff
 *.lzh    -text -diff
@@ -168,7 +173,6 @@
 *.rz     -text -diff
 *.sfark  -text -diff
 *.sz     -text -diff
-*.xz     -text -diff
 *.z      -text -diff
 *.zst    -text -diff
 *.a      -text -diff
@@ -181,7 +185,6 @@
 *.mar    -text -diff
 *.sbx    -text -diff
 *.tar    -text -diff
-*.zip    -text -diff
 *.zipx   -text -diff
 *.xp3    -text -diff
 *.xar    -text -diff
@@ -197,6 +200,8 @@
 
 # important misc formats
 *.pdf    -text -diff
+*.bib    -text -diff
+*.tex    -text -diff
 
 # office suite formats
 *.doc    -text -diff
@@ -236,3 +241,34 @@
 
 # misc formats
 *.raw    -text -diff
+
+# 0x4) -----------------------------------------------------------------------------------------------------------------
+#                         __
+#                        /\ \                           __
+#  _ __    __     __     \_\ \         __      ____    /\_\    ___ ___      __       __      __
+# /\`'__\/'__`\ /'__`\   /'_` \      /'__`\   /',__\   \/\ \ /' __` __`\  /'__`\   /'_ `\  /'__`\
+# \ \ \//\  __//\ \L\.\_/\ \L\ \    /\ \L\.\_/\__, `\   \ \ \/\ \/\ \/\ \/\ \L\.\_/\ \L\ \/\  __/
+#  \ \_\\ \____\ \__/.\_\ \___,_\   \ \__/.\_\/\____/    \ \_\ \_\ \_\ \_\ \__/.\_\ \____ \ \____\
+#   \/_/ \/____/\/__/\/_/\/__,_ /    \/__/\/_/\/___/      \/_/\/_/\/_/\/_/\/__/\/_/\/___L\ \/____/
+#                                                                                    /\____/
+#                                                                                    \_/__/
+# ----------------------------------------------------------------------------------------------------------------------
+
+*.png    -text diff=image
+*.jpg    -text diff=image
+*.jpeg   -text diff=image
+*.jp2    -text diff=image
+*.j2k    -text diff=image
+*.jpf    -text diff=image
+*.gif    -text -diff
+*.webp   -text -diff
+*.tif    -text -diff
+*.tiff   -text -diff
+*.psd    -text -diff
+*.bmp    -text -diff
+*.heif   -text -diff
+*.heic   -text -diff
+*.svg    -text -diff
+*.svgz   -text -diff
+*.ai     -text -diff
+*.eps    -text -diff

@@ -24,6 +24,10 @@ ________________________________________________________________________________
 #define _set_instance_field(kclass, the_val, field_name)  rb_iv_set(kclass, field_name, the_val);
 #define 💎set_instance_field(kclass, the_val, field_name) _set_instance_field(kclass, the_val, "@" #field_name)
 
+#define _get_instance_field(kclass, field_name)  rb_iv_get(kclass, field_name);
+#define 💎get_instance_field(kclass, field_name) _get_instance_field(kclass, "@" #field_name)
+
+#define ensure_loaded_db(path)                   ensure_file_loaded("ruuuby/db/" #path)
 #define ensure_loaded_ruuuby(path)               ensure_file_loaded("ruuuby/" #path)
 #define ensure_loaded_io(path)                   ensure_file_loaded("ruuuby/class/io/" #path)
 #define ensure_loaded_enumerable(path)           ensure_file_loaded("ruuuby/class/enumerable/" #path)
@@ -37,6 +41,11 @@ ________________________________________________________________________________
 #define ensure_loaded_nums(path)                 ensure_file_loaded("ruuuby/class/nums/" #path)
 #define ensure_loaded_default(path)              ensure_file_loaded("" #path)
 
+#define ensure_all_loaded_for_io(){\
+    ensure_loaded_io(file)\
+    ensure_loaded_io(dir)\
+}
+
 #define ensure_all_loaded_for_set_theory(){\
     ensure_loaded_set_theory(closure)\
     ensure_loaded_set_theory(number_set)\
@@ -48,14 +57,14 @@ ________________________________________________________________________________
     ensure_loaded_set_theory(discrete/integer_numbers)\
     ensure_loaded_set_theory(discrete/irrational_numbers)\
     ensure_loaded_set_theory(discrete/natural_numbers)\
-    ensure_loaded_set_theory(discrete/null_set)\
     ensure_loaded_set_theory(discrete/rational_numbers)\
     ensure_loaded_set_theory(discrete/real_algebraic_numbers)\
     ensure_loaded_set_theory(discrete/real_numbers)\
     ensure_loaded_set_theory(discrete/universal_set)\
     ensure_loaded_set_theory(discrete/whole_numbers)\
-    ensure_loaded_group_theory(circle_group)\
 }
+//ensure_loaded_set_theory(discrete/null_set)
+//ensure_loaded_group_theory(circle_group)
 
 #define ensure_all_loaded_for_math_space(){\
     ensure_loaded_math(space/space)\
@@ -75,11 +84,6 @@ ________________________________________________________________________________
     ensure_loaded_math(algebra/tropical/tropical)\
     ensure_loaded_math(algebra/tropical/context_numeric)\
     ensure_loaded_math(algebra/tropical/context_matrix)\
-    ensure_loaded_math(graph_theory/graph_theory)\
-    ensure_loaded_nums(matrix)\
-    ensure_loaded_nums(vector)\
-    ensure_loaded_math(finance/currency_matrix)\
-    ensure_loaded_math(graph_theory/pseudo_graph)\
 }
 
 #define ensure_all_loaded_for_geometry(){\
@@ -100,15 +104,21 @@ ________________________________________________________________________________
 }
 
 #define ensure_all_loaded_for_ruuuby(){\
-    ensure_loaded_ruuuby(virtual/env)\
+    ensure_loaded_ruuuby(env)\
     ensure_loaded_ruuuby(ruuuby/ruuuby_api)\
     ensure_loaded_ruuuby(ruuuby/api/api_zsh)\
-    ensure_loaded_ruuuby(ruuuby/api/api_git)\
+    ensure_loaded_ruuuby(ruuuby/api/git/api_git)\
     ensure_loaded_ruuuby(ruuuby/api/api_brew)\
     ensure_loaded_ruuuby(ruuuby/api/api_iconv)\
     ensure_loaded_ruuuby(ruuuby/api/api_locale)\
     ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine)\
     ensure_loaded_ruuuby(configs)\
+}
+
+#define ensure_all_loaded_for_ruuuby_engine(){\
+    ensure_loaded_ruuuby(ruuuby/engine/component/component)\
+    ensure_loaded_ruuuby(ruuuby/engine/component/api)\
+    ensure_loaded_ruuuby(ruuuby/engine/component/api_cli)\
 }
 
 #define ensure_all_loaded_for_nums(){\
@@ -121,10 +131,8 @@ ________________________________________________________________________________
 }
 
 #define ensure_all_loaded_for_attribute_includable(){\
-    ensure_loaded_attribute_includable(cardinality)\
-    ensure_loaded_attribute_includable(notation_set_mathematics)\
-    ensure_loaded_attribute_includable(subscript_indexing)\
     ensure_loaded_attribute_includable(syntax_cache)\
+    ensure_loaded_attribute_includable(connectable)\
 }
 
 #define ensure_all_loaded_for_module(){\

@@ -1,15 +1,18 @@
-var THREE = require('three');
+import Engine from './engine/engine'
 
-console.log('index.js just ran');
+console.log(`index.js just ran with version{${VERSION}} and iteration 3`);
 
-console.log(THREE);
+let engine    = new Engine.Engine();
+window.ruuuby = engine;
+window.R      = engine;
+
+engine.run();
+
+//console.log('engine just ran');
 
 //module.exports = THREE;
 
-// TODO: https://blog.scottlogic.com/2020/01/13/selenium-vs-puppeteer.html
-// TODO: https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#puppeteer-vs-puppeteer-core
-// https://github.com/puppeteer/puppeteer
-// https://blog.bitsrc.io/top-javascript-testing-frameworks-in-demand-for-2019-90c76e7777e9
-// https://www.lambdatest.com/blog/top-javascript-automation-testing-framework/
-// https://www.chaijs.com/
-// https://try-puppeteer.appspot.com/
+// TODO: https://unix.stackexchange.com/questions/88644/how-to-check-os-and-version-using-a-linux-command
+// TODO: https://nodesource.com/blog/an-absolute-beginners-guide-to-using-npm/
+// TODO: https://webpack.js.org/guides/production/
+// TODO: https://www.sitepoint.com/unit-test-javascript-mocha-chai/

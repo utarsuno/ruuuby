@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 module ::Math
   # math related code that can be categorized under +NumberTheory+
@@ -13,7 +13,7 @@ module ::Math
         # @return [Boolean] true, if `self ≡ b (mod c)`
         def ≡(b: ∞, mod: ∞)
           🛑num❓(:b, b, :∈ℤ)
-          🛑 ::Ruuuby::DescriptiveStandardError.🆕(self, "provided param mod{#{mod.to_s}} was either non-int or equal to val{0}") unless (mod.int? && mod != 0)
+          🛑 ::Ruuuby::DescriptiveStandardError.new(self, "provided param mod{#{mod.to_s}} was either non-int or equal to val{0}") unless (mod.int? && mod != 0)
           (self.modulo(mod)) == (b.modulo(mod))
         end
       end
@@ -38,7 +38,11 @@ module ::Math
     #  - semiprime?
 
     # equations within +NumberTheory+ that only involve 1-input (which belongs to the `natural-numbers`)
+    #
+    # TODO: sum of proper divisors{https://oeis.org/A001065}
     module ℕ¹
+
+      attribute_lazy_loadable('prime', false)
 
       # vocab:
       #  - prime number:        a natural-number that can't be created from the multiplication of other natural-numbers
@@ -58,7 +62,8 @@ module ::Math
       #
       # @return [Array]
       def self.prime_factors(n)
-        🛑num❓(:n, n, :∈ℕ)
+        🛑num❓('n', n, :∈ℕ)
+        self.ensure_lazy_loaded
         ::Prime.prime_division(n)
       end
 
@@ -70,8 +75,9 @@ module ::Math
       #
       # @return [Array]
       def self.divisors(n)
-        🛑num❓(:n, n, :∈ℕ)
+        🛑num❓('n', n, :∈ℕ)
         return [1] if 1 == n
+        self.ensure_lazy_loaded
         primes, powers = ::Prime.prime_division(n).transpose
         ranges = powers.map{|m| (0..m).to_a}
         ranges[0].product(*ranges[1..-1]).map{|es| primes.zip(es).map{|p,e| p**e}.reduce :*}.sort
@@ -83,7 +89,7 @@ module ::Math
       #
       # @return [Array] the same result as +divisors+ but without `n` itself
       def self.proper_divisors(n)
-        🛑num❓(:n, n, :∈ℕ)
+        🛑num❓('n', n, :∈ℕ)
         if n == 1
           return []
         elsif n < 4
@@ -100,7 +106,7 @@ module ::Math
       #
       # @return [Integer, Numeric]
       def self.aliquot_sum(n)
-        🛑num❓(:n, n, :∈ℕ)
+        🛑num❓('n', n, :∈ℕ)
         ::Math::NumberTheory::ℕ¹.proper_divisors(n).sum
       end
 
@@ -151,6 +157,8 @@ module ::Math
         end
       end
 
+      # @see https://oeis.org/A005100
+      #
       # @param [Integer] n
       #
       # @raise [ArgumentError] if n is not ∈ ℕ
@@ -177,10 +185,11 @@ module ::Math
       #
       # @return [Boolean] true, if +n+ is neither +prime+ nor +1+
       def self.composite?(n)
-        🛑num❓(:n, n, :∈ℕ)
+        🛑num❓('n', n, :∈ℕ)
         if n < 4
           return false
         else
+          self.ensure_lazy_loaded
           return !::Prime.prime?(n)
         end
       end
@@ -193,7 +202,7 @@ module ::Math
       def self.nᵗʰ_euler_totient(n); ::Math::NumberTheory.nth_euler_totient(n); end
 
       def self.nᵗʰ_cototient(n)
-        🛑num❓(:n, n, :∈𝕎)
+        🛑num❓('n', n, :∈𝕎)
         n - ::Math::NumberTheory.nth_euler_totient(n)
       end
 
@@ -203,7 +212,7 @@ module ::Math
       #
       # @return [Integer] summation of all digits, in base{10}, from `n`
       def self.digit_sum(n)
-        🛑num❓(:n, n, :∈𝕎)
+        🛑num❓('n', n, :∈𝕎)
         if n < 10
           return n
         else
@@ -217,7 +226,7 @@ module ::Math
       #
       # @return [Integer] summation of all digits recursively until the summation is a single digit, in base{10}, from `n`
       def self.digital_root(n)
-        🛑num❓(:n, n, :∈𝕎)
+        🛑num❓('n', n, :∈𝕎)
         if n < 10
           return n
         else
@@ -232,7 +241,7 @@ module ::Math
       #
       # @return [Integer] the number of +digit_sum+ iterations that func{+digital_root+} would perform for value `n`
       def self.additive_persistence(n)
-        🛑num❓(:n, n, :∈𝕎)
+        🛑num❓('n', n, :∈𝕎)
         if n < 10
           return 0
         elsif n < 19
@@ -392,17 +401,13 @@ module ::Math
 
     end # end: {ℤ³}
 
-    # Liouville's Constant
-
-    module Symbolic
-
+    #module Symbolic
       # TODO: Liouville's Constant (OEIS A012245)
       # https://mathworld.wolfram.com/LiouvillesConstant.html.
       # https://en.wikipedia.org/wiki/Liouville_number
       #  ^ (relevant as no Liouville number can be `rational`)
       #  ^ (all Liouville numbers are `transcendental`)
-
-    end
+    #end
 
   end # end: {NumberTheory}
 
@@ -419,4 +424,4 @@ end
 # TODO: pentatope numbers
 # TODO: square pyramidal number
 # TODO: multiplicative persistence
-#
+# TODO: https://oeis.org/A002378

@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+=begin
 RSpec.describe 'f37_b00' do
 
   context 'functionality' do
@@ -85,3 +86,4 @@ RSpec.describe 'f37_b00' do
   end # end: {audit}
 
 end
+=end

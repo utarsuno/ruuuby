@@ -8,7 +8,7 @@ module ::Ruuuby
     # @see https://man7.org/linux/man-pages/man3/iconv.3.html
     # @see https://en.wikipedia.org/wiki/Iconv
     # @see https://apple.stackexchange.com/questions/346453/what-the-difference-and-usage-of-encodings-utf-8-and-utf-8-mac-in-iconv
-    class IconvAPI < ::Ruuuby::MetaData::RuuubyAPIComponentCLI
+    class IconvAPI < ::Ruuuby::MetaData::EngineComponentAPICLI
 
       def initialize(engine)
         super(engine, 'iconv')

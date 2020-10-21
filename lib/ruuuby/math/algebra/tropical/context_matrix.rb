@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 using ::Math::Algebra::Tropical::ContextNumeric
+using ::Matrix::ContextParamCheck
 
 module ::Math
   module Algebra

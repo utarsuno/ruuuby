@@ -1,13 +1,12 @@
-//#encoding
+const express    = require('express');
+const app        = express();
+const port       = Number(process.env.SERVICE_PORT);
+const host       = String(process.env.SERVICE_HOST);
 
-const express  = require('express');
-const app      = express();
-const port     = Number(process.env.SERVICE_PORT);
-
-const LIB_REQ  = require('./utils/utils_protocol');
-const LIB_IO   = require('./utils/utils_file');
-const LIB_CSS  = require('./utils/utils_css');
-const LIB_HTML = require('./utils/utils_html');
+const LIB_REQ    = require('./utils/protocol');
+const LIB_FILE   = require('./utils/io/file');
+const LIB_DIR    = require('./utils/io/dir');
+const LIB_MINIFY = require('./utils/minify/minify');
 
 /**
  * @param {string} text
@@ -16,50 +15,161 @@ let log = function(text) {console.log(text)};
 
 // start the server
 app.listen(port, function() {
-    log(`file{server.js} launched, listening at http://localhost:${port}`);
+    log(`file{server.js} launched, listening at ${host}:${port}`);
 });
 
-// TODO: LOTS OF ERROR SCENARIO (TDD) COVERAGE MISSING
-app.get('/js/minify', function(req, res) {
-    if (!LIB_REQ.Ǝ_param('path_input', req)) {
-        LIB_REQ.err_param_missing('path_input', res);
-    } else if (!LIB_REQ.Ǝ_param('minify_type', req)) {
-        LIB_REQ.err_param_missing('minify_type', res);
-    } else {
-        let debug       = LIB_REQ.Ǝ_param('debug', req) ? req.query.debug === true : false;
-        let path_input  = req.query.path_input;
-        let path_output = LIB_REQ.Ǝ_param('path_output', req) ? req.query.path_output : undefined;
-        let minify_type = req.query.minify_type;
-        if (minify_type !== 'html' && minify_type !== 'css') {
-            res.status(400);
-            res.send(`provided param{minify_type} has un-recognized value{${minify_type}}`);
-        }
-        let data        = debug ? LIB_IO.read(path_input) : LIB_IO.read_debugging(path_input);
-        data.then(function(the_file_contents) {
-            if (debug) {log(`finished reading from path{${path_input}}`);}
-            let minified = '';
-            if (minify_type === 'css') {
-                minified = LIB_CSS.minify(the_file_contents);
-            } else {
-                minified = LIB_HTML.minify(the_file_contents);
-            }
-            if (path_output !== undefined) {
-                if (debug) {log(`saving to{${path_output}}`);}
-                let p = LIB_IO.write(path_output, minified);
-                p.then(function(val) {
-                    if (debug) {log(`saved to{${path_output}}, returning data!`);}
-                    res.send(`${minified}`);
-                }).catch(function(err) {
-                    LIB_REQ.err_runtime(err, res);
+app.get('/md5/file', function(req, res) {
+    // ------------------------------------------------------------------------------------
+    //  __        __              __       __   ___  __          __   ___  __
+    // |__)  /\  |__)  /\   |\/| /__` .   |__) |__  /  \ |  | | |__) |__  |  \
+    // |    /~~\ |  \ /~~\  |  | .__/ .   |  \ |___ \__X \__/ | |  \ |___ |__/
+    // ------------------------------------------------------------------------------------
+    let path      = LIB_REQ.parse_param_fileⵑ('path', req, res);
+    if (res.headersSent) {return res;}
+
+    // ------------------------------------------------------------------------------------
+    //  __        __              __       __   __  ___    __
+    // |__)  /\  |__)  /\   |\/| /__` .   /  \ |__)  |  | /  \ |\ |  /\  |
+    // |    /~~\ |  \ /~~\  |  | .__/ .   \__/ |     |  | \__/ | \| /~~\ |___
+    // ------------------------------------------------------------------------------------
+    let debug = LIB_REQ.parse_param_𝔹('debug', req, false);
+
+    // ------------------------------------------------------------------------------------
+    //  ___       __   __   __         ___          __   __     __
+    // |__  |\ | |  \ |__) /  \ | |\ |  |     |    /  \ / _` | /  `
+    // |___ | \| |__/ |    \__/ | | \|  |     |___ \__/ \__> | \__,
+    // ------------------------------------------------------------------------------------
+    let result = LIB_FILE.md5(path);
+    result.then(function(data){
+        if (debug) {
+            log(`path{${path}} has md5 value{${data}}`);
+            res.json({
+                path: path,
+                md5: data,
+                timestamp: Date.now(),
+            });
+        } else {res.send(data);}
+    }).catch(function(err) {
+        return LIB_REQ.err_runtime(err, res);
+    });
+});
+
+app.get('/md5/dir', function(req, res) {
+    // ------------------------------------------------------------------------------------
+    //  __        __              __       __   ___  __          __   ___  __
+    // |__)  /\  |__)  /\   |\/| /__` .   |__) |__  /  \ |  | | |__) |__  |  \
+    // |    /~~\ |  \ /~~\  |  | .__/ .   |  \ |___ \__X \__/ | |  \ |___ |__/
+    // ------------------------------------------------------------------------------------
+    let path      = LIB_REQ.parse_param_dirⵑ('path', req, res);
+    if (res.headersSent) {return res;}
+    let base_name = LIB_REQ.parse_paramⵑ('base_name', req, res);
+    if (res.headersSent) {return res;}
+
+    // ------------------------------------------------------------------------------------
+    //  __        __              __       __   __  ___    __
+    // |__)  /\  |__)  /\   |\/| /__` .   /  \ |__)  |  | /  \ |\ |  /\  |
+    // |    /~~\ |  \ /~~\  |  | .__/ .   \__/ |     |  | \__/ | \| /~~\ |___
+    // ------------------------------------------------------------------------------------
+    let debug = LIB_REQ.parse_param_𝔹('debug', req, false);
+
+    // ------------------------------------------------------------------------------------
+    //  ___       __   __   __         ___          __   __     __
+    // |__  |\ | |  \ |__) /  \ | |\ |  |     |    /  \ / _` | /  `
+    // |___ | \| |__/ |    \__/ | | \|  |     |___ \__/ \__> | \__,
+    // ------------------------------------------------------------------------------------
+    try {
+        let result = LIB_DIR.md5(path, base_name, debug);
+        result.then(function (data) {
+            if (debug) {
+                log(`path{${path}} has md5 value{${data}}`);
+                res.json({
+                    path: path,
+                    pre_parsed: data[0],
+                    md5: data[1],
+                    timestamp: Date.now(),
                 });
-            } else {
-                if (debug) {log("no save path specified, returning data!");}
-                res.send(minified);
-            }
-        }).catch(function(error) {
-            LIB_REQ.err_runtime(error, res);
-        });
+            } else {res.send(data);}
+        }).catch(function (err) {throw err;});
+    } catch (err) {
+        return LIB_REQ.err_runtime(err, res);
     }
+});
+
+/**
+ * @see https://expressjs.com/en/api.html#app.get
+ *
+ * @TODO full test coverage
+ */
+app.get('/minify', function(req, res) {
+    // ------------------------------------------------------------------------------------
+    //  __        __              __       __   ___  __          __   ___  __
+    // |__)  /\  |__)  /\   |\/| /__` .   |__) |__  /  \ |  | | |__) |__  |  \
+    // |    /~~\ |  \ /~~\  |  | .__/ .   |  \ |___ \__X \__/ | |  \ |___ |__/
+    // ------------------------------------------------------------------------------------
+    let minify_type = LIB_REQ.parse_param_enumⵑ('minify_type', req, res, LIB_MINIFY.types);
+    if (res.headersSent) {return res;}
+
+    let path_input  = LIB_REQ.parse_param_fileⵑ('path_input', req, res);
+    if (res.headersSent) {return res;}
+
+    // ------------------------------------------------------------------------------------
+    //  __        __              __       __   __  ___    __
+    // |__)  /\  |__)  /\   |\/| /__` .   /  \ |__)  |  | /  \ |\ |  /\  |
+    // |    /~~\ |  \ /~~\  |  | .__/ .   \__/ |     |  | \__/ | \| /~~\ |___
+    // ------------------------------------------------------------------------------------
+    let debug       = LIB_REQ.parse_param_𝔹('debug', req, false);
+    let path_output = LIB_REQ.parse_param('path_output', req);
+    let data        = LIB_FILE.read(path_input, debug);
+
+    // ------------------------------------------------------------------------------------
+    //                 ___            /  __
+    //  |\/| | |\ | | |__  \ /    |  /  /  \
+    //  |  | | | \| | |     |     | /   \__/
+    // ------------------------------------------------------------------------------------
+    data.then(function(the_file_contents) {
+        let minified = LIB_MINIFY.minify(the_file_contents, minify_type);
+        if (path_output !== undefined && path_output !== null) {
+            let p = LIB_FILE.write(path_output, minified, debug);
+            p.then(function(val) {
+                if (debug) {
+                    log(`saved to{${path_output}}, returning data for minified{${path_input}} w/ strategy{${minify_type}}`);
+                    res.send(minified);
+                } else {
+                    let len_before = LIB_FILE.len(path_input);
+                    let len_after  = LIB_FILE.len(path_output);
+                    res.json({
+                        path_base: path_input,
+                        path_minified: path_output,
+                        timestamp: Date.now(),
+                        size_base: len_before,
+                        size_minified: len_after,
+                        size_diff: Math.abs((len_before - len_after) / len_before)
+                    });
+                }
+            }).catch(function(err) {
+                if (debug) {log(`error minifying path{${path_input}} w/ err{${err.toString()}}`)}
+                return LIB_REQ.err_runtime(err, res);
+            });
+        } else {
+            if (debug) {
+                log(`no save path specified, returning data for minified{${path_input}} w/ strategy{${minify_type}}`);
+                res.send(minified);
+            } else {
+                let len_before = the_file_contents.length;
+                let len_after  = minified.length;
+                res.json({
+                    path_base: path_input,
+                    timestamp: Date.now(),
+                    size_base: len_before,
+                    size_minified: len_after,
+                    size_diff: Math.abs((len_before - len_after) / len_before)
+                });
+            }
+        }
+    }).catch(function(err) {
+        if (debug) {log(`error reading path{${path_input}} w/ err{${err.toString()}}`)}
+        return LIB_REQ.err_runtime(err, res);
+    });
 });
 
 // TODO: https://itnext.io/setup-logger-for-node-express-app-9ef4e8f73dac

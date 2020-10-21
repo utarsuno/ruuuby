@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# encoding: utf-8
+
+set -euo pipefail
+IFS=$'\n\t'
+set -vx
+
+RUBYOPT="--jit --jit-warnings --jit-wait --jit-max-cache=1337 --jit-verbose=2 --jit-debug -w" ./bin/console/ruuuby

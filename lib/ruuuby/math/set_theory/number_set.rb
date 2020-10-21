@@ -33,9 +33,7 @@ module ::Math
 
       # @param [Symbol]                    symbol
       # @param [Integer, NilClass, Symbol] cardinality
-      # @param [Hash]                      axioms
-      def initialize(symbol, cardinality, axioms={})
-        super(axioms)
+      def initialize(symbol, cardinality)
         🛑sym❓(:symbol, symbol)
         @name        = self.Ⓣ.♻️⟶∞('::').to_🐍.gsub('_', ' ')
         @symbol      = symbol

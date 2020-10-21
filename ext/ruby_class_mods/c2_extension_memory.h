@@ -32,7 +32,8 @@ static VALUE cached_flt_inf_complex;
 static VALUE ⓜruuuby;
 static VALUE ⓜruuuby_metadata;
 static VALUE ⓜruuuby_engine;
-static VALUE ⓜruuuby_engine_jit;
+// TODO: un-comment once field needs to be kept on extension side {ruuuby_f22_b01}
+//static VALUE ⓜruuuby_engine_jit;
 static VALUE ⓜruuuby_engine_gc;
 
 static VALUE ⓜnumber_theory;
@@ -42,12 +43,12 @@ static VALUE ⓜtrigonometry;
 
 static VALUE Ⓒbig_decimal;
 static VALUE Ⓒset;
-static VALUE Ⓒmatrix;
-static VALUE Ⓒvector;
 static VALUE Ⓒtheta_angle;
 static VALUE Ⓒtime_series_data;
 static VALUE Ⓒpseudo_graph;
 static VALUE Ⓒruuuby_engine;
+
+static VALUE hsh_ruuuby_engine_stats;
 
 static VALUE cached_const_angle_golden;
 static VALUE cached_const_angle_tau;

@@ -1,5 +1,14 @@
-# coding: UTF-8
+# encoding: UTF-8
 
+# ### Rationals
+#
+#  * `0/0` means `⟶0 / ⟶0` where `⟶0` means `approaching to 0`
+#  * `⟶∞` and `∞` are equivalent notation
+#  * `⟶0` and `0` are not equivalent notation
+#    * ex: the ONLY answer for (`5/0`) is `division by zero not defined`
+#    * ex: `0/0` is `not defined`
+#    * ex: `⟶0 / ⟶0` is `indeterminate`
+#
 # `Ruuuby` modifications to existing class{+Rational+}
 class ::Rational
 
@@ -67,7 +76,7 @@ class ::Rational
         return ::Float::NAN
       end
     else
-      🛑 ArgumentError.🆕("| c{Rational}-> m{^} self(#{self.to_s}) received invalid exponential argument(#{n.to_s}) |")
+      🛑 ArgumentError.new("| c{Rational}-> m{^} self(#{self.to_s}) received invalid exponential argument(#{n.to_s}) |")
     end
   end
 

@@ -1,32 +1,8 @@
-# coding: utf-8
+# encoding: UTF-8
 
-RSpec.describe 'lib/class/re.rb' do
+RSpec.describe 're.rb' do
 
-  context 'extends class[Regexp]' do
-
-    context 'by adding module[Syntax]' do
-      it 'exists' do
-        expect_∃ᵐ(:Syntax, ::Regexp)
-      end
-      context 'with needed constants' do
-        context '::Regexp::Syntax::MARKER_START' do
-          it 'exists' do
-            expect(::Regexp::Syntax::MARKER_START).to eq('\A')
-          end
-          it "can't be changed" do
-            expect{::Regexp::Syntax::MARKER_START = 5}.to raise_error(FrozenError)
-          end
-        end
-        context '::Regexp::Syntax::MARKER_END' do
-          it 'exists' do
-            expect(::Regexp::Syntax::MARKER_END).to eq('\z')
-          end
-          it "can't be changed" do
-            expect{::Regexp::Syntax::MARKER_END = 5}.to raise_error(FrozenError)
-          end
-        end
-      end
-    end
+  context 'extends class{Regexp}' do
 
     context 'adding needed functions' do
       context 'static-function{gen_closed_match} handles needed scenarios' do
@@ -49,9 +25,9 @@ RSpec.describe 'lib/class/re.rb' do
           expect(result3.source).to eq('\Aabc\z')
         end
         it 'cases: error' do
-          expect{::Regexp.gen_closed_match(nil)}.to raise_error(ArgumentError)
-          expect{::Regexp.gen_closed_match([])}.to raise_error(ArgumentError)
-          expect{::Regexp.gen_closed_match(5)}.to raise_error(ArgumentError)
+          expect{::Regexp.gen_closed_match(nil)}.to raise_error(::ArgumentError)
+          expect{::Regexp.gen_closed_match([])}.to raise_error(::ArgumentError)
+          expect{::Regexp.gen_closed_match(5)}.to raise_error(::ArgumentError)
         end
       end
     end

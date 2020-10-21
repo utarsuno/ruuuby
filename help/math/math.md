@@ -91,7 +91,6 @@
 
 | # | more | example |
 | --- | --- | --- |
-| 0x00 | "in the natural numbers `ℕ` and all of its supersets(`ℤ`, `ℚ`, `ℝ`, or `ℂ`), the `additive identity` is `0`. Thus for any one of these numbers `n`, `n + 0 = n = 0 + n`" | `5 + 0 = 5 = 0 + 5` |
 | 0x20, 0x21 | `f: X → Y` is a `function` from the `set X` to the `set Y` |
 | 0x22 | `one-to-one function` is different than `one-to-one correspondence` (`bijective functions`)(0x23) |
 
@@ -132,15 +131,6 @@ TODO formal def: `normal distrubtion`
  * `(x/y)ᵃ = xᵃ/yᵃ`
  * TODO:
    * `(d/dx)x^ᵃ = ax^ᵃ⁻ᵇ, {ᵇ=1}`
-
-### Rationals
-
- * `0/0` means `⟶0 / ⟶0` where `⟶0` means `approaching to 0`
- * `⟶∞` and `∞` are equivalent notation
- * `⟶0` and `0` are not equivalent notation
-   * ex: the ONLY answer for (`5/0`) is `division by zero not defined`
-   * ex: `0/0` is `not defined`
-   * ex: `⟶0 / ⟶0` is `indeterminate`
 
 #### Examples of `even-functions`:
 

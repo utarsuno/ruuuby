@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # mathematics related code
 module ::Math
@@ -7,12 +7,13 @@ module ::Math
     class IntegerNumbers < ::Math::SetTheory::NumberSet
       include ::Singleton
 
+      # {
+      #   closed_under_addition: true,
+      #   closed_under_multiplication: true,
+      #   closed_under_subtraction: true
+      # }
       def initialize
-        super(:ℤ, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO, {
-            closed_under_addition: true,
-            closed_under_multiplication: true,
-            closed_under_subtraction: true
-        })
+        super(:ℤ, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO)
         @subset_of   = [:𝕌, :𝔸ᵣ, :𝔸, :ℝ, :ℂ, :ℚ]
         @superset_of = [:𝔹, :ℕ, :𝕎]
       end

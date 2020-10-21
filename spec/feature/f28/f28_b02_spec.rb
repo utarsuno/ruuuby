@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 using ::ThetaAngle::ContextRuuuby
+using ::Object::ContextSuperscripts
 
 RSpec.describe 'f28_b02' do
   context 'functionality' do

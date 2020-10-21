@@ -32,7 +32,15 @@ module ::Math
     # ‣ helpful resources from `National Futures Association (NFA)`:
     # @see https://www.nfa.futures.org/investors/investor-resources/index.html
     #
-    module Forex
+    #module Forex
+      #CRYPTO = {
+      #    BTC: %w(Bitcoin ₿),
+      #    LTC: %w(Litecoin Ł),
+      #    DOGE: %w(Dogecoin),
+      #    ETH: %w(Ethereum),
+      #    MIOTA: %w(IOTA)
+      #}
+    #end
 
 =begin
       module Fiat
@@ -57,17 +65,7 @@ module ::Math
             CNY: ['元', 'Chinese yuan', 'China', '🇨🇳'],
         }
       end
-
-      module Crypto
-        TEMP_DATA = {
-            BTC: %w(Bitcoin ₿),
-            DOGE: %w(Dogecoin),
-            ETH: %w(Ethereum),
-            MIOTA: %w(IOTA)
-        }
-      end
 =end
-    end
 
 =begin
     # | term                   | details                                                                                                               | source |

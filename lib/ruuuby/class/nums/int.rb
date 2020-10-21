@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # `Ruuuby` aliases & function additions to existing Class{+Integer+}
 class ::Integer

@@ -13,7 +13,7 @@ RSpec.describe 'f06_b01' do
           [String, nil, 0, 1, {}, [], ['str'], :str].∀{|s|expect(s.str?).to eq(false)}
         end
         it 'a newly created object inheriting String (does not match)' do
-          expect(MockString.🆕('my_str').str?).to eq(false)
+          expect(MockString.new('my_str').str?).to eq(false)
         end
       end
     end
@@ -78,8 +78,8 @@ RSpec.describe 'f06_b01' do
   context 'audit', :audit do
     context 'feature{f06}:behavior{b01} passes audits' do
       context 'funcs provided are defined in correct location' do
-        it 'for m{ObjectF06}' do
-          expect_∃⨍(:🛑str❓, ::Ruuuby::Feature::Includable::ObjectF06)
+        it 'for c{Object}' do
+          expect_∃⨍(:🛑str❓, ::Object)
         end
       end
     end

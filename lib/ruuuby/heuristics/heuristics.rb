@@ -13,7 +13,9 @@ module ::Ruuuby
       refine ::Array do
 
         # @return [Boolean]
-        def all_str?; self.∀{|element| return false unless element.str?}; return true; end
+        #def all_str?; self.∀{|element| return false unless element.str?}; return true; end
+
+        def all_str?; self.all?{|element| element.str?}; end
 
         def clean
           if self.length == 1
@@ -56,8 +58,7 @@ module ::Ruuuby
 
         def clean
           if self.∋?($/)
-            out = self.strip.split($/)
-            return out.clean
+            return self.strip.split($/).clean
           else
             return self
           end

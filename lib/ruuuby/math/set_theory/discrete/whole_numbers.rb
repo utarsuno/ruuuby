@@ -7,12 +7,14 @@ module ::Math
     # also called: `counting-numbers`
     class WholeNumbers < ::Math::SetTheory::NumberSet
       include ::Singleton
+
+      # {
+      #   closed_under_addition: true,
+      #   closed_under_multiplication: true,
+      #   closed_under_subtraction: true
+      # }
       def initialize
-        super(:𝕎, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO, {
-            closed_under_addition: true,
-            closed_under_multiplication: true,
-            closed_under_subtraction: true
-        })
+        super(:𝕎, ::Math::SetTheory::NumberSet::AlephNumbers::ZERO)
         @subset_of   = [:𝕌, :𝔸ᵣ, :𝔸, :ℝ, :ℂ, :ℚ, :ℤ, :𝕎]
         @superset_of = [:𝔹, :ℕ]
       end

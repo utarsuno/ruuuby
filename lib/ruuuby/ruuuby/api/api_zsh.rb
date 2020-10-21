@@ -7,13 +7,13 @@ module ::Ruuuby
   # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
 
-    class ZshAPI < ::Ruuuby::MetaData::RuuubyAPIComponentCLI
+    class ZshAPI < ::Ruuuby::MetaData::EngineComponentAPICLI
 
       module Scripts
         # @type [String]
         GET_LOCAL_IP = 'get_local_ip'
 
-        module DockerCompose
+        module Docker
           # @type [String]
           RUN_CLEAN_UP = 'clean'
 
@@ -45,8 +45,8 @@ module ::Ruuuby
         case script_name
         when Ruuuby::MetaData::ZshAPI::Scripts::GET_LOCAL_IP
           self.run_cmd("./bin/zsh/#{script_name}.zsh")
-        when Ruuuby::MetaData::ZshAPI::Scripts::Docker::Compose::DEV_RUN
-          self.run_cmd("./bin/zsh/docker_compose/#{script_name}.zsh")
+        when Ruuuby::MetaData::ZshAPI::Scripts::Docker::Compose::DEV_START
+          self.run_cmd("./bin/zsh/docker/compose/#{script_name}.zsh")
         else
           🛑 ::RuntimeError.new("| {ZshAPI}-> m{run_script} does not recognize script_name{#{script_name}} |")
         end

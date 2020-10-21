@@ -20,7 +20,7 @@ module HelpersSyntaxCache
     expect(the_class.respond_to?(syntax_id)).to eq(true)
     result = the_class.send(syntax_id)
     expect(result.ⓣ).to eq(Regexp)
-    expect(result.source).to eq("\\A#{syntax_before_processing}\\z")
+    expect(result.source).to eq(syntax_before_processing)
     expect(the_class.send(syntax_id).🆔).to eq(result.🆔)
     expect{the_class.send("#{syntax_id}=".to_sym, 5).to raise_error(FrozenError)}
   end
@@ -59,6 +59,32 @@ module HelpersFeature16
 end
 
 module HelpersGeneral
+
+  # @param [*] response
+  def expect_json_response(response)
+    expect(response.content_type_json?).to eq(true)
+    expect(response.content_type).to eq('application/json; charset=utf-8')
+  end
+
+  # @param [*]                 response
+  # @param [String, NilClass]  expected_code
+  # @param [String, NilClass]  expected_content
+  # @param [Integer, NilClass] expected_content_length
+  #
+  # @return [*] response
+  def expect_request_response(response, expected_code=nil, expected_content=nil, expected_content_length=nil)
+    expect(response.is_a?(::Net::HTTPResponse)).to eq(true)
+    unless expected_code.nil?
+      expect(response.code).to eq(expected_code)
+    end
+    unless expected_content.nil?
+      expect(response.body).to eq(expected_content)
+    end
+    unless expected_content_length.nil?
+      expect(response.body.length).to eq(expected_content_length)
+    end
+    response
+  end
 
   def expect_needed_version(subject, version_expected, validate_matching_value=nil)
     expect(subject.∃version?).to eq(true)
@@ -159,6 +185,8 @@ RSpec.configure do |config|
 
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
+
+  #config.add_setting(:start_time)
 
   # Disable RSpec exposing methods globally on `Module` and `main`
   #config.disable_monkey_patching!

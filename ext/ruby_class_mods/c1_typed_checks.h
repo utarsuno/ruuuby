@@ -1,4 +1,4 @@
-// encoding: utf-8
+// encoding: UTF-8
 
 /*____________________________________________________________________________________________________________________________________________________________________
          __   __        __                  __   __   __  ___  __
@@ -12,6 +12,8 @@ ________________________________________________________________________________
 
 #ifndef CRUUUBY_H1_CONSTANTS_TYPE_HEADERS
 #define CRUUUBY_H1_CONSTANTS_TYPE_HEADERS "defined(CRUUUBY_H1_CONSTANTS_TYPE_HEADERS)"
+
+//extern enum ruby_value_type;
 
 /*____________________________________________________________________________________________________________________________________________________________________
   __   __        __  ___           ___                         ___  __
@@ -104,8 +106,9 @@ static inline VALUE 💎new_ary(const long known_max_size);
 #define is_empty_generic(arg)     (rb_respond_to(arg, cached_rb_intern_is_empty) && rb_funcall(arg, cached_rb_intern_is_empty, 0) == Qtrue)
 #define is_non_empty_generic(arg) (rb_respond_to(arg, cached_rb_intern_is_empty) && rb_funcall(arg, cached_rb_intern_is_empty, 0) == Qfalse)
 
-#define r_hsh_len(arg)      RHASH_SIZE(arg)
-#define r_hsh_is_empty(arg) RHASH_EMPTY_P(arg)
+#define r_hsh_len(arg)           RHASH_SIZE(arg)
+#define r_hsh_is_empty(arg)      RHASH_EMPTY_P(arg)
+#define r_hsh_set(arg, key, val) rb_hash_aset(arg, key, val)
 
 #define r_ary_len(arg)             RARRAY_LEN(arg)
 #define r_ary_is_empty(arg)        r_ary_len(arg) == 0

@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+=begin
 # mathematics related code
 module ::Math
 
@@ -21,6 +22,7 @@ module ::Math
 
   end
 end
+=end
 
 # TODO: https://en.wikipedia.org/wiki/Complex_plane
 # TODO: https://en.wikipedia.org/wiki/De_Moivre%27s_formula

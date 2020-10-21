@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 using ::ThetaAngle::ContextRuuuby
+using ::Object::ContextSuperscripts
 
 RSpec.describe 'f28_b00' do
   context 'functionality' do
@@ -30,7 +31,7 @@ RSpec.describe 'f28_b00' do
     end # end: {golden ratio}
   end
 
-  context 'integration tests' do
+  context 'integration tests', :integration do
     context '{f28_b00} and {f16}' do
       it '0 == 𝚽^² - 𝚽 - 1' do
         expect((𝚽 ** 2) - 𝚽 - 1.0).to eq(0)

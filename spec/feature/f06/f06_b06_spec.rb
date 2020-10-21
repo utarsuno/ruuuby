@@ -107,9 +107,9 @@ RSpec.describe 'f06_b06' do
         it 'for c{Object}' do
           expect_∃⨍(:sym?, ::Object)
         end
-        it 'for m{ObjectF06}' do
-          expect_∃⨍(:🛑sym❓, ::Ruuuby::Feature::Includable::ObjectF06)
-          expect_∃⨍(:🛑syms❓, ::Ruuuby::Feature::Includable::ObjectF06)
+        it 'for c{Object}' do
+          expect_∃⨍(:🛑sym❓, ::Object)
+          expect_∃⨍(:🛑syms❓, ::Object)
         end
       end
     end

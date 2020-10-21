@@ -1,3 +1,6 @@
+# encoding: UTF-8
+
+using ::Object::ContextSuperscripts
 
 RSpec.describe 'math-operations: raise to subscript powers' do
 

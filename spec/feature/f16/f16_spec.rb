@@ -1,38 +1,38 @@
 # encoding: UTF-8
 
+using ::Object::ContextSuperscripts
+
 RSpec.describe 'f16' do
 
   context 'audit', :audit do
 
-    context 'feature(16) passes audits' do
-      it 'module is defined in correct location' do
-        expect_∃ᵐ(:ObjectF16, ::Ruuuby::Feature::Includable)
-      end
-      context 'funcs provided are defined in correct location' do
-        it 'for m{ObjectF16}' do
-          expect_∃⨍(:⁻⁹, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁻⁸, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁻⁷, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁻⁶, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁻⁵, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁻⁴, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁻³, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁻², ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁻¹, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁰, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁹, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁸, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁷, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁶, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁵, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:⁴, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:³, ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:², ::Ruuuby::Feature::Includable::ObjectF16)
-          expect_∃⨍(:¹, ::Ruuuby::Feature::Includable::ObjectF16)
-        end
-      end
+    it 'funcs mapped from{-9} to {9} provide expected symbol' do
+      expect(⁻⁹).to eq(:⁻⁹)
+      expect(⁻⁸).to eq(:⁻⁸)
+      expect(⁻⁷).to eq(:⁻⁷)
+      expect(⁻⁶).to eq(:⁻⁶)
+      expect(⁻⁵).to eq(:⁻⁵)
+      expect(⁻⁴).to eq(:⁻⁴)
+      expect(⁻³).to eq(:⁻³)
+      expect(⁻²).to eq(:⁻²)
+      expect(⁻¹).to eq(:⁻¹)
+      expect(⁰).to eq(:⁰)
+      expect(⁹).to eq(:⁹)
+      expect(⁸).to eq(:⁸)
+      expect(⁷).to eq(:⁷)
+      expect(⁶).to eq(:⁶)
+      expect(⁵).to eq(:⁵)
+      expect(⁴).to eq(:⁴)
+      expect(³).to eq(:³)
+      expect(²).to eq(:²)
+      expect(¹).to eq(:¹)
     end
 
+    context 'feature{16} passes audits' do
+      it 'module{ContextSuperscripts} is defined in correct location' do
+        expect_∃ᵐ(:ContextSuperscripts, ::Object)
+      end
+    end
   end
 
 end

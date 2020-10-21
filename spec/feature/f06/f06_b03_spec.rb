@@ -7,9 +7,6 @@ RSpec.describe 'f06_b03' do
     context 'by adding function{ary?}' do
       context 'handling needed scenarios' do
         context 'cases: positive' do
-          it 'w/ normalization{∉∅}' do
-            [[[]], [nil], [true], [false], ['a'], [1337]].∀{|n|expect(n.ary?(:∉∅)).to eq(true)}
-          end
           it 'w/o normalization' do
             [[], [] + [], [[]], [nil], [true], [false], ['a'], [1337]].∀{|n|expect(n.ary?).to eq(true)}
           end
@@ -17,17 +14,9 @@ RSpec.describe 'f06_b03' do
         context 'cases: negative' do
           it 'w/o effecting Class-instance{Array}' do
             expect(::Array.ary?).to eq(false)
-            expect(::Array.ary?(:∉∅)).to eq(false)
           end
-          context 'data-based' do
-            it 'w/ normalization{∉∅}' do
-              [TrueClass, FalseClass, Class, Object, NilClass, '', 'true', 'false', -1, 1, 0, {}].∀{|n|expect(n.ary?(:∉∅)).to eq(false)}
-              expect([].ary?(:∉∅)).to eq(false)
-              expect(([] + []).ary?(:∉∅)).to eq(false)
-            end
-            it 'w/o normalization' do
-              [TrueClass, FalseClass, Class, Object, NilClass, '', 'true', 'false', -1, 1, 0, {}].∀{|n|expect(n.ary?).to eq(false)}
-            end
+          it 'w/o normalization' do
+            [::TrueClass, ::FalseClass, ::Class, ::Object, ::NilClass, '', 'true', 'false', -1, 1, 0, {}].∀{|n|expect(n.ary?).to eq(false)}
           end
         end
       end
@@ -82,8 +71,8 @@ RSpec.describe 'f06_b03' do
   context 'audit', :audit do
     context 'feature{f06}:behavior{b03} passes audits' do
       context 'funcs provided are defined in correct location' do
-        it 'for m{ObjectF06}' do
-          expect_∃⨍(:🛑ary❓, ::Ruuuby::Feature::Includable::ObjectF06)
+        it 'for c{Object}' do
+          expect_∃⨍(:🛑ary❓, ::Object)
         end
       end
     end
@@ -101,16 +90,10 @@ RSpec.describe 'f06_b03' do
             expect{[].ary?}.to perform_extremely_quickly
             expect{['a'].ary?}.to perform_extremely_quickly
           end
-          it 'w/ normalizer{∉∅}' do
-            expect{['a'].ary?(:∉∅)}.to perform_extremely_quickly
-          end
         end
         context 'cases: negative' do
           it 'w/o normalizer' do
             expect{0.ary?}.to perform_extremely_quickly
-          end
-          it 'w/ normalizer{∉∅}' do
-            expect{[].ary?(:∉∅)}.to perform_extremely_quickly
           end
         end
       end
@@ -122,9 +105,6 @@ RSpec.describe 'f06_b03' do
           it 'w/o normalizer' do
             expect{🛑ary❓(:arg, [])}.to perform_extremely_quickly
             expect{🛑ary❓(:arg, [nil])}.to perform_extremely_quickly
-          end
-          it 'w/ normalizer{∉∅}' do
-            expect{🛑ary❓(:arg, [nil], :∉∅)}.to perform_extremely_quickly
           end
         end
       end

@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 RSpec.describe 'application_record.rb' do
-  let(:data_orm_all_classes){[::RuuubyFeature, ::RuuubyRelease, ::RuuubyFeatureBehavior, ::RuuubyGem, ::RuuubyFile, ::RuuubyDir, ::RuuubyChangelog, ::GitCommit]}
+  let(:data_orm_all_classes){[::RuuubyFeature, ::RuuubyRelease, ::RuuubyFeatureBehavior, ::RuuubyGem, ::RuuubyFile, ::RuuubyDir, ::RuuubyChangelog]}
 
   context 'class{ApplicationRecord}', :db do
 
@@ -42,7 +42,6 @@ RSpec.describe 'application_record.rb' do
             expect(::RuuubyDir.orm_Ⓣ_🐍).to eq('ruuuby_dir')
             expect(::RuuubyFile.orm_Ⓣ_🐍).to eq('ruuuby_file')
             expect(::RuuubyChangelog.orm_Ⓣ_🐍).to eq('ruuuby_changelog')
-            expect(::GitCommit.orm_Ⓣ_🐍).to eq('git_commit')
           end
         end
       end # end: {func{orm_Ⓣ_🐍}}

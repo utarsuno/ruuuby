@@ -8,15 +8,16 @@ module ::Math
     class RealNumbers < ::Math::SetTheory::NumberSet
       include ::Singleton
 
+      # {
+      #   closed_under_addition: true,
+      #   closed_under_multiplication: true,
+      #   closed_under_subtraction: true,
+      #   closed_under_division: true,
+      #   dense: true,
+      #   continuous: true
+      # }
       def initialize
-        super(:ℝ, ::Math::SetTheory::NumberSet::AlephNumbers::ONE, {
-            closed_under_addition: true,
-            closed_under_multiplication: true,
-            closed_under_subtraction: true,
-            closed_under_division: true,
-            dense: true,
-            continuous: true
-        })
+        super(:ℝ, ::Math::SetTheory::NumberSet::AlephNumbers::ONE)
         @subset_of   = [:𝕌, :ℂ]
         @superset_of = [:𝔹, :ℕ, :𝕎, :ℤ, :𝔸ᵣ, :𝔸, :ℚ, :𝕀]
       end

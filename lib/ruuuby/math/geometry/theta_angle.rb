@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-using ::Math::Space::SymbolicNumbersSpace::ContextStr
+using ::Math::Space::SymbolicNumbers::ContextStr
 
 class ::ThetaAngle
 
@@ -28,22 +28,22 @@ class ::ThetaAngle
     # (ex: `3°7'30''` == `3 + 7/60 + 30/3600` == `3.125°`)
     #
     # @type [String]
-    FORMAT_DGR         = "(?<s0>#{SYN_NUM}(( )?(°|dgr|degrees)))?(?<s1>( )?#{SYN_NUM}(( )?('|arc[-]minutes)))?(?<s2>( )?#{SYN_NUM}(( )?(''|arc[-]seconds)))?".❄️
+    FORMAT_DGR         = "(?<s0>#{SYN_NUM}(( )?(°|dgr|degrees)))?(?<s1>( )?#{SYN_NUM}(( )?('|arc[-]minutes)))?(?<s2>( )?#{SYN_NUM}(( )?(''|arc[-]seconds)))?"
 
     # @type [String]
-    FORMAT_RAD         = "(?<s0>#{SYN_NUM}(( )?(ʳ|radians|rad)))?(?<s1>( )?#{SYN_NUM}(( )?mrad))?(?<s2>( )?#{SYN_NUM}(( )?urad))?".❄️
+    FORMAT_RAD         = "(?<s0>#{SYN_NUM}(( )?(ʳ|radians|rad)))?(?<s1>( )?#{SYN_NUM}(( )?mrad))?(?<s2>( )?#{SYN_NUM}(( )?urad))?"
 
     # @type [String]
-    FORMAT_GON         = "(?<s0>#{SYN_NUM}( )?(ᵍ|gon(s)?))".❄️
+    FORMAT_GON         = "(?<s0>#{SYN_NUM}( )?(ᵍ|gon(s)?))"
 
     # @type [String]
-    FORMAT_TRN         = "(?<s0>#{SYN_NUM}( )?(trn|turns))".❄️
+    FORMAT_TRN         = "(?<s0>#{SYN_NUM}( )?(trn|turns))"
 
     # @type [String]
-    NUMERIC_SCENARIOS  = "(?<s0>#{SYN_NUM})(?<s1>((\\/)#{SYN_NUM}))?".❄️
+    NUMERIC_SCENARIOS  = "(?<s0>#{SYN_NUM})(?<s1>((\\/)#{SYN_NUM}))?"
 
     # @type [String]
-    SYMBOLIC_SCENARIOS = "(?<s0>[-]?((\\d+(.\\d+)?))?)(?<s1>(π|𝚽))(?<s2>((\\/)?(\\d+(.\\d+)?))?)".❄️
+    SYMBOLIC_SCENARIOS = "(?<s0>[-]?((\\d+(.\\d+)?))?)(?<s1>(π|𝚽))(?<s2>((\\/)?(\\d+(.\\d+)?))?)"
 
       #❄️
   end
@@ -228,14 +228,14 @@ class ::ThetaAngle
       # @param [*]              arg
       #
       # @raise [ArgumentError]
-      def 🛑θ❓(arg_name, arg); 🛑 ::Ruuuby::PrmErrThetaAngle.🆕(self, arg_name.to_s, arg) unless arg.θ?; end
+      def 🛑θ❓(arg_name, arg); 🛑 ::ArgErr.new(self, arg_name.to_s, arg, 'ThetaAngle') unless arg.θ?; end
 
       # @param [*] args
       #
       # @raise [ArgumentError]
       def 🛑θs❓(args)
         args.∀ₓᵢ do |x, i|
-          🛑 ::Ruuuby::PrmErrThetaAngle.🆕(self, "[#{i.to_s}]{#{x.to_s}}", x) unless x.θ?
+          🛑 ::ArgErr.new(self, "[#{i.to_s}]{#{x.to_s}}", x, 'ThetaAngle') unless x.θ?
         end
       end
     end

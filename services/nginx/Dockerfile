@@ -4,7 +4,7 @@
 #
 FROM nginx:1.19.1-alpine as build_base
 
-RUN apk add --no-cache curl wget git \
+RUN apk add --no-cache curl wget \
  && mkdir /etc/nginx/ruuuby \
  && mkdir /etc/nginx/ruuuby/caching \
  && mkdir /etc/nginx/ruuuby/gzip \
@@ -41,7 +41,7 @@ RUN apk add --update --no-cache git zsh vim dpkg \
  && sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" \
  && sed -i '1d' /etc/passwd \
  && (echo "root:x:0:0:root:/root:/bin/zsh" && cat /etc/passwd) > /etc/passwd_parsed && mv /etc/passwd_parsed /etc/passwd \
- && echo "alias cd_volume='cd /v/'" >> /root/.zshrc \
+ && echo "alias cd_data='cd /v/'" >> /root/.zshrc \
  && echo "alias ll='ls -larti'" >> /root/.zshrc \
  && rm -rf /var/cache/apk/*
 

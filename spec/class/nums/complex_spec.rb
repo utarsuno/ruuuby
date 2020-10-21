@@ -1,4 +1,6 @@
-# coding: UTF-8
+# encoding: UTF-8
+
+using ::Object::ContextSuperscripts
 
 RSpec.describe 'complex.rb' do
 

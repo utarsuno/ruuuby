@@ -1,10 +1,20 @@
 # encoding: UTF-8
 
-using ::Math::Algebra::Tropical::ContextNumeric
-using ::Math::Algebra::Tropical::ContextMatrix
+#using ::Math::Algebra::Tropical::ContextNumeric
+#using ::Math::Algebra::Tropical::ContextMatrix
 
 # `Ruuuby` aliases & function additions to existing Class{+Matrix+}
 class ::Matrix
+
+  module ContextParamCheck
+    refine ::Object do
+      # @param [String, Symbol] arg_name
+      # @param [*]              arg
+      #
+      # @raise [ArgumentError]
+      def 🛑matrix❓(arg_name, arg); 🛑 ::ArgErr.new(self, arg_name.to_s, arg, 'Matrix') unless arg.matrix?; end
+    end
+  end
 
   alias_method :▣?, :square?
   alias_method :ᵀ, :transpose

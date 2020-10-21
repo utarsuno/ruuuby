@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 # mathematics related code
 module ::Math
@@ -12,15 +12,14 @@ module ::Math
       module Syntax
 
         # @type [String]
-        FORMATS_TRUE  = '((1)|(1.0)|((Y(es|ES)?)|(y(es)?))|((T(rue|RUE)?)|(t(rue)?)))'.❄️
+        FORMATS_TRUE  = '((1)|(1.0)|((Y(es|ES)?)|(y(es)?))|((T(rue|RUE)?)|(t(rue)?)))'
 
         # @type [String]
-        FORMATS_FALSE = '((0)|(0.0)|((N(o|O)?)|(n(o)?))|((F(alse|ALSE)?)|(f(alse)?)))'.❄️
+        FORMATS_FALSE = '((0)|(0.0)|((N(o|O)?)|(n(o)?))|((F(alse|ALSE)?)|(f(alse)?)))'
 
         # @type [String]
-        FORMAT_ANY    = "((#{FORMATS_TRUE})|(#{FORMATS_FALSE}))".❄️
+        FORMAT_ANY    = "((#{FORMATS_TRUE})|(#{FORMATS_FALSE}))"
 
-        ❄️
       end
 
       include ::Ruuuby::Attribute::Includable::SyntaxCache

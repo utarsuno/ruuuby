@@ -1,4 +1,4 @@
-# coding: UTF-8
+# encoding: UTF-8
 
 RSpec.describe 'f10' do
 
@@ -23,19 +23,12 @@ RSpec.describe 'f10' do
         expect(leet.❄️?).to eq(true)
       end
     end
-    context '{b07}' do
+    context '{b06}' do
       context 'adds func{√}' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
-            it 'equals (Math.sqrt)' do
-              expect(√(25)).to eq(Math.sqrt(25))
-            end
             it 'w/ regular numerics' do
-              expect(√(1)).to eq(1.0)
-              expect(√(1.0)).to eq(1.0)
-              expect(√(25)).to eq(5.0)
-              expect(√(Rational(25, 1))).to eq(5.0)
-              expect(√(Complex(25))).to eq(5.0)
+              [1, 1.0, 25, Rational(25, 1), Complex(25)].∀{|scenario| expect(√(scenario)).to eq(::Math.sqrt(scenario))}
             end
             it 'w/ with numerics represented by strings' do
               expect(√('2.0')).to eq(√(2.0))
@@ -44,14 +37,26 @@ RSpec.describe 'f10' do
             end
           end
           it 'cases: error' do
-            expect{√(nil)}.to raise_error(ArgumentError)
+            expect{√(nil)}.to raise_error(::ArgumentError)
           end
         end
       end # end: {adds func{√}}
 
       context 'adds func{∛}' do
-        it 'equals (Math.cbrt)' do
-          expect(∛(25)).to eq(Math.cbrt(25))
+        context 'handles needed scenarios' do
+          context 'cases: positive' do
+            it 'w/ regular numerics' do
+              [1, 1.0, 25, Rational(25, 1), Complex(25)].∀{|scenario| expect(∛(scenario)).to eq(::Math.cbrt(scenario))}
+            end
+            it 'w/ with numerics represented by strings' do
+              expect(√('2.0')).to eq(√(2.0))
+              expect(√('𝚽')).to eq(√(𝚽))
+              expect(√('1337')).to eq(√(1337))
+            end
+          end
+          it 'cases: error' do
+            expect{∛(nil)}.to raise_error(::ArgumentError)
+          end
         end
       end # end: {adds func{∛}}
     end
@@ -64,9 +69,9 @@ RSpec.describe 'f10' do
           #expect_∃⨍_with_alias(:private, :🙈, ::Module)
           #expect_∃⨍_with_alias(:protected, :🛡️, ::Module)
         end
-        it 'for{b01}' do
-          expect_∃⨍(:🆕, ::Class)
-        end
+        #it 'for{b01}' do
+        #  expect($git).to eq(💎.engine.api_locale.api_git)
+        #end
         it 'for{b02}' do
           #expect_∃⨍_with_alias(:object_id, :🆔, ::Object)
           #expect_∃⨍_with_alias(:freeze, :❄️, ::Object)
@@ -77,7 +82,11 @@ RSpec.describe 'f10' do
           #expect_∃⨍(:Ⓣ, ::Object)
         end
         it 'for{b04}' do
-          expect_∃⨍_with_alias(:source_location, :🏠, ::Method)
+          if ENV['RUUUBY_F10'].nil?
+            expect(::Method.∃⨍_alias?(:source_location, :🏠)).to eq(false)
+          else
+            expect_∃⨍_with_alias(:source_location, :🏠, ::Method)
+          end
         end
         it 'for{b05}' do
           #expect_∃⨍_with_alias(:rand, :🎲, ::Kernel)

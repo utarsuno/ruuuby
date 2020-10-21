@@ -7,29 +7,31 @@
     margin: 0;
     /*user-select: none;
     touch-action: none;*/
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
 }
 
 html, body {
     width: 100%;
     height: 100%;
+    margin: 0;
+}
+
+/* ---- C A N V A S -- B A S E ---- */
+.c {
+    left    : 0;
+    top     : 0;
+    position: absolute;
+    width   : 100%;
+    height  : 100%;
 }
 
 /* ---- C A N V A S -- 3D ---- */
 #a {
-    left    : 0;
-    top     : 0;
-    position: absolute;
     z-index : 10;
-    width   : 100%;
-    height  : 100%;
 }
 
 /* ---- C A N V A S -- 2D ---- */
 #b {
-    left    : 0;
-    top     : 0;
-    position: absolute;
     z-index : 20;
-    width   : 100%;
-    height  : 100%;
 }

@@ -103,8 +103,8 @@ RSpec.describe 'f06_b02' do
   context 'audit', :audit do
     context 'feature{f06}:behavior{b02} passes audits' do
       context 'funcs provided are defined in correct location' do
-        it 'for m{ObjectF06}' do
-          expect_∃⨍(:🛑int❓, ::Ruuuby::Feature::Includable::ObjectF06)
+        it 'for c{Object}' do
+          expect_∃⨍(:🛑int❓, ::Object)
         end
       end
     end

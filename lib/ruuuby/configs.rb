@@ -3,6 +3,7 @@
 # ------------------------------------------------------------------------------------------------------------ | *f23* |
 
 BEGIN {
+  💎.engine.engine.start
 
   # add these methods onto the `main` object (similar to adding methods to `Kernel`, but of smaller scope to avoid polluting other Classes)
   class << self
@@ -11,9 +12,9 @@ BEGIN {
     )
 
     #$🌎 = self
+    #$git = 💎.engine.api_locale.api_git
+    #$orm = 💎.engine.orm
   end
-
-  💎.engine.warm_up
 
   # TODO: create better solution than loading it here
   module ::TTY
@@ -42,8 +43,6 @@ BEGIN {
 
     # ---------------------------------------------------------------------------------------------------------- | *f28* |
 
-    ℕ𝕌𝕃𝕃 = ::Math::SetTheory::NullSet.instance
-
     𝔹 = ::Math::SetTheory::BooleanNumbers.instance
 
     ℕ = ::Math::SetTheory::NaturalNumbers.instance
@@ -60,7 +59,7 @@ BEGIN {
 
     ℂ = ::Math::SetTheory::ComplexNumbers.instance
 
-    𝕋 = ::Math::GroupTheory::CircleGroup.instance
+    #𝕋 = ::Math::GroupTheory::CircleGroup.instance
 
     𝕀 = ::Math::SetTheory::IrrationalNumbers.instance
 
@@ -70,7 +69,7 @@ BEGIN {
 
     # ---------------------------------------------------------------------------------------------------------- | *f06* |
 
-    ::Kernel.const_set(:𝕊, ::Math::Space::SymbolicNumbersSpace.instance)
+    ::Kernel.const_set(:𝕊, ::Math::Space::SymbolicNumbers.instance)
 
     ::Kernel.const_set(:🅱, ::Math::Space::BooleanSpace.instance)
 
@@ -86,46 +85,8 @@ BEGIN {
   end
   # | --------------------------------------------------------------------------------------------------------------------
 
-  # TODO: temporary code & design
-
-  f10_configs = ENV['RUUUBY_F10']
-  f12_configs = ENV['RUUUBY_F12']
-  f26_configs = ENV['RUUUBY_F26']
-
-  unless f10_configs.∅?
-    if f10_configs.include?('b03')
-      ::Method.alias_method :🏠, :source_location
-    end
-  end
-
-  unless f12_configs.∅?
-    if f12_configs.∋?('b00')
-      module ::Kernel
-        private
-        # @return [::File]
-        def 📁; ::File; end
-        # @return [::Dir]
-        def 🗄️; ::Dir; end
-      end
-    end
-  end
-
-  unless f26_configs.∅?
-    if f26_configs.∋?('b00')
-      module ::Kernel
-        private
-        # @return [::Date]
-        def 📅; ::Date; end
-        # @return [::Time]
-        def 🕒; ::Time; end
-        # @return [::DateTime]
-        def 📅🕒; ::DateTime; end
-      end
-    end
-  end
-
 }
 
 END {
-  💎.engine.cool_down
+  💎.engine.engine.stop
 }
