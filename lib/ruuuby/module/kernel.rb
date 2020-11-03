@@ -4,8 +4,10 @@
 module ::Kernel
   # ---------------------------------------------------------------------------------------------------------- | *f10* |
 
-  alias_method :🎲, :rand
   alias_method :🛑, :raise
+
+  # @return [Math::Stats::RNG]
+  def 🎲; ::Math::Stats::RNG; end
 
   # @return [Ruuuby::MetaData]
   def 💎; ::Ruuuby::MetaData; end

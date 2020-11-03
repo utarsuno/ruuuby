@@ -3,6 +3,8 @@
 -- testing purposes
 -- -------------------------------------------- ⚠️ --------------------------------------------
 
+BEGIN TRANSACTION;
+
 CREATE OR REPLACE PROCEDURE ruuuby_gem_add(_version_ruuuby TEXT, _name TEXT, _version_current TEXT, _env_dev BOOLEAN DEFAULT TRUE, _env_prod BOOLEAN DEFAULT FALSE, _ref_source TEXT DEFAULT NULL, _ref_version TEXT DEFAULT NULL, _git_url TEXT DEFAULT NULL)
 LANGUAGE plpgsql AS $$
 DECLARE
@@ -47,3 +49,5 @@ BEGIN
     RETURN (SELECT version_current FROM ruuuby_gem_changelogs WHERE ruuuby_gem_id = (SELECT ruuuby_gem_get_id(_name)) ORDER BY id DESC LIMIT 1);
 END
 $$ LANGUAGE plpgsql;
+
+COMMIT TRANSACTION;

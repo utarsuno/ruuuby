@@ -145,16 +145,10 @@ RSpec.describe 'ruby' do
       end
     end # end: {current user}
 
-    context 'recommended settings for{ZSH}' do
-      it 'expected version{5.7.1} matches' do
-        expect(💎.engine.api_zsh.version).to eq('zsh 5.8 (x86_64-apple-darwin18.7.0)')
-      end
-    end # end: {ZSH}
-
     context 'recommended settings for lib' do
       context '{zsh}' do
-        it 'expected version{5.7.1} matches' do
-          expect(💎.engine.api_zsh.version).to eq('zsh 5.8 (x86_64-apple-darwin18.7.0)')
+        it 'expected version{5.8} matches' do
+          expect(💻('zsh --version')).to eq('zsh 5.8 (x86_64-apple-darwin18.7.0)')
         end
       end # end: {ZSH}
       context '{curl}' do
@@ -189,12 +183,14 @@ RSpec.describe 'ruby' do
           expect(💻('xcode-select --version')).to eq('xcode-select version 2373.')
         end
         it 'has needed path' do
+          # @see https://github.com/nodejs/node-gyp/issues/569
+          # to change path after fresh xcode installation: `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
           expect(💻('xcode-select --print-path')).to eq('/Applications/Xcode.app/Contents/Developer')
         end
       end
       context 'xcodebuild' do
         it 'has needed version' do
-          expect(💻('xcodebuild -version')).to eq(["Xcode 12.0", "Build version 12A7209"])
+          expect(💻('xcodebuild -version')).to eq(["Xcode 12.1", "Build version 12A7403"])
         end
       end
     end

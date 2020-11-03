@@ -177,7 +177,7 @@
         'offer categorical abstractions w/ module{`Descriptive`}',
         'offer categorical abstractions w/ module{`Probability`}',
         'offer categorical abstractions w/ module{`StatisticalLearning`}',
-        'offer categorical abstractions w/ module{`TimeSeries`}',
+        'offer categorical abstractions w/ module{`TimeSeries`}'
     ]
 )
 

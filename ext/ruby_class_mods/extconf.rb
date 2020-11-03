@@ -134,17 +134,28 @@ the_flags += %w(Wall Wformat fexceptions pipe std=gnu11) #std=gnu11  #std=c17
 # x86_64
 the_flags += %w(fPIC malign-double)
 
+path_overlap_ruby = 'rbenv/versions/3.0.0-preview1/include/ruby-3.0.0'
+
 # flags for MacOS only
 if os == 'mac'
+  the_flags += %w(fdeclspec)
+
+  append_cflags("-include ~/.#{path_overlap_ruby}/x86_64-darwin19/rb_mjit_min_header-3.0.0.h")
+  append_cflags("-include ~/.#{path_overlap_ruby}/ruby/internal/core/rbasic.h")
+  append_cflags("-include ~/.#{path_overlap_ruby}/ruby/internal/intern/sprintf.h")
+  append_cflags("-include ~/.#{path_overlap_ruby}/ruby/internal/core/rdata.h")
+
+  # struct RBasic basic
+
   the_flags += %w(fapinotes fapple-pragma-pack fblocks ftarget-variant-availability-checks fmacro-backtrace-limit=0 fconstexpr-backtrace-limit=0 nostdinc++ fforce-emit-vtables fwhole-program-vtables mpie-copy-relocations)
-  the_flags += %w(DRUUUBY_OS_IS_MAC)
 
   # OpenMP
   #the_flags += %w(Xpreprocessor fopenmp) #lomp
   #the_flags += %w(DCMAKE_C_COMPILER=clang DOpenMP_libomp_LIBRARY DLIBOMP_ARCH=x86_64 DCMAKE_BUILD_TYPE=Debug DCMAKE_SHARED_LINKER_FLAGS)
   #the_flags += %w(DOpenMP_libomp_LIBRARY DCMAKE_SHARED_LINKER_FLAGS)
 else
-  the_flags += %w(DRUUUBY_OS_IS_UNIX)
+  append_cflags("-include /usr/local/#{path_overlap_ruby}/x86_64-linux-musl/rb_mjit_min_header-3.0.0.h")
+  append_cflags("-include /usr/local/#{path_overlap_ruby}/ruby/internal/intern/sprintf.h")
 end
 
 # utf-8

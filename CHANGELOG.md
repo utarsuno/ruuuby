@@ -4,6 +4,14 @@
 
 ---
 
+# `v0.1.0.pre.1`
+
+ * start migration from `CHANGELOG.md` to `History.txt`
+ * update gems{`tty-command`,`rspec`}
+   * `npm`, `Python`, `Java`, etc, version & library updates to be 'auto' tracked soon
+ * continue migration for `RabbitMQ` and preparation for `DB` migration
+ * apply miscellaneous clean ups
+
 # `v0.1.0.pre.0`
 
 > abstract: Kintsugi!

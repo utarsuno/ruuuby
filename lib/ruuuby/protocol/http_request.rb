@@ -56,179 +56,180 @@ module Net::HTTPHeader
 
 end
 
-module ::Ruuuby
-  module Protocols
+module ::Ruuuby; module Protocols; end; end
 
-    # @see https://ruby-doc.org/stdlib-2.7.0/libdoc/net/http/rdoc/Net/HTTP.html
-    # @see https://yukimotopress.github.io/http
+# @see https://ruby-doc.org/stdlib-2.7.0/libdoc/net/http/rdoc/Net/HTTP.html
+# @see https://yukimotopress.github.io/http
+#
+# `🌐`
+module ::Ruuuby::Protocols::RequestHTTP
+
+  module Syntax
+
+    # @see https://stackoverflow.com/questions/1128168/validation-for-url-domain-using-regex-rails
     #
-    # `🌐`
-    module RequestHTTP
+    # @type [String]
+    URL = '^(((http|https):\/\/|)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6}(:[0-9]{1,5})?(\/.*)?)$'
 
-      module Syntax
-
-        # @see https://stackoverflow.com/questions/1128168/validation-for-url-domain-using-regex-rails
-        #
-        # @type [String]
-        URL = '^(((http|https):\/\/|)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6}(:[0-9]{1,5})?(\/.*)?)$'
-
-      end
-
-      include ::Ruuuby::Attribute::Includable::SyntaxCache
-
-      def self.execute_debugging(uri, params={}, headers=nil)
-        the_uri  = self.parse_uri(uri, params)
-        response = nil
-        is_https = uri.to_s.include?('https')
-        req      = ::Net::HTTP::Get.new(the_uri.request_uri)
-        if headers != nil
-          headers.each{|k,v| req[k] = v}
-        end
-        ::Net::HTTP.start(the_uri.host, the_uri.port, {use_ssl: is_https}) do |http|
-          response = http.request(req)
-        end
-        return response, req
-      end
-
-      def self.execute_post_debugging(uri, params={}, headers=nil)
-        #response, request = 🌐.get_dbg("#{@domain_configs['uri']}#{@endpoint_latest}", {}, args)
-
-        the_uri  = self.parse_uri(uri, {})
-        response = nil
-        is_https = uri.to_s.include?('https')
-
-        #http = Net::HTTP.new(the_uri.host, the_uri.port)
-        #http.use_ssl = is_https
-        req  = ::Net::HTTP::Post.new(the_uri.request_uri)
-        if headers != nil
-          headers.each{|k,v| req[k] = v}
-        end
-
-        req.body = params.to_json
-
-        #puts "REQUEST BODY IS"
-        #pp req.body
-
-        ::Net::HTTP.start(the_uri.host, the_uri.port, {use_ssl: is_https}) do |http|
-          #request  = Net::HTTP::Get.new(the_uri)
-          #request  = Net::HTTP::Get.new(the_uri.request_uri)
-          #if headers != nil
-          #  request.each{|k,v| request[k] = v}
-          #end
-          #response = http.request(request)
-          #puts req.cached_headers
-          response = http.request(req)
-        end
-
-        #response = http.request(req)
-
-        return req, response
-      end
-
-      # @param [String, URI] uri
-      # @param [Hash]        params
-      # @param [Hash]        headers
-      #
-      # @raise [ArgumentError]
-      #
-      # @return [Net::HTTPResponse]
-      def self.execute(uri, params={}, headers=nil)
-        the_uri  = self.parse_uri(uri, params)
-        response = nil
-        is_https = uri.to_s.include?('https')
-
-        req = ::Net::HTTP::Get.new(the_uri.request_uri)
-        if headers != nil
-          headers.each{|k,v| req[k] = v}
-        end
-
-        ::Net::HTTP.start(the_uri.host, the_uri.port, {use_ssl: is_https}) do |http|
-          #request  = Net::HTTP::Get.new(the_uri)
-          #request  = Net::HTTP::Get.new(the_uri.request_uri)
-          #if headers != nil
-          #  request.each{|k,v| request[k] = v}
-          #end
-          #response = http.request(request)
-          #puts req.cached_headers
-          response = http.request(req)
-        end
-        return response
-      end
-
-      # TODO: add full testing coverage
-      #
-      # @param [String, URI] uri
-      # @param [Hash]        params
-      # @param [Hash]        headers
-      #
-      # @raise [ArgumentError, RuntimeError]
-      #
-      # @return [Net::HTTPResponse]
-      def self.execute!(uri, params={}, headers=nil)
-        the_uri  = self.parse_uri(uri, params)
-        response = nil
-        is_https = uri.to_s.include?('https')
-
-        req = ::Net::HTTP::Get.new(the_uri.request_uri)
-        if headers != nil
-          headers.each{|k,v| req[k] = v}
-        end
-
-        ::Net::HTTP.start(the_uri.host, the_uri.port, {use_ssl: is_https}) do |http|
-          #request  = Net::HTTP::Get.new(the_uri)
-          #request  = Net::HTTP::Get.new(the_uri.request_uri)
-          response = http.request(req)
-        end
-        🛑 ::RuntimeError.new("| c{RequestHTTP}-> m{execute!} got non-200 response{#{response.code.to_s}} for uri{#{uri.to_s}} w/{#{the_uri.request_uri}} |") unless response.code == '200'
-        return response
-      end
-
-      class << self
-        alias_method :get, :execute
-        alias_method :get!, :execute!
-        alias_method :get_dbg, :execute_debugging
-        alias_method :post_dbg, :execute_post_debugging
-      end
-
-      # @param [String, URI] uri
-      #
-      # @raise [ArgumentError, RuntimeError]
-      #
-      # @return [Net::HTTPResponse]
-      def self.execute_timed!(uri)
-        time_start = ::Time.now
-        response   = self.execute!(uri)
-        time_delta = time_start - response.time_received
-        return response, time_delta
-      end
-
-      🙈
-
-      # @see https://stackoverflow.com/questions/7785793/add-parameter-to-url/26867426
-      #
-      # @param [String, URI] uri
-      # @param [Hash]        params
-      #
-      # @raise [ArgumentError]
-      #
-      # @return [URI, URI::HTTP]
-      def self.parse_uri(uri, params)
-        if uri.str?
-          uri = URI(uri)
-        elsif uri.ⓣ != URI && uri.ⓣ != URI::HTTP
-          🛑 ::ArgumentError.new("| c{RequestHTTP}-> m{execute!} got invalid type{#{uri.Ⓣ}} for arg(uri) |")
-        end
-        unless params.empty?
-          if uri.query == nil
-            uri.query = URI.encode_www_form(params)
-          else
-            params    = Hash[URI.decode_www_form(uri.query || '')].merge(params)
-            uri.query = URI.encode_www_form(params)
-          end
-        end
-        uri
-      end
-
-    end
   end
+
+  include ::Ruuuby::Attribute::Includable::SyntaxCache
+
+  def self.execute_debugging(uri, params={}, headers=nil)
+    the_uri  = self.parse_uri(uri, params)
+    response = nil
+    is_https = uri.to_s.include?('https')
+    req      = ::Net::HTTP::Get.new(the_uri.request_uri)
+    if headers != nil
+      headers.each{|k,v| req[k] = v}
+    end
+    ::Net::HTTP.start(the_uri.host, the_uri.port, {use_ssl: is_https}) do |http|
+      response = http.request(req)
+    end
+    return response, req
+  end
+
+  # TODO: TDD
+  #
+  # == Example
+  #
+  # response, request = 🌐.json("#{@domain_configs['uri']}#{@endpoint_latest}", {}, args)
+  #
+  # @param [URI]            uri
+  # @param [Hash]           params
+  # @param [Hash, NilClass] headers
+  def self.execute_json(uri, params={}, headers={"content-type" => "application/json"})
+    request, response = (self.execute_post_debugging(uri, params, headers))
+    ::JSON.parse(response.body)
+  end
+
+  # == Example
+  #
+  # response, request = 🌐.post_dbg("#{@domain_configs['uri']}#{@endpoint_latest}", {}, args)
+  #
+  # @param [URI]            uri
+  # @param [Hash]           params
+  # @param [Hash, NilClass] headers
+  def self.execute_post_debugging(uri, params={}, headers=nil)
+    🛑hsh❓('params', params)
+    🛑hsh❓('headers', headers) unless headers.nil?
+
+    the_uri  = self.parse_uri(uri, {})
+    response = nil
+    is_https = uri.to_s.include?('https')
+    req      = ::Net::HTTP::Post.new(the_uri.request_uri)
+    if headers != nil
+      headers.each{|k,v| req[k] = v}
+    end
+    req.body = params.to_json
+
+    ::Net::HTTP.start(the_uri.host, the_uri.port, {use_ssl: is_https}) do |http|
+      response = http.request(req)
+    end
+
+    return req, response
+  end
+
+  # @param [String, URI] uri
+  # @param [Hash]        params
+  # @param [Hash]        headers
+  #
+  # @raise [ArgumentError]
+  #
+  # @return [Net::HTTPResponse]
+  def self.execute(uri, params={}, headers=nil)
+    the_uri  = self.parse_uri(uri, params)
+    response = nil
+    is_https = uri.to_s.include?('https')
+
+    req = ::Net::HTTP::Get.new(the_uri.request_uri)
+    if headers != nil
+      headers.each{|k,v| req[k] = v}
+    end
+
+    ::Net::HTTP.start(the_uri.host, the_uri.port, {use_ssl: is_https}) do |http|
+      response = http.request(req)
+    end
+    return response
+  end
+
+  # TEMP
+  def self.execute_get_json!(uri, params={}, headers={"content-type" => "application/json"})
+    ::JSON.parse(self.execute!(uri, params, headers).body)
+  end
+
+  # TODO: add full testing coverage
+  #
+  # @param [String, URI] uri
+  # @param [Hash]        params
+  # @param [Hash]        headers
+  #
+  # @raise [ArgumentError, RuntimeError]
+  #
+  # @return [Net::HTTPResponse]
+  def self.execute!(uri, params={}, headers=nil)
+    the_uri  = self.parse_uri(uri, params)
+    response = nil
+    is_https = uri.to_s.include?('https')
+
+    req = ::Net::HTTP::Get.new(the_uri.request_uri)
+    if headers != nil
+      headers.each{|k,v| req[k] = v}
+    end
+
+    ::Net::HTTP.start(the_uri.host, the_uri.port, {use_ssl: is_https}) do |http|
+      response = http.request(req)
+    end
+    🛑 ::RuntimeError.new("| c{RequestHTTP}-> m{execute!} got non-200 response{#{response.code.to_s}} for uri{#{uri.to_s}} w/{#{the_uri.request_uri}} |") unless response.code == '200'
+    return response
+  end
+
+  class << self
+    alias_method :get, :execute
+    alias_method :get!, :execute!
+    alias_method :get_json!, :execute_get_json!
+    alias_method :get_dbg, :execute_debugging
+    alias_method :post_dbg, :execute_post_debugging
+    alias_method :post_json, :execute_json
+  end
+
+  # @param [String, URI] uri
+  #
+  # @raise [ArgumentError, RuntimeError]
+  #
+  # @return [Net::HTTPResponse]
+  def self.execute_timed!(uri)
+    time_start = ::Time.now
+    response   = self.execute!(uri)
+    time_delta = time_start - response.time_received
+    return response, time_delta
+  end
+
+  🙈
+
+  # @see https://stackoverflow.com/questions/7785793/add-parameter-to-url/26867426
+  #
+  # @param [String, URI] uri
+  # @param [Hash]        params
+  #
+  # @raise [ArgumentError]
+  #
+  # @return [URI, URI::HTTP]
+  def self.parse_uri(uri, params)
+    if uri.str?
+      uri = URI(uri)
+    elsif uri.ⓣ != URI && uri.ⓣ != URI::HTTP
+      🛑 ::ArgumentError.new("| c{RequestHTTP}-> m{execute!} got invalid type{#{uri.Ⓣ}} for arg(uri) |")
+    end
+    unless params.empty?
+      if uri.query == nil
+        uri.query = URI.encode_www_form(params)
+      else
+        params    = Hash[URI.decode_www_form(uri.query || '')].merge(params)
+        uri.query = URI.encode_www_form(params)
+      end
+    end
+    uri
+  end
+
 end

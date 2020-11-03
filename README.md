@@ -4,13 +4,13 @@
 
 | for resource        | reference                                                   |
 | ------------------: | :---------------------------------------------------------- |
-| latest: `Gemfile`    | `gem 'ruuuby', '~> 0.1.0.pre.0'`                            |
+| latest: `Gemfile`    | `gem 'ruuuby', '~> 0.1.0.pre.1'`                            |
 | stable: `Gemfile`    | `gem 'ruuuby', '~> 0.0.49`                                  |
 | ruby scripts        | `require 'ruuuby'`                                          |
 | gem url             | https://rubygems.org/gems/ruuuby                            |
 | changelog           | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md <br>`note: style of changelog will be adapted to the` [`[History.txt format]`](https://guides.rubygems.org/releasing-rubygems/) |
 | `JIT` testing       | `RUBYOPT="--jit --jit-warnings --jit-wait --jit-max-cache=1337 --jit-verbose=2 --jit-debug -w" ./bin/console/ruuuby` |
-| common<br>non-ascii | `∅`,`η̂`,`μ`,`𝔠`,`∃`,`∄`,`∋`,`∌`,`∈`,`∉`,`ⓣ`,`Ⓣ`,`Λ`,`λ`,`⨍`,`𝑓`,`∀`,`τ`,`x̃`,`𝚡`,`𝛿`,`σ`<br>`𝔹`,`ℂ`,`ℕ`,`𝕎`,`ℤ`,`ℚ`,`𝔸ᵣ`,`ℂ`,`𝕋`,`𝕀`,`ℝ`,`𝕌`,`𝕊`,`🅱`<br>`∞`,`π`,`℮`,`𝚽`,`Ω`,`γ`,`Ψ`,`ρ`,`δ`,`Ⴔ`,`⨁`,`⨂`,`∖`,`≡`,`≈`,`√`,`∛`,`↩`,`⟶`,`↘`,`⬇`,`⬆`<br>`𝞽`,`θ`,`°`,`ʳ`,`ᵍ`,`⦜`,`○`,`ₑ`,`₀`,`₁`,`₂`,`₃`,`ₓ`,`ᵢ`,`ᵀ`,`▣`<br>`⁻¹`,`⁻²`,`⁻³`,`⁻⁴`,`⁻⁵`,`⁻⁶`,`⁻⁷`,`⁻⁸`,`⁻⁹`,`⁻⁰`,`¹`,`²`,`³`,`⁴`,`⁵`,`⁶`,`⁷`,`⁸`,`⁹`<br>`¼`,`½`,`¾`,`⅓`,`⅕`,`⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`,`⅛`,`⅜`,`⅝`,`⅞`,`⅑`,`⅒`<br>`📁`,`🗄️`,`💾`,`🕒`,`🎲`,`📊`,`🧟`,`💻`,`🌐`,`❄️`,`💎`,`⚠️`,`🔑`,`✏️`,`📖`,`🏠`<br>`🐋`,`✅`,`♻️`,`🐍`,`🐫`,`🙈`,`🍺`,`🛡`,`📅`,`🛑`,`❌`,`❓`,`🆔`,`🧬` |
+| common<br>non-ascii | `∅`,`∃`,`∄`,`∋`,`∌`,`∈`,`∉`,`ⓣ`,`Ⓣ`,`≈`,`∞`,`π`,`℮`,`𝚽`<br>`η̂`,`μ`,`∴`,`𝔠`,`𝔦`,`𝔣`,`Λ`,`λ`,`∫`,`⨍`,`𝑓`,`∀`,`τ`,`x̃`,`𝚡`,`𝛿`,`σ`<br>`𝔹`,`ℂ`,`ℕ`,`𝕎`,`ℤ`,`ℚ`,`𝔸ᵣ`,`ℂ`,`𝕋`,`𝕀`,`ℝ`,`𝕌`,`𝕊`,`🅱`<br>`±`,`Ω`,`γ`,`Ψ`,`ρ`,`δ`,`Ⴔ`,`⨁`,`⨂`,`∖`,`≡`,`√`,`∛`,`↩`,`‣`,`⟶`,`↘`,`⬇`,`⬆`<br>`𝞽`,`θ`,`°`,`ʳ`,`ᵍ`,`⦜`,`○`,`ₑ`,`₀`,`₁`,`₂`,`₃`,`ₓ`,`ᵢ`,`ᵀ`,`▣`<br>`⁻ⁿ`,`⁰`,`¹`,`²`,`³`,`⁴`,`⁵`,`⁶`,`⁷`,`⁸`,`⁹`<br>`¼`,`½`,`¾`,`⅓`,`⅕`,`⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`,`⅛`,`⅜`,`⅝`,`⅞`,`⅑`,`⅒`<br>`📁`,`🗄️`,`💾`,`🕒`,`🎲`,`📊`,`🧟`,`💻`,`📱`,`🌐`,`❄️`,`💎`,`⚠️`,`🔑`,`✏️`,`📖`,`🏠`<br>`✅`,`♻️`,`🍺`,`🛡`,`📅`,`🛑`,`❌`,`❓`,`🆔`,`🧬`<br>`🐇`,`🐋`,`🐍`,`🐫`,`🙈` |
 | download source for utilized version of Ruby | [Ruby3.0.0-preview1](https://www.ruby-lang.org/en/news/2020/09/25/ruby-3-0-0-preview1-released/) |
 
 ### Examples
@@ -24,12 +24,20 @@
 qa_results = 🐋['service_js'].cmd!(%w(npm test --check-leaks)).join.as_utf8
 🐋['service_nginx'].📁✏️('/v/js_qa_results.txt', qa_results)
 
-# check if temperature in Chicago is currently below freezing, if it is, and if the
-# file specified below does not exist, then create it with results from local cmd{`gem update -V`} 
-path_to_log_file = 'temp_demo___as_in_temporary_not_temperature.txt' 
-chicago_weather = ::JSON.parse(🌐.get!('https://www.metaweather.com/api/location/2379574/').body)
-if chicago_weather['consolidated_weather'].first['the_temp'] < 0
-   💻("gem update -V > #{path_to_log_file}") if 📁.∄?(path_to_log_file) || 📁.∅?(path_to_log_file)
+# send chat message, triggering execution of background QA tests which involve randomness
+#   ‣ allowing relatively ∞ time for tests to complete, as needed
+#   ‣ jobs can be scheduled from mobile-phone! 📱
+#
+# AMQP & REST: Ruuuby ⟶ Discord ⟶ JavaScript ⟶ RabbitMQ ⟶ Ruuuby ⟶ Discord
+$discord.msg('!cmd: RUUUBY_F01="b00"; bundle exec rake rspec_rng')
+
+# ‣ check if today's average temperature in Chicago is below freezing
+# ‣ check if specified file does not already exists
+# ‣ if both checks pass, create file w/ results from local command ran (updating brew)
+path_to_log_file = "brew_update_#{📅.today.to_s}.txt"
+chicago_weather = 🌐.get_json!('https://www.metaweather.com/api/location/2379574/')
+if chicago_weather['consolidated_weather'].first['the_temp'] < 0 
+  💻("brew update > #{path_to_log_file}") unless 📁.∃?(path_to_log_file)
 end
 
 ```
@@ -60,7 +68,7 @@ elements_a = [1, 'a', 2, nil, [], 2]
 elements_b = [nil, 2, 2, 'a', 1, []]
 [elements_a.≈≈(elements_b), elements_a == elements_b]
 
-# | ✔ | ✔ | ✓ | ✔ |
+# | ✔ | ✔ | ✔ | ✔ |
 ['snake_case'.🐍?, 'AHHH_CAPITALS'.🐍⬆?, 'UpperCaseCamel'.🐫?, 'lowerCaseCamel'.🐫⬇?]
 
 # | ✘ | ✔ | ✔ | ✘ | ✘ | ✔ |
@@ -88,18 +96,18 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 | gem | version | :development, :runtime | notes |
 | ---: | :--- | :---: | ---: |
-| `tty-command` | [`0.9.0`](https://rubygems.org/gems/tty-command) | ✅, ✅ | always required |
+| `tty-command` | [`0.10.0`](https://rubygems.org/gems/tty-command) | ✅, ✅ | always required |
 | `finite_machine` | [`0.14.0`](https://rubygems.org/gems/finite_machine) | ✅, ✅ | always required |
 | `bunny` | [`2.17.0`](https://rubygems.org/gems/bunny) | ✅, ❌ | toggleable feature |
 | `docker-api` | [`2.0.0`](https://rubygems.org/gems/docker-api) | ✅, ❌ | toggleable feature |
 | `pg` | [`1.2.3`](https://rubygems.org/gems/pg) | ✅, ❌ | toggleable feature |
 | `activerecord` | [`6.0.3.4`](https://rubygems.org/gems/activerecord) | ✅, ❌ | toggleable feature |
 | `rdoc` | [`6.2.1`](https://rubygems.org/gems/rdoc) | ✅, ❌ | development utility |
-| `rspec` | [`3.9.0`](https://rubygems.org/gems/rspec) | ✅, ❌ | development utility |
+| `rspec` | [`3.10.0`](https://rubygems.org/gems/rspec) | ✅, ❌ | development utility |
 | `rspec-benchmark` | [`0.6.0`](https://rubygems.org/gems/rspec-benchmark) | ✅, ❌ | development utility |
 | `rake` | [`13.0.1`](https://rubygems.org/gems/rake) | ✅, ❌ | development utility |
 | `rake-compiler` | [`1.1.1`](https://rubygems.org/gems/rake-compiler) | ✅, ❌ | development utility |
-| `rugged` | [`1.1.1`](https://rubygems.org/gems/rugged) | ❌, ❌ | broke w/ migration, fix wip |
+| `rugged` | [`1.1.0`](https://rubygems.org/gems/rugged) | ❌, ❌ | broke w/ migration, fix wip |
 | `rubygems-update` | [`3.2.0.rc.2`](https://rubygems.org/gems/rugged) | ❌, ❌ | recommended version |
 | `bundler` | [`2.2.0.rc.2`](https://rubygems.org/gems/rugged) | ❌, ❌ | recommended version |
 
@@ -168,7 +176,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 | for                    | base method(s) reference(s)               | alias(es)                |
 | ---------------------: | ----------------------------------------- | ------------------------ |
-| `Kernel`               | `raise`, `rand`                           | `🛑`, `🎲` |
+| `Kernel`               | `raise`                                   | `🛑` |
 | `Object`               | `object_id`, `class`, `freeze`, `frozen?` | `🆔`, `ⓣ`, `❄️`, `❄️?` |
 | `Module`               | `private`, `protected`, `const_defined?`, `private_method_defined?`, `protected_method_defined?` | `🙈`, `🛡️`, `∃const?`, `∃🙈⨍`, `∃🛡️⨍?` |
 | `String`, `Symbol`     | `upcase`, `downcase`                      | `⬆`, `⬇` |
@@ -191,17 +199,18 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 ### Code Base Statistics:
 
-> tests marked with a ~~strikethrough~~ will not exist/work in version{`0.1.0.pre.0`}
+> tests marked with a ~~strikethrough~~ will not exist/work before version{`0.1.0`}
 
 | category    | attribute               | value(s)         | # of  |
 | ----------: | :---------------------: | ---------------: | :---- |
-| `QA`        | `unit`                  | `1273`           | tests (core functionality) |
+| `QA`        | `unit`                  | `1276`           | tests (core functionality) |
 | `QA`        | `integration`           | `22`             | tests (state & functionality of grouped units) |
 | `QA`        | `performance (runtime)` | ~~142 : 85~~     | ~~tests{`non_numeric`,`numeric`}~~ |
-| `QA`        | `DB`                    | ~~~291~~         | ~~tests (combined categories of `DB`, `ORM`, & `Service`)~~ |
-| `QA`        | `system`                | `6`              | tests (`integration` scaled to features/services & w/ randomness involved to help encounter niche error-states) |
+| `QA`        | `DB`                    | ~~291~~          | ~~tests (combined categories of `DB`, `ORM`, & `Service`)~~ |
+| `QA`        | `rng`                   | `2`              | tests (involving statistics/randomness, ex: verifying a geometric distribution) |
+| `QA`        | `system`                | `7`              | tests (`integration` scaled to `micro-services` & w/ randomness involved to help encounter niche error-states) |
 | `CI`        | `audit`                 | `128`            | tests (anything non-functionality based) |
-| `CI`        | `locale`                | `66`:`34`        | tests on local setup & configs{`core`:`excessive_checks`} |
+| `CI`        | `locale`                | `66`:`32`        | tests on local setup & configs{`core`:`excessive_checks`} |
 | `tech-debt` | `coverage`              | `31`             | tests (tracking missing functionality) |
 | `structure` | `features`              | `1`:`32`:`9`:`6` | features{`stable`:`wip`:`⚠️`:`todo`} |
 | `coverage`  | `LOCs`                  | `???`            | `wip` |

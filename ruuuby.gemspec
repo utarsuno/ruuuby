@@ -3,21 +3,23 @@
 ::Gem::Specification.new do |gem|
   require_relative 'lib/ruuuby/version'
 
-  gem.name                  = 'ruuuby'
-  gem.version               = ::Ruuuby::VERSION
-  gem.summary               = 'wip: increase quality of Ruby coding life'
-  gem.description           = '{wip: flavored modifications & extensions for increased quality of Ruby coding life}'
-  gem.authors               = ["Uladzislau Tarsunou"]
-  gem.homepage              = 'https://github.com/utarsuno/ruuuby'
-  gem.license               = 'MIT'
-  gem.required_ruby_version = ::Gem::Requirement.new(">= #{RUBY_VERSION}")
-  gem.platform              = ::Gem::Platform.local
-  gem.post_install_message  = "Gem{ruuuby, v#{::Ruuuby::VERSION}} has just been installed, cheers!"
-  _md                       = gem.metadata
-  _md['homepage_uri']       = gem.homepage
-  _md['source_code_uri']    = "#{gem.homepage}.git"
-  _md['changelog_uri']      = "#{gem.homepage}/blob/master/CHANGELOG.md"
-  _md['documentation_uri']  = "#{gem.homepage}/tree/master/help"
+  gem.name                      = 'ruuuby'
+  gem.version                   = ::Ruuuby::VERSION
+  gem.summary                   = 'wip: increase quality of Ruby coding life'
+  gem.description               = '{wip: flavored modifications & extensions for increased quality of Ruby coding life}'
+  gem.authors                   = ["Uladzislau Tarsunou"]
+  gem.homepage                  = 'https://github.com/utarsuno/ruuuby'
+  gem.license                   = 'MIT'
+  gem.required_ruby_version     = ::Gem::Requirement.new('>= 3.0.0-preview1') # ">= #{RUBY_VERSION}"
+  gem.required_rubygems_version = ::Gem::Requirement.new('>= 3.2.0.rc.2')
+
+  gem.platform                  = ::Gem::Platform.local
+  gem.post_install_message      = "Gem{ruuuby, v#{::Ruuuby::VERSION}} has just been installed, cheers!"
+  _md                           = gem.metadata
+  _md['homepage_uri']           = gem.homepage
+  _md['source_code_uri']        = "#{gem.homepage}.git"
+  _md['changelog_uri']          = "#{gem.homepage}/blob/master/CHANGELOG.md"
+  _md['documentation_uri']      = "#{gem.homepage}/tree/master/help"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -38,17 +40,17 @@
   # ╠═════════════════════════════════════════════════════════════════════════════╣
   gem.add_development_dependency(:bunny, '~> 2.17.0')                            #║
   gem.add_development_dependency(:rake, '~> 13.0.1')                             #║
-  gem.add_development_dependency(:rspec, '~> 3.9.0')                             #║
+  gem.add_development_dependency(:rspec, '~> 3.10.0')                            #║
   gem.add_development_dependency(:rdoc, '~> 6.2.1')                              #║
   gem.add_development_dependency(:'docker-api', '~> 2.0.0')                      #║
   gem.add_development_dependency(:'rspec-benchmark', '~> 0.6.0')                 #║
   gem.add_development_dependency(:'rake-compiler', '~> 1.1.1')                   #║
-  gem.add_development_dependency(:'tty-command', '~> 0.9.0')                     #║
+  gem.add_development_dependency(:'tty-command', '~> 0.10.0')                    #║
   gem.add_development_dependency(:finite_machine, '~> 0.14.0')                    #║
   gem.add_development_dependency(:pg, '~> 1.2.3')                                #║
   gem.add_development_dependency(:activerecord, '~> 6.0.3.4')                    #║
   # ╠═════════════════════════════════════════════════════════════════════════════╣
-  gem.add_runtime_dependency(:'tty-command', '~> 0.9.0')                         #║
+  gem.add_runtime_dependency(:'tty-command', '~> 0.10.0')                        #║
   gem.add_runtime_dependency(:finite_machine, '~> 0.14.0')                        #║
   # ╠═════════════════════════════════════════════════════════════════════════════╣
   gem.installed_by_version = '3.2.0.rc.2'                                        #║
@@ -65,7 +67,3 @@ end
 # -----------------------------------------------------------------------------
 # gem.add_development_dependency(:rugged, '~> 1.1.0')                        #║
 
-# removed from dependency requirement, even if only dev
-# ----------------------------------------------------------------------
-# gem.add_development_dependency(:bundler, '~> 2.2.0.rc.2')           #║
-# gem.add_development_dependency(:'rubygems-update', '~> 3.2.0.rc.2') #║

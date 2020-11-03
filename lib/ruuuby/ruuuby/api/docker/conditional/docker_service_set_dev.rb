@@ -91,31 +91,6 @@ module ::Ruuuby
         self._run_cmd('network create -d bridge --subnet 192.168.0.0/24 --gateway 192.168.0.1 ruuuby_network')
       end
 
-      def run_dev
-        🛑 ::ArgumentError.new("| c{DockerAPI}-> m{run_dev} was called when container{ruuuby_nginx} was detected to be running |") if ∃🐋?('service_nginx')
-        result = @engine.api_zsh.run_script(::Ruuuby::MetaData::ZshAPI::Scripts::Docker::Compose::DEV_START)
-        if result == 'ok'
-          true
-        else
-          🛑 ::ArgumentError.new("| {🐋}-> m{run_dev} got non-ok response{#{result.to_s}} |")
-        end
-      end
-
-      def stop_dev
-        🛑 ::ArgumentError.new("| c{DockerAPI}-> m{stop_dev} was called when container{ruuuby_nginx} was not detected to be running |") if ∄🐋?('service_nginx')
-        result = @engine.api_zsh.run_script(::Ruuuby::MetaData::ZshAPI::Scripts::Docker::Compose::DEV_STOP)
-        if result == 'ok'
-          true
-        else
-          🛑 ::ArgumentError.new("| {🐋}-> m{stop_dev} got non-ok response{#{result.to_s}} |")
-        end
-      end
-
-      def build_dev
-        self.stop_dev
-        self.run_dev
-      end
-
     end
   end
 end

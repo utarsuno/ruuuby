@@ -36,7 +36,7 @@ RSpec.describe 'docker_service_nginx' do
       expect(data.match?(/Active connections: \d+ \nserver accepts handled requests\n \d+ \d+ \d+ \nReading: \d+ Writing: \d+ Waiting: \d+ \n/)).to eq(true)
       requests_served = data.split($/)[2].to_s.♻️⟶(' ', 3).♻️⟵(' ').to_i
 
-      (🎲(20) + 1).∀{🌐.get!(data_url)}
+      (🎲.𝔦𝔦(1, 10)).∀{🌐.get!(data_url)}
 
       response2, time_delta = 🌐.execute_timed!(data_url)
       data2 = response2.body

@@ -13,8 +13,9 @@
  |    \__/ | \| \__, .__/ .   |__/ |___ \__, |___ /~~\ |  \ /~~\  |  | \__/ | \| .__/
 _____________________________________________________________________________________________________________________ */
 
-static void startup_step1_before_loading_extension(void);
-static void startup_step2_add_ruuuby_c_extensions(void);
+static void startup_step1_f38(void);
+static void startup_step2_before_loading_extension(void);
+static void startup_step3_add_ruuuby_c_extensions(void);
 static void startup_step4_load_needed_ruuuby_files(void); //__attribute__ ((noreturn))
 static void startup_step5_protect_against_gc(void);
 static void internal_only_prepare_f16(void);
@@ -113,9 +114,9 @@ static VALUE has_smell_of_int(const VALUE arg);
 static VALUE is_finite_num(const VALUE arg) {return rb_funcall(arg, cached_rb_intern_is_finite, 0);}
 static VALUE has_smell_of_int(const VALUE arg){return rb_funcall(arg, cached_rb_intern_smells_like_int, 0);}
 
-static VALUE m_nil_empty(const VALUE self) __attribute__ ((const));
-static VALUE m_int_is_finite(const VALUE self) __attribute__ ((const));
-static VALUE m_int_is_not_finite(const VALUE self) __attribute__ ((const));
+CONSTFUNC(static VALUE m_nil_empty(const VALUE self));
+CONSTFUNC(static VALUE m_int_is_finite(const VALUE self));
+CONSTFUNC(static VALUE m_int_is_not_finite(const VALUE self));
 
 void Init_ruby_class_mods(void);
 
@@ -142,9 +143,6 @@ static inline VALUE r_flt_is_universal(const double flt){
 
 //💎parse_kargs_with_normalizer
 //#define 💎parse_kargs_with_normalizer(func_name, expr_0args, expr_1arg) if (argc == 0) {expr_0args} else if (argc == 1) {💎parse_optional_arg_as_them(); if (is_sym(them)) {expr_1arg} else {🛑expected_sym(func_name, "normalizer", them)}} else {🛑expected_kargs(func_name, "0 or 1")}
-
-
-
 
 //🛑expected_sym(func_name, "did not support the received normalizer", sym)
 

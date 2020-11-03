@@ -98,6 +98,7 @@ ________________________________________________________________________________
 #define ensure_all_loaded_for_statistics(){\
     ensure_loaded_math(combinatorics/combinatorics)\
     ensure_loaded_math(stats/stats)\
+    ensure_loaded_math(stats/rng)\
     ensure_loaded_math(stats/time_series)\
     ensure_loaded_math(stats/descriptive)\
     ensure_loaded_math(stats/time_series_data)\
@@ -106,7 +107,6 @@ ________________________________________________________________________________
 #define ensure_all_loaded_for_ruuuby(){\
     ensure_loaded_ruuuby(env)\
     ensure_loaded_ruuuby(ruuuby/ruuuby_api)\
-    ensure_loaded_ruuuby(ruuuby/api/api_zsh)\
     ensure_loaded_ruuuby(ruuuby/api/git/api_git)\
     ensure_loaded_ruuuby(ruuuby/api/api_brew)\
     ensure_loaded_ruuuby(ruuuby/api/api_iconv)\
@@ -144,23 +144,24 @@ ________________________________________________________________________________
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-#define re_ye              return Qtrue;
-#define re_c_ye            return 1;
-#define re_no              return Qfalse;
-#define re_nil             return Qnil;
-#define re_c_no            return 0;
-#define re_as_bool(expr)   if (expr) {re_ye} else {re_no}
-#define re_as_c_bool(expr) if (expr) {return 1;} else {return 0;}
-#define re_me              return self;
-#define re_me_eq_to(arg)   return rb_obj_equal(self, arg);
-#define re_0               return ℤ0;
-#define re_nan             return cached_flt_nan;
-#define re_inf             return cached_flt_inf;
-#define re_negative_inf    return cached_flt_negative_inf;
-#define re_inf_complex     return cached_flt_inf_complex;
-#define re_1               return ℤ1;
-#define re_n1              return ℤn1;
-#define re_me_mem_size     return UINT2NUM((unsigned int) rb_obj_memsize_of(self));
+#define re_ye                       return Qtrue;
+#define re_c_ye                     return 1;
+#define re_no                       return Qfalse;
+#define re_nil                      return Qnil;
+#define re_c_no                     return 0;
+#define re_as_bool(expr)            if (expr) {re_ye} else {re_no}
+#define re_as_bool_opposite(expr)   if (expr) {re_no} else {re_ye}
+#define re_as_c_bool(expr)          if (expr) {return 1;} else {return 0;}
+#define re_me                       return self;
+#define re_me_eq_to(arg)            return rb_obj_equal(self, arg);
+#define re_0                        return ℤ0;
+#define re_nan                      return cached_flt_nan;
+#define re_inf                      return cached_flt_inf;
+#define re_negative_inf             return cached_flt_negative_inf;
+#define re_inf_complex              return cached_flt_inf_complex;
+#define re_1                        return ℤ1;
+#define re_n1                       return ℤn1;
+#define re_me_mem_size              return UINT2NUM((unsigned int) rb_obj_memsize_of(self));
 // essentially returns "self.send(func_name, arg)"
 #define re_me_func_1args(func_name, arg) return rb_funcall(self, func_name, 1, arg);
 

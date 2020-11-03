@@ -154,6 +154,8 @@ static inline VALUE r_flt_smells_like_int(const double flt);
         re_as_bool(c_int_is_natural(converter_func(self)))\
     } else if (the_normalizer == 🅽_whole || the_normalizer == 🅽_whole_w_str_allowed) {\
         re_as_bool(c_int_is_whole(converter_func(self)))\
+    } else if (the_normalizer == 🅽_no_empty) {\
+        re_as_bool_opposite(rb_equal(self, ℤ0))\
     } else {\
         raise_err_arg("| <%"PRIsVALUE">-> m{%s} did not receive a valid normalizer{%"PRIsVALUE"}; either it is invalid or the current type of{%s} is not valid w/ the valid normalizer |", self, func_name, the_normalizer, rb_obj_classname(self));\
     }\

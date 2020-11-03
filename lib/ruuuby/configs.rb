@@ -19,7 +19,7 @@ BEGIN {
   # TODO: create better solution than loading it here
   module ::TTY
     class Command
-      attribute_versionable('0.9.0'){::TTY::Command::VERSION}
+      attribute_versionable('0.10.0'){::TTY::Command::VERSION}
 
       # @return [Boolean]
       def self.healthy?
@@ -86,6 +86,7 @@ BEGIN {
   # | --------------------------------------------------------------------------------------------------------------------
 
 }
+
 
 END {
   💎.engine.engine.stop

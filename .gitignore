@@ -24,6 +24,7 @@
 
 # wip
 services/ruuuby/f93/
+services/temp/
 
 # preference based config checks or anything un-related to Ruuuby
 spec/dev_settings/

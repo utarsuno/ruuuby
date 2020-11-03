@@ -22,8 +22,8 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
         end # end: {for gem{rake}}
 
         context 'for gem{rspec}' do
-          it 'has correct version{3.9.0}' do
-            expect(::RSpec::Version::STRING).to eq('3.9.0')
+          it 'has correct version{3.10.0}' do
+            expect(::RSpec::Version::STRING).to eq('3.10.0')
           end
         end # end: {for gem{rspec}}
 
@@ -34,8 +34,8 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
         end # end: {for gem{rspec-benchmark}}
 
         context 'for gem{tty-command}' do
-          it 'has correct version{0.9.0}' do
-            expect_needed_version(::TTY::Command, '0.9.0', ::TTY::Command::VERSION)
+          it 'has correct version{0.10.0}' do
+            expect_needed_version(::TTY::Command, '0.10.0', ::TTY::Command::VERSION)
           end
           context 'reports expected config values' do
             context 'for health checks' do

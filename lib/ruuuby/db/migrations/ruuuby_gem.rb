@@ -55,3 +55,31 @@ class CreateRuuubyGem < RuuubyDBMigration
 end
 
 #ActiveRecord::Base.connection.execute(sql)
+
+class ::RuuubyGem < ::ApplicationRecord
+
+  # @param [String] gem_name
+  def self.[](gem_name)
+    🛑str❓('gem_name', gem_name)
+    ::RuuubyGem.where('name = ?', [gem_name]).limit(1).first
+  end
+
+  # @return [Array]
+  def version_updates; ::RuuubyGemChangelog.where('ruuuby_gem_id = ?', self.id).to_a; end
+
+end
+
+class ::RuuubyGemChangelog < ::ApplicationRecord
+
+  # @param [String] gem_name
+  def self.[](id)
+    🛑str❓('id', id)
+    ::RuuubyGemChangelog.where('id = ?', [id]).limit(1).first
+  end
+
+  def self.history(for_version)
+    🛑str❓('for_version', for_version)
+    ::RuuubyGemChangelog.where('version_ruuuby = ?', [for_version]).to_a
+  end
+
+end

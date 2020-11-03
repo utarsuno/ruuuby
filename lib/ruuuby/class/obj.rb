@@ -176,7 +176,7 @@ class ::Object
   # @raise [ArgumentError]
   def 🛑int❓(arg_name, arg, normalization_checks=:none)
     if normalization_checks != :none
-      🛑 ::ArgErr.new(self, arg_name.to_s, arg, 'Integer') unless arg.int?(normalization_checks)
+      🛑 ::ArgErr.new(self, arg_name.to_s, arg, 'Integer', normalization_checks) unless arg.int?(normalization_checks)
     else
       🛑 ::ArgErr.new(self, arg_name.to_s, arg, 'Integer') unless arg.int?
     end
@@ -189,7 +189,7 @@ class ::Object
   def 🛑ints❓(args, normalization_checks=:none)
     if normalization_checks != :none
       args.∀ₓᵢ do |x, i|
-        🛑 ::ArgErr.new(self, "[#{i.to_s}]{#{x.to_s}}", x, 'Integer') unless x.int?(normalization_checks)
+        🛑 ::ArgErr.new(self, "[#{i.to_s}]{#{x.to_s}}", x, 'Integer', normalization_checks) unless x.int?(normalization_checks)
       end
     else
       args.∀ₓᵢ do |x, i|
@@ -262,12 +262,10 @@ class ::Object
   #
   # @raise [ArgumentError]
   def 🛑ary❓(arg_name, arg, normalization_checks=:none)
-    🛑 ::ArgErr.new(self, 'arg', arg, 'Array') unless arg.ary?
-    case normalization_checks
-    when :∉∅
-      🛑 ::ArgErr.new(self, 'arg', arg, 'Array', :∉∅) if arg.∅?
+    if normalization_checks != :none
+      🛑 ::ArgErr.new(self, 'arg', arg, 'Array', :∉∅) unless arg.ary?(normalization_checks)
     else
-      🛑 ::ArgErr.new(self, 'normalization_checks', normalization_checks, 'Symbol', :unrecognized) if normalization_checks != :none
+      🛑 ::ArgErr.new(self, 'arg', arg, 'Array') unless arg.ary?
     end
   end
 
@@ -276,14 +274,11 @@ class ::Object
   #
   # @raise [ArgumentError]
   def 🛑arys❓(args, normalization_checks=:none)
-    case normalization_checks
-    when :∉∅
+    if normalization_checks != :none
       args.∀ₓᵢ do |x, i|
-        🛑 ::ArgErr.new(self, "[#{i.to_s}]{#{x.to_s}}", x, 'Array') unless x.ary?
-        🛑 ::ArgErr.new(self, "[#{i.to_s}]{#{x.to_s}}", x, 'Array', :∉∅) if x.∅?
+        🛑 ::ArgErr.new(self, "[#{i.to_s}]{#{x.to_s}}", x, 'Array', normalization_checks) unless x.ary?(normalization_checks)
       end
     else
-      🛑 ::ArgErr.new(self, 'normalization_checks', normalization_checks, 'Symbol', :unrecognized) if normalization_checks != :none
       args.∀ₓᵢ do |x, i|
         🛑 ::ArgErr.new(self, "[#{i.to_s}]{#{x.to_s}}", x, 'Array') unless x.ary?
       end

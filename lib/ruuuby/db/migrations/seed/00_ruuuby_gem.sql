@@ -3,6 +3,8 @@
 -- testing purposes
 -- -------------------------------------------- ⚠️ --------------------------------------------
 
+BEGIN TRANSACTION;
+
 CALL ruuuby_gem_add('0.0.1', 'bundler', '2.1.4', true, false, '::Bundler', '::VERSION', NULL);
 CALL ruuuby_gem_add('0.0.1', 'rake', '13.0.1', true, false, '::Rake', '::VERSION', NULL);
 CALL ruuuby_gem_add('0.0.1', 'rspec', '3.9.0', true, false, '::Rspec', '::Version::STRING', NULL);
@@ -48,3 +50,8 @@ CALL ruuuby_gem_remove('0.1.0.pre.0', 'rubygems-update');
 CALL ruuuby_gem_remove('0.1.0.pre.0', 'rugged');
 CALL ruuuby_gem_remove('0.1.0.pre.0', 'schema_plus_foreign_keys');
 CALL ruuuby_gem_remove('0.1.0.pre.0', 'sqlite3');
+
+CALL ruuuby_gem_update('0.1.0.pre.1', 'tty-command', '0.10.0');
+CALL ruuuby_gem_update('0.1.0.pre.1', 'rspec', '3.10.0');
+
+COMMIT TRANSACTION;

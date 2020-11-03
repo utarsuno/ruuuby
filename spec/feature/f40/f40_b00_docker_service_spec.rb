@@ -36,7 +36,7 @@ RSpec.describe 'f40_b00' do
         expect(::Docker.version['Platform']['Name']).to eq('Docker Engine - Community')
       end
       it 'w/ OS relating key/vals' do
-        expect(::Docker.version['KernelVersion']).to eq('4.19.76-linuxkit')
+        expect(::Docker.version['KernelVersion']).to eq('5.4.39-linuxkit')
         expect(::Docker.version['Os']).to eq('linux')
       end
       context 'w/ version related information' do

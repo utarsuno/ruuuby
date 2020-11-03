@@ -3,7 +3,7 @@
 #ifndef CRUUUBY_H0_CONSTANTS
 #define CRUUUBY_H0_CONSTANTS "defined(CRUUUBY_H0_CONSTANTS)"
 
-//extern enum ruby_value_type;
+#define COMPILED_AT_DATETIME __DATE__ " " __TIME__
 
 /*____________________________________________________________________________________________________________________________________________________________________
   __   __        __  ___           ___                         ___  __

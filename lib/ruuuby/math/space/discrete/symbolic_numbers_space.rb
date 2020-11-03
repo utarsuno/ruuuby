@@ -44,47 +44,6 @@ module ::Math
           Ω: ::Float::CONST_OMEGA
       }
 
-=begin
-      if RUUUBY_F28_B09
-        MAPPING = {
-            ∞: ::Float::INFINITY,
-            π: ::Math::PI,
-            ℮: ::Math::E,
-            𝚽: ::Float::RATIO_GOLDEN,
-            Ⴔ: ::Math::ANGLE_GOLDEN,
-            𝞽: ::Math::ANGLE_TAU,
-            Ω: ::Float::CONST_OMEGA,
-            ½: ::Float::ONE_HALF,
-            ⅓: ::Float::ONE_THIRD,
-            ⅔: ::Float::TWO_THIRDS,
-            ¼: ::Float::ONE_FOURTH,
-            ¾: ::Float::THREE_FOURTHS,
-            ⅕: ::Float::ONE_FIFTH,
-            ⅖: ::Float::TWO_FIFTHS,
-            ⅗: ::Float::THREE_FIFTHS,
-            ⅘: ::Float::FOUR_FIFTHS,
-            ⅙: ::Float::ONE_SIXTH,
-            ⅐: ::Float::ONE_SEVENTH,
-            ⅛: ::Float::ONE_EIGHTH,
-            ⅜: ::Float::THREE_EIGHTHS,
-            ⅝: ::Float::FIVE_EIGHTHS,
-            ⅞: ::Float::SEVEN_EIGHTHS,
-            ⅑: ::Float::ONE_NINTH,
-            ⅒: ::Float::ONE_TENTH,
-        }
-      else
-        MAPPING = {
-            ∞: ::Float::INFINITY,
-            π: ::Math::PI,
-            ℮: ::Math::E,
-            𝚽: ::Float::RATIO_GOLDEN,
-            Ⴔ: ::Math::ANGLE_GOLDEN,
-            𝞽: ::Math::ANGLE_TAU,
-            Ω: ::Float::CONST_OMEGA
-        }
-      end
-=end
-
       def initialize
         @space_type     = 'types'
         @symbol         = :𝕊

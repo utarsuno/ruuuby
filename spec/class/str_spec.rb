@@ -742,7 +742,7 @@ RSpec.describe 'str' do
         end
       end # end: {func{♻️⟶}}
 
-      context 'fund{♻️⟶∞}' do
+      context 'func{♻️⟶∞}' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
             it 'single char terminating pattern' do
@@ -763,6 +763,14 @@ RSpec.describe 'str' do
               expect('abaccbab'.♻️⟶∞('cc')).to eq('bab')
               expect('abacccbabcbab'.♻️⟶∞('cc')).to eq('babcbab')
               expect(specific_data.♻️⟶∞('♻️')).to eq("y4f 4v3tbh 54h")
+            end
+            it 'non ascii terminating pattern' do
+              expect('hello♻️♻️world'.♻️⟶∞('♻️')).to eq('world')
+              expect('♻️hello♻️world'.♻️⟶∞('♻️')).to eq('world')
+              expect('♻️hello♻️♻️world'.♻️⟶∞('♻️')).to eq('world')
+              expect(' ♻️ hello ♻️♻ ♻️  ♻️world'.♻️⟶∞('♻️')).to eq('world')
+              expect(' ♻️ hello ♻️♻ ♻️  world'.♻️⟶∞('♻️')).to eq('  world')
+              expect(' ♻️ hello ♻️♻ ♻️  η̂world'.♻️⟶∞('η̂')).to eq('world')
             end
           end
           context 'cases: error' do

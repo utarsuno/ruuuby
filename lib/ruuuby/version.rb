@@ -3,5 +3,5 @@
 # +Ruuuby+
 module ::Ruuuby
   # @type [String] the version of *Ruuuby* reflected in this source code
-  VERSION = '0.1.0.pre.0'.freeze
+  VERSION = '0.1.0.pre.1'.freeze
 end

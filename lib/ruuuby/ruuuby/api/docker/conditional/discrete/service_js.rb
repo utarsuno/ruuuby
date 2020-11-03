@@ -106,7 +106,7 @@ class RuuubyServiceJS < ::RuuubyService
 
     puts "IN DIR{#{local_dir.path}}"
 
-    local_dir.∀_📁 do |path|
+    local_dir.∀📁 do |path|
       #puts "PATH{#{path}}, remote-dir{#{remote_dir}}"
       the_path = "#{local_dir.path}".ensure_ending!('/') + path
       remote_path = "#{remote_dir}#{path}"
@@ -119,7 +119,7 @@ class RuuubyServiceJS < ::RuuubyService
       end
     end
 
-    local_dir.∀_🗄️(false) do |d|
+    local_dir.∀🗄️(false) do |d|
       path_dir_remote = d.path.dup.♻️⟶('src/').ensure_start!('src/').ensure_ending!('/')
       #puts "???{#{path_dir_remote}}"
       md5_remote      = self.md5_dir(path_dir_remote)

@@ -12,13 +12,13 @@ RSpec.describe 'f32_b10' do
           context 'cases: positive' do
             it 'same value as self' do
               (-9..9).∀ do |i|
-                a = (🎲(i)).to_i + 1
+                a = 🎲.𝔦𝔦(-9,9)
                 expect(fℤ².gcd(a, a)).to eq(a.abs)
               end
             end
             it 'paired w/ 0' do
               (-9..9).∀ do |i|
-                a = (🎲(i)).to_i + 1
+                a = 🎲.𝔦𝔦(-9,9)
                 expect(fℤ².gcd(a, 0)).to eq(a.abs)
                 expect(fℤ².gcd(0, a)).to eq(a.abs)
               end
@@ -45,9 +45,9 @@ RSpec.describe 'f32_b10' do
             end
             it 'passes associative law tests' do
               (1..42).∀ do |i|
-                a = (🎲(i.to_i).to_i + 1)
-                b = (🎲(i.to_i).to_i + 1)
-                c = (🎲(i.to_i).to_i + 1)
+                a = 🎲.𝔦𝔦(1, 42)
+                b = 🎲.𝔦𝔦(1, 42)
+                c = 🎲.𝔦𝔦(1, 42)
                 expect(fℤ².gcd(a, fℤ².gcd(b, c))).to eq(fℤ².gcd(a, fℤ².gcd(c, b)))
                 expect(fℤ².gcd(fℤ².gcd(b, c), a)).to eq(fℤ².gcd(fℤ².gcd(c, b), a))
 
@@ -61,8 +61,8 @@ RSpec.describe 'f32_b10' do
             context 'passes misc formulas' do
               it 'gcd(2ᵃ − 1, 2ᵇ − 1) = 2ᵍᶜᵈ⁽ᵃ,ᵇ⁾ − 1' do
                 (1..9).∀ do |i|
-                  a = (🎲(i.to_i).to_i + 1)
-                  b = (🎲(i.to_i).to_i + 1)
+                  a = 🎲.𝔦𝔦(1, 9)
+                  b = 🎲.𝔦𝔦(1, 9)
                   expect(fℤ².gcd(2 ** a - 1, 2 ** b - 1)).to eq(2 ** (fℤ².gcd(a, b)) - 1)
                 end
               end

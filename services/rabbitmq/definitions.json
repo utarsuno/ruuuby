@@ -31,7 +31,7 @@
       "name":"queue_hello",
       "vhost":"/",
       "durable":true,
-      "auto_delete":true,
+      "auto_delete":false,
       "arguments":{}
     }
   ],
@@ -40,7 +40,7 @@
       "name":"exchange_hello",
       "vhost":"/",
       "type":"topic",
-      "durable":true,
+      "durable":false,
       "auto_delete":false,
       "internal":false,
       "arguments":{}

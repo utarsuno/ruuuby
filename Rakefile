@@ -130,6 +130,7 @@ def add_task_rspec(task_name, sub_category, with_warnings, singular_category_tes
   official_task_name = "#{task_name}"
   official_task_name += "_#{sub_category}" unless sub_category.empty?
   local_opts = ['--format progress', '--color', '--require spec_helper']
+  #local_opts = ['--color', '--require spec_helper']
   local_opts << '--warnings' if with_warnings
   if singular_category_test && task_name != 'unit'
     local_opts << "--tag @#{task_name}"
@@ -141,6 +142,7 @@ def add_task_rspec(task_name, sub_category, with_warnings, singular_category_tes
   end
   rspec_task            = RSpec::Core::RakeTask.new("rspec_#{official_task_name}".to_sym)
   rspec_task.verbose    = with_warnings
+
   rspec_task.rspec_opts = local_opts.join(' ')
   unless files_to_require.empty?
     files_to_require.each do |relative_path|
@@ -151,12 +153,21 @@ def add_task_rspec(task_name, sub_category, with_warnings, singular_category_tes
     rspec_task.rspec_opts << " --exclude-pattern \"#{exclude_patterns}\""
   end
 
+
+  if task_name == 'rng'
+    rspec_task.rspec_opts << ' --out rspec_rng.txt'
+  else
+    #rspec_task.rspec_opts << ' --format progress'
+  end
+
   #puts "task{#{official_task_name}}, rspec_opts{#{rspec_task.rspec_opts.to_s}}"
 end
 
 add_task_rspec('unit', '',false,  true, true)
 add_task_rspec('audit', '', false, true, true)
 add_task_rspec('db', '', false, true, true, '', CategoriesQA::Preload::DB_FULL)
+
+add_task_rspec('rng', '', false, true, true)
 
 # TODO: use better solution for loading benchmark (use existing rake task settings)
 add_task_rspec('performance', '', false, true, true, '', CategoriesQA::Preload::LIB_BENCHMARK)

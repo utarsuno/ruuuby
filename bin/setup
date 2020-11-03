@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# encoding: utf-8
+# encoding: UTF-8
 
 set -euo pipefail
 IFS=$'\n\t'

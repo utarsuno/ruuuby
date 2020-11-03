@@ -44,7 +44,7 @@ module ::Ruuuby
       include ::Ruuuby::Attribute::Includable::SyntaxCache
       include ::Singleton
 
-      attr_reader :logger, :logging_level, :logging_mode, :api, :api_locale, :path_base, :api_zsh, :engine
+      attr_reader :logger, :logging_level, :logging_mode, :api, :api_locale, :path_base, :engine
 
       attr_accessor :stats_ext
 
@@ -53,10 +53,6 @@ module ::Ruuuby
         require_relative '../../feature_lazy_loader'
       end
 
-      # state flags
-      # | 0 | not started     |
-      # | 1 | engine started  |
-      # | 2 | engined stopped |
       def initialize
         @path_base      = "#{::File.dirname(::File.dirname(::File.dirname(::File.dirname(::File.dirname(__FILE__)))))}/"
         @logger         = nil
@@ -65,15 +61,14 @@ module ::Ruuuby
         @logging_level  = ::Logger::DEBUG
         @api            = ::Ruuuby::MetaData::RuuubyAPI.new(self, 30)
         @api_locale     = ::Ruuuby::MetaData::LocaleAPI.new(self)
-        @api_zsh        = ::Ruuuby::MetaData::ZshAPI.new(self)
         @orm            = nil
 
         @running = false
         @engine  = ::FiniteMachine.new(self, alias_target: :engine) do
           initial :neutral
 
-          event :start,   :neutral => :running, if: "engine_on?"
-          event :stop,    :running => :neutral, unless: "engine_on?"
+          event :start, :neutral => :running, if: "engine_on?"
+          event :stop,  :running => :neutral, unless: "engine_on?"
 
           on_before :start do |event|
             if event.from != :neutral

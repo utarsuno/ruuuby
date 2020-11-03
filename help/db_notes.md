@@ -133,9 +133,17 @@
  * YEAR
  * ZONE
 
-
 ### misc notes to organize
 
  * number of decimals displayed w/ numbers is `DBMS` specific
  * Databases are optimized to perform filtering quickly and efficiently, shifting too much of this work onto the client application will cause serious long-term scaling issues
  * generally the operators `!=` and `<>` can be easily interchanged, but this is still `DBMS` specific
+
+# TODOs (short description)
+
+| term                     | definition | note  |
+| ------------------------ | --------- | ----- |
+| all the normalization forms!!!!!! |
+| `DDL`</n>`Database Definition Language` |
+| `DML`</n>`Data Manipulation Language` |
+| `DCL`</n>`Data Control Language` |

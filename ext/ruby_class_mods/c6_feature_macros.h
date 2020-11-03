@@ -76,7 +76,7 @@ ________________________________________________________________________________
     💎add_public_func_0args_to(R_OBJ, "chr?",         m_obj_is_chr)\
     💎add_public_func_0args_to(R_OBJ, "set?",         m_obj_is_set)\
     💎add_public_func_0args_to(R_OBJ, "theta_angle?", is_theta_angle)\
-    💎add_public_func_0args_to(R_OBJ, "ary?",         m_obj_is_ary)\
+    💎add_public_func_kargs_to(R_OBJ, "ary?",         m_obj_is_ary)\
     💎add_public_func_kargs_to(R_OBJ, "int?",         m_obj_is_int)\
     💎add_public_func_kargs_to(R_OBJ, "flt?" ,         m_obj_is_flt)\
     💎add_public_func_kargs_to(R_OBJ, "sym?",         m_obj_is_sym)\

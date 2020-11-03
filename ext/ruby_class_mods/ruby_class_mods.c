@@ -8,20 +8,6 @@ ________________________________________________________________________________
 
 #include "ruby/config.h"
 
-// TODO: resolve w/ extconf
-#ifdef RUUUBY_OS_IS_MAC
-    //#include "/Users/utarsuno/.rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-darwin18/rb_mjit_min_header-2.7.1.h"
-    #include "/Users/utarsuno/.rbenv/versions/3.0.0-preview1/include/ruby-3.0.0/x86_64-darwin19/rb_mjit_min_header-3.0.0.h"
-#endif
-
-// TODO: resolve w/ extconf
-#ifdef RUUUBY_OS_IS_UNIX
-    //#include "/usr/local/rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-linux-musl/rb_mjit_min_header-2.7.1.h"
-    #include "/usr/local/rbenv/versions/3.0.0-preview1/include/ruby-3.0.0/x86_64-linux-musl/rb_mjit_min_header-3.0.0.h"
-#endif
-
-//extern enum ruby_value_type;
-
 #include <ruby/defines.h>
 #include <ruby/version.h>
 #include <ruby/vm.h>
@@ -41,11 +27,6 @@ ________________________________________________________________________________
 #include <float.h>
 //#include <tgmath.h>
 //#include <complex.h>
-
-//#include <sprintf.h>
-
-// TODO: resolve w/ extconf
-#include "/Users/utarsuno/.rbenv/versions/3.0.0-preview1/include/ruby-3.0.0/ruby/internal/intern/sprintf.h"
 
 #ifdef RUUUBY_F98_DEBUG
     #ifdef RUUUBY_F98_TIMER
@@ -484,17 +465,14 @@ ________________________________________________________________________________
 _____________________________________________________________________________________________________________________ */
 
 // | func{ary?}  |
-/*ⓡ𝑓_kargs(m_obj_is_ary,
+ⓡ𝑓_kargs(m_obj_is_ary,
     💎parse_kargs_with_normalizer("ary?", re_as_bool(is_ary(self)),
     if (them == 🅽_no_empty) {
         if (is_ary(self)) {
             if (r_ary_is_empty(self)) {re_no} else {re_ye}
         } else {re_no}
     } else {🛑normalizer_value("ary?", them)})
-)*/
-
-// | func{ary?} |
-ⓡ𝑓_def(m_obj_is_ary, re_as_bool(is_ary(self)))
+)
 
 // | func{bool?} |
 ⓡ𝑓_def(m_obj_is_bool, re_as_bool(is_bool(self)))
@@ -1806,7 +1784,7 @@ static VALUE m_square_root(const VALUE self, const VALUE val) {
   \ \____\/______/\ \____\/\_/\_\ \ \__\ \____\ \_\ \_\/\____/\ \_\ \____/\ \_\ \_\   \ \_\ \_\ \_\ \__/.\_\\ \_\ \_\ \_\
    \/____/         \/____/\//\/_/  \/__/\/____/\/_/\/_/\/___/  \/_/\/___/  \/_/\/_/    \/_/\/_/\/_/\/__/\/_/ \/_/\/_/\/_/*/
 
-static inline void startup_step1_before_loading_extension(void) {
+static inline void startup_step2_before_loading_extension(void) {
     Ⓒbig_decimal = rb_const_get(rb_cObject, rb_intern("BigDecimal"));
     Ⓒset         = rb_const_get(rb_cObject, rb_intern("Set"));
 #ifdef RUUUBY_F06_B08
@@ -1845,7 +1823,7 @@ static inline void startup_step1_before_loading_extension(void) {
     rb_gc_register_address(& cached_flt_nan);
 }
 
-static void startup_step2_add_ruuuby_c_extensions(void) {
+static void startup_step3_add_ruuuby_c_extensions(void) {
     init_f06()
 #ifdef RUUUBY_F06_B08
     init_f06_b08()
@@ -2056,6 +2034,8 @@ typedef struct Ruuuby_Engine_Stats {
         Ⓒruuuby_engine         = rb_funcall(ⓜruuuby_engine, rb_intern("_get_engine"), 0);
         hsh_ruuuby_engine_stats = 💎get_instance_field(Ⓒruuuby_engine,stats_ext);
 
+        ENGINE_STAT_SET("compiled_at", c_str_to_r_str(COMPILED_AT_DATETIME));
+
         #ifdef RUUUBY_F06_B08
             ENGINE_STAT_SET("F06_B08", Qtrue);
         #else
@@ -2167,6 +2147,12 @@ typedef struct Ruuuby_Engine_Stats {
 
 // TODO: https://stackoverflow.com/questions/20979565/how-can-i-print-the-result-of-sizeof-at-compile-time-in-c/35261673#35261673
 
+static void startup_step1_f38(void) {
+#ifdef RUUUBY_F38
+    ensure_loaded_default(matrix);
+#endif
+}
+
 // the `main function`, executes once on startup setting up `Ruuuby`
 void Init_ruby_class_mods(void) {
     RuuubyEngineStats ruuuby_engine;
@@ -2175,27 +2161,23 @@ void Init_ruby_class_mods(void) {
 
 #ifndef RUUUBY_F98_DEBUG
     startup_step0_load_f98()
-    #ifdef RUUUBY_F38
-        ensure_loaded_default(matrix)
-    #endif
-    startup_step1_before_loading_extension();
-    startup_step2_add_ruuuby_c_extensions();
+    startup_step1_f38();
+    startup_step2_before_loading_extension();
+    startup_step3_add_ruuuby_c_extensions();
     startup_step4_load_needed_ruuuby_files();
     startup_step5_protect_against_gc();
 #else
     engine_start_up(& ruuuby_engine);
 
     startup_step0_load_f98()
-    #ifdef RUUUBY_F38
-        ensure_loaded_default(matrix)
-    #endif
-    startup_step1_before_loading_extension();
+    startup_step1_f38();
+    startup_step2_before_loading_extension();
 
     #ifdef RUUUBY_F98_MEMORY
         rb_define_module_function(ⓜruuuby_engine_gc, "mem_usage_peak", m_memory_peak_this_runtime, 0);
     #endif
 
-    startup_step2_add_ruuuby_c_extensions();
+    startup_step3_add_ruuuby_c_extensions();
     startup_step4_load_needed_ruuuby_files();
     startup_step5_protect_against_gc();
 

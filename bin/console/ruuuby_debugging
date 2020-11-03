@@ -7,12 +7,22 @@ require 'bundler/setup'
 require 'ruuuby'
 
 $ruuuby = 💎
-#using ::Math::Algebra::Tropical::ContextNumeric
-#using ::Math::Algebra::Tropical::ContextMatrix
-#using ::ThetaAngle::ContextRuuuby
-#using ::ThetaAngle::ContextParamCheck
 using ::String::ContextF24
-#using ::Ruuuby::Heuristics::ContextParsingCommandOutput
+using ::Ruuuby::Heuristics::ContextParsingCommandOutput
+
+class TempDiscord
+
+  def initialize
+    @temp_url = ENV['TEMP_URL']
+  end
+
+  def msg(the_msg)
+    🌐.post_json(@temp_url, {username: "B O T", avatar_url: "", content: the_msg})
+  end
+
+end
+
+$discord = TempDiscord.new
 
 require 'irb'
 IRB.start(__FILE__)

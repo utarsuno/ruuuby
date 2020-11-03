@@ -24,7 +24,7 @@ class ::Dir
   # @see https://stackoverflow.com/questions/2370702/one-liner-to-recursively-list-directories-in-ruby
   #
   # @param [Boolean] recursively
-  def ∀_📁(recursively=false)
+  def ∀📁(recursively=false)
     if recursively
       ::Dir["#{self.path}**/*"].reject{|fn| ::File.directory?(fn)}
       #::Dir["#{self.path}**/*"]
@@ -36,7 +36,7 @@ class ::Dir
   end
 
   # @param [Boolean] recursively
-  def ∀_🗄️(recursively=false)
+  def ∀🗄️(recursively=false)
     #self.∀{|path| yield path if ::Dir.∃?("#{self.path}#{path}")}
     if recursively
       ::Dir["#{self.path}**/*"].reject{|fn| ::File.file?(fn)}
@@ -61,7 +61,7 @@ class ::Dir
   def md5(recursively=false)
     if recursively
       results = []
-      self.∀_🗄️ do |sub_dir|
+      self.∀🗄️ do |sub_dir|
         #dir = Dir.new("#{self.path}#{sub_dir}/")
         #results << [dir.md5(true), sub_dir]
         results << [sub_dir.md5(true), sub_dir.path]
@@ -73,7 +73,7 @@ class ::Dir
       ::Math::Crypto.md5(parsed.join)
     else
       results = []
-      self.∀_📁(false) do |path|
+      self.∀📁(false) do |path|
         md5 = ::File.md5("#{self.path}".ensure_ending!('/') + path)
         results << [md5, path]
       end

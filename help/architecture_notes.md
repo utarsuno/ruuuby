@@ -32,7 +32,7 @@
 | `maximum tolerable downtime` (`MTD`)               | | 0x4 |
 | `maximum tolerable outage` (`MTO`)                 | | 0x4 |
 | `maximum allowable outage` (`MAO`)                 | | 0x4 |
-| `RPC framework`                                    | the general "set of tools that enable the programmer to call a piece o code in a remote process, be it on a different machine or just another process on the same machine" | 0x8 |
+| `RPC framework`                                    | the general "set of tools that enable the programmer to call a piece of code in a remote process, be it on a different machine or just another process on the same machine" | 0x8 |
 
 TODO: document relating data acts
  * Federal Information Security Management Act of 2002
@@ -130,3 +130,13 @@ https://www.upguard.com/blog/ansible-vs-chef
 | 0x6)         | https://en.wikipedia.org/wiki/Off-site_data_protection |
 | 0x7)         | https://en.wikipedia.org/wiki/Failure_mode_and_effects_analysis |
 | 0x8)         | https://stackoverflow.com/questions/20653240/what-is-rpc-framework-and-apache-thrift# |
+
+### TODOs (short descriptions))
+
+| term                                               | definition   | notes and/or source |
+| -------------------------------------------------- | ----- | --- |
+| `SDET`                                             | | |
+| `Inversion of Control` (`IoC`)                     | | |
+| `Aspect Oriented Programming` (`AOP`)              | | |
+| `Model View Controller` (`MVC`)                    | | |
+| `Data Access Object` (`DAO`)                       | | |

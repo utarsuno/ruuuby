@@ -2,10 +2,10 @@
 
 module ::Ruuuby
 
-  # | term                    | definition                                                           |
-  # | ----------------------- | ------------------------------------------------------------------- |
-  # | `admissible`            | a function that "never overestimates the cost of reaching the goal" |
-  # | `consistent`/`monotone` | in context of path-finding, a function whose "estimate is always less than or equal to the estimated distance from any neighbouring vertex to the goal, plus the cost of reaching that neighbour" |
+  # | term                    | definition                                                           | source |
+  # | ----------------------- | ------------------------------------------------------------------- | ------ |
+  # | `admissible`            | a function that "never overestimates the cost of reaching the goal" | 0x0    |
+  # | `consistent`/`monotone` | in context of path-finding, a function whose "estimate is always less than or equal to the estimated distance from any neighbouring vertex to the goal, plus the cost of reaching that neighbour" | 0x1 |
   module Heuristics
 
     module ContextParsingCommandOutput
@@ -69,7 +69,6 @@ module ::Ruuuby
     end
   end
 end
-
 
 # resources
 # 0x0) https://en.wikipedia.org/wiki/Admissible_heuristic
