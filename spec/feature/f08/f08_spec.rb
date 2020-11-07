@@ -174,9 +174,6 @@ RSpec.describe 'f08' do
 
   context 'audit', :audit do
     context 'feature(f08) passes audits' do
-      it 'module is defined in correct location' do
-        expect_∃ᵐ(:StringF08, ::Ruuuby::Feature::Includable)
-      end
       context 'extra sanity checks: all Classes w/ Enumerable have needed funcs' do
         context 'func{∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎}' do
           it 'exists in needed Classes' do

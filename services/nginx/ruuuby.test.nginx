@@ -1,0 +1,125 @@
+# main context {configurations that apply on a broad application level}
+
+# ideally (at max) 1 worker per 1 CPU
+worker_processes     auto;
+
+# number of file descriptors that can be used by NGINX (default is 2000)
+worker_rlimit_nofile 1048575;
+
+# @see: https://www.keycdn.com/support/nginx-error-log
+error_log /var/log/nginx/error.log warn;
+
+# this context is used for setting global options that affect general behavior of handling connections
+events {
+    # max clients = worker_connections * worker_processes
+    worker_connections 1024;
+
+    # NON-PROD-SAFE:{an optimization for serving many clients in each thread (esp. for Linux)}
+    use                epoll;
+
+    # NON-PROD-SAFE:{accept as many connections as possible, ideally requires more worker_processes}
+    multi_accept       on;
+
+    # since 'reuseport' is being used, 'accept_mutex' should be set off
+    accept_mutex       off;
+}
+
+# sibling of the events context
+http {
+    default_type application/octet-stream;
+
+    include /etc/nginx/mime.types;
+    include /etc/nginx/ruuuby/unsorted/buffers.nginx;
+    include /etc/nginx/ruuuby/unsorted/http_performance.nginx;
+    include /etc/nginx/ruuuby/caching/enable_files.nginx;
+    include /etc/nginx/ruuuby/unsorted/timeouts.nginx;
+    include /etc/nginx/ruuuby/unsorted/docker_dns_fix.nginx;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    add_header X-Frame-Options "";
+
+    upstream docker_pgadmin {
+        server service_pgadmin;
+    }
+
+    upstream docker_js {
+        server service_js:8080;
+    }
+
+    upstream docker_rabbitmq {
+        server service_rabbitmq:15672;
+    }
+
+    server {
+        listen 80;
+        listen 1337 reuseport;
+
+        server_name localhost ruuuby.com www.ruuuby.com;
+
+        #       __
+        # |\ | / _` | |\ | \_/
+        # | \| \__> | | \| / \
+        location /nginx {
+            stub_status on;
+        }
+
+        #       __   __   ___ ___  __
+        #  /\  /__` /__` |__   |  /__`
+        # /~~\ .__/ .__/ |___  |  .__/
+        location /v/ {
+            include   /etc/nginx/ruuuby/unsorted/cors.nginx;
+            include   /etc/nginx/ruuuby/caching/disable.nginx;
+            root      /;
+            autoindex on;
+        }
+
+        #  __   __        __
+        # |__) / _`  /\  |  \  |\/| | |\ |
+        # |    \__> /~~\ |__/  |  | | | \|
+        location /pgadmin4/ {
+            proxy_pass       http://docker_pgadmin;
+            include          /etc/nginx/ruuuby/unsorted/proxy_pass.nginx;
+            include          /etc/nginx/ruuuby/unsorted/cors.nginx;
+            add_header       X-Frame-Options "";
+            proxy_set_header X-Frame-Options "";
+            proxy_set_header X-Script-Name /pgadmin4;
+        }
+        # TODO: for when needed: SSL example for pgadmin4: https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html
+    }
+
+
+    server {
+        listen 8080 reuseport;
+
+        #                      __   __   __     __  ___
+        #    |  /\  \  /  /\  /__` /  ` |__) | |__)  |
+        # \__/ /~~\  \/  /~~\ .__/ \__, |  \ | |     |
+        location / {
+            proxy_pass       http://docker_js;
+            include          /etc/nginx/ruuuby/unsorted/proxy_pass.nginx;
+        }
+    }
+
+    server {
+        #listen 5672 reuseport;
+        listen 15672 reuseport;
+
+        #  __        __   __    ___        __
+        # |__)  /\  |__) |__) |  |   |\/| /  \
+        # |  \ /~~\ |__) |__) |  |   |  | \__X
+        location / {
+            proxy_pass       http://docker_rabbitmq;
+
+            proxy_http_version 1.1;
+            proxy_set_header Host             $host;
+            proxy_set_header X-Real-IP        $remote_addr;
+            proxy_set_header X-Forwarded-For  $proxy_add_x_forwarded_for;
+        }
+    }
+
+}

@@ -31,10 +31,16 @@ ENV SERVICE_NAME="service_js"
 
 RUN npm install --global $BUILD_NPM_LIBS
 
-#  ___                __   __   __   __
-# |__  |\ | \  / .   |__) |__) /  \ |  \
-# |___ | \|  \/  .   |    |  \ \__/ |__/
-#
+#                                                        __
+#                                                       /\ \
+#    __    ___   __  __   __      _____   _ __   ___    \_\ \
+#  /'__`\/' _ `\/\ \/\ \ /\_\    /\ '__`\/\`'__\/ __`\  /'_` \
+# /\  __//\ \/\ \ \ \_/ |\/_/_   \ \ \L\ \ \ \//\ \L\ \/\ \L\ \
+# \ \____\ \_\ \_\ \___/   /\_\   \ \ ,__/\ \_\\ \____/\ \___,_\
+#  \/____/\/_/\/_/\/__/    \/_/    \ \ \/  \/_/ \/___/  \/__,_ /
+#                                   \ \_\
+#                                    \/_/
+
 FROM build_base as build_env_prod
 ENV BUILD_ENV=prod
 ENV NODE_ENV=production
@@ -55,10 +61,14 @@ COPY ./utils /root/ruuuby_js/utils
 COPY ./server.js /root/ruuuby_js/server.js
 CMD ["node", "server.js"]
 
-#  ___                __   ___
-# |__  |\ | \  / .   |  \ |__  \  /
-# |___ | \|  \/  .   |__/ |___  \/
-#
+#                                   __
+#                                  /\ \
+#    __    ___   __  __   __       \_\ \     __   __  __
+#  /'__`\/' _ `\/\ \/\ \ /\_\      /'_` \  /'__`\/\ \/\ \
+# /\  __//\ \/\ \ \ \_/ |\/_/_    /\ \L\ \/\  __/\ \ \_/ |
+# \ \____\ \_\ \_\ \___/   /\_\   \ \___,_\ \____\\ \___/
+#  \/____/\/_/\/_/\/__/    \/_/    \/__,_ /\/____/ \/__/
+
 FROM build_base as build_env_dev
 ENV BUILD_ENV=dev
 ENV NODE_ENV=development
@@ -79,7 +89,6 @@ COPY ./package.json /root/ruuuby_js/package.json
 COPY ./webpack.config.js /root/ruuuby_js/webpack.config.js
 
 #RUN npm install
-
 RUN npm install --save-dev $BUILD_NPM_LIBS
 
 COPY ./dist /root/ruuuby_js/dist
@@ -91,5 +100,32 @@ COPY ./intermediate /root/ruuuby_js/intermediate
 COPY ./bin /root/ruuuby_js/bin
 COPY ./utils /root/ruuuby_js/utils
 COPY ./server.js /root/ruuuby_js/server.js
+CMD ["node", "server.js"]
 
+#                               __                   __
+#                              /\ \__               /\ \__
+#    __    ___   __  __   __   \ \ ,_\    __    ____\ \ ,_\
+#  /'__`\/' _ `\/\ \/\ \ /\_\   \ \ \/  /'__`\ /',__\\ \ \/
+# /\  __//\ \/\ \ \ \_/ |\/_/_   \ \ \_/\  __//\__, `\\ \ \_
+# \ \____\ \_\ \_\ \___/   /\_\   \ \__\ \____\/\____/ \ \__\
+#  \/____/\/_/\/_/\/__/    \/_/    \/__/\/____/\/___/   \/__/
+
+FROM build_base as build_env_test
+ENV BUILD_ENV=test
+ENV NODE_ENV=test
+
+COPY ./bin /root/ruuuby_js/bin
+COPY ./dist /root/ruuuby_js/dist
+COPY ./intermediate /root/ruuuby_js/intermediate
+COPY ./test /root/ruuuby_js/test
+COPY ./gulpfile.js /root/ruuuby_js/gulpfile.js
+COPY ./package.json /root/ruuuby_js/package.json
+COPY ./webpack.config.js /root/ruuuby_js/webpack.config.js
+
+RUN npm install
+
+COPY ./src /root/ruuuby_js/src
+COPY ./assets /root/ruuuby_js/assets
+COPY ./utils /root/ruuuby_js/utils
+COPY ./server.js /root/ruuuby_js/server.js
 CMD ["node", "server.js"]

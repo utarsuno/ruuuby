@@ -17,25 +17,48 @@ ENV SERVICE_OS="alpine"
 ENV SERVICE_OS_VERSION="3.11.6"
 
 COPY ./includes/ /etc/nginx/ruuuby/
-COPY ./ruuuby.nginx /etc/nginx/nginx.conf
 
-#  ___                __   __   __   __
-# |__  |\ | \  / .   |__) |__) /  \ |  \
-# |___ | \|  \/  .   |    |  \ \__/ |__/
-#
+#                                                        __
+#                                                       /\ \
+#    __    ___   __  __   __      _____   _ __   ___    \_\ \
+#  /'__`\/' _ `\/\ \/\ \ /\_\    /\ '__`\/\`'__\/ __`\  /'_` \
+# /\  __//\ \/\ \ \ \_/ |\/_/_   \ \ \L\ \ \ \//\ \L\ \/\ \L\ \
+# \ \____\ \_\ \_\ \___/   /\_\   \ \ ,__/\ \_\\ \____/\ \___,_\
+#  \/____/\/_/\/_/\/__/    \/_/    \ \ \/  \/_/ \/___/  \/__,_ /
+#                                   \ \_\
+#                                    \/_/
 
 FROM build_base as build_env_prod
 ENV BUILD_ENV=prod
+COPY ./ruuuby.prod.nginx /etc/nginx/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]
 
-#  ___                __   ___
-# |__  |\ | \  / .   |  \ |__  \  /
-# |___ | \|  \/  .   |__/ |___  \/
-#
+#                               __                   __
+#                              /\ \__               /\ \__
+#    __    ___   __  __   __   \ \ ,_\    __    ____\ \ ,_\
+#  /'__`\/' _ `\/\ \/\ \ /\_\   \ \ \/  /'__`\ /',__\\ \ \/
+# /\  __//\ \/\ \ \ \_/ |\/_/_   \ \ \_/\  __//\__, `\\ \ \_
+# \ \____\ \_\ \_\ \___/   /\_\   \ \__\ \____\/\____/ \ \__\
+#  \/____/\/_/\/_/\/__/    \/_/    \/__/\/____/\/___/   \/__/
+
+FROM build_base as build_env_test
+ENV BUILD_ENV=test
+COPY ./ruuuby.test.nginx /etc/nginx/nginx.conf
+
+CMD ["nginx", "-g", "daemon off;"]
+
+#                                   __
+#                                  /\ \
+#    __    ___   __  __   __       \_\ \     __   __  __
+#  /'__`\/' _ `\/\ \/\ \ /\_\      /'_` \  /'__`\/\ \/\ \
+# /\  __//\ \/\ \ \ \_/ |\/_/_    /\ \L\ \/\  __/\ \ \_/ |
+# \ \____\ \_\ \_\ \___/   /\_\   \ \___,_\ \____\\ \___/
+#  \/____/\/_/\/_/\/__/    \/_/    \/__,_ /\/____/ \/__/
 
 FROM build_base as build_env_dev
 ENV BUILD_ENV=dev
+COPY ./ruuuby.dev.nginx /etc/nginx/nginx.conf
 
 RUN apk add --update --no-cache git zsh vim dpkg \
  && sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" \

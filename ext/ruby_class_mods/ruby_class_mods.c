@@ -338,7 +338,6 @@ static void startup_step5_protect_against_gc(void) {
 #endif
 
 static void startup_step4_load_needed_ruuuby_files(void) {
-
     ensure_loaded_class(bitwise_flag)
 
     ensure_all_loaded_for_ruuuby_engine()
@@ -422,6 +421,10 @@ static void startup_step4_load_needed_ruuuby_files(void) {
 #endif
     ensure_loaded_math(geometry/shape/triangle)
 
+#ifdef RUUUBY_F43
+    ensure_loaded_ruuuby(ruuuby/api/f43_api_iconv)
+#endif
+
 #ifdef RUUUBY_F92_B00
     ensure_loaded_default(sqlite3)
 #endif
@@ -437,7 +440,6 @@ static void startup_step4_load_needed_ruuuby_files(void) {
 #endif
 
 #ifdef RUUUBY_F92_B03
-    ensure_loaded_db(db_schema)
     ensure_loaded_db(model_attributes/extendable/uid)
     ensure_loaded_db(model_attributes/includable/uid)
     ensure_loaded_db(model_attributes/application_record)
@@ -2032,88 +2034,96 @@ typedef struct Ruuuby_Engine_Stats {
     static void engine_start_up_finished(RuuubyEngineStats * engine);
     static void engine_start_up_finished(RuuubyEngineStats * engine) {
         Ⓒruuuby_engine         = rb_funcall(ⓜruuuby_engine, rb_intern("_get_engine"), 0);
-        hsh_ruuuby_engine_stats = 💎get_instance_field(Ⓒruuuby_engine,stats_ext);
+        hsh_ruuuby_engine_stats = rb_hash_new();
+        💎set_instance_field(Ⓒruuuby_engine,hsh_ruuuby_engine_stats,stats_ext);
 
         ENGINE_STAT_SET("compiled_at", c_str_to_r_str(COMPILED_AT_DATETIME));
 
         #ifdef RUUUBY_F06_B08
             ENGINE_STAT_SET("F06_B08", Qtrue);
         #else
-            ENGINE_STAT_SET("F06_B08", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F06_B08");
         #endif
         #ifdef RUUUBY_F06_B09
             ENGINE_STAT_SET("F06_B09", Qtrue);
         #else
-            ENGINE_STAT_SET("F06_B09", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F06_B09");
         #endif
         #ifdef RUUUBY_F10_B04
             ENGINE_STAT_SET("F10_B04", Qtrue);
         #else
-            ENGINE_STAT_SET("F10_B04", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F10_B04");
         #endif
         #ifdef RUUUBY_F12_B00
             ENGINE_STAT_SET("F12_B00", Qtrue);
         #else
-            ENGINE_STAT_SET("F12_B00", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F12_B00");
         #endif
         #ifdef RUUUBY_F22_B01
             ENGINE_STAT_SET("F22_B01", Qtrue);
         #else
-            ENGINE_STAT_SET("F22_B01", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F22_B01");
         #endif
         #ifdef RUUUBY_F22_B05
             ENGINE_STAT_SET("F22_B05", Qtrue);
         #else
-            ENGINE_STAT_SET("F22_B05", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F22_B05");
         #endif
         #ifdef RUUUBY_F22_B06
             ENGINE_STAT_SET("F22_B06", Qtrue);
         #else
-            ENGINE_STAT_SET("F22_B06", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F22_B06");
         #endif
         #ifdef RUUUBY_F22_B07
             ENGINE_STAT_SET("F22_B07", Qtrue);
         #else
-            ENGINE_STAT_SET("F22_B07", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F22_B07");
         #endif
         #ifdef RUUUBY_F26_B00
             ENGINE_STAT_SET("F26_B00", Qtrue);
         #else
-            ENGINE_STAT_SET("F26_B00", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F26_B00");
         #endif
         #ifdef RUUUBY_F28_B09
             ENGINE_STAT_SET("F28_B09", Qtrue);
         #else
-            ENGINE_STAT_SET("F28_B09", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F28_B09");
+        #endif
+        #ifdef RUUUBY_F43
+            ENGINE_STAT_SET("F43", Qtrue);
+        #else
+            ENGINE_STAT_SET_DISABLED("F43");
         #endif
         #ifdef RUUUBY_F92_B00
             ENGINE_STAT_SET("F92_B00", Qtrue);
         #else
-            ENGINE_STAT_SET("F92_B00", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F92_B00");
         #endif
         #ifdef RUUUBY_F92_B01
             ENGINE_STAT_SET("F92_B01", Qtrue);
         #else
-            ENGINE_STAT_SET("F92_B01", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F92_B01");
         #endif
         #ifdef RUUUBY_F92_B02
             ENGINE_STAT_SET("F92_B02", Qtrue);
         #else
-            ENGINE_STAT_SET("F92_B02", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F92_B02");
         #endif
         #ifdef RUUUBY_F93
             ENGINE_STAT_SET("F93", Qtrue);
         #else
-            ENGINE_STAT_SET("F93", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F93");
         #endif
         #ifdef RUUUBY_F98_DEBUG
             ENGINE_STAT_SET("F98_DEBUG", Qtrue);
         #else
-            ENGINE_STAT_SET("F98_DEBUG", Qfalse);
+            ENGINE_STAT_SET_DISABLED("F98_DEBUG");
         #endif
         #ifdef RUUUBY_F98_COMPILER
             engine->runtime_compiler_version = establish_compiler_version();
             ENGINE_STAT_SET("compiler", compiler_version_to_s(engine->runtime_compiler_version));
+        #else
+            ENGINE_STAT_SET_DISABLED("compiler");
         #endif
         #ifdef RUUUBY_F98_MEMORY
             engine->max_memory_after_extensions_loaded = memory_peak_this_runtime();
@@ -2131,6 +2141,10 @@ typedef struct Ruuuby_Engine_Stats {
             engine->max_memory_after_gc = memory_peak_this_runtime();
 
             ENGINE_STAT_SET("mem_after_gc", DBL2NUM(engine->max_memory_after_gc));
+        #else
+            ENGINE_STAT_SET_DISABLED("mem_pre_load");
+            ENGINE_STAT_SET_DISABLED("mem_post_load");
+            ENGINE_STAT_SET_DISABLED("mem_after_gc");
         #endif
         #ifdef RUUUBY_F98_TIMER
             simple_timer_end(& (engine->simple_timer));
@@ -2139,13 +2153,13 @@ typedef struct Ruuuby_Engine_Stats {
 
             // microsecond | μs | 10⁻⁶ | 0.000001 | @see https://en.wikipedia.org/wiki/Microsecond
             ENGINE_STAT_SET("timer", UINT2NUM(delta_us_int));
+        #else
+            ENGINE_STAT_SET_DISABLED("timer");
         #endif
 
         rb_funcall(Ⓒruuuby_engine, rb_intern("log_ext_stats"), 0);
     }
 #endif // end: {RUUUBY_F98_DEBUG}
-
-// TODO: https://stackoverflow.com/questions/20979565/how-can-i-print-the-result-of-sizeof-at-compile-time-in-c/35261673#35261673
 
 static void startup_step1_f38(void) {
 #ifdef RUUUBY_F38
@@ -2155,8 +2169,6 @@ static void startup_step1_f38(void) {
 
 // the `main function`, executes once on startup setting up `Ruuuby`
 void Init_ruby_class_mods(void) {
-    RuuubyEngineStats ruuuby_engine;
-
     //rb_gc_disable();
 
 #ifndef RUUUBY_F98_DEBUG
@@ -2167,6 +2179,7 @@ void Init_ruby_class_mods(void) {
     startup_step4_load_needed_ruuuby_files();
     startup_step5_protect_against_gc();
 #else
+    RuuubyEngineStats ruuuby_engine;
     engine_start_up(& ruuuby_engine);
 
     startup_step0_load_f98()

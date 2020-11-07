@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 # encoding: UTF-8
 
-#export RUUUBY_F98="15"
-#export RUUUBY_F98="7"
 export RUUUBY_F98="11"
+export RUUUBY_F43="true"
 
 bundle exec rake manual:clean_all
 

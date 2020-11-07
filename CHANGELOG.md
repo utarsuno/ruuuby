@@ -4,12 +4,18 @@
 
 ---
 
+# `v0.1.0.pre.2`
+
+ * modify `.gitattributes` to track `.sql` files
+ * update gem{`activerecord`}
+ * continue `DB` migration
+ * apply miscellaneous clean ups
+
 # `v0.1.0.pre.1`
 
  * start migration from `CHANGELOG.md` to `History.txt`
  * update gems{`tty-command`,`rspec`}
-   * `npm`, `Python`, `Java`, etc, version & library updates to be 'auto' tracked soon
- * continue migration for `RabbitMQ` and preparation for `DB` migration
+ * continue migration for `RabbitMQ` and `DB`
  * apply miscellaneous clean ups
 
 # `v0.1.0.pre.0`
@@ -33,8 +39,7 @@
 # `v0.0.49`
 
 > abstract:
- * ⚠️: overall code (esp. `math`/`DB` related) still `on-hold`, intermediate version release for organizational purposes
-   * (ex: many `Classes`/`functions` added are temporary, intentionally created with later removal planned)
+ * ⚠️: intermediate version release for organizational purposes, many `Classes`/`functions` added are temporary, intentionally created with later removal planned)
 
 > discrete:
  * add `Docker`{`service_js`}
@@ -733,7 +738,7 @@
 | `Kernel` | `¿`, `∞`, `∞ℂ` | `f10`, `f17` |
 | `Integer` | `¿?`, `nan?`, `∞ℂ?` | `f17` |
 | `Float` | `¿?`, `∞ℂ?` | `f17` |
-| `Symbol` | `power?`, `pow_to_i` | `TODO_LABEL` |
+| `Symbol` | `power?`, `pow_to_i` | `f16` |
 | `Rational` | `^` | `f16` |
 
 ---
@@ -786,9 +791,6 @@
 | `Module` | `∋?`, `∌?`, `∈?`, `∉?` | `f09` |
 | `Object` | `🛑ℤ❓` | `f14` |
 
- * ⚠️ :
-   * full `TDD` still omitted for `ORM` while certain design areas are more susceptible to needed refactors
-
 ---
 
 # `v0.0.20`
@@ -811,7 +813,6 @@
 | `Kernel` | `∠ᶜ` | `f17` |
 | `Kernel` | `∠°` | `f17` |
 
-
 ---
 
 # `v0.0.19`
@@ -831,11 +832,9 @@
 | `Object` | `⁻¹`, `⁻²`, `⁻³`, `⁻⁴`, `⁻⁵`, `⁻⁶`, `⁻⁷`, `⁻⁸`, `⁻⁹` | `f16` |
 | `Dir` | `normalized_paths` | `f12` |
 
-
 ---
 
 # `v0.0.18`
- * ⚠️ intermediate patch (full testing coverage of this patch to be concluded within `0.0.19`-`0.0.30`)
  * renaming existing func(`🛑str_or_ary❓`) to(`🛑countable❓`); it now checks for `Set` as well
  * add `gem 'sqlite3', '~> 1.4.2'`
  * add `gem 'activerecord', '~> 5.2.4.1'`
@@ -873,9 +872,7 @@
  * (`f15`): start general, wide-scale, re-structuring to manage changes into categorized `features`
 
 #### Discrete
- * ⚠️ (full coverage of this patch to be concluded in future patch)
  * continued audit on number classes (see notes from v`0.0.15-16`)
- * (⚠️ missing coverage) add support for raising to powers `0-9` for `Integer` and `Float`
  * for math related `RSpecs`, move common/shared `let` definitions into `spec_helper.rb`, add additional ones to form a general schema for testing data
  
 #### Methods & Aliases:
@@ -883,12 +880,12 @@
  | ------------------------------------ | --------------------- | ------- |
  | (m) `Kernel`                         | `𝔠`                   | `f03` |
  | (c) `String`, `Set`, `Array`, `Hash` | `𝔠` (length)          | `f03` |
- | (c) `Class`                          | `🆕` (new)            | `TODO: feature label` |
- | (c) `Object`                         | `⁰`, `¹`, `²`, `³`, `⁴`, `⁵`, `⁶`, `⁷`, `⁸`, `⁹` | `TODO: feature label` |
+ | (c) `Class`                          | `🆕` (new)            | `f10` |
+ | (c) `Object`                         | `⁰`, `¹`, `²`, `³`, `⁴`, `⁵`, `⁶`, `⁷`, `⁸`, `⁹` | `f16` |
  | (c) `Object` | `🛡️funcs` (protected_methods), `🙈funcs` (private_methods) | [`f01`, `f02`] |
  | (m) `Module` | `🛡️` (protected), `∃🛡️func?` (protected_method_defined?), `🛡️instance_funcs` (protected_instance_methods), `🙈instance_funcs` (private_instance_methods), `🙈class_func` (private_class_method) | [`f01`, `f02`] |
- | (c) `Integer`                        | `^`, `preserved_reference_to_bitwise_or` | `TODO: feature label` |
- | (c) `Float`                          | `^` | `TODO: feature label` |
+ | (c) `Integer`                        | `^`, `preserved_reference_to_bitwise_or` | `f16` |
+ | (c) `Float`                          | `^` | `f16` |
 
 #### Files Added:
  * `ruuuby/class/class.rb`
@@ -1129,7 +1126,6 @@
 | `Object` | `ary?` | `f06` |
 | `Array` | `remove_empty!` | `f07` |
 
-
 ---
 
 # `v0.0.2`
@@ -1155,6 +1151,5 @@
 ---
 
 # `v0.0.0`
- * initial project creation
 
 ---

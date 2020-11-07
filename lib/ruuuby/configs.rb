@@ -13,7 +13,6 @@ BEGIN {
 
     #$🌎 = self
     #$git = 💎.engine.api_locale.api_git
-    #$orm = 💎.engine.orm
   end
 
   # TODO: create better solution than loading it here
@@ -33,9 +32,6 @@ BEGIN {
 
     # @type [Float]
     Ω = ::Float::CONST_OMEGA
-
-    # @return [Float]
-    def ₑˆΩ; ::Float::E_POW_CONST_OMEGA; end
 
     # TODO: https://en.wikipedia.org/wiki/Golden_spiral
     # TODO: https://en.wikipedia.org/wiki/Polar_coordinate_system

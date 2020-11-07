@@ -1,129 +1,107 @@
 # encoding: UTF-8
 
-# `Ruuuby` modifications to c(`Array`)
-module ::Ruuuby
-
-  # (not-final-design): attributes that are to be included/extended an absolute maximum of once per Class & Runtime
-  module Feature
-
-    # attributes that are to be included, not extended
-    module Includable
-
-      # defines the operations needed to support Feature(`f08`) that are applied to Class(`Array`)
-      module ArrayF08
-
-        # @param [*]
-        #
-        # @return [Boolean] true, if this array ends with the provided elements
-        def end_with?(*ending)
-          return false if (ending.∅? || ending.𝔠 > self.𝔠)
-          return self.last == ending[0] if (ending.𝔠 == 1)
-          self.last(ending.𝔠) == ending
-        end
-
-        # @param [*]
-        #
-        # @return [Boolean] true, if this array starts with the provided elements
-        def start_with?(*start)
-          return false if (start.∅? || start.𝔠 > self.𝔠)
-          return self.first == start[0] if (start.𝔠 == 1)
-          self.first(start.𝔠) == start
-        end
-
-        # @param [*]
-        #
-        # @return [Array] this array instance, modified if not starting with provided starting elements
-        def ensure_start!(*start)
-          return self if (start.∅? || self.start_with?(*start))
-          return self >> start[0] if (start.𝔠 == 1)
-          delta        = 0
-          last_matched = nil
-          while delta <= self.𝔠 && delta <= start.𝔠
-            ending_of_start = start[(start.𝔠 - (1 + delta))...start.𝔠]
-            last_matched    = ending_of_start if self[0..delta] == ending_of_start
-            delta          += 1
-          end
-          if last_matched == nil
-            start.↩∀{|element| self >> element}
-          else
-            start[0...(start.𝔠 - (last_matched.𝔠))].↩∀{|element| self >> element}
-          end
-          self
-        end
-
-        # @param [*]
-        #
-        # @return [Array] this array instance, modified if not ending with provided endings elements
-        def ensure_ending!(*ending)
-          return self if (ending.∅? || self.end_with?(*ending))
-          return self << ending[0] if (ending.𝔠 == 1)
-          delta        = 0
-          last_matched = nil
-          while delta <= self.𝔠 && delta <= ending.𝔠
-            starting_of_end = ending[0..delta]
-            last_matched    = starting_of_end if self[(self.𝔠 - (1 + delta))...self.𝔠] == starting_of_end
-            delta          += 1
-          end
-          if last_matched == nil
-            ending.∀{|element| self << element }
-          else
-            ending[last_matched.𝔠...ending.𝔠].∀{|element| self << element}
-          end
-          self
-        end
-
-        # TODO: lots of feature-coverage to add
-        #
-        # @param [Symbol] normalization_opts
-        #
-        # @return [Array] self, modified if any normalization needed to occur
-        def η̂!(normalization_opts)
-          if ::Math::Space::NumberSpace::NORMALIZERS_ALL_NUMS_W_STR.∋?(normalization_opts)
-            🛑nums❓(self, normalization_opts)
-            self.∀ₓᵢ do |element, i|
-              if element.num?(normalization_opts)
-                if element.str?
-                  if element.to_num?
-                    self[i] = element.to_num
-                  else
-                    raise "normalizer{#{element.to_s}} can't be parsed as a number!"
-                  end
-                end
-              end
-            end
-          else
-            raise "normalizer{#{normalization_opts.to_s}} is unknown"
-          end
-          self
-        end
-      end # end: {ArrayF08}
-
-      # defines the operations needed to support Feature(`f09`) that are applied to Class(`Array`)
-      module ArrayF09
-
-        # Performs the relative complement (or set difference) of these two arrays, operation order/side does matter.
-        #
-        # @param [Array] them
-        #
-        # @raise [ArgumentError]
-        #
-        # @return [Array] a new Array instance containing the relative complement between this array and the one provided
-        def ∖(them); 🛑ary❓('them', them); self - them; end
-
-      end # end: {ArrayF09}
-    end # end: {Includable}
-  end # end: {Feature}
-end # end: {Ruuuby}
-
 # add various aliases & functions to existing Class(+Array+)
 class ::Array
 
   # ---------------------------------------------------------------------------------------------------------- | *f03* |
   alias_method :𝔠, :length
   # ---------------------------------------------------------------------------------------------------------- | *f08* |
-  include ::Ruuuby::Feature::Includable::ArrayF08
+
+  # @param [*]
+  #
+  # @return [Boolean] true, if this array ends with the provided elements
+  def end_with?(*ending)
+    return false if (ending.∅? || ending.𝔠 > self.𝔠)
+    return self.last == ending[0] if (ending.𝔠 == 1)
+    self.last(ending.𝔠) == ending
+  end
+
+  # @param [*]
+  #
+  # @return [Boolean] true, if this array starts with the provided elements
+  def start_with?(*start)
+    return false if (start.∅? || start.𝔠 > self.𝔠)
+    return self.first == start[0] if (start.𝔠 == 1)
+    self.first(start.𝔠) == start
+  end
+
+  # @param [*]
+  #
+  # @return [Array] this array instance, modified if not starting with provided starting elements
+  def ensure_start!(*start)
+    return self if (start.∅? || self.start_with?(*start))
+    return self >> start[0] if (start.𝔠 == 1)
+    delta        = 0
+    last_matched = nil
+    while delta <= self.𝔠 && delta <= start.𝔠
+      ending_of_start = start[(start.𝔠 - (1 + delta))...start.𝔠]
+      last_matched    = ending_of_start if self[0..delta] == ending_of_start
+      delta          += 1
+    end
+    if last_matched == nil
+      start.↩∀{|element| self >> element}
+    else
+      start[0...(start.𝔠 - (last_matched.𝔠))].↩∀{|element| self >> element}
+    end
+    self
+  end
+
+  # @param [*]
+  #
+  # @return [Array] this array instance, modified if not ending with provided endings elements
+  def ensure_ending!(*ending)
+    return self if (ending.∅? || self.end_with?(*ending))
+    return self << ending[0] if (ending.𝔠 == 1)
+    delta        = 0
+    last_matched = nil
+    while delta <= self.𝔠 && delta <= ending.𝔠
+      starting_of_end = ending[0..delta]
+      last_matched    = starting_of_end if self[(self.𝔠 - (1 + delta))...self.𝔠] == starting_of_end
+      delta          += 1
+    end
+    if last_matched == nil
+      ending.∀{|element| self << element }
+    else
+      ending[last_matched.𝔠...ending.𝔠].∀{|element| self << element}
+    end
+    self
+  end
+
+  # TODO: lots of feature-coverage to add
+  #
+  # @param [Symbol] normalization_opts
+  #
+  # @return [Array] self, modified if any normalization needed to occur
+  def η̂!(normalization_opts)
+    if ::Math::Space::NumberSpace::NORMALIZERS_ALL_NUMS_W_STR.∋?(normalization_opts)
+      🛑nums❓(self, normalization_opts)
+      self.∀ₓᵢ do |element, i|
+        if element.num?(normalization_opts)
+          if element.str?
+            if element.to_num?
+              self[i] = element.to_num
+            else
+              raise "normalizer{#{element.to_s}} can't be parsed as a number!"
+            end
+          end
+        end
+      end
+    else
+      raise "normalizer{#{normalization_opts.to_s}} is unknown"
+    end
+    self
+  end
+
   # ---------------------------------------------------------------------------------------------------------- | *f09* |
-  include ::Ruuuby::Feature::Includable::ArrayF09
+
+  # Performs the relative complement (or set difference) of these two arrays, operation order/side does matter.
+  #
+  # @param [Array] them
+  #
+  # @raise [ArgumentError]
+  #
+  # @return [Array] a new Array instance containing the relative complement between this array and the one provided
+  def ∖(them); 🛑ary❓('them', them); self - them; end
 
   alias_method(:∀, :each)
   alias_method(:∋?, :include?)

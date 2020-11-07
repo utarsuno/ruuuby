@@ -22,6 +22,8 @@
 # swap files created from `vim`
 .*.swp
 
+vendor/
+
 # wip
 services/ruuuby/f93/
 services/temp/

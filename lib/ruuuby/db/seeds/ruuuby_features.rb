@@ -1,6 +1,5 @@
 # encoding: UTF-8
 
-@f00 = ::RuuubyFeature.spawn(0, "`η̂` to alias concept of `normalization` (offered in any applicable context)", 2, %w())
 @f01 = ::RuuubyFeature.spawn(1, 'simplify debugging state & logging through the `RuuubyEngine`', 2, %w(ruuuby engine logging logs log))
 @f02 = ::RuuubyFeature.spawn(2, 'augment working with other `API` sets, be it a small `CLI script` to larger `domain-driven/micro-services` representations', 2, %w(ruuuby engine cli))
 @f03 = ::RuuubyFeature.spawn(3, "`𝔠` to alias concept of `cardinality`", 2, %w())
@@ -43,12 +42,3 @@
 @f40 = ::RuuubyFeature.spawn(40, 'provide an `API` for `Docker` operations w/ a light layer over gem{`docker-api`}', 2, %w(api docker))
 @f41 = ::RuuubyFeature.spawn(41, 'provide an `API` for `Brew` operations', 2, %w(api brew))
 @f42 = ::RuuubyFeature.spawn(42, 'provide an `API` for `RabbitMQ` operations w/ a light layer over gem{`bunny`}', 2, %w(api rabbitmq rabbit))
-
-@f92 = ::RuuubyFeature.spawn(92, 'enable building with specific DB support loaded', 2, %w(builds))
-@f93 = ::RuuubyFeature.spawn(93, 'offer help in managing custom scripts, functionality, and anything else needed for too niche of scenarios to consider adding as a feature or even a conditionally-loadable feature', 2, %w(builds))
-@f94 = ::RuuubyFeature.spawn(94, 'enable a `WebAssembly` based build (for `JS`/`WebGL`)', 0, %w(builds))
-@f95 = ::RuuubyFeature.spawn(95, 'enable pure a `Ruby` only build', 0, %w(builds))
-@f96 = ::RuuubyFeature.spawn(96, 'painlessly support multiple Operation Systems (ex: Alpine Linux, macOS, etc)', 0, %w(OS docker kubernetes))
-@f97 = ::RuuubyFeature.spawn(97, 'offer custom builds of `Ruuuby` to support only the needed/wanted unicode/symbols/emojis etc', 2, %w(builds))
-@f98 = ::RuuubyFeature.spawn(98, '`C-extensions`', 2, %w(builds extensions))
-@f99 = ::RuuubyFeature.spawn(99, '`Java-extensions`/`JRuby`', 2, %w(builds extensions))

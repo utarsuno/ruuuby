@@ -3,7 +3,7 @@
 module ::Ruuuby::MetaData
   class EngineComponent
 
-    # @param [*]       engine
+    # @param [*] engine
     def initialize(engine)
       @engine = engine
     end

@@ -93,20 +93,6 @@ module ::Ruuuby::MetaData
 
   end
 
-  class DBConnectionMemorySQLite3 < ::Ruuuby::MetaData::DBConnection
-
-    #@expected_tables = {
-    #    orm: %w(ruuuby_releases ruuuby_features ruuuby_feature_behaviors ruuuby_changelogs ruuuby_dirs ruuuby_files),
-    #    application_record: %w(ar_internal_metadata)
-    #}
-    #@db_orm          = ::Ruuuby::MetaData::DBConnectionMemorySQLite3.new
-
-    def initialize
-      super({adapter: 'sqlite3', database: ':memory:'}, 'activerecord')
-    end
-
-  end
-
 end
 
 # --------------------------------------------- ⚠️ ---------------------------------------------

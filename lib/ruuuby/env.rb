@@ -8,36 +8,15 @@ class << ENV
   alias :∀🔑 :each_key
   alias :∀ :each
 
-  # TODO: MISSING TDD!
-  #
+  def cache; if @cache == nil; @cache = ENV.to_hash; end; @cache; end
+
   # `does each provided key exist w/ the the same provided value?`
   #
   # @param [Array] keys_to_find
   # @param [*]     expected_value
   #
   # @return [Boolean]
-  def ∀🔑∃_value?(keys_to_find, expected_value)
-    matched_keys = 0
-    num_to_find   = keys_to_find.length
-    keys_to_find.∀ do |key|
-      if ::ENV.∃?(key)
-        if ::ENV[key] == expected_value
-          if matched_keys + 1 == num_to_find
-            return true
-          else
-            matched_keys += 1
-          end
-        end
-      else
-        return false
-      end
-    end
-    if matched_keys == num_to_find
-      true
-    else
-      🛑 ::RuntimeError.new("| {ENV}-> m{∀🔑∃_value?} called w/ keys_to_find as{#{keys_to_find.to_s}} and expected_value as {#{expected_value.to_s}} which did not match the result length of{#{matched_keys.to_s}} |")
-    end
-  end
+  def ∀🔑∃_value?(keys_to_find, expected_value); self.cache.∀🔑∃_value?(keys_to_find, expected_value); end
 
   # @param [String] the_key
   #

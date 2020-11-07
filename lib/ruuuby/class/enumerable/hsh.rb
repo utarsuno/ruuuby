@@ -45,21 +45,14 @@ class ::Hash
     keys_to_find.∀ do |key|
       if self.∃🔑?(key)
         if self[key] == expected_value
-          if matched_keys + 1 == num_to_find
-            return true
-          else
-            matched_keys += 1
-          end
+          matched_keys += 1
+          return true if matched_keys == num_to_find
         end
       else
         return false
       end
     end
-    if matched_keys == num_to_find
-      true
-    else
-      🛑 ::RuntimeError.new("| {Hash}-> m{∀🔑∃_value?} called w/ keys_to_find as{#{keys_to_find.to_s}} and expected_value as {#{expected_value.to_s}} which did not match the result length of{#{matched_keys.to_s}} |")
-    end
+    🛑 ::RuntimeError.new("| c{Hash}-> m{∀🔑∃_value?} called w/ keys_to_find as{#{keys_to_find.to_s}} and expected_value as {#{expected_value.to_s}} which did not match the result length of{#{matched_keys.to_s}} |")
   end
 
 end

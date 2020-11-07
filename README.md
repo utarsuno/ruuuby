@@ -4,13 +4,13 @@
 
 | for resource        | reference                                                   |
 | ------------------: | :---------------------------------------------------------- |
-| latest: `Gemfile`    | `gem 'ruuuby', '~> 0.1.0.pre.1'`                            |
+| latest: `Gemfile`    | `gem 'ruuuby', '~> 0.1.0.pre.2'`                            |
 | stable: `Gemfile`    | `gem 'ruuuby', '~> 0.0.49`                                  |
 | ruby scripts        | `require 'ruuuby'`                                          |
 | gem url             | https://rubygems.org/gems/ruuuby                            |
 | changelog           | https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md <br>`note: style of changelog will be adapted to the` [`[History.txt format]`](https://guides.rubygems.org/releasing-rubygems/) |
 | `JIT` testing       | `RUBYOPT="--jit --jit-warnings --jit-wait --jit-max-cache=1337 --jit-verbose=2 --jit-debug -w" ./bin/console/ruuuby` |
-| common<br>non-ascii | `∅`,`∃`,`∄`,`∋`,`∌`,`∈`,`∉`,`ⓣ`,`Ⓣ`,`≈`,`∞`,`π`,`℮`,`𝚽`<br>`η̂`,`μ`,`∴`,`𝔠`,`𝔦`,`𝔣`,`Λ`,`λ`,`∫`,`⨍`,`𝑓`,`∀`,`τ`,`x̃`,`𝚡`,`𝛿`,`σ`<br>`𝔹`,`ℂ`,`ℕ`,`𝕎`,`ℤ`,`ℚ`,`𝔸ᵣ`,`ℂ`,`𝕋`,`𝕀`,`ℝ`,`𝕌`,`𝕊`,`🅱`<br>`±`,`Ω`,`γ`,`Ψ`,`ρ`,`δ`,`Ⴔ`,`⨁`,`⨂`,`∖`,`≡`,`√`,`∛`,`↩`,`‣`,`⟶`,`↘`,`⬇`,`⬆`<br>`𝞽`,`θ`,`°`,`ʳ`,`ᵍ`,`⦜`,`○`,`ₑ`,`₀`,`₁`,`₂`,`₃`,`ₓ`,`ᵢ`,`ᵀ`,`▣`<br>`⁻ⁿ`,`⁰`,`¹`,`²`,`³`,`⁴`,`⁵`,`⁶`,`⁷`,`⁸`,`⁹`<br>`¼`,`½`,`¾`,`⅓`,`⅕`,`⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`,`⅛`,`⅜`,`⅝`,`⅞`,`⅑`,`⅒`<br>`📁`,`🗄️`,`💾`,`🕒`,`🎲`,`📊`,`🧟`,`💻`,`📱`,`🌐`,`❄️`,`💎`,`⚠️`,`🔑`,`✏️`,`📖`,`🏠`<br>`✅`,`♻️`,`🍺`,`🛡`,`📅`,`🛑`,`❌`,`❓`,`🆔`,`🧬`<br>`🐇`,`🐋`,`🐍`,`🐫`,`🙈` |
+| common<br>non-ascii | `∅`,`∃`,`∄`,`∋`,`∌`,`∈`,`∉`,`ⓣ`,`Ⓣ`,`≈`,`∞`,`π`,`℮`,`𝚽`<br>`η̂`,`μ`,`∴`,`𝔠`,`𝔦`,`𝔣`,`Λ`,`λ`,`∫`,`⨍`,`𝑓`,`∀`,`τ`,`x̃`,`𝚡`,`𝛿`,`σ`,`⌋`,`⌈`<br>`𝔹`,`ℂ`,`ℕ`,`𝕎`,`ℤ`,`ℚ`,`𝔸ᵣ`,`ℂ`,`𝕋`,`𝕀`,`ℝ`,`𝕌`,`𝕊`,`🅱`<br>`±`,`Ω`,`γ`,`Ψ`,`ρ`,`δ`,`Ⴔ`,`⨁`,`⨂`,`∖`,`≡`,`√`,`∛`,`↩`,`‣`,`⟶`,`↘`,`⬇`,`⬆`<br>`𝞽`,`θ`,`°`,`ʳ`,`ᵍ`,`⦜`,`○`,`ₑ`,`₀`,`₁`,`₂`,`₃`,`ₓ`,`ᵢ`,`ᵀ`,`▣`<br>`⁻ⁿ`,`⁰`,`¹`,`²`,`³`,`⁴`,`⁵`,`⁶`,`⁷`,`⁸`,`⁹`<br>`¼`,`½`,`¾`,`⅓`,`⅕`,`⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`,`⅛`,`⅜`,`⅝`,`⅞`,`⅑`,`⅒`<br>`📁`,`🗄️`,`💾`,`🕒`,`🎲`,`📊`,`🧟`,`💻`,`📱`,`🌐`,`❄️`,`💎`,`⚠️`,`🔑`,`✏️`,`📖`,`🏠`<br>`✅`,`♻️`,`🍺`,`🛡`,`📅`,`🛑`,`❌`,`❓`,`🆔`,`🧬`<br>`🐇`,`🐋`,`🐍`,`🐫`,`🙈` |
 | download source for utilized version of Ruby | [Ruby3.0.0-preview1](https://www.ruby-lang.org/en/news/2020/09/25/ruby-3-0-0-preview1-released/) |
 
 ### Examples
@@ -96,20 +96,20 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 | gem | version | :development, :runtime | notes |
 | ---: | :--- | :---: | ---: |
-| `tty-command` | [`0.10.0`](https://rubygems.org/gems/tty-command) | ✅, ✅ | always required |
-| `finite_machine` | [`0.14.0`](https://rubygems.org/gems/finite_machine) | ✅, ✅ | always required |
-| `bunny` | [`2.17.0`](https://rubygems.org/gems/bunny) | ✅, ❌ | toggleable feature |
-| `docker-api` | [`2.0.0`](https://rubygems.org/gems/docker-api) | ✅, ❌ | toggleable feature |
-| `pg` | [`1.2.3`](https://rubygems.org/gems/pg) | ✅, ❌ | toggleable feature |
-| `activerecord` | [`6.0.3.4`](https://rubygems.org/gems/activerecord) | ✅, ❌ | toggleable feature |
-| `rdoc` | [`6.2.1`](https://rubygems.org/gems/rdoc) | ✅, ❌ | development utility |
-| `rspec` | [`3.10.0`](https://rubygems.org/gems/rspec) | ✅, ❌ | development utility |
-| `rspec-benchmark` | [`0.6.0`](https://rubygems.org/gems/rspec-benchmark) | ✅, ❌ | development utility |
-| `rake` | [`13.0.1`](https://rubygems.org/gems/rake) | ✅, ❌ | development utility |
-| `rake-compiler` | [`1.1.1`](https://rubygems.org/gems/rake-compiler) | ✅, ❌ | development utility |
-| `rugged` | [`1.1.0`](https://rubygems.org/gems/rugged) | ❌, ❌ | broke w/ migration, fix wip |
-| `rubygems-update` | [`3.2.0.rc.2`](https://rubygems.org/gems/rugged) | ❌, ❌ | recommended version |
-| `bundler` | [`2.2.0.rc.2`](https://rubygems.org/gems/rugged) | ❌, ❌ | recommended version |
+| `tty-command` | [`0.10.0`](https://rubygems.org/gems/tty-command/versions/0.10.0) | ✅, ✅ | always required |
+| `finite_machine` | [`0.14.0`](https://rubygems.org/gems/finite_machine/versions/0.14.0) | ✅, ✅ | always required |
+| `bunny` | [`2.17.0`](https://rubygems.org/gems/bunny/versions/2.17.0) | ✅, ❌ | toggleable feature |
+| `docker-api` | [`2.0.0`](https://rubygems.org/gems/docker-api/versions/2.0.0) | ✅, ❌ | toggleable feature |
+| `pg` | [`1.2.3`](https://rubygems.org/gems/pg/versions/1.2.3) | ✅, ❌ | toggleable feature |
+| `activerecord` | [`6.1.0.rc1`](https://rubygems.org/gems/activerecord/versions/6.1.0.rc1) | ✅, ❌ | toggleable feature |
+| `rdoc` | [`6.2.1`](https://rubygems.org/gems/rdoc/versions/6.2.1) | ✅, ❌ | development utility |
+| `rspec` | [`3.10.0`](https://rubygems.org/gems/rspec/versions/3.10.0) | ✅, ❌ | development utility |
+| `rspec-benchmark` | [`0.6.0`](https://rubygems.org/gems/rspec-benchmark/versions/0.6.0) | ✅, ❌ | development utility |
+| `rake` | [`13.0.1`](https://rubygems.org/gems/rake/versions/13.0.1) | ✅, ❌ | development utility |
+| `rake-compiler` | [`1.1.1`](https://rubygems.org/gems/rake-compiler/versions/1.1.1) | ✅, ❌ | development utility |
+| `rugged` | [`1.1.0`](https://rubygems.org/gems/rugged/versions/1.1.0) | ❌, ❌ | broke w/ migration, fix wip |
+| `rubygems-update` | [`3.2.0.rc.2`](https://rubygems.org/gems/rubygems-update/versions/3.2.0.rc.2) | ❌, ❌ | recommended version |
+| `bundler` | [`2.2.0.rc.2`](https://rubygems.org/gems/bundler/versions/2.2.0.rc.2) | ❌, ❌ | recommended version |
 
 ## Overview:
 
@@ -203,13 +203,13 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 | category    | attribute               | value(s)         | # of  |
 | ----------: | :---------------------: | ---------------: | :---- |
-| `QA`        | `unit`                  | `1276`           | tests (core functionality) |
+| `QA`        | `unit`                  | `1274`           | tests (core functionality) |
 | `QA`        | `integration`           | `22`             | tests (state & functionality of grouped units) |
 | `QA`        | `performance (runtime)` | ~~142 : 85~~     | ~~tests{`non_numeric`,`numeric`}~~ |
 | `QA`        | `DB`                    | ~~291~~          | ~~tests (combined categories of `DB`, `ORM`, & `Service`)~~ |
 | `QA`        | `rng`                   | `2`              | tests (involving statistics/randomness, ex: verifying a geometric distribution) |
 | `QA`        | `system`                | `7`              | tests (`integration` scaled to `micro-services` & w/ randomness involved to help encounter niche error-states) |
-| `CI`        | `audit`                 | `128`            | tests (anything non-functionality based) |
+| `CI`        | `audit`                 | `124`            | tests (anything non-functionality based) |
 | `CI`        | `locale`                | `66`:`32`        | tests on local setup & configs{`core`:`excessive_checks`} |
 | `tech-debt` | `coverage`              | `31`             | tests (tracking missing functionality) |
 | `structure` | `features`              | `1`:`32`:`9`:`6` | features{`stable`:`wip`:`⚠️`:`todo`} |

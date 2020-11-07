@@ -2,290 +2,6 @@
 
 using ::String::ContextF24
 
-# `Ruuuby` modifications to c(`String`)
-module ::Ruuuby
-
-  # (not-final-design): attributes that are to be included/extended an absolute maximum of once per Class & Runtime
-  module Feature
-
-    # attributes that are to be included, not extended
-    module Includable
-
-      # defines the operations needed to support Feature(`f08`) that are applied to Class(`String`)
-      module StringF08
-
-        # @return [Boolean] true, if this `String` is of length 1 and the character is uppercase
-        def upcase?
-          case(self.𝔠)
-          when 1
-            return self[0].match?(::String.syntax_char_uppercase)
-          when 0
-            return false
-          else
-            return self.🐫? || 🐍⬆?
-          end
-        end
-
-        # @return [Boolean] true, if this `String` is of length 1 and the character is lowercase
-        def downcase?
-          case(self.𝔠)
-          when 1
-            return self[0].match?(::String.syntax_char_lowercase)
-          when 0
-            return false
-          else
-            return self.🐍?
-          end
-        end
-
-        # @param [String]         stop_at
-        # @param [Integer, Float] num_matches (default: 1), use value{-1} or{∞} to have no limit on matches
-        #
-        # @raise [ArgumentError, RuntimeError] thrown when arg(terminating_pattern) was not found in self
-        #
-        # @return [String] self, with all content (leading up to arg{terminating_pattern}) removed
-        def remove_until(stop_at, num_matches=1)
-          🛑str❓(:stop_at, stop_at, :∉∅)
-          🛑int❓(:num_matches, num_matches)
-          return '' if self == stop_at
-          🛑 RuntimeError.new("| c{String}-> m{remove_until} got arg(stop_at){#{stop_at}} which is not contained in self{#{self}} |") if (self.∅? || self.∌?(stop_at))
-          🛑 ArgumentError.new("| c{String}-> m{remove_until} got arg(stop_at){#{stop_at}}-len{#{stop_at.𝔠.to_s}} which is longer than self{#{self}} of len{#{self.𝔠.to_s}} |") if stop_at.𝔠 > self.𝔠
-          if num_matches == -1 || num_matches == ::Float::INFINITY
-            return self[(self.rindex(stop_at)+stop_at.𝔠)...self.𝔠]
-          elsif num_matches == 1
-            return self[(self.index(stop_at)+stop_at.𝔠)...self.𝔠]
-          else
-            num_matched = 0
-            position    = 0
-            len_pattern = stop_at.length
-            while position <= (self.length - len_pattern)
-              curr = self[position...(position+len_pattern)]
-              if curr == stop_at
-                num_matched += 1
-                if num_matched >= num_matches
-                  return self[(position+len_pattern)...self.length]
-                end
-              end
-              position += 1
-            end
-            🛑 ArgumentError.new("| c{String}-> c{remove_until} got arg(num_matches) and self{#{self}} does not have{#{num_matches.to_s}} instances of{#{stop_at}} |")
-          end
-        end
-
-        # @param [String]         stop_at
-        # @param [Integer, Float] num_matches (default: 1), use value{-1} or{∞} to have no limit on matches
-        #
-        # @raise [ArgumentError, RuntimeError]
-        #
-        # @return [String] self, with all content (leading up to arg{stop_at}) removed, searched from reversed order and then returned back in original order
-        def ♻️⟵(stop_at, num_matches=1)
-          🛑str❓(:stop_at, stop_at, :∉∅)
-          self.↩.♻️⟶(stop_at.reverse, num_matches).↩
-        end
-
-        # @param [String]
-        #
-        # @raise [ArgumentError, RuntimeError] thrown when arg(terminating_pattern) was not found in self
-        #
-        # @return [String] self, with all content (leading up to arg{terminating_pattern}) removed
-        def remove_until_last(stop_at) ; self.remove_until(stop_at, -1) ; end
-
-        # @param [String]  start the text that this string start with
-        #
-        # @raise [ArgumentError]
-        #
-        # @return [String] the original string with the starting text added if at least partially missing prior
-        def ensure_start!(start)
-          🛑str❓(:start, start)
-          return self if start.∅? || self.start_with?(start)
-          return self >> start if self.∅?
-          last_matched = ''
-          delta        = 0
-          while delta <= self.𝔠 && delta <= start.𝔠
-            ending_of_start = start[(start.𝔠-1-delta)..(start.𝔠-1)]
-            last_matched    = ending_of_start if self[0..delta] == ending_of_start
-            delta          += 1
-          end
-          self >> (last_matched.∅? ? start : start[0..(start.𝔠-1-last_matched.𝔠)])
-        end
-
-        # @param [String] ending the text that this string should end with
-        #
-        # @raise [ArgumentError]
-        #
-        # @return [String] the original string with ending-string added if missing prior
-        def ensure_ending!(ending)
-          🛑str❓(:ending, ending)
-          return self if ending.∅? || self.end_with?(ending)
-          return self << ending if self.∅?
-          last_matched = ''
-          delta        = 0
-          while delta <= self.𝔠 && delta <= ending.𝔠
-            starting_of_end = ending[0..delta]
-            last_matched    = starting_of_end if self[(self.𝔠-1-delta)...self.𝔠] == starting_of_end
-            delta          += 1
-          end
-          self << (last_matched.∅? ? ending : ending[last_matched.𝔠...ending.𝔠])
-        end
-
-      end
-
-      # defines the operations needed to support Feature(`f09`) that are applied to Class(`String`)
-      module StringF09
-        # @param [String] them
-        #
-        # @raise [ArgumentError]
-        #
-        # @return [Boolean] true, if this string instance contains the provided str
-        def ∋?(them); 🛑str❓(:them, them); self.include?(them); end
-
-        # @param [String] them
-        #
-        # @raise [ArgumentError]
-        #
-        # @return [Boolean] true, if this string instance contains the provided str
-        def ∌?(them); 🛑str❓(:them, them); not self.include?(them); end
-
-        # @param [String, Array, Set] them
-        #
-        # @raise [ArgumentError]
-        #
-        # @return [Boolean] true, if this string instance is not contained in the provided str (or array/set)
-        def ∉?(them)
-          🛑 ArgumentError.new("| c{String}-> m{∉?} will only accept args of type{String, Array, Set}, not the provided type{#{them.Ⓣ}} from arg{#{them.to_s}} |") unless (them.str? || them.ary? || them.is_a?(Set))
-          them.∌?(self)
-        end
-
-        # @param [String, Array, Set] them
-        #
-        # @raise [ArgumentError]
-        #
-        # @return [Boolean] true, if this string instance is contained in the provided str (or array/set)
-        def ∈?(them)
-          🛑 ArgumentError.new("| c{String}-> m{∈?} will only accept args of type{String, Array, Set}, not the provided type{#{them.Ⓣ}} from arg{#{them.to_s}} |") unless (them.str? || them.ary? || them.is_a?(Set))
-          them.∋?(self)
-        end
-      end
-
-      # defines the operations needed to support Feature(`f21`) that are applied to Class(`String`)
-      module StringF21
-
-        # @return [Boolean] true, if this `String` is length 1 with a it's character being a digit (ascii value between 48 and 57)
-        def digit?; (self.𝔠 == 1) && self.ord < 58 && self.ord > 47; end
-
-        # @return [Boolean] true, if this `String` can be converted into a number w/o raising any exception
-        def to_num?
-          self.to_num
-          true
-        rescue
-          false
-        end
-
-        # @raise [ArgumentError]
-        #
-        # @return [Numeric, Symbol, ThetaAngle]
-        def to_num
-          if 𝕊.∋?(self)
-            return 𝕊.parse(self)
-          end
-
-          case(self.length)
-          when 0
-            🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
-          when 1
-            if self.digit?
-              return self.to_i
-            else
-              🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
-            end
-          when 2
-            case(self[0])
-            when '.'
-              if self[1].digit?
-                return Float(self)
-              else
-                🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
-              end
-            when '+', '-'
-              if self[1].digit?       ; return Integer(self)
-              elsif self[1] == ('π') ; return (self[0] == '-') ? (-::Math::PI) : (::Math::PI)
-              else                   ;  🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
-              end
-            else
-              if self[0].digit? && self[1].digit? ; return Integer(self)
-              else                              ; 🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
-              end
-            end
-          when 3
-            if self.match?(String.syntax_len_3_as_flt)     ; return Float(self)
-            elsif self.match?(String.syntax_len_3_as_int) ; return Integer(self)
-            elsif self.downcase == 'nan'                  ; return Float::NAN
-            else                                          ; 🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
-            end
-          else
-            if self.match?(String.syntax_len_any_as_int) ; return Integer(self)
-            elsif self.match?(String.syntax_len_any)     ; return Float(self)
-            else                                         ; 🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
-            end
-          end
-        end
-
-      end
-      # defines the operations needed to support Feature(`f24`) that are applied to Class(`String`)
-      #module StringF24
-      #end # end: {f24}
-
-      # defines the operations needed to support Feature(`f26`) that are applied to Class(`String`)
-      module StringF26
-
-        # @return [Boolean] true, if the contents of this `String` are representative of an iso8601 formatted date and/or time
-        def iso8601? ; self.length > 3 && self.match?(::String.syntax_iso8601_normalizable) ; end
-
-        # @raise [RuntimeError] if this contents of this `String` are not representative of an iso8601 formatted date and/or time
-        #
-        # @return [String] a normalized representation of iso8601
-        def as_iso8601
-          🛑 RuntimeError.new("| c{String}-> m{as_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x0) |") unless self.iso8601?
-          data      = self.dup
-          node_date = data[0...10]
-          return self if node_date == self
-          remainder = data[11...data.length]
-          if remainder.length < 8
-            🛑 RuntimeError.new("| c{String}-> m{as_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x1) |")
-          else
-            node_time = remainder[0...8]
-            return "#{node_date}T#{node_time}" if node_time == remainder
-            remainder = remainder[8...remainder.length].strip
-            if remainder.match?(::String.syntax_utc_offsets)
-              case(remainder.length)
-              when 3
-                return "#{node_date}T#{node_time}#{remainder}:00"
-              when 5
-                return "#{node_date}T#{node_time}#{remainder[0...3]}:#{remainder[3...5]}"
-              when 6
-                return "#{node_date}T#{node_time}#{remainder}"
-              else
-                🛑 RuntimeError.new("| c{String}-> m{as_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x2) |")
-              end
-            else
-              🛑 RuntimeError.new("| c{String}-> m{as_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x3) |")
-            end
-          end
-        end
-
-        # @raise [RuntimeError]
-        #
-        # @return [DateTime]
-        def to_iso8601
-          ::DateTime.iso8601(self.as_iso8601)
-          #DateTime.strptime(self, '%FT%T%:z')
-        end
-
-      end
-    end # end: {Includable}
-  end # end: {Feature}
-end # end: {Ruuuby}
-
 # `Ruuuby` modifications to existing Class{+String+}
 class ::String
 
@@ -369,7 +85,120 @@ class ::String
   # ---------------------------------------------------------------------------------------------------------- | *f03* |
   alias_method :𝔠, :length
   # ---------------------------------------------------------------------------------------------------------- | *f08* |
-  include ::Ruuuby::Feature::Includable::StringF08
+
+  # @return [Boolean] true, if this `String` is of length 1 and the character is uppercase
+  def upcase?
+    case(self.𝔠)
+    when 1
+      return self[0].match?(::String.syntax_char_uppercase)
+    when 0
+      return false
+    else
+      return self.🐫? || 🐍⬆?
+    end
+  end
+
+  # @return [Boolean] true, if this `String` is of length 1 and the character is lowercase
+  def downcase?
+    case(self.𝔠)
+    when 1
+      return self[0].match?(::String.syntax_char_lowercase)
+    when 0
+      return false
+    else
+      return self.🐍?
+    end
+  end
+
+  # @param [String]         stop_at
+  # @param [Integer, Float] num_matches (default: 1), use value{-1} or{∞} to have no limit on matches
+  #
+  # @raise [ArgumentError, RuntimeError] thrown when arg(terminating_pattern) was not found in self
+  #
+  # @return [String] self, with all content (leading up to arg{terminating_pattern}) removed
+  def remove_until(stop_at, num_matches=1)
+    🛑str❓(:stop_at, stop_at, :∉∅)
+    🛑int❓(:num_matches, num_matches)
+    return '' if self == stop_at
+    🛑 RuntimeError.new("| c{String}-> m{remove_until} got arg(stop_at){#{stop_at}} which is not contained in self{#{self}} |") if (self.∅? || self.∌?(stop_at))
+    🛑 ArgumentError.new("| c{String}-> m{remove_until} got arg(stop_at){#{stop_at}}-len{#{stop_at.𝔠.to_s}} which is longer than self{#{self}} of len{#{self.𝔠.to_s}} |") if stop_at.𝔠 > self.𝔠
+    if num_matches == -1 || num_matches == ::Float::INFINITY
+      return self[(self.rindex(stop_at)+stop_at.𝔠)...self.𝔠]
+    elsif num_matches == 1
+      return self[(self.index(stop_at)+stop_at.𝔠)...self.𝔠]
+    else
+      num_matched = 0
+      position    = 0
+      len_pattern = stop_at.length
+      while position <= (self.length - len_pattern)
+        curr = self[position...(position+len_pattern)]
+        if curr == stop_at
+          num_matched += 1
+          if num_matched >= num_matches
+            return self[(position+len_pattern)...self.length]
+          end
+        end
+        position += 1
+      end
+      🛑 ArgumentError.new("| c{String}-> c{remove_until} got arg(num_matches) and self{#{self}} does not have{#{num_matches.to_s}} instances of{#{stop_at}} |")
+    end
+  end
+
+  # @param [String]         stop_at
+  # @param [Integer, Float] num_matches (default: 1), use value{-1} or{∞} to have no limit on matches
+  #
+  # @raise [ArgumentError, RuntimeError]
+  #
+  # @return [String] self, with all content (leading up to arg{stop_at}) removed, searched from reversed order and then returned back in original order
+  def ♻️⟵(stop_at, num_matches=1)
+    🛑str❓(:stop_at, stop_at, :∉∅)
+    self.↩.♻️⟶(stop_at.reverse, num_matches).↩
+  end
+
+  # @param [String]
+  #
+  # @raise [ArgumentError, RuntimeError] thrown when arg(terminating_pattern) was not found in self
+  #
+  # @return [String] self, with all content (leading up to arg{terminating_pattern}) removed
+  def remove_until_last(stop_at) ; self.remove_until(stop_at, -1) ; end
+
+  # @param [String]  start the text that this string start with
+  #
+  # @raise [ArgumentError]
+  #
+  # @return [String] the original string with the starting text added if at least partially missing prior
+  def ensure_start!(start)
+    🛑str❓(:start, start)
+    return self if start.∅? || self.start_with?(start)
+    return self >> start if self.∅?
+    last_matched = ''
+    delta        = 0
+    while delta <= self.𝔠 && delta <= start.𝔠
+      ending_of_start = start[(start.𝔠-1-delta)..(start.𝔠-1)]
+      last_matched    = ending_of_start if self[0..delta] == ending_of_start
+      delta          += 1
+    end
+    self >> (last_matched.∅? ? start : start[0..(start.𝔠-1-last_matched.𝔠)])
+  end
+
+  # @param [String] ending the text that this string should end with
+  #
+  # @raise [ArgumentError]
+  #
+  # @return [String] the original string with ending-string added if missing prior
+  def ensure_ending!(ending)
+    🛑str❓(:ending, ending)
+    return self if ending.∅? || self.end_with?(ending)
+    return self << ending if self.∅?
+    last_matched = ''
+    delta        = 0
+    while delta <= self.𝔠 && delta <= ending.𝔠
+      starting_of_end = ending[0..delta]
+      last_matched    = starting_of_end if self[(self.𝔠-1-delta)...self.𝔠] == starting_of_end
+      delta          += 1
+    end
+    self << (last_matched.∅? ? ending : ending[last_matched.𝔠...ending.𝔠])
+  end
 
   # @return [Boolean]
   def enclosed_with?(pattern_start, pattern_end)
@@ -404,11 +233,147 @@ class ::String
   alias_method :♻️⟶∞, :remove_until_last
 
   # ---------------------------------------------------------------------------------------------------------- | *f09* |
-  include ::Ruuuby::Feature::Includable::StringF09
+  # @param [String] them
+  #
+  # @raise [ArgumentError]
+  #
+  # @return [Boolean] true, if this string instance contains the provided str
+  def ∋?(them); 🛑str❓(:them, them); self.include?(them); end
+
+  # @param [String] them
+  #
+  # @raise [ArgumentError]
+  #
+  # @return [Boolean] true, if this string instance contains the provided str
+  def ∌?(them); 🛑str❓(:them, them); not self.include?(them); end
+
+  # @param [String, Array, Set] them
+  #
+  # @raise [ArgumentError]
+  #
+  # @return [Boolean] true, if this string instance is not contained in the provided str (or array/set)
+  def ∉?(them)
+    🛑 ArgumentError.new("| c{String}-> m{∉?} will only accept args of type{String, Array, Set}, not the provided type{#{them.Ⓣ}} from arg{#{them.to_s}} |") unless (them.str? || them.ary? || them.is_a?(Set))
+    them.∌?(self)
+  end
+
+  # @param [String, Array, Set] them
+  #
+  # @raise [ArgumentError]
+  #
+  # @return [Boolean] true, if this string instance is contained in the provided str (or array/set)
+  def ∈?(them)
+    🛑 ArgumentError.new("| c{String}-> m{∈?} will only accept args of type{String, Array, Set}, not the provided type{#{them.Ⓣ}} from arg{#{them.to_s}} |") unless (them.str? || them.ary? || them.is_a?(Set))
+    them.∋?(self)
+  end
+
   # ---------------------------------------------------------------------------------------------------------- | *f21* |
-  include ::Ruuuby::Feature::Includable::StringF21
+
+  # @return [Boolean] true, if this `String` is length 1 with a it's character being a digit (ascii value between 48 and 57)
+  def digit?; (self.𝔠 == 1) && self.ord < 58 && self.ord > 47; end
+
+  # @return [Boolean] true, if this `String` can be converted into a number w/o raising any exception
+  def to_num?
+    self.to_num
+    true
+  rescue
+    false
+  end
+
+  # @raise [ArgumentError]
+  #
+  # @return [Numeric, Symbol, ThetaAngle]
+  def to_num
+    if 𝕊.∋?(self)
+      return 𝕊.parse(self)
+    end
+
+    case(self.length)
+    when 0
+      🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
+    when 1
+      if self.digit?
+        return self.to_i
+      else
+        🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
+      end
+    when 2
+      case(self[0])
+      when '.'
+        if self[1].digit?
+          return Float(self)
+        else
+          🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
+        end
+      when '+', '-'
+        if self[1].digit?       ; return Integer(self)
+        elsif self[1] == ('π') ; return (self[0] == '-') ? (-::Math::PI) : (::Math::PI)
+        else                   ;  🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
+        end
+      else
+        if self[0].digit? && self[1].digit? ; return Integer(self)
+        else                              ; 🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
+        end
+      end
+    when 3
+      if self.match?(String.syntax_len_3_as_flt)     ; return Float(self)
+      elsif self.match?(String.syntax_len_3_as_int) ; return Integer(self)
+      elsif self.downcase == 'nan'                  ; return Float::NAN
+      else                                          ; 🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
+      end
+    else
+      if self.match?(String.syntax_len_any_as_int) ; return Integer(self)
+      elsif self.match?(String.syntax_len_any)     ; return Float(self)
+      else                                         ; 🛑 ::Ruuuby::DescriptiveStandardError.new(self, "can't be parsed as a num")
+      end
+    end
+  end
+
   # ---------------------------------------------------------------------------------------------------------- | *f26* |
-  include ::Ruuuby::Feature::Includable::StringF26
+
+  # @return [Boolean] true, if the contents of this `String` are representative of an iso8601 formatted date and/or time
+  def iso8601? ; self.length > 3 && self.match?(::String.syntax_iso8601_normalizable) ; end
+
+  # @raise [RuntimeError] if this contents of this `String` are not representative of an iso8601 formatted date and/or time
+  #
+  # @return [String] a normalized representation of iso8601
+  def as_iso8601
+    🛑 RuntimeError.new("| c{String}-> m{as_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x0) |") unless self.iso8601?
+    data      = self.dup
+    node_date = data[0...10]
+    return self if node_date == self
+    remainder = data[11...data.length]
+    if remainder.length < 8
+      🛑 RuntimeError.new("| c{String}-> m{as_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x1) |")
+    else
+      node_time = remainder[0...8]
+      return "#{node_date}T#{node_time}" if node_time == remainder
+      remainder = remainder[8...remainder.length].strip
+      if remainder.match?(::String.syntax_utc_offsets)
+        case(remainder.length)
+        when 3
+          return "#{node_date}T#{node_time}#{remainder}:00"
+        when 5
+          return "#{node_date}T#{node_time}#{remainder[0...3]}:#{remainder[3...5]}"
+        when 6
+          return "#{node_date}T#{node_time}#{remainder}"
+        else
+          🛑 RuntimeError.new("| c{String}-> m{as_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x2) |")
+        end
+      else
+        🛑 RuntimeError.new("| c{String}-> m{as_iso8601} can't normalize self{#{self}} as it is not similar enough to iso8601 formatted data | (0x3) |")
+      end
+    end
+  end
+
+  # @raise [RuntimeError]
+  #
+  # @return [DateTime]
+  def to_iso8601
+    ::DateTime.iso8601(self.as_iso8601)
+    #DateTime.strptime(self, '%FT%T%:z')
+  end
+
   # ---------------------------------------------------------------------------------------------------------- | *f04* |
   alias_method :∅?, :empty?
   # | ------------------------------------------------------------------------------------------------------------------

@@ -3,5 +3,8 @@
 # +Ruuuby+
 module ::Ruuuby
   # @type [String] the version of *Ruuuby* reflected in this source code
-  VERSION = '0.1.0.pre.1'.freeze
+  VERSION = '0.1.0.pre.2'.freeze
+
+  # @type [String] the version of Gem{`rubygem-update`} utilized and recommended
+  VERSION_BUNDLER = '3.2.0.rc.2'.freeze
 end

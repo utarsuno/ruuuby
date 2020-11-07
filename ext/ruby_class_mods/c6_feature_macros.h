@@ -101,6 +101,7 @@ ________________________________________________________________________________
      \/_/  \/_____/   \/___/ */
 
 #define ENGINE_STAT_SET(the_str, the_val) r_hsh_set(hsh_ruuuby_engine_stats, rb_str_new_cstr(the_str), the_val);
+#define ENGINE_STAT_SET_DISABLED(the_str) r_hsh_set(hsh_ruuuby_engine_stats, rb_str_new_cstr(the_str), Qfalse);
 
 /*   ___    ___    ________
    /'___\ /'___`\ /\_____  \

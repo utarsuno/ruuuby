@@ -115,7 +115,7 @@ end
 # ______________________________________________________________________________________________________________________
 
 module CategoriesQA
-  ALL_SINGULAR_CATEGORIES = %w(audit db performance locale tech_debt unit integration system service)
+  ALL_SINGULAR_CATEGORIES = %w(audit db performance locale tech_debt unit integration system service rng)
   PATH_BASE               = ::File.dirname(__FILE__)
   module Preload
     DB_PARTIAL    = %w(/db/db)

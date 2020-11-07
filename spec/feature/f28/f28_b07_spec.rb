@@ -11,7 +11,6 @@ RSpec.describe 'f28_b07' do
         context 'Ωe^Ω = 1' do
           it 'passes w/ Ruuuby' do
             expect((Ω * (℮ ** Ω)).to_f).to eq(1)
-            expect((Ω * (ₑˆΩ)).to_f).to eq(1)
           end
         end
         it 'ln(1/Ω) = Ω' do

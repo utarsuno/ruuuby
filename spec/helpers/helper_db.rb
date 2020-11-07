@@ -314,6 +314,4 @@ RSpec.shared_context 'shared_context_db' do
   let(:f98_b01){f98.ruuuby_feature_behaviors[1]}
   let(:f98_b02){f98.ruuuby_feature_behaviors[2]}
 
-  let(:f99){::RuuubyFeature[99]}
-
 end

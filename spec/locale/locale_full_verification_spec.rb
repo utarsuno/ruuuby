@@ -158,7 +158,7 @@ RSpec.describe 'ruby' do
       end # end: {curl}
     end
 
-    context '(thus far) recommended settings for {iconv}' do
+    context 'recommended settings for {iconv}' do
       it 'passes all health checks' do
         expect(💎.engine.api_locale.api_iconv.healthy?).to eq(true)
         end

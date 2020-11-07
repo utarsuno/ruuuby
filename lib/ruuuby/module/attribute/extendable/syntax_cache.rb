@@ -28,7 +28,7 @@ module ::Ruuuby
         # provide a default implementation
         #
         # @return [*]
-        def cache_generate(cache_key); ::Regexp.gen_closed_match(cache_key); end
+        def cache_generate(cache_key); ::Regexp.closed_match(cache_key); end
 
         # @param [String, Symbol] cache_key
         #

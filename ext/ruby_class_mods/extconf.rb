@@ -88,6 +88,9 @@ unless env_f92.nil?
   end
 end
 
+env_f43 = ENV['RUUUBY_F43']
+flag_f43 = !env_f43.nil?
+
 env_f93 = ENV['RUUUBY_F93']
 
 if env_f93.nil?
@@ -145,8 +148,6 @@ if os == 'mac'
   append_cflags("-include ~/.#{path_overlap_ruby}/ruby/internal/intern/sprintf.h")
   append_cflags("-include ~/.#{path_overlap_ruby}/ruby/internal/core/rdata.h")
 
-  # struct RBasic basic
-
   the_flags += %w(fapinotes fapple-pragma-pack fblocks ftarget-variant-availability-checks fmacro-backtrace-limit=0 fconstexpr-backtrace-limit=0 nostdinc++ fforce-emit-vtables fwhole-program-vtables mpie-copy-relocations)
 
   # OpenMP
@@ -191,6 +192,8 @@ the_flags += %w(DRUUUBY_F26_B00) if flag_f26_b00
 the_flags += %w(DRUUUBY_F28_B09) if flag_f28_b09
 
 the_flags += %w(DRUUUBY_F38) if flag_f38
+
+the_flags += %w(DRUUUBY_F43) if flag_f43
 
 the_flags += %w(DRUUUBY_F92_B00) if flag_f92_b00
 the_flags += %w(DRUUUBY_F92_B01) if flag_f92_b01

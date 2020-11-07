@@ -109,7 +109,6 @@ ________________________________________________________________________________
     ensure_loaded_ruuuby(ruuuby/ruuuby_api)\
     ensure_loaded_ruuuby(ruuuby/api/git/api_git)\
     ensure_loaded_ruuuby(ruuuby/api/api_brew)\
-    ensure_loaded_ruuuby(ruuuby/api/api_iconv)\
     ensure_loaded_ruuuby(ruuuby/api/api_locale)\
     ensure_loaded_ruuuby(ruuuby/engine/ruuuby_engine)\
     ensure_loaded_ruuuby(configs)\

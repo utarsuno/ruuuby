@@ -40,7 +40,8 @@ module ::Ruuuby::Attribute
       self.validate_name_arg(name)
       begin
         self.get(name)
-      rescue ::Docker::Error::NotFoundError
+      rescue ::Docker::Error::NotFoundError, err
+        raise err
         nil
       end
     end

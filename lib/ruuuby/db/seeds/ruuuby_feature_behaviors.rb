@@ -1,18 +1,5 @@
 # encoding: UTF-8
 
-@f00.spawn_behaviors(['create func{η̂!} for class(`Array`)'])
-
-@f01.spawn_behaviors(
-    [
-        'supports mode: none (empty methods called for logging)',
-        'supports mode: stdout (log to console)',
-        'supports mode: stderr (log only errors to console)',
-        'supports mode: file (standard Ruby log file logging)',
-        'supports setting the logging level',
-        'supports running a hybrid of logging modes'
-    ]
-)
-
 @f04.spawn_behaviors(
     [
         'Enumerable classes{ex: `Array`, `Set`, `String` have func{`∅?`}',
@@ -222,22 +209,5 @@
     [
         'offers functionality wrappers for provided brew commands',
         'offers health checks for current local dev state'
-    ]
-)
-
-@f92.spawn_behaviors(
-    [
-        'enable support for SQLite3',
-        'enable support for ActiveRecord',
-        'enable support for pg for PostgreSQL'
-    ]
-)
-
-# TODO: double (_Complex double)
-@f98.spawn_behaviors(
-    [
-        'dynamically add `macros` w/ `mkmf` in order to (during pre-processing) include/exclude feature-code to be compiled w/ or w/o',
-        'offer (to `Ruuuby`) access to `C` math functions, especially those involving higher precision',
-        'simplify import/require statements & setup as much as possible'
     ]
 )

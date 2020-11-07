@@ -11,6 +11,4 @@ class Docker::Network
   extend ::Ruuuby::Attribute::Findable
   # ------------------------------------------------------------------------
 
-
-
 end

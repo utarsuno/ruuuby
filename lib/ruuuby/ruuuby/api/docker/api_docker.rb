@@ -7,19 +7,6 @@ module ::Ruuuby::MetaData
 
   # for base gem documentation @see: https://github.com/swipely/docker-api
   #
-  # TODO: https://docs.docker.com/registry/spec/api/
-  # TODO: https://registry.hub.docker.com/v2/
-  # TODO: https://hub.docker.com/_/alpine?tab=tags
-  # TODO: https://hub.docker.com/_/nginx/
-  #
-  # TODO: docs.docker.com/registry/spec/api
-  #
-  # TODO: https://runnable.com/docker/advanced-docker-compose-configuration
-  #
-  # TODO: https://docs.docker.com/network/
-  # TODO: https://docs.docker.com/network/iptables/
-  # TODO: https://runnable.com/docker/basic-docker-networking
-  #
   # helpful CLI commands:
   #  --------------------------------------------------------------------------------------------------------
   #  | scenario                          | command/template/example                              | source   |
@@ -76,6 +63,8 @@ module ::Ruuuby::MetaData
     # @return [Boolean]
     def ∃🌐?(network_name); ::Docker::Network.∃?(network_name); end
 
+    # does there exist a running docker container w/ the provided name?
+    #
     # @param [String] container_name
     #
     # @raise [ArgumentError]
@@ -119,32 +108,6 @@ module ::Ruuuby::MetaData
     # @return [Array] an array of all the alive containers
     def ∀🐋; ::Docker::Container.all(all: true); end
 
-=begin
-    # @param [String]  container_name
-    # @param [Boolean] exact_match
-    #
-    # @raise [ArgumentError, RuntimeError]
-    #
-    # @return [Docker::Network]
-    def zz(container_name, exact_match=false)
-      🛑str❓('container_name', container_name)
-      🛑bool❓('exact_match', exact_match)
-      if exact_match
-        results = self.run_cmd("ps -aqf \"name=^#{container_name}$\"")
-      else
-        results = self.run_cmd("ps -aqf \"name=#{container_name}\"")
-      end
-      if results.∅?
-        🛑 ::ArgumentError.new("| c{🐋}-> m{[]} found no matches w/ container-name{#{container_name.to_s}} |")
-      elsif results.ary?
-        🛑 ::ArgumentError.new("| c{🐋}-> m{[]} found{#{results.length.to_s}} matches, max-allowed is{1} |") if results.length > 1
-        self.find_🐋_by_id(results[0])
-      else
-        self.find_🐋_by_id(results)
-      end
-    end
-=end
-
     # @param [String]  container_name
     #
     # @raise [ArgumentError, RuntimeError]
@@ -159,7 +122,6 @@ module ::Ruuuby::MetaData
       end
       🛑 ::ArgumentError.new("| c{🐋}-> m{[]} found no matches w/ container-name{#{container_name.to_s}} |")
     end
-
 
     def test(container_name)
       🐋.∀🐋.each do |d|
@@ -185,6 +147,7 @@ module ::Ruuuby::MetaData
 
     🙈
 
+    # @return [Boolean]
     def _connected?; ::Docker.ping == 'OK'; end
 
     # @see https://stackoverflow.com/questions/40080887/how-do-i-restart-docker-for-mac-from-the-terminal
@@ -218,11 +181,8 @@ module ::Ruuuby::MetaData
   end # end: Class{DockerAPI}
 end
 
-# TODO: https://docs.docker.com/engine/api/v1.24/
 # TODO: https://docs.docker.com/engine/api/v1.40/
 # TODO: https://container42.com/2016/03/27/docker-quicktip-7-psformat/
-#
-# TODO: https://stackoverflow.com/questions/16064957/how-to-check-in-applescript-if-an-app-is-running-without-launching-it-via-osa
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
