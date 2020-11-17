@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 RSpec.describe 'docker_service_pgadmin' do
-  let(:service_name){'service_pgadmin'}
+  let(:service_name){'service_pgadmin_dev'}
 
   context 'system tests for docker-service{pgadmin}', :system do
 
@@ -12,12 +12,13 @@ RSpec.describe 'docker_service_pgadmin' do
     end
 
     it 'can find the container{service_pgadmin}, matching against expected versions & configs' do
-      container_pgadmin = audit_container(service_name, false, 'alpine', '3.9.4')
-
-      env_vars = container_pgadmin.env_vars
-      expect(env_vars['PYTHON_PIP_VERSION']).to eq('19.1.1')
-      expect(env_vars['PYTHON_VERSION']).to eq('3.7.3')
+      container_pgadmin = audit_container(service_name, false, 'alpine', '3.11.6')
+      env_vars          = container_pgadmin.env_vars
+      expect(env_vars['PYTHON_PIP_VERSION']).to eq('20.2.3')
+      expect(env_vars['PYTHON_VERSION']).to eq('3.8.6')
       expect(env_vars['LANG']).to eq('C.UTF-8')
+      expect(env_vars['PGADMIN_LISTEN_PORT']).to eq('13337')
+      expect(env_vars['GUNICORN_THREADS']).to eq('15')
     end
 
   end

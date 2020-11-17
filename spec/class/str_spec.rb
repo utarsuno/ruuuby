@@ -55,6 +55,11 @@ RSpec.describe 'str' do
             expect('0101b0'.palindrome?).to eq(false)
           end
         end
+        context 'tech_debt', :tech_debt do
+          it 'offers arg to give deal with "visual palindromeness"' do
+            expect('∃12321∃'.palindrome?).to eq(true)
+          end
+        end
       end # end: {func{palindrome?}}
 
       context 'func{in_quotes?}' do

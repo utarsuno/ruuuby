@@ -41,7 +41,7 @@ module ::Ruuuby::Attribute
       if self.connected?
         self._disconnect
       else
-        🛑 ::RuntimeError.new("| {🐋}-> m{disconnect!} called when the docker-engine is not running |")
+        🛑 ::RuntimeError.new("| {#{self.Ⓣ}}-> m{disconnect!} called when the docker-engine is not running |")
       end
     end
 

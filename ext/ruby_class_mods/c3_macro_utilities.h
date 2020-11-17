@@ -75,11 +75,6 @@ ________________________________________________________________________________
     ensure_loaded_math(space/discrete/symbolic_numbers_space)\
 }
 
-#define ensure_all_loaded_for_math_expressions(){\
-    ensure_loaded_math(expr/seq/sequence)\
-    ensure_loaded_math(expr/seq/recursive)\
-}
-
 #define ensure_all_loaded_for_tropical_algebra(){\
     ensure_loaded_math(algebra/tropical/tropical)\
     ensure_loaded_math(algebra/tropical/context_numeric)\
@@ -87,10 +82,6 @@ ________________________________________________________________________________
 }
 
 #define ensure_all_loaded_for_geometry(){\
-    ensure_loaded_math(geometry/shape/shape)\
-    ensure_loaded_math(geometry/shape/plane_figure)\
-    ensure_loaded_math(geometry/shape/quadrilateral)\
-    ensure_loaded_math(geometry/shape/circle)\
     ensure_loaded_math(geometry/theta_angle)\
     ensure_loaded_math(geometry/trig)\
 }

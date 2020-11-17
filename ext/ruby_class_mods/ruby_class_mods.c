@@ -351,10 +351,6 @@ static void startup_step4_load_needed_ruuuby_files(void) {
     ensure_loaded_enumerable(ary)
     ensure_loaded_enumerable(hsh) // must be after{ary}
 
-    // TODO: REMOVE FROM RUNTIME, ONLY NEEDED FOR TESTING CODE
-    ensure_loaded_module(gem)
-    ensure_loaded_module(bundler)
-
     ensure_all_loaded_for_nums()
 
     ensure_loaded_enumerable(set)
@@ -375,7 +371,7 @@ static void startup_step4_load_needed_ruuuby_files(void) {
 
     ensure_all_loaded_for_math_space()
 
-    ensure_all_loaded_for_math_expressions()
+    ensure_loaded_math(expr/sequence)
 #ifdef RUUUBY_F06_B08
     ensure_loaded_nums(matrix)
 #endif
@@ -419,7 +415,6 @@ static void startup_step4_load_needed_ruuuby_files(void) {
 #ifdef RUUUBY_F22_B07
     ensure_loaded_ruuuby(ruuuby/engine/f22/b07)
 #endif
-    ensure_loaded_math(geometry/shape/triangle)
 
 #ifdef RUUUBY_F43
     ensure_loaded_ruuuby(ruuuby/api/f43_api_iconv)

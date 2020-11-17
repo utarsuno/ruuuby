@@ -8,67 +8,71 @@ require 'rdoc/rdoc'
 
 require 'rake'
 
-namespace :dev_settings do
-
-  f92 = ENV['RUUUBY_F92']
-
-  task :disable_db_dev do
-    raise ::RuntimeError.new("| ENV[RUUUBY_F92] w/ value{#{f92.to_s}} indicates it should not be disabled |") if (f92 != nil && (f92.include?('b01') || f92.include?('b02')))
-    `bundle config unset with`
-    `bundle config unset without`
-    `bundle config set with 'development'`
-    `bundle config set without 'db'`
-  end
-
-  task :enable_db_dev do
-    raise ::RuntimeError.new("| ENV[RUUUBY_F92] w/ value{#{f92.to_s}} does not have the required feature behavior needed |") if (f92.class == ::String && !(f92.include?('b01') || f92.include?('b02')))
-    `bundle config unset with`
-    `bundle config unset without`
-    `bundle config set with 'db' 'development'`
-    #`bundle config set without 'prod'`
-  end
-
-end
-
 namespace :qa do
 
   task :unit do
-    #ENV['RUBYOPT']    = '-W:no-deprecated -W:no-experimental'
     #ENV['RUUUBY_F01'] = 'b00'
+    ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
+    ENV['RUUUBY_AUTOLOAD_DB'] = 'off'
     ::Rake::Task['rspec_unit'].invoke
   end
 
   task :functionality do
-    #ENV['RUBYOPT']    = '-W:no-deprecated -W:no-experimental'
     #ENV['RUUUBY_F01'] = 'b00'
+    ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
     ::Rake::Task['rspec_audit'].execute
     ::Rake::Task['rspec_locale'].execute
     ::Rake::Task['rspec_tech_debt'].execute
-    ::Rake::Task['rspec_integration'].execute
     ::Rake::Task['qa:unit'].invoke
+
+    ::Rake::Task['qa:integration'].invoke
+  end
+
+  task :integration do
+    ENV['RUBYOPT']                  = '-W:no-deprecated -W:no-experimental'
+    ENV['RUUUBY_F01']               = 'b00'
+    ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
+    ENV['RUUUBY_AUTOLOAD_DB']       = 'off'
+    ENV['RUUUBY_RSPEC_INTEGRATION'] = 'on'
+    ::Rake::Task['rspec_integration'].execute
   end
 
   task :db do
-    ENV['RUBYOPT']    = '-W:no-deprecated -W:no-experimental'
-    ENV['RUUUBY_F01'] = 'b00'
-    ::Rake::Task['rspec_db'].execute
+    ENV['RUBYOPT']                  = '-W:no-deprecated -W:no-experimental'
+    ENV['RUUUBY_F01']               = 'b00'
+    ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
+    ENV['RUUUBY_F92']               = 'b01|b02'
+    ENV['RUUUBY_RSPEC_INTEGRATION'] = 'off'
+    ENV['RUUUBY_AUTOLOAD_DB']       = 'on'
+    ::Rake::Task['rspec_db'].invoke
+  end
+
+  task :rng do
+    ENV['RUBYOPT']                  = '-W:no-deprecated -W:no-experimental'
+    ENV['RUUUBY_F01']               = 'b00'
+    ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
+    ::Rake::Task['rspec_rng'].execute
   end
 
   task :audit do
-    ENV['RUBYOPT']    = '-W:no-deprecated -W:no-experimental'
-    ENV['RUUUBY_F01'] = 'b00'
+    ENV['RUBYOPT']                  = '-W:no-deprecated -W:no-experimental'
+    ENV['RUUUBY_F01']               = 'b00'
+    ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
     ::Rake::Task['rspec_audit'].execute
   end
 
   task :locale do
-    ENV['RUBYOPT']    = '-W:no-deprecated -W:no-experimental'
-    ENV['RUUUBY_F01'] = 'b00'
+    ENV['RUBYOPT']                  = '-W:no-deprecated -W:no-experimental'
+    ENV['RUUUBY_F01']               = 'b00'
+    ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
     ::Rake::Task['rspec_locale'].execute
   end
 
   task :locale_full do
-    ENV['RUBYOPT']    = '-W:no-deprecated -W:no-experimental'
-    ENV['RUUUBY_F01'] = 'b00'
+    ENV['RUBYOPT']                  = '-W:no-deprecated -W:no-experimental'
+    ENV['RUUUBY_F01']               = 'b00'
+    ENV['RUUUBY_F43']               = 'b00'
+    ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
     ::Rake::Task['rspec_locale_full'].execute
   end
 
@@ -115,35 +119,58 @@ end
 # ______________________________________________________________________________________________________________________
 
 module CategoriesQA
-  ALL_SINGULAR_CATEGORIES = %w(audit db performance locale tech_debt unit integration system service rng)
-  PATH_BASE               = ::File.dirname(__FILE__)
+  RSPEC_TAG_NAMES  = %w(audit db db_new performance locale preferences tech_debt unit integration system service rng)
+  PATH_BASE        = ::File.dirname(__FILE__)
   module Preload
-    DB_PARTIAL    = %w(/db/db)
-    DB_FULL       = %w(/db/db /db/seed)
-    LIB_BENCHMARK = %w(/spec/helpers/load_benchmark)
+    DB_FULL  = %w(/db/db /db/seed)
+#    DB_NEW  = %w(/services/ruuuby_db/spec/migration_spec)
+    DB_NEW   = %w(
+    /spec/helpers/db/autoload_me
+    /services/ruuuby_db/spec/migration_spec
+)
+    INTEGRATION   = %w(/spec/helpers/integration/autoload_me)
+    LIB_BENCHMARK = %w(/spec/helpers/performance/autoload_me)
+    LOCALE_BASE   = %w(/spec/helpers/locale/autoload_me)
+    LOCALE_FULL   = LOCALE_BASE + %w(
+    /services/dev_configs/mac/spec/locale/f43_spec
+    /services/dev_configs/mac/spec/locale/f44_spec
+    /services/dev_configs/mac/spec/locale/f45_spec
+    /services/dev_configs/mac/spec/locale/f46_spec
+    /services/dev_configs/mac/spec/locale/f47_spec
+    /services/dev_configs/mac/spec/locale/f92_b00_spec
+    /services/dev_configs/mac/spec/locale/f98_spec
+    /services/dev_configs/mac/spec/locale/locale_full_verification_spec
+)
   end
 end
 
 # https://rubydoc.info/github/rspec/rspec-core/RSpec/Core/Configuration
 
-def add_task_rspec(task_name, sub_category, with_warnings, singular_category_test, exclude_other_categories, exclude_patterns='', files_to_require=[])
-  official_task_name = "#{task_name}"
-  official_task_name += "_#{sub_category}" unless sub_category.empty?
+# @param [String] task_name
+# @param [String] exclude_patterns
+# @param [Array]  files_to_require
+def add_task_rspec(task_name, exclude_patterns='', files_to_require=[])
+  rspec_task = RSpec::Core::RakeTask.new("rspec_#{task_name}".to_sym)
   local_opts = ['--format progress', '--color', '--require spec_helper']
-  #local_opts = ['--color', '--require spec_helper']
-  local_opts << '--warnings' if with_warnings
-  if singular_category_test && task_name != 'unit'
-    local_opts << "--tag @#{task_name}"
-  end
-  if exclude_other_categories
-    CategoriesQA::ALL_SINGULAR_CATEGORIES.each do |c|
-      local_opts << "--tag ~@#{c}" if c != task_name
+
+  if task_name == 'all'
+    local_opts << '--warnings'
+    rspec_task.verbose = true
+  else
+    rspec_task.verbose = false
+    CategoriesQA::RSPEC_TAG_NAMES.each do |tag|
+      local_opts << "--tag ~@#{tag}" if tag != task_name
+    end
+    local_opts << "--tag @#{task_name}" unless task_name == 'unit'
+    case task_name
+    when 'rng'
+      local_opts << '--out rspec_rng.txt'
+    else
     end
   end
-  rspec_task            = RSpec::Core::RakeTask.new("rspec_#{official_task_name}".to_sym)
-  rspec_task.verbose    = with_warnings
 
   rspec_task.rspec_opts = local_opts.join(' ')
+
   unless files_to_require.empty?
     files_to_require.each do |relative_path|
       rspec_task.rspec_opts << " --require #{CategoriesQA::PATH_BASE}#{relative_path}.rb"
@@ -152,40 +179,23 @@ def add_task_rspec(task_name, sub_category, with_warnings, singular_category_tes
   unless exclude_patterns.empty?
     rspec_task.rspec_opts << " --exclude-pattern \"#{exclude_patterns}\""
   end
-
-
-  if task_name == 'rng'
-    rspec_task.rspec_opts << ' --out rspec_rng.txt'
-  else
-    #rspec_task.rspec_opts << ' --format progress'
-  end
-
-  #puts "task{#{official_task_name}}, rspec_opts{#{rspec_task.rspec_opts.to_s}}"
 end
 
-add_task_rspec('unit', '',false,  true, true)
-add_task_rspec('audit', '', false, true, true)
-add_task_rspec('db', '', false, true, true, '', CategoriesQA::Preload::DB_FULL)
+add_task_rspec('db', '', CategoriesQA::Preload::DB_FULL)
+add_task_rspec('db_new',   '', CategoriesQA::Preload::DB_NEW)
+add_task_rspec('performance', '', CategoriesQA::Preload::LIB_BENCHMARK)
 
-add_task_rspec('rng', '', false, true, true)
+add_task_rspec('unit')
+add_task_rspec('audit')
+add_task_rspec('rng')
+add_task_rspec('locale',  '**/*_full_verification_spec.rb', CategoriesQA::Preload::LOCALE_BASE)
+add_task_rspec('preferences', '', CategoriesQA::Preload::LOCALE_FULL)
+add_task_rspec('tech_debt')
+add_task_rspec('integration',  '', CategoriesQA::Preload::INTEGRATION)
+add_task_rspec('system', '', %w(/spec/helpers/db/autoload_me))
+add_task_rspec('service')
 
-# TODO: use better solution for loading benchmark (use existing rake task settings)
-add_task_rspec('performance', '', false, true, true, '', CategoriesQA::Preload::LIB_BENCHMARK)
-add_task_rspec('performance', 'no_nums', false, true, true, '**/int_spec.rb,**/float_spec.rb,**/complex_spec.rb,**/rational_spec.rb', CategoriesQA::Preload::LIB_BENCHMARK)
-
-add_task_rspec('locale', '', false, true, true, '**/*_full_verification_spec.rb')
-add_task_rspec('locale', 'full', false, true, true, '')
-add_task_rspec('tech_debt', '', false, true, true)
-add_task_rspec('integration', '', false, true, true)
-add_task_rspec('system', '', false, true, true)
-add_task_rspec('service', '', false, true, true)
-add_task_rspec('all', '', true,  false, false, '**/*_service_spec.rb', CategoriesQA::Preload::DB_FULL)
-
-# ______________________________________________________________________________________________________________________
-#  __       ___       __        __   ___
-# |  \  /\   |   /\  |__)  /\  /__` |__
-# |__/ /~~\  |  /~~\ |__) /~~\ .__/ |___
-# ______________________________________________________________________________________________________________________
+#add_task_rspec('all',   '**/*_service_spec.rb', CategoriesQA::Preload::DB_FULL)
 
 # ______________________________________________________________________________________________________________________
 #  __   __   __              ___      ___      ___    __
@@ -207,3 +217,5 @@ RDoc::Task.new do |rdoc|
 end
 
 #task :default => :rspec
+
+task :default => :'qa:unit'

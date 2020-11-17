@@ -18,14 +18,16 @@ module ::Kernel
   # @return [Ruuuby::MetaData::BrewAPI]
   def 🍺; ::Ruuuby::MetaData.engine.api_locale.api_brew; end
 
-  # @param [String] cmd
+  # @param [String]  cmd
+  # @param [Boolean] allow_errors
   #
   # @raise [ArgumentError]
   #
   # @return [Array, String]
-  def 💻(cmd)
+  def 💻(cmd, allow_errors=false)
     🛑str❓('cmd', cmd)
-    ::Ruuuby::MetaData.engine.api.run_cmd!(cmd)
+    🛑bool❓('allow_errors', allow_errors)
+    ::Ruuuby::MetaData.engine.api.run_cmd!(cmd, allow_errors)
   end
 
   # @return [Ruuuby::Protocols::RequestHTTP]

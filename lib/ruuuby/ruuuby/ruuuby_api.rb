@@ -30,11 +30,6 @@ module ::Ruuuby::MetaData
       [out, err]
     end
 
-    # @return [String, Array] parsed output
-    def run_cmd_custom(cmd)
-      self.get_tty.run!(cmd, {timeout: @default_timeout, pty: false})
-    end
-
     # @see http://www.tldp.org/LDP/abs/html/exitcodes.html
     #
     # | error code | description                |
@@ -49,16 +44,23 @@ module ::Ruuuby::MetaData
     # | 255\*      | exit status out of range   |
     #
     # TODO: useful cmd: ps -lww -p <PID>
-    def run_cmd!(cmd)
+    #
+    # @param [String]  cmd
+    # @param [Boolean] allow_errors
+    def run_cmd!(cmd, allow_errors=false)
       out, err = self.get_tty.run(cmd, timeout: @default_timeout, pty: false)
       unless err.empty?
-        raise "cmd{#{cmd.to_s}} encountered error{#{err.to_s}}"
+        if allow_errors
+          if out.empty?
+            return [nil, err.clean]
+          else
+            return [out.clean, err.clean]
+          end
+        else
+          raise "cmd{#{cmd.to_s}} encountered error{#{err.to_s}}"
+        end
       end
-      if cmd.str? || cmd.ary?
-        out.clean
-      else
-        out
-      end
+      out.clean
     end
 
     # @param [String] cmd

@@ -298,32 +298,6 @@ class ::Object
   alias_method :❄️?, :frozen?
   # | ------------------------------------------------------------------------------------------------------------------
 
-  # @param [String] version_expected
-  #
-  # @raise [ArgumentError]
-  def attribute_versionable(version_expected, &block)
-    🛑str❓('version_expected', version_expected)
-    self.instance_variable_set("@version_expected", version_expected)
-
-    self.define_singleton_method(:∃version?) do ||
-      self.instance_variable_set("@version_current", block.call) if @version_current.nil?
-      if @version_current == @version_expected
-        return true
-      else
-        🛑 ::RuntimeError.new("{#{@version_current.to_s}}[#{@version_current.Ⓣ}] != {#{@version_expected.to_s}}[#{@version_expected.Ⓣ}]")
-      end
-    end
-
-    class << self
-      attr_reader :version_expected
-
-      # @return [String]
-      def version_current; self.∃version? if @version_current.nil?; @version_current; end
-    end
-
-    self
-  end
-
   def attribute_lazy_loadable(library_to_load, debug=false)
     🛑str❓('library_to_load', library_to_load)
     self.instance_variable_set("@lazy_loaded", false)

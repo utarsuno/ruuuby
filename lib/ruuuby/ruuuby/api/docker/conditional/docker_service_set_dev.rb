@@ -12,7 +12,7 @@ class RuuubyServiceSetDev < RuuubyServiceSet
     super("#{💎.engine.path_base}docker-compose.dev.yml")
 
     @host              = host
-    @pgadmin           = @services['service_pgadmin']
+    @pgadmin           = @services['service_pgadmin_dev']
 
     @path_assets       = 'services/web_assets/'
     @path_intermediate = "#{@path_assets}intermediate/"
@@ -27,7 +27,7 @@ class RuuubyServiceSetDev < RuuubyServiceSet
   def nginx
     if @nginx == nil
       require_relative 'discrete/service_nginx'
-      @nginx = ::RuuubyServiceNGINX.new(@services['service_nginx'])
+      @nginx = ::RuuubyServiceNGINX.new(@services['service_nginx_dev'])
     end
     @nginx
   end
@@ -35,15 +35,20 @@ class RuuubyServiceSetDev < RuuubyServiceSet
   def js
     if @js == nil
       require_relative 'discrete/service_js'
-      @js = RuuubyServiceJS.new(@services['service_js'], self.nginx)
+      @js = RuuubyServiceJS.new(@services['service_js_dev'], self.nginx)
     end
     @js
+  end
+
+  def create_needed_networks
+    🛑 ::ArgumentError.new("| c{DockerAPI}-> m{create_needed_network} was called when the network{ruuuby_network} already exists |") if ∃🌐?('ruuuby_network')
+    💻('docker network create -d bridge --subnet 192.168.0.0/24 --gateway 192.168.0.1 ruuuby_network')
   end
 
   #def postgresql
   #  if @postgresql == nil
   #    require_relative 'discrete/service_postgresql'
-  #    @postgresql = RuuubyServicePostgreSQL.new(@services['service_postgres'])
+  #    @postgresql = RuuubyServicePostgreSQL.new(@services['service_postgresql'])
   #  end
   #  @postgresql
   #end
@@ -79,18 +84,3 @@ class RuuubyServiceSetDev < RuuubyServiceSet
 end
 
 # -------------------------------------------- ⚠️ --------------------------------------------
-
-module ::Ruuuby
-  module MetaData
-
-    # `🐋`
-    class DockerAPI < ::Ruuuby::MetaData::EngineComponentAPICLI
-
-      def create_needed_network
-        🛑 ::ArgumentError.new("| c{DockerAPI}-> m{create_needed_network} was called when the network{ruuuby_network} already exists |") if ∃🌐?('ruuuby_network')
-        self._run_cmd('network create -d bridge --subnet 192.168.0.0/24 --gateway 192.168.0.1 ruuuby_network')
-      end
-
-    end
-  end
-end

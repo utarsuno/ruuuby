@@ -40,6 +40,7 @@ class Docker::Container
   # @return [String]
   def os; self.env_vars['SERVICE_OS']; end
 
+  # TODO: install for dev/test, don't install for prod
   # @raise [RuntimeError]
   #
   # @return [Boolean]

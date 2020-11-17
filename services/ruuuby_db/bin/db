@@ -4,17 +4,20 @@
 require 'bundler/setup'
 
 require 'ruuuby'
+
 #require_relative '../../lib/ruuuby/ruuuby/api/git/conditional'
 
 $ruuuby = 💎
-$ruuuby.engine.stats_ext['RUUUBY_ENV'] = 'test'
+$ruuuby.engine.stats_ext['RUUUBY_ENV']     = 'test'
+$ruuuby.engine.stats_ext['RUUUBY_CONFIGS'] = 'configs_local/db/test.yml'
 
 require_relative '../../../lib/ruuuby/db/migrations/migration_ext'
 require_relative '../../../lib/ruuuby/db/migrations/ruuuby_gem'
-require_relative '../../../lib/ruuuby/db/migrations/ruuuby_resource'
 
-💎.engine.orm.db_orm.obtain_connection
+#💎.engine.orm.db_orm.obtain_connection
 $orm = 💎.engine.orm
+
+$gems = CreateRuuubyGem.new
 
 require 'irb'
 IRB.start(__FILE__)

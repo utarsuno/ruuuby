@@ -17,6 +17,8 @@ class ::ApplicationRecord < ActiveRecord::Base
 
   alias_method :♻️, :destroy
   alias_method :♻️!, :destroy!
+  alias_method :💾, :save
+  alias_method :💾!, :save!
 
   # @return [Integer]
   def self.length; self.all.length; end

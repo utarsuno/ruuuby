@@ -2,18 +2,6 @@
 
 using ::ThetaAngle::ContextRuuuby
 
-::RSpec.shared_context 'shared_context_f38' do
-
-  # @param [PseudoGraph] graph
-  # @param [Integer]     num_nodes
-  def expect_pseudo_graph(graph, num_nodes)
-    expect(graph.ⓣ).to eq(::PseudoGraph)
-    expect(graph.num_nodes.ⓣ).to eq(::Integer)
-    expect(graph.num_nodes).to eq(num_nodes)
-  end
-
-end
-
 ::RSpec.shared_context 'shared_context_f40' do
 
   # @param [String]  container_name
@@ -37,7 +25,14 @@ end
 
     expect(container.env_vars).to eq(container_by_id.env_vars)
 
-    expect(container.env_vars['SERVICE_NAME']).to eq(container_name)
+    short_name = container.env_vars['SERVICE_NAME']
+    if short_name.end_with?('_dev')
+      short_name = short_name[0..short_name.length-5]
+    elsif short_name.end_with?('_test') || short_name.end_with?('_prod')
+      short_name = short_name[0..short_name.length-6]
+    end
+
+    expect(container.env_vars['SERVICE_NAME']).to eq(short_name)
 
     if expected_os == 'alpine'
       expect(container.alpine?).to eq(true)
@@ -51,7 +46,9 @@ end
       expect(os_release['HOME_URL']).to eq('https://alpinelinux.org/')
       expect(os_release['BUG_REPORT_URL']).to eq('https://bugs.alpinelinux.org/')
 
-      expect(container.os_architecture).to eq('musl-linux-amd64')
+      unless container_name.include?('pgadmin') || container_name.include?('postgres')
+        expect(container.os_architecture).to eq('musl-linux-amd64')
+      end
     else
       expect(container.alpine?).to eq(false)
       expect(container.debian?).to eq(true)
@@ -61,23 +58,6 @@ end
     expect(container.tty?).to eq(expect_tty)
 
     return container
-  end
-
-end
-
-::RSpec.shared_context 'shared_context_f34' do
-
-  def expect_sum_of_interior_angles(the_shape, expected_number_of_sides)
-    result = the_shape.sum_of_interior_angles
-    expect(result.ⓣ).to eq(::ThetaAngle)
-    if the_shape.is_a?(::Math::Geometry::Circle)
-      expect(the_shape.num_sides).to eq(::Float::INFINITY)
-      expect(θ°(360)).to eq(result)
-    else
-      expect(the_shape.num_sides.ⓣ).to eq(::Integer)
-      expect(the_shape.num_sides).to eq(expected_number_of_sides)
-      expect((θ°(180.0 * (the_shape.num_sides - 2)))).to eq(result)
-    end
   end
 
 end
@@ -105,17 +85,6 @@ end
     else
       raise "unrecognized input type{#{the_sequence.input_type.to_s}} from sequence{#{the_sequence.to_s}}"
     end
-  end
-
-end
-
-::RSpec.shared_context 'shared_context_f30' do
-
-  def expect_feature_behavior_as_needed(the_ref, kclass)
-    the_id  = the_ref.🆔
-    expect(the_ref.ⓣ).to eq(kclass)
-    expect(the_ref.🆔).to eq(kclass.instance.🆔)
-    expect(the_ref.🆔).to eq(the_id)
   end
 
 end

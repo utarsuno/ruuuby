@@ -1,4 +1,11 @@
 
+= `v0.1.0.pre.3` / 2020-11-16
+
+* add gem{`open3`}
+* continue `DB` migrations
+* iterative improvement for custom builds, lazy-loading, and separation between `dev`/`test`/`prod` environments
+* apply clean ups, any removed core functionality to return closer to version{`0.1.0`}
+
 = `v0.1.0.pre.2` / 2020-11-06
 
 * modify `.gitattributes` to track `.sql` files

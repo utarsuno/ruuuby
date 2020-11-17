@@ -30,7 +30,7 @@ RSpec.describe 'docker_service_js' do
       # webpack -v
       expect(versions[2]).to eq('4.44.2')
       # mocha --version
-      expect(versions[3]).to eq('8.1.3')
+      expect(versions[3]).to eq('8.2.1')
       # gulp -v
       expect(versions[4]).to eq('CLI version: 2.3.0')
       expect(versions[5]).to eq('Local version: 4.0.2')

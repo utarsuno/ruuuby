@@ -2,16 +2,16 @@
 
 class RuuubyDBMigration < ActiveRecord::Migration[6.0]
 
-  # @return [String]
+  # @return [String] relative_ending
   def self.read_sql_file(relative_ending); ::File.read("#{💎.engine.path_base}lib/ruuuby/db/migrations/#{relative_ending}"); end
 
-  # @return [String]
+  # @return [String] relative_ending
   def self.read_sql_rollout_file(relative_ending); self.read_sql_file("rollout/#{relative_ending}"); end
 
-  # @return [String]
+  # @return [String] relative_ending
   def self.read_sql_rollback_file(relative_ending); self.read_sql_file("rollback/#{relative_ending}"); end
 
-  # @return [String]
+  # @return [String] relative_ending
   def self.read_sql_seed_file(relative_ending); self.read_sql_file("seed/#{relative_ending}"); end
 
   # @param  [String] func_name
@@ -30,11 +30,25 @@ class RuuubyDBMigration < ActiveRecord::Migration[6.0]
     end
   end
 
-  # TODO: MIGRATE TO DB_ORM_MANAGER
   # @param  [String] table_name
   #
   # @return [Boolean]
-  def self.∃table?(table_name); $orm.db_orm.connection.table_exists?(table_name); end
-  #def self.∃table?(table_name); $ruuuby.engine.orm.db_orm.connection.table_exists?(table_name); end
+  def ∃table?(table_name); table_exists?(table_name); end
+
+  # @param [Symbol] table_name
+  # @param [Symbol] single_field
+  def ♻️index(table_name, single_field)
+    remove_index(table_name, single_field) if index_exists?(table_name, single_field)
+  end
+
+  # @param [Symbol] table_name
+  # @param [Symbol] single_field
+  def ♻️index!(table_name, single_field); remove_index(table_name, single_field); end
+
+  # @param [Symbol] table_name
+  def ♻️table(table_name); drop_table(table_name, if_exists: true); end
+
+  # @param [Symbol] table_name
+  def ♻️table!(table_name); drop_table(table_name); end
 
 end

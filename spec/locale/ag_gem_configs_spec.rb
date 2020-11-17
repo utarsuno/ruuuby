@@ -1,6 +1,5 @@
 # encoding: UTF-8
 
-# wip
 RSpec.describe '[AutomaticGeneration]: gem configs' do
 
   context 'locale', :locale do
@@ -58,18 +57,6 @@ RSpec.describe '[AutomaticGeneration]: gem configs' do
             end
           end
         end # end: {for gem{tty-command}}
-
-        #context 'for gem{sqlite3}' do
-        #  it 'has correct version{1.4.2}' do
-        #    expect(::SQLite3::VERSION).to eq('1.4.2')
-        #  end
-        #end # end: {for gem{sqlite3}}
-
-        #context 'for gem{activerecord}' do
-        #  it 'has correct version{5.2.4.3}' do
-        #    expect(::ActiveRecord::VERSION::STRING).to eq('5.2.4.3')
-        #  end
-        #end # end: {for gem{activerecord}}
 
       end # end: {by having correct configs}
 

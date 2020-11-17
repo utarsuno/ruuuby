@@ -16,23 +16,3 @@ end
 # TODO: document WebRTC (compare with WebSockets)
 #  > https://en.wikipedia.org/wiki/WebRTC
 #  > https://webrtc.org/
-
-# ----------------------------------------------------------------------------------------
-# ___  ___        __           __   __       ___    __            __        __
-#  |  |__   |\/| |__)    |    /  \ /  `  /\   |  | /  \ |\ | .   /  ` |  | |__) |
-#  |  |___  |  | |       |___ \__/ \__, /~~\  |  | \__/ | \| .   \__, \__/ |  \ |___
-#
-# ----------------------------------------------------------------------------------------
-
-# @see https://www.cyberciti.biz/faq/download-a-file-with-curl-on-linux-unix-command-line/
-#
-# @param [String] url_resource
-# @param [String] optional_save_as_path
-#def curl_get(url_resource, optional_save_as_path='')
-#  🛑strs❓([url_resource, optional_save_as_path])
-#  if optional_save_as_path.∅?
-#    self.run_cmd("curl -L -O #{url_resource}")
-#  else
-#    self.run_cmd("curl -L #{url_resource} --output #{optional_save_as_path}")
-#  end
-#end

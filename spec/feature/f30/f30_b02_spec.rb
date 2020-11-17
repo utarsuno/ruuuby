@@ -5,10 +5,6 @@ RSpec.describe 'f30_b02' do
   context 'feature{f30} functionality for' do
     context 'behavior{b02}' do
 
-      it 'exists as needed' do
-        expect_feature_behavior_as_needed(🧬, ::Math::Space::NucleotideSpace)
-      end
-
       context 'func{∃ᶜ?}' do
         context 'handling needed scenarios' do
           context 'cases: positive' do

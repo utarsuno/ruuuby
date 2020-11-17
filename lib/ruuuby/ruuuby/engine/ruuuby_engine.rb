@@ -114,7 +114,7 @@ module ::Ruuuby::MetaData
     # @return [::Ruuuby::MetaData::RuuubyORM]
     def orm
       if @orm.nil?
-        @orm = ::Ruuuby::MetaData::RuuubyORM.new(self, 'configs_local/db/test.yml')
+        @orm = ::Ruuuby::MetaData::RuuubyORM.new(self)
       end
       @orm
     end

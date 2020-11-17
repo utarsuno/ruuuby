@@ -8,10 +8,6 @@ require 'ruuuby'
 
 $ruuuby = 💎
 $docker = 🐋
-#using ::Math::Algebra::Tropical::ContextNumeric
-#using ::Math::Algebra::Tropical::ContextMatrix
-#using ::ThetaAngle::ContextRuuuby
-#using ::ThetaAngle::ContextParamCheck
 using ::String::ContextF24
 using ::Ruuuby::Heuristics::ContextParsingCommandOutput
 

@@ -106,7 +106,9 @@ module ::Ruuuby::MetaData
     end
 
     # @return [Array] an array of all the alive containers
-    def ∀🐋; ::Docker::Container.all(all: true); end
+    def ∀🐋
+      ::Docker::Container.all(all: true)
+    end
 
     # @param [String]  container_name
     #

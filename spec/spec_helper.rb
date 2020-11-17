@@ -3,11 +3,8 @@
 require 'bundler/setup'
 require 'ruuuby'
 
-require_relative 'helpers/helper_performance'
 require_relative 'helpers/helper_ruuuby'
 require_relative 'helpers/static_test_data'
-require_relative 'helpers/helper_db'
-require_relative 'helpers/helper_math'
 
 require 'rdoc'
 require 'rake'
@@ -183,13 +180,10 @@ end
 
 RSpec.configure do |config|
 
-  # Enable flags like --only-failures and --next-failure
+  # enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
 
   #config.add_setting(:start_time)
-
-  # Disable RSpec exposing methods globally on `Module` and `main`
-  #config.disable_monkey_patching!
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
@@ -197,33 +191,31 @@ RSpec.configure do |config|
 
   config.profile_examples = 4
 
-  config.include ::Math::Trig
+  if ENV['RUUUBY_RSPEC_INTEGRATION'] == 'on'
+    config.include ::Math::Trig
+  end
 
   config.include_context 'shared_context_general'
   config.include_context 'shared_context_f24'
   config.include_context 'shared_context_f27'
-  config.include_context 'shared_context_f30'
   config.include_context 'shared_context_f32'
-  config.include_context 'shared_context_f34'
-  config.include_context 'shared_context_f38'
   config.include_context 'shared_context_f40'
 
   config.include HelpersGeneral
   config.include HelpersFeature16
   config.include HelpersSyntaxCache
-  config.include HelpersMath
 
-  config.include HelpersDB, :db
-  config.include_context 'shared_context_db', :db
+  stats = ::Ruuuby::MetaData.engine.stats_ext
 
-  config.include PerformanceTestHelper, :performance
+  if ENV['RUUUBY_AUTOLOAD_DB'] == 'on' && (stats['F92_B00'] || stats['F92_B01'] || stats['F92_B02'])
+    config.include HelpersDB, :db
+    config.include_context 'shared_context_db', :db
+  end
 
-  config.include RSpec::Benchmark::Matchers, :performance
-  config.include_context 'shared_context_performance', :performance
-
-  #config.filter_run_excluding :performance => lambda {|v| v == 'slow'}
-
-  #config.filter_run_excluding :performance => 'slow'
-  # https://github.com/rspec/rspec-core/issues/2567
+  if ENV['RUUUBY_PERFORMANCE_LIMIT'] == 'off'
+    config.include PerformanceTestHelper, :performance
+    config.include RSpec::Benchmark::Matchers, :performance
+    config.include_context 'shared_context_performance', :performance
+  end
 
 end

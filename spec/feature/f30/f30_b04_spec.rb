@@ -4,9 +4,6 @@ RSpec.describe 'f30_b04' do
 
   context 'feature{f34} functionality for' do
     context 'behavior{b04}' do
-      it 'exists as needed' do
-        expect_feature_behavior_as_needed(𝕊, ::Math::Space::SymbolicNumbers)
-      end
 
       context 'handles all needed scenarios' do
         context 'cases: positive' do

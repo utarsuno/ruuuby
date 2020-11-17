@@ -49,46 +49,6 @@ RSpec.describe 'ruby' do
 
     end # end: {web protocol}
 
-    context 'recommended configs' do
-
-      context 'for gem{rubygems-update}' do
-        it 'has correct version' do
-          expect_needed_version(::Gem, '3.2.0.rc.2', ::Gem.rubygems_version.to_s)
-        end
-        it 'matching output of cmd{gem -v}' do
-          expect(::Gem.version_current).to eq(💻('gem -v'))
-        end
-      end # end: {for gem{rubygems-update}}
-
-      context 'for gem{bundler}' do
-        it 'passes all health checks' do
-          expect(::Bundler.healthy?).to eq(true)
-        end
-        it 'has correct version' do
-          expect_needed_version(::Bundler, '2.2.0.rc.2', ::Bundler::VERSION)
-        end
-        it 'as defined by {Gem}' do
-          expect(::Gem::BundlerVersionFinder.bundler_version.to_s).to eq(::Bundler.version_current)
-        end
-        it 'w/ needed ENV_VARs' do
-          expected_path = "#{💎.engine.path_base}Gemfile"
-          expect(::ENV['BUNDLE_GEMFILE']).to eq(expected_path)
-          expect(::Bundler.path_gemfile).to eq(expected_path)
-        end
-        it 'does not require sudo (depending on OS)' do
-          if 💎.engine.os.mac?
-            expect(::Bundler.requires_sudo?).to eq(false)
-          elsif 💎.engine.os.unix
-            # currently, only Alpine-Linux is supported/expected, which will run w/ user{`root`}
-            expect(::Bundler.requires_sudo?).to eq(true)
-          else
-            # ¯\_(ツ)_/¯
-          end
-        end
-      end # end: {for gem{bundler}}
-
-    end # end: {recommended configs}
-
     context 'additional configs for GCC' do
       context 'needed libs for GCC can be found' do
         context 'brew based, see lib{ruby-build}' do
@@ -112,10 +72,6 @@ RSpec.describe 'ruby' do
           #it 'for{git}' do
           #  expect($git.version).to eq('git version 2.24.3 (Apple Git-128)')
           #end
-          it '${clang --version} matches ${cc --version}' do
-            expect(💻('clang --version')).to eq(💻('cc --version'))
-          end
-          # TODO: test having #{gcc -v} match too
         end # end: {correct version tests from CLI-APIs}
       end # end: {optional tests}
     end
@@ -145,53 +101,9 @@ RSpec.describe 'ruby' do
       end
     end # end: {current user}
 
-    context 'recommended settings for lib' do
-      context '{zsh}' do
-        it 'expected version{5.8} matches' do
-          expect(💻('zsh --version')).to eq('zsh 5.8 (x86_64-apple-darwin18.7.0)')
-        end
-      end # end: {ZSH}
-      context '{curl}' do
-        it 'expected version{7.64.1} matches' do
-          expect(💻('curl --version')).to eq(["curl 7.64.1 (x86_64-apple-darwin19.0) libcurl/7.64.1 (SecureTransport) LibreSSL/2.8.3 zlib/1.2.11 nghttp2/1.39.2", "Release-Date: 2019-03-27", "Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp smb smbs smtp smtps telnet tftp ", "Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz MultiSSL NTLM NTLM_WB SPNEGO SSL UnixSockets"])
-        end
-      end # end: {curl}
-    end
-
-    context 'recommended settings for {iconv}' do
-      it 'passes all health checks' do
-        expect(💎.engine.api_locale.api_iconv.healthy?).to eq(true)
-        end
-      it 'has needed version{1.11}' do
-        expect_needed_version(💎.engine.api_locale.api_iconv, 'iconv (GNU libiconv 1.11)')
-      end
-      it 'supports needed encoding{UTF-8}' do
-        expect(💎.engine.api_locale.api_iconv.∃_encoding?('UTF-8')).to eq(true)
-      end
-    end # end: {iconv}
-
     context 'misc configs are as needed' do
       it '$PATH separator is defined as{:}' do
         expect(build_configs['PATH_SEPARATOR']).to eq(':')
-      end
-    end
-
-    # @see https://stackoverflow.com/questions/17980759/xcode-select-active-developer-directory-error
-    context 'configs for xcode' do
-      context 'xcode-select' do
-        it 'has needed version' do
-          expect(💻('xcode-select --version')).to eq('xcode-select version 2373.')
-        end
-        it 'has needed path' do
-          # @see https://github.com/nodejs/node-gyp/issues/569
-          # to change path after fresh xcode installation: `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
-          expect(💻('xcode-select --print-path')).to eq('/Applications/Xcode.app/Contents/Developer')
-        end
-      end
-      context 'xcodebuild' do
-        it 'has needed version' do
-          expect(💻('xcodebuild -version')).to eq(["Xcode 12.1", "Build version 12A7403"])
-        end
       end
     end
 

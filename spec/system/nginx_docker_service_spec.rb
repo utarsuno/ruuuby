@@ -24,7 +24,7 @@ RSpec.describe 'docker_service_nginx' do
       expect(env_vars['PKG_RELEASE']).to eq('1')
 
       expect(container_nginx.volumes.length).to eq(1)
-      expect(container_nginx.volumes[0]).to eq(%w(ruuuby_nginx_data /var/lib/docker/volumes/ruuuby_nginx_data/_data /v))
+      expect(container_nginx.volumes[0]).to eq(%w(vol_nginx_dev /var/lib/docker/volumes/vol_nginx_dev/_data /v))
       #expect(container_nginx.mounts.length).to eq(1)
       #expect(container_nginx.mounts[0].ⓣ).to eq(::Hash)
       #expect(container_nginx.mounts[0]['Destination']).to eq('/v')

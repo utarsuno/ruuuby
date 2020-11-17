@@ -16,13 +16,6 @@ RSpec.describe 'ruuuby_features.rb' do
         fake_feature.♻️!
       end
 
-      #
-      # flag_wip         = ::RuuubyFeature::EnumFlagState::STATE_WIP
-      # flag_needs_merge = ::RuuubyFeature::EnumFlagState::STATE_NEEDS_MERGE
-      # flag_todo        = ::RuuubyFeature::EnumFlagState::STATE_NULL
-      # flag_stable      = ::RuuubyFeature::EnumFlagState::STATE_STABLE
-      #
-
       it 'prevents duplicate id_nums from being created' do
         expect{
           RuuubyFeature.spawn(1337, '1337')

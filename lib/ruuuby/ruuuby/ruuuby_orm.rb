@@ -8,8 +8,9 @@ module Ruuuby::MetaData
 
     attr_reader :db_orm
 
-    def initialize(engine, path_relative)
+    def initialize(engine)
       super(engine)
+      path_relative = engine.stats_ext['RUUUBY_CONFIGS']
       if engine.stats_ext['F92_B02'] == true
         @db_orm = ::Ruuuby::MetaData::DBConnectionPostgreSQL.new("#{engine.path_base}#{path_relative}")
         @db_orm.obtain_connection

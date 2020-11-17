@@ -32,7 +32,7 @@ ENV LC_CTYPE en_US.UTF-8
 ENV LC_MESSAGES en_US.UTF-8
 
 #ENV BUILD_CORE_LIBS bash bash-completion git wget curl vim build-base readline readline-dev openssl-dev zlib-dev
-ENV BUILD_CORE_LIBS git wget curl vim build-base readline readline-dev openssl-dev zlib-dev
+ENV BUILD_CORE_LIBS git wget curl vim build-base readline readline-dev openssl-dev zlib-dev gmp-dev
 ENV SERVICE_OS="alpine"
 ENV SERVICE_OS_VERSION="TODO:"
 

@@ -16,18 +16,6 @@ BEGIN {
   end
 
   # TODO: create better solution than loading it here
-  module ::TTY
-    class Command
-      attribute_versionable('0.10.0'){::TTY::Command::VERSION}
-
-      # @return [Boolean]
-      def self.healthy?
-        ::TTY::Command.record_separator == $/ && !::TTY::Command.windows? && ::TTY::Command.∃version?
-      end
-    end
-  end
-
-  # TODO: create better solution than loading it here
   module ::Kernel
 
     # @type [Float]
@@ -82,7 +70,6 @@ BEGIN {
   # | --------------------------------------------------------------------------------------------------------------------
 
 }
-
 
 END {
   💎.engine.engine.stop

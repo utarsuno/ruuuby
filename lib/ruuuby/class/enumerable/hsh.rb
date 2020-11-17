@@ -31,8 +31,6 @@ class ::Hash
     self
   end
 
-  # TODO: MISSING TDD!
-  #
   # `does each provided key exist w/ the the same provided value?`
   #
   # @param [Array] keys_to_find
@@ -40,19 +38,16 @@ class ::Hash
   #
   # @return [Boolean]
   def ∀🔑∃_value?(keys_to_find, expected_value)
+    🛑ary❓('keys_to_find', keys_to_find)
     matched_keys = 0
-    num_to_find   = keys_to_find.length
     keys_to_find.∀ do |key|
-      if self.∃🔑?(key)
-        if self[key] == expected_value
-          matched_keys += 1
-          return true if matched_keys == num_to_find
-        end
+      if self.∃🔑?(key) && self[key] == expected_value
+        matched_keys += 1
       else
         return false
       end
     end
-    🛑 ::RuntimeError.new("| c{Hash}-> m{∀🔑∃_value?} called w/ keys_to_find as{#{keys_to_find.to_s}} and expected_value as {#{expected_value.to_s}} which did not match the result length of{#{matched_keys.to_s}} |")
+    matched_keys == keys_to_find.length
   end
 
 end

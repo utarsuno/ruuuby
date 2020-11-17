@@ -4,13 +4,6 @@
 
   context 'ApplicationRecord{RuuubyRelease}', :db do
 
-    #context 'version wip' do
-    #  it 'reports correct prev version' do
-    #    expect(::RuuubyRelease::Version.wip).to eq(::RuuubyRelease::Version.curr.next)
-    #    expect(::RuuubyRelease::Version.wip).to eq(v0_0_50)
-    #  end
-    #end
-
     context 'integration tests w/ modules{Version, Remote}' do
 
       context 'additional checks' do

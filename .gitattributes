@@ -99,18 +99,20 @@
 #   \/_/ \/____/\/__/\/_/\/__,_ /    \/__/\/_/\/___/      \/__/\/____/\//\/_/  \/__/
 # ----------------------------------------------------------------------------------------------------------------------
 
-*.txt     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.text    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.log     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.csv     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.yml     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.yaml    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.nginx   diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.sh      diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.sql     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.scpt    diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.cjs     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
-*.mjs     diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.txt          diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.text         diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.ruby-version diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.log          diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.csv          diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.yml          diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.yaml         diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.nginx        diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.sh           diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.zsh          diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.sql          diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.scpt         diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.cjs          diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
+*.mjs          diff=text text=text eol=lf whitespace=blank-at-eof,blank-at-eol
 
 # 0x3) -----------------------------------------------------------------------------------------------------------------
 #                         __                           __
@@ -288,10 +290,29 @@
 #                          \_/__/
 #
 # @see https://github.com/github/linguist/issues/3666
+# @see https://github.com/github/linguist/blob/master/lib/linguist/languages.yml
 # ----------------------------------------------------------------------------------------------------------------------
 
-*.sql linguist-detectable=true
-*.sql linguist-language=sql
+*.sql                   linguist-detectable=true
+*.sql                   linguist-language=SQL
 
-*.c   linguist-language=c
-*.h   linguist-language=c
+*.c                     linguist-language=C
+*.h                     linguist-language=C
+
+*.sh                    linguist-language=Shell
+*.zsh                   linguist-language=Shell
+
+*.rb                    linguist-language=Ruby
+*.gemspec               linguist-language=Ruby
+Rakefile                 linguist-language=Ruby
+Gemfile                  linguist-language=Ruby
+
+Dockerfile               linguist-language=Dockerfile
+docker-compose.yml      linguist-language=Dockerfile
+docker-compose.dev.yml  linguist-language=Dockerfile
+docker-compose.test.yml linguist-language=Dockerfile
+docker-compose.prod.yml linguist-language=Dockerfile
+
+LICENSE.txt             linguist-documentation=false
+History.txt             linguist-documentation=false
+CHANGELOG.md            linguist-documentation=false

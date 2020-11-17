@@ -14,7 +14,6 @@ RSpec.describe 'ruby' do
           expect(RUBY_REVISION).to eq('0096d2b895395df5ab8696d3b6d444dc1b7730b6')
         end
         it 'w/ needed ENV_VARs set' do
-          #expect(ENV['RBENV_VERSION']).to eq(RUBY_VERSION)
           expect(ENV['RBENV_VERSION']).to eq('3.0.0-preview1')
         end
         it 'w/ build configs' do
@@ -52,8 +51,6 @@ RSpec.describe 'ruby' do
 
       context 'runtime configs' do
         it 'is currently not using safe mode' do
-          # @see https://docs.ruby-lang.org/en/2.6.0/security_rdoc.html#label-24SAFE
-          # TODO: change w/ Ruby 3.0
           expect($SAFE).to eq(nil)
         end
         context 'rubygems' do

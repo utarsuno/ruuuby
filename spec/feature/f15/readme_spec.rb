@@ -3,6 +3,9 @@
 using ::ThetaAngle::ContextRuuuby
 using ::String::ContextF24
 using ::Object::ContextSuperscripts
+include(
+    ::Math::Trig
+)
 
 RSpec.describe 'README.md' do
 

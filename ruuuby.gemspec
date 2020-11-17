@@ -5,26 +5,28 @@
 
   gem.name                      = 'ruuuby'
   gem.version                   = ::Ruuuby::VERSION
-  gem.summary                   = 'wip: increase quality of Ruby coding life'
-  gem.description               = '{wip: flavored modifications & extensions for increased quality of Ruby coding life}'
+  gem.summary                   = 'migration wip'
+  gem.description               = 'migration wip'
   gem.authors                   = ["Uladzislau Tarsunou"]
   gem.homepage                  = 'https://github.com/utarsuno/ruuuby'
   gem.license                   = 'MIT'
-  gem.required_ruby_version     = ">= #{Gem.ruby_version.to_s}"
+  gem.required_ruby_version     = ">= #{::Ruuuby::VERSION_RUBY}"
   gem.required_rubygems_version = ">= #{::Ruuuby::VERSION_BUNDLER}"
-  gem.installed_by_version      = "#{::Ruuuby::VERSION_BUNDLER}"
+  gem.installed_by_version      = ::Ruuuby::VERSION_BUNDLER
 
   gem.platform                  = ::Gem::Platform.local
   gem.post_install_message      = "Gem{ruuuby, v#{::Ruuuby::VERSION}} has just been installed, cheers!"
   _md                           = gem.metadata
   _md['homepage_uri']           = gem.homepage
-  _md['source_code_uri']        = "#{gem.homepage}.git"
-  _md['changelog_uri']          = "#{gem.homepage}/blob/master/CHANGELOG.md"
-  _md['documentation_uri']      = "#{gem.homepage}/tree/master/help"
+  #_md['source_code_uri']        = "#{gem.homepage}.git"
+  _md['source_code_uri']        = "#{gem.homepage}/tree/v#{::Ruuuby::VERSION}"
+  _md['changelog_uri']          = "https://raw.githubusercontent.com/utarsuno/ruuuby/master/History.txt"
+  _md['documentation_uri']      = gem.homepage
 
   gem.requirements              = [
       'mac or Linux based OS',
-      'C-compiler'
+      'C-compiler',
+      '(atm) building gem requires working from git code source, not just gem',
   ]
   gem.bindir                    = 'bin'
 
@@ -53,6 +55,8 @@
   gem.add_development_dependency(:finite_machine, '~> 0.14.0')
   gem.add_development_dependency(:pg, '~> 1.2.3')
   gem.add_development_dependency(:activerecord, '~> 6.1.0.rc1')
+
+  gem.add_development_dependency(:open3, '~> 0.1.0')
 
   gem.add_runtime_dependency(:'tty-command', '~> 0.10.0')
   gem.add_runtime_dependency(:finite_machine, '~> 0.14.0')

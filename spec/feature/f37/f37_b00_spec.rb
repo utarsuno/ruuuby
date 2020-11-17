@@ -1,6 +1,18 @@
 # encoding: UTF-8
 
 =begin
+
+::RSpec.shared_context 'shared_context_f38' do
+  # @param [PseudoGraph] graph
+  # @param [Integer]     num_nodes
+  def expect_pseudo_graph(graph, num_nodes)
+    expect(graph.ⓣ).to eq(::PseudoGraph)
+    expect(graph.num_nodes.ⓣ).to eq(::Integer)
+    expect(graph.num_nodes).to eq(num_nodes)
+  end
+end
+
+
 RSpec.describe 'f37_b00' do
 
   context 'functionality' do

@@ -225,7 +225,6 @@ class ::File
   end # end: {YAML}
 
   module JSON
-    #attribute_lazy_loadable('json', true)
 
     # @see https://makandracards.com/makandra/15611-how-to-fix-unexpected-token-error-for-json-parse
     # @see https://www.jvt.me/posts/2019/11/22/minify-json-ruby/

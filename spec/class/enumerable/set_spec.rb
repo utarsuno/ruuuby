@@ -23,6 +23,4 @@ RSpec.describe 'set' do
 
   end
 
-
 end
-

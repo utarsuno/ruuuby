@@ -1,11 +1,9 @@
-# {'Compose file format': '3.8', 'Docker Engine release': '19.03.13'}; utilized API-Version: `1.40`
 version: '3.8'
 
 services:
 
-  # TODO: ruuuby server
-
-  service_nginx:
+  service_nginx_test:
+    container_name: "service_nginx_test"
     build:
       context: ./services/nginx
       dockerfile: ./Dockerfile
@@ -16,18 +14,18 @@ services:
     volumes:
       - 'vol_nginx_test:/v'
     ports:
-      - 1337:1337
-      - 8080:8080
-      - 15672:15672
-      - 80:80
+      - 1338:1338
+      - 8081:8081
+      - 15673:15673
+      - 13338:13338
     depends_on:
-      - service_postgres
-      - service_pgadmin
-      - service_js
-      - service_rabbitmq
+      - service_postgresql_test
+      - service_pgadmin_test
+      - service_js_test
+      - service_rabbitmq_test
 
-  #image: 'rabbitmq:3-management'
-  service_rabbitmq:
+  service_rabbitmq_test:
+    container_name: "service_rabbitmq_test"
     build:
       context: ./services/rabbitmq
       dockerfile: ./Dockerfile
@@ -36,13 +34,14 @@ services:
       RABBIT_ERLANG_COOKIE: 'secret string'
       RABBIT_NODENAME: 'service_rabbitmq'
     ports:
-      - 5672:5672
+      - 5673:5673
     volumes:
       - 'vol_rabbitmq_test:/data'
-      - './services/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config'
-      - './services/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json'
+      - './services/rabbitmq/test/rabbitmq.config:/etc/rabbitmq/rabbitmq.config'
+      - './services/rabbitmq/test/definitions.json:/etc/rabbitmq/definitions.json'
 
-  service_js:
+  service_js_test:
+    container_name: "service_js_test"
     build:
       context: ./services/web_assets
       dockerfile: ./Dockerfile
@@ -50,41 +49,43 @@ services:
     tty: false
     environment:
       SERVICE_ENV: 'test'
-      SERVICE_PORT: '8080'
+      SERVICE_PORT: '8081'
       SERVICE_HOST: 'http://localhost'
 
-  service_postgres:
-    image: 'amd64/postgres:13-alpine'
+  service_postgresql_test:
+    container_name: "service_postgresql_test"
+    build:
+      context: ./services/ruuuby_db
+      dockerfile: ./Dockerfile
     command: postgres -c 'max_connections=10'
     restart: always
     tty: false
     environment:
-      SERVICE_NAME: 'service_postgres'
-      BUILD_ENV: 'test'
       SERVICE_ENV: 'test'
-      SERVICE_OS: 'alpine'
-      SERVICE_OS_VERSION: '3.12.0'
-      POSTGRES_DB: 'env_test'
       POSTGRES_USER: 'myuser'
       POSTGRES_PASSWORD: 'mypassword'
-    ports:
-      - 5432:5432
+      POSTGRES_DB: 'env_test'
+  #  ports:
+  #    - 5433:5433
     volumes:
       - 'vol_db_test/:/var/lib/postgresql/data/'
+      - './services/ruuuby_db/init.sql:/docker-entrypoint-initdb.d/init.sql'
 
-  service_pgadmin:
-    image: 'dpage/pgadmin4'
+  service_pgadmin_test:
+    container_name: "service_pgadmin_test"
+    build:
+      context: ./services/pgadmin
+      dockerfile: ./Dockerfile
     tty: false
     environment:
-      SERVICE_NAME: 'service_pgadmin'
       BUILD_ENV: 'test'
       SERVICE_ENV: 'test'
-      SERVICE_OS: 'alpine'
-      SERVICE_OS_VERSION: '3.9.4'
       PGADMIN_DEFAULT_EMAIL: 'pgadmin4@pgadmin.org'
       PGADMIN_DEFAULT_PASSWORD: 'admin'
-      PGADMIN_ADMIN_PORT: '1337'
+      PGADMIN_ADMIN_PORT: '13338'
       PGADMIN_LISTEN_ADDRESS: '0.0.0.0'
+      PGADMIN_LISTEN_PORT: '13338'
+      GUNICORN_THREADS: '20'
     volumes:
       - 'vol_pgadmin_test/:/var/lib/pgadmin/'
 

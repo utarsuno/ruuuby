@@ -149,16 +149,6 @@
     ]
 )
 
-@f34.spawn_behaviors(
-    [
-        'offer basic abstractions to `Shape`',
-        'offer basic abstractions to `Shape::PlaneFigure`',
-        'offer basic abstractions to `Shape::Triangle`',
-        'offer basic abstractions to `Shape::Quadrilateral`',
-        'offer basic abstractions to `Shape::Circle`',
-    ]
-)
-
 @f35.spawn_behaviors(
     [
         'offer categorical abstractions w/ module{`Descriptive`}',

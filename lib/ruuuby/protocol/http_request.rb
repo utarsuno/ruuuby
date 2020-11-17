@@ -98,8 +98,15 @@ module ::Ruuuby::Protocols::RequestHTTP
   # @param [URI]            uri
   # @param [Hash]           params
   # @param [Hash, NilClass] headers
+  #
+  # @return [Hash, NilClass]
   def self.execute_json(uri, params={}, headers={"content-type" => "application/json"})
-    request, response = (self.execute_post_debugging(uri, params, headers))
+    request, response = self.execute_post_debugging(uri, params, headers)
+
+    if response.body.nil? || response.body.length == 0
+      return nil
+    end
+
     ::JSON.parse(response.body)
   end
 

@@ -17,6 +17,35 @@ module ::Ruuuby::MetaData
     # `💎.engine.os`
     module F22B05
 
+      # @return [Ruuuby::MetaData::RuuubyEngine::F22B05::IPv4]
+      def self.ipv4; self::IPv4; end
+
+      # `💎.engine.os.ipv4`
+      module IPv4
+
+        # TODO: TDD
+        #
+        # @see https://stackoverflow.com/questions/14112955/how-to-get-my-machines-ip-address-from-ruby-without-leveraging-from-other-ip-ad/27454154
+        # @see https://en.wikipedia.org/wiki/Localhost
+        def self.internal
+          results = ::Socket.ip_address_list.reject(&:ipv6?).reject {|s| s.inspect_sockaddr == '127.0.0.1'}
+          if results.length == 1
+            return results[0].inspect_sockaddr
+          else
+            error_message = "| {💎.engine.os.ipv4}-> m{ipv4_internal} got results{#{results.to_s}}, currently only built to expect single IP back |"
+            🛑 ::NotImplementedError.new(error_message)
+          end
+        end
+
+        # TODO: TDD
+        #
+        # @see https://unix.stackexchange.com/questions/22615/how-can-i-get-my-external-ip-address-in-a-shell-script
+        # @see https://www.linuxtrainingacademy.com/determine-public-ip-address-command-line-curl/
+        # @see https://stackoverflow.com/questions/13270042/get-public-remote-ip-address
+        # @see https://www.whatismyip.com/what-is-my-public-ip-address/
+        def self.external; res, req = 🌐.get!('https://api.ipify.org'); res.body; end
+      end
+
       # @param [String]
       def self.current_user; ::Etc.getlogin; end
 

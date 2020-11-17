@@ -1,8 +1,10 @@
----
 
-#### ⚠️: documentation & testing synchronization targeted {0.1.0}
+# `v0.1.0.pre.3`
 
----
+ * add gem{`open3`}
+ * continue `DB` migrations
+ * iterative improvement for custom builds, lazy-loading, and separation between `dev`/`test`/`prod` environments
+ * apply clean ups, any removed core functionality to return closer to version{`0.1.0`}
 
 # `v0.1.0.pre.2`
 
@@ -507,8 +509,6 @@
 | `TOPLEVEL_BINDING` | `θ°`, `θʳ`, `θᵍ`, `θ𝞽` | `f27` |
 | `ThetaAngle` | `real`, `repr`, `as_radian`, `as_degree`, `as_gon`, `as_turn`, `radians?`, `degrees?`, `gons?`, `turns?`, `-@`, `+@`, `coerce`, `~`, `!`, `+`, `-`, `*`, `%`,`==`, `/`, `<=>`, `angle?`, `normal?`, `normalize!`, `golden_with?`, `explementary_with?`, `supplementary_with?`, `complementary_with?`, | `f27` |
 
-* remove the following methods/aliases:
-
 | from       | methods/aliases removed |
 | ---------- | ----------------------- |
 | `Kernel`   | `∠ᶜ`, `∠°` |
@@ -555,9 +555,9 @@
 | `GitCommit` | `get_latest`, `query_get_newest_within_version` | `f15` |
 | `RuuubyRelease` | `on_before_save` | `f15` |
 
-| (c)lass or (m)odule | methods/aliases *removed* |
+| from | methods/aliases *removed* |
 | ------------------- | --------------------- |
-| (c) `Symbol`   | `power?`, `pow_to_i` |
+| `Symbol`   | `power?`, `pow_to_i` |
 
 ---
 
@@ -620,11 +620,6 @@
 | `lib/ruuuby/ruuuby/ruuuby_orm.rb` | `Ruuuby::MetaData::RuuubyORM` |  | `f15` |
 | `lib/ruuuby/ruuuby/routine_cli.rb` | `Ruuuby::Routine::CommandCLI` |  | `f15` |
 
-| path removed | notes |
-| ---: | --- |
-| `app/models/db_schema.rb` | seemed like a bad location |
-| `conditionals/ide_helper.rb` | moved to `lib/ruuuby/ide_helper.rb`, gets excluded by `ruuuby.gemspec` |
-
 | class | method(s) added | feature(s) |
 | --- | --- | --- |
 | `String` | `char?`,  | `f06` |
@@ -679,10 +674,6 @@
 | class | alias(es) added | feature(s) |
 | --- | --- | --- |
 | `Object` | (freeze) `❄`, `❄?` | `f10` |
-
-| path removed | notes |
-| ---: | --- |
-| `conditionals/ruuuby_configs.rb` | configs not needed during runtime should be dynamically handled, not with conditionally loaded files (created explicitly for such need) |
 
 ---
 

@@ -8,6 +8,7 @@ RUN apk add --no-cache curl wget \
  && mkdir /etc/nginx/ruuuby \
  && mkdir /etc/nginx/ruuuby/caching \
  && mkdir /etc/nginx/ruuuby/gzip \
+ && mkdir /etc/nginx/ruuuby/proxy_pass \
  && mkdir /etc/nginx/ruuuby/unsorted \
  && rm /etc/nginx/conf.d/default.conf \
  && rm -rf /var/cache/apk/*
