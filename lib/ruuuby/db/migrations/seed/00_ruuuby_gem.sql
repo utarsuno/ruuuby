@@ -1,3 +1,4 @@
+--() { :; }; exec psql -f "$0"
 
 -- -------------------------------------------- ⚠️ --------------------------------------------
 -- testing purposes
@@ -68,6 +69,22 @@ CALL ruuuby_release_add('0.1.0.pre.1');
 CALL ruuuby_release_add('0.1.0.pre.2');
 CALL ruuuby_release_add('0.1.0.pre.3');
 
+--76.20%  Ruby
+--16.06%  C
+--3.85%   JavaScript
+--1.84%   Dockerfile
+--1.77%   SQL
+--0.18%   Shell
+--0.05%   HTML
+--0.04%   CSS
+CALL ruuuby_release_add('0.1.0.pre.4');
+
+-- TODO: @see https://github.com/rbenv/rbenv/wiki/Authoring-plugins#rbenv-hooks
+-- TODO: @see https://githooks.com/
+-- TODO: @see https://medium.com/@sairamkrish/git-branching-strategy-for-true-continuous-delivery-eade4435b57e
+-- TODO: @see https://proandroiddev.com/how-to-set-up-an-efficient-development-workflow-with-git-and-ci-cd-5e8916f6bece
+--CALL ruuuby_release_add('0.1.0.pre.5');
+
 --    ___                __
 --  /'___\              /\ \__
 -- /\ \__/   __     __  \ \ ,_\  __  __  _ __    __    ____
@@ -76,24 +93,23 @@ CALL ruuuby_release_add('0.1.0.pre.3');
 --   \ \_\\ \____\ \__/.\_\\ \__\\ \____/\ \_\\ \____\/\____/
 --    \/_/ \/____/\/__/\/_/ \/__/ \/___/  \/_/ \/____/\/___/
 
-CALL ruuuby_feature_add('f00', FALSE, '`η̂` to alias concept of `normalization` (offered in any applicable context)');
+CALL ruuuby_feature_add(0::smallint, FALSE, 'utilize non-ascii to enable quicker to read code');
 
+CALL ruuuby_feature_add(40::smallint, TRUE, 'provide an `API` for `Docker` operations w/ a light layer over gem{`docker-api`}');
+CALL ruuuby_feature_add(41::smallint, TRUE, 'provide an `API` for `Brew` operations');
+CALL ruuuby_feature_add(42::smallint, TRUE, 'provide an `API` for `RabbitMQ` operations w/ a light layer over gem{`bunny`}');
+CALL ruuuby_feature_add(43::smallint, TRUE, 'provide an `API` for `Iconv`');
+CALL ruuuby_feature_add(44::smallint, TRUE, 'provide an `API` for `ZSH`');
+CALL ruuuby_feature_add(46::smallint, TRUE, 'provide an `API` for `Bundler`');
+CALL ruuuby_feature_add(47::smallint, TRUE, 'provide an `API` for `Gem`');
 
-CALL ruuuby_feature_add('f40', TRUE, 'provide an `API` for `Docker` operations w/ a light layer over gem{`docker-api`}');
-CALL ruuuby_feature_add('f41', TRUE, 'provide an `API` for `Brew` operations');
-CALL ruuuby_feature_add('f42', TRUE, 'provide an `API` for `RabbitMQ` operations w/ a light layer over gem{`bunny`}');
-CALL ruuuby_feature_add('f43', TRUE, 'provide an `API` for `Iconv`');
-CALL ruuuby_feature_add('f44', TRUE, 'provide an `API` for `ZSH`');
-CALL ruuuby_feature_add('f46', TRUE, 'provide an `API` for `Bundler`');
-CALL ruuuby_feature_add('f47', TRUE, 'provide an `API` for `Gem`');
-
-CALL ruuuby_feature_add('f92', TRUE, 'enable building with specific DB support loaded');
-CALL ruuuby_feature_add('f93', TRUE, 'offer help in managing custom scripts, functionality, and anything else needed for too niche of scenarios to consider adding as a feature or even a conditionally-loadable feature');
-CALL ruuuby_feature_add('f94', TRUE, 'enable a `WebAssembly` based build (for `JS`/`WebGL`)');
-CALL ruuuby_feature_add('f95', TRUE, 'enable a pure `Ruby` only build');
-CALL ruuuby_feature_add('f96', TRUE, 'support multiple Operation Systems');
-CALL ruuuby_feature_add('f97', TRUE, 'offer custom builds of `Ruuuby` to support only the needed/wanted unicode/symbols/emojis etc');
-CALL ruuuby_feature_add('f98', FALSE, '`C-extensions`');
+CALL ruuuby_feature_add(92::smallint, TRUE, 'enable building with specific DB support loaded');
+CALL ruuuby_feature_add(93::smallint, TRUE, 'offer help in managing custom scripts, functionality, and anything else needed for too niche of scenarios to consider adding as a feature or even a conditionally-loadable feature');
+CALL ruuuby_feature_add(94::smallint, TRUE, 'enable a `WebAssembly` based build (for `JS`/`WebGL`)');
+CALL ruuuby_feature_add(95::smallint, TRUE, 'enable a pure `Ruby` only build');
+CALL ruuuby_feature_add(96::smallint, TRUE, 'support multiple Operation Systems');
+CALL ruuuby_feature_add(97::smallint, TRUE, 'offer custom builds of `Ruuuby` to support only the needed/wanted unicode/symbols/emojis etc');
+CALL ruuuby_feature_add(98::smallint, FALSE, '`C-extensions`');
 
 --  __              __
 -- /\ \            /\ \                         __
@@ -103,22 +119,27 @@ CALL ruuuby_feature_add('f98', FALSE, '`C-extensions`');
 --    \ \_,__/\ \____\\ \_\ \_\ \__/.\_\\ \___/  \ \_\ \____/\ \_\\/\____/
 --     \/___/  \/____/ \/_/\/_/\/__/\/_/ \/__/    \/_/\/___/  \/_/ \/___/
 
-CALL ruuuby_feature_behavior_add('f00', 'b00', 'create func{η̂!} for class(`Array`)');
+CALL ruuuby_feature_behavior_add(0::smallint, 0::smallint, FALSE, '`η̂` to alias concept of `normalization`');
+CALL ruuuby_feature_behavior_add(0::smallint, 1::smallint, FALSE, '`∅` to alias concept of `empty`');
+CALL ruuuby_feature_behavior_add(0::smallint, 2::smallint, FALSE, '`∃` to alias concept of `does this(arg) exist?` and `∄` for inverse meaning');
+CALL ruuuby_feature_behavior_add(0::smallint, 3::smallint, FALSE, '`𝔠` to alias concept of `cardinality`');
+CALL ruuuby_feature_behavior_add(0::smallint, 4::smallint, TRUE, '`📅` to alias Class{`Date`}, `🕒` for{`🕒`}, and `📅🕒` for{`DateTime`}');
+CALL ruuuby_feature_behavior_add(0::smallint, 5::smallint, TRUE, '`📁` to alias Class{`File`} and `🗄️` for{`Dir`}');
 
-CALL ruuuby_feature_behavior_add('f01', 'b00', 'supports mode: none (empty methods called for logging)');
-CALL ruuuby_feature_behavior_add('f01', 'b01', 'supports mode: stdout (log to console)');
-CALL ruuuby_feature_behavior_add('f01', 'b02', 'supports mode: stderr (log only errors to console)');
-CALL ruuuby_feature_behavior_add('f01', 'b03', 'supports mode: file (standard Ruby log file logging)');
-CALL ruuuby_feature_behavior_add('f01', 'b04', 'supports setting the logging level');
-CALL ruuuby_feature_behavior_add('f01', 'b05', 'supports running a hybrid of logging modes');
+CALL ruuuby_feature_behavior_add(1::smallint, 0::smallint, TRUE, 'supports mode: none (empty methods called for logging)');
+CALL ruuuby_feature_behavior_add(1::smallint, 1::smallint, TRUE, 'supports mode: stdout (log to console)');
+CALL ruuuby_feature_behavior_add(1::smallint, 2::smallint, TRUE, 'supports mode: stderr (log only errors to console)');
+CALL ruuuby_feature_behavior_add(1::smallint, 3::smallint, TRUE, 'supports mode: file (standard Ruby log file logging)');
+CALL ruuuby_feature_behavior_add(1::smallint, 4::smallint, TRUE, 'supports setting the logging level');
+CALL ruuuby_feature_behavior_add(1::smallint, 5::smallint, TRUE, 'supports running a hybrid of logging modes');
 
-CALL ruuuby_feature_behavior_add('f92', 'b00', 'enable support for ActiveRecord');
-CALL ruuuby_feature_behavior_add('f92', 'b01', 'enable support for pg for PostgreSQL');
---CALL ruuuby_feature_behavior_add('f92', 'b02', 'enable support for SQLite3');
+CALL ruuuby_feature_behavior_add(92::smallint, 0::smallint, TRUE, 'enable support for ActiveRecord');
+CALL ruuuby_feature_behavior_add(92::smallint, 1::smallint, TRUE, 'enable support for pg for PostgreSQL');
 
-CALL ruuuby_feature_behavior_add('f98', 'b00', 'dynamically add `macros` w/ `mkmf` in order to (during pre-processing) include/exclude feature-code to be compiled w/ or w/o');
-CALL ruuuby_feature_behavior_add('f98', 'b01', 'offer (to `Ruuuby`) access to `C` math functions, especially those involving higher precision');
-CALL ruuuby_feature_behavior_add('f98', 'b02', 'simplify import/require statements & setup as much as possible');
+-- TODO: refactor-ish
+CALL ruuuby_feature_behavior_add(98::smallint, 0::smallint, FALSE, 'dynamically add `macros` w/ `mkmf` in order to (during pre-processing) include/exclude feature-code to be compiled w/ or w/o');
+CALL ruuuby_feature_behavior_add(98::smallint, 1::smallint, FALSE, 'offer (to `Ruuuby`) access to `C` math functions, especially those involving higher precision');
+CALL ruuuby_feature_behavior_add(98::smallint, 2::smallint, FALSE, 'simplify import/require statements & setup as much as possible');
 -- | f98 | OpenAI | https://github.blog/2020-07-27-introducing-githubs-openapi-description/                       |
 -- | f98 | OpenAI | https://github.com/OAI/OpenAPI-Specification                                                   |
 -- | f98 | WebGL  | https://webgl2fundamentals.org/webgl/lessons/webgl-anti-patterns.html                         |
@@ -186,12 +207,11 @@ CALL ruuuby_gem_update('0.1.0.pre.2', 'activerecord', '6.1.0.rc1');
 
 CALL ruuuby_gem_add_dev('0.1.0.pre.3', 'open3', '0.1.0');
 
+CALL ruuuby_gem_update('0.1.0.pre.4', 'activerecord', '6.0.3.4');
+CALL ruuuby_gem_add_recommended('0.1.0.pre.4', 'keycutter', '1.0.2', '::Keycutter', '::VERSION', NULL);
+CALL ruuuby_gem_add_recommended('0.1.0.pre.4', 'github-linguist', '7.12.0', '::Linguist', '::VERSION', NULL);
+CALL ruuuby_gem_add_recommended('0.1.0.pre.4', 'rails', '6.0.3.4', '::Rails', '.version', NULL);
+
 -- ---------------------------------------------------------------------------------------------------------------------
-
-INSERT INTO ruuuby_tags (name) VALUES ('finance');
-INSERT INTO ruuuby_tags (name) VALUES ('dev-tool');
-INSERT INTO ruuuby_tags (name) VALUES ('dev-url');
-
-INSERT INTO ruuuby_resource_types (name) VALUES ('URL');
 
 COMMIT TRANSACTION;

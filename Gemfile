@@ -2,9 +2,4 @@
 
 source 'https://rubygems.org'
 
-group :db do
-  gem 'pg'
-  gem 'activerecord'
-end
-
 gemspec

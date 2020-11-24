@@ -99,11 +99,6 @@ RSpec.describe 'f31_b01' do
                 expect(cached_configs['diff.renames']).to eq('copies')
               end
               it '{algorithm}' do
-                # mini-changelog
-                # | version | value     |
-                # | ------- | --------- |
-                # | 0.0.48  | minimal   |
-                # | 0.0.49+ | histogram |
                 expect(cached_configs['diff.algorithm']).to eq('histogram')
               end
 

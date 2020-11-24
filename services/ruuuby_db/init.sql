@@ -1,3 +1,4 @@
+--() { :; }; exec psql -f "$0"
 
 --|    ___                         __
 --|  /'___\                       /\ \__  __
@@ -37,6 +38,7 @@ END; $$ LANGUAGE plpgsql;
 
 -- ---------------------------------------------------------------------------------------------------------------------
 
+-- TODO: lower priority, simplify query
 CREATE OR REPLACE FUNCTION does_func_exist(_func_name TEXT) RETURNS BOOLEAN AS $$
 BEGIN
     RETURN (SELECT COUNT(*) FROM get_all_funcs() AS data_src WHERE data_src.function_name = _func_name LIMIT 1) > 0;
@@ -71,7 +73,10 @@ END; $$ LANGUAGE plpgsql;
 
 -- ---------------------------------------------------------------------------------------------------------------------
 
-CREATE OR REPLACE FUNCTION get_all_table_names () RETURNS TABLE(table_name TEXT) AS $$
+CREATE OR REPLACE FUNCTION get_all_table_names ()
+    RETURNS TABLE (
+        table_name TEXT
+    ) AS $$
 	SELECT t.table_name FROM information_schema.tables AS t
 	WHERE t.table_type = 'BASE TABLE' AND t.table_schema NOT IN ('pg_catalog', 'information_schema');
 $$ LANGUAGE SQL;
@@ -109,6 +114,13 @@ END; $$ LANGUAGE plpgsql;
 
 -- ---------------------------------------------------------------------------------------------------------------------
 
+CREATE OR REPLACE FUNCTION table_row_count_estimate(_table_name TEXT) RETURNS BIGINT AS $$
+BEGIN
+    RETURN (SELECT reltuples as approximate_row_count FROM pg_class WHERE relname = _table_name);
+END; $$ language plpgsql;
+
+-- ---------------------------------------------------------------------------------------------------------------------
+
 --|   __            __             __
 --|  /\ \          /\ \__         /\ \
 --|  \_\ \     __  \ \ ,_\    __  \ \ \____     __      ____     __    ____
@@ -132,6 +144,44 @@ BEGIN
 			FROM pg_database
 		;
 END; $$ LANGUAGE plpgsql;
+
+-- @see https://serverfault.com/questions/128284/how-to-see-active-connections-and-current-activity-in-postgresql-8-4
+CREATE OR REPLACE FUNCTION db_active_connections(_datname NAME)
+    RETURNS TABLE (
+        -- custom field added
+        time_running interval,
+        -- default fields and their order
+        datid oid,
+        datname name,
+        pid integer,
+        leader_pid integer,
+        usesysid oid,
+        usename name,
+        application_name text,
+        client_addr inet,
+        client_hostname text,
+        client_port integer,
+        backend_start TIMESTAMP WITH TIME ZONE,
+        xact_start TIMESTAMP WITH TIME ZONE,
+        query_start TIMESTAMP WITH TIME ZONE,
+        state_change TIMESTAMP WITH TIME ZONE,
+        wait_event_type TEXT,
+        wait_event TEXT,
+        state TEXT,
+        backend_xid xid,
+        backend_xmin xid,
+        query text,
+        backend_type text
+    ) AS $$
+BEGIN
+    RETURN QUERY
+		select (CURRENT_TIMESTAMP - s.backend_start) AS time_running, *
+		from pg_stat_activity AS s
+		where s.datname = _datname
+		ORDER BY time_running DESC;
+END; $$ LANGUAGE plpgsql;
+
+-- TODO: https://coderwall.com/p/k5yeyq/postgres-terminanting-db-connections
 
 --|               __
 --|              /\ \__                        __

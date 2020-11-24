@@ -8,6 +8,11 @@ class << ENV
   alias :∀🔑 :each_key
   alias :∀ :each
 
+  alias :∃? :has_key?
+
+  # @return [Boolean] true if the provided{`key`} does not exist
+  def ∄?(key); !(self.∃?(key)); end
+
   def cache; if @cache == nil; @cache = ENV.to_hash; end; @cache; end
 
   # `does each provided key exist w/ the the same provided value?`
@@ -17,16 +22,6 @@ class << ENV
   #
   # @return [Boolean]
   def ∀🔑∃_value?(keys_to_find, expected_value); self.cache.∀🔑∃_value?(keys_to_find, expected_value); end
-
-  # @param [String] the_key
-  #
-  # @raise [ArgumentError] if the provided arg(the_key) is not of type +String+
-  #
-  # @return [Boolean] true, if there exists an ENV_VAR w/ matching name
-  def ∃?(the_key)
-    🛑str❓('the_key', the_key)
-    self.has_key?(the_key)
-  end
 
   # @param [*] env_key_then_opts
   #

@@ -29,6 +29,7 @@ RSpec.describe 'docker_service_postgresql' do
         expect(ENV.∃?('RUUUBY_F92')).to eq(true)
         expect(ENV['RUUUBY_F92'].include?('b01')).to eq(true)
         expect(ENV['RUUUBY_F92'].include?('b02')).to eq(true)
+
         db = 💎.engine.orm.db_orm.connection
 
         expect(db.supports_advisory_locks?).to eq(true)

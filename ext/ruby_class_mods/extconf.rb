@@ -6,6 +6,16 @@ require 'mkmf'
 
 os = ENV['RUUUBY_OS_CURRENT']
 
+env_f00     = ENV['RUUUBY_F00']
+flags_f00    = [false, false]
+unless env_f00.nil?
+  if env_f00.include?('b04')
+    flags_f00[0] = true
+  elsif env_f00.include?('b05')
+    flags_f00[1] = true
+  end
+end
+
 env_f06     = ENV['RUUUBY_F06']
 flag_f06_b08 = false
 flag_f06_b09 = false
@@ -26,14 +36,6 @@ unless env_f10.nil?
   end
 end
 
-env_f12     = ENV['RUUUBY_F12']
-flag_f12_b00 = false
-unless env_f12.nil?
-  if env_f12.include?('b00')
-    flag_f12_b00 = true
-  end
-end
-
 env_f22 = ENV['RUUUBY_F22']
 if env_f22.nil?
   flag_f22_b01 = false
@@ -45,14 +47,6 @@ else
   flag_f22_b05 = env_f22.include?('b05')
   flag_f22_b06 = env_f22.include?('b06')
   flag_f22_b07 = env_f22.include?('b07')
-end
-
-env_f26     = ENV['RUUUBY_F26']
-flag_f26_b00 = false
-unless env_f26.nil?
-  if env_f26.include?('b00')
-    flag_f26_b00 = true
-  end
 end
 
 env_f28 = ENV['RUUUBY_F28']
@@ -121,7 +115,7 @@ else
   end
 end
 
-puts "compiling ruuuby-extensions{#{::Ruuuby::VERSION}} w/ env_f98{#{env_f98.to_s}}"
+#puts "compiling ruuuby-extensions{#{::Ruuuby::VERSION}} w/ env_f98{#{env_f98.to_s}}"
 
 $VERBOSE = true
 $DEBUG = true
@@ -132,7 +126,10 @@ the_flags = []
 the_flags += %w(O3 fgnu89-inline fstrict-enums flto ftree-vectorize fvectorize fzvector)
 
 # etc
-the_flags += %w(Wall Wformat fexceptions pipe std=gnu11) #std=gnu11  #std=c17
+the_flags += %w(Wall Wformat fexceptions pipe)
+
+# compiler GNU extensions standard (note: `gnu11` is intentionally used over `c17`)
+the_flags += %w(std=gnu11)
 
 # x86_64
 the_flags += %w(fPIC malign-double)
@@ -176,18 +173,18 @@ the_flags += %w(DRUUUBY_F98_COMPILER) if flag_compiler
 the_flags += %w(DRUUUBY_F98_OPENMP) if flag_openmp
 the_flags += %w(DRUUUBY_F98_OPENGL) if flag_opengl
 
+the_flags += %w(DRUUUBY_F00_B04) if flags_f00[0]
+the_flags += %w(DRUUUBY_F00_B05) if flags_f00[1]
+
 the_flags += %w(DRUUUBY_F06_B08) if flag_f06_b08
 the_flags += %w(DRUUUBY_F06_B09) if flag_f06_b09
 
 the_flags += %w(DRUUUBY_F10_B04) if flag_f10_b04
-the_flags += %w(DRUUUBY_F12_B00) if flag_f12_b00
 
 the_flags += %w(DRUUUBY_F22_B01) if flag_f22_b01
 the_flags += %w(DRUUUBY_F22_B05) if flag_f22_b05
 the_flags += %w(DRUUUBY_F22_B06) if flag_f22_b06
 the_flags += %w(DRUUUBY_F22_B07) if flag_f22_b07
-
-the_flags += %w(DRUUUBY_F26_B00) if flag_f26_b00
 
 the_flags += %w(DRUUUBY_F28_B09) if flag_f28_b09
 
@@ -201,6 +198,10 @@ the_flags += %w(DRUUUBY_F92_B02) if flag_f92_b02
 the_flags += %w(DRUUUBY_F92_B03) if flag_f92_b03
 
 the_flags += %w(DRUUUBY_F93) if flag_f93
+
+if env_f98 >= 11
+  the_flags += %w(DRUUUBY_DEBUGGING)
+end
 
 # warnings
 # Wbad-function-cast
@@ -236,13 +237,17 @@ headers = []
 headers += %w(ruby ruby/assert ruby/debug ruby/defines ruby/encoding ruby/intern ruby/version ruby/missing)
 
 # for ruuuby
-headers += %w(c0_constants c1_typed_checks c2_extension_memory c3_macro_utilities c4_theta_angle c5_internal_structs c6_feature_macros c7_time_series_data c8_graphs ruby_class_mods)
+headers += %w(00_constants 01_typed_checks 02_extension_memory 03_macro_utilities 04_theta_angle 05_feature_macros 06_time_series_data 07_graphs ruby_class_mods)
 
 # for c
 headers += %w(stdio stdlib sys/types string float tgmath inttypes locale sys/resource) # tgmath includes {math, complex}
 
 if flag_timer
   headers += %w(time sys/time)
+end
+
+if env_f98 >= 11
+  headers += %w(optional/00_debugging)
 end
 
 headers.each{|header_file| abort("Unable to find header{#{header_file}.h}") unless find_header("#{header_file}.h")}
@@ -274,6 +279,9 @@ if env_f98 >= 15
   abort("Unable to find const{ℤ0} in header{c0_constants.h}") unless have_const("ℤ0", 'c0_constants.h')
 end
 
-#abort("missing macro{M_SQRT2}") unless have_macro('M_SQRT2')
+abort("missing macro{M_SQRT2}") unless have_macro('M_SQRT2')
+
+abort unless have_macro('RBIMPL_COMPILER_IS_CLANG_H')
+abort unless have_macro('RBIMPL_COMPILER_IS_APPLE_H')
 
 create_makefile('ruby_class_mods')

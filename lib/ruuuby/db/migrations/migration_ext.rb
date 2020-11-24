@@ -36,14 +36,14 @@ class RuuubyDBMigration < ActiveRecord::Migration[6.0]
   def ∃table?(table_name); table_exists?(table_name); end
 
   # @param [Symbol] table_name
-  # @param [Symbol] single_field
-  def ♻️index(table_name, single_field)
-    remove_index(table_name, single_field) if index_exists?(table_name, single_field)
+  # @param [Symbol] fields
+  def ♻️index(table_name, fields)
+    remove_index(table_name, fields) if index_exists?(table_name, fields)
   end
 
   # @param [Symbol] table_name
-  # @param [Symbol] single_field
-  def ♻️index!(table_name, single_field); remove_index(table_name, single_field); end
+  # @param [Symbol] fields
+  def ♻️index!(table_name, fields); remove_index(table_name, fields); end
 
   # @param [Symbol] table_name
   def ♻️table(table_name); drop_table(table_name, if_exists: true); end

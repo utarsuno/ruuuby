@@ -13,7 +13,7 @@ module ::Ruuuby::MetaData
   # | pty | pseudo-teletype | "device entry that acts like a terminal to the process performing I/O, but is managed by something else"
   #
   # `💎.engine.api`
-  class RuuubyAPI < ::Ruuuby::MetaData::EngineComponentAPI
+  class RuuubyAPI < ::Ruuuby::MetaData::EngineComponent
 
     # @param [*]       engine
     # @param [Integer] default_timeout

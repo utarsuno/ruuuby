@@ -2,8 +2,6 @@
 
 @f01 = ::RuuubyFeature.spawn(1, 'simplify debugging state & logging through the `RuuubyEngine`', 2, %w(ruuuby engine logging logs log))
 @f02 = ::RuuubyFeature.spawn(2, 'augment working with other `API` sets, be it a small `CLI script` to larger `domain-driven/micro-services` representations', 2, %w(ruuuby engine cli))
-@f03 = ::RuuubyFeature.spawn(3, "`𝔠` to alias concept of `cardinality`", 2, %w())
-@f04 = ::RuuubyFeature.spawn(4, '`∅` to alias concept of `empty`', 2, %w())
 @f05 = ::RuuubyFeature.spawn(5, '`>>` to offer reverse functionality of `<<`', 4, %w(str ary >> <<))
 @f06 = ::RuuubyFeature.spawn(6, 'offer easy to use type-check funcs for common/core Classes (ex: `variable.int?`)', 1, %w())
 @f07 = ::RuuubyFeature.spawn(7, 'offer layer of functionality to easily describe & check various meta-data on Ruby', 1, %w())
@@ -12,7 +10,6 @@
 @f10 = ::RuuubyFeature.spawn(10, 'offer special character aliases for natural ease of readability', 2, %w())
 @f11 = ::RuuubyFeature.spawn(11, 'abstract `SetTheory` and offer discrete singleton objs which reference various groups of numbers', 2, %w(math set-theory))
 @f12 = ::RuuubyFeature.spawn(12, 'enable more simple `file/directory io`', 2, %w(io file dir))
-@f13 = ::RuuubyFeature.spawn(13, '`∃` to alias concept of `does this(arg) exist?` and `∄` to mean inverse: `does this(arg) not exist?`', 2, %w())
 @f14 = ::RuuubyFeature.spawn(14, 'enable easier catching and throwing of parameter type errors', 2, %w())
 @f15 = ::RuuubyFeature.spawn(15, 'enable quicker tracking and auditing of features across versions', 2, %w())
 @f16 = ::RuuubyFeature.spawn(16, 'for specific classes, patch in the operation of raising to an exponent, using operator(`^`) w/ `superscripts`', 2, %w())
@@ -28,7 +25,7 @@
 @f26 = ::RuuubyFeature.spawn(26, 'enable more simple syntax parsing for `ISO8601` and other time operations', 1, %w())
 @f27 = ::RuuubyFeature.spawn(27, 'add new class (`ThetaAngle`) for easier operations involving angles', 2, %w())
 @f28 = ::RuuubyFeature.spawn(28, 'formally support various math constants & equations (ex: aliasing the golden-ratio w/ (`𝚽`)', 2, %w(math geometry symbolic-math))
-@f29 = ::RuuubyFeature.spawn(29, 'add new class (`Quaternion`) for easier operations involving `quaternions`', 0, %w(math linear-algebra Quaternion))
+
 @f30 = ::RuuubyFeature.spawn(30, 'mimic `SetTheory` by creating data-type groupings for Ruby data', 2, %w())
 @f31 = ::RuuubyFeature.spawn(31, 'provide an `API` for `GIT` operations w/ a light layer over gem{`rugged`}', 2, %w(ruuuby engine git api))
 @f32 = ::RuuubyFeature.spawn(32, 'abstract `NumberTheory`; offering static math functions', 2, %w(math number-theory))

@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 module ::Ruuuby::MetaData
-  class LocaleAPI < ::Ruuuby::MetaData::EngineComponentAPI
+  class LocaleAPI < ::Ruuuby::MetaData::EngineComponent
     # @return [Ruuuby::MetaData::IconvAPI]
     def api_iconv; @api_iconv = ::Ruuuby::MetaData::IconvAPI.new(@engine) if @api_iconv.∅?; @api_iconv; end
   end

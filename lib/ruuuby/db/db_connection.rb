@@ -53,7 +53,30 @@ module ::Ruuuby::MetaData
       🛑str❓('sql', sql)
       puts "executing sql{#{sql}}"
         #@connection.execute(sql)
-      @connection.exec_query(sql)
+        @connection.exec_query(sql)
+    end
+
+    # TODO: ruuuby specific DB class
+    def ∃⨍?(func_name); self.sql("SELECT does_func_exist('#{func_name}');").rows[0][0]; end
+
+    # TODO: ruuuby specific DB class
+    def ∃table?(table_name); self.sql("SELECT does_table_exist('#{table_name}');").rows[0][0]; end
+
+    def db_size
+      self.sql("SELECT db_size_bytes FROM db_size_stats() WHERE dat_name = 'env_test';").rows[0]
+    end
+
+    def refresh_stats(table_name)
+      self.sql("ANALYZE #{table_name};")
+    end
+
+    # @param [String]  table_name
+    # @param [Boolean] update_cache
+    #
+    # @return [Integer]
+    def num_rows(table_name, update_cache=false)
+      refresh_stats(table_name) if update_cache
+      self.sql("SELECT table_row_count_estimate('#{table_name}');").rows[0][0]
     end
 
     def _connected?; @connection != nil; end

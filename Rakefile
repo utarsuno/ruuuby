@@ -13,7 +13,6 @@ namespace :qa do
   task :unit do
     #ENV['RUUUBY_F01'] = 'b00'
     ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
-    ENV['RUUUBY_AUTOLOAD_DB'] = 'off'
     ::Rake::Task['rspec_unit'].invoke
   end
 
@@ -32,7 +31,6 @@ namespace :qa do
     ENV['RUBYOPT']                  = '-W:no-deprecated -W:no-experimental'
     ENV['RUUUBY_F01']               = 'b00'
     ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
-    ENV['RUUUBY_AUTOLOAD_DB']       = 'off'
     ENV['RUUUBY_RSPEC_INTEGRATION'] = 'on'
     ::Rake::Task['rspec_integration'].execute
   end
@@ -43,13 +41,12 @@ namespace :qa do
     ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
     ENV['RUUUBY_F92']               = 'b01|b02'
     ENV['RUUUBY_RSPEC_INTEGRATION'] = 'off'
-    ENV['RUUUBY_AUTOLOAD_DB']       = 'on'
-    ::Rake::Task['rspec_db'].invoke
+    ::Rake::Task['rspec_db_new'].invoke
   end
 
   task :rng do
     ENV['RUBYOPT']                  = '-W:no-deprecated -W:no-experimental'
-    ENV['RUUUBY_F01']               = 'b00'
+    ENV['RUUUBY_F01']               = 'b01|b03|b04{debug}'
     ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
     ::Rake::Task['rspec_rng'].execute
   end
@@ -127,7 +124,9 @@ module CategoriesQA
     DB_NEW   = %w(
     /spec/helpers/db/autoload_me
     /services/ruuuby_db/spec/migration_spec
+    /services/ruuuby_db/spec/test/migration_spec
 )
+    SPEC_RNG      = %w(/spec/helpers/rng/autoload_me)
     INTEGRATION   = %w(/spec/helpers/integration/autoload_me)
     LIB_BENCHMARK = %w(/spec/helpers/performance/autoload_me)
     LOCALE_BASE   = %w(/spec/helpers/locale/autoload_me)
@@ -140,6 +139,7 @@ module CategoriesQA
     /services/dev_configs/mac/spec/locale/f92_b00_spec
     /services/dev_configs/mac/spec/locale/f98_spec
     /services/dev_configs/mac/spec/locale/locale_full_verification_spec
+    /services/dev_configs/mac/spec/locale/ruby_installation_spec
 )
   end
 end
@@ -187,7 +187,7 @@ add_task_rspec('performance', '', CategoriesQA::Preload::LIB_BENCHMARK)
 
 add_task_rspec('unit')
 add_task_rspec('audit')
-add_task_rspec('rng')
+add_task_rspec('rng', '', CategoriesQA::Preload::SPEC_RNG)
 add_task_rspec('locale',  '**/*_full_verification_spec.rb', CategoriesQA::Preload::LOCALE_BASE)
 add_task_rspec('preferences', '', CategoriesQA::Preload::LOCALE_FULL)
 add_task_rspec('tech_debt')

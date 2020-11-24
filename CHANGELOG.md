@@ -1,4 +1,15 @@
 
+# `v0.1.0.pre.4`
+
+* continue `DB` migrations
+* apply miscellaneous clean ups
+* (*unofficially*) add gems{`rails`, `keycutter`, `github-linguist`}
+* remove `rng` tests among others while reviewing scope of needed `statistics formulas` and approaches
+* start of (critically needed) migration for more formal `CICD`
+  * begin preparation for proper git branching w/ `git hooks` on both `client` and `server` side
+  * begin preparation for proper build pipelines w/ a hybrid of custom code + a (to be chosen) `CICD` framework(s)
+  * iterative refactor of mapping between features & code; `Ruuuby Dockerization` to resume following more cleanup
+
 # `v0.1.0.pre.3`
 
  * add gem{`open3`}
@@ -34,7 +45,7 @@
 
  * add gem{`bunny`} and a `Docker service` to help monitor `RabbitMQ`
  * add gem{`finite-machine`}, apply some design cleanup (w/ lots more to be done)
- * for `web-based services`: add `webmanifest` file and `JSON minification` to the existing single `node.js REST end-point`
+ * for `web-based services`: add `webmanifest` file and `JSON minification` to the existing `node.js REST end-point`
    * generating file & directory `checksums` also added (wip) w/ results cross-checked between `JS` and `Ruuuby`
  * iterative upgrade for being able to set & apply development preferences such as `OS level configurations`
 
@@ -59,31 +70,31 @@
 | ----: | :---: | :---- |
 | `docker-api` | `1.34.2` | `2.0.0.pre.1` |
 
-| path added | reference | notes | feature(s) |
-| ----: | ---- | ---- | ---- |
-| `lib/ruuuby/module/bundler.rb` | `Bundler` |  | `f10` |
-| `lib/ruuuby/module/gem.rb` | `Gem` |  | `f10` |
-| `services/web_assets/*` | `multiple files & dirs` | code not directly relating to `ruuuby engine` will not normally be documented (until pending `DB` overhaul) | `f10` |
-| `lib/ruuuby/api/docker/docker_service.rb` | `RuuubyService` | temp util | `f39` |
-| `lib/ruuuby/api/docker/docker_service_set.rb` | `RuuubyServiceSet` | temp util | `f39` |
-| `bin/console_docker` | `RuuubyServiceSetDev` | offers funcs like: `build_web_assets`, `build_js`, `build_html`, `build_css`, `run_dev` | `f39` |
+| path added | reference | notes |
+| ----: | ---- | ---- |
+| `lib/ruuuby/module/bundler.rb` | `Bundler` |  |
+| `lib/ruuuby/module/gem.rb` | `Gem` |  |
+| `services/web_assets/*` | `multiple files & dirs` | code not directly relating to `ruuuby engine` will not normally be documented (until pending `DB` overhaul) |
+| `lib/ruuuby/api/docker/docker_service.rb` | `RuuubyService` | temp util |
+| `lib/ruuuby/api/docker/docker_service_set.rb` | `RuuubyServiceSet` | temp util |
+| `bin/console_docker` | `RuuubyServiceSetDev` | offers funcs like: `build_web_assets`, `build_js`, `build_html`, `build_css`, `run_dev` |
 
-| context | method(s) added | feature(s) |
-| ---: | :--- | ---: |
-| `Object` | `attribute_versionable` | `f10` |
-| `ENV` | `∀🔑∃_value?` | `f10` |
-| `Hash` | `∄🔑?`, `∀🔑∃_value?` | `f10` |
-| `Array` | `convert_to_json` | `f10` |
-| `String` | `clean!` | `f10` |
-| `Heuristics` | `clean` | `f10` |
-| `Net::HTTPResponse` | `time_received`, `content_length` | `f10` |
-| `💎.engine.api_zsh` | `run_script` | `f10` |
-| `💎.engine` | `run_apple_script!`, `curl_get` | `f10` |
-| `💎.engine.api_locale` | `healthy?`, `healthy_encoding?` | `f10` |
-| `🍺` | `doctor`, `cleanup`, `healthy?`, `analytics?`, `analytics_disabled?`, `analytics_set_on`, `analytics_set_off` | `f10` |
-| `💎.engine.api_git` | `∃index_conflicts?`, `∃fixable_syntax_errors?` | `f31` |
-| ``🐋`/`💎.engine.api_locale.api_docker`` | `∀🐋`, `connected?`, `connect`, `connect!`, `disconnect`, `disconnect!`, `version_compose` | `f40` |
-| `Docker::Container` | `alpine?`, `debian?`, `dev?`, `prod?`, `healthy?`, `env_vars`, `os`, `os_version`, `linux_kernel_version`, `os_architecture`, `mounts`, `∃mount?`, `file_create`, `cmd!` | `f40` |
+| for | method(s) added |
+| ---: | :--- |
+| `Object` | `attribute_versionable` |
+| `ENV` | `∀🔑∃_value?` |
+| `Hash` | `∄🔑?`, `∀🔑∃_value?` |
+| `Array` | `convert_to_json` |
+| `String` | `clean!` |
+| `Heuristics` | `clean` |
+| `Net::HTTPResponse` | `time_received`, `content_length` |
+| `💎.engine.api_zsh` | `run_script` |
+| `💎.engine` | `run_apple_script!`, `curl_get` |
+| `💎.engine.api_locale` | `healthy?`, `healthy_encoding?` |
+| `🍺` | `doctor`, `cleanup`, `healthy?`, `analytics?`, `analytics_disabled?`, `analytics_set_on`, `analytics_set_off` |
+| `💎.engine.api_git` | `∃index_conflicts?`, `∃fixable_syntax_errors?` |
+| ``🐋`/`💎.engine.api_locale.api_docker`` | `∀🐋`, `connected?`, `connect`, `connect!`, `disconnect`, `disconnect!`, `version_compose` |
+| `Docker::Container` | `alpine?`, `debian?`, `dev?`, `prod?`, `healthy?`, `env_vars`, `os`, `os_version`, `linux_kernel_version`, `os_architecture`, `mounts`, `∃mount?`, `file_create`, `cmd!` |
 
 ---
 
@@ -102,45 +113,43 @@
 | `pg` | `N/A` | `1.2.3` | comparing (apples & oranges) use-cases against `ActiveRecord` |
 | `docker-api` | `N/A` | `1.34.2` | offers tons of functionality, way more to be utilized |
 
-| path(s) added | reference | notes | feature(s) |
-| ----: | ---- | ---- | ---- |
-| `services/nginx/includes/*.nginx` | (multiple files & directories) | | `f39` |
-| `services/web_assets/Dockerfile` | | file added early, will be utilizing various `JS` libs/environments | `f39` |
-| `services/web_assets/ruuuby.html` | | same as above | `f39` |
-| `services/web_assets/ruuuby.js` | | same as above | `f39` |
+| path(s) added | reference | notes |
+| ----: | ---- | ---- |
+| `services/nginx/includes/*.nginx` | (multiple files & directories) | |
+| `services/web_assets/Dockerfile` | | file added early, will be utilizing various `JS` libs/environments |
+| `services/web_assets/ruuuby.html` | | same as above |
+| `services/web_assets/ruuuby.js` | | same as above |
 
-| context | method(s) added | feature(s) |
-| ----: | :---- | ----: |
-| `Array` | `∀𝚡λ𝑓🖨️` | `f10` |
-| `Hash` | `λ𝑓∀🔑：₍🔑∉₎`, `λ𝑓∀🔑：₍🔑∉₎!` | `f10` |
-| `File::YAML` | `read` | `f12` |
-| `💎.engine.os` | `windows?`, `unix?`, `mac?`, `linux?` | `f22` |
-| `🐋`/`💎.engine.api_locale.api_docker` | `healthy?`, `∃🌐?`, `∃🐋?`, `find_🌐_by_name`, `find_🐋_by_name`, `find_🐋_by_id`, `♻️_🌐_by_name` | `f40` |
+| for | method(s) added |
+| ----: | :---- |
+| `Array` | `∀𝚡λ𝑓🖨️` |
+| `Hash` | `λ𝑓∀🔑：₍🔑∉₎`, `λ𝑓∀🔑：₍🔑∉₎!` |
+| `File::YAML` | `read` |
+| `💎.engine.os` | `windows?`, `unix?`, `mac?`, `linux?` |
+| `🐋`/`💎.engine.api_locale.api_docker` | `healthy?`, `∃🌐?`, `∃🐋?`, `find_🌐_by_name`, `find_🐋_by_name`, `find_🐋_by_id`, `♻️_🌐_by_name` |
 
 ---
 
 # `v0.0.47`
-
- * add T e C h D e B t ♪~ ᕕ(ᐛ)ᕗ
 
 | gem updated | version previous | version current |
 | ----: | :---: | :---- |
 | `rake-compiler` | `1.1.0` | `1.1.1` |
 | `rubygems-update` | `3.1.4` | `3.2.0.rc.1` |
 
-| path added | reference | notes | feature(s) |
-| ----: | ---- | ---- | ---- |
-| `lib/ruuuby/math/finance/benchmarks.rb` |  | not currently utilized, just file added early | `f10` |
-| `lib/ruuuby/heuristics/heuristics.rb` | `Ruuuby::Heuristics` | same as above description | `f10` |
+| path added | reference | notes |
+| ----: | ---- | ---- |
+| `lib/ruuuby/math/finance/benchmarks.rb` |  | not currently utilized, just file added early |
+| `lib/ruuuby/heuristics/heuristics.rb` | `Ruuuby::Heuristics` | same as above description |
 
-| context | method(s) added | feature(s) |
-| ---: | :--- | ---: |
-| `Matrix` | `ᵀ` | `f10` |
-| `File::CSV` | `read` | `f12` |
-| `💎.engine.api` | `pid_terminate` | `f22` |
-| `💎.engine.api_locale` | `iconv_version`, `iconv_supported_encodings` | `f22` |
-| `PseudoGraph` | `[]`, `set_edge`, `set_edge_inverse`, `num_nodes`, `empty?`, `free_memory`, `print_debugging` | `f37` |
-| `TimeSeriesData` | `Q₁`, `Q₃`, `IQR`, `outliers_lower`, `outliers_upper`, `boundary_outliers_min`, `boundary_outliers_max`, `sum_squared`, `sum_of_squares`, `sum_weighted`, `mean_weighted`, `mean_geometric`, `nᵗʰ_percent_rank`, `healthy?` | `f38` |
+| for | method(s) added |
+| ---: | :--- |
+| `Matrix` | `ᵀ` |
+| `File::CSV` | `read` |
+| `💎.engine.api` | `pid_terminate` |
+| `💎.engine.api_locale` | `iconv_version`, `iconv_supported_encodings` |
+| `PseudoGraph` | `[]`, `set_edge`, `set_edge_inverse`, `num_nodes`, `empty?`, `free_memory`, `print_debugging` |
+| `TimeSeriesData` | `Q₁`, `Q₃`, `IQR`, `outliers_lower`, `outliers_upper`, `boundary_outliers_min`, `boundary_outliers_max`, `sum_squared`, `sum_of_squares`, `sum_weighted`, `mean_weighted`, `mean_geometric`, `nᵗʰ_percent_rank`, `healthy?` |
 
 ---
 
@@ -151,27 +160,27 @@
  * ⚠️: greatly increase scope of upcoming wide-scale refactors
    > tech-debt will out-pace rate of implementation/testing for at least a few versions, then more effective code clean-up will be enabled and performed
 
-| path added | reference | notes | feature(s) |
-| ----: | ---- | ---- | ---- |
-| `lib/ruuuby/math/physics/physics.rb` | `Math::Physics` | not currently utilized, just file added early | `f10` |
-| `lib/ruuuby/math/physics/wave.rb` | `Math::Physics::Wave` | same as above desc. | `f10` |
-| `lib/ruuuby/math/physics/harmonic_analysis.rb` | `Math::Physics::HarmonicAnalysis` | same as above desc. | `f10` |
-| `lib/ruuuby/math/forex/forex.rb` | `Math::Forex` | same as above desc. | `f10` |
-| `lib/ruuuby/math/forex/currency_matrix.rb` | `Math::Forex::CurrencyMatrix` | `wip` | `f10` |
-| `lib/ruuuby/class/nums/vector.rb` | `Vector` | `Ruby` built-in Class (now loaded in) | `f10` |
-| `lib/ruuuby/class/nums/matrix.rb` | `Matrix` | `Ruby` built-in Class (now loaded in) | `f37` |
-| `lib/ruuuby/math/algebra/tropical.rb` | `Math::Algebra::Tropical` |  | `f38` |
-| `ext/ruby_class_mods/c8_graphs.h` | `PseudoGraph` | same creation style as `ThetaAngle` & `TimeSeriesData` | `f38` |
-| `lib/ruuuby/protocol/unix_socket.rb` | `UNIXSocket` | `Ruby` built-in Class (now loaded in) | `f39` |
-| `help/extensions/c/open_mp.md` |  | `wip` | `f98` |
+| path added | reference | notes |
+| ----: | ---- | ---- |
+| `lib/ruuuby/math/physics/physics.rb` | `Math::Physics` | not currently utilized, just file added early |
+| `lib/ruuuby/math/physics/wave.rb` | `Math::Physics::Wave` | same as above desc. |
+| `lib/ruuuby/math/physics/harmonic_analysis.rb` | `Math::Physics::HarmonicAnalysis` | same as above desc. |
+| `lib/ruuuby/math/forex/forex.rb` | `Math::Forex` | same as above desc. |
+| `lib/ruuuby/math/forex/currency_matrix.rb` | `Math::Forex::CurrencyMatrix` | `wip` |
+| `lib/ruuuby/class/nums/vector.rb` | `Vector` | `Ruby` built-in Class (now loaded in) |
+| `lib/ruuuby/class/nums/matrix.rb` | `Matrix` | `Ruby` built-in Class (now loaded in) |
+| `lib/ruuuby/math/algebra/tropical.rb` | `Math::Algebra::Tropical` |  |
+| `ext/ruby_class_mods/c8_graphs.h` | `PseudoGraph` | same creation style as `ThetaAngle` & `TimeSeriesData` |
+| `lib/ruuuby/protocol/unix_socket.rb` | `UNIXSocket` | `Ruby` built-in Class (now loaded in) |
+| `help/extensions/c/open_mp.md` |  | |
 
-| context | method(s) added | feature(s) |
-| ---: | :--- | ---: |
-| `Vector` | `∅?` | `f11` |
-| `Matrix` | `▣?`, `∀ₓ↘`, `∀ₓᵢ↘`, `↘_to_a`, `∀ₓᵢⱼ`, `num_rows`, `num_cols` | `f38` |
-| `Math::Forex::CurrencyMatrix` | `η̂!`,`algo_🌴_arbitrage`, `karps_algorithm` | `f38` |
-| `Math::Algebra::Tropical::ContextNumeric` | `⨁`, `⨂` | `f38` |
-| `Math::Algebra::Tropical::ContextMatrix` | `⨁`, `⨁!`, `⨂`, `⨂ⁿ` | `f38` |
+| for | method(s) added |
+| ---: | :--- |
+| `Vector` | `∅?` |
+| `Matrix` | `▣?`, `∀ₓ↘`, `∀ₓᵢ↘`, `↘_to_a`, `∀ₓᵢⱼ`, `num_rows`, `num_cols` |
+| `Math::Forex::CurrencyMatrix` | `η̂!`,`algo_🌴_arbitrage`, `karps_algorithm` |
+| `Math::Algebra::Tropical::ContextNumeric` | `⨁`, `⨂` |
+| `Math::Algebra::Tropical::ContextMatrix` | `⨁`, `⨁!`, `⨂`, `⨂ⁿ` |
 
 ---
 
@@ -182,26 +191,26 @@
  * fix various edge-case bugs w/ `ThetaAngle` <em>bitwise flags</em>; apply same design to `TimeSeriesData`; start creation of re-usable base code for `Bitwise Flags` in general
  * `ORM`: apply start of refactors for proper support of `RuuubyChangelog` and other automation-functionality; design still `wip`
    * and thus full `DB TDD` & `documentation` is still withheld
- * <em>**remove:**</em> global{`$PRM_MANY`}, update funcs in{`f06`} as needed and slightly increase testing coverage
+ * <em>**remove:**</em> global{`$PRM_MANY`}, update funcs as needed and slightly increase testing coverage
  * move various math functions to better suited locations; more to be done
 
 | gem updated | version previous | version current |
 | ----: | :---: | :---- |
 | `bundler` | `2.1.4` | `2.2.0.rc.1` |
 
-| path added | reference | notes | feature(s) |
-| ----: | ---- | ---- | ---- |
-| `lib/ruuuby/class/bitwise_flag.rb` | `Ruuuby::BitwiseFlag` | utility/helper, non-core class | `f10` |
-| `.gitattributes` |  |  | `f22` |
-| `lib/ruuuby/math/geometry/shape/sphere.rb` | `Math::Geometry::Sphere` | not currently utilized, just file added early | `f35` |
+| path added | reference | notes |
+| ----: | ---- | ---- |
+| `lib/ruuuby/class/bitwise_flag.rb` | `Ruuuby::BitwiseFlag` | utility/helper, non-core class |
+| `.gitattributes` |  |  |
+| `lib/ruuuby/math/geometry/shape/sphere.rb` | `Math::Geometry::Sphere` | not currently utilized, just file added early |
 
-| context | method(s) added | feature(s) |
-| ---: | :--- | ---: |
-| `ApplicationRecord` | `orm_Ⓣ_🐍`, `empty?` | `f15` |
-| `Ruuuby::MetaData::RuuubyEngine` | `num_cpu_cores`, `current_user`, `get_compiled_code` | `f22` |
-| `💎.engine.api_git` | `validate_attribute` | `f31` |
-| `Math::Stats::Descriptive` | `percentage_error` | `f36` |
-| `TimeSeriesData` | `ρ`, `flags`, `mape`, `normalize!`, `print_debugging`, `first`, `last`, `λ`, `Λ`, `has_zero?`, `has_negative?`, `normalized?`, `even?`, `strictly_increasing?`, `strictly_decreasing?`, `all_same?` | `f36` |
+| for | method(s) added |
+| ---: | :--- |
+| `ApplicationRecord` | `orm_Ⓣ_🐍`, `empty?` |
+| `Ruuuby::MetaData::RuuubyEngine` | `num_cpu_cores`, `current_user`, `get_compiled_code` |
+| `💎.engine.api_git` | `validate_attribute` |
+| `Math::Stats::Descriptive` | `percentage_error` |
+| `TimeSeriesData` | `ρ`, `flags`, `mape`, `normalize!`, `print_debugging`, `first`, `last`, `λ`, `Λ`, `has_zero?`, `has_negative?`, `normalized?`, `even?`, `strictly_increasing?`, `strictly_decreasing?`, `all_same?` |
 
 ---
 
@@ -217,40 +226,40 @@
    * `TimeSeriesData` will eventually be able to be used for discovering optimal `GC-settings`
    * ex: finding optimal `heap-size` and `garbage-collection-frequency` depending on context of script
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/math/stats/time_series_data.rb` | `TimeSeriesData` | `wip` | `f34` |
-| `ext/ruby_class_mods/c7_times_series_data.rb` | `TimeSeriesData` | `wip` | `f35` |
-| `lib/ruuuby/ruuuby/engine/ruuuby_api_component.rb` |  | `temp/wip` | `f97` |
-| `bin/compilation_modes/build_w_debugging` |  | `temp/wip` | `f97` |
-| `bin/compilation_modes/build_simple` |  | `temp/wip` | `f97` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/math/stats/time_series_data.rb` | `TimeSeriesData` | |
+| `ext/ruby_class_mods/c7_times_series_data.rb` | `TimeSeriesData` | |
+| `lib/ruuuby/ruuuby/engine/ruuuby_api_component.rb` |  | |
+| `bin/compilation_modes/build_w_debugging` |  | |
+| `bin/compilation_modes/build_simple` |  | |
 
-| context | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Ruuuby::MetaData::RuuubyEngine::F22B00` | `percentage_protected_from_minor_marks`, `percentage_fragmentation`, `stats_bytes_per_object_slot`, `stats_slots_per_heap_page`, `perform_quick`, `perform_full` | `f23` |
-| (Refinement) `String` | `ʳ?`, `ʳ`, `ᵍ?`, `ᵍ`, `𝞽?`, `𝞽` | `f28` |
-| `TimeSeriesData` | `mem_size`, `free_memory`, `len`, `mean`, `sum`, `max`, `min`, `median`, `range`, `σ²`=>`variance`, `σ`=>`std_dev`, `percentile`, `mse` | `f36` |
+| for | method(s) added |
+| --- | --- |
+| `Ruuuby::MetaData::RuuubyEngine::F22B00` | `percentage_protected_from_minor_marks`, `percentage_fragmentation`, `stats_bytes_per_object_slot`, `stats_slots_per_heap_page`, `perform_quick`, `perform_full` |
+| (Refinement) `String` | `ʳ?`, `ʳ`, `ᵍ?`, `ᵍ`, `𝞽?`, `𝞽` |
+| `TimeSeriesData` | `mem_size`, `free_memory`, `len`, `mean`, `sum`, `max`, `min`, `median`, `range`, `σ²`=>`variance`, `σ`=>`std_dev`, `percentile`, `mse` |
 
 ---
 
 # `v0.0.43`
- * add{`f06_b04`} to provide normalizer{`∈𝕌`} for funcs{`flt?`, `🛑flt❓`}
+ * add normalizer{`∈𝕌`} for funcs{`flt?`, `🛑flt❓`}
  * start adding textual parsing for `ThetaAngle` via `Refinement` in{`ThetaAngle::ContextStrParsing`}
  * increase scope tested in some db_audit funcs
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/math/geometry/theta_angle/context_str.rb` | `ThetaAngle::ContextStrParsing` | Refinements onto `String` for parsing to and from `ThetaAngle` | `f27` |
-| `lib/ruuuby/ruuuby/engine/ruuuby_engine_component.rb` | `Ruuuby::MetaData::RuuubyEngineComponent` | start of cleaner design w/ `RuuubyEngine` and relating objs | `f10` |
-| `lib/ruuuby/ruuuby/api/api_locale.rb` | `Ruuuby::MetaData::LocaleAPI` |  | `f10` |
-| `bin/manually_execute/clean_up` |  | delete any temporary/generated content, quick way to force a full re-compile | `f10` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/math/geometry/theta_angle/context_str.rb` | `ThetaAngle::ContextStrParsing` | Refinements onto `String` for parsing to and from `ThetaAngle` |
+| `lib/ruuuby/ruuuby/engine/ruuuby_engine_component.rb` | `Ruuuby::MetaData::RuuubyEngineComponent` | start of cleaner design w/ `RuuubyEngine` and relating objs |
+| `lib/ruuuby/ruuuby/api/api_locale.rb` | `Ruuuby::MetaData::LocaleAPI` |  |
+| `bin/manually_execute/clean_up` |  | delete any temporary/generated content, quick way to force a full re-compile |
 
-| context | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Math::Stats::TimeSeries` | `aroon_up`, `aroon_down`, `aroon_oscillator`, `simple_moving_average` | `f35` |
-| `Math::Combinatorics::𝕎¹` | `len_powerset` | `f33` |
-| `Math::Combinatorics::𝕎²` | `len_ordered_with_replacement` | `f33` |
-| (`Refinement`) `String` | `°?`, `°` | `f27` |
+| for | method(s) added |
+| --- | --- |
+| `Math::Stats::TimeSeries` | `aroon_up`, `aroon_down`, `aroon_oscillator`, `simple_moving_average` |
+| `Math::Combinatorics::𝕎¹` | `len_powerset` |
+| `Math::Combinatorics::𝕎²` | `len_ordered_with_replacement` |
+| (`Refinement`) `String` | `°?`, `°` |
 
 ---
 
@@ -258,11 +267,11 @@
  * change normalizer from{!∅} to{∉∅}; add{f06_b03} to provide this normalizer for funcs{ary?, 🛑ary❓}
  * provide function aliases{`wma`, `ema`} to `Math::Stats::TimeSeries`
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `ThetaAngle` | `octant?` | `f28` |
-| `Math::Stats` | `median` | `f35` |
-| `Math::Stats::TimeSeries` | `weighted_moving_average` | `f35` |
+| for | method(s) added |
+| --- | --- |
+| `ThetaAngle` | `octant?` |
+| `Math::Stats` | `median` |
+| `Math::Stats::TimeSeries` | `weighted_moving_average` |
 
 ---
 
@@ -277,32 +286,32 @@
    * faster start-up time esp. for targeted scripts
    * ex: compare `rspec_locale{0.04s}` vs `rspec_locale_full{1.33s}`
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `ext/ruby_class_mods/c5_internal_structs.h` |  |  | `f98` |
-| `ext/ruby_class_mods/c6_feature_macros.h` |  |  | `f98` |
-| `lib/ruuuby/math/stats/stats.rb` | `Math::Stats` | | `f35` |
-| `lib/ruuuby/math/stats/time_series.rb` | `Math::Stats::TimeSeries` | | `f35` |
-| `lib/ruuuby/math/geometry/shape/shape.rb` | `Math::Geometry::Shape` | not currently utilized, just file added early | `f34` |
-| `lib/ruuuby/math/geometry/shape/plane_figure.rb` | `Math::Geometry::PlaneFigure` | same as ↑ | `f34` |
-| `lib/ruuuby/math/geometry/shape/quadrilateral.rb` | `Math::Geometry::Triangle` | same as ↑ | `f34` |
-| `lib/ruuuby/math/geometry/shape/shape.rb` | `Math::Geometry::Quadrilateral` | same as ↑ | `f34` |
-| `db/db_schema.rb` |  |  | `f15` |
-| `lib/ruuuby/ruuuby/api/abstract_space.rb` |  | not currently utilized, just file added early | `f02` |
-| `lib/ruuuby/ruuuby/api/api_brew.rb` |  | same as ↑ | `f02` |
-| `lib/ruuuby/ruuuby/api/api_docker.rb` |  | same as ↑ | `f02` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `ext/ruby_class_mods/c5_internal_structs.h` |  |  |
+| `ext/ruby_class_mods/c6_feature_macros.h` |  |  |
+| `lib/ruuuby/math/stats/stats.rb` | `Math::Stats` | |
+| `lib/ruuuby/math/stats/time_series.rb` | `Math::Stats::TimeSeries` | |
+| `lib/ruuuby/math/geometry/shape/shape.rb` | `Math::Geometry::Shape` | not currently utilized, just file added early |
+| `lib/ruuuby/math/geometry/shape/plane_figure.rb` | `Math::Geometry::PlaneFigure` | same as ↑ |
+| `lib/ruuuby/math/geometry/shape/quadrilateral.rb` | `Math::Geometry::Triangle` | same as ↑ |
+| `lib/ruuuby/math/geometry/shape/shape.rb` | `Math::Geometry::Quadrilateral` | same as ↑ |
+| `db/db_schema.rb` |  |  |
+| `lib/ruuuby/ruuuby/api/abstract_space.rb` |  | not currently utilized, just file added early |
+| `lib/ruuuby/ruuuby/api/api_brew.rb` |  | same as ↑ |
+| `lib/ruuuby/ruuuby/api/api_docker.rb` |  | same as ↑ |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `String` | `palindrome?` | `f10` |
-| `ApplicationRecord` | `num_where` | `f11` |
-| `GitCommit` | `num_release_tags` | `f11` |
-| `RuuubyRelease` | `num_released` | `f11` |
-| `Ruuuby::MetaData::RuuubyEngine` | `memory_peak_this_runtime` | `f22` |
-| `Math::NumberTheory` | `semiprime?` | `f32` |
-| `Math::Combinatorics` | `permutations` | `f33` |
-| `Math::Stats` | `arithmetic_mean` | `f35` |
-| `Math::Stats::TimeSeries` | `exponential_moving_average` | `f35` |
+| for | method(s) added |
+| --- | --- |
+| `String` | `palindrome?` |
+| `ApplicationRecord` | `num_where` |
+| `GitCommit` | `num_release_tags` |
+| `RuuubyRelease` | `num_released` |
+| `Ruuuby::MetaData::RuuubyEngine` | `memory_peak_this_runtime` |
+| `Math::NumberTheory` | `semiprime?` |
+| `Math::Combinatorics` | `permutations` |
+| `Math::Stats` | `arithmetic_mean` |
+| `Math::Stats::TimeSeries` | `exponential_moving_average` |
 
 ---
 
@@ -316,14 +325,14 @@
  * add/track `gem 'rubygems-update', '~> 3.1.4'`
    * update version from{`3.1.2`} to{`3.1.4`}
 
-| context | method(s) added | feature(s) |
-| --- | --- | --- |
-| (c) `Symbol` | `as_source_ruby` | `f10` |
-| (v) `ENV` | `parse_feature_behaviors`, `validate_feature_behavior_syntax!` | `f10` |
-| (c) `RuuubyGem` | `fetch_by_type` | `f15` |
-| (m) `Math::NumberTheory::ℤ²` | `fast_gcd` | `f32` |
-| (m) `Math::NumberTheory::ℤ³` | `congruent?` | `f32` |
-| (Refinement) `Integer` | `≡` | `f32` |
+| for | method(s) added |
+| --- | --- |
+| `Symbol` | `as_source_ruby` |
+| `ENV` | `parse_feature_behaviors`, `validate_feature_behavior_syntax!` |
+| `RuuubyGem` | `fetch_by_type` |
+| `Math::NumberTheory::ℤ²` | `fast_gcd` |
+| `Math::NumberTheory::ℤ³` | `congruent?` |
+| (Refinement) `Integer` | `≡` |
 
 ---
 
@@ -333,43 +342,41 @@
  * add `RSpec` sections: `integration` & `tech_debt`
  * add the following `Sequence` objs to `Math::NumberTheory::𝕎¹`: `seq_pronic`, `seq_square`, `seq_fibonacci`, `seq_lucas`, `seq_triangle`, `seq_hexagonal`
  * remove some non-ASCII characters in `.h` and `.c` files while testing between compilers `clang` & `gcc`
- * remove both (`f01`, `f02`), (`f10`) now covers these scenarios w/ feature-behaviors
  * fix typo for const{ANGLE_TAU}, it is now correctly referenced by{`𝞽`} and not{`τ`}
  * various edge-case bugs w/ `ThetaAngle` identified, some are fixed for this version
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/math/expr/seq/arithmetic.rb` | `Math::Expr::ArithmeticSequence` | (`Ruby` version{`2.7.1`} just added `Enumerator::ArithmeticSequence` which will be looked at prior to further modifications & clean-up of these `Sequence` classes) | `f10` |
-| `lib/ruuuby/math/expr/seq/geometric.rb` | `Math::Expr::GeometricSequence` |  | `f10` |
-| `lib/ruuuby/math/expr/seq/recursive.rb` | `Math::Expr::RecursiveSequence` |  | `f10` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/math/expr/seq/arithmetic.rb` | `Math::Expr::ArithmeticSequence` | (`Ruby` version{`2.7.1`} just added `Enumerator::ArithmeticSequence` which will be looked at prior to further modifications & clean-up of these `Sequence` classes) |
+| `lib/ruuuby/math/expr/seq/geometric.rb` | `Math::Expr::GeometricSequence` |  |
+| `lib/ruuuby/math/expr/seq/recursive.rb` | `Math::Expr::RecursiveSequence` |  |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Math::NumberTheory` | `digit_sum`, `digital_root`, `additive_persistence`, `almost_perfect?`, `nᵗʰ_cototient`, `nᵗʰ_euler_totient`, `friendly?` | `f31` |
-| `Math::Combinatorics` | `n_choose_k` | `f32` |
+| for | method(s) added |
+| --- | --- |
+| `Math::NumberTheory` | `digit_sum`, `digital_root`, `additive_persistence`, `almost_perfect?`, `nᵗʰ_cototient`, `nᵗʰ_euler_totient`, `friendly?` |
+| `Math::Combinatorics` | `n_choose_k` |
 
 ---
 
 # `v0.0.38`
- * (`f98`) replace all usages of c-ext-func{`rb_eval_string`} and others that were significantly slowing down `startup/initial-load time`
- * (`f18`) moved to {`f98_b02`}, `f18` will now cover the math module `Space`
+ * replace all usages of c-ext-func{`rb_eval_string`} and others that were significantly slowing down `startup/initial-load time`
  * remove funcs{`class?`, `module?`, `singleton?`} from Class(`Object`); (functionality covered by `🧬`)
- * remove func{`𝔠`} from `Kernel` (and thus remove `functional-style` support from (`f05`))
+ * remove func{`𝔠`} from `Kernel` (and thus remove `functional-style` support from previously{`f05`})
  * track `git tags` w/ related `ORMs` & `APIs`; however, version automation tasks paused until `TDD` catches up for `DB` and/or some event/queue-based logic is added (ex: `RabbitMQ`)
  * apply various misc cleanups w/ others `wip`
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/math/statistics/statistical_learning.rb` | `Math::Stats::StatisticalLearning` | not currently in use | `f30` |
-| `lib/math/statistics/probability_theory.rb` | `Math::Stats::ProbabilityTheory` | not currently in use | `f30` |
-| `lib/math/statistics/descriptive_statistics.rb` | `Math::Stats::DescriptiveStatistics` | not currently in use | `f30` |
-| `lib/math/combinatorics/combinatorics.rb` | `Math::Stats` | not currently in use | `f30` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `lib/math/statistics/statistical_learning.rb` | `Math::Stats::StatisticalLearning` | not currently in use |
+| `lib/math/statistics/probability_theory.rb` | `Math::Stats::ProbabilityTheory` | not currently in use |
+| `lib/math/statistics/descriptive_statistics.rb` | `Math::Stats::DescriptiveStatistics` | not currently in use |
+| `lib/math/combinatorics/combinatorics.rb` | `Math::Stats` | not currently in use |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Math::Space::NucleotideSpace` | `∋ˢ?` | `f30` |
-| `Ruuuby::MetaData::GitAPI` | `release_tags`, `branch_names`, `remote_release_current`, `remote_release_previous` | `f31` |
-| `Math::NumberTheory` | `aliquot_sum`, `deficient?`, `deficiency`, `abundant?`, `abundance`, `abundancy_index`, `composite?` | `f32` |
+| for | method(s) added |
+| --- | --- |
+| `Math::Space::NucleotideSpace` | `∋ˢ?` |
+| `Ruuuby::MetaData::GitAPI` | `release_tags`, `branch_names`, `remote_release_current`, `remote_release_previous` |
+| `Math::NumberTheory` | `aliquot_sum`, `deficient?`, `deficiency`, `abundant?`, `abundance`, `abundancy_index`, `composite?` |
 
 ---
 
@@ -379,22 +386,21 @@
  * remove func{∞?} from Class(`String`)
  * add `ORM`{`RuuubyGem`}, some functionality was added; also removed runtime constants needed solely for unit-tests (these tests are now semi-generated w/ `ORM` data)
  * add `RSpec` section for `locale` (local configs); `(not final design)`
- * (`f22`) will now be designated for `GC` and the `GC::Profiler`, previous `f22` moved to {`f28_b12`}
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/virtual/f06.rb` |  |  | `f06` |
-| `app/models/ruuuby_gem.rb` | `RuuubyGem` |  | `f15` |
-| `lib/virtual/f28.rb` |  |  | `f28` |
-| `lib/math/complex_analysis/complex_analysis.rb` | `Math::ComplexAnalysis` | not currently in use | `f30` |
-| `lib/math/trigonometry/trigonometry.rb` | `Math::Trigonometry` | not currently in use | `f30` |
-| `lib/math/graph_theory/graph_theory.rb` | `Math::GraphTheory` | not currently in use | `f30` |
-| `lib/math/geometry/geometry.rb` | `Math::Geometry` | not currently in use | `f30` |
-| `lib/math/space/discrete/symbolic_numbers_space.rb` | `Math::Space::SymbolicNumbersSpace` | 𝕊 | `f30` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `lib/virtual/f06.rb` |  |  |
+| `app/models/ruuuby_gem.rb` | `RuuubyGem` |  |
+| `lib/virtual/f28.rb` |  |  |
+| `lib/math/complex_analysis/complex_analysis.rb` | `Math::ComplexAnalysis` | |
+| `lib/math/trigonometry/trigonometry.rb` | `Math::Trigonometry` | |
+| `lib/math/graph_theory/graph_theory.rb` | `Math::GraphTheory` | |
+| `lib/math/geometry/geometry.rb` | `Math::Geometry` | | |
+| `lib/math/space/discrete/symbolic_numbers_space.rb` | `Math::Space::SymbolicNumbersSpace` | 𝕊 |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Object` | `ⓣ`, `Ⓣ` | `f06` |
+| for | method(s) added |
+| --- | --- |
+| `Object` | `ⓣ`, `Ⓣ` |
 
 ---
 
@@ -402,25 +408,25 @@
  * remove func{`get_prime_factors`} from `Integer`, newly created module{`Math::NumberTheory`} now offers that functionality
  * local git-config settings are now enforced with newly created `💎.api_git`, version-automation refactorings started
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/math/expression/equation.rb` | `Math::Expression::Equation` | not currently in use | `f10` |
-| `lib/math/expression/sequence.rb` | `Math::Expression::Sequence` | not currently in use | `f10` |
-| `lib/math/group_theory/circle_group.rb` | `Math::GroupTheory::CircleGroup` | not currently in use, aliased via(`𝕋`) | `f30` |
-| `lib/ruuuby/ruuuby/git_api.rb` | `Ruuuby::MetaData::GitAPI` | `💎.api_git` (to fully replace existing `git` functionality found in `💎.api` and elsewhere) | `f31` |
-| `lib/math/number_theory/number_theory.rb` | `Math::Ruuuby::NumberTheory` |  | `f32` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `lib/math/expression/equation.rb` | `Math::Expression::Equation` | |
+| `lib/math/expression/sequence.rb` | `Math::Expression::Sequence` | |
+| `lib/math/group_theory/circle_group.rb` | `Math::GroupTheory::CircleGroup` | aliased via(`𝕋`) |
+| `lib/ruuuby/ruuuby/git_api.rb` | `Ruuuby::MetaData::GitAPI` | `💎.api_git` (to fully replace existing `git` functionality found in `💎.api` and elsewhere) |
+| `lib/math/number_theory/number_theory.rb` | `Math::Ruuuby::NumberTheory` |  |
 
-| module | class-method(s) added | feature(s) |
-| --- | --- | --- |
-| `Math::NumberTheory::ℕ¹` | `get_prime_factors`, `get_divisors`, `get_proper_divisors`, `perfect_number?` | `f32` |
-| `Math::NumberTheory::ℕ²` | `gcd`, `coprime?` | `f32` |
+| for | class-method(s) added |
+| --- | --- |
+| `Math::NumberTheory::ℕ¹` | `get_prime_factors`, `get_divisors`, `get_proper_divisors`, `perfect_number?` |
+| `Math::NumberTheory::ℕ²` | `gcd`, `coprime?` |
 
 ---
 
 # `v0.0.35`
  * add `gem 'rugged', '~> 1.0.0'`
  * apply general clean-ups, next few versions to have similar target
- * (`f98`): remove many function calls and variables that didn't need to be executed or exist; start adding extra checks via{`mkmf`} which will halt/fail even before the compilations step
+ * remove many function calls and variables that didn't need to be executed or exist; start adding extra checks via{`mkmf`} which will halt/fail even before the compilations step
  * remove alias `🧬?`, `🧬` is now a 'global-alias' for the singleton{`NucleotideLikeSpace`}
  * remove alias `🅱️?`, `🛑🅱️❓`, etc; just `🅱` is now a 'global-alias' for the single{`BooleanLikeSpace`}
  * remove funcs{`stry?`, `countable?`} and{`🛑stry❓`, `🛑countable❓`}
@@ -430,84 +436,84 @@
  * add more detail to various `ORM` features/funcs, documentation and TDD still intentionally not fully present for these
  * add class `DescriptiveStandardError`
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/math/expression/expression.rb` |  | not currently in use | `f10` |
-| `lib/math/expression/formula.rb` |  | not currently in use | `f10` |
-| `lib/math/space/tuple_space.rb` |  |  | `f30` |
-| `lib/math/space/types_space.rb` |  |  | `f30` |
-| `lib/math/space/discrete/boolean-like_space.rb` | ``Math::Space::BooleanLikeSpace`` |  | `f30` |
-| `lib/math/space/discrete/number-like_space.rb` | ``Math::Space::NumberLikeSpace`` |  | `f30` |
-| `lib/math/space/discrete/nucleotide-like_space.rb` | ``Math::Space::NucleotideLikeSpace`` |  | `f30` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `lib/math/expression/expression.rb` |  | |
+| `lib/math/expression/formula.rb` |  |  |
+| `lib/math/space/tuple_space.rb` |  |  |
+| `lib/math/space/types_space.rb` |  |  |
+| `lib/math/space/discrete/boolean-like_space.rb` | ``Math::Space::BooleanLikeSpace`` |  |
+| `lib/math/space/discrete/number-like_space.rb` | ``Math::Space::NumberLikeSpace`` |  |
+| `lib/math/space/discrete/nucleotide-like_space.rb` | ``Math::Space::NucleotideLikeSpace`` |  |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `TrueClass`, `FalseClass` | `to_i`, `to_b` | `f06` |
-| `Rational` | `μ?` | `f10` |
-| `String` | `to_🐫⬇`, `to_🐍⬆` | `f24` |
+| for | method(s) added |
+| --- | --- |
+| `TrueClass`, `FalseClass` | `to_i`, `to_b` |
+| `Rational` | `μ?` |
+| `String` | `to_🐫⬇`, `to_🐍⬆` |
 
 # `v0.0.34`
  * increase precision of various funcs (ex: `sin²` and `cos²`), by performing calculations in `long double` instead of `double`
  * add `𝞽` as a 'global-const' which is a ThetaAngle representing a single complete turn
  * adjust parameter style of class-functions for `Math` to use named params
  * remove global-alias-funcs{`ℂ`, `ℚ`}; these now correspond to a specific singleton instance of the newly created class(`Math::SetTheory::NumberSet`)
- * (`f28`): add `super golden ratio` as `Ψ`, `silver ratio` as `δ`, `plastic ratio` as `ρ`, `omega constant` as `Ω`
+ * add `super golden ratio` as `Ψ`, `silver ratio` as `δ`, `plastic ratio` as `ρ`, `omega constant` as `Ω`
  * remove various out-dated testing helper functions, meta-data generation/processing will eventually replace this
  * remove `Array::EMPTY_INSTANCE`, `∅` by itself now aliases a singleton of type{`NumberSet`}
- * (`f15`): create `ORM`{`RuuubyFeatureBehavior`} which is many to one{`RuuubyFeature`}
+ * create `ORM`{`RuuubyFeatureBehavior`} which is many to one{`RuuubyFeature`}
  * remove number-set membership check funcs from `Numerics` and create `singleton` instances of `NumberSet` which covers the previous functionality (just more scalable)
  * remove as much deprecated code as possible, file structure adjustments started
- * (`f98`): move `Float`'s method{`≈≈`} into `C-extensions`
+ * move `Float`'s method{`≈≈`} into `C-extensions`
  * remove funcs (and related ones): `🛑ℤ❓` and `🛑𝕌❓`, these checks are now covered by existing functions w/ new types of normalizers added for existing normalizer feature
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/math/set_theory/closure.rb` | ``Math::SetTheory::Closure`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/number_set.rb` | ``Math::SetTheory::NumberSet`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/algebraic_numbers.rb` | ``Math::SetTheory::AlgebraicNumbers`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/boolean_numbers.rb` | ``Math::SetTheory::BooleanNumbers`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/complex_numbers.rb` | ``Math::SetTheory::ComplexNumbers`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/empty_set.rb` | ``Math::SetTheory::EmptySet`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/imaginary_numbers.rb` | ``Math::SetTheory::ImaginaryNumbers`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/integer_numbers.rb` | ``Math::SetTheory::IntegerNumbers`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/irrational_numbers.rb` | ``Math::SetTheory::IrrationalNumbers`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/natural_numbers.rb` | ``Math::SetTheory::NaturalNumbers`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/null_set.rb` | ``Math::SetTheory::NullSet`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/rational_numbers.rb` | ``Math::SetTheory::RationalNumbers`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/real_algebraic_numbers.rb` | ``Math::SetTheory::RealAlgebraicNumbers`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/real_numbers.rb` | ``Math::SetTheory::RealNumbers`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/universal_set.rb` | ``Math::SetTheory::UniversalSet`` |  | `f11` |
-| `lib/ruuuby/math/set_theory/discrete/whole_numbers.rb` | ``Math::SetTheory::WholeNumbers`` |  | `f11` |
-| `app/models/ruuuby_feature_behavior.rb` |  |  | `f15` |
-| `ext/ruby_class_mods/c4_theta_angle.h` |  | for organization | `f27` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/math/set_theory/closure.rb` | ``Math::SetTheory::Closure`` |  |
+| `lib/ruuuby/math/set_theory/number_set.rb` | ``Math::SetTheory::NumberSet`` |  |
+| `lib/ruuuby/math/set_theory/discrete/algebraic_numbers.rb` | ``Math::SetTheory::AlgebraicNumbers`` |  |
+| `lib/ruuuby/math/set_theory/discrete/boolean_numbers.rb` | ``Math::SetTheory::BooleanNumbers`` |  |
+| `lib/ruuuby/math/set_theory/discrete/complex_numbers.rb` | ``Math::SetTheory::ComplexNumbers`` |  |
+| `lib/ruuuby/math/set_theory/discrete/empty_set.rb` | ``Math::SetTheory::EmptySet`` |  |
+| `lib/ruuuby/math/set_theory/discrete/imaginary_numbers.rb` | ``Math::SetTheory::ImaginaryNumbers`` |  |
+| `lib/ruuuby/math/set_theory/discrete/integer_numbers.rb` | ``Math::SetTheory::IntegerNumbers`` |  |
+| `lib/ruuuby/math/set_theory/discrete/irrational_numbers.rb` | ``Math::SetTheory::IrrationalNumbers`` |  |
+| `lib/ruuuby/math/set_theory/discrete/natural_numbers.rb` | ``Math::SetTheory::NaturalNumbers`` |  |
+| `lib/ruuuby/math/set_theory/discrete/null_set.rb` | ``Math::SetTheory::NullSet`` |  |
+| `lib/ruuuby/math/set_theory/discrete/rational_numbers.rb` | ``Math::SetTheory::RationalNumbers`` |  |
+| `lib/ruuuby/math/set_theory/discrete/real_algebraic_numbers.rb` | ``Math::SetTheory::RealAlgebraicNumbers`` |  |
+| `lib/ruuuby/math/set_theory/discrete/real_numbers.rb` | ``Math::SetTheory::RealNumbers`` |  |
+| `lib/ruuuby/math/set_theory/discrete/universal_set.rb` | ``Math::SetTheory::UniversalSet`` |  |
+| `lib/ruuuby/math/set_theory/discrete/whole_numbers.rb` | ``Math::SetTheory::WholeNumbers`` |  |
+| `app/models/ruuuby_feature_behavior.rb` |  |  |
+| `ext/ruby_class_mods/c4_theta_angle.h` |  | for organization |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Object` | `set?`, `🛑set❓` | `f06` |
-| `Integer` | `get_prime_factors` | `f17` |
-| `ThetaAngle` | `normalize`, `windings` | `f28` |
+| for | method(s) added |
+| --- | --- |
+| `Object` | `set?`, `🛑set❓` |
+| `Integer` | `get_prime_factors` |
+| `ThetaAngle` | `normalize`, `windings` |
 
 ---
 
 # `v0.0.33`
- * (`f98`): create new Class(`ThetaAngle`) which is essentially a wrapper over a `C-struct`
+ * create new Class(`ThetaAngle`) which is essentially a wrapper over a `C-struct`
  * modify global-funcs `sin`, `cos`, `tan`, etc to utilize the `ThetaAngle` class
  * add empty code file(`lib/ruuuby/class/method/math_function.rb`) for future versions
  * apply lots of misc clean-ups and/or adjustments
  * `v0.0.34` to resolve missing parts from `ThetaAngle` and clean-up relating funcs from `String`
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/class/nums/theta_angle.rb` | `ThetaAngle` |  | `f27` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/class/nums/theta_angle.rb` | `ThetaAngle` |  |
 
-| class / module | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Object` | `θ?`, `🛑θ❓`, `enumerable?`, `🛑enumerable❓` | `f06` |
-| `Math` | `pythagoras_τ³?`, `cot`, `csc`, `sec`, `sin²`, `cos²` | `f17` |
-| `TOPLEVEL_BINDING` | `℮`, `logₑ`, `log₂`, `log₁₀`, `arcsin`, `arccos`, `arctan`, `cot`, `csc`, `sec`, `sin²`, `cos²` | `f17` |
-| `TOPLEVEL_BINDING` | `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒` | `f17` |
-| `TOPLEVEL_BINDING` | `θ°`, `θʳ`, `θᵍ`, `θ𝞽` | `f27` |
-| `ThetaAngle` | `real`, `repr`, `as_radian`, `as_degree`, `as_gon`, `as_turn`, `radians?`, `degrees?`, `gons?`, `turns?`, `-@`, `+@`, `coerce`, `~`, `!`, `+`, `-`, `*`, `%`,`==`, `/`, `<=>`, `angle?`, `normal?`, `normalize!`, `golden_with?`, `explementary_with?`, `supplementary_with?`, `complementary_with?`, | `f27` |
+| for | method(s) added |
+| --- | --- |
+| `Object` | `θ?`, `🛑θ❓`, `enumerable?`, `🛑enumerable❓` |
+| `Math` | `pythagoras_τ³?`, `cot`, `csc`, `sec`, `sin²`, `cos²` |
+| `TOPLEVEL_BINDING` | `℮`, `logₑ`, `log₂`, `log₁₀`, `arcsin`, `arccos`, `arctan`, `cot`, `csc`, `sec`, `sin²`, `cos²` |
+| `TOPLEVEL_BINDING` | `⅓`, `⅕`, `⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`, `⅛`, `⅜`, `⅝`, `⅞`, `⅑`, `⅒` |
+| `TOPLEVEL_BINDING` | `θ°`, `θʳ`, `θᵍ`, `θ𝞽` |
+| `ThetaAngle` | `real`, `repr`, `as_radian`, `as_degree`, `as_gon`, `as_turn`, `radians?`, `degrees?`, `gons?`, `turns?`, `-@`, `+@`, `coerce`, `~`, `!`, `+`, `-`, `*`, `%`,`==`, `/`, `<=>`, `angle?`, `normal?`, `normalize!`, `golden_with?`, `explementary_with?`, `supplementary_with?`, `complementary_with?`, |
 
 | from       | methods/aliases removed |
 | ---------- | ----------------------- |
@@ -516,44 +522,44 @@
 ---
 
 # `v0.0.32`
- * (`f98`) add flags to the compilation and linker steps (`wip`); replace locations in `C-extensions` that were previously accessing pointers not intended to be used beyond its internal scope (internal to `Ruby`)
+ * add flags to the compilation and linker steps (`wip`); replace locations in `C-extensions` that were previously accessing pointers not intended to be used beyond its internal scope (internal to `Ruby`)
  * global-func(`φ`) removed, reference replaced with(`𝚽`), a `Kernel` constant; also add the golden-angle constant(`Ⴔ`)
  * start utilizing more generic math notation where possible, ex-func(`∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎`), very useful as this automatically applies (for example) to both regular objects like `Array` and also `ORM` objects like `RuuubyRelease` while still applicable to both
  * `v0.0.33` to utilize `golden-angle` as well as dramatically alter angle-trig related functions
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/module/attribute/includable/singleton.rb` | `Ruuuby::Attribute::Includable::RuuubySingleton` |  | `f10` |
-| `lib/ruuuby/module/attribute/extendable/singleton.rb` | `Ruuuby::Attribute::Extendable::RuuubySingleton` |  | `f10` |
-| `lib/ruuuby/class/proc.rb` | ``Proc`` |  | `f10` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/module/attribute/includable/singleton.rb` | `Ruuuby::Attribute::Includable::RuuubySingleton` |  |
+| `lib/ruuuby/module/attribute/extendable/singleton.rb` | `Ruuuby::Attribute::Extendable::RuuubySingleton` |  |
+| `lib/ruuuby/class/proc.rb` | ``Proc`` |  |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Enumerable` | `∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎` | `f11` |
+| for | method(s) added |
+| --- | --- |
+| `Enumerable` | `∀τ²∈λ𝑓₍ᵢ،ᵢ₊₁₎` |
 
 ---
 
 # `v0.0.31`
  * remove constants needed previous for supporting exponential operations from m(`Numeric`), needed values are now dynamically generated by `C-extensions` instead of relying on pre-existing constants (created specifically for just this purpose)
- * (`f98`): lots of misc edits/clean-ups in `C-extensions`
+ * lots of misc edits/clean-ups in `C-extensions`
  * remove various un-used or now deprecated Modules such as `Ruuuby::MetaData::Vocabulary` (was a temporary location for `normalizers`)
  * engine/configs cleaned up and support started for multi-flag ENV_VARs
  * automation for `db/seeds/git_commits.rb` updated to better handle scenario where release had multiple commits, still lots of TODOs and missing `TDD` to be added
  * various modifications & additions to existing `ORM` Classes for general stability/reliability
  * flipped functionality of String's funcs `to_iso8601` and `as_iso8601` to closer match `Ruby style`
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/virtual/env` | ``ENV`` | note: `class << ENV` | `f10` |
-| `db/seeds/ruuuby_releases/future_ruuuby_releases.rb` |  | not currently used | `f15` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/virtual/env` | ``ENV`` | note: `class << ENV` |
+| `db/seeds/ruuuby_releases/future_ruuuby_releases.rb` |  | not currently used |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `String` | `as_utf8` | `f08` |
-| TOPLEVEL_BINDING | `¼`, `½`, `¾`, `🌽` | `f10` |
-| `File` | `insert_lines_before_expr` | `f12` |
-| `GitCommit` | `get_latest`, `query_get_newest_within_version` | `f15` |
-| `RuuubyRelease` | `on_before_save` | `f15` |
+| for | method(s) added |
+| --- | --- |
+| `String` | `as_utf8` |
+| TOPLEVEL_BINDING | `¼`, `½`, `¾`, `🌽` |
+| `File` | `insert_lines_before_expr` |
+| `GitCommit` | `get_latest`, `query_get_newest_within_version` |
+| `RuuubyRelease` | `on_before_save` |
 
 | from | methods/aliases *removed* |
 | ------------------- | --------------------- |
@@ -564,19 +570,19 @@
 # `v0.0.30`
  * add normalizers to `sym?`
  * continued ORM cleanups started in `v0.0.29`
- * add `f26` as continued step in enabling textual parsing for more useful code-file automations
+ * iterative step in enabling textual parsing for more useful code-file automations
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `app/model_attributes/extendable/uid.rb` | | | `f15` |
-| `app/model_attributes/includable/uid.rb` | | | `f15` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `app/model_attributes/extendable/uid.rb` | |
+| `app/model_attributes/includable/uid.rb` | |
 
-| (c)lass or (m)odule | method(s) added | feature(s) | notes |
-| --- | --- | --- | --- |
-| (c) `Object` | `singleton?` | `f06` | |
-| (c) `Object` | `🅱?`, `🛑🅱❓`, `🧬?` | `f10` | |
-| (m) `Module` | `get_all_defined_modules`, `get_all_defined_classes` | `f10` | |
-| (c) `String` | `iso8601?`, `to_iso8601`, `as_iso8601` | `f26` | |
+| for | method(s) added | notes |
+| --- | --- | --- |
+| `Object` | `singleton?` | |
+| `Object` | `🅱?`, `🛑🅱❓`, `🧬?` | |
+| `Module` | `get_all_defined_modules`, `get_all_defined_classes` | |
+| `String` | `iso8601?`, `to_iso8601`, `as_iso8601` | |
 
 ---
 
@@ -587,69 +593,69 @@
  * general functionality increases for `Ruuuby` `MetaData`, add global func `💎` for quicker reference
  * add logger with output in directory{`tmp`}, file{`ruuuby.log`}
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/ruuuby/engine/ruuuby_engine.rb` | `Ruuuby::MetaData::RuuubyEngine` | alias{`💎.engine`} | `f15` |
-| `lib/ruuuby/ruuuby/engine/ruuuby_logging.rb` | `Ruuuby::MetaData::RuuubyEngine.instance.logger` | alias{`💎.engine.logger`} | `f15` |
-| `lib/ruuuby/ruuuby/metadata/ruuuby_metadata_constants.rb` | ``Ruuuby::MetaData`` |  | `f15` |
-| `app/models/ruuuby_dir` | ``RuuubyDir`` | directory operations specifically for `ORM` related context/use-cases | `f15` |
-| `app/models/ruuuby_file` | ``RuuubyFile`` | file operations specifically for `ORM` related context/use-cases | `f15` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/ruuuby/engine/ruuuby_engine.rb` | `Ruuuby::MetaData::RuuubyEngine` | alias{`💎.engine`} |
+| `lib/ruuuby/ruuuby/engine/ruuuby_logging.rb` | `Ruuuby::MetaData::RuuubyEngine.instance.logger` | alias{`💎.engine.logger`} |
+| `lib/ruuuby/ruuuby/metadata/ruuuby_metadata_constants.rb` | ``Ruuuby::MetaData`` |  |
+| `app/models/ruuuby_dir` | ``RuuubyDir`` | directory operations specifically for `ORM` related context/use-cases |
+| `app/models/ruuuby_file` | ``RuuubyFile`` | file operations specifically for `ORM` related context/use-cases |
 
-| (c)lass or (m)odule | method(s) added | feature(s) | notes |
-| --- | --- | --- | --- |
-| (c) `Array` | `∅` | `f05` | starting point of adding similar immutable references like `nil` but for (assumable to be immutable) objects that are `∅` |
-| (c) `Object` | `🛑sym❓` | `f07` | |
-| (m) `Ruuuby::MetaData` | `orm`, `orm_meta`, `paths`, `engine` | `f10` | shortcuts to either modules or singleton-instanced objects |
-| (m) `Ruuuby::MetaData` | `info`, `debug` | `f10` | shortcuts for logging statements |
-| TOPLEVEL_BINDING | `ℂ`, `ℚ` | `f11` | alias to `Complex`<br/>alias to `Rational` |
-| (m) `Kernel` | `💎` | `f11` | alias to `Ruuuby::MetaData` | |
-| (c) `File` | `insert_line_before_expr` | `f13` | |
+| for | method(s) added | notes |
+| --- | --- | --- |
+| `Array` | `∅` | starting point of adding similar immutable references like `nil` but for (assumable to be immutable) objects that are `∅` |
+| `Object` | `🛑sym❓` | |
+| `Ruuuby::MetaData` | `orm`, `orm_meta`, `paths`, `engine` | shortcuts to either modules or singleton-instanced objects |
+| `Ruuuby::MetaData` | `info`, `debug` | shortcuts for logging statements |
+| TOPLEVEL_BINDING | `ℂ`, `ℚ` | alias to `Complex`<br/>alias to `Rational` |
+| `Kernel` | `💎`  | alias to `Ruuuby::MetaData` | |
+| `File` | `insert_line_before_expr` | |
 
 ---
 
 # `v0.0.28`
- * (`f15`): updating contents of `db/seeds/git_commits.rb` is now automated (starting point, LOTs of TODOs to guard against any edge case scenarios and future functionality requirements)
- * (`f06`, `f98`): move funcs `class?`, `module?`, `nucleotide?` into `C-extensions` (also add `char?`)
- * add `f24` as continued step in enabling textual parsing for more useful code-file automations
- * (`f98`): add normalizers to funcs `int?` and `str?`, allows (mainly-visual) clean-up for `Ruuuby` funcs `🛑str❓` and `🛑int❓`
+ * updating contents of `db/seeds/git_commits.rb` is now automated (starting point, LOTs of TODOs to guard against any edge case scenarios and future functionality requirements)
+ * move funcs `class?`, `module?`, `nucleotide?` into `C-extensions` (also add `char?`)
+ * iterative step in enabling textual parsing for more useful code-file automations
+ * add normalizers to funcs `int?` and `str?`, allows (mainly-visual) clean-up for `Ruuuby` funcs `🛑str❓` and `🛑int❓`
  * add types to `Ruuuby::VirtualTypes`
  * rename c(`String`)'s func{♻️until!} to {remove_until}, add alias(`♻️⟶`); also add reverse direction w/ func{`♻️⟵`}
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/ruuuby/ruuuby_orm.rb` | `Ruuuby::MetaData::RuuubyORM` |  | `f15` |
-| `lib/ruuuby/ruuuby/routine_cli.rb` | `Ruuuby::Routine::CommandCLI` |  | `f15` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/ruuuby/ruuuby_orm.rb` | `Ruuuby::MetaData::RuuubyORM` |  |
+| `lib/ruuuby/ruuuby/routine_cli.rb` | `Ruuuby::Routine::CommandCLI` |  |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `String` | `char?`,  | `f06` |
-| `String` | `♻️⟵`, `♻️⟶∞` <br/> [`upcase?`, `⬆️?`, `⬆?`, `🔠?`] <br/> [`downcase?`, `⬇️?`, `⬇?`, `🔡?`] | `f08` |
-| `String` | `🐫?`, [`🐫⬇️?`, `🐫⬇?`, `🐫🔡?`], `to_🐫` <br/> `🐍?`, [`🐍⬆️?`, `🐍⬆?`, `🐍🔠?`], `to_🐍` | `f23` |
+| for | method(s) added |
+| --- | --- |
+| `String` | `char?`,  |
+| `String` | `♻️⟵`, `♻️⟶∞` <br/> [`upcase?`, `⬆️?`, `⬆?`, `🔠?`] <br/> [`downcase?`, `⬇️?`, `⬇?`, `🔡?`] |
+| `String` | `🐫?`, [`🐫⬇️?`, `🐫⬇?`, `🐫🔡?`], `to_🐫` <br/> `🐍?`, [`🐍⬆️?`, `🐍⬆?`, `🐍🔠?`], `to_🐍` |
 
 ---
 
 # `v0.0.27`
  * contents in `db/seed.rb` split across files in newly created dir: `db/seeds/`; also add new `ORM: GitCommit`, (one `RuuubyRelease` to many `GitCommits`)
  * performing update of version number for `README.md` and `lib/ruuuby/version.rb` is now automated
- * (`f98`): m{`Module`}'s func{`⨍_add_aliases`} converted to alias the func{`f_add_aliases`} created from `C-extensions`
+ * m{`Module`}'s func{`⨍_add_aliases`} converted to alias the func{`f_add_aliases`} created from `C-extensions`
 
 | gem added | version |
 | ---: | :---- |
 | `schema_plus_foreign_keys` | `0.1.8` |
 
 
-| path added | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `db/seeds/git_commits.rb` |  |  | `f15` |
-| `db/seeds/ruuuby_features.rb` |  |  | `f15` |
-| `db/seeds/ruuuby_releases.rb` |  |  | `f15` |
-| `app/models/git_commit.rb` | `::GitCommit` |  | `f15` |
-| `lib/ruuuby/ruuuby/ruuuby_api.rb` | `::Ruuuby::RuuubyAPI` |  | `f15` |
-| `lib/ruuuby/ruuuby/routine.rb` |  | `example usage: Routine::CMD.new` | `f15` |
+| path added | reference | notes |
+| ---: | --- | --- |
+| `db/seeds/git_commits.rb` |  |  |
+| `db/seeds/ruuuby_features.rb` |  |  |
+| `db/seeds/ruuuby_releases.rb` |  |  |
+| `app/models/git_commit.rb` | `::GitCommit` |  |
+| `lib/ruuuby/ruuuby/ruuuby_api.rb` | `::Ruuuby::RuuubyAPI` |  |
+| `lib/ruuuby/ruuuby/routine.rb` |  | `example usage: Routine::CMD.new` |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `File` | `dirname⁴` | `f12` |
+| for | method(s) added |
+| --- | --- |
+| `File` | `dirname⁴` |
 
 ---
 
@@ -660,50 +666,50 @@
  * add normalizer_option(`:ℕ`) to func(🛑int❓)
  * add `RSpec` section `db`, clean-up various locations where `db/seed` was loaded before
 
-| added path | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/module/attribute/includable/notation_set_mathematics.rb` | `Ruuuby::Attribute::Includable::Notation::SetMathematics` |  | `f09` |
-| `lib/ruuuby/ruuuby/ruuuby_metadata.rb` | `Ruuuby::MetaData` | design pending | |
+| added path | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/module/attribute/includable/notation_set_mathematics.rb` | `Ruuuby::Attribute::Includable::Notation::SetMathematics` |  |
+| `lib/ruuuby/ruuuby/ruuuby_metadata.rb` | `Ruuuby::MetaData` | design pending |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Module` | `⨍_add_aliases` | `f10` |
-| `File` | `replace_expr_with`, `replace_expr_with!` | `f12` |
-| `RuuubyRelease` | `<`, `>`, `get_next_version_uid`, `get_latest_version_uid` | `f15` |
+| class | method(s) added |
+| --- | --- |
+| `Module` | `⨍_add_aliases` |
+| `File` | `replace_expr_with`, `replace_expr_with!` |
+| `RuuubyRelease` | `<`, `>`, `get_next_version_uid`, `get_latest_version_uid` |
 
-| class | alias(es) added | feature(s) |
-| --- | --- | --- |
-| `Object` | (freeze) `❄`, `❄?` | `f10` |
+| class | alias(es) added |
+| --- | --- |
+| `Object` | (freeze) `❄`, `❄?` |
 
 ---
 
 # `v0.0.25`
- * start dividing (`f98`)/`C-code` across multiple header files, lots of small misc changes (ex: moved various constants definitions from `Ruuuby's` `Float`)
+ * start dividing `C-code` across multiple header files, lots of small misc changes (ex: moved various constants definitions from `Ruuuby's` `Float`)
  * re-structure `Feature` <---> `Module` mapping, add `audit` tests to verify pattern is present/consistent
  * move certain funcs out of `Kernel` and directly add them to `TOPLEVEL_BINDING` to avoid polluting other classes
- * (`f00`) start formalization of existing funcs w/ name(`η̂`, `normalize`) and/or when `normalization` is applied to `args` (any context)
+ * start formalization of existing funcs w/ name(`η̂`, `normalize`) and/or when `normalization` is applied to `args` (any context)
  * symbolic-math support being added only for niche use-cases, `automatic-differentiation` features to take priority in case of any feature-conflicts
 
-| added path | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/global_funcs.rb` |  |  | `f15` |
-| `ext/ruby/class_mods/c0_constants.h` |  |  | `f98` |
-| `ext/ruby/class_mods/c1_typed_checks.h` |  |  | `f98` |
-| `ext/ruby/class_mods/c2_extension_memory.h` |  |  | `f98` |
-| `ext/ruby/class_mods/c3_macro_utilities.h` |  |  | `f98` |
+| added path | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/global_funcs.rb` |  |  |
+| `ext/ruby/class_mods/c0_constants.h` |  |  |
+| `ext/ruby/class_mods/c1_typed_checks.h` |  |  |
+| `ext/ruby/class_mods/c2_extension_memory.h` |  |  |
+| `ext/ruby/class_mods/c3_macro_utilities.h` |  |  |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `String` | `♻️until!` | `f08` |
-| `TOPLEVEL_BINDING` | `tan`, `tan°` | `f17` |
-| `String` | `to_radian` | `f17` |
+| for | method(s) added |
+| --- | --- |
+| `String` | `♻️until!` |
+| `TOPLEVEL_BINDING` | `tan`, `tan°` |
+| `String` | `to_radian` |
 
-| class | alias(es) added | feature(s) |
-| --- | --- | --- |
-| `Array` | (remove_empty!): `♻️∅!` | `f10` |
-| `Set` | (remove_empty!): `♻️∅!` | `f10` |
-| `String` | (reverse): `↩️`, `↩️!`, `↩`, `↩!` | `f10` |
-| `Array` | (reverse): `↩`, `↩!`, `↩∀` | `f10` |
+| for | alias(es) added |
+| --- | --- |
+| `Array` | (remove_empty!): `♻️∅!` |
+| `Set` | (remove_empty!): `♻️∅!` |
+| `String` | (reverse): `↩️`, `↩️!`, `↩`, `↩!` |
+| `Array` | (reverse): `↩`, `↩!`, `↩∀` |
 
 ---
 
@@ -711,98 +717,95 @@
  * ensure `Ruby` data created from `C-extensions` gets guarded against `garbage-collection`
  * start utilizing configs for `Ruuuby`, especially for debugging information
 
-| added path | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/configs.rb` |  |  | `f23` |
+| added path | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/configs.rb` |  |  |
 
 ---
 
 # `v0.0.23`
  * (starting-point) add support for representing `Complex Infinity`; (for now) via Symbol(`∞ℂ`)
- * add Feature(`f03`) and Attribute(`SubscriptIndexing`) to Class(`Symbol`)
+ * add Attribute(`SubscriptIndexing`) to Class(`Symbol`)
  * add missing tests and fix bugs (missing scenario coverage) for c(`Object`)'s funcs `🛑ℤ❓` and `🛑𝕌❓`
  * `power-operations` given support for working with 'custom' `infinitity values`, Class(`Rational`) given support for `superscript-power-operations`
- * various consts defined into c(`Float`) but to soon be moved into (`f98`)
  
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Kernel` | `¿`, `∞`, `∞ℂ` | `f10`, `f17` |
-| `Integer` | `¿?`, `nan?`, `∞ℂ?` | `f17` |
-| `Float` | `¿?`, `∞ℂ?` | `f17` |
-| `Symbol` | `power?`, `pow_to_i` | `f16` |
-| `Rational` | `^` | `f16` |
+| for | method(s) added |
+| --- | --- |
+| `Kernel` | `¿`, `∞`, `∞ℂ` |
+| `Integer` | `¿?`, `nan?`, `∞ℂ?` |
+| `Float` | `¿?`, `∞ℂ?` |
+| `Symbol` | `power?`, `pow_to_i` |
+| `Rational` | `^` |
 
 ---
 
 # `v0.0.22`
  * continued (minor) improvements to catching bad parameters & throwing needed errors
- * (`f98`) add func(`err_to_num`) to class(`String`) as a utility function for throwing errors
+ * add func(`err_to_num`) to class(`String`) as a utility function for throwing errors
  * start organizing groups of functions into modules labeled by their `Feature` or `Attribute` (`includable` or `extendable`)
  * tech debt accumulation to be dealt with by `v0.1.0` to remove all `🍝 code` prior to adding support to `automatic differentiation`
 
-| added path | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/class/sym.rb` | `Symbol` |  | `f10` |
-| `lib/ruuuby/module/attribute/includable/cardinality.rb` | `Ruuuby::Attribute::Includable::Cardinality` |  | `f04` |
-| `lib/ruuuby/module/attribute/includable/subscript_indexing.rb` | `Ruuuby::Attribute::Includable::SubscriptIndexing` |  | `f10` |
-| `lib/ruuuby/module/attribute/includable/syntax_cache.rb` | `Ruuuby::Attribute::Includable::SyntaxCache` |  | `f10` |
-| `lib/ruuuby/module/attribute/extendable/syntax_cache.rb` | `Ruuuby::Attribute::Extendable::SyntaxCache` |  | `f10` |
+| added path | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/class/sym.rb` | `Symbol` |  |
+| `lib/ruuuby/module/attribute/includable/cardinality.rb` | `Ruuuby::Attribute::Includable::Cardinality` |  |
+| `lib/ruuuby/module/attribute/includable/subscript_indexing.rb` | `Ruuuby::Attribute::Includable::SubscriptIndexing` |  |
+| `lib/ruuuby/module/attribute/includable/syntax_cache.rb` | `Ruuuby::Attribute::Includable::SyntaxCache` |  |
+| `lib/ruuuby/module/attribute/extendable/syntax_cache.rb` | `Ruuuby::Attribute::Extendable::SyntaxCache` |  |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Object` | `🛑𝕌❓` | `f06` |
-| `Array` | `η̂!` | `f08` |
-| `Symbol` | (downcase, upcase) `⬇️`, `⬇`, `🔡`, `⬆️`, `⬆`, `🔠` | `f10` |
-| `String` | (downcase, upcase) `⬇️`, `⬇`, `🔡`, `⬆️`, `⬆`, `🔠`, `⬇️!`, `⬇!`, `🔡!`, `⬆️!`, `⬆!`, `🔠!` | `f10` |
-| `Enumerable` | `∀ₓᵢ` (each_with_index) | `f10` |
-| `Object` | `define_singleton_⨍` (define_singleton_function) | `f10` |
-| `Kernel` | `🌽_previous_⨍` | `f10` |
-| `String` | `digit?`, `to_num`, `to_num?` | `f21` |
+| for | method(s) added |
+| --- | --- |
+| `Object` | `🛑𝕌❓` |
+| `Array` | `η̂!` |
+| `Symbol` | (downcase, upcase) `⬇️`, `⬇`, `🔡`, `⬆️`, `⬆`, `🔠` |
+| `String` | (downcase, upcase) `⬇️`, `⬇`, `🔡`, `⬆️`, `⬆`, `🔠`, `⬇️!`, `⬇!`, `🔡!`, `⬆️!`, `⬆!`, `🔠!` |
+| `Enumerable` | `∀ₓᵢ` (each_with_index) |
+| `Object` | `define_singleton_⨍` (define_singleton_function) |
+| `Kernel` | `🌽_previous_⨍` |
+| `String` | `digit?`, `to_num`, `to_num?` |
 
 ---
 
 # `v0.0.21`
  * add const `NUCLEOTIDES` to `Ruuuby::VirtualTypes`
  * add missing scenarios & tests for `spec/helpers/static_test_data.rb`
- * rename m(`Module`)'s func(`∃func?`) to(`∃⨍?`)
- * rename m(`Module`)'s func(`∃func_alias?`) to(`∃⨍_alias?`)
- * (`f98`) add `global-constant`(`$PRM_MANY`), param-type checking functions expanded for multi-param check use-cases
+ * add `global-constant`(`$PRM_MANY`), param-type checking functions expanded for multi-param check use-cases
  * add modules `ORMAttributeUID` and `ORMAttributeCache` to `ApplicationRecord` as well as module(`Syntax`), which each `ORM Class` will also define
 
-| added path | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `bin/console_db` |  | same as `/bin/console` but also pre-loads `db/seed.rb` |  |
-| `lib/ruuuby/class/re.rb` | `Regexp` |  | `f20` |
-| `app/models/db_schema.rb` | `RuuubyDBSchema` | `temporary design` | `f15` |
-| `lib/ruuuby/module/attribute_extendable/static_attribute_syntax_cache` | `Ruuuby::StaticAttributeSyntaxCache` | | |
+| added path | reference | notes |
+| ---: | --- | --- |
+| `bin/console_db` |  | same as `/bin/console` but also pre-loads `db/seed.rb` |
+| `lib/ruuuby/class/re.rb` | `Regexp` |  |
+| `app/models/db_schema.rb` | `RuuubyDBSchema` | `temporary design` |
+| `lib/ruuuby/module/attribute_extendable/static_attribute_syntax_cache` | `Ruuuby::StaticAttributeSyntaxCache` | |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Object` | `class?`, `module?`, `nucleotide?` | `f06` |
-| `Module` | `∋?`, `∌?`, `∈?`, `∉?` | `f09` |
-| `Object` | `🛑ℤ❓` | `f14` |
+| for | method(s) added |
+| --- | --- |
+| `Object` | `class?`, `module?`, `nucleotide?` |
+| `Module` | `∋?`, `∌?`, `∈?`, `∉?` |
+| `Object` | `🛑ℤ❓` |
 
 ---
 
 # `v0.0.20`
- * (`f98`) add consts `RATIO_DEGREES_TO_RADIAN` and `RATIO_RADIANS_TO_DEGREE` into module `Math`
+ * add consts `RATIO_DEGREES_TO_RADIAN` and `RATIO_RADIANS_TO_DEGREE` into module `Math`
  * power-operations for `Integer` and `Float` given support for raising from `-1` to `-9` via superscripts(`⁻¹` to `⁻⁹`)
 
-| added path | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/module/math.rb` | ``Math`` |  | `f17` |
-| `help/math/automatic_differentiation.rb` |  | `Ruuuby's` current main focus to add functionality support to | `f19` |
+| added path | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/module/math.rb` | ``Math`` |  |
+| `help/math/automatic_differentiation.rb` |  | `Ruuuby's` current main focus to add functionality support to |
 
-| class | method(s) added | feature(s) |
+| for | method(s) added |
 | --- | --- | --- |
-| `Object` | `🛑flt❓` | `f06` |
-| `Float` | `≈≈` | `f17` |
-| `Kernel` | `sin` | `f17` |
-| `Kernel` | `sin°` | `f17` |
-| `Kernel` | `cos` | `f17` |
-| `Kernel` | `cos°` | `f17` |
-| `Kernel` | `∠ᶜ` | `f17` |
-| `Kernel` | `∠°` | `f17` |
+| `Object` | `🛑flt❓` |
+| `Float` | `≈≈` |
+| `Kernel` | `sin` |
+| `Kernel` | `sin°` |
+| `Kernel` | `cos` |
+| `Kernel` | `cos°` |
+| `Kernel` | `∠ᶜ` |
+| `Kernel` | `∠°` |
 
 ---
 
@@ -815,13 +818,13 @@
  * `ruby_class_mods.c` to start using `non-ascii` based `#define` statements
  * start adding code for negative-exponents
  
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `File`, `Dir` | `∅?` | `f04` |
-| `ApplicationRecord` | `♻️`, `♻️!` | `f10` |
-| `Kernel` | `🎲`, `∛`, `π`, `φ`, `γ` | `f10` |
-| `Object` | `⁻¹`, `⁻²`, `⁻³`, `⁻⁴`, `⁻⁵`, `⁻⁶`, `⁻⁷`, `⁻⁸`, `⁻⁹` | `f16` |
-| `Dir` | `normalized_paths` | `f12` |
+| for | method(s) added |
+| --- | --- |
+| `File`, `Dir` | `∅?` |
+| `ApplicationRecord` | `♻️`, `♻️!` |
+| `Kernel` | `🎲`, `∛`, `π`, `φ`, `γ` |
+| `Object` | `⁻¹`, `⁻²`, `⁻³`, `⁻⁴`, `⁻⁵`, `⁻⁶`, `⁻⁷`, `⁻⁸`, `⁻⁹` |
+| `Dir` | `normalized_paths` |
 
 ---
 
@@ -832,51 +835,51 @@
  * start process of tracking language changes across versions into `ORM`/`db`
    * start process of auto-generating documentation from these objects
 
-| added path | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/ruuuby/class/io/file.rb` | `File` |  | `f12` |
-| `lib/ruuuby/class/io/dir.rb` | `Dir` |  | `f12` |
-| `lib/ruuuby/types.rb` | `Ruuuby::VirtualTypes` | adds (module-scoped) constants `🅱️`, `STRY`, `NUMS`, `COUNTABLES`  | `f06` |
-| `app/models/application_record.rb` | `ApplicationRecord` |  | `f15` |
-| `app/models/ruuuby_changelog.rb` | `RuuubyChangelog` |  | `f15` |
-| `app/models/ruuuby_feature.rb` | `RuuubyFeature` |  | `f15` |
-| `app/models/ruuuby_release.rb` | `RuuubyRelease` |  | `f15` |
-| `lib/ruuuby/class/method.rb` | `Method`` |  |  |
-| `conditionals/ide_helper.rb` |  | received all duplicated aliases (for playing nice with IDEs, happens from funcs created in `C-extension`)  |  |
-| `db/db.rb` |  |  | `f15` |
-| `db/seed.rb` |  |  | `f15` |
+| added path | reference | notes |
+| ---: | --- | --- |
+| `lib/ruuuby/class/io/file.rb` | `File` |  |
+| `lib/ruuuby/class/io/dir.rb` | `Dir` |  |
+| `lib/ruuuby/types.rb` | `Ruuuby::VirtualTypes` | adds (module-scoped) constants `🅱️`, `STRY`, `NUMS`, `COUNTABLES`  |
+| `app/models/application_record.rb` | `ApplicationRecord` |  |
+| `app/models/ruuuby_changelog.rb` | `RuuubyChangelog` |  |
+| `app/models/ruuuby_feature.rb` | `RuuubyFeature` |  |
+| `app/models/ruuuby_release.rb` | `RuuubyRelease` |  |
+| `lib/ruuuby/class/method.rb` | `Method`` |  |
+| `conditionals/ide_helper.rb` |  | received all duplicated aliases (for playing nice with IDEs, happens from funcs created in `C-extension`)  |
+| `db/db.rb` |  |  |
+| `db/seed.rb` |  |  |
 
-| class(es) | method(s) added | feature(s) |
-| --- | --- | --- |
-| `File`, `Dir` | `∃?` | `f12` |
-| `File` | `dirname²`, `dirname³` | `f12` |
-| `Kernel` | `📁` (`File`), `📂` (`File`), `🗄️` (`Dir`) | `f12` |
-| `Object` | `flt?`, `num?` | `f06` |
-| `Integer`, `Numeric` | `♾️?` (infinite?) | `f11` |
-| `Method` | `🏠` (`source_location`) | `f10` |
+| class(es) | method(s) added |
+| --- | --- |
+| `File`, `Dir` | `∃?` |
+| `File` | `dirname²`, `dirname³` |
+| `Kernel` | `📁` (`File`), `📂` (`File`), `🗄️` (`Dir`) |
+| `Object` | `flt?`, `num?` |
+| `Integer`, `Numeric` | `♾️?` (infinite?) |
+| `Method` | `🏠` (`source_location`) |
 
 ---
 
 # `0.0.17`
 
 #### Abstract
- * (`f15`): start general, wide-scale, re-structuring to manage changes into categorized `features`
+ * start general, wide-scale, re-structuring to manage changes into categorized `features`
 
 #### Discrete
  * continued audit on number classes (see notes from v`0.0.15-16`)
  * for math related `RSpecs`, move common/shared `let` definitions into `spec_helper.rb`, add additional ones to form a general schema for testing data
  
 #### Methods & Aliases:
- | (c)lass or (m)odule                  | methods/aliases added | feature |
- | ------------------------------------ | --------------------- | ------- |
- | (m) `Kernel`                         | `𝔠`                   | `f03` |
- | (c) `String`, `Set`, `Array`, `Hash` | `𝔠` (length)          | `f03` |
- | (c) `Class`                          | `🆕` (new)            | `f10` |
- | (c) `Object`                         | `⁰`, `¹`, `²`, `³`, `⁴`, `⁵`, `⁶`, `⁷`, `⁸`, `⁹` | `f16` |
- | (c) `Object` | `🛡️funcs` (protected_methods), `🙈funcs` (private_methods) | [`f01`, `f02`] |
- | (m) `Module` | `🛡️` (protected), `∃🛡️func?` (protected_method_defined?), `🛡️instance_funcs` (protected_instance_methods), `🙈instance_funcs` (private_instance_methods), `🙈class_func` (private_class_method) | [`f01`, `f02`] |
- | (c) `Integer`                        | `^`, `preserved_reference_to_bitwise_or` | `f16` |
- | (c) `Float`                          | `^` | `f16` |
+ | for                              | methods/aliases added |
+ | -------------------------------- | --------------------- |
+ | `Kernel`                         | `𝔠`                   |
+ | `String`, `Set`, `Array`, `Hash` | `𝔠` (length)          |
+ | `Class`                          | `🆕` (new)            |
+ | `Object`                         | `⁰`, `¹`, `²`, `³`, `⁴`, `⁵`, `⁶`, `⁷`, `⁸`, `⁹` |
+ | `Object` | `🛡️funcs` (protected_methods), `🙈funcs` (private_methods) |
+ | `Module` | `🛡️` (protected), `∃🛡️func?` (protected_method_defined?), `🛡️instance_funcs` (protected_instance_methods), `🙈instance_funcs` (private_instance_methods), `🙈class_func` (private_class_method) |
+ | `Integer`                        | `^`, `preserved_reference_to_bitwise_or` |
+ | `Float`                          | `^` |
 
 #### Files Added:
  * `ruuuby/class/class.rb`
@@ -889,17 +892,17 @@
  * add first multi-step audit test against project file structure (will require better solution, just a starting point)
  * add/move the following methods/aliases:
 
- | (c)lass or (m)odule                  | methods/aliases added/moved                               | feature |
- | ------------------------------------ | --------------------------------------------------------- | ------- |
- | (c) `Array`                          | `equal_contents?` (`≈≈` now aliases it)                   |
- | (c) `Array`                          | `frequency_counts` (`📊` now aliases it)                  |
- | (c) `Array`                          | `disjunctive_union` (`⊕` now aliases it)                  |
- | (c) `Array`                          | `↩️` (reverse), `↩️!` (reverse!), `↩️∀` (reverse_each)   |
- | (c) `Object`                         | `🅱️?` (alias to `bool?`), `🛑🅱️❓`                       |
- | (c) `Integer`                        | `∞?`, `𝕌?`                                                |
- | (c) `Float`, `Complex`, `BigDecimal` | `𝕌?`                                                      |
- | (c) `Numeric`                        | `𝕌?`, `𝔹?`                                                |
- | (c) `Hash`                           | `🗝?`, `∃🗝?` (both alias `key?`, same as `🔑?`, `∃🔑?`) |
+ | for                              | methods/aliases added/moved                               |
+ | -------------------------------- | --------------------------------------------------------- |
+ | `Array`                          | `equal_contents?` (`≈≈` now aliases it)                   |
+ | `Array`                          | `frequency_counts` (`📊` now aliases it)                  |
+ | `Array`                          | `disjunctive_union` (`⊕` now aliases it)                  |
+ | `Array`                          | `↩️` (reverse), `↩️!` (reverse!), `↩️∀` (reverse_each)   |
+ | `Object`                         | `🅱️?` (alias to `bool?`), `🛑🅱️❓`                       |
+ | `Integer`                        | `∞?`, `𝕌?`                                                |
+ | `Float`, `Complex`, `BigDecimal` | `𝕌?`                                                      |
+ | `Numeric`                        | `𝕌?`, `𝔹?`                                                |
+ | `Hash`                           | `🗝?`, `∃🗝?` (both alias `key?`, same as `🔑?`, `∃🔑?`) |
 
 ---
 
@@ -910,13 +913,13 @@
  * move certain module/class initial definition/creation into `ruby_class_mods.c`
  * for number classes (ex: `Integer`), fix various logical/performance/test-coverage flaws for funcs like `ℕ?`
 
- | (c)lass or (m)odule | methods/aliases added/moved                      | feature |
- | ------------------- | ------------------------------------------------ | ------- |
- | (c) `Array`         | `start_with?`, `ensure_start!`                   | `f08`   |
- | (c) `Set`           | `remove_empty!`, `∅?` (empty?), `∀` (each), `∋?` | `f09`   |
- | (m) `Enumerable`    | `∌?`, `⨍` (map)                                  | `f09`   |
- | (c) `Numeric`       | `∞?` (infinite?)                                  | `f10`   |
- | (c) `Integer`       | `finite?`, `infinite?`                             | `f11`   |
+ |  for            | methods/aliases added/moved                      |
+ | --------------- | ------------------------------------------------ |
+ | `Array`         | `start_with?`, `ensure_start!`                   |
+ | `Set`           | `remove_empty!`, `∅?` (empty?), `∀` (each), `∋?` |
+ | `Enumerable`    | `∌?`, `⨍` (map)                                  |
+ | `Numeric`       | `∞?` (infinite?)                                  |
+ | `Integer`       | `finite?`, `infinite?`                             |
 
 ---
 
@@ -924,10 +927,7 @@
  * add gem `'tty-command', '~> 0.9.0'` to group `runtime`
  * for use by `audit RSpecs`: start various means of tracking internal versions, configs, etc; will help form dynamically generated audits and reports
  * temporarily remove `.travis.yml` (auto-generated at project creation but would be useful to utilize)
-
-| feature | change |
-| ------- | ------ |
-| `f14`   | adjust naming on param check functions (in `Ruuuby::ParamErr`), ex: `🛑❓bool` change to `🛑bool❓` |
+ * adjust naming on param check functions (in `Ruuuby::ParamErr`), ex: `🛑❓bool` change to `🛑bool❓`
 
 ---
 
@@ -937,20 +937,20 @@
  * heavily adjust usage/style for throwing param errors via `Ruuuby::Err` now(`Ruuuby::ParamErr`)
  * add new type of RSpec: `audit`
  
- | (c)lass or (m)odule      | methods/aliases added | feature |
- | ------------------------ | --------------------- | ------- |
- | (c) `Hash`               | `∀` (each), `∅?` (empty) | `f09`, `f04` |
- | (m) `Kernel`             | `🛑` (raise), `√` (Math.sqrt) | `f14`, `f10` |
- | (m) `Module`             | `∃func?` (func created and alias removed), `∃🙈func?` (private_method_defined?) | `f13` |
- | (c) `NilClass`, `String` | `∅?` (empty) | `f04` |
- | (c) `Array`              | `ensure_ending!`, `end_with?`, `∅?` (empty), `uniq_to_me` (∖) | `f09`, `f04` |
- | (c) `Object`             | `🛑❓bool`, `🛑❓int`, `🛑❓ary`, `🛑❓str`, `🛑❓stry`, `🛑❓str_or_ary` | `f14` |
+ | for                  | methods/aliases added |
+ | -------------------- | --------------------- |
+ | `Hash`               | `∀` (each), `∅?` (empty) |
+ | `Kernel`             | `🛑` (raise), `√` (Math.sqrt) |
+ | `Module`             | `∃func?` (func created and alias removed), `∃🙈func?` (private_method_defined?) |
+ | `NilClass`, `String` | `∅?` (empty) |
+ | `Array`              | `ensure_ending!`, `end_with?`, `∅?` (empty), `uniq_to_me` (∖) |
+ | `Object`             | `🛑❓bool`, `🛑❓int`, `🛑❓ary`, `🛑❓str`, `🛑❓stry`, `🛑❓str_or_ary` |
 
 * remove the following methods/aliases:
 
-| (c)lass or (m)odule | methods/aliases removed |
-| ------------------- | --------------------- |
-| (m) `Ruuuby::Err`   | `param¬bool`, `param¬str`, `param¬stry`, `param¬ary`, `param¬module`, `param¬class` |
+| for             | methods/aliases removed |
+| --------------- | --------------------- |
+| `Ruuuby::Err`   | `param¬bool`, `param¬str`, `param¬stry`, `param¬ary`, `param¬module`, `param¬class` |
 
 ---
 
@@ -961,13 +961,13 @@
  * add organization and new information to `help/ruuuby.md`
  * add files: `ruuuby/module/kernel.rb`, `ruuuby/module/module.rb`, and `ruuuby/arg_err.rb`
  
- | (c)lass or (m)odule | methods/aliases added | feature |
- | ------------------- | --------------------- | ------- |
- | (m) `Module`        | `🙈`, `🙈constants⟶`, `∃const?`, `∃func?`, `∃func_alias?` | `f13` |
- | (m) `Kernel`        | `∃module?`, `∃class?` | `f13`   |
- | (m) `Ruuuby::Err`   | `param¬bool`, `param¬str`, `param¬stry`, `param¬ary`, `param¬module`, `param¬class` | `f14` |
- | (c) `Ruuuby::Err::WrongParamType` | `generate_error_text`, `throw` | `f14` |
- | (c) `Object`        | `stry?`               | `f06`   |
+ | for                 | methods/aliases added |
+ | ------------------- | --------------------- |
+ | `Module`        | `🙈`, `🙈constants⟶`, `∃const?`, `∃func?`, `∃func_alias?` |
+ | `Kernel`        | `∃module?`, `∃class?` |
+ | `Ruuuby::Err`   | `param¬bool`, `param¬str`, `param¬stry`, `param¬ary`, `param¬module`, `param¬class` |
+ | `Ruuuby::Err::WrongParamType` | `generate_error_text`, `throw` |
+ | `Object`        | `stry?`               |
 
 ---
 
@@ -980,11 +980,11 @@
    * move `String`'s added method `>>`
    * add private method `disjunctive_union` to `Array` for use in method`⊕`
  
- | (c)lass or (m)odule | methods/aliases added | feature |
- | ------------------- | --------------------- | ------- |
- | (c) `Hash`          | `🔑?`, `∃🔑?`         | `f10`   |
- | (c) `Array`         | `∀`, `📊`, `≈`        | `f09`   |
- | (m) `Ruuuby`        | `∃module?`, `∃class?` | `f13`   |
+ | for                 | methods/aliases added |
+ | ------------------- | --------------------- |
+ | `Hash`              | `🔑?`, `∃🔑?`         |
+ | `Array`             | `∀`, `📊`, `≈`        |
+ | `Ruuuby`            | `∃module?`, `∃class?` |
 
 ---
 
@@ -995,13 +995,13 @@
  * add `help/jruby.md` to document jruby extensions gotchas along the way
  * add initial `Dockerfile` and `docker-compose.yml`
  
- | class        | methods added                | feature |
- | -----------  | ---------------------------- | ------- |
- | `Integer`    | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` | `f11`   |
- | `Float`      | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` | `f11`   |
- | `BigDecimal` | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` | `f11`   |
- | `Complex`    | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` | `f11`   |
- | `Rational`   | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` | `f11`   |
+ | class        | methods added                |
+ | -----------  | ---------------------------- |
+ | `Integer`    | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
+ | `Float`      | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
+ | `BigDecimal` | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
+ | `Complex`    | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
+ | `Rational`   | `ℕ?`, `ℤ?`, `ℚ?`, `ℂ?`, `ℝ?` |
 
 ---
 
@@ -1009,10 +1009,10 @@
  * add example usage in `README.md`
  * add various aliases and functions for additional set math operations
  
- | class    | method(s)/alias(es) added | feature |
- | -------  | ------------------------- | ------- |
- | `Array`  | `∌?`, `∋?`                | `f09`   |
- | `String` | `∌?`, `∋?`, `∈?`, `∉?`    | `f09`   |
+ | class    | method(s)/alias(es) added |
+ | -------  | ------------------------- |
+ | `Array`  | `∌?`, `∋?`                |
+ | `String` | `∌?`, `∋?`, `∈?`, `∉?`    |
  
 ---
 
@@ -1024,28 +1024,28 @@
  * increase scope of performance RSpecs, light adjustments to remaining RSpecs for clarity & future scope
  * add various aliases to existing Ruby functions/fields/constants/etc
  
-| class           | base reference                          | alias         | feature |
-| --------------- | --------------------------------------- | ------------- | ------- |
-| `Object`        | method: `object_id`                     | `🆔`          | `f10`   |
-| `Object`        | method: `freeze`                        | `❄️`          | `f10`   |
-| `Object`        | method: `frozen?`                       | `❄️?`         | `f10`   |
-| `Array`         | method: `∑`                             | `each`        | `f10`   |
-| `Array`         | method: `⨍`                             | `map`         | `f10`   |
+| class           | base reference                          | alias         |
+| --------------- | --------------------------------------- | ------------- |
+| `Object`        | method: `object_id`                     | `🆔`          |
+| `Object`        | method: `freeze`                        | `❄️`          |
+| `Object`        | method: `frozen?`                       | `❄️?`         |
+| `Array`         | method: `∑`                             | `each`        |
+| `Array`         | method: `⨍`                             | `map`         |
 
  * added the following methods:
  
- | class    | method added     | feature |
- | -------  | ---------------- | ------- |
- | `Array`  | `>>`             | `f05`   |
- | `Array`  | `⊕`              | `f09`   |
- | `Array`  | `∖`              | `f09`   |
+ | class    | method added     |
+ | -------  | ---------------- |
+ | `Array`  | `>>`             |
+ | `Array`  | `⊕`              |
+ | `Array`  | `∖`              |
 
  * add/replace various Ruby functions with native C-extensions (`ruuuby/ext/ruby_class_mods/ruby_class_mods.c`):
  
- | modified class   | funcs added/replaced  | feature |
- | --------------- | --------------------- | ------- |
- | `Object`        | `hsh?`                | `f06`   |
- | `Array`         | `remove_empty!`       | `f07`   |
+ | modified class   | funcs added/replaced  |
+ | --------------- | --------------------- |
+ | `Object`        | `hsh?`                |
+ | `Array`         | `remove_empty!`       |
 
 ---
 
@@ -1055,10 +1055,10 @@
  * added section `project layout` and update formatting to `README.md`
  * replace various Ruby functions with native C-extensions (`ruuuby/ext/ruby_class_mods/ruby_class_mods.c`):
  
- | modified class   | funcs replaced                          | feature |
- | --------------- | --------------------------------------- | ------- |
- | `Object`        | `ary?`, `bool?`, `int?`, `str?`, `sym?` | `f06`   |
- | `NilClass`      | `empty?`                                | `f04`   |
+ | modified class   | funcs replaced                          |
+ | --------------- | --------------------------------------- |
+ | `Object`        | `ary?`, `bool?`, `int?`, `str?`, `sym?` |
+ | `NilClass`      | `empty?`                                |
 
 ---
 
@@ -1067,12 +1067,12 @@
  * minor changes/functions-added to DRY some code
  * add `Gemfile.lock` to `.gitignore`
  
- | class    | method added     | feature |
- | -------  | ---------------- | ------- |
- | `Object` | `sym?`           | `f06`   |
- | `String` | `>>`             | `f05`   |
- | `String` | `ensure_start!`  | `f08`   |
- | `String` | `ensure_ending!` | `f08`   |
+ | class    | method added     |
+ | -------  | ---------------- |
+ | `Object` | `sym?`           |
+ | `String` | `>>`             |
+ | `String` | `ensure_start!`  |
+ | `String` | `ensure_ending!` |
 
 ---
 
@@ -1081,9 +1081,9 @@
  * `freeze` various constants and modules
  * slightly clean-up (with helper functions) and expand RSpec scenario coverage
  
- | class    | method added | feature |
- | -------- | ------------ | ------- |
- | `Object` | `str?`       | `f06`   |
+ | class    | method added |
+ | -------- | ------------ |
+ | `Object` | `str?`       |
 
 ---
 
@@ -1106,38 +1106,38 @@
  * modify `Ruuuby::Enum::Emoji` from `Strings` to `Symbols`
  * fix gemspec to reflect correct git URLs
 
-| added path | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `lib/class/ary.rb` | ``Array`` |  | `f07`, `f06` |
-| `lib/class/int.rb` | ``Integer`` |  | `f06` |
+| added path | reference | notes |
+| ---: | --- | --- |
+| `lib/class/ary.rb` | ``Array`` |  |
+| `lib/class/int.rb` | ``Integer`` |  |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Object` | `int?` | `f06` |
-| `Object` | `ary?` | `f06` |
-| `Array` | `remove_empty!` | `f07` |
+| class | method(s) added |
+| --- | --- |
+| `Object` | `int?` |
+| `Object` | `ary?` |
+| `Array` | `remove_empty!` |
 
 ---
 
 # `v0.0.2`
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `Object` | `bool?` | `f06` |
+| class | method(s) added |
+| --- | --- |
+| `Object` | `bool?` |
 
 ---
 
 # `v0.0.1`
 
-| added path | reference | notes | feature(s) |
-| ---: | --- | --- | --- |
-| `CHANGELOG.md` |  |  |  |
-| `lib/ruuuby/class/nil.rb` | `NilClass` |  | `f04` |
-| `lib/ruuuby/enum/emoji.rb` |  | `Ruuuby::Enum::Emoji` |  |
-| `bin/audit` |  | for running rdoc, rspecs, and coverage reports |  |
+| added path | reference | notes |
+| ---: | --- | --- |
+| `CHANGELOG.md` |  |  |
+| `lib/ruuuby/class/nil.rb` | `NilClass` |  |
+| `lib/ruuuby/enum/emoji.rb` |  | `Ruuuby::Enum::Emoji` |
+| `bin/audit` |  | for running rdoc, rspecs, and coverage reports |
 
-| class | method(s) added | feature(s) |
-| --- | --- | --- |
-| `NilClass` | `empty?` | `f04` |
+| class | method(s) added |
+| --- | --- |
+| `NilClass` | `empty?` |
 
 ---
 

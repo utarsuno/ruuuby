@@ -14,9 +14,12 @@ class ::File
   attribute_lazy_loadable('tempfile', false)
 
   # TODO: all these characters should be valid for JavaScript: http://www.fileformat.info/info/charset/UTF-16/list.htm
+  # TODO: unit test w/ https://unix.stackexchange.com/questions/16640/how-can-i-get-the-size-of-a-file-in-a-bash-script
 
   class << self
     alias_method :∅?, :empty?
+
+    alias_method :∃?, :file?
   end
 
   module Syntax
@@ -42,18 +45,6 @@ class ::File
   # @return [String]
   def self.md5(path); ::Math::Crypto.md5(::File.read(path)) if self.∃!(path); end
 
-  # TODO: missing coverage
-  #
-  # @param [String] path
-  #
-  # @raise [ArgumentError]
-  #
-  # @return [Boolean]
-  def self.∃?(path)
-    🛑str❓('path', path)
-    ::File.file?(path)
-  end
-
   def self.∄?(path); !self.∃?(path); end
 
   # @param [String] path
@@ -64,7 +55,6 @@ class ::File
   def self.∃!(path)
     🛑str❓('path', path)
     🛑 ::RuntimeError.new("| c{File}-> m{∃!} got path{#{path}} which does not exist as a file |") unless ::File.file?(path)
-
     true
   end
 

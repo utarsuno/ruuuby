@@ -36,6 +36,8 @@ module ::Ruuuby::MetaData
   # |                                |                                                                                          |              |
   # | TODO: (libgit2)                | https://libgit2.org/docs/guides/101-samples/                                             |              |
   # | TODO: (libgit2)                | https://git-scm.com/book/en/v2/Appendix-B%3A-Embedding-Git-in-your-Applications-Libgit2  |              |
+  # | | |
+  # | TODO: https://docs.github.com/en/free-pro-team@latest/packages/using-github-packages-with-your-projects-ecosystem/configuring-rubygems-for-use-with-github-packages \
   # --------------------------------------------------------------------------------------------------------------------------------------------
   #
   # terminology:

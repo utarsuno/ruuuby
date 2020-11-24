@@ -5,6 +5,7 @@ class CreateRuuubyGem < RuuubyDBMigration
 
   DB_FILE_NAME = '00_ruuuby_gem.sql'
 
+=begin
   # @return [Boolean]
   def self.up_verify
     needed_funcs = %w(ruuuby_release_id ruuuby_feature_id ruuuby_feature_add ruuuby_release_add
@@ -12,52 +13,59 @@ ruuuby_feature_behavior_add ruuuby_gem_add ruuuby_gem_add_dev ruuuby_gem_add_pro
 ruuuby_gem_update ruuuby_gem_remove ruuuby_gem_id ruuuby_gem_latest_changelog_id ruuuby_gem_current_version
 ruuuby_release_gem_changelogs)
 
-    needed_tables = %w(ruuuby_releases ruuuby_features ruuuby_feature_behaviors ruuuby_gems ruuuby_gem_changelogs)
-
     needed_funcs_found = !(needed_funcs.∀.any? {|elem| !self.∃⨍_sql?(elem)})
-
-    needed_table_found = !(needed_tables.∀.any? {|elem| !self.∃table?(elem)})
 
     needed_funcs_found && needed_table_found
   end
+=end
 
   def self.up
+
     create_table :ruuuby_releases do |t|
-      t.string :version, :null => false
-      t.json :changelogs, :null => true
+      t.string    :version, :null => false
+      t.json      :changelogs, :null => true
       t.timestamp :dt_released, :null => true
 
-      t.index :version, unique: true
+      # meta-data
+      t.boolean   :is_beta, :null => false
+      t.boolean   :is_published, :null => true
+      t.bigint    :gem_size, :null => true
+
+      t.index     :version, unique: true
     end
-    add_index :ruuuby_releases, :version, unique: true
 
     create_table :ruuuby_features do |t|
-      t.string :uid, :null => false, :unique => true
+      t.integer :uid, null: false, limit: 2
       t.boolean :is_optional, :null => false
-      t.string :desc_self, :null => false, :unique => true
+      t.string  :desc_self, :null => false, :unique => true
+
+      t.index   :uid, unique: true
+      t.index   :desc_self, unique: true
     end
-    add_index :ruuuby_features, :uid, unique: true
 
     create_table :ruuuby_feature_behaviors do |t|
-      t.string :uid, :null => false, :unique => true
-      t.string :desc_self, :null => false, :unique => true
-      # TODO: t.boolean :is_optional, :null => false
+      t.integer    :uid, null: false, limit: 2
+      t.string     :desc_self, :null => false
+      t.boolean    :is_optional, :null => false
       t.references :ruuuby_features, foreign_key: { references: :ruuuby_features }
-    end
-    add_index :ruuuby_feature_behaviors, :uid, unique: true
 
-    # TODO: ruuuby_feature_groups
-    # TODO: ruuuby_feature_behaviors_ptrs
+      t.index :desc_self, unique: true
+      t.index [:uid, :ruuuby_features_id], unique: true
+    end
 
     create_table :ruuuby_gems do |t|
-      t.string :name, :null => false, :unique => true
-      t.text :url_gem, :null => true, :unique => true
-      t.text :url_git, :null => true, :unique => true
+      t.string :name, :null => false
+      t.text :url_gem, :null => true
+      t.text :url_git, :null => true
       t.boolean :env_dev, :null => false
       t.boolean :env_prod, :null => false
       t.string :ref_source, :null => true
       t.string :ref_version, :null => true
       #t.timestamps
+
+      t.index :name, unique: true
+      t.index :url_gem, unique: true
+      t.index :url_git, unique: true
     end
 
     create_table :ruuuby_gem_changelogs do |t|
@@ -81,13 +89,19 @@ ruuuby_release_gem_changelogs)
   def self.down
     ♻️index(:ruuuby_releases, :version)
     ♻️index(:ruuuby_features, :uid)
-    ♻️index(:ruuuby_feature_behaviors, :uid)
+    ♻️index(:ruuuby_features, :desc_self)
+    ♻️index(:ruuuby_feature_behaviors, :desc_self)
+    ♻️index(:ruuuby_feature_behaviors, [:desc_self, :ruuuby_features_id])
 
-    ♻️table!(:ruuuby_gem_changelogs)
-    ♻️table!(:ruuuby_gems)
-    ♻️table!(:ruuuby_releases)
-    ♻️table!(:ruuuby_feature_behaviors)
-    ♻️table!(:ruuuby_features)
+    ♻️index(:ruuuby_gems, :name)
+    ♻️index(:ruuuby_gems, :url_gem)
+    ♻️index(:ruuuby_gems, :url_git)
+
+    ♻️table(:ruuuby_gem_changelogs)
+    ♻️table(:ruuuby_gems)
+    ♻️table(:ruuuby_releases)
+    ♻️table(:ruuuby_feature_behaviors)
+    ♻️table(:ruuuby_features)
 
     execute(self.read_sql_rollback_file(DB_FILE_NAME))
   end

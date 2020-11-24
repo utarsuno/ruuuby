@@ -9,9 +9,6 @@ RSpec.describe 'f12_db_orm' do
       end
 
       context 'defines behaviors' do
-        it 'has{b00}' do
-          audit_feature_behavior(f12, f12_b00, 'b00', 'offer Class aliases: {`📁` -> `File`}, {`🗄️` -> `Dir`}')
-        end
 
         it 'has{b01}' do
           audit_feature_behavior(f12, f12_b01, 'b01', "offer a light layer over `Ruby's` loadable `CSV` data parsing")

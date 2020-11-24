@@ -65,8 +65,8 @@ services:
       POSTGRES_USER: 'myuser'
       POSTGRES_PASSWORD: 'mypassword'
       POSTGRES_DB: 'env_test'
-  #  ports:
-  #    - 5433:5433
+    ports:
+      - 5433:5432
     volumes:
       - 'vol_db_test/:/var/lib/postgresql/data/'
       - './services/ruuuby_db/init.sql:/docker-entrypoint-initdb.d/init.sql'

@@ -6,6 +6,9 @@
  |___ | |__) |  \ /~~\ |  \  |     |  |  | |    \__/ |  \  |  .__/
 ____________________________________________________________________________________________________________________________________________________________________ */
 
+#include "ruby.h"
+#include "ruby/ruby.h"
+
 #include "ruby/config.h"
 
 #include <ruby/defines.h>
@@ -21,10 +24,9 @@ ________________________________________________________________________________
 #include <sys/stat.h>
 
 #include <unistd.h>
-//#include <math.h>
 #include <inttypes.h>
-
 #include <float.h>
+//#include <math.h>
 //#include <tgmath.h>
 //#include <complex.h>
 
@@ -43,29 +45,12 @@ ________________________________________________________________________________
     #endif
 #endif
 
-/*
-#include "ruby/encoding.h"
-#include <locale.h>
-#include <ruby.h>
-#include "ruby/ruby.h"
-
-#include <ruby/defines.h>
-#include <ruby/intern.h>
-#include <ruby/debug.h>
-#include <ruby/assert.h>
-#include <ruby/missing.h>
-#include <ruby/re.h>
-#include <ruby/regex.h>
-#include <ruby/ruby.h>
-#include <ruby/st.h>
-#include <ruby/subst.h>
-#include <ruby/util.h>
-#include <ruby/version.h>
-#include <ruby/vm.h>
-*/
-
 #ifndef CRUUUBY_H
 #include "ruby_class_mods.h"
+#endif
+
+#ifdef RUUUBY_DEBUGGING
+#include "optional/00_debugging.h"
 #endif
 
 /*____________________________________________________________________________________________________________________
@@ -120,15 +105,6 @@ static inline int is_num(const VALUE arg) {
     }
 }
 
-/*static inline int is_simple_num(const VALUE arg) {
-    switch(TYPE(arg)){
-    case RUBY_T_FIXNUM:case RUBY_T_FLOAT:case RUBY_T_BIGNUM:
-        re_c_ye
-    default:
-        re_no
-    }
-}*/
-
 static inline int is_non_simple_num(const VALUE arg) {
     switch(TYPE(arg)){
     case RUBY_T_RATIONAL:case RUBY_T_COMPLEX:
@@ -142,7 +118,7 @@ static inline int is_non_simple_num(const VALUE arg) {
 static inline VALUE 💎new_ary(const long known_max_size) {
     if (known_max_size == 0) {
         return rb_ary_new_capa(0);
-    } else if (known_max_size > 0 && known_max_size <= 16L) {
+    } else if (known_max_size <= 15L) {
         return rb_ary_new_capa(known_max_size);
     } else {
         return rb_ary_new();
@@ -439,14 +415,6 @@ static void startup_step4_load_needed_ruuuby_files(void) {
     ensure_loaded_db(model_attributes/includable/uid)
     ensure_loaded_db(model_attributes/application_record)
 #endif
-
-#ifdef RUUUBY_F92_B04
-    ensure_loaded_db(seeds/ruuuby_features)
-    ensure_loaded_db(seeds/ruuuby_feature_behaviors)
-    ensure_loaded_db(seeds/ruuuby_releases/past)
-    ensure_loaded_db(seeds/ruuuby_releases/active_or_recent)
-    ensure_loaded_db(seeds/ruuuby_dirs)
-#endif
 }
 
 /*____________________________________________________________________________________________________________________________________________________________________
@@ -482,7 +450,7 @@ ________________________________________________________________________________
     💎parse_kargs_with_normalizer("flt?", re_as_bool(is_float(self)),
     if (them == 🅽_universal) {
         if (is_float(self)) {
-            return r_flt_is_universal(NUM2DBL(self));
+            return c_flt_is_universal(NUM2DBL(self));
         } else {re_no}
     } else {🛑normalizer_value("flt?", them)})
 )
@@ -559,10 +527,10 @@ ________________________________________________________________________________
 _____________________________________________________________________________________________________________________ */
 
 // | func{finite?}   |
-static VALUE m_int_is_finite(const VALUE self){re_ye}
+ⓡ𝑓_const(m_int_is_finite, re_ye)
 
 // | func{infinite?} |
-static VALUE m_int_is_not_finite(const VALUE self){re_no}
+ⓡ𝑓_const(m_int_is_not_finite, re_no)
 
 // | func{^}        |
 ⓡ𝑓_self_them(m_int_patch_for_exponentials,
@@ -637,10 +605,10 @@ ________________________________________________________________________________
 ⓡ𝑓_def(m_flt_is_one, re_me_eq_to(ℤd1);)
 
 // | func{has_decimals?} |
-ⓡ𝑓_def(m_flt_has_decimals, return r_flt_has_decimals(NUM2DBL(self));)
+ⓡ𝑓_def(m_flt_has_decimals, return c_flt_has_decimals(NUM2DBL(self));)
 
 // | func{smells_like_int?} |
-ⓡ𝑓_def(m_flt_smells_like_int, return r_flt_smells_like_int(NUM2DBL(self));)
+ⓡ𝑓_def(m_flt_smells_like_int, return c_flt_smells_like_int(NUM2DBL(self));)
 
 // original source code referenced from:
 // @see https://floating-point-gui.de/errors/NearlyEqualsTest.java
@@ -648,14 +616,14 @@ ________________________________________________________________________________
 // | func{≈≈} |
 ⓡ𝑓_self_them(m_flt_basically_equal,
     if (rb_obj_equal(self, them) || self == them) {re_ye}
-    else if (!is_int_or_flt(them)) {re_no} else {
+    else if (!is_int_or_flt(them)) {re_no}
+    else {
         const double val_self = NUM2DBL(self);
         const double val_them = NUM2DBL(them);
-        if (val_self == val_them) {re_ye} else {
-            const double abs_a  = fabs(val_self);
-            const double abs_b  = fabs(val_them);
+        if (val_self == val_them) {re_ye}
+        else {
             const double diff   = fabs(val_self - val_them);
-            const double summed = abs_a + abs_b;
+            const double summed = fabs(val_self) + fabs(val_them);
             if (val_self == 0.0 || val_them == 0.0 || (summed < M_FLT_EPSILON)) {
                 re_as_bool(diff < (M_FLT_RELATIVE_ERR_RELAXED * M_FLT_EPSILON))
             } else {
@@ -749,9 +717,11 @@ ________________________________________________________________________________
 | \| | |___
 _____________________________________________________________________________________________________________________ */
 
-static VALUE m_nil_empty(const VALUE self) {re_ye}
+// | function{empty?} |
+ⓡ𝑓_const(m_nil_empty, re_ye)
 
-ⓡ𝑓_self_them(m_nil_include,re_no)
+// | function{include?} |
+ⓡ𝑓_self_them_returning_const(m_nil_include, re_no)
 
 /*____________________________________________________________________________________________________________________
  __     ___     __                   __
@@ -762,16 +732,12 @@ ________________________________________________________________________________
 // | function{>>} |
 ⓡ𝑓_self_them(m_str_prepend,
     if (is_str(them)) {
-        if (r_str_is_empty(them)) {
-            re_me
-        } else {
+        if (!(r_str_is_empty(them))) {
             r_str_pre_modify(self)
             r_str_prepend(self, them)
-            re_me
         }
-    } else {
-        ERR_c_self_got_non_str_param(">>", them)
-    }
+        re_me
+    } else {🛑param_str(">>", them)}
 )
 
 /*___________________________________________________________________________________________________________________
@@ -862,6 +828,120 @@ ________________________________________________________________________________
         }
     } else {ERR_c_self_got_non_ary_param("disjunctive_union", them)}
 )
+
+/*                         __                            __
+                          /\ \      __                  /\ \__                __
+    ___    ___     ___ ___\ \ \____/\_\    ___      __  \ \ ,_\   ___   _ __ /\_\    ___    ____
+   /'___\ / __`\ /' __` __`\ \ '__`\/\ \ /' _ `\  /'__`\ \ \ \/  / __`\/\`'__\/\ \  /'___\ /',__\
+  /\ \__//\ \L\ \/\ \/\ \/\ \ \ \L\ \ \ \/\ \/\ \/\ \L\.\_\ \ \_/\ \L\ \ \ \/ \ \ \/\ \__//\__, `\
+  \ \____\ \____/\ \_\ \_\ \_\ \_,__/\ \_\ \_\ \_\ \__/.\_\\ \__\ \____/\ \_\  \ \_\ \____\/\____/
+   \/____/\/___/  \/_/\/_/\/_/\/___/  \/_/\/_/\/_/\/__/\/_/ \/__/\/___/  \/_/   \/_/\/____/\/___/ */
+
+
+// source solution credit: https://blog.plover.com/math/choose.html
+ⓡ𝑓_self_a_b(m_combinatorics_n_choose_k,
+    if (is_int(param_a) && is_int(param_b)) {
+         unsigned int n = RB_FIX2UINT(param_a);
+         unsigned int k = RB_FIX2UINT(param_b);
+         if (k == 0 || n == k) {
+            re_1
+         } else if (k > n) {
+            rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{n_choose_k} got arg(n){%"PRIsVALUE"} w/ value smaller than arg(k){%"PRIsVALUE"} |", param_a, param_b);
+         } else if (((k - 1) * 2) < n) {
+            k = n - k;
+         }
+         unsigned long r = 1;
+         unsigned int d;
+         for (d = 1; d <= k; d++) {
+            r *= n--;
+            r /= d;
+         }
+         return ULONG2NUM(r);
+    } else {
+        rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{n_choose_k} did not receive type{Integer} for either arg(n){%"PRIsVALUE"} or arg(k){%"PRIsVALUE"} |", param_a, param_b);
+    }
+)
+
+ⓡ𝑓_self_a_b(m_combinatorics_permutations,
+    if (is_int(param_a) && is_int(param_b)) {
+         int n = RB_FIX2INT(param_a);
+         int k = RB_FIX2INT(param_b);
+         if (n < 0 || k < 0) {
+            rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{permutations} received a negative Integer for either arg(n){%"PRIsVALUE"} or arg(k){%"PRIsVALUE"} |", param_a, param_b);
+         } if (k > n) {
+            rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{permutations} received arg(n){%"PRIsVALUE"} w/ a smaller value than arg(k){%"PRIsVALUE"} |", param_a, param_b);
+         }
+         unsigned long p = 1;
+         for (int i = 0; i < k; i++) {
+            p *= (n - i);
+         }
+         return ULONG2NUM(p);
+    } else {
+        rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{permutations} did not receive type{Integer} for either arg(n){%"PRIsVALUE"} or arg(k){%"PRIsVALUE"} |", param_a, param_b);
+    }
+)
+
+/*                          __                         __    __
+                           /\ \                       /\ \__/\ \
+    ___   __  __    ___ ___\ \ \____     __   _ __    \ \ ,_\ \ \___      __    ___   _ __   __  __
+  /' _ `\/\ \/\ \ /' __` __`\ \ '__`\  /'__`\/\`'__\   \ \ \/\ \  _ `\  /'__`\ / __`\/\`'__\/\ \/\ \
+  /\ \/\ \ \ \_\ \/\ \/\ \/\ \ \ \L\ \/\  __/\ \ \/     \ \ \_\ \ \ \ \/\  __//\ \L\ \ \ \/ \ \ \_\ \
+  \ \_\ \_\ \____/\ \_\ \_\ \_\ \_,__/\ \____\\ \_\      \ \__\\ \_\ \_\ \____\ \____/\ \_\  \/`____ \
+   \/_/\/_/\/___/  \/_/\/_/\/_/\/___/  \/____/ \/_/       \/__/ \/_/\/_/\/____/\/___/  \/_/   `/___/> \
+                                                                                                 /\___/
+                                                                                                 \/__/ */
+// source solution credit: https://www.geeksforgeeks.org/eulers-totient-function/
+ⓡ𝑓_self_them(m_number_theory_eulers_totient_func,
+    if (is_int(them)) {
+        unsigned long n = NUM2ULONG(them);
+        if (n == 0ul) {re_0}
+        unsigned long result = n;
+        for (unsigned long p = 2ul; p * p <= n; ++p) {
+            if (n % p == 0ul) {
+                while (n % p == 0ul) {
+                    n /= p;
+                }
+                result -= result / p;
+            }
+        }
+        if (n > 1ul) {
+            result -= result / n;
+        }
+        return ULONG2NUM(result);
+    } else {rb_raise(R_ERR_ARG, "");}
+)
+
+// source solution credit: https://www.geeksforgeeks.org/check-whether-number-semiprime-not/
+ⓡ𝑓_self_them(m_number_theory_is_semiprime,
+    if (is_fixnum(them)) {
+        int num                    = FIX2INT(them);
+        int num_primes_encountered = 0;
+        for (int i = 2; num_primes_encountered < 2 && i * i <= num; ++i) {
+            while (num % i == 0) {
+                num /= i;
+                ++num_primes_encountered;
+            }
+        }
+        // a remaining value of > 1 will be a prime number
+        if (num > 1) {
+            re_as_bool(num_primes_encountered == 1)
+        } else {
+            re_as_bool(num_primes_encountered == 2)
+        }
+    } else {
+        rb_raise(R_ERR_ARG, "| m{NumberTheory}-> sf{semiprime?} did not receive type{Fixnum} for either arg(n){%"PRIsVALUE"} but type{%s} |", them, rb_obj_classname(them));
+    }
+)
+
+/* __                                                                   __
+  /\ \__         __                                                    /\ \__
+  \ \ ,_\  _ __ /\_\     __     ___     ___     ___     ___ ___      __\ \ ,_\  _ __   __  __
+   \ \ \/ /\`'__\/\ \  /'_ `\  / __`\ /' _ `\  / __`\ /' __` __`\  /'__`\ \ \/ /\`'__\/\ \/\ \
+    \ \ \_\ \ \/ \ \ \/\ \L\ \/\ \L\ \/\ \/\ \/\ \L\ \/\ \/\ \/\ \/\  __/\ \ \_\ \ \/ \ \ \_\ \
+     \ \__\\ \_\  \ \_\ \____ \ \____/\ \_\ \_\ \____/\ \_\ \_\ \_\ \____\\ \__\\ \_\  \/`____ \
+      \/__/ \/_/   \/_/\/___L\ \/___/  \/_/\/_/\/___/  \/_/\/_/\/_/\/____/ \/__/ \/_/   `/___/> \
+                         /\____/                                                           /\___/
+                         \_/__/                                                            \/__/ */
 
 /*____________________________________________________________________________________________________________________
 ___       ___ ___                    __        ___
@@ -1495,15 +1575,7 @@ ptrθ_func(θ_m_is_reflex,
     }
 )
 
-/* __                                                                   __
-  /\ \__         __                                                    /\ \__
-  \ \ ,_\  _ __ /\_\     __     ___     ___     ___     ___ ___      __\ \ ,_\  _ __   __  __
-   \ \ \/ /\`'__\/\ \  /'_ `\  / __`\ /' _ `\  / __`\ /' __` __`\  /'__`\ \ \/ /\`'__\/\ \/\ \
-    \ \ \_\ \ \/ \ \ \/\ \L\ \/\ \L\ \/\ \/\ \/\ \L\ \/\ \/\ \/\ \/\  __/\ \ \_\ \ \/ \ \ \_\ \
-     \ \__\\ \_\  \ \_\ \____ \ \____/\ \_\ \_\ \____/\ \_\ \_\ \_\ \____\\ \__\\ \_\  \/`____ \
-      \/__/ \/_/   \/_/\/___L\ \/___/  \/_/\/_/\/___/  \/_/\/_/\/_/\/____/ \/__/ \/_/   `/___/> \
-                         /\____/                                                           /\___/
-                         \_/__/                                                            \/__/ */
+
 static VALUE m_cos(const VALUE self, const VALUE val) {
     if (is_theta_angle(val)) {
         ptrθ data; 💎parse_ptrθ(val, data);
@@ -1670,108 +1742,6 @@ static VALUE m_square_root(const VALUE self, const VALUE val) {
         rb_raise(R_ERR_ARG, "| m{Math}-> sf{square_root} may not convert the arg{%"PRIsVALUE"} into a Float |", val);
     }
 }
-/*                          __                         __    __
-                           /\ \                       /\ \__/\ \
-    ___   __  __    ___ ___\ \ \____     __   _ __    \ \ ,_\ \ \___      __    ___   _ __   __  __
-  /' _ `\/\ \/\ \ /' __` __`\ \ '__`\  /'__`\/\`'__\   \ \ \/\ \  _ `\  /'__`\ / __`\/\`'__\/\ \/\ \
-  /\ \/\ \ \ \_\ \/\ \/\ \/\ \ \ \L\ \/\  __/\ \ \/     \ \ \_\ \ \ \ \/\  __//\ \L\ \ \ \/ \ \ \_\ \
-  \ \_\ \_\ \____/\ \_\ \_\ \_\ \_,__/\ \____\\ \_\      \ \__\\ \_\ \_\ \____\ \____/\ \_\  \/`____ \
-   \/_/\/_/\/___/  \/_/\/_/\/_/\/___/  \/____/ \/_/       \/__/ \/_/\/_/\/____/\/___/  \/_/   `/___/> \
-                                                                                                 /\___/
-                                                                                                 \/__/ */
-// source solution credit: https://www.geeksforgeeks.org/eulers-totient-function/
-ⓡ𝑓_self_them(m_number_theory_eulers_totient_func,
-    if (is_int(them)) {
-        unsigned long n = NUM2ULONG(them);
-        if (n == 0ul) {re_0}
-        unsigned long result = n;
-        for (unsigned long p = 2ul; p * p <= n; ++p) {
-            if (n % p == 0ul) {
-                while (n % p == 0ul) {
-                    n /= p;
-                }
-                result -= result / p;
-            }
-        }
-        if (n > 1ul) {
-            result -= result / n;
-        }
-        return ULONG2NUM(result);
-    } else {rb_raise(R_ERR_ARG, "");}
-)
-
-// source solution credit: https://www.geeksforgeeks.org/check-whether-number-semiprime-not/
-ⓡ𝑓_self_them(m_number_theory_is_semiprime,
-    if (is_fixnum(them)) {
-        int num                    = FIX2INT(them);
-        int num_primes_encountered = 0;
-        for (int i = 2; num_primes_encountered < 2 && i * i <= num; ++i) {
-            while (num % i == 0) {
-                num /= i;
-                ++num_primes_encountered;
-            }
-        }
-        // a remaining value of > 1 will be a prime number
-        if (num > 1) {
-            re_as_bool(num_primes_encountered == 1)
-        } else {
-            re_as_bool(num_primes_encountered == 2)
-        }
-    } else {
-        rb_raise(R_ERR_ARG, "| m{NumberTheory}-> sf{semiprime?} did not receive type{Fixnum} for either arg(n){%"PRIsVALUE"} but type{%s} |", them, rb_obj_classname(them));
-    }
-)
-
-/*                         __                            __
-                          /\ \      __                  /\ \__                __
-    ___    ___     ___ ___\ \ \____/\_\    ___      __  \ \ ,_\   ___   _ __ /\_\    ___    ____
-   /'___\ / __`\ /' __` __`\ \ '__`\/\ \ /' _ `\  /'__`\ \ \ \/  / __`\/\`'__\/\ \  /'___\ /',__\
-  /\ \__//\ \L\ \/\ \/\ \/\ \ \ \L\ \ \ \/\ \/\ \/\ \L\.\_\ \ \_/\ \L\ \ \ \/ \ \ \/\ \__//\__, `\
-  \ \____\ \____/\ \_\ \_\ \_\ \_,__/\ \_\ \_\ \_\ \__/.\_\\ \__\ \____/\ \_\  \ \_\ \____\/\____/
-   \/____/\/___/  \/_/\/_/\/_/\/___/  \/_/\/_/\/_/\/__/\/_/ \/__/\/___/  \/_/   \/_/\/____/\/___/ */
-
-// source solution credit: https://blog.plover.com/math/choose.html
-ⓡ𝑓_self_a_b(m_combinatorics_n_choose_k,
-    if (is_int(param_a) && is_int(param_b)) {
-         unsigned int n = RB_FIX2UINT(param_a);
-         unsigned int k = RB_FIX2UINT(param_b);
-         if (k == 0 || n == k) {
-            re_1
-         } else if (k > n) {
-            rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{n_choose_k} got arg(n){%"PRIsVALUE"} w/ value smaller than arg(k){%"PRIsVALUE"} |", param_a, param_b);
-         } else if (((k - 1) * 2) < n) {
-            k = n - k;
-         }
-         unsigned long r = 1;
-         unsigned int d;
-         for (d = 1; d <= k; d++) {
-            r *= n--;
-            r /= d;
-         }
-         return ULONG2NUM(r);
-    } else {
-        rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{n_choose_k} did not receive type{Integer} for either arg(n){%"PRIsVALUE"} or arg(k){%"PRIsVALUE"} |", param_a, param_b);
-    }
-)
-
-ⓡ𝑓_self_a_b(m_combinatorics_permutations,
-    if (is_int(param_a) && is_int(param_b)) {
-         int n = RB_FIX2INT(param_a);
-         int k = RB_FIX2INT(param_b);
-         if (n < 0 || k < 0) {
-            rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{permutations} received a negative Integer for either arg(n){%"PRIsVALUE"} or arg(k){%"PRIsVALUE"} |", param_a, param_b);
-         } if (k > n) {
-            rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{permutations} received arg(n){%"PRIsVALUE"} w/ a smaller value than arg(k){%"PRIsVALUE"} |", param_a, param_b);
-         }
-         unsigned long p = 1;
-         for (int i = 0; i < k; i++) {
-            p *= (n - i);
-         }
-         return ULONG2NUM(p);
-    } else {
-        rb_raise(R_ERR_ARG, "| m{Combinatorics}-> sf{permutations} did not receive type{Integer} for either arg(n){%"PRIsVALUE"} or arg(k){%"PRIsVALUE"} |", param_a, param_b);
-    }
-)
 
 /*                              __
                                /\ \__                        __                                            __
@@ -1921,10 +1891,6 @@ typedef struct SimpleTimerStruct {
 
 typedef struct Ruuuby_Engine_Stats {
 
-#ifdef RUUUBY_F98_COMPILER
-    unsigned char runtime_compiler_version;
-#endif
-
 #ifdef RUUUBY_F98_MEMORY
     double max_memory_before_extensions_loaded;
     double max_memory_after_extensions_loaded;
@@ -1962,47 +1928,6 @@ typedef struct Ruuuby_Engine_Stats {
         static VALUE m_memory_peak_this_runtime(const VALUE self){return DBL2NUM(memory_peak_this_runtime());}
     #endif // end: {RUUUBY_F98_MEMORY}
 
-    #ifdef RUUUBY_F98_COMPILER
-        static inline VALUE compiler_version_to_s(const unsigned short compiler_version) __attribute__ ((const));
-        static inline VALUE compiler_version_to_s(const unsigned short compiler_version) {💎parse_compiler_version_to_string(compiler_version);}
-
-        // @see https://stackoverflow.com/questions/14737104/what-is-the-default-c-std-standard-version-for-the-current-gcc-especially-on-u
-        static inline unsigned short establish_compiler_version(void) __attribute__ ((const));
-        static inline unsigned short establish_compiler_version(void) {
-            #ifdef __STRICT_ANSI__
-                #ifdef __STDC_VERSION__
-                    switch(__STDC_VERSION__){
-                        case VAL_STD_VERSION_C_99:
-                            return FLAG_RUNTIME_VERSION_C_99;
-                        case VAL_STD_VERSION_C_11:
-                            return FLAG_RUNTIME_VERSION_C_11;
-                        case VAL_STD_VERSION_C_17:
-                            return FLAG_RUNTIME_VERSION_C_17;
-                        default:
-                            return FLAG_RUNTIME_VERSION_DEFAULT;
-                    }
-                #else
-                    return FLAG_RUNTIME_VERSION_C_89;
-                #endif
-            #else
-                #ifdef __STDC_VERSION__
-                    switch(__STDC_VERSION__) {
-                        case VAL_STD_VERSION_GNU_99:
-                            return FLAG_RUNTIME_VERSION_GNU_99;
-                        case VAL_STD_VERSION_GNU_11:
-                            return FLAG_RUNTIME_VERSION_GNU_11;
-                        case VAL_STD_VERSION_GNU_17:
-                            return FLAG_RUNTIME_VERSION_GNU_17;
-                        default:
-                            return FLAG_RUNTIME_VERSION_DEFAULT;
-                    }
-                #else
-                    return FLAG_RUNTIME_VERSION_GNU_89;
-                #endif
-            #endif
-        }
-    #endif // end: {RUUUBY_F98_COMPILER}
-
     #ifdef RUUUBY_F98_TIMER
         void simple_timer_start(SimpleTimer * simple_timer);
         void simple_timer_end(SimpleTimer * simple_timer);
@@ -2028,103 +1953,111 @@ typedef struct Ruuuby_Engine_Stats {
 
     static void engine_start_up_finished(RuuubyEngineStats * engine);
     static void engine_start_up_finished(RuuubyEngineStats * engine) {
-        Ⓒruuuby_engine         = rb_funcall(ⓜruuuby_engine, rb_intern("_get_engine"), 0);
+        Ⓒruuuby_engine = rb_funcall(ⓜruuuby_engine, rb_intern("_get_engine"), 0);
         hsh_ruuuby_engine_stats = rb_hash_new();
+
         💎set_instance_field(Ⓒruuuby_engine,hsh_ruuuby_engine_stats,stats_ext);
 
         ENGINE_STAT_SET("compiled_at", c_str_to_r_str(COMPILED_AT_DATETIME));
 
+        #ifdef RUUUBY_F00_B04
+            ENGINE_STAT_SET("F00_B04", Qtrue);
+        #else
+            ENGINE_STAT_DISABLE("F00_B04");
+        #endif
+        #ifdef RUUUBY_F00_B05
+            ENGINE_STAT_SET("F00_B05", Qtrue);
+        #else
+            ENGINE_STAT_DISABLE("F00_B05");
+        #endif
         #ifdef RUUUBY_F06_B08
             ENGINE_STAT_SET("F06_B08", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F06_B08");
+            ENGINE_STAT_DISABLE("F06_B08");
         #endif
         #ifdef RUUUBY_F06_B09
             ENGINE_STAT_SET("F06_B09", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F06_B09");
+            ENGINE_STAT_DISABLE("F06_B09");
         #endif
         #ifdef RUUUBY_F10_B04
             ENGINE_STAT_SET("F10_B04", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F10_B04");
-        #endif
-        #ifdef RUUUBY_F12_B00
-            ENGINE_STAT_SET("F12_B00", Qtrue);
-        #else
-            ENGINE_STAT_SET_DISABLED("F12_B00");
+            ENGINE_STAT_DISABLE("F10_B04");
         #endif
         #ifdef RUUUBY_F22_B01
             ENGINE_STAT_SET("F22_B01", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F22_B01");
+            ENGINE_STAT_DISABLE("F22_B01");
         #endif
         #ifdef RUUUBY_F22_B05
             ENGINE_STAT_SET("F22_B05", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F22_B05");
+            ENGINE_STAT_DISABLE("F22_B05");
         #endif
         #ifdef RUUUBY_F22_B06
             ENGINE_STAT_SET("F22_B06", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F22_B06");
+            ENGINE_STAT_DISABLE("F22_B06");
         #endif
         #ifdef RUUUBY_F22_B07
             ENGINE_STAT_SET("F22_B07", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F22_B07");
-        #endif
-        #ifdef RUUUBY_F26_B00
-            ENGINE_STAT_SET("F26_B00", Qtrue);
-        #else
-            ENGINE_STAT_SET_DISABLED("F26_B00");
+            ENGINE_STAT_DISABLE("F22_B07");
         #endif
         #ifdef RUUUBY_F28_B09
             ENGINE_STAT_SET("F28_B09", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F28_B09");
+            ENGINE_STAT_DISABLE("F28_B09");
         #endif
         #ifdef RUUUBY_F43
             ENGINE_STAT_SET("F43", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F43");
+            ENGINE_STAT_DISABLE("F43");
         #endif
         #ifdef RUUUBY_F92_B00
             ENGINE_STAT_SET("F92_B00", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F92_B00");
+            ENGINE_STAT_DISABLE("F92_B00");
         #endif
         #ifdef RUUUBY_F92_B01
             ENGINE_STAT_SET("F92_B01", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F92_B01");
+            ENGINE_STAT_DISABLE("F92_B01");
         #endif
         #ifdef RUUUBY_F92_B02
             ENGINE_STAT_SET("F92_B02", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F92_B02");
+            ENGINE_STAT_DISABLE("F92_B02");
         #endif
         #ifdef RUUUBY_F93
             ENGINE_STAT_SET("F93", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F93");
+            ENGINE_STAT_DISABLE("F93");
         #endif
         #ifdef RUUUBY_F98_DEBUG
             ENGINE_STAT_SET("F98_DEBUG", Qtrue);
         #else
-            ENGINE_STAT_SET_DISABLED("F98_DEBUG");
+            ENGINE_STAT_DISABLE("F98_DEBUG");
         #endif
         #ifdef RUUUBY_F98_COMPILER
-            engine->runtime_compiler_version = establish_compiler_version();
-            ENGINE_STAT_SET("compiler", compiler_version_to_s(engine->runtime_compiler_version));
+            VALUE key_outer_compiler = rb_str_new_cstr("compiler");
+            rb_str_modify(key_outer_compiler);
+            ENGINE_STAT_SET_SET(key_outer_compiler, c_str_to_frozen_r_str("standard"), c_str_to_frozen_r_str(COMPILER_STANDARD));
+            ENGINE_STAT_SET_SET(key_outer_compiler, c_str_to_frozen_r_str("name"), c_str_to_frozen_r_str(COMPILER_NAME));
+            ENGINE_STAT_SET_SET(key_outer_compiler, c_str_to_frozen_r_str("version"), c_str_to_frozen_r_str(COMPILER_VERSION));
+            rb_str_free(key_outer_compiler);
         #else
-            ENGINE_STAT_SET_DISABLED("compiler");
+            ENGINE_STAT_DISABLE("compiler");
         #endif
         #ifdef RUUUBY_F98_MEMORY
+            VALUE key_outer_memory = rb_str_new_cstr("memory");
+            rb_str_modify(key_outer_memory);
+
             engine->max_memory_after_extensions_loaded = memory_peak_this_runtime();
 
-            ENGINE_STAT_SET("mem_pre_load", DBL2NUM(engine->max_memory_before_extensions_loaded));
-            ENGINE_STAT_SET("mem_post_load", DBL2NUM(engine->max_memory_after_extensions_loaded));
+            ENGINE_STAT_SET_SET(key_outer_memory, c_str_to_frozen_r_str("pre_load"), DBL2NUM(engine->max_memory_before_extensions_loaded));
+            ENGINE_STAT_SET_SET(key_outer_memory, c_str_to_frozen_r_str("post_load"), DBL2NUM(engine->max_memory_after_extensions_loaded));
 
             rb_gc_enable();
             rb_gc_verify_internal_consistency();
@@ -2135,11 +2068,10 @@ typedef struct Ruuuby_Engine_Stats {
 
             engine->max_memory_after_gc = memory_peak_this_runtime();
 
-            ENGINE_STAT_SET("mem_after_gc", DBL2NUM(engine->max_memory_after_gc));
+            ENGINE_STAT_SET_SET(key_outer_memory, c_str_to_frozen_r_str("after_gc"), DBL2NUM(engine->max_memory_after_gc));
+            rb_str_free(key_outer_memory);
         #else
-            ENGINE_STAT_SET_DISABLED("mem_pre_load");
-            ENGINE_STAT_SET_DISABLED("mem_post_load");
-            ENGINE_STAT_SET_DISABLED("mem_after_gc");
+            ENGINE_STAT_DISABLE("memory");
         #endif
         #ifdef RUUUBY_F98_TIMER
             simple_timer_end(& (engine->simple_timer));

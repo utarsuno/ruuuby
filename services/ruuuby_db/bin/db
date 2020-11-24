@@ -13,11 +13,14 @@ $ruuuby.engine.stats_ext['RUUUBY_CONFIGS'] = 'configs_local/db/test.yml'
 
 require_relative '../../../lib/ruuuby/db/migrations/migration_ext'
 require_relative '../../../lib/ruuuby/db/migrations/ruuuby_gem'
+require_relative '../../../lib/ruuuby/db/migrations/env_vars'
 
 #💎.engine.orm.db_orm.obtain_connection
 $orm = 💎.engine.orm
+$db  = $orm.db_orm
 
-$gems = CreateRuuubyGem.new
+$gems     = CreateRuuubyGem.new
+$env_vars = CreateEnvVars.new
 
 require 'irb'
 IRB.start(__FILE__)

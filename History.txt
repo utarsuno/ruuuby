@@ -1,4 +1,15 @@
 
+= `v0.1.0.pre.4` / 2020-11-24
+
+* continue `DB` migrations
+* apply miscellaneous clean ups
+* (*unofficially*) add gems{`rails`, `keycutter`, `github-linguist`}
+* remove `rng` tests among others while reviewing scope of needed `statistics formulas` and approaches
+* start of (critically needed) migration for more formal `CICD`
+  * begin preparation for proper git branching w/ `git hooks` on both `client` and `server` side
+  * begin preparation for proper build pipelines (w/ hybrid of code and one of the many great `CICD` frameworks)
+  * iterative refactor of mapping between features & code; `Ruuuby Dockerization` to resume following more cleanup
+
 = `v0.1.0.pre.3` / 2020-11-16
 
 * add gem{`open3`}

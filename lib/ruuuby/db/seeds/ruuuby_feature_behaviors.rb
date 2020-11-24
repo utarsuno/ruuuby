@@ -1,13 +1,5 @@
 # encoding: UTF-8
 
-@f04.spawn_behaviors(
-    [
-        'Enumerable classes{ex: `Array`, `Set`, `String` have func{`∅?`}',
-        "'class' ENV and class{NilClass} have func{`∅?`}",
-        'classes: `File` & `Dir` have func{`∅?`}' # TODO: create a way to mark this behavior as hybrid/relating to feature 12
-    ]
-)
-
 @f05.spawn_behaviors(['offer func{>>} to class(`Array`)', 'offer func{>>} to class(`String`)'])
 
 @f06.spawn_behaviors(
@@ -47,7 +39,6 @@
 @f11.spawn_behaviors(['create module{SetTheory}', 'create class{Closure}', 'create class{NumberSet}'])
 
 @f12.spawn_behaviors([
-                         'offer Class aliases: {`📁` -> `File`}, {`🗄️` -> `Dir`}',
                          "offer a light layer over `Ruby's` loadable `CSV` data parsing",
                          "offer a light layer over `Ruby's` loadable `YAML` data parsing",
                          'offer regular expression checks for valid file & dir paths'
@@ -73,12 +64,6 @@
         'syntax category{snake_case_capital} aliased w/ {🐍⬆}',
         'syntax category{camel_case} aliased w/ {🐫}',
         'syntax category{camel_case_lower} aliased w/ {🐫⬇}'
-    ]
-)
-
-@f26.spawn_behaviors(
-    [
-        'offer Class aliases: {`📅` -> `Date`}, {`🕒` -> `Time`}, {`📅🕒` -> `DateTime`}|{OPTIONAL}'
     ]
 )
 

@@ -1,11 +1,11 @@
 // encoding: UTF-8
 
-#ifndef CRUUUBY_H8_GRAPHS
-#include "c8_graphs.h"
+#ifndef CRUUUBY_H7_GRAPHS
+#include "07_graphs.h"
 #endif
 
 #ifndef CRUUUBY_H
-#define CRUUUBY_H "defined(CRUUUBY_H)"
+#define CRUUUBY_H
 
 /*____________________________________________________________________________________________________________________
   ___            __   __       __   ___  __             __       ___    __        __
@@ -47,14 +47,19 @@ ________________________________________________________________________________
 #define declare_func(func_name, expr, return_type, single_param) return_type func_name(single_param);return_type func_name(single_param){expr}
 #define declare_static_func(func_name, expr, return_type, single_param) static return_type func_name(single_param);static return_type func_name(single_param){expr}
 
-//#define r_func_pure(func_name, expr)              PUREFUNC(static VALUE func_name(const VALUE self) {expr})
+//#define r_func_pure(func_name, expr)                       PUREFUNC(static VALUE func_name(const VALUE self) {expr})
 #define ⓡ𝑓(func_name, expr)                                 PUREFUNC(static VALUE func_name(const VALUE self) {expr});
+
+#define ⓡ𝑓_const(func_name, expr)                           CONSTFUNC(static VALUE func_name(const VALUE self));static VALUE func_name(const VALUE self){expr}
+
 #define ⓡ𝑓_def(func_name, expr)                             declare_static_func(func_name, expr, VALUE, VALUE self)
 #define ⓡ𝑓_def2(func_name, param_0, param_1, expr)          VALUE func_name(const VALUE param_0, const VALUE param_1);VALUE func_name(const VALUE param_0, const VALUE param_1){expr}
 #define ⓡ𝑓_def3(func_name, param_0, param_1, param_2, expr) VALUE func_name(VALUE param_0, VALUE param_1, VALUE param_2);VALUE func_name(VALUE param_0, VALUE param_1, VALUE param_2){expr}
 
-#define ⓡ𝑓_kargs(func_name, expr)     static VALUE func_name(int argc, VALUE * argv, VALUE self);static VALUE func_name(int argc, VALUE * argv, VALUE self){expr}
-#define ⓡ𝑓_self_them(func_name, expr) ⓡ𝑓_def2(func_name, self, them, expr)
+#define ⓡ𝑓_kargs(func_name, expr)                     static VALUE func_name(int argc, VALUE * argv, VALUE self);static VALUE func_name(int argc, VALUE * argv, VALUE self){expr}
+#define ⓡ𝑓_self_them(func_name, expr)                 ⓡ𝑓_def2(func_name, self, them, expr)
+#define ⓡ𝑓_self_them_returning_const(func_name, expr) CONSTFUNC(static VALUE func_name(const VALUE self, const VALUE them));static VALUE func_name(const VALUE self, const VALUE them){expr}
+
 #define ⓡ𝑓_self_a_b(func_name, expr)  ⓡ𝑓_def3(func_name, self, param_a, param_b, expr)
 
 #define c_func(func_name, expr) declare_func(func_name, expr, void, void)
@@ -63,9 +68,9 @@ ________________________________________________________________________________
 #define 💎add_module_under(kclass, str)              rb_define_module_under(kclass, str);
 #define 💎add_class_under(kclass, kclass_super, str) rb_define_class_under(kclass, str, kclass_super);
 
-#define 💎add_func_alias(kclass, name_alias, name_original)  rb_define_alias(kclass, name_alias, name_original);
-#define 💎add_const_under(kclass, const_name, const_value)   rb_define_const(kclass, const_name, const_value);
-#define 💎add_const_flt(const_name, const_as_c_double)        💎add_const_under(R_FLT, const_name, DBL2NUM(const_as_c_double))
+#define 💎add_func_alias(kclass, name_alias, name_original) rb_define_alias(kclass, name_alias, name_original);
+#define 💎add_const_under(kclass, const_name, const_value)  rb_define_const(kclass, const_name, const_value);
+#define 💎add_const_flt(const_name, const_as_c_double)       💎add_const_under(R_FLT, const_name, DBL2NUM(const_as_c_double))
 #define 💎add_const_theta_angle(const_name, dbl_angle, mode_angle, ref, initial_flags) {\
     ref = θ_new_constant(dbl_angle, mode_angle, initial_flags);\
     rb_define_const(R_MATH, const_name, ref);\
@@ -114,23 +119,19 @@ static VALUE has_smell_of_int(const VALUE arg);
 static VALUE is_finite_num(const VALUE arg) {return rb_funcall(arg, cached_rb_intern_is_finite, 0);}
 static VALUE has_smell_of_int(const VALUE arg){return rb_funcall(arg, cached_rb_intern_smells_like_int, 0);}
 
-CONSTFUNC(static VALUE m_nil_empty(const VALUE self));
-CONSTFUNC(static VALUE m_int_is_finite(const VALUE self));
-CONSTFUNC(static VALUE m_int_is_not_finite(const VALUE self));
-
 void Init_ruby_class_mods(void);
 
 // --------------
 
-static inline VALUE r_flt_has_decimals(const double flt){
+static inline VALUE c_flt_has_decimals(const double flt) {
     if (isfinite(flt)) {re_as_bool(flt != trunc(flt))} else {re_no}
 }
 
-static inline VALUE r_flt_smells_like_int(const double flt){
+static inline VALUE c_flt_smells_like_int(const double flt) {
     if (isfinite(flt)) {re_as_bool(flt == trunc(flt))} else {re_no}
 }
 
-static inline VALUE r_flt_is_universal(const double flt){
+static inline VALUE c_flt_is_universal(const double flt) {
     re_as_bool(isfinite(flt))
 }
 

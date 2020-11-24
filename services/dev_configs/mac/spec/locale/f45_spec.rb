@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 RSpec.describe 'ruby' do
-  context 'locale', :preferences do
+  context 'preferences', :preferences do
 
     context 'recommended settings for {curl}' do
       it 'expected version{7.64.1} matches' do

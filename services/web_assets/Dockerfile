@@ -72,9 +72,8 @@ CMD ["node", "server.js"]
 FROM build_base as build_env_dev
 ENV BUILD_ENV=dev
 ENV NODE_ENV=development
-
-# BUILD_LIBS_DEV_ONLY
 ENV BUID_LIBS_DEV_ONLY zsh vim dpkg mandoc man-pages
+
 RUN apk add --update --no-cache git zsh vim dpkg \
  && sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" \
  && sed -i '1d' /etc/passwd \
@@ -113,7 +112,9 @@ CMD ["node", "server.js"]
 FROM build_base as build_env_test
 ENV BUILD_ENV=test
 ENV NODE_ENV=test
+ENV BUILD_LIBS_TEST_ONLY dpkg
 
+RUN apk add --update --no-cache dpkg \
 COPY ./bin /root/ruuuby_js/bin
 COPY ./dist /root/ruuuby_js/dist
 COPY ./intermediate /root/ruuuby_js/intermediate

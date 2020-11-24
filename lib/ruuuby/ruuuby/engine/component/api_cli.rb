@@ -2,7 +2,7 @@
 
 # information and utilities that define and work w/ aspects of `Ruuuby`
 module ::Ruuuby::MetaData
-  class EngineComponentAPICLI < ::Ruuuby::MetaData::EngineComponentAPI
+  class EngineComponentAPICLI < ::Ruuuby::MetaData::EngineComponent
 
     attr_reader :cmd_start
 
@@ -15,9 +15,6 @@ module ::Ruuuby::MetaData
       super(engine)
       @cmd_start = cmd_start
     end
-
-    # @return [String, Array]
-    def _calculate_version; self.run_cmd('--version'); end
 
     # @param [String] cmd
     # @param [String] output

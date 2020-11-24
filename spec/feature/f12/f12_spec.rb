@@ -1,28 +1,6 @@
 # encoding: UTF-8
 
 RSpec.describe 'f12' do
-  let(:flag_f12_b00){💎.engine.stats_ext['F12_B00']}
-
-  context 'needed global funcs get added to main' do
-    context 'func{📁}' do
-      it 'aliases File' do
-        if flag_f12_b00
-          expect(📁).to eq(::File)
-        else
-          expect{📁}.to raise_error(::NameError)
-        end
-      end
-    end
-    context 'func{🗄️}' do
-      it 'aliases Dir' do
-        if flag_f12_b00
-          expect(🗄️).to eq(::Dir)
-        else
-          expect{🗄️}.to raise_error(::NameError)
-        end
-      end
-    end
-  end
 
   context 'audit', :audit do
 

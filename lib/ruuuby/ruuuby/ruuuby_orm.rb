@@ -4,7 +4,7 @@
 
 # `💎.engine.orm`
 module Ruuuby::MetaData
-  class RuuubyORM < ::Ruuuby::MetaData::EngineComponentAPI
+  class RuuubyORM < ::Ruuuby::MetaData::EngineComponent
 
     attr_reader :db_orm
 

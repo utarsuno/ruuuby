@@ -29,11 +29,24 @@ RSpec.describe 'float.rb' do
 
     context 'by adding function{has_decimals?}' do
       context 'handles needed scenarios' do
-        it 'cases: positive' do
-          [-1337.1, -1.2, -0.3, 0.999999999999, 1.4, 1.5, 1337.6].∀{|scenario| expect(scenario.has_decimals?).to eq(true)}
+        context 'cases: positive' do
+          it 'w/ floats close to zero' do
+            [-1337.1, -1.2, -0.999999999999, -0.3, -0.000000000001, 0.00000000001, 0.999999999999, 1.4, 1.5,].
+                ∀{|scenario| expect(scenario.has_decimals?).to eq(true)}
+          end
+          it 'w/ floats far from zero' do
+            [-1337.133713371337, -1337.1, 1337.6, 1337.133713371337].
+                ∀{|scenario| expect(scenario.has_decimals?).to eq(true)}
+          end
         end
-        it 'cases: negative' do
-          [-1337.0, -2.0, -1.0, -0.0, 0.0, 1.0, 2.0, 1337.0].∀{|scenario| expect(scenario.has_decimals?).to eq(false)}
+        #1187
+        context 'cases: negative' do
+          it 'w/ regular floats' do
+            [-1337.0, -2.0, -1.0, -0.0, 0.0, 1.0, 2.0, 1337.0].∀{|scenario| expect(scenario.has_decimals?).to eq(false)}
+          end
+          it 'w/ infinities' do
+            [::Float::INFINITY_NEGATIVE, ::Float::INFINITY].∀{|scenario| expect(scenario.has_decimals?).to eq(false)}
+          end
         end
       end
     end

@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 RSpec.describe 'ruby' do
-  context 'locale', :preferences do
+  context 'preferences', :preferences do
 
     context 'for gem{rubygems-update}' do
       it 'has correct version' do

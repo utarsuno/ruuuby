@@ -15,11 +15,14 @@ class ::Dir
 
   # @param [String] path (to a directory)
   #
-  # @return [Boolean] true, if provided path exists and is a directory
+  # @return [Boolean] true, if provided{`path`} exists and is a directory
   def self.∃?(path)
     🛑str❓(:path, path)
     ::File.directory?(path)
   end
+
+  # @return [Boolean] true, if the provided{`path`} does not exist (as a directory)
+  def self.∄?(path); !(self.∃?(path)); end
 
   # @see https://stackoverflow.com/questions/2370702/one-liner-to-recursively-list-directories-in-ruby
   #
@@ -27,17 +30,13 @@ class ::Dir
   def ∀📁(recursively=false)
     if recursively
       ::Dir["#{self.path}**/*"].reject{|fn| ::File.directory?(fn)}
-      #::Dir["#{self.path}**/*"]
     else
       self.∀{|path| yield path if ::File.file?("#{self.path}/#{path}")}
-      #self.∀{|path| yield "#{self.path}/#{path}"}
-      #self.∀{|path| yield path if ::File.file?(path)}
     end
   end
 
   # @param [Boolean] recursively
   def ∀🗄️(recursively=false)
-    #self.∀{|path| yield path if ::Dir.∃?("#{self.path}#{path}")}
     if recursively
       ::Dir["#{self.path}**/*"].reject{|fn| ::File.file?(fn)}
     else
@@ -47,7 +46,6 @@ class ::Dir
           yield ::Dir.new(full_path)
         end
       end
-      #self.∀{|path| yield ::Dir.new("#{self.path}#{path}") if ::File.directory?("#{self.path}".ensure_ending!('/') + path)}
     end
   end
 
@@ -62,8 +60,6 @@ class ::Dir
     if recursively
       results = []
       self.∀🗄️ do |sub_dir|
-        #dir = Dir.new("#{self.path}#{sub_dir}/")
-        #results << [dir.md5(true), sub_dir]
         results << [sub_dir.md5(true), sub_dir.path]
       end
       results.sort!{|a, b| a[1] <=> b[1]}
@@ -139,7 +135,7 @@ class ::Dir
     🛑 ::ArgErr.str(elf, 'dir_or_path', dir_or_path) unless (dir_or_path.str? || dir_or_path.is_a?(::Dir))
     sections_self = self.path.split('/')
     sections_them = dir_or_path.str? ? dir_or_path.split('/') : dir_or_path.path.split('/')
-    them_str      = dir_or_path.str? ? dir_or_path : dir_or_path.path
+    #them_str     = dir_or_path.str? ? dir_or_path : dir_or_path.path
     num_same      = 0
     if sections_self[-1] == sections_them[-1]
       num_same      = 1

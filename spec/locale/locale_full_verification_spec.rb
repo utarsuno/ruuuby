@@ -14,7 +14,6 @@ RSpec.describe 'ruby' do
   end
 
   context 'locale', :locale do
-    let(:build_configs){::RbConfig::CONFIG}
 
     context 'web protocol' do
 
@@ -103,7 +102,7 @@ RSpec.describe 'ruby' do
 
     context 'misc configs are as needed' do
       it '$PATH separator is defined as{:}' do
-        expect(build_configs['PATH_SEPARATOR']).to eq(':')
+        expect(::RbConfig::CONFIG['PATH_SEPARATOR']).to eq(':')
       end
     end
 

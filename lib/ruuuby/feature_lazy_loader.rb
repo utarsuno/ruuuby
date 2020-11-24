@@ -12,14 +12,26 @@
 #            \/_/
 # =====================================================================================================================
 
-if 💎.engine.stats_ext['F10_B04']
-  ::Method.alias_method :🏠, :source_location
-end
+feature_configs = 💎.engine.stats_ext
 
-if 💎.engine.stats_ext['F12_B00']
+if feature_configs['F00_B04']
   class ::Object
 
     # @return [Date]
+    def 📅; ::Date; end
+
+    # @return [Time]
+    def 🕒; ::Time; end
+
+    # @return [DateTime]
+    def 📅🕒; ::DateTime; end
+  end
+end
+
+if feature_configs['F00_B05']
+  class ::Object
+
+    # @return [File]
     def 📁; ::File; end
 
     # @return [Dir]
@@ -28,21 +40,11 @@ if 💎.engine.stats_ext['F12_B00']
   end
 end
 
-if 💎.engine.stats_ext['F26_B00']
-  class ::Object
-
-    # @return [Date]
-    def 📅; ::Date; end
-
-    # @return [::Time]
-    def 🕒; ::Time; end
-
-    # @return [::DateTime]
-    def 📅🕒; ::DateTime; end
-  end
+if feature_configs['F10_B04']
+  ::Method.alias_method :🏠, :source_location
 end
 
-if 💎.engine.stats_ext['F28_B09']
+if feature_configs['F28_B09']
   class ::Object
 
     # @return [Float] +Float::ONE_HALF+
@@ -236,4 +238,64 @@ module ::Kernel
   def ∞ℂ; ::Float::INFINITY_COMPLEX; end
 
   # -----------------------------------------------------------------------------------------------------------------
+end
+
+# =====================================================================================================================
+#                                                        __
+#  __                          __                       /\ \__  __
+# /\_\    ___         ___ ___ /\_\     __   _ __    __  \ \ ,_\/\_\    ___     ___
+# \/\ \ /' _ `\     /' __` __`\/\ \  /'_ `\/\`'__\/'__`\ \ \ \/\/\ \  / __`\ /' _ `\
+#  \ \ \/\ \/\ \    /\ \/\ \/\ \ \ \/\ \L\ \ \ \//\ \L\.\_\ \ \_\ \ \/\ \L\ \/\ \/\ \
+#   \ \_\ \_\ \_\   \ \_\ \_\ \_\ \_\ \____ \ \_\\ \__/.\_\\ \__\\ \_\ \____/\ \_\ \_\
+#    \/_/\/_/\/_/    \/_/\/_/\/_/\/_/\/___L\ \/_/ \/__/\/_/ \/__/ \/_/\/___/  \/_/\/_/
+#                                      /\____/
+#                                      \_/__/
+# =====================================================================================================================
+
+module ::Kernel
+
+  # @type [Float]
+  Ω = ::Float::CONST_OMEGA
+
+  # TODO: https://en.wikipedia.org/wiki/Golden_spiral
+  # TODO: https://en.wikipedia.org/wiki/Polar_coordinate_system
+  # TODO: https://en.wikipedia.org/wiki/Euler%27s_formula
+
+  𝔹 = ::Math::SetTheory::BooleanNumbers.instance
+
+  ℕ = ::Math::SetTheory::NaturalNumbers.instance
+
+  𝕎 = ::Math::SetTheory::WholeNumbers.instance
+
+  ℤ = ::Math::SetTheory::IntegerNumbers.instance
+
+  ℚ = ::Math::SetTheory::RationalNumbers.instance
+
+  𝔸ᵣ = ::Math::SetTheory::RealAlgebraicNumbers.instance
+
+  𝔸 = ::Math::SetTheory::AlgebraicNumbers.instance
+
+  ℂ = ::Math::SetTheory::ComplexNumbers.instance
+
+  #𝕋 = ::Math::GroupTheory::CircleGroup.instance
+
+  𝕀 = ::Math::SetTheory::IrrationalNumbers.instance
+
+  ℝ = ::Math::SetTheory::RealNumbers.instance
+
+  𝕌 = ::Math::SetTheory::UniversalSet.instance
+
+  ::Kernel.const_set(:𝕊, ::Math::Space::SymbolicNumbers.instance)
+
+  ::Kernel.const_set(:🅱, ::Math::Space::BooleanSpace.instance)
+
+  🙈
+
+  def 🧬; ::Math::Space::NucleotideSpace.instance; end
+
+  def 🔢; ::Math::Space::NumberSpace.instance; end
+
+  def ∅; ::Math::SetTheory::EmptySet.instance; end
+
+  def 𝕚; ::Math::SetTheory::ImaginaryNumbers.instance; end
 end

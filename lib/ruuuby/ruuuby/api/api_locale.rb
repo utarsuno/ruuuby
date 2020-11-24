@@ -10,7 +10,7 @@ module ::Ruuuby::MetaData
   # TODO: document https://gist.github.com/barnes7td/3804534
   #
   # `💎.engine.api_locale`
-  class LocaleAPI < ::Ruuuby::MetaData::EngineComponentAPI
+  class LocaleAPI < ::Ruuuby::MetaData::EngineComponent
 
     def initialize(engine)
       super(engine)

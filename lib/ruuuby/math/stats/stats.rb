@@ -3,6 +3,8 @@
 # mathematics related code
 module ::Math::Stats
 
+
+
   # ‣ notice: all data points share equal weight
   #   ‣ thus it does NOT take into account the `evenness` of the data
   #

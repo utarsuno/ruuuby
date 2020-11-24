@@ -1,12 +1,16 @@
 # encoding: UTF-8
 
+# @see https://docs.oracle.com/database/121/ADFNS/adfns_regexp.htm#ADFNS9999
+#
 #   -----------------------------------------------------------------------------------------
 #  | for                                  | regex                                            |
 #  | ------------------------------------ | ------------------------------------------------ |
 #  | lowercase letter                     | `[[:lower:]]`                                    |
 #  | uppercase letter                     | `[[:upper:]]`                                    |
 #  | marker start                         | `\A`                                             |
-#  | market end                           | `\z`                                             |
+#  | marker end                           | `\z`                                             |
+#  | marker start in DB context           | `^`                                              |
+#  | marker end in DB context             | `$`                                              |
 #   -----------------------------------------------------------------------------------------
 #
 # add various functions to existing class +Regexp+
