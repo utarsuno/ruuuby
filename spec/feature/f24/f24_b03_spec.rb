@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-using ::String::ContextF24
+# utf-8
 
 RSpec.describe 'f24_b03' do
 

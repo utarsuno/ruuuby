@@ -81,13 +81,6 @@ RSpec.describe 'f10' do
           #expect_∃⨍_with_alias(:class, :ⓣ, ::Object)
           #expect_∃⨍(:Ⓣ, ::Object)
         end
-        it 'for{b04}' do
-          if ENV['RUUUBY_F10'].nil?
-            expect(::Method.∃⨍_alias?(:source_location, :🏠)).to eq(false)
-          else
-            expect_∃⨍_with_alias(:source_location, :🏠, ::Method)
-          end
-        end
         it 'for{b05}' do
           #expect_∃⨍_with_alias(:rand, :🎲, ::Kernel)
           #expect_∃⨍_with_alias(:raise, :🛑, ::Kernel)

@@ -1,7 +1,7 @@
 // encoding: UTF-8
 
-#ifndef CRUUUBY_D0_DEBUGGING
-#define CRUUUBY_D0_DEBUGGING
+#ifndef RUUUBY_OPTIONAL_00
+#define RUUUBY_OPTIONAL_00
 
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)

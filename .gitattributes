@@ -293,26 +293,21 @@
 # @see https://github.com/github/linguist/blob/master/lib/linguist/languages.yml
 # ----------------------------------------------------------------------------------------------------------------------
 
-*.sql                   linguist-detectable=true
-*.sql                   linguist-language=SQL
+*.sql        linguist-detectable=true
+*.sql        linguist-language=SQL
 
-*.c                     linguist-language=C
-*.h                     linguist-language=C
+*.c          linguist-language=C
+*.h          linguist-language=C
 
-*.sh                    linguist-language=Shell
-*.zsh                   linguist-language=Shell
+*.sh         linguist-language=Shell
+*.zsh        linguist-language=Shell
 
-*.rb                    linguist-language=Ruby
-*.gemspec               linguist-language=Ruby
-Rakefile                 linguist-language=Ruby
-Gemfile                  linguist-language=Ruby
+*.rb         linguist-language=Ruby
+*.gemspec    linguist-language=Ruby
+Rakefile      linguist-language=Ruby
+Gemfile       linguist-language=Ruby
 
-Dockerfile               linguist-language=Dockerfile
-docker-compose.yml      linguist-language=Dockerfile
-docker-compose.dev.yml  linguist-language=Dockerfile
-docker-compose.test.yml linguist-language=Dockerfile
-docker-compose.prod.yml linguist-language=Dockerfile
-
-LICENSE.txt             linguist-documentation=false
-History.txt             linguist-documentation=false
-CHANGELOG.md            linguist-documentation=false
+LICENSE.txt  linguist-documentation=false
+History.txt  linguist-documentation=false
+CHANGELOG.md linguist-documentation=false
+.rubocop.yml linguist-documentation=false

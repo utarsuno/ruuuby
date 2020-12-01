@@ -2,10 +2,8 @@
 # |__)  /\  /__` |__     |__) |  | | |    |  \
 # |__) /~~\ .__/ |___    |__) \__/ | |___ |__/
 #
-FROM alpine:3.12 as build_base
 
-RUN apk update && apk upgrade && apk add --update --no-cache \
-  nodejs nodejs-npm curl gzip alpine-sdk wget coreutils
+FROM js_base:latest as build_base
 
 # TODO: https://stackoverflow.com/questions/35968047/using-webpack-threejs-examples-and-typescript
 # TODO: https://www.giacomodebidda.com/threejs-project-starter-for-es6-and-webpack2/
@@ -25,8 +23,6 @@ RUN mkdir /root/ruuuby_js
 WORKDIR /root/ruuuby_js
 
 ENV BUILD_NPM_LIBS chai csso esm exports-loader express fs gulp gulp-cli gulp-mocha html-minifier imports-loader jsonminify mocha three webpack webpack-cli
-ENV SERVICE_OS="alpine"
-ENV SERVICE_OS_VERSION="3.12.0"
 ENV SERVICE_NAME="service_js"
 
 RUN npm install --global $BUILD_NPM_LIBS

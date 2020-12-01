@@ -1,0 +1,40 @@
+# -------------------------------------------- ⚠️ --------------------------------------------
+# not currently utilized (in this version) and thus not currently tested
+# -------------------------------------------- ⚠️ --------------------------------------------
+
+FROM ruuuby_base
+
+ENV RUBY_VERSION "2.7.1"
+ENV RBENV_VERSION "2.7.1"
+
+RUN git clone --depth 1 git://github.com/sstephenson/rbenv.git ${RBENV_ROOT} \
+ && git clone --depth 1 https://github.com/sstephenson/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build \
+ && set -x CC clang && ${RBENV_ROOT}/plugins/ruby-build/install.sh -v
+
+RUN echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
+
+RUN apk add --update bash
+
+RUN rbenv install 2.7.1
+
+#RUN set -x CC clang && \
+#RUN rbenv global $RUBY_VERSION && \
+#    gem update --system $GEM_VERSION
+
+RUN set -x CC clang && \
+    rbenv global $RUBY_VERSION && \
+    gem update --system $GEM_VERSION && \
+    gem install "bundler:2.2.0.rc.2"
+
+#RUN gem install "bundler:2.2.0.rc.2"
+
+CMD ["ruby", "-v"]
+#CMD ["sleep", "9999999999"]
+
+#bundler:2.2.0.rc.2
+
+# git clone --depth 1 --branch v0.0.49 https://github.com/utarsuno/ruuuby.git
+
+# -------------------------------------------- ⚠️ --------------------------------------------
+# not currently utilized (in this version) and thus not currently tested
+# -------------------------------------------- ⚠️ --------------------------------------------

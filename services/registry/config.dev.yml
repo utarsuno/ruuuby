@@ -1,0 +1,16 @@
+# @see https://docs.docker.com/registry/configuration/
+
+version: 0.1
+log:
+  level: debug
+storage:
+  filesystem:
+    rootdirectory: /var/lib/registry
+http:
+  addr: 0.0.0.0:5000
+  host: http://0.0.0.0:5000
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3

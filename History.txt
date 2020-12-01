@@ -1,4 +1,15 @@
 
+= `v0.1.0.pre.5` / 2020-11-30
+
+* add gem{`rubocop`}
+* add a `docker registry service`
+* start adding & preparing needed `tooling` for various `CICD methodologies`
+* for `docker images`, begin better utilization of `docker tags` to enable a more hierarchical design
+  * (enabling more `layer caching`, `code re-use`, reducing `build times`, etc)
+* start formal division between `Ruuuby` as a `gem` and as a `stateful engine` (latter requiring `gem + git source`)
+  * `Ruuuby as a gem` will converge to `TDD` towards {`0.1.0`}
+  * `Ruuuby as a stateful engine` to accelerate `ad hoc refactorings & design testing` towards {`0.1.0`}
+
 = `v0.1.0.pre.4` / 2020-11-24
 
 * continue `DB` migrations

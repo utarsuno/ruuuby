@@ -1,5 +1,5 @@
-# encoding: UTF-8
+# utf-8
 
-class CreateRubyVersion < RuuubyDBMigration
+class CreatePHPVersion < RuuubyDBMigration
 
 end

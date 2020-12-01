@@ -31,7 +31,6 @@
 @f32 = ::RuuubyFeature.spawn(32, 'abstract `NumberTheory`; offering static math functions', 2, %w(math number-theory))
 @f33 = ::RuuubyFeature.spawn(33, 'abstract `Combinatorics`; offering static math functions', 2, %w(math combinatorics))
 
-@f35 = ::RuuubyFeature.spawn(35, 'abstract `Statistics`; offering static math functions', 2, %w(math statistics stats))
 @f36 = ::RuuubyFeature.spawn(36, 'add new class (`TimeSeriesData`) for easier operations involving multi-sample based stats', 2, %w(math stats time-series data))
 @f37 = ::RuuubyFeature.spawn(37, 'abstract `GraphTheory`; offering static math functions and custom `Graph classes`', 2, %w(math graph-theory graphs))
 @f38 = ::RuuubyFeature.spawn(38, 'abstract `Tropical Algebra`; offering static math functions and `Refinements` for specific classes', 2, %w(math tropical-algebra tropical algebra))

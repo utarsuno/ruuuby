@@ -29,6 +29,7 @@ services/ruuuby/f93/
 /services/ruuuby_server/
 /services/ruuuby_server/ruuuby_server/
 services/temp/
+services/message_bot/config.json
 
 #
 Gemfile.lock

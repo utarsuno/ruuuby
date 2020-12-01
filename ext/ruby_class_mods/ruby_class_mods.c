@@ -27,21 +27,13 @@ ________________________________________________________________________________
 #include <inttypes.h>
 #include <float.h>
 //#include <math.h>
-//#include <tgmath.h>
+#include <tgmath.h>
 //#include <complex.h>
 
 #ifdef RUUUBY_F98_DEBUG
     #ifdef RUUUBY_F98_TIMER
         #include <time.h>
         #include <sys/time.h>
-    #endif
-    #ifdef RUUUBY_F98_OPENCL
-        #define CL_SILENCE_DEPRECATION
-        #define GL_SILENCE_DEPRECATION
-        #include <OpenCL/cl.h>
-    #endif
-    #ifdef RUUUBY_F98_OPENMP
-        #include <omp.h>
     #endif
 #endif
 
@@ -50,8 +42,11 @@ ________________________________________________________________________________
 #endif
 
 #ifdef RUUUBY_DEBUGGING
-#include "optional/00_debugging.h"
+#include "optional_00_debugging.h"
+#include "optional_01_universal_math_funcs.h"
+#include "optional_02_stats_funcs.h"
 #endif
+
 
 /*____________________________________________________________________________________________________________________
  __        __        ___      __        __
@@ -111,17 +106,6 @@ static inline int is_non_simple_num(const VALUE arg) {
         re_c_ye
     default:
         re_as_c_bool(rb_obj_is_instance_of(arg, Ⓒbig_decimal))
-    }
-}
-
-// rb_ary_new: uses a default size of 16
-static inline VALUE 💎new_ary(const long known_max_size) {
-    if (known_max_size == 0) {
-        return rb_ary_new_capa(0);
-    } else if (known_max_size <= 15L) {
-        return rb_ary_new_capa(known_max_size);
-    } else {
-        return rb_ary_new();
     }
 }
 
@@ -333,17 +317,15 @@ static void startup_step4_load_needed_ruuuby_files(void) {
 
     ensure_loaded_attribute_extendable(syntax_cache)
 
-    ensure_loaded_class(str/context_case_syntax)
-    ensure_all_loaded_for_set_theory() // must be after{str/context_case_syntax}
+    ensure_loaded_class(sym)             // must be after{attribute_cardinality}
+    ensure_loaded_class(str)             // must be after{attribute_syntax_cache, attribute_cardinality}
+    ensure_all_loaded_for_set_theory()
 
-    ensure_loaded_class(sym)           // must be after{attribute_cardinality}
-
-    ensure_loaded_class(str/str)       // must be after{attribute_syntax_cache, attribute_cardinality}
-    ensure_all_loaded_for_io()         // must be after{attribute_syntax_cache}
+    ensure_all_loaded_for_io()           // must be after{attribute_syntax_cache}
 
     ensure_loaded_math(cryptography/crypto)
 
-    internal_only_prepare_f16();       // must be after{ruuuby/types, ruuuby/class/str}
+    internal_only_prepare_f16();         // must be after{ruuuby/types, ruuuby/class/str}
 
     ensure_all_loaded_for_math_space()
 
@@ -356,6 +338,10 @@ static void startup_step4_load_needed_ruuuby_files(void) {
 #endif
 #ifdef RUUUBY_F38
     ensure_all_loaded_for_tropical_algebra()
+#endif
+
+#ifdef RUUUBY_OPTIONAL_01
+    ensure_loaded_math(universal_functions/gamma)
 #endif
 
 #ifdef RUUUBY_F38
@@ -387,9 +373,6 @@ static void startup_step4_load_needed_ruuuby_files(void) {
 #endif
 #ifdef RUUUBY_F22_B06
     ensure_loaded_ruuuby(ruuuby/engine/f22/b06)
-#endif
-#ifdef RUUUBY_F22_B07
-    ensure_loaded_ruuuby(ruuuby/engine/f22/b07)
 #endif
 
 #ifdef RUUUBY_F43
@@ -1773,12 +1756,25 @@ static inline void startup_step2_before_loading_extension(void) {
     //ⓜruuuby_engine_jit = 💎add_module_under(ⓜruuuby_engine, "F22B01")
     💎add_module_under(ⓜruuuby_engine, "F22B01")
 #endif
-    ⓜruuuby_engine_gc = 💎add_module_under(ⓜruuuby_engine, "F22B00")
+    ⓜruuuby_engine_gc    = 💎add_module_under(ⓜruuuby_engine, "F22B00")
 
-    ⓜcombinatorics = 💎add_module_under(R_MATH, "Combinatorics")
-    ⓜtrigonometry  = 💎add_module_under(R_MATH, "Trig")
-    ⓜnumber_theory = 💎add_module_under(R_MATH, "NumberTheory")
-    ⓜgraph_theory  = 💎add_module_under(R_MATH, "GraphTheory")
+    ⓜcombinatorics       = 💎add_module_under(R_MATH, "Combinatorics")
+
+#ifdef RUUUBY_OPTIONAL_02
+    ⓜstats                     = 💎add_module_under(R_MATH, "Stats")
+    ⓜstats_distribution        = 💎add_module_under(ⓜstats, "Distribution")
+    ⓜstats_distribution_normal = 💎add_module_under(ⓜstats_distribution, "Normal")
+
+    💎add_universal_func_1args_to(ⓜstats_distribution_normal, "area_above", m_normal_distribution_area_above)
+    💎add_universal_func_1args_to(ⓜstats_distribution_normal, "area_below", m_normal_distribution_area_below)
+    💎add_universal_func_2args_to(ⓜstats_distribution_normal, "area_between", m_normal_distribution_area_between)
+    💎add_universal_func_2args_to(ⓜstats_distribution_normal, "area_outside", m_normal_distribution_area_outside)
+#endif
+
+    ⓜtrigonometry        = 💎add_module_under(R_MATH, "Trig")
+    ⓜnumber_theory       = 💎add_module_under(R_MATH, "NumberTheory")
+    ⓜgraph_theory        = 💎add_module_under(R_MATH, "GraphTheory")
+    ⓜuniversal_functions = 💎add_module_under(R_MATH, "UniversalFunctions")
 
     💎add_singleton_func_1args_to(ⓜnumber_theory, "nth_euler_totient", m_number_theory_eulers_totient_func)
     💎add_singleton_func_1args_to(ⓜnumber_theory, "semiprime?", m_number_theory_is_semiprime)
@@ -1870,6 +1866,12 @@ static void startup_step3_add_ruuuby_c_extensions(void) {
 
     💎add_public_func_1args_to(ⓜtrigonometry, "sec", m_sec)
     💎add_public_func_1args_to(ⓜtrigonometry, "sec2", m_sec2)
+
+#ifdef RUUUBY_OPTIONAL_01
+    💎add_universal_func_1args_to(ⓜuniversal_functions, "gamma", m_gamma)
+    //💎add_universal_func_2args_to(ⓜuniversal_functions, "gamma_incomplete", m_gamma_incomplete)
+    //💎add_universal_func_2args_to(ⓜuniversal_functions, "chi_squared_test", m_chi_squared_test)
+#endif
 }
 
 /*                               __
@@ -1894,7 +1896,7 @@ typedef struct Ruuuby_Engine_Stats {
 #ifdef RUUUBY_F98_MEMORY
     double max_memory_before_extensions_loaded;
     double max_memory_after_extensions_loaded;
-    double max_memory_after_gc;
+    //double max_memory_after_gc;
 #endif
 
 #ifdef RUUUBY_F98_TIMER
@@ -1958,7 +1960,7 @@ typedef struct Ruuuby_Engine_Stats {
 
         💎set_instance_field(Ⓒruuuby_engine,hsh_ruuuby_engine_stats,stats_ext);
 
-        ENGINE_STAT_SET("compiled_at", c_str_to_r_str(COMPILED_AT_DATETIME));
+        ENGINE_STAT_SET("compiled_at", c_str_to_r_str_frozen(COMPILED_AT_DATETIME));
 
         #ifdef RUUUBY_F00_B04
             ENGINE_STAT_SET("F00_B04", Qtrue);
@@ -1980,11 +1982,6 @@ typedef struct Ruuuby_Engine_Stats {
         #else
             ENGINE_STAT_DISABLE("F06_B09");
         #endif
-        #ifdef RUUUBY_F10_B04
-            ENGINE_STAT_SET("F10_B04", Qtrue);
-        #else
-            ENGINE_STAT_DISABLE("F10_B04");
-        #endif
         #ifdef RUUUBY_F22_B01
             ENGINE_STAT_SET("F22_B01", Qtrue);
         #else
@@ -1999,11 +1996,6 @@ typedef struct Ruuuby_Engine_Stats {
             ENGINE_STAT_SET("F22_B06", Qtrue);
         #else
             ENGINE_STAT_DISABLE("F22_B06");
-        #endif
-        #ifdef RUUUBY_F22_B07
-            ENGINE_STAT_SET("F22_B07", Qtrue);
-        #else
-            ENGINE_STAT_DISABLE("F22_B07");
         #endif
         #ifdef RUUUBY_F28_B09
             ENGINE_STAT_SET("F28_B09", Qtrue);
@@ -2043,9 +2035,9 @@ typedef struct Ruuuby_Engine_Stats {
         #ifdef RUUUBY_F98_COMPILER
             VALUE key_outer_compiler = rb_str_new_cstr("compiler");
             rb_str_modify(key_outer_compiler);
-            ENGINE_STAT_SET_SET(key_outer_compiler, c_str_to_frozen_r_str("standard"), c_str_to_frozen_r_str(COMPILER_STANDARD));
-            ENGINE_STAT_SET_SET(key_outer_compiler, c_str_to_frozen_r_str("name"), c_str_to_frozen_r_str(COMPILER_NAME));
-            ENGINE_STAT_SET_SET(key_outer_compiler, c_str_to_frozen_r_str("version"), c_str_to_frozen_r_str(COMPILER_VERSION));
+            ENGINE_STAT_SET_SET(key_outer_compiler, c_str_to_r_str_frozen("standard"), c_str_to_r_str_frozen(COMPILER_STANDARD));
+            ENGINE_STAT_SET_SET(key_outer_compiler, c_str_to_r_str_frozen("name"), c_str_to_r_str_frozen(COMPILER_NAME));
+            ENGINE_STAT_SET_SET(key_outer_compiler, c_str_to_r_str_frozen("version"), c_str_to_r_str_frozen(COMPILER_VERSION));
             rb_str_free(key_outer_compiler);
         #else
             ENGINE_STAT_DISABLE("compiler");
@@ -2056,19 +2048,16 @@ typedef struct Ruuuby_Engine_Stats {
 
             engine->max_memory_after_extensions_loaded = memory_peak_this_runtime();
 
-            ENGINE_STAT_SET_SET(key_outer_memory, c_str_to_frozen_r_str("pre_load"), DBL2NUM(engine->max_memory_before_extensions_loaded));
-            ENGINE_STAT_SET_SET(key_outer_memory, c_str_to_frozen_r_str("post_load"), DBL2NUM(engine->max_memory_after_extensions_loaded));
+            ENGINE_STAT_SET_SET(key_outer_memory, c_str_to_r_str_frozen("pre_load"), DBL2NUM(engine->max_memory_before_extensions_loaded));
+            ENGINE_STAT_SET_SET(key_outer_memory, c_str_to_r_str_frozen("post_load"), DBL2NUM(engine->max_memory_after_extensions_loaded));
 
             rb_gc_enable();
             rb_gc_verify_internal_consistency();
+            //rb_funcall(ⓜruuuby_engine_gc, rb_intern("perform_full"), 0);
+            //rb_gc_verify_internal_consistency();
+            //engine->max_memory_after_gc = memory_peak_this_runtime();
+            ////ENGINE_STAT_SET_SET(key_outer_memory, c_str_to_r_str_frozen("after_gc"), DBL2NUM(engine->max_memory_after_gc));
 
-            rb_funcall(ⓜruuuby_engine_gc, rb_intern("perform_full"), 0);
-
-            rb_gc_verify_internal_consistency();
-
-            engine->max_memory_after_gc = memory_peak_this_runtime();
-
-            ENGINE_STAT_SET_SET(key_outer_memory, c_str_to_frozen_r_str("after_gc"), DBL2NUM(engine->max_memory_after_gc));
             rb_str_free(key_outer_memory);
         #else
             ENGINE_STAT_DISABLE("memory");

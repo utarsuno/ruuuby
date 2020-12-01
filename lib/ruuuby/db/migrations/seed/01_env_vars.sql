@@ -22,9 +22,9 @@ INSERT INTO env_var_groups (group_name) VALUES
 
 -- ---------------------------------------------------------------------------------------------------------------------
 -- @see https://github.com/rbenv/rbenv
---CALL env_var_add('rbenv', 'tier_err_if_present', 'RBENV_VERSION',   'specifies version of Ruby to be used, overrides global & application-specific version');
---CALL env_var_add('rbenv', 'tier_err_if_missing', 'RBENV_ROOT',      'specifies location for Ruby versions and shims');
---CALL env_var_add('rbenv', 'tier_optional',       'RBENV_DEBUG',     'add verbose debug info');
+--CALL env_var_add('rbenv', 'tier_err_if_present', 'RBENV_VERSION', 'specifies version of Ruby to be used, overrides global & application-specific version');
+--CALL env_var_add('rbenv', 'tier_err_if_missing', 'RBENV_ROOT',    'specifies location for Ruby versions and shims');
+--CALL env_var_add('rbenv', 'tier_optional',       'RBENV_DEBUG',   'add verbose debug info');
 
 -- TODO: look into utilizing
 --CALL env_var_add('rbenv', 'tier_optional',       'RBENV_HOOK_PATH', 'list of paths searched against for rbenv hooks');

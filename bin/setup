@@ -5,8 +5,6 @@ set -euo pipefail
 IFS=$'\n\t'
 set -vx
 
-echo "JUST CALLED BIN/SETUP"
-
 bundle install
 
 # Do any other automated setup that you need to do here

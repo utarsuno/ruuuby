@@ -38,16 +38,3 @@ defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false'
 
   end
 end
-
-# TODO:
-#  * https://goinbigdata.com/demystifying-ifconfig-and-network-interfaces-in-linux/
-#  * https://linux.die.net/man/8/ifconfig
-#  * https://www.computerhope.com/unix/uifconfi.htm
-#  * https://www.computerhope.com/jargon/m/multicast.htm
-#  * https://www.tecmint.com/ifconfig-command-examples/
-#  * https://www.techrepublic.com/blog/apple-in-the-enterprise/diagnose-mac-networking-problems-with-these-three-commands/
-#  * https://stackoverflow.com/questions/37860936/find-out-which-network-interface-belongs-to-docker-container
-#  * https://unix.stackexchange.com/questions/103241/how-to-use-ifconfig-to-show-active-interface-only
-#  * https://stackoverflow.com/questions/50520202/macos-en5-network-cant-be-turned-off
-#  * https://en.wikipedia.org/wiki/Subnetwork
-#  * https://support.microsoft.com/en-us/help/164015/understanding-tcp-ip-addressing-and-subnetting-basics

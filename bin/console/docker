@@ -8,12 +8,16 @@ require 'ruuuby'
 
 $ruuuby = 💎
 $docker = 🐋
-using ::String::ContextF24
 using ::Ruuuby::Heuristics::ContextParsingCommandOutput
 
 # -------------------------------------------- ⚠️ --------------------------------------------
 
 $docker_dev = 💎.engine.api_locale.api_docker_dev
+
+require_relative '../../lib/ruuuby/protocol/abstract/rest_domain'
+require_relative '../../services/registry/lib/docker_registry'
+
+$registry = ::Ruuuby::MetaData::DockerAPI::DockerRegistryAPI.new('localhost', '5000')
 
 require 'irb'
 IRB.start(__FILE__)

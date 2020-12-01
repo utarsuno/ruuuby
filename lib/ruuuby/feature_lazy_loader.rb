@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# utf-8
 
 # =====================================================================================================================
 #               __                                  ___          ___                __
@@ -38,10 +38,6 @@ if feature_configs['F00_B05']
     def 🗄️; ::Dir; end
 
   end
-end
-
-if feature_configs['F10_B04']
-  ::Method.alias_method :🏠, :source_location
 end
 
 if feature_configs['F28_B09']
@@ -142,63 +138,70 @@ end
 ::NilClass.alias_method :∅?, :empty?
 
 module ::Kernel
-
   # ------------------------------------------------------------------------------------------------ | *b04* | *f10* |
 
   # Return the square-root of the provided argument.
   #
-  # @param [Integer, Float, Numeric, Rational, Complex, String] n
+  # @note syntax based operations aim to provide better accuracy at cost of slower performance.
+  #
+  # @param [Integer, Float, Numeric, Rational, Complex, String] num
   #
   # @return [Float, Numeric]
-  def √(n)
-    if n.str? && n.to_num?
-      ::Math.square_root(n.to_num.to_f)
+  def √(num)
+    if num.str? && num.to_num?
+      ::Math.square_root(num.to_num.to_f)
     else
-      🛑num❓(:n, n)
-      ::Math.square_root(n.to_f)
+      🛑num❓('num', num)
+      if num.🆔 == ::Math::PI.🆔
+        # √(π)   == 1.7724538509055159 (last two digits not matching π)
+        # 𝚪(0.5) == 1.772453850905516  (matching digits of π)
+        return ::Math::UniversalFunctions.gamma(0.5)
+      else
+        return ::Math.square_root(num.to_f)
+      end
     end
   end
 
   # Return the cube-root of the provided argument.
   #
-  # @param [Integer, Float, Numeric, Rational, Complex, String] n
+  # @param [Integer, Float, Numeric, Rational, Complex, String] num
   #
   # @return [Float, Numeric]
-  def ∛(n)
-    if n.str? && n.to_num?
-      ::Math.cubic_root(n.to_num.to_f)
+  def ∛(num)
+    if num.str? && num.to_num?
+      ::Math.cubic_root(num.to_num.to_f)
     else
-      🛑num❓(:n, n)
-      ::Math.cubic_root(n.to_f)
+      🛑num❓('num', num)
+      ::Math.cubic_root(num.to_f)
     end
   end
 
   # ------------------------------------------------------------------------------------------------ | *b05* | *f10* |
 
-  # @return [Float] the base ℮ logarithm of +n+
-  def logₑ(n)
-    if n < 0 && n == (Ω ** -1)
+  # @return [Float] the base ℮ logarithm of +num+
+  def logₑ(num)
+    if num.negative? && num == (Ω ** -1)
       ::BigMath.exp(-Ω, 42)
     else
-      ::Math.log_e(n.to_f)
+      ::Math.log_e(num.to_f)
     end
   end
 
-  # @param [Numeric, Float, Complex] n
+  # @param [Numeric, Float, Complex] num
   #
   # | domain    | (0, ∞)  |
   # | co-domain | (-∞, ∞) |
   #
   # @return [Float] the base 2 logarithm of +n+
-  def log₂(n); ::Math.log2(n); end
+  def log₂(num); ::Math.log2(num); end
 
-  # @param [Numeric, Float, Complex] n
+  # @param [Numeric, Float, Complex] num
   #
   # | domain    | (0, ∞)  |
   # | co-domain | (-∞, ∞) |
   #
   # @return [Float] the base 10 logarithm of +n+
-  def log₁₀(n); ::Math.log10(n); end
+  def log₁₀(num); ::Math.log10(num); end
 
   # -------------------------------------------------------------------------------------------------------- | *f28* |
 
@@ -271,13 +274,13 @@ module ::Kernel
 
   ℚ = ::Math::SetTheory::RationalNumbers.instance
 
-  𝔸ᵣ = ::Math::SetTheory::RealAlgebraicNumbers.instance
+  # 𝔸ᵣ = ::Math::SetTheory::RealAlgebraicNumbers.instance
 
   𝔸 = ::Math::SetTheory::AlgebraicNumbers.instance
 
   ℂ = ::Math::SetTheory::ComplexNumbers.instance
 
-  #𝕋 = ::Math::GroupTheory::CircleGroup.instance
+  # 𝕋 = ::Math::GroupTheory::CircleGroup.instance
 
   𝕀 = ::Math::SetTheory::IrrationalNumbers.instance
 

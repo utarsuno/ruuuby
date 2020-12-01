@@ -6,12 +6,12 @@
  |___ | |__) |  \ /~~\ |  \  |     |  |  | |    \__/ |  \  |  .__/
 ____________________________________________________________________________________________________________________________________________________________________ */
 
-#ifndef CRUUUBY_H0_CONSTANTS
+#ifndef CRUUUBY_H0
 #include "00_constants.h"
 #endif
 
-#ifndef CRUUUBY_H1_CONSTANTS_TYPE_HEADERS
-#define CRUUUBY_H1_CONSTANTS_TYPE_HEADERS
+#ifndef CRUUUBY_H1
+#define CRUUUBY_H1
 
 /*____________________________________________________________________________________________________________________________________________________________________
   __   __        __  ___           ___                         ___  __
@@ -50,8 +50,10 @@ ________________________________________________________________________________
 ____________________________________________________________________________________________________________________________________________________________________ */
 
 // rb_gc_register_address(& cached_field);
+
+// TODO: rb_cData vs rb_cObject
 #define 💎define_new_ruby_class_as_wrapper_over_c_struct(cached_field, name_of_class, alloc_func){\
-    cached_field = rb_define_class(name_of_class, rb_cData);\
+    cached_field = rb_define_class(name_of_class, rb_cObject);\
     rb_define_alloc_func(cached_field, alloc_func);\
 }
 
@@ -131,11 +133,22 @@ static inline VALUE 💎new_ary(const long known_max_size);
 }
 
 #define c_str_to_r_str(arg)             rb_str_new_cstr(arg)
-#define c_str_to_frozen_r_str(the_cstr) rb_str_new_frozen(c_str_to_r_str(the_cstr))
+#define c_str_to_r_str_frozen(the_cstr) rb_str_new_frozen(c_str_to_r_str(the_cstr))
 #define r_str_len(arg)                  RSTRING_LEN(arg)
 #define r_str_is_empty(arg)             r_str_len(arg) == 0
 #define r_str_prepend(arg, elem)        rb_str_update(arg, 0L, 0L, elem);
 #define r_str_pre_modify(arg)           rb_str_modify(arg);
+
+// rb_ary_new: uses a default size of 16
+static inline VALUE 💎new_ary(const long known_max_size) {
+    if (known_max_size == 0) {
+        return rb_ary_new_capa(0);
+    } else if (known_max_size <= 15L) {
+        return rb_ary_new_capa(known_max_size);
+    } else {
+        return rb_ary_new();
+    }
+}
 
 static inline int c_int_is_natural(const int c_int);
 static inline int c_int_is_natural(const int c_int) {return c_int > 0;}

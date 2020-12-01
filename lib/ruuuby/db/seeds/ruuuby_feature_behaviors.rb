@@ -29,7 +29,6 @@
         'provide global variables for certain ruby engine components (ex: `$git` instead of `💎.engine.api_locale.api_git`)',
         'part I/II  | for class{`Object`}, alias func{`object_id`} as{`🆔`}, func{`frozen`} as{`❄️`}, func{`frozen?`} as{`❄️?`}',
         'part II/II | for class{`Object`}, alias func{`class`} as{`ⓣ`} & provide utility func{`Ⓣ`} to get self-class as a String',
-        '`🏠` to alias `source_location` for `::Method`',
         'part I/III   | for class{`Kernel`}, alias func{`rand`} as{`🎲`} & func{`raise`} as{`🛑`}',
         'part II/III  | for class{`Kernel`}, alias `Math` funcs{`sqrt`, `cbrt`} w/ {`√`, `∛`}',
         'part III/III | for class{`Kernel`}, alias `Math` funcs{`log_e`, `log2`, `log10`} w/ {`logₑ`, `log₂`, `log₁₀`}'

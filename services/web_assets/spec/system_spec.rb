@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# utf-8
 
 RSpec.describe 'docker_service_js' do
   let(:dev){💎.engine.api_locale.api_docker_dev}

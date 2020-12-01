@@ -73,7 +73,7 @@ module ::Math::NumberTheory
       return [1] if 1 == n
       self.ensure_lazy_loaded
       primes, powers = ::Prime.prime_division(n).transpose
-      ranges = powers.map{|m| (0..m).to_a}
+      ranges         = powers.map{|m| (0..m).to_a}
       ranges[0].product(*ranges[1..-1]).map{|es| primes.zip(es).map{|p,e| p**e}.reduce :*}.sort
     end
 

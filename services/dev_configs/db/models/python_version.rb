@@ -1,5 +1,5 @@
 # encoding: UTF-8
 
-class CreateRubyVersion < RuuubyDBMigration
+class CreatePythonVersion < RuuubyDBMigration
 
 end

@@ -1,11 +1,11 @@
 // encoding: UTF-8
 
-#ifndef CRUUUBY_H1_TYPED_CHECKS
+#ifndef CRUUUBY_H1
 #include "01_typed_checks.h"
 #endif
 
-#ifndef CRUUUBY_H2_EXTENSION_MEMORY
-#define CRUUUBY_H2_EXTENSION_MEMORY
+#ifndef CRUUUBY_H2
+#define CRUUUBY_H2
 
 /*____________________________________________________________________________________________________________________
  __        __        ___      __        __

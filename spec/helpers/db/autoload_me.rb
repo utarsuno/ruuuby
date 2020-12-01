@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
 $ruuuby = 💎
-$ruuuby.engine.stats_ext['RUUUBY_ENV']     = 'test'
-$ruuuby.engine.stats_ext['RUUUBY_CONFIGS'] = 'configs_local/db/test.yml'
+$ruuuby.engine.stats_ext['RUUUBY_ENV']     = 'dev'
+$ruuuby.engine.stats_ext['RUUUBY_CONFIGS'] = 'configs_local/db/dev.yml'
 
 require_relative '../../../lib/ruuuby/db/migrations/migration_ext'
 require_relative '../../../lib/ruuuby/db/migrations/ruuuby_gem'

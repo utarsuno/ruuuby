@@ -1,11 +1,11 @@
 // encoding: UTF-8
 
-#ifndef CRUUUBY_H5_FEATURE_MACROS
+#ifndef CRUUUBY_H5
 #include "05_feature_macros.h"
 #endif
 
-#ifndef CRUUUBY_H6_TIME_SERIES_DATA
-#define CRUUUBY_H6_TIME_SERIES_DATA
+#ifndef CRUUUBY_H6
+#define CRUUUBY_H6
 
 
 /*            __   __   __   __

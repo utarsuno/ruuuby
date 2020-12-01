@@ -1,14 +1,8 @@
-# encoding: UTF-8
+# utf-8
 
-# add various aliases & functions to existing Class(+Symbol+)
+# `Ruuuby` modifications to existing Class{+Symbol+}
 class ::Symbol
-
-  # ---------------------------------------------------------------------------------------------------------- | *f03* |
-  alias_method :𝔠, :length
-  # ---------------------------------------------------------------------------------------------------------- | *f10* |
-
-  alias_method :⬇, :downcase
-  alias_method :⬆, :upcase
-
-  # | ------------------------------------------------------------------------------------------------------------------
+  alias 𝔠 length
+  alias ⬇ downcase
+  alias ⬆ upcase
 end

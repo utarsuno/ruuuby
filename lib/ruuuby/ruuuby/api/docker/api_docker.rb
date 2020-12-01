@@ -34,13 +34,16 @@ module ::Ruuuby::MetaData
 
     include ::Ruuuby::Attribute::Connectable
 
-    attr_accessor :services
+    attr_accessor :services, :registry
 
     # @param [Object] engine
     def initialize(engine, project_name)
       super(engine, 'docker')
       @project_name = project_name
       #TODO: cached_services
+
+      # TODO: proper loading
+      @registry     = nil
     end
 
     # `wip`
@@ -91,7 +94,7 @@ module ::Ruuuby::MetaData
     # @raise [ArgumentError]
     #
     # @return [Docker::Network]
-    def find_🌐(network_name); ::Docker::Network.fetch(network_name); end
+    def find_🌐(network_name); ::Docker::Network[network_name]; end
 
     # @param [String] container_id
     #

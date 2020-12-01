@@ -1,14 +1,14 @@
-# encoding: UTF-8
+# utf-8
 
 using ::ThetaAngle::ContextRuuuby
 
 RSpec.describe 'str' do
   let(:syntax_str){::String::Syntax}
 
-  let(:scenarios_iso8601_full){%w(2020-04-04T00:00:00Z 2020-04-04T00:00:00-1200 1920-04-04T00:00:01-12:00
+  let(:scenarios_iso8601_full){%w[2020-04-04T00:00:00Z 2020-04-04T00:00:00-1200 1920-04-04T00:00:01-12:00
 1999-04-04T00:00:00-0500 2000-04-04T00:00:01-05:00 2020-01-04T00:01:00+0500 2020-12-04T00:01:01+05:00 2020-11-04T01:00:01+1400
 2020-04-04T01:00:01+14:00 2020-04-04T01:01:00-1400 2020-10-04T01:01:01+14:00 2020-09-04T23:12:12+0000 2020-08-04T23:12:12+00:00
-2020-07-04T23:12:12+0000 2020-06-04T23:12:12+00:00)}
+2020-07-04T23:12:12+0000 2020-06-04T23:12:12+00:00]}
 
   let(:scenarios_iso8601_error){['', '2020-04-04T00:00:00-3500', '2020-04-04T00:00:01+26:00']}
 
@@ -23,11 +23,6 @@ RSpec.describe 'str' do
     context 'by adding needed functions' do
 
       context 'func{palindrome?}' do
-        context 'scenarios not handled correctly?', :tech_debt do
-          it 'see char generated from{[770].pack("U*")}' do
-            expect('η̂'.palindrome?).to eq(false)
-          end
-        end
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect(''.palindrome?).to eq(true)
@@ -58,6 +53,7 @@ RSpec.describe 'str' do
         context 'tech_debt', :tech_debt do
           it 'offers arg to give deal with "visual palindromeness"' do
             expect('∃12321∃'.palindrome?).to eq(true)
+            expect('η̂'.palindrome?).to eq(false)
           end
         end
       end # end: {func{palindrome?}}
@@ -205,7 +201,7 @@ RSpec.describe 'str' do
                 expect_syntax(::String, :syntax_time_day, syntax_str::TIME_DAY)
               end
               it 'handles cases: positive' do
-                %w(01 12 30 31 29 19 10 09).∀{|scenario| expect(scenario.match?(::String.syntax_time_day)).to eq(true)}
+                %w[01 12 30 31 29 19 10 09].∀{|scenario| expect(scenario.match?(::String.syntax_time_day)).to eq(true)}
               end
               it 'handles cases: negative' do
                 ['-1', '', '34', '41', '00'].∀{|scenario| expect(scenario.match?(::String.syntax_time_day)).to eq(false)}
@@ -216,7 +212,7 @@ RSpec.describe 'str' do
                 expect_syntax(::String, :syntax_time_hour_min, syntax_str::TIME_HOUR_MIN)
               end
               it 'handles cases: positive' do
-                %w(00:00 23:59 10:12 12:50).∀{|scenario| expect(scenario.match?(::String.syntax_time_hour_min)).to eq(true)}
+                %w[00:00 23:59 10:12 12:50].∀{|scenario| expect(scenario.match?(::String.syntax_time_hour_min)).to eq(true)}
               end
               it 'handles cases: negative' do
                 ['', '000:00', '234:59', '12:60', '24:01'].∀{|scenario| expect(scenario.match?(::String.syntax_time_hour_min)).to eq(false)}
@@ -227,7 +223,7 @@ RSpec.describe 'str' do
                 expect_syntax(::String, :syntax_time_hour_min_sec, syntax_str::TIME_HOUR_MIN_SEC)
               end
               it 'handles cases: positive' do
-                %w(00:00:00 23:59:13 10:12:10 12:50:02).∀{|scenario| expect(scenario.match?(::String.syntax_time_hour_min_sec)).to eq(true)}
+                %w[00:00:00 23:59:13 10:12:10 12:50:02].∀{|scenario| expect(scenario.match?(::String.syntax_time_hour_min_sec)).to eq(true)}
               end
               it 'handles cases: negative' do
                 ['', '000:00:00', '234:59:00', '12:60:00', '24:01:00', '10:10:623'].∀{|scenario| expect(scenario.match?(::String.syntax_time_hour_min_sec)).to eq(false)}
@@ -339,34 +335,23 @@ RSpec.describe 'str' do
           end
         end
       end # end: {func{iso8601?}}
-      context 'func{η̂} && func{as_iso8601}' do
+      context 'func{as_iso8601}' do
         context 'normalizer{:iso8601}' do
           context 'cases: positive' do
             it 'year' do
-              expect('2020'.η̂(:iso8601)).to eq('2020')
               expect('2020'.as_iso8601).to eq('2020')
             end
             it 'year & month' do
-              expect('2020-04'.η̂(:iso8601)).to eq('2020-04')
               expect('2020-04'.as_iso8601).to eq('2020-04')
             end
             it 'year & month & day' do
-              expect('2020-04-04'.η̂(:iso8601)).to eq('2020-04-04')
               expect('2020-04-04'.as_iso8601).to eq('2020-04-04')
             end
             it 'year & month & day & time' do
-              expect('2020-04-04T23:12:12'.η̂(:iso8601)).to eq('2020-04-04T23:12:12')
-              expect('2020-04-04 23:12:12'.η̂(:iso8601)).to eq('2020-04-04T23:12:12')
-
               expect('2020-04-04T23:12:12'.as_iso8601).to eq('2020-04-04T23:12:12')
               expect('2020-04-04T23:12:12'.as_iso8601).to eq('2020-04-04T23:12:12')
             end
             it 'year & month & day & time & time-zone' do
-              expect('2020-04-04T23:12:12+11:00'.η̂(:iso8601)).to eq('2020-04-04T23:12:12+11:00')
-              expect('2020-04-04T23:12:12+1100'.η̂(:iso8601)).to eq('2020-04-04T23:12:12+11:00')
-              expect('2020-04-04 23:12:12+11:00'.η̂(:iso8601)).to eq('2020-04-04T23:12:12+11:00')
-              expect('2020-04-04 23:12:12+1100'.η̂(:iso8601)).to eq('2020-04-04T23:12:12+11:00')
-
               expect('2020-04-04T23:12:12+11:00'.as_iso8601).to eq('2020-04-04T23:12:12+11:00')
               expect('2020-04-04T23:12:12+1100'.as_iso8601).to eq('2020-04-04T23:12:12+11:00')
               expect('2020-04-04 23:12:12+11:00'.as_iso8601).to eq('2020-04-04T23:12:12+11:00')
@@ -375,52 +360,33 @@ RSpec.describe 'str' do
           end
           context 'cases: negative' do
             it 'year' do
-              expect{'-1000'.η̂(:iso8601)}.to raise_error(RuntimeError)
-              expect{'a123'.η̂(:iso8601)}.to raise_error(RuntimeError)
-              expect{''.η̂(:iso8601)}.to raise_error(RuntimeError)
-
               expect{'-1000'.as_iso8601}.to raise_error(RuntimeError)
               expect{'a123'.as_iso8601}.to raise_error(RuntimeError)
               expect{''.as_iso8601}.to raise_error(RuntimeError)
             end
             it 'year & month' do
-              expect{'-1000'.η̂(:iso8601)}.to raise_error(RuntimeError)
-              expect{'a123'.η̂(:iso8601)}.to raise_error(RuntimeError)
-              expect{''.η̂(:iso8601)}.to raise_error(RuntimeError)
-              expect{'2020-55'.η̂(:iso8601)}.to raise_error(RuntimeError)
-
               expect{'-1000'.as_iso8601}.to raise_error(RuntimeError)
               expect{'a123'.as_iso8601}.to raise_error(RuntimeError)
               expect{''.as_iso8601}.to raise_error(RuntimeError)
               expect{'2020-55'.as_iso8601}.to raise_error(RuntimeError)
             end
             it 'year & month & day' do
-              expect{'-1000'.η̂(:iso8601)}.to raise_error(RuntimeError)
-              expect{'2020-04-54'.η̂(:iso8601)}.to raise_error(RuntimeError)
-              expect{''.η̂(:iso8601)}.to raise_error(RuntimeError)
-
               expect{'-1000'.as_iso8601}.to raise_error(RuntimeError)
               expect{'2020-04-54'.as_iso8601}.to raise_error(RuntimeError)
               expect{''.as_iso8601}.to raise_error(RuntimeError)
             end
             it 'year & month & day & time' do
-              expect{'-1000'.η̂(:iso8601)}.to raise_error(RuntimeError)
-              expect{'2020-04-04A23:12:12'.η̂(:iso8601)}.to raise_error(RuntimeError)
-              expect{'2020-04-04T25:12:12'.η̂(:iso8601)}.to raise_error(RuntimeError)
-              expect{''.η̂(:iso8601)}.to raise_error(RuntimeError)
-
               expect{'-1000'.as_iso8601}.to raise_error(RuntimeError)
               expect{'2020-04-04A23:12:12'.as_iso8601}.to raise_error(RuntimeError)
               expect{'2020-04-04T25:12:12'.as_iso8601}.to raise_error(RuntimeError)
               expect{''.as_iso8601}.to raise_error(RuntimeError)
             end
             it 'year & month & day & time & time-zone' do
-              scenarios_iso8601_error.∀{|scenario| expect{scenario.η̂(:iso8601)}.to raise_error(RuntimeError)}
               scenarios_iso8601_error.∀{|scenario| expect{scenario.as_iso8601}.to raise_error(RuntimeError)}
             end
           end
         end # end: {normalizer{:iso8601}}
-      end # end: {func{η̂}}
+      end # end: {func{as_iso8601}}
     end # end: {time relating functionality}
 
     context 'functions for single character operations' do
@@ -429,18 +395,18 @@ RSpec.describe 'str' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
             it 'w/ char' do
-              %w(A Z).∀{|scenario| expect(scenario.⬆?).to eq(true)}
+              %w[A Z].∀{|scenario| expect(scenario.⬆?).to eq(true)}
             end
             it 'w/ many chars' do
-              %w(IsThisUppercase AA ZZ IS_THIS_UPPER_SNAKE_CASE).∀{|scenario| expect(scenario.⬆?).to eq(true)}
+              %w[IsThisUppercase AA ZZ IS_THIS_UPPER_SNAKE_CASE].∀{|scenario| expect(scenario.⬆?).to eq(true)}
             end
           end
           context 'cases: negative' do
             it 'not upper case' do
-              %w(a z).∀{|scenario| expect(scenario.⬆?).to eq(false)}
+              %w[a z].∀{|scenario| expect(scenario.⬆?).to eq(false)}
             end
             it 'not single char' do
-              %w(Aa).∀{|scenario| expect(scenario.⬆?).to eq(false)}
+              %w[Aa].∀{|scenario| expect(scenario.⬆?).to eq(false)}
             end
           end
         end
@@ -450,18 +416,18 @@ RSpec.describe 'str' do
         context 'handles needed scenarios' do
           context 'cases: positive' do
             it 'w/ char' do
-              %w(a z).∀{|scenario| expect(scenario.⬇?).to eq(true)}
+              %w[a z].∀{|scenario| expect(scenario.⬇?).to eq(true)}
             end
             it 'w/ many chars' do
-              %w(aa zz is_this_downcase).∀{|scenario| expect(scenario.⬇?).to eq(true)}
+              %w[aa zz is_this_downcase].∀{|scenario| expect(scenario.⬇?).to eq(true)}
             end
           end
           context 'cases: negative' do
             it 'not lower case' do
-              %w(A Z).∀{|scenario| expect(scenario.⬇?).to eq(false)}
+              %w[A Z].∀{|scenario| expect(scenario.⬇?).to eq(false)}
             end
             it 'not single char' do
-              %w(aA zZ).∀{|scenario| expect(scenario.⬇?).to eq(false)}
+              %w[aA zZ].∀{|scenario| expect(scenario.⬇?).to eq(false)}
             end
           end
         end
@@ -520,7 +486,7 @@ RSpec.describe 'str' do
             end
             context 'for func{to_num?}' do
               it 'same-cases' do
-                %w(∞ +∞ -∞ ∞ℂ π +π -π Ⴔ Ω 𝞽 𝚽).∀{|scenario| expect(scenario.to_num?).to eq(true)}
+                %w[∞ +∞ -∞ ∞ℂ π +π -π Ⴔ Ω 𝞽 𝚽].∀{|scenario| expect(scenario.to_num?).to eq(true)}
               end
             end
           end
@@ -554,7 +520,7 @@ RSpec.describe 'str' do
             end
             context 'for func{to_num?}' do
               it 'same-cases' do
-                %w(00 -0 +0 .0 01 10 13 .1 .9).∀ do |scenario|
+                %w[00 -0 +0 .0 01 10 13 .1 .9].∀ do |scenario|
                   expect(scenario.to_num?).to eq(true)
                 end
               end
@@ -588,7 +554,7 @@ RSpec.describe 'str' do
             end
             context 'for func{to_num?}' do
               it 'same-cases' do
-                %w(000 -00 +00 0.0 001 +01 -01 456 +56 -56 4.0 4.7 +.1 -.1 1.1 1e1 4e5).∀ do |scenario|
+                %w[000 -00 +00 0.0 001 +01 -01 456 +56 -56 4.0 4.7 +.1 -.1 1.1 1e1 4e5].∀ do |scenario|
                   expect(scenario.to_num?).to eq(true)
                 end
               end
@@ -607,7 +573,7 @@ RSpec.describe 'str' do
             end
             context 'for func{to_num?}' do
               it 'same-cases' do
-                %w(1337133713371337 +1337133713371337 -1337133713371337 -3e33 1.3371337e3 +1.3371337e3 -1.3371337e3).∀ do |scenario|
+                %w[1337133713371337 +1337133713371337 -1337133713371337 -3e33 1.3371337e3 +1.3371337e3 -1.3371337e3].∀ do |scenario|
                   expect(scenario.to_num?).to eq(true)
                 end
               end
@@ -637,7 +603,7 @@ RSpec.describe 'str' do
           end
           context 'for func{to_num?}' do
             it 'same-cases' do
-              %w(- + . a \n -+ 1+ +. aa 0. 7.).∀ do |scenario|
+              %w[- + . a \n -+ 1+ +. aa 0. 7.].∀ do |scenario|
                 expect(scenario.to_num?).to eq(false)
               end
             end
@@ -647,7 +613,7 @@ RSpec.describe 'str' do
     end
 
     context 'funcs w/ ♻️' do
-      let(:scenarios_p1_error_runtime){[['', 'a'], %w(ab aa)]}
+      let(:scenarios_p1_error_runtime){[['', 'a'], %w[ab aa]]}
       let(:scenarios_p1_bad_args){[['a', ''], ['a', nil]]}
       let(:scenarios_p2_bad_args){[['abbbabbbabbbabbb', 'a', 5], ['abc', 'a', nil]]}
       let(:specific_data){"5v\t32rfdfkds S\nDgr@ ♻️G<RFG9k@,ex \t\t\n m9t♻️y4f 4v3tbh 54h"}
@@ -804,14 +770,14 @@ RSpec.describe 'str' do
           context 'with partial fill in' do
             it 'passes simple scenarios' do
               [
-                  ['', '', ''], ['', 'aaa', 'aaa'], ['aaa', '', 'aaa'], %w(hello? ? hello?), %w(hello ?a hello?a), %w(hellb ?? hellb??), %w(hello? ?? hello??)
+                  ['', '', ''], ['', 'aaa', 'aaa'], ['aaa', '', 'aaa'], %w[hello? ? hello?], %w[hello ?a hello?a], %w[hellb ?? hellb??], %w[hello? ?? hello??]
               ].∀{|a|expect(a[0].ensure_ending!(a[1])).to eq(a[2])}
             end
             it 'passes complex scenarios' do
               [
-                  %w(baa aaa baaa), %w(bba aaa bbaaa), %w(baa aaaaaaaaa baaaaaaaaa),
-                  %w(baaaaa aaaaaa baaaaaa), %w(ba aaaaaaaa baaaaaaaa), %w(abc bca abca),
-                  ['hi ', ' ', 'hi '], [' hi', ' ', ' hi '], %w(abc bcd abcd)
+                  %w[baa aaa baaa], %w[bba aaa bbaaa], %w[baa aaaaaaaaa baaaaaaaaa],
+                  %w[baaaaa aaaaaa baaaaaa], %w[ba aaaaaaaa baaaaaaaa], %w[abc bca abca],
+                  ['hi ', ' ', 'hi '], [' hi', ' ', ' hi '], %w[abc bcd abcd]
               ].∀{|a|expect(a[0].ensure_ending!(a[1])).to eq(a[2])}
             end
           end # end context 'positive' -> 'with partial fill in'
@@ -854,7 +820,7 @@ RSpec.describe 'str' do
           it 'cases: error' do
             expect{'b'.∌? nil}.to raise_exception(ArgumentError)
             expect{'b'.∌? 1337}.to raise_exception(ArgumentError)
-            expect{'b'.∌? %w(a cc b)}.to raise_exception(ArgumentError)
+            expect{'b'.∌? %w[a cc b]}.to raise_exception(ArgumentError)
           end
         end
       end
@@ -862,7 +828,7 @@ RSpec.describe 'str' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect('b'.∈? 'abc').to eq(true)
-            expect('b'.∈? %w(a cc b)).to eq(true)
+            expect('b'.∈? %w[a cc b]).to eq(true)
           end
           it 'cases: negative' do
             expect('d'.∈? 'abc').to eq(false)
@@ -877,11 +843,11 @@ RSpec.describe 'str' do
         context 'handles needed scenarios' do
           it 'cases: positive' do
             expect('d'.∉? 'abc').to eq(true)
-            expect('d'.∉? %w(a cc b)).to eq(true)
+            expect('d'.∉? %w[a cc b]).to eq(true)
           end
           it 'cases: negative' do
             expect('b'.∉? 'abc').to eq(false)
-            expect('b'.∉? %w(a cc b)).to eq(false)
+            expect('b'.∉? %w[a cc b]).to eq(false)
           end
           it 'cases: error' do
             expect{'b'.∉? nil}.to raise_exception(ArgumentError)
@@ -897,13 +863,13 @@ RSpec.describe 'str' do
           context 'with partial fill in' do
             it 'simple data' do
               [
-                  ['', '', ''], ['', ' ', ' '], [' ', ' ', ' '], ['', 'a', 'a'], %w(b a ab), %w(c aaac aaac)
+                  ['', '', ''], ['', ' ', ' '], [' ', ' ', ' '], ['', 'a', 'a'], %w[b a ab], %w[c aaac aaac]
               ].∀{|a|expect(a[0].ensure_start!(a[1])).to eq(a[2])}
             end
             it 'complex data' do
               [
-                  %w(baa b baa), %w(baa ba baa), %w(baa baa baa), %w(baa bb bbaa), %w(baa bba bbaa),
-                  %w(baa bbaa bbaa), %w(baa bbaaa bbaaabaa), %w(abc123xyz 123 123abc123xyz)
+                  %w[baa b baa], %w[baa ba baa], %w[baa baa baa], %w[baa bb bbaa], %w[baa bba bbaa],
+                  %w[baa bbaa bbaa], %w[baa bbaaa bbaaabaa], %w[abc123xyz 123 123abc123xyz]
               ].∀{|a|expect(a[0].ensure_start!(a[1])).to eq(a[2])}
             end
           end
@@ -970,7 +936,7 @@ RSpec.describe 'str' do
             expect{a_str.∉?('c')}.to perform_very_quickly
           end
           it 'cases: negative' do
-            expect{'b'.∉?(%w(a cc b))}.to perform_very_quickly
+            expect{'b'.∉?(%w[a cc b])}.to perform_very_quickly
           end
         end
       end
@@ -1089,10 +1055,10 @@ RSpec.describe 'str' do
     context 'with partial fill in, performs quickly' do
       # TODO: ADD TEST CASES TO MEASURE BIG-O NOTATION
       it 'func[ensure_ending!]' do
-        [%w(hello ?a), ['', big_str], [big_str, '']].∀{|a|expect{a[0].ensure_ending!(a[1])}.to perform_quickly}
+        [%w[hello ?a], ['', big_str], [big_str, '']].∀{|a|expect{a[0].ensure_ending!(a[1])}.to perform_quickly}
       end
       it 'func[ensure_start!]' do
-        [%w(hello ?a), ['', big_str], [big_str, '']].∀{|a|expect{a[0].ensure_start!(a[1])}.to perform_quickly}
+        [%w[hello ?a], ['', big_str], [big_str, '']].∀{|a|expect{a[0].ensure_start!(a[1])}.to perform_quickly}
       end
     end
 

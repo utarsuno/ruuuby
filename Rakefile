@@ -32,6 +32,7 @@ namespace :qa do
     ENV['RUUUBY_F01']               = 'b00'
     ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
     ENV['RUUUBY_RSPEC_INTEGRATION'] = 'on'
+    $RSPEC_INTEGRATION              = true
     ::Rake::Task['rspec_integration'].execute
   end
 
@@ -65,12 +66,9 @@ namespace :qa do
     ::Rake::Task['rspec_locale'].execute
   end
 
-  task :locale_full do
-    ENV['RUBYOPT']                  = '-W:no-deprecated -W:no-experimental'
-    ENV['RUUUBY_F01']               = 'b00'
-    ENV['RUUUBY_F43']               = 'b00'
-    ENV['RUUUBY_PERFORMANCE_LIMIT'] = 'on'
-    ::Rake::Task['rspec_locale_full'].execute
+  task :system do
+    ENV['RSPEC_SYSTEM'] = 'on'
+    ::Rake::Task['rspec_system'].execute
   end
 
 end
@@ -126,6 +124,14 @@ module CategoriesQA
     /services/ruuuby_db/spec/migration_spec
     /services/ruuuby_db/spec/test/migration_spec
 )
+    SPEC_SYSTEM   = %w[
+      /spec/helpers/system/autoload_me
+      /spec/helpers/db/autoload_me
+      /services/nginx/spec/system_spec
+      /services/web_assets/spec/system_spec
+      /services/ruuuby_db/spec/system_spec
+      /services/pgadmin/spec/system_spec
+    ]
     SPEC_RNG      = %w(/spec/helpers/rng/autoload_me)
     INTEGRATION   = %w(/spec/helpers/integration/autoload_me)
     LIB_BENCHMARK = %w(/spec/helpers/performance/autoload_me)
@@ -192,7 +198,7 @@ add_task_rspec('locale',  '**/*_full_verification_spec.rb', CategoriesQA::Preloa
 add_task_rspec('preferences', '', CategoriesQA::Preload::LOCALE_FULL)
 add_task_rspec('tech_debt')
 add_task_rspec('integration',  '', CategoriesQA::Preload::INTEGRATION)
-add_task_rspec('system', '', %w(/spec/helpers/db/autoload_me))
+add_task_rspec('system', '', CategoriesQA::Preload::SPEC_SYSTEM)
 add_task_rspec('service')
 
 #add_task_rspec('all',   '**/*_service_spec.rb', CategoriesQA::Preload::DB_FULL)
@@ -205,17 +211,20 @@ add_task_rspec('service')
 RDoc::Task.new do |rdoc|
   #rdoc.main  = 'README.md'
   rdoc.title = "Ruuuby Documentation"
-  #rdoc.rdoc_files.include('README.md', 'lib/**/*.rb')
   rdoc.rdoc_files.include('README.md', 'lib/**/*.rb', 'ext/**/*.rb', 'ext/**/*.c')
 
-  rdoc.options << '--verbose'
+  #rdoc.options << '--verbose'
+
+  rdoc.generator = 'ri'
 
   # more options at: https://ruby.github.io/rdoc/RDoc/Options.html
   #%w(coverage-report verbose force-update).each do |option|
   #rdoc.options << "--#{option}"
   #end
-end
 
-#task :default => :rspec
+  rdoc.rdoc_files.exclude('services/**/*.rb')
+  rdoc.rdoc_files.exclude('vendor/**.*')
+  rdoc.rdoc_files.exclude('tmp/**.*')
+end
 
 task :default => :'qa:unit'

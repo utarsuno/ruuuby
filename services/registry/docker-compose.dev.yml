@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+
+  # @see https://docs.docker.com/registry/spec/api/
+  # @see https://docs.docker.com/registry/configuration/
+  # @see https://github.com/docker/distribution/blob/master/cmd/registry/config-example.yml
+  service_registry_dev:
+    #restart: always
+    tty: true
+    container_name: "service_registry_dev"
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 5000:5000
+    volumes:
+      - 'vol_registry_dev:/var/lib/registry'
+      - './config.dev.yml:/etc/docker/registry/config.yml'
+
+networks:
+  default:
+    external:
+      name: ruuuby_network
+
+volumes:
+  vol_registry_dev:
+    external: true

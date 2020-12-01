@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# utf-8
 
 RSpec.describe 'ruby' do
 
@@ -75,7 +75,7 @@ RSpec.describe 'ruby' do
           it 'cpu' do
             expect(::Etc.uname[:machine]).to eq('x86_64')
             expect(::Gem::Platform.local.cpu).to eq('x86_64')
-            expect(build_configs.∀🔑∃_value?(%w(target_cpu host_cpu build_cpu), 'x86_64')).to eq(true)
+            expect(build_configs.∀🔑∃_value?(%w[target_cpu host_cpu build_cpu], 'x86_64')).to eq(true)
           end
           it 'as defined through build-settings{::RbConfig}' do
             expect(build_configs['host_os']).to eq('darwin19.6.0')

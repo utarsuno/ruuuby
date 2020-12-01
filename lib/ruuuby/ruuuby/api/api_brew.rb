@@ -10,8 +10,6 @@ module ::Ruuuby
   # information and utilities that define and work w/ aspects of `Ruuuby`
   module MetaData
 
-    # gem install rugged -- --use-system-libraries
-    #
     # brew install libgit2
     #
     # TODO: https://github.com/Homebrew/brew/releases

@@ -1,11 +1,11 @@
 // encoding: UTF-8
 
-#ifndef CRUUUBY_H2_EXTENSION_MEMORY
+#ifndef CRUUUBY_H2
 #include "02_extension_memory.h"
 #endif
 
-#ifndef CRUUUBY_H3_MACRO_UTILITIES
-#define CRUUUBY_H3_MACRO_UTILITIES
+#ifndef CRUUUBY_H3
+#define CRUUUBY_H3
 
 // macros for internal pre-processing generators
 
@@ -33,6 +33,7 @@ ________________________________________________________________________________
 #define ensure_loaded_enumerable(path)           ensure_file_loaded("ruuuby/class/enumerable/" #path)
 #define ensure_loaded_module(path)               ensure_file_loaded("ruuuby/module/" #path)
 #define ensure_loaded_math(path)                 ensure_file_loaded("ruuuby/math/" #path)
+#define ensure_loaded_stats(path)                ensure_file_loaded("ruuuby/math/stats/" #path)
 #define ensure_loaded_set_theory(path)           ensure_file_loaded("ruuuby/math/set_theory/" #path)
 #define ensure_loaded_group_theory(path)         ensure_file_loaded("ruuuby/math/group_theory/" #path)
 #define ensure_loaded_attribute_includable(path) ensure_file_loaded("ruuuby/module/attribute/includable/" #path)
@@ -46,6 +47,7 @@ ________________________________________________________________________________
     ensure_loaded_io(dir)\
 }
 
+//ensure_loaded_set_theory(discrete/real_algebraic_numbers)
 #define ensure_all_loaded_for_set_theory(){\
     ensure_loaded_set_theory(closure)\
     ensure_loaded_set_theory(number_set)\
@@ -58,7 +60,6 @@ ________________________________________________________________________________
     ensure_loaded_set_theory(discrete/irrational_numbers)\
     ensure_loaded_set_theory(discrete/natural_numbers)\
     ensure_loaded_set_theory(discrete/rational_numbers)\
-    ensure_loaded_set_theory(discrete/real_algebraic_numbers)\
     ensure_loaded_set_theory(discrete/real_numbers)\
     ensure_loaded_set_theory(discrete/universal_set)\
     ensure_loaded_set_theory(discrete/whole_numbers)\
@@ -86,12 +87,13 @@ ________________________________________________________________________________
 
 #define ensure_all_loaded_for_statistics(){\
     ensure_loaded_math(combinatorics/combinatorics)\
-    ensure_loaded_math(stats/stats)\
-    ensure_loaded_math(stats/probability)\
-    ensure_loaded_math(stats/rng)\
-    ensure_loaded_math(stats/time_series)\
-    ensure_loaded_math(stats/descriptive)\
-    ensure_loaded_math(stats/time_series_data)\
+    ensure_loaded_stats(stats)\
+    ensure_loaded_stats(probability)\
+    ensure_loaded_stats(rng)\
+    ensure_loaded_stats(time_series)\
+    ensure_loaded_stats(distribution)\
+    ensure_loaded_stats(descriptive)\
+    ensure_loaded_stats(time_series_data)\
 }
 
 #define ensure_all_loaded_for_ruuuby(){\

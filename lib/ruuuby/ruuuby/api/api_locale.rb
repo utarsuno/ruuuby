@@ -26,7 +26,7 @@ module ::Ruuuby::MetaData
       if @api_docker.∅?
         require 'docker'
         require_relative 'docker/attributes/findable'
-        %w(network volume container service service_set).∀{|docker_lib| require_relative "docker/docker_#{docker_lib}"}
+        %w(network volume image container service service_set).∀{|docker_lib| require_relative "docker/docker_#{docker_lib}"}
         require_relative 'docker/api_docker'
         @api_docker = ::Ruuuby::MetaData::DockerAPI.new(@engine, 'ruuuby')
       end

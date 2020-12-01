@@ -12,10 +12,13 @@ $ruuuby = 💎
 #using ::Math::Algebra::Tropical::ContextMatrix
 using ::ThetaAngle::ContextRuuuby
 using ::ThetaAngle::ContextParamCheck
-using ::String::ContextF24
 using ::Ruuuby::Heuristics::ContextParsingCommandOutput
 
 using ::Object::ContextSuperscripts
+
+#include Math::UniversalFunctions
+
+require_relative '../../domains/code/lib/rubocop'
 
 require 'irb'
 IRB.start(__FILE__)

@@ -2,12 +2,12 @@
 
 | for resource           | reference                                                   |
 | ---------------------: | :---------------------------------------------------------- |
-| latest version         | [`0.1.0.pre.4`](https://rubygems.org/gems/ruuuby/versions/0.1.0.pre.4-x86_64-darwin-19) |
+| latest version         | [`0.1.0.pre.5`](https://rubygems.org/gems/ruuuby/versions/0.1.0.pre.5-x86_64-darwin-19) |
 | stable version         | [`0.0.49`](https://rubygems.org/gems/ruuuby/versions/0.0.49-x86_64-darwin-18)           |
 | copy-paste smiley face | `˙ ͜ʟ˙` |
 | changelog              | [`CHANGELOG.md`](https://github.com/utarsuno/ruuuby/blob/master/CHANGELOG.md) with in progress migration to [`[History.txt format]`](https://guides.rubygems.org/releasing-rubygems/) |
 | `JIT` testing          | `RUBYOPT="--jit --jit-warnings --jit-wait --jit-max-cache=1337 --jit-verbose=2 --jit-debug -w" ./bin/console/ruuuby` |
-| common<br>non-ascii    | `∅`,`∃`,`∄`,`∋`,`∌`,`∈`,`∉`,`ⓣ`,`Ⓣ`,`≈`,`∞`,`π`,`℮`,`𝚽`<br>`η̂`,`μ`,`𝔠`,`Λ`,`λ`,`∫`,`⨍`,`𝑓`,`∀`,`τ`,`χ²`,`x̃`,`𝚡`,`𝛿`,`σ`<br>`𝔹`,`ℂ`,`ℕ`,`𝕎`,`ℤ`,`ℚ`,`𝔸ᵣ`,`ℂ`,`𝕋`,`𝕀`,`ℝ`,`𝕌`,`𝕊`,`🅱`<br>`±`,`Ω`,`γ`,`Ψ`,`ρ`,`δ`,`Ⴔ`,`⨁`,`⨂`,`∖`,`≡`,`√`,`∛`,<br>`↩`,`‣`,`⟶`,`↘`,`➚`,`⬇`,`⬆`,`●`,`◆`,`▲`,`▬`,`▰`,`♪`<br>`𝞽`,`θ`,`°`,`ʳ`,`ᵍ`,`⦜`,`○`,`ᵀ`,`▣`,`∴`,`𝔦`,`𝔣`,`⌈`,`⌋`<br>`ₑ`,`₀`,`₁`,`₂`,`₃`,`ₓ`,`ᵢ`,`⁻ⁿ`,`⁰`,`¹`,`²`,`³`,`⁴`,`⁵`,`⁶`,`⁷`,`⁸`,`⁹`<br>`¼`,`½`,`¾`,`⅓`,`⅕`,`⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`,`⅛`,`⅜`,`⅝`,`⅞`,`⅑`,`⅒`<br>`💎`,`🌐`,`🆔`,`🛑`,`❓`,`💻`,`🔑`,`🐋`,`🐍`,`🐫`,`🙈`<br>`📁`,`🗄️`,`💾`,`🕒`,`🎲`,`📊`,`🧟`,`❄️`,`⚠️`,`✏️`,`📖`,`🏠`<br>`📱`,`🌎`,`✅`,`♻️`,`🍺`,`🛡`,`📅`,`❌`,`🧬`,`🐇`,`🌽` |
+| common<br>non-ascii    | `∅`,`∃`,`∄`,`∋`,`∌`,`∈`,`∉`,`ⓣ`,`Ⓣ`,`≈`,`∞`,`π`,`℮`,`𝚽`<br>`η̂`,`μ`,`𝔠`,`Λ`,`λ`,`∫`,`⨍`,`𝑓`,`∀`,`τ`,`χ²`,`x̃`,`𝚡`,`𝛿`,`σ`,`𝚪`,`𝛾`<br>`𝔹`,`ℂ`,`ℕ`,`𝕎`,`ℤ`,`ℚ`,`𝔸ᵣ`,`ℂ`,`𝕋`,`𝕀`,`ℝ`,`𝕌`,`𝕊`,`🅱`<br>`±`,`Ω`,`γ`,`Ψ`,`ρ`,`δ`,`Ⴔ`,`⨁`,`⨂`,`∖`,`≡`,`√`,`∛`,<br>`↩`,`‣`,`⟶`,`↘`,`➚`,`⬇`,`⬆`,`●`,`◆`,`▲`,`▬`,`▰`,`♪`<br>`𝞽`,`θ`,`°`,`ʳ`,`ᵍ`,`⦜`,`○`,`ᵀ`,`▣`,`∴`,`𝔦`,`𝔣`,`⌈`,`⌋`<br>`ₑ`,`₀`,`₁`,`₂`,`₃`,`ₓ`,`ᵢ`,`⁻ⁿ`,`⁰`,`¹`,`²`,`³`,`⁴`,`⁵`,`⁶`,`⁷`,`⁸`,`⁹`<br>`¼`,`½`,`¾`,`⅓`,`⅕`,`⅕`,`⅖`,`⅗`,`⅘`,`⅙`,`⅐`,`⅛`,`⅜`,`⅝`,`⅞`,`⅑`,`⅒`<br>`💎`,`🌐`,`🆔`,`🛑`,`❓`,`💻`,`🔑`,`🐋`,`🐍`,`🐫`,`🙈`<br>`📁`,`🗄️`,`💾`,`🕒`,`🎲`,`📊`,`🧟`,`❄️`,`⚠️`,`✏️`,`📖`,`🏠`<br>`📱`,`🌎`,`✅`,`♻️`,`🍺`,`🛡`,`📅`,`❌`,`🧬`,`🐇`,`🌽` |
 | [download source for utilized version of Ruby](https://cache.ruby-lang.org/pub/ruby/3.0/) | [Ruby3.0.0-preview1](https://www.ruby-lang.org/en/news/2020/09/25/ruby-3-0-0-preview1-released/) |
 | summary & purpose      | in migration until version{`0.1.0`} |
 
@@ -99,6 +99,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `pg` | [`1.2.3`](https://rubygems.org/gems/pg/versions/1.2.3) | ✅, ❌ | toggleable feature |
 | `activerecord` | [`6.0.3.4`](https://rubygems.org/gems/activerecord/versions/6.0.3.4) | ✅, ❌ | toggleable feature |
 | `keycutter` | [`1.0.2`](https://rubygems.org/gems/keycutter/versions/1.0.2) | ✅, ❌ | development utility |
+| `rubocop` | [`1.4.2`](https://rubygems.org/gems/rubocop/versions/1.4.2) | ✅, ❌ | development utility |
 | `rdoc` | [`6.2.1`](https://rubygems.org/gems/rdoc/versions/6.2.1) | ✅, ❌ | development utility |
 | `rspec` | [`3.10.0`](https://rubygems.org/gems/rspec/versions/3.10.0) | ✅, ❌ | development utility |
 | `rspec-benchmark` | [`0.6.0`](https://rubygems.org/gems/rspec-benchmark/versions/0.6.0) | ✅, ❌ | development utility |
@@ -122,9 +123,9 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Math::Algebra::Tropical` | `ContextMatrix`  | `Matrix`  | `⨁`, `⨁!`, `⨂`, `⨂ⁿ` |
 | `Heuristics` | `ContextParsingCommandOutput` | -`String`<br>-`Array` | `clean` |
 
-### Example Math Modules Modification:
+### Example Math Modules:
 
-| module(s) | sub-module | func(s) added |
+| (sub) module | sub-module | func(s) added |
 | ------: | :----: | :---------------- |
 | `Math` | `Ratio` | `golden?`, `super_golden?` |
 | `NumberTheory` | | `semiprime?` |
@@ -139,6 +140,7 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `Stats` | `Probability` | |
 | `Stats` | `Descriptive` | `𝛿`⟶`percentage_error`, `relative_diff` |
 | `Stats` | `StatisticalLearning` | |
+| `Stats` | `Distribution::Normal` | `cdf` |
 
 ### Example Custom Math Classes:
 
@@ -190,9 +192,9 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 
 | relative weight per test | testing categories | label   | count   | stable before version{`0.1.0`} | description |
 | -----: | :----------------: | :----------------------: | :----------: | :-----: | :---- |
-| `0.01` | `QA`               | `unit`                   | `1189`      | ✅      | core functionality |
-| `0.01` | `QA`               | `tech-debt`              | `9`         | ✅      | track missing or incorrect functionality |
-| `0.01` | `CICD`             | `audit`                  | `82`        | ✅      | anything non-functionality based regarding expected `code structure` |
+| `0.01` | `QA`               | `unit`                   | `1203`      | ✅      | core functionality |
+| `0.01` | `QA`               | `tech-debt`              | `8`         | ✅      | track missing or incorrect functionality |
+| `0.01` | `CICD`             | `audit`                  | `83`        | ✅      | anything non-functionality based regarding expected `code structure` |
 | `0.01` | `CICD`             | `preferences`            | `26`        | ✅      | verify developer preferred `OS & dev configs/values` |
 | `0.02` | `QA`,`DB`          | `DB engine`              |             | ❌      | `DB` specific `unit` tests |
 | `0.05` | `QA`,`DB`          | `ORM`                    |             | ❌      | `ORM` specific `unit` tests |
@@ -214,3 +216,4 @@ data = {haaallo: 'wooorld', ye: 'ee'}
 | `documentation`        | `?`                      | ❌                             |
 | `full test suite`      | `?`                      | ❌                             |
 | `configuration as code` | `?`                      | ❌                             |
+| `linter`               | `?`                      | ❌                             |

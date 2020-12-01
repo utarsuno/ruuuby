@@ -2,7 +2,7 @@
 
 RSpec.describe 'f28_b08' do
   context 'functionality' do
-    context 'angle tau' do
+    context 'Euler-Mascheroni constant' do
       context 'has correct value' do
         it 'γ == Float::CONST_EULER_MASCHERONI' do
           expect(::Float::CONST_EULER_MASCHERONI.ⓣ).to eq(::Float)

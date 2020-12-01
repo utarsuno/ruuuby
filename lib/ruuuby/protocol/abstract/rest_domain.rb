@@ -1,26 +1,24 @@
-# encoding: UTF-8
+# utf-8
 
+# utilities for various web protocols
 module ::Ruuuby::Protocols
-
+  # for simple domains only, does not support any complexity whatsoever (for now)
   class DomainREST
+    attr_reader :protocol, :host, :port, :base_headers, :base_params, :url
 
-    # @param [String]  base_uri
-    # @param [Integer] base_port
-    # @param [Hash]    base_params
-    # @param [Hash]    base_headers
-    def initialize(base_uri, base_port=80, base_params=nil, base_headers=nil)
-      @base_uri     = base_uri
-      @base_port    = base_port
+    # @param [String]          protocol
+    # @param [String]          host
+    # @param [String, Integer] port
+    # @param [Hash]            _base_params
+    # @param [Hash]            _base_headers
+    def initialize(protocol = 'http://', host = 'localhost', port = 80, _base_params = nil, _base_headers = nil)
+      @protocol     = protocol
+      @host         = host
+      @port         = port.to_s
+      @url          = "#{@protocol}#{@host}:#{@port}"
       # optional defaults
       @base_headers = nil
       @base_params  = nil
     end
-
-    def generate_uri(endpoint)
-      🛑str❓('endpoint', endpoint)
-      "#{@base_uri}:#{@base_port.to_s}#{endpoint}"
-    end
-
   end
-
 end

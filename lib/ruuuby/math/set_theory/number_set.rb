@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-using ::String::ContextF24
-
 # mathematics related code
 module ::Math
 

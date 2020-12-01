@@ -68,22 +68,8 @@ CALL ruuuby_release_add('0.1.0.pre.0');
 CALL ruuuby_release_add('0.1.0.pre.1');
 CALL ruuuby_release_add('0.1.0.pre.2');
 CALL ruuuby_release_add('0.1.0.pre.3');
-
---76.20%  Ruby
---16.06%  C
---3.85%   JavaScript
---1.84%   Dockerfile
---1.77%   SQL
---0.18%   Shell
---0.05%   HTML
---0.04%   CSS
 CALL ruuuby_release_add('0.1.0.pre.4');
-
--- TODO: @see https://github.com/rbenv/rbenv/wiki/Authoring-plugins#rbenv-hooks
--- TODO: @see https://githooks.com/
--- TODO: @see https://medium.com/@sairamkrish/git-branching-strategy-for-true-continuous-delivery-eade4435b57e
--- TODO: @see https://proandroiddev.com/how-to-set-up-an-efficient-development-workflow-with-git-and-ci-cd-5e8916f6bece
---CALL ruuuby_release_add('0.1.0.pre.5');
+CALL ruuuby_release_add('0.1.0.pre.5');
 
 --    ___                __
 --  /'___\              /\ \__
@@ -94,6 +80,8 @@ CALL ruuuby_release_add('0.1.0.pre.4');
 --    \/_/ \/____/\/__/\/_/ \/__/ \/___/  \/_/ \/____/\/___/
 
 CALL ruuuby_feature_add(0::smallint, FALSE, 'utilize non-ascii to enable quicker to read code');
+
+CALL ruuuby_feature_add(35::smallint, 'provide light abstraction for `Statistics`')
 
 CALL ruuuby_feature_add(40::smallint, TRUE, 'provide an `API` for `Docker` operations w/ a light layer over gem{`docker-api`}');
 CALL ruuuby_feature_add(41::smallint, TRUE, 'provide an `API` for `Brew` operations');
@@ -132,6 +120,8 @@ CALL ruuuby_feature_behavior_add(1::smallint, 2::smallint, TRUE, 'supports mode:
 CALL ruuuby_feature_behavior_add(1::smallint, 3::smallint, TRUE, 'supports mode: file (standard Ruby log file logging)');
 CALL ruuuby_feature_behavior_add(1::smallint, 4::smallint, TRUE, 'supports setting the logging level');
 CALL ruuuby_feature_behavior_add(1::smallint, 5::smallint, TRUE, 'supports running a hybrid of logging modes');
+
+CALL ruuuby_feature_add(35::smallint, 5::smallint, 'provide common functionality for modeling: `distributions`')
 
 CALL ruuuby_feature_behavior_add(92::smallint, 0::smallint, TRUE, 'enable support for ActiveRecord');
 CALL ruuuby_feature_behavior_add(92::smallint, 1::smallint, TRUE, 'enable support for pg for PostgreSQL');
@@ -211,6 +201,8 @@ CALL ruuuby_gem_update('0.1.0.pre.4', 'activerecord', '6.0.3.4');
 CALL ruuuby_gem_add_recommended('0.1.0.pre.4', 'keycutter', '1.0.2', '::Keycutter', '::VERSION', NULL);
 CALL ruuuby_gem_add_recommended('0.1.0.pre.4', 'github-linguist', '7.12.0', '::Linguist', '::VERSION', NULL);
 CALL ruuuby_gem_add_recommended('0.1.0.pre.4', 'rails', '6.0.3.4', '::Rails', '.version', NULL);
+
+CALL ruuuby_gem_add_dev('0.1.0.pre.5', 'rubocop', 'rubocop', '::RuboCop', '::Version.version', NULL);
 
 -- ---------------------------------------------------------------------------------------------------------------------
 

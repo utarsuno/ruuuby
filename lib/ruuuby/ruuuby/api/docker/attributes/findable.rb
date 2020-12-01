@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# utf-8
 
 module ::Ruuuby::Attribute
 
@@ -40,11 +40,12 @@ module ::Ruuuby::Attribute
       self.validate_name_arg(name)
       begin
         self.get(name)
-      rescue ::Docker::Error::NotFoundError, err
+      rescue ::Docker::Error::NotFoundError => err
         raise err
-        nil
       end
     end
+
+    alias [] fetch
 
     # @param [String] name
     #

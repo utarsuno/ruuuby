@@ -1,11 +1,11 @@
 // encoding: UTF-8
 
-#ifndef CRUUUBY_H3_MACRO_UTILITIES
+#ifndef CRUUUBY_H3
 #include "03_macro_utilities.h"
 #endif
 
-#ifndef CRUUUBY_H4_THETA_ANGLE
-#define CRUUUBY_H4_THETA_ANGLE
+#ifndef CRUUUBY_H4
+#define CRUUUBY_H4
 
 /*____________________________________________________________________________________________________________________
  __  ___  __        __  ___               __      ___            __   __
@@ -55,7 +55,7 @@ typedef union generic_bitwise_8_flags {
 #define θFLAG_IS_COERCE 4
 // used to avoid un-necessary calls to DBL2NUM when not needed
 #define θFLAG_IS_CACHE_SYNCED 5
-// 0 indicates that the value is currently an exact match, 1 indicates the current value may have had operations performed on it and thus may contain precision error
+// 0 indicates that the value is currently an exact match, 1 indicates the current value likely contain precision error (depending on the operations performed)
 #define θFLAG_LIKELY_HAS_PRECISION_LOSS 6
 // used as a quicker check if this value is exactly 1 full turn or not
 #define θFLAG_IS_PERIGON 7

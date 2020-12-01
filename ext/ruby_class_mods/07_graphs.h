@@ -1,11 +1,11 @@
 // encoding: UTF-8
 
-#ifndef CRUUUBY_H6_TIME_SERIES_DATA
+#ifndef CRUUUBY_H6
 #include "06_time_series_data.h"
 #endif
 
-#ifndef CRUUUBY_H7_GRAPHS
-#define CRUUUBY_H7_GRAPHS
+#ifndef CRUUUBY_H7
+#define CRUUUBY_H7
 
 typedef struct Pseudo_Graph {
     unsigned int num_nodes;

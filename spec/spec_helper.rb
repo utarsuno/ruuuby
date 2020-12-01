@@ -205,6 +205,10 @@ module HelpersGeneral
 
 end
 
+if ENV['RSPEC_SYSTEM'] == 'on'
+  require_relative 'helpers/system/autoload_me'
+end
+
 RSpec.configure do |config|
 
   # enable flags like --only-failures and --next-failure
@@ -216,17 +220,17 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.profile_examples = 4
+  config.profile_examples = 3
 
-  if ENV['RUUUBY_RSPEC_INTEGRATION'] == 'on'
-    config.include ::Math::Trig
-  end
+  config.include(::Math::Trig) if ENV['RUUUBY_RSPEC_INTEGRATION'] == 'on'
 
   config.include_context 'shared_context_general'
   config.include_context 'shared_context_f24'
   config.include_context 'shared_context_f27'
   config.include_context 'shared_context_f32'
-  config.include_context 'shared_context_f40'
+  if ENV['RSPEC_SYSTEM'] == 'on'
+    config.include_context 'shared_context_f40'
+  end
 
   config.include HelpersGeneral
   config.include HelpersFeature16

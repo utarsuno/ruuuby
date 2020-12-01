@@ -48,7 +48,15 @@ module ::Ruuuby::MetaData
     # @param [String]  cmd
     # @param [Boolean] allow_errors
     def run_cmd!(cmd, allow_errors=false)
-      out, err = self.get_tty.run(cmd, timeout: @default_timeout, pty: false)
+      if allow_errors
+        begin
+          out, err = self.get_tty.run(cmd, timeout: @default_timeout, pty: false)
+        rescue ::TTY::Command::ExitError => error
+          return error
+        end
+      else
+        out, err = self.get_tty.run(cmd, timeout: @default_timeout, pty: false)
+      end
       unless err.empty?
         if allow_errors
           if out.empty?

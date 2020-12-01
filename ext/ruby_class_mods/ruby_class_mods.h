@@ -1,6 +1,6 @@
 // encoding: UTF-8
 
-#ifndef CRUUUBY_H7_GRAPHS
+#ifndef CRUUUBY_H7
 #include "07_graphs.h"
 #endif
 
@@ -43,6 +43,9 @@ ________________________________________________________________________________
 #define 💎add_singleton_func_1args_to(kclass, func_name, the_func) rb_define_singleton_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
 #define 💎add_singleton_func_2args_to(kclass, func_name, the_func) rb_define_singleton_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), 2);
 #define 💎add_singleton_func_kargs_to(kclass, func_name, the_func) rb_define_singleton_method(kclass, func_name, RUBY_METHOD_FUNC(the_func), -1);
+
+#define 💎add_universal_func_1args_to(kclass, func_name, the_func) rb_define_module_function(kclass, func_name, RUBY_METHOD_FUNC(the_func), 1);
+#define 💎add_universal_func_2args_to(kclass, func_name, the_func) rb_define_module_function(kclass, func_name, RUBY_METHOD_FUNC(the_func), 2);
 
 #define declare_func(func_name, expr, return_type, single_param) return_type func_name(single_param);return_type func_name(single_param){expr}
 #define declare_static_func(func_name, expr, return_type, single_param) static return_type func_name(single_param);static return_type func_name(single_param){expr}

@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-using ::String::ContextF24
-
 # `Ruuuby` modifications to existing Class{+String+}
 class ::String
 
@@ -85,6 +83,92 @@ class ::String
   # ---------------------------------------------------------------------------------------------------------- | *f03* |
   alias_method :𝔠, :length
   # ---------------------------------------------------------------------------------------------------------- | *f08* |
+
+  # @return [Boolean] true, if this String's content's syntax match camel-case
+  def 🐫?; self.match?(::String.syntax_case_camel); end
+
+  # @return [Boolean] true, if this String's content's syntax match camel-case-lower
+  def 🐫⬇?; self.match?(::String.syntax_case_lower_camel); end
+
+  # @return [Boolean] true, if this String's content's syntax match snake-case-upper
+  def 🐍⬆?; self.match?(::String.syntax_case_upper_snake); end
+
+  # @return [Boolean] true, if this String's content's syntax match snake-case
+  def 🐍?; self.match?(::String.syntax_case_snake); end
+
+  # @raise [Ruuuby::DescriptiveStandardError]
+  #
+  # @return [String]
+  def to_🐫⬇; as_camel = self.to_🐫; as_camel[0].⬇ + as_camel[1...as_camel.length]; end
+
+  # @raise [Ruuuby::DescriptiveStandardError]
+  #
+  # @return [String]
+  def to_🐍⬆; self.to_🐍.⬆; end
+
+  # @raise [Ruuuby::DescriptiveStandardError]
+  #
+  # @return [String]
+  def to_🐍
+    if self.🐍⬆?
+      self.⬇
+    elsif self.🐫? || self.🐫⬇?
+      chars = ''
+      self.each_char do |c|
+        if c.⬆?
+          if chars.∅?
+            chars << "#{c.⬇}"
+          else
+            chars << "_#{c.⬇}"
+          end
+        else
+          chars << c
+        end
+      end
+      chars
+    elsif self.🐍?
+      self
+    else
+      🛑 ::Ruuuby::DescriptiveStandardError.new(self, "which is not in one of the formats: [🐫, 🐫⬇, 🐍⬆, 🐍]")
+    end
+  end
+
+  # @raise [Ruuuby::DescriptiveStandardError]
+  #
+  # @return [String]
+  def to_🐫
+    chars = ''
+    mark  = true
+    if self.🐍⬆?
+      self.each_char do |c|
+        if c == '_'
+          mark = true
+        elsif mark
+          chars << c
+          mark = false
+        else
+          chars << c.downcase
+        end
+      end
+      chars
+    elsif self.🐍?
+      self.each_char do |c|
+        if c == '_'
+          mark = true
+        elsif mark
+          mark = false
+          chars << c.upcase
+        else
+          chars << c
+        end
+      end
+      chars
+    elsif self.🐫?
+      self
+    elsif self.🐫⬇?
+      self[0].upcase + self[1...self.𝔠]
+    else; 🛑 ::Ruuuby::DescriptiveStandardError.new(self, "which is not in one of the formats: [🐫, 🐫⬇, 🐍⬆, 🐍]"); end
+  end
 
   # @return [Boolean] true, if this `String` is of length 1 and the character is uppercase
   def upcase?
@@ -380,23 +464,6 @@ class ::String
 
   alias_method :⬆?, :upcase?
   alias_method :⬇?, :downcase?
-
-  def clean!
-    self.gsub!($/, '')
-  end
-
-  # TODO: not finalized design
-  #
-  # @param [Symbol] normalizer
-  #
-  # @return [String]
-  def η̂(normalizer)
-    if normalizer == :iso8601
-      self.as_iso8601
-    else
-      🛑 RuntimeError.new("c{String}-> m{η̂} got invalid arg(normalizer){#{normalizer.to_s}} w/ type{#{normalizer.Ⓣ}}")
-    end
-  end
 
   # @return [String] self with modified +encoding+ if not already +UTF-8+
   def as_utf8; self.force_encoding(::Encoding::UTF_8); end

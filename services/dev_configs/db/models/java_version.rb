@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# utf-8
 
 class CreateJavaVersion < RuuubyDBMigration
 

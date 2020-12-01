@@ -25,10 +25,6 @@ RSpec.describe 'f10_db_orm' do
           audit_feature_behavior(f10, f10_b03, 'b03', 'part II/II | for class{`Object`}, alias func{`class`} as{`ⓣ`} & provide utility func{`Ⓣ`} to get self-class as a String')
         end
 
-        it 'has{b04}' do
-          audit_feature_behavior(f10, f10_b04, 'b04', '`🏠` to alias `source_location` for `::Method`')
-        end
-
         it 'has{b05}' do
           audit_feature_behavior(f10, f10_b05, 'b05', 'part I/III   | for class{`Kernel`}, alias func{`rand`} as{`🎲`} & func{`raise`} as{`🛑`}')
         end

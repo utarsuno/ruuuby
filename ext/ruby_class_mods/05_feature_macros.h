@@ -6,12 +6,12 @@
  |___ | |__) |  \ /~~\ |  \  |     |  |  | |    \__/ |  \  |  .__/
 ____________________________________________________________________________________________________________________________________________________________________ */
 
-#ifndef CRUUUBY_H4_MACRO_UTILITIES
+#ifndef CRUUUBY_H4
 #include "04_theta_angle.h"
 #endif
 
-#ifndef CRUUUBY_H5_FEATURE_MACROS
-#define CRUUUBY_H5_FEATURE_MACROS
+#ifndef CRUUUBY_H5
+#define CRUUUBY_H5
 
 //ensure_loaded_default(tzinfo)
 
